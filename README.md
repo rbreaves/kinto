@@ -9,13 +9,19 @@ No more spiderhands for programmers and developers. This project is only about o
 
 1. clone this repo
 ```
-
+git clone https://github.com/rbreaves/kinto.git
 ```
-2. Install via shell file
-```
+2. Install python3 (If needed, most current distros have it already)
 
+Debian or Ubuntu 16.04
+```
+sudo apt update
+sudo apt install python3.6
 ```
 3. Follow the prompts and the script will guide you through the rest of the setup.
+```
+./install.py
+```
 
 ## Troubleshooting
 If your keyboard is not being autodetected and configured then please run `xinput list`, if you are on linux, and copy the output into a ticket under issues. 
