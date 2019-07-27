@@ -61,6 +61,9 @@ internalid = subprocess.check_output('xinput list | grep -iv "Virtual\|USB" | gr
 
 # Loop the following to ensure the id is picked up after 5-10 tries
 usbid = subprocess.check_output('udevadm info -e | stdbuf -oL grep -o -P "(?<=event-kbd /dev/input/by-path/pci-0000:00:).*(?=.0-usb)";exit 0', shell=True).decode('utf-8')
+if usbid == "":
+    usbid = "none found"
+
 
 print("Internal Keyboard ID: " + internalid + "USB Keyboard ID: " + usbid)
 

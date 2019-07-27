@@ -1,9 +1,9 @@
-# Kinto
+# K!nt◎
 [![GitHub release](https://img.shields.io/github/release/rbreaves/kinto.svg)](https://github.com/rbreaves/kinto/releases)
 
-- Fix the damn keyboard. -
+\- Fix the damn keyboard. -
 
-When memory muscle matters (for programmers and developers).
+Memory muscle matters for programmers and developers. (For linux)
 
 This project is only about one thing, remapping the control key to be next to your space bar no matter what keyboard you swap into your workflow and to do it without mastering xmodmap, setxkbmap or modifying system files.
 
@@ -11,9 +11,11 @@ This project is only about one thing, remapping the control key to be next to yo
 
 Remaps your keyboard to behave more like you're on a mac again and below is how the keymap will behave.
 
-Normal apps - Alt will be Ctrl, Win/Super will be Alt, Ctrl will be Win/Super
-Terminal apps (optional) - Alt will be Win/Super, Win/Super will be Alt, Ctrl will be Ctrl
-Modify existing Terminal app keymap profiles (optional and with confirmation) - Copy, Paste, New Tab, etc will be remapped to user Win/Super in the physical Command (or Alt key) position.
+- Normal apps - Alt will be Ctrl, Win/Super will be Alt, Ctrl will be Win/Super
+
+- Terminal apps (optional) - Alt will be Win/Super, Win/Super will be Alt, Ctrl will be Ctrl
+
+- Modify existing Terminal app keymap profiles (optional and with confirmation) - Copy, Paste, New Tab, etc will be remapped to use Win/Super in the physical Command (or Alt key) position.
 
 ## How to install
 
