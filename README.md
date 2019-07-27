@@ -3,7 +3,17 @@
 
 - Fix the damn keyboard. -
 
-No more spiderhands for programmers and developers. This project is only about one thing, remapping the control key to be next to your space bar no matter what keyboard you swap into your workflow and to do it without mastering xmodmap, setxkbmap or modifying system files.
+When memory muscle matters (for programmers and developers).
+
+This project is only about one thing, remapping the control key to be next to your space bar no matter what keyboard you swap into your workflow and to do it without mastering xmodmap, setxkbmap or modifying system files.
+
+## What does this do exactly?
+
+Remaps your keyboard to behave more like you're on a mac again and below is how the keymap will behave.
+
+Normal apps - Alt will be Ctrl, Win/Super will be Alt, Ctrl will be Win/Super
+Terminal apps (optional) - Alt will be Win/Super, Win/Super will be Alt, Ctrl will be Ctrl
+Modify existing Terminal app keymap profiles (optional and with confirmation) - Copy, Paste, New Tab, etc will be remapped to user Win/Super in the physical Command (or Alt key) position.
 
 ## How to install
 
