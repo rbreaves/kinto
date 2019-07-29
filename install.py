@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import os, platform, sysconfig, sys, subprocess
+import os, platform, sysconfig, sys, subprocess, time
 
 yellow = "\033[1;33m"
 green = "\033[0;32m"
@@ -18,6 +18,54 @@ syme = '\u0250'
 syma = '\u0251'
 # bang = '\u1F589'.decode('unicode-escape')
 
+internalid = 0
+usbid = 0
+
+def keyboard_detect():
+    global internalid
+    global usbid
+
+    internal_kbname = ""
+    usb_kbname = ""
+    print()
+    print("Looking for keyboards...")
+    print()
+    if laptop_kb == "1" or laptop_kb == "2":
+        result = subprocess.check_output('xinput list | grep -iv "Virtual\|USB" | grep -i "keyboard.*keyboard" | grep -o -P "(?<=↳).*(?=id\=)";exit 0', shell=True).decode('utf-8')
+        if result != "":
+            internal_kbname = result.strip()
+        internalid = subprocess.check_output('xinput list | grep -iv "Virtual\|USB" | grep -i "keyboard.*keyboard" | cut -d "=" -f 2- | awk \'{print $1}\';exit 0', shell=True).decode('utf-8')
+        print("Internal Keyboard\nName: " + internal_kbname + "\nID: " + internalid)
+
+    if laptop_kb == "1" or laptop_kb == "3":
+        result = subprocess.check_output('udevadm info -e | grep -o -P "(?<=by-id/usb-).*(?=-event-kbd)" | head -1;exit 0', shell=True).decode('utf-8')
+        if result != "":
+            usb_kbname = result.strip()
+
+        # Loop the following to ensure the id is picked up after 5-10 tries
+        usbid = ""
+        usbcount=0
+        while usbid == "":
+            usbid = subprocess.check_output('udevadm info -e | stdbuf -oL grep -o -P "(?<=event-kbd /dev/input/by-path/pci-0000:00:).*(?=.0-usb)";exit 0', shell=True).decode('utf-8')
+            if usbid == "":
+                usbcount += 1
+                # print('usbid not found '+ str(usbcount))
+                if usbcount == 5:
+                    usbid = "none found"
+            time.sleep(1)
+        print("\nUSB Keyboard\n" + "Name: " + usb_kbname + "\nID: " + usbid)
+        
+
+
+def os_detect():
+    print()
+    print("Checking for OS and system information...")
+    print()
+    print("OS Type")
+    # print(" Platform: " + platform_name)
+    if platform_name == 'Linux':
+        result = subprocess.check_output("lsb_release -a | grep -v LSB ", shell=True).decode('ascii')
+        print(result)
 
 def hwinfo():
     print("Requires user password to display hardware information...")
@@ -36,36 +84,46 @@ print(italic + "            - F!x the d" + syma + "mn k" + syme + "yb" + circleo
 sys.stdout.write(reset)
 print()
 input("Press Enter to begin...")
-print()
-print("Checking for OS and system information...")
-print()
-print("OS Type")
-# print(" Platform: " + platform_name)
-if platform_name == 'Linux':
-    result = subprocess.check_output("lsb_release -a | grep -v LSB ", shell=True).decode('ascii')
-    print(result)
-print()
-print("Looking for keyboards...")
-print()
-result = subprocess.check_output('xinput list | grep -iv "Virtual\|USB" | grep -i "keyboard.*keyboard";exit 0', shell=True).decode('utf-8')
-if result != "":
-    print("Built in keyboard")
-    print(result)
 
-result = subprocess.check_output('udevadm info -e | grep -o -P "(?<=by-id/usb-).*(?=-event-kbd)" | head -1;exit 0', shell=True).decode('utf-8')
-if result != "":
-    print("USB keyboard")
-    print(result)
+system_type = input("\nWhat type of system are you using?\n\
+    1) Windows\\Linux Laptop\n\
+    2) Chromebook Laptop\n\
+    3) Macbook\n\
+    4) Windows\Linux Desktop\n\
+    5) Chrome Desktop (w/ Chrome keyboard)\n\
+    6) Mac Desktop\n")
 
-internalid = subprocess.check_output('xinput list | grep -iv "Virtual\|USB" | grep -i "keyboard.*keyboard" | cut -d "=" -f 2- | awk \'{print $1}\';exit 0', shell=True).decode('utf-8')
+swap_behavior = 1
+# Chromebook
+if system_type == "2" or system_type == "5":
+    if not input("\nWould you like to swap Alt to Super/Win and Search key to Ctrl when using terminal applications? (y/n)\n\
+Note: For a more mac like experience & less issues with terminal based interactions y is recommended.\n").lower().strip()[:1] == "y":
+        swap_behavior = 0
+# Windows
+if system_type == "1" or system_type == "4":
+    if not input("\nWould you like to swap Alt to Super/Win and Ctrl key back to Ctrl when using terminal applications? (y/n)\n\
+Note: For a more mac like experience & less issues with terminal based interactions y is recommended.\n").lower().strip()[:1] == "y":
+        swap_behavior = 0
+# Mac
+if system_type == "3" or system_type == "6":
+    if not input("\nWould you like to swap Command back to Super/Win and Ctrl key back to Ctrl when using terminal applications? (y/n)\n\
+Note: For a more mac like experience & less issues with terminal based interactions y is recommended.\n").lower().strip()[:1] == "y":
+        swap_behavior = 0
 
-# Loop the following to ensure the id is picked up after 5-10 tries
-usbid = subprocess.check_output('udevadm info -e | stdbuf -oL grep -o -P "(?<=event-kbd /dev/input/by-path/pci-0000:00:).*(?=.0-usb)";exit 0', shell=True).decode('utf-8')
-if usbid == "":
-    usbid = "none found"
+if int(system_type) < 4:
+    laptop_kb = input("\nWhat is your keyboard configuration?\n\
+    1) Both\n\
+    2) Built-in\n\
+    3) USB External\n")
+else:
+    laptop_kb = 3
 
+keyboard_detect()
 
-print("Internal Keyboard ID: " + internalid + "USB Keyboard ID: " + usbid)
+# terminal_kb 
+
+# os_detect()
+
 
 # Print out/confirm the keyboard type or types detected, Windows, Mac, or Chromebook.
 # Print out the keymap method/arrangement that will be used for the keyboard(s)

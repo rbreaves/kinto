@@ -2,7 +2,13 @@
 # pip3 install --no-deps pynput
 
 from pynput.keyboard import Key, Listener
-import sys
+import sys, subprocess
+
+uitype=sys.argv[1]
+apply_rules=sys.argv[2]
+windows=sys.argv[3]
+chromebook=sys.argv[4]
+mac=sys.argv[5]
 
 class color:
    PURPLE = '\033[95m'
@@ -266,28 +272,44 @@ def mac_keys_terminal():
         on_release=is_ctrl_terminal) as listener:
             listener.join()
 
-# reset setxkbmap -option
+if uitype == 'gui':
+    if chromebook == '1':
+        if apply_rules == '1':
+            subprocess.check_output('setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.gui $DISPLAY', shell=True).decode('utf-8')
+        print()
+        print("Testing chromebook - GUI apps - Kinto keymapping...")
+        chromebook_keys_gui()
 
-# xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.gui $DISPLAY
-# print("Testing chromebook - GUI apps - Kinto keymapping...")
-# chromebook_keys_gui()
+    if windows == '1':
+        if apply_rules == '1':
+            subprocess.check_output('setxkbmap -option;setxkbmap -option altwin:ctrl_alt_win', shell=True).decode('utf-8')
+        print()
+        print ("Testing windows keyboard - GUI apps - Kinto keymapping...")
+        windows_keys_gui()
 
-# setxkbmap -option altwin:swap_lalt_lwin
-# print("Testing chromebook - terminal - Kinto keymapping...")
-# chromebook_keys_terminal()
+    if mac == '1':
+        if apply_rules == '1':
+            subprocess.check_output('setxkbmap -option;setxkbmap -option ctrl:swap_lwin_lctl', shell=True).decode('utf-8')
+        print ("Testing mac keyboard - GUI apps - Kinto keymapping...")
+        mac_keys_gui()
 
-# setxkbmap -option altwin:ctrl_alt_win
-# print ("Testing windows keyboard - GUI apps - Kinto keymapping...")
-# windows_keys_gui()
+if uitype == 'term':
+    if chromebook == '1':
+        if apply_rules == '1':
+            subprocess.check_output('setxkbmap -option;setxkbmap -option altwin:swap_lalt_lwin', shell=True).decode('utf-8')
+        print("Testing chromebook - terminal - Kinto keymapping...")
+        chromebook_keys_terminal()
 
-# setxkbmap -option altwin:swap_alt_win
-# print ("Testing windows keyboard - terminal - Kinto keymapping...")
-# windows_keys_terminal()
+    if windows == '1':
+        if apply_rules == '1':
+            subprocess.check_output('setxkbmap -option;setxkbmap -option altwin:swap_alt_win', shell=True).decode('utf-8')
+        print ("Testing windows keyboard - terminal - Kinto keymapping...")
+        windows_keys_terminal()
 
-# setxkbmap -option ctrl:swap_lwin_lctl
-# print ("Testing mac keyboard - GUI apps - Kinto keymapping...")
-# mac_keys_gui()
+    if mac == '1':
+        if apply_rules == '1':
+            subprocess.check_output('setxkbmap -option', shell=True).decode('utf-8')
+        print ("Testing mac keyboard - terminal - Kinto keymapping...")
+        mac_keys_terminal()
 
-# setxkbmap -option
-# print ("Testing windows keyboard - terminal - Kinto keymapping...")
-# mac_keys_terminal()
+subprocess.run('setxkbmap -option', shell=True)
