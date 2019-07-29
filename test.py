@@ -127,7 +127,7 @@ def is_super_chromebook(key):
     elif key == Key.esc:
     	return False
     else:
-        print('keymap failure, ' + str(key).replace("Key.", "").title() + ' may have been mapped to the physical Alt key.'.format(key))
+        print('keymap failure, ' + str(key).replace("Key.", "").title() + ' may have been mapped to the physical Search key.'.format(key))
         return False
 
 def is_super_terminal(key):
