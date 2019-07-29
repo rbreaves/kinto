@@ -311,5 +311,6 @@ if uitype == 'term':
             subprocess.check_output('setxkbmap -option', shell=True).decode('utf-8')
         print ("Testing mac keyboard - terminal - Kinto keymapping...")
         mac_keys_terminal()
-
-subprocess.run('setxkbmap -option', shell=True)
+        
+if apply_rules == '1':
+    subprocess.run('setxkbmap -option', shell=True)
