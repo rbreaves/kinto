@@ -76,7 +76,7 @@ def keyboard_detect():
         print("systemctl --user disable keyswap")
         print("rm -rf ~/.config/autostart/keyswap.sh")
         print("rm -rf ~/.config/xactive.sh")
-        keyswapcmd = '/bin/bash -c "./keyswap_service.sh 1 0 ' + system_type + ' ' + str(internalid).strip() + ' ' + str(usbid) + ' ' + chromeswap '"'
+        keyswapcmd = '/bin/bash -c "./keyswap_service.sh 1 0 ' + system_type + ' ' + str(internalid).strip() + ' ' + str(usbid).strip() + ' ' + str(chromeswap) + '"'
         print(keyswapcmd)
         subprocess.check_output(keyswapcmd, shell=True).decode('utf-8')
     else:

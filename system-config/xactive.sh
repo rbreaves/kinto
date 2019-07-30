@@ -38,7 +38,7 @@ echo "$systemtype $swapbehavior"
 echo "$swapcmd_gui"
 
 # regex for extracting hex id's
-grep_id='0[xX][a-zA-Z0-9]\{7\}'
+grep_id='0[xX][a-zA-Z0-9]\+'
 
 #Storing timestamp and will use timediff to prevent xprop duplicates
 timestp=$(date +%s)
@@ -53,6 +53,7 @@ while read -r id; do
 			# Set keymap for terminal, Alt is Super, Ctrl is Ctrl, Super is Alt
 			if [[ $internalid -gt 0 ]]; then
 				eval "$check_gt"
+				echo $?
 				if [ $? -eq 0 ]; then
 					echo "internal gui to term"
 					eval "$swapcmd_term"
@@ -70,6 +71,7 @@ while read -r id; do
 			# Set keymap for gui, Alt is Ctrl,Super is Alt, Ctrl is Super
 			if [[ $internalid -gt 0 ]]; then
 				eval "$check_tg"
+				echo $?
 				if [ $? -eq 0 ]; then
 					echo "internal term to gui"
 					eval "$swapcmd_gui"
