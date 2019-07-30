@@ -22,38 +22,34 @@ internalid = 0
 usbid = 0
 
 def keyboard_detect():
-    global internalid
-    global usbid
-
+    global internalid, usbid, chromeswap
     internal_kbname = ""
     usb_kbname = ""
     print()
     print("Looking for keyboards...")
     print()
-    if laptop_kb == "1" or laptop_kb == "2":
-        result = subprocess.check_output('xinput list | grep -iv "Virtual\|USB" | grep -i "keyboard.*keyboard" | grep -o -P "(?<=↳).*(?=id\=)";exit 0', shell=True).decode('utf-8')
-        if result != "":
-            internal_kbname = result.strip()
-        internalid = subprocess.check_output('xinput list | grep -iv "Virtual\|USB" | grep -i "keyboard.*keyboard" | cut -d "=" -f 2- | awk \'{print $1}\';exit 0', shell=True).decode('utf-8')
-        print("Internal Keyboard\nName: " + internal_kbname + "\nID: " + internalid)
+    result = subprocess.check_output('xinput list | grep -iv "Virtual\|USB" | grep -i "keyboard.*keyboard" | grep -o -P "(?<=↳).*(?=id\=)";exit 0', shell=True).decode('utf-8')
+    if result != "":
+        internal_kbname = result.strip()
+    internalid = subprocess.check_output('xinput list | grep -iv "Virtual\|USB" | grep -i "keyboard.*keyboard" | cut -d "=" -f 2- | awk \'{print $1}\';exit 0', shell=True).decode('utf-8')
+    print("Internal Keyboard\nName: " + internal_kbname + "\nID: " + internalid)
 
-    if laptop_kb == "1" or laptop_kb == "3":
-        result = subprocess.check_output('udevadm info -e | grep -o -P "(?<=by-id/usb-).*(?=-event-kbd)" | head -1;exit 0', shell=True).decode('utf-8')
-        if result != "":
-            usb_kbname = result.strip()
+    result = subprocess.check_output('udevadm info -e | grep -o -P "(?<=by-id/usb-).*(?=-event-kbd)" | head -1;exit 0', shell=True).decode('utf-8')
+    if result != "":
+        usb_kbname = result.strip()
 
-        # Loop the following to ensure the id is picked up after 5-10 tries
-        usbid = ""
-        usbcount=0
-        while usbid == "":
-            usbid = subprocess.check_output('udevadm info -e | stdbuf -oL grep -o -P "(?<=event-kbd /dev/input/by-path/pci-0000:00:).*(?=.0-usb)";exit 0', shell=True).decode('utf-8')
-            if usbid == "":
-                usbcount += 1
-                # print('usbid not found '+ str(usbcount))
-                if usbcount == 5:
-                    usbid = "none found"
-            time.sleep(1)
-        print("\nUSB Keyboard\n" + "Name: " + usb_kbname + "\nID: " + usbid)
+    # Loop the following to ensure the id is picked up after 5-10 tries
+    usbid = ""
+    usbcount=0
+    while usbid == "":
+        usbid = subprocess.check_output('udevadm info -e | stdbuf -oL grep -o -P "(?<=event-kbd /dev/input/by-path/pci-0000:00:).*(?=.0-usb)";exit 0', shell=True).decode('utf-8')
+        if usbid == "":
+            usbcount += 1
+            # print('usbid not found '+ str(usbcount))
+            if usbcount == 5:
+                usbid = "none found"
+        time.sleep(1)
+    print("\nUSB Keyboard\n" + "Name: " + usb_kbname + "\nID: " + usbid)
         
 
 
@@ -86,37 +82,36 @@ print()
 input("Press Enter to begin...")
 
 system_type = input("\nWhat type of system are you using?\n\
-    1) Windows\\Linux Laptop\n\
-    2) Chromebook Laptop\n\
-    3) Macbook\n\
-    4) Windows\Linux Desktop\n\
-    5) Chrome Desktop (w/ Chrome keyboard)\n\
-    6) Mac Desktop\n")
+    1) Windows\n\
+    2) Chromebook\n\
+    3) Mac\n")
 
 swap_behavior = 1
 # Chromebook
-if system_type == "2" or system_type == "5":
-    if not input("\nWould you like to swap Alt to Super/Win and Search key to Ctrl when using terminal applications? (y/n)\n\
+if system_type == "2":
+    if input("\nWould you like to swap Alt to Super/Win and Search key to Ctrl when using terminal applications? (y/n)\n\
 Note: For a more mac like experience & less issues with terminal based interactions y is recommended.\n").lower().strip()[:1] == "y":
         swap_behavior = 0
 # Windows
-if system_type == "1" or system_type == "4":
-    if not input("\nWould you like to swap Alt to Super/Win and Ctrl key back to Ctrl when using terminal applications? (y/n)\n\
+if system_type == "1":
+    if input("\nWould you like to swap Alt to Super/Win and Ctrl key back to Ctrl when using terminal applications? (y/n)\n\
 Note: For a more mac like experience & less issues with terminal based interactions y is recommended.\n").lower().strip()[:1] == "y":
         swap_behavior = 0
 # Mac
-if system_type == "3" or system_type == "6":
-    if not input("\nWould you like to swap Command back to Super/Win and Ctrl key back to Ctrl when using terminal applications? (y/n)\n\
+if system_type == "3":
+    if input("\nWould you like to swap Command back to Super/Win and Ctrl key back to Ctrl when using terminal applications? (y/n)\n\
 Note: For a more mac like experience & less issues with terminal based interactions y is recommended.\n").lower().strip()[:1] == "y":
         swap_behavior = 0
 
-if int(system_type) < 4:
-    laptop_kb = input("\nWhat is your keyboard configuration?\n\
-    1) Both\n\
-    2) Built-in\n\
-    3) USB External\n")
-else:
-    laptop_kb = 3
+print(system_type + " " + str(swap_behavior))
+if int(system_type) == 2 and swap_behavior == 0:
+    chromeswap = input("\nIf the keyswap is applied on a chromebook with both an internal and external Apple keyboard\n\
+you may need to press a key on the external Apple keyboard any time you switch between the terminal and gui based apps.\n\
+Are you ok with that, or would you like to only apply the keyswap on one keyboard type?\n\
+    1) Built-in\n\
+    2) Both - (Chromebook & Windows)\n\
+    3) Both - (Chromebook & Mac)\n\
+    4) USB External - (Mac)\n")
 
 keyboard_detect()
 
