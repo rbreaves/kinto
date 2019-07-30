@@ -34,8 +34,10 @@ elif [[ "$swapbehavior" == "none" ]]; then
 	check_tg="setxkbmap -query | grep -q 'swap_alt_win'"
 fi
 
-echo "$systemtype $swapbehavior"
-echo "$swapcmd_gui"
+# echo "$systemtype $swapbehavior"
+# echo "$swapcmd_gui"
+
+eval "$swapcmd_gui"
 
 # regex for extracting hex id's
 grep_id='0[xX][a-zA-Z0-9]\+'
