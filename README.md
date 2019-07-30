@@ -9,7 +9,7 @@ This project is only about one thing, remapping the control key to be next to yo
 
 That also includes making sure that while using your terminal applications the control key maps itself back to the actual ctrl key to avoid terminal generated (tty) signals from misbehaving. You can also retain the ability to copy and paste normally without conflicting with the actual Ctrl+C sigint, which also happens to be the same behavior you'd experience on a mac or space-cadet keyboard, for you lisp fans. 
 
-Note: You will need to edit your terminal preferences and update the shortcuts you want to use to use, adding "Super+<key>" instead of "Ctrl+Shift+<key>".
+Note: You will need to edit your terminal preferences and update the shortcuts you want to use, adding "Super+<key>" instead of "Ctrl+Shift+<key>".
 
 ## What does this do exactly?
 
