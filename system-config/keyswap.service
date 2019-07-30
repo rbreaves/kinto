@@ -1,0 +1,15 @@
+[Unit]
+Description=keyswap for Terminal and GUI
+After=syslog.target
+
+[Service]
+Type=simple
+User={username}
+Group={username}
+Environment=DISPLAY=:0
+Restart=always
+WorkingDirectory=/home/{username}/.config/
+ExecStart=/bin/bash /home/{username}/.config/xactive.sh {parameters}
+
+[Install]
+WantedBy=multi-user.target
