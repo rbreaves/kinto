@@ -1,15 +1,23 @@
 #!/bin/bash
 
 swapbehavior=$1
-newparams=$2
-noswapcmd=$3
+noswapcmd=$2
 
-if [[ "$swapbehavior" == "yes" ]]; then
-	swapcmd="/bin/bash /home/`whoami`/.config/xactive.sh $2"
+systemtype=$3
+internalid=$4
+usbid=$5
+chromeswap=$6
 
+if [[ "$swapbehavior" == "1" ]]; then
+	swapcmd="\/bin\/bash\ \/home\/`whoami`\/.config\/xactive.sh\ ${systemtype}\ ${internalid}\ ${usbid}\ ${chromeswap}"
+	mkdir -p ~/.config/systemd/user
 	cp ./system-config/keyswap.service ~/.config/systemd/user/keyswap.service
-	sed -i "s/{username}/${whoami}/g" ~/.config/systemd/user/keyswap.service
+	cp ./system-config/keyswap.sh ~/.config/autostart/keyswap.sh
+	cp ./system-config/xactive.sh ~/.config/xactive.sh
+	sed -i "s/{username}/`whoami`/g" ~/.config/systemd/user/keyswap.service
 	sed -i "s/ExecStart=/ExecStart=${swapcmd}/g" ~/.config/systemd/user/keyswap.service
+	systemctl --user enable keyswap
+	systemctl --user start keyswap
 else
 	#/usr/bin/setxkbmap
 	#/usr/bin/xkbcomp

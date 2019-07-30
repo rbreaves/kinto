@@ -30,8 +30,8 @@ elif [[ "$swapbehavior" == "none" ]]; then
 	check_tg="setxkbmap -query | grep -q 'swap_alt_win'"
 fi
 
-# echo "$systemtype $swapbehavior"
-# echo "$swapcmd_gui"
+echo "$systemtype $swapbehavior"
+echo "$swapcmd_gui"
 
 # regex for extracting hex id's
 grep_id='0[xX][a-zA-Z0-9]\{7\}'
@@ -48,7 +48,7 @@ while read -r id; do
 		if [ -n "$class" ]; then
 			# Set keymap for terminal, Alt is Super, Ctrl is Ctrl, Super is Alt
 			if [[ $internalid -gt 0 ]]; then
-				eval "$check_gt;echo $?"
+				eval "$check_gt"
 				if [ $? -eq 0 ]; then
 					echo "internal gui to term"
 					eval "$swapcmd_term"
@@ -65,10 +65,10 @@ while read -r id; do
 		else
 			# Set keymap for gui, Alt is Ctrl,Super is Alt, Ctrl is Super
 			if [[ $internalid -gt 0 ]]; then
-				eval "$check_tg;echo $?"
+				eval "$check_tg"
 				if [ $? -eq 0 ]; then
 					echo "internal term to gui"
-					eval "$swapcmd_gui;echo $?"
+					eval "$swapcmd_gui"
 					if [ $? -eq 0 ] && [[ "$swapbehavior" == "both_win" ]]; then
 						eval "$fallbackcmd_gui"
 						check_gt="setxkbmap -query | grep -v 'swap_alt_win' 1>/dev/null"

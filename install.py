@@ -22,7 +22,7 @@ internalid = 0
 usbid = 0
 
 def keyboard_detect():
-    global internalid, usbid, chromeswap
+    global internalid, usbid, chromeswap, system_type
     internal_kbname = ""
     usb_kbname = ""
     print()
@@ -47,9 +47,47 @@ def keyboard_detect():
             usbcount += 1
             # print('usbid not found '+ str(usbcount))
             if usbcount == 5:
-                usbid = "none found"
+                usbid = "0"
         time.sleep(1)
     print("\nUSB Keyboard\n" + "Name: " + usb_kbname + "\nID: " + usbid)
+
+    if system_type == "1":
+        system_type = "windows"
+    elif system_type == "2":
+        system_type = "chromebook"
+    elif system_type == "3":
+        system_type = "mac"
+
+    if system_type == "windows" or system_type == "mac":
+        cmdgui = '"/usr/bin/setxkbmap -option;/usr/bin/setxkbmap -option altwin:ctrl_alt_win"'
+        # subprocess.check_output('echo "1" > /sys/module/hid_apple/parameters/swap_opt_cmd', shell=True).decode('utf-8')
+    elif system_type == "chromebook":
+        cmdgui = '"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.gui $DISPLAY"'
+        subprocess.check_output('/bin/bash -c ./chromebook.sh', shell=True).decode('utf-8')
+
+    # password = getpass("Please enter your password to complete the keyswap: ")
+    # proc = Popen("echo '1' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd".split(), stdin=PIPE, stdout=PIPE, stderr=PIPE)
+    # proc.communicate(password.encode())
+
+    if swap_behavior == 1:
+        print("Setting up " + system_type + " keyswap as a service.")
+        print("You can disable and remove the service by using the following commands.")
+        print("systemctl --user stop keyswap")
+        print("systemctl --user disable keyswap")
+        print("rm -rf ~/.config/autostart/keyswap.sh")
+        print("rm -rf ~/.config/xactive.sh")
+        keyswapcmd = '/bin/bash -c "./keyswap_service.sh 1 0 ' + system_type + ' ' + str(internalid).strip() + ' ' + str(usbid) + ' ' + chromeswap '"'
+        print(keyswapcmd)
+        subprocess.check_output(keyswapcmd, shell=True).decode('utf-8')
+    else:
+        print("Setting up " + system_type + " keyswap inside your profiles ~/.Xsession file.")
+        print("You can modify or remove the file if you want you want to remove the modification.")
+        keyswapcmd = '/bin/bash -c "./keyswap_service.sh 0 ' + cmdgui + '"'
+        subprocess.check_output(keyswapcmd, shell=True).decode('utf-8')
+
+    print("Please run this command in the terminal if you are using a Windows or Macbook.")
+    print("Your keymapping will not work right on Apple keyboards without it.")
+    print("echo '1' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd")
         
 
 
@@ -87,24 +125,24 @@ system_type = input("\nWhat type of system are you using?\n\
     3) Mac\n")
 
 swap_behavior = 1
+chromeswap = 0
 # Chromebook
 if system_type == "2":
-    if input("\nWould you like to swap Alt to Super/Win and Search key to Ctrl when using terminal applications? (y/n)\n\
+    if not input("\nWould you like to swap Alt to Super/Win and Search key to Ctrl when using terminal applications? (y/n)\n\
 Note: For a more mac like experience & less issues with terminal based interactions y is recommended.\n").lower().strip()[:1] == "y":
         swap_behavior = 0
 # Windows
 if system_type == "1":
-    if input("\nWould you like to swap Alt to Super/Win and Ctrl key back to Ctrl when using terminal applications? (y/n)\n\
+    if not input("\nWould you like to swap Alt to Super/Win and Ctrl key back to Ctrl when using terminal applications? (y/n)\n\
 Note: For a more mac like experience & less issues with terminal based interactions y is recommended.\n").lower().strip()[:1] == "y":
         swap_behavior = 0
 # Mac
 if system_type == "3":
-    if input("\nWould you like to swap Command back to Super/Win and Ctrl key back to Ctrl when using terminal applications? (y/n)\n\
+    if not input("\nWould you like to swap Command back to Super/Win and Ctrl key back to Ctrl when using terminal applications? (y/n)\n\
 Note: For a more mac like experience & less issues with terminal based interactions y is recommended.\n").lower().strip()[:1] == "y":
         swap_behavior = 0
 
-print(system_type + " " + str(swap_behavior))
-if int(system_type) == 2 and swap_behavior == 0:
+if int(system_type) == 2 and swap_behavior == 1:
     chromeswap = input("\nIf the keyswap is applied on a chromebook with both an internal and external Apple keyboard\n\
 you may need to press a key on the external Apple keyboard any time you switch between the terminal and gui based apps.\n\
 Are you ok with that, or would you like to only apply the keyswap on one keyboard type?\n\
@@ -113,45 +151,11 @@ Are you ok with that, or would you like to only apply the keyswap on one keyboar
     3) Both - (Chromebook & Mac)\n\
     4) USB External - (Mac)\n")
 
+    if chromeswap == "1":
+        chromeswap = "none"
+    elif chromeswap == "2":
+        chromeswap = "both_win"
+    elif chromeswap == "3" or chromeswap == "4":
+        chromeswap = "both_mac"
+
 keyboard_detect()
-
-# terminal_kb 
-
-# os_detect()
-
-
-# Print out/confirm the keyboard type or types detected, Windows, Mac, or Chromebook.
-# Print out the keymap method/arrangement that will be used for the keyboard(s)
-# - Normal apps - Alt will be Ctrl, Win/Super will be Alt, Ctrl will be Win/Super
-# - Terminal apps (optional) - Alt will be Win/Super, Win/Super will be Alt, Ctrl will be Ctrl
-#
-# If Chromebook then create a local symbols file for swapping ctrl and alt.
-# - setxkbmap -print > ~/.xkb/keymap/kbd.gui
-# - modify ~/.xkb/keymap/kbd.gui xkb_symbols line with +myswap(swap_lalt_lctrl) inside the quotes at the end
-# - create/copy lalt_lctrl to ~/.xkb/symbols/myswap
-#
-# Ask user how they would like their keymap to work
-# 2 options will be given 
-# 1) Mac like option - Normal swap, but swap alt with super when the terminal is in use, so ctrl key behaves normally.
-# 2) Always swapped - Always keep alt as ctrl.
-#
-# Begin test run on Internal Keyboard, have user confirm that it is correct
-# Begin test run on External Keyboard, if one was attached, again ask user for confirmation
-# Note: The test may use xev to confirm the key input.
-# Ask user if they would like to apply Kinto persistently, run as a service
-#
-# - Windows keyboards
-#   - gui - setxkbmap -option altwin:ctrl_alt_win
-#   - terminal -  setxkbmap -option altwin:swap_alt_win
-# - Mac keyboards
-#  - gui - setxkbmap -option ctrl:swap_lwin_lctl
-#  - terminal - setxkbmap -option
-# - Chromebook keyboard
-#  - gui - xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.gui $DISPLAY
-#  - terminal - setxkbmap -option altwin:swap_lalt_lwin
-#
-# Ask User if they would like Kinto to hook into udev/usb/hid to create persistent remaps for any keyboard
-# If yes then create a file to hook into any udev/usb/hid keyboard devices when plugged in.
-
-# Add autohotkey scripts to handle keymapping for Windows
-

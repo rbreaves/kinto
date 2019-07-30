@@ -1,15 +1,15 @@
 [Unit]
 Description=keyswap for Terminal and GUI
-After=syslog.target
+PartOf=graphical-session.target
 
 [Service]
 Type=simple
-User={username}
-Group={username}
+#User={username}
+#Group={username}
 Environment=DISPLAY=:0
 Restart=always
 WorkingDirectory=/home/{username}/.config/
 ExecStart=
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
