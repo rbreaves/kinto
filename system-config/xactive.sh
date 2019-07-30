@@ -1,5 +1,9 @@
 #!/bin/bash
-class_name='konsole'
+# How to add more terminal editors
+# run this command while using the terminal
+# and add the name to class_name
+# xprop -id $(xprop -root 32x '\t$0' _NET_ACTIVE_WINDOW | cut -f 2) WM_CLASS
+class_name='konsole\|Gnome-terminal\|terminator\|sakura\|guake\|tilda\|xterm\|eterm'
 
 systemtype=$1
 internalid=$2
