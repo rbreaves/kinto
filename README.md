@@ -40,7 +40,21 @@ sudo apt install python3.6
 ```
 
 ## Troubleshooting
-If your keyboard is not being autodetected and configured then please run `xinput list`, if you are on linux, and copy the output into a ticket under issues. 
+If your keyboard is not being autodetected and configured then please run `xinput list`, if you are on linux, and copy the output into a ticket under issues.
+
+## Known Issues
+
+### USB Hubs
+
+USB hubs may prevent Apple branded keyboards from loading properly or other Apple specific keyboards that are intended to make use of the "hid_apple" driver. Without this driver it is not possible to run the following command and have it swap alt and cmd.
+
+```
+echo '1' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd
+```
+
+This is required so that Apple and Windows keyboards can co-exist with the exact same keymappings, provided by setxkbmap. The solution for now is to avoid using a usb hub for your keyboard. Other possible solutions may be finding a way to patch the hid_apple module to accept other vendor and product id's so that it will still load the driver properly.
+
+Other solutions may involve implementing a separate Mac system option in Kinto with a keyswap specific to a usb hub situation, however it will not be possible to have a Windows keyboard (aka internal laptop keyboard) working with the same keymap at the same time.
 
 ## Contributing
 
