@@ -5,7 +5,7 @@
 
 Memory muscle matters for programmers and developers.
 
-This project is only about one thing, remapping the control key to be next to your space bar no matter what keyboard you swap into your workflow and to do it without mastering xmodmap, setxkbmap or modifying system files. 
+This project is only about one thing, remapping the control key to be next to your space bar no matter what keyboard you swap into your workflow and to do it without mastering xmodmap, setxkbmap or modifying system files. The intent is to make your keyboard work and feel like you're using macOS shortcuts, so you can seamlessly transition between operating systems.
 
 That also includes making sure that while using your terminal applications the control key maps itself back to the actual ctrl key to avoid terminal generated (tty) signals from misbehaving. You can also retain the ability to copy and paste normally without conflicting with the actual Ctrl+C sigint, which also happens to be the same behavior you'd experience on a mac or space-cadet keyboard, for you lisp fans. 
 
