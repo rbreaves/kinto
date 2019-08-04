@@ -15,7 +15,7 @@ swapbehavior=$4
 swapcmd_term="setxkbmap -option;setxkbmap -option altwin:swap_alt_win"
 fallbackcmd_gui=""
 if [[ "$systemtype" == "windows" || "$systemtype" == "mac" ]]; then
-	swapcmd_gui="setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.onelvl $DISPLAY"
+	swapcmd_gui="setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.gui $DISPLAY"
 	check_gt="setxkbmap -query | grep -v 'swap_alt_win' 1>/dev/null"
 	check_tg="setxkbmap -query | grep -q 'swap_alt_win'"
 elif [[ "$swapbehavior" == "both_mac" ]]; then
