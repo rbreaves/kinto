@@ -15,21 +15,21 @@ swapbehavior=$4
 swapcmd_term="setxkbmap -option;setxkbmap -option altwin:swap_alt_win"
 fallbackcmd_gui=""
 if [[ "$systemtype" == "windows" || "$systemtype" == "mac" ]]; then
-	swapcmd_gui="setxkbmap -option;setxkbmap -option altwin:ctrl_alt_win"
-	check_gt="setxkbmap -query | grep -q 'ctrl_alt_win'"
-	check_tg="setxkbmap -query | grep -v 'ctrl_alt_win' 1>/dev/null"
+	swapcmd_gui="setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.onelvl $DISPLAY"
+	check_gt="setxkbmap -query | grep -v 'swap_alt_win' 1>/dev/null"
+	check_tg="setxkbmap -query | grep -q 'swap_alt_win'"
 elif [[ "$swapbehavior" == "both_mac" ]]; then
-	swapcmd_gui="setxkbmap -option;setxkbmap -option ctrl:swap_lwin_lctl; xkbcomp -w0 -i $internalid -I$HOME/.xkb ~/.xkb/keymap/kbd.gui $DISPLAY"
+	swapcmd_gui="setxkbmap -option;setxkbmap -option ctrl:swap_lwin_lctl; xkbcomp -w0 -i $internalid -I$HOME/.xkb ~/.xkb/keymap/kbd.chromebook.gui $DISPLAY"
 	swapcmd_term="setxkbmap -option;setxkbmap -device $internalid -option 'altwin:swap_alt_win'"
 	check_gt="setxkbmap -query | grep -v 'swap_alt_win' 1>/dev/null"
 	check_tg="setxkbmap -query | grep -q 'swap_alt_win'"
 elif [[ "$swapbehavior" == "both_win" ]]; then
-	swapcmd_gui="setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.gui $DISPLAY; setxkbmap -device $usbid -option altwin:ctrl_alt_win"
-	fallbackcmd_gui="setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.gui $DISPLAY"
+	swapcmd_gui="setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.chromebook.gui $DISPLAY; setxkbmap -device $usbid -option altwin:ctrl_alt_win"
+	fallbackcmd_gui="setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.chromebook.gui $DISPLAY"
 	check_gt="setxkbmap -query | grep -q 'ctrl_alt_win'"
 	check_tg="setxkbmap -query | grep -v 'ctrl_alt_win' 1>/dev/null"
 elif [[ "$swapbehavior" == "none" ]]; then
-	swapcmd_gui="setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.gui $DISPLAY"
+	swapcmd_gui="setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.chromebook.gui $DISPLAY"
 	check_gt="setxkbmap -query | grep -v 'swap_alt_win' 1>/dev/null"
 	check_tg="setxkbmap -query | grep -q 'swap_alt_win'"
 fi

@@ -1,0 +1,26 @@
+default partial xkb_symbols "mac_onelvlsym" {
+    // LEFT to Begin Line
+    replace key <LEFT> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [         Left,         Left, NoSymbol ],
+        actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<HOME>,clearmods=Control)]
+    };
+    // Right to End of Line
+    replace key <RGHT> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [         Right,         Right, NoSymbol ],
+        actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<END>,clearmods=Control)]
+    };
+    // Up to Mac Home
+    replace key <UP> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [         Up, NoSymbol ],
+        actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<HOME>)]
+    };
+    // Down to Mac End
+    replace key <DOWN> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [         Down, NoSymbol ],
+        actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<END>)]
+    };
+};

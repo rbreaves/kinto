@@ -59,11 +59,12 @@ def keyboard_detect():
         system_type = "mac"
 
     if system_type == "windows" or system_type == "mac":
-        cmdgui = '"/usr/bin/setxkbmap -option;/usr/bin/setxkbmap -option altwin:ctrl_alt_win"'
+        subprocess.check_output('/bin/bash -c ./mac_wordwise.sh', shell=True).decode('utf-8')
+        cmdgui = '"/usr/bin/setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.onelvl $DISPLAY"'
         # subprocess.check_output('echo "1" > /sys/module/hid_apple/parameters/swap_opt_cmd', shell=True).decode('utf-8')
     elif system_type == "chromebook":
-        cmdgui = '"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.gui $DISPLAY"'
         subprocess.check_output('/bin/bash -c ./chromebook.sh', shell=True).decode('utf-8')
+        cmdgui = '"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.chromebook.gui $DISPLAY"'
 
     # password = getpass("Please enter your password to complete the keyswap: ")
     # proc = Popen("echo '1' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd".split(), stdin=PIPE, stdout=PIPE, stderr=PIPE)
