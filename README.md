@@ -29,13 +29,14 @@ Remaps your keyboard to behave more like you're on a mac again and below is how 
 ```
 git clone https://github.com/rbreaves/kinto.git
 ```
-2. Install python3 (If needed, most current distros have it already)
+2. Install python3 (If needed)
 
-Debian or Ubuntu 16.04
+Debian or Ubuntu 16.04 or 18.04
 ```
 sudo apt update
-sudo apt install python3.6
+sudo apt install python3
 ```
+
 3. Follow the prompts and the script will guide you through the rest of the setup.
 ```
 ./install.py
