@@ -1,0 +1,80 @@
+default partial xkb_symbols "mac_levelssym" {
+    // Cut
+    replace key <AB02> {
+        type[Group1]= "ALPHABETIC_SUPER",
+        symbols[Group1]= [               x,               X, NoSymbol ],
+        actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<LatX>,mods=Control+Shift,clearmods=Super)]
+    };
+    // Copy
+    replace key <AB03> {
+        type[Group1]= "ALPHABETIC_SUPER",
+        symbols[Group1]= [               c,               C, NoSymbol ],
+        actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<LatC>,mods=Control+Shift,clearmods=Super)]
+    };
+    // Paste
+    replace key <AB04> {
+        type[Group1]= "ALPHABETIC_SUPER",
+        symbols[Group1]= [               v,               V, NoSymbol ],
+        actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<LatV>,mods=Control+Shift,clearmods=Super)]
+    };
+    // New Tab
+    replace key <AD05> {
+        type[Group1]= "ALPHABETIC_SUPER",
+        symbols[Group1]= [               t,               T, NoSymbol ],
+        actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<LatT>,mods=Control+Shift,clearmods=Super)]
+    };
+    // New Window
+    replace key <AB06> {
+        type[Group1]= "ALPHABETIC_SUPER",
+        symbols[Group1]= [               n,               N, NoSymbol ],
+        actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<LatN>,mods=Control+Shift,clearmods=Super)]
+    };
+    // Close Tab
+    replace key <AD02> {
+        type[Group1]= "ALPHABETIC_SUPER",
+        symbols[Group1]= [               w,               W, NoSymbol ],
+        actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<LatW>,mods=Control+Shift,clearmods=Super)]
+    };
+    // Close Window
+    replace key <AD01> {
+        type[Group1]= "ALPHABETIC_SUPER",
+        symbols[Group1]= [               q,               Q, NoSymbol ],
+        actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<LatQ>,mods=Control+Shift,clearmods=Super)]
+    };
+    // Scroll back reset
+    replace key <AC08> {
+        type[Group1]= "ALPHABETIC_SUPER",
+        symbols[Group1]= [               k,               K, NoSymbol ],
+        actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<LatK>,mods=Control+Shift,clearmods=Super)]
+    };
+    // Detach Tab
+    replace key <AC06> {
+        type[Group1]= "ALPHABETIC_SUPER",
+        symbols[Group1]= [               h,               H, NoSymbol ],
+        actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<LatH>,mods=Control+Shift,clearmods=Super)]
+    };
+    // Find
+    replace key <AC04> {
+        type[Group1]= "ALPHABETIC_SUPER",
+        symbols[Group1]= [               f,               F, NoSymbol ],
+        actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<LatF>,mods=Control+Shift,clearmods=Super)]
+    };
+    // Close Active
+    replace key <AC02> {
+        type[Group1]= "ALPHABETIC_SUPER",
+        symbols[Group1]= [               s,               S, NoSymbol ],
+        actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<LatS>,mods=Control+Shift,clearmods=Super)]
+    };
+    // Close Others
+    replace key <AD09> {
+        type[Group1]= "ALPHABETIC_SUPER",
+        symbols[Group1]= [               o,               O, NoSymbol ],
+        actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<LatO>,mods=Control+Shift,clearmods=Super)]
+    };
+    // Show Menu
+    replace key <AB07> {
+        type[Group1]= "ALPHABETIC_SUPER",
+        symbols[Group1]= [               m,               M, NoSymbol ],
+        actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<LatM>,mods=Control+Shift,clearmods=Super)]
+    };
+};
