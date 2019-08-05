@@ -1,0 +1,13 @@
+default partial xkb_types "addmac_levels" {
+    type "ALPHABETIC_SUPER" {
+        modifiers= Shift+Lock+Mod4;
+        map[Shift]= Level2;
+        map[Lock]= Level2;
+        map[Mod4]= Level3;
+        map[Shift+Mod4]= Level3;
+        map[Lock+Mod4]= Level3;
+        level_name[Level1]= "Base";
+        level_name[Level2]= "Caps";
+        level_name[Level3]= "With Super";
+    };
+};

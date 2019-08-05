@@ -24,9 +24,9 @@ default partial xkb_symbols "mac_levelssym" {
         actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<END>)]
     };
     // CTRL BKSP to DELETE
-    replace key <BKSP> {
-        type[Group1]= "TWO_LEVEL_CTRL",
-        symbols[Group1]= [       BackSpace,       BackSpace, NoSymbol ],
-        actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<DELE>,clearmods=Control)]
-    };
+    // replace key <BKSP> {
+    //    type[Group1]= "TWO_LEVEL_CTRL",
+    //    symbols[Group1]= [       BackSpace,       BackSpace, NoSymbol ],
+    //    actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<DELE>,clearmods=Control)]
+    // };
 };
