@@ -9,7 +9,7 @@ If it happens on your mac keyboard then it should happen the same in linux.
 
 ## What does this do exactly?
 
-Remaps your keyboard to behave more like you're on a mac again and below is how the keymap will behave.
+Remaps your keyboard to behave more like you're on a mac again and below is how the keymap will behave. (Note: Kinto does support the remapping of Apple keyboards just fine, so you can safely ignore how I describe the keymapping below - since that is based on PC/Windows keyboards.)
 
 - Normal apps - Alt will be Ctrl, Win/Super will be Alt, Ctrl will be Win/Super
 
@@ -80,6 +80,13 @@ systemctl --user disable keyswap
 ## Troubleshooting
 If your keyboard is not being autodetected and configured then please run `xinput list`, if you are on linux, and copy the output into a ticket under issues.
 
+## Language Support
+As far as I know this solution should work fine on all languages, but I am not able to test this on anything besides US based keyboards. The custom keymaps themselves are moduler, however if you find a problem or want to add needed language support then you can create new keymap files under the .xkb directory, just follow a similar scheme as the existing one and additional modifications can be made to mac_wordwise.sh to support additional languages during install.
+
+If you would like to attempt adding additional custom keymaps then I strongly recommend reading Ramhounds post here.
+https://superuser.com/questions/385748/binding-superc-superv-to-copy-and-paste
+
+
 ## Known Issues
 
 ### USB Hubs
@@ -93,6 +100,12 @@ echo '1' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd
 This is required so that Apple and Windows keyboards can co-exist with the exact same keymappings, provided by setxkbmap. The solution for now is to avoid using a usb hub for your keyboard. Other possible solutions may be finding a way to patch the hid_apple module to accept other vendor and product id's so that it will still load the driver properly.
 
 Other solutions may involve implementing a separate Mac system option in Kinto with a keyswap specific to a usb hub situation, however it will not be possible to have a Windows keyboard (aka internal laptop keyboard) working with the same keymap at the same time.
+
+### KDE with Konsole or QT5 apps may block Super+ custom keymaps
+
+In the macterm branch you will find a WIP, it is possible to remap Super+T to something like Ctrl+Shift+T using xkbcomp, so that remapping certain defaults in most Terminal apps would not be required. The issue however is that KDE and Konsole (or QT5 apps?) appear to have a conflict with the custom keymap I created for Super. Until a resolution is found this feature will not be a default or optional to install.
+
+If anyone finds a solution then please contact me, create an issue or submit a pull request and I will merge it - the custom Terminal keymaps have already been made and exist in all branches.
 
 ## Debugging
 
@@ -109,9 +122,16 @@ systemctl --user stop keyswap
 ~/.config/xactive.sh mac 12 0 none
 ```
 
+You can also refer to this Gist file to better understand what Kinto is doing and the simplicity of it. (The gist does not make use of any custom keymaps.)
+https://gist.github.com/rbreaves/f4cf8a991eaeea893999964f5e83eebb
+
 ## Contributing
 
 I welcome any and all contributors who want to contribute something to this project.
+
+If you are specifically wanting to contribute additional custom keymaps to help with aligning Kinto's behavior to that of a mac keyboard then I would strongly recommend that you read Ramhounds comment on Superuser (the link is below). You may also look at the .xkb directory, mac_worsewise.sh and xactive.sh files to better understand how Kinto operates so that you can test your own keymaps without having to use the systemd service or running the xactive.sh script.
+
+https://superuser.com/questions/385748/binding-superc-superv-to-copy-and-paste
 
 ## License
 
