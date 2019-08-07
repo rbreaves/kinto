@@ -83,7 +83,7 @@ If your keyboard is not being autodetected and configured then please run `xinpu
 ## Language Support
 As far as I know this solution should work fine on all languages, but I am not able to test this on anything besides US based keyboards. The custom keymaps themselves are moduler, however if you find a problem or want to add needed language support then you can create new keymap files under the .xkb directory, just follow a similar scheme as the existing one and additional modifications can be made to mac_wordwise.sh to support additional languages during install.
 
-If you would like to attempt adding additional custom keymaps then I strongly recommend reading Ramhounds post here.
+If you would like to attempt adding additional custom keymaps then I strongly recommend reading Glen Whitney's post here.
 https://superuser.com/questions/385748/binding-superc-superv-to-copy-and-paste
 
 
