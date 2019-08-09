@@ -91,7 +91,7 @@ https://superuser.com/questions/385748/binding-superc-superv-to-copy-and-paste
 
 ### USB Hubs
 
-No longer an issue. If the Apple hid_apple driver is not detected then the installer will only install a keymap that will work with Apple keyboards that have no driver attached. Otherwise a keymap that is compatiable with both Windows and Apple keyboards will be applied.
+No longer an issue. If the Apple hid_apple driver is not detected, when an Apple keyboard has been selected, then the installer will only install a keymap that will work with Apple keyboards that have no driver attached. Otherwise a keymap that is compatible with both Windows and Apple keyboards will be applied.
 
 ### KDE with Konsole or QT5 apps may block Super+ custom keymaps
 
