@@ -91,15 +91,7 @@ https://superuser.com/questions/385748/binding-superc-superv-to-copy-and-paste
 
 ### USB Hubs
 
-USB hubs may prevent Apple branded keyboards from loading properly or other Apple specific keyboards that are intended to make use of the "hid_apple" driver. Without this driver it is not possible to run the following command and have it swap alt and cmd.
-
-```
-echo '1' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd
-```
-
-This is required so that Apple and Windows keyboards can co-exist with the exact same keymappings, provided by setxkbmap. The solution for now is to avoid using a usb hub for your keyboard. Other possible solutions may be finding a way to patch the hid_apple module to accept other vendor and product id's so that it will still load the driver properly.
-
-Other solutions may involve implementing a separate Mac system option in Kinto with a keyswap specific to a usb hub situation, however it will not be possible to have a Windows keyboard (aka internal laptop keyboard) working with the same keymap at the same time.
+No longer an issue. If the Apple hid_apple driver is not detected then the installer will only install a keymap that will work with Apple keyboards that have no driver attached. Otherwise a keymap that is compatiable with both Windows and Apple keyboards will be applied.
 
 ### KDE with Konsole or QT5 apps may block Super+ custom keymaps
 
