@@ -25,31 +25,34 @@ def keyboard_detect():
     global internalid, usbid, chromeswap, system_type
     internal_kbname = ""
     usb_kbname = ""
-    print()
-    print("Looking for keyboards...")
-    print()
-    result = subprocess.check_output('xinput list | grep -iv "Virtual\|USB" | grep -i "keyboard.*keyboard" | grep -o -P "(?<=↳).*(?=id\=)";exit 0', shell=True).decode('utf-8')
-    if result != "":
-        internal_kbname = result.strip()
-    internalid = subprocess.check_output('xinput list | grep -iv "Virtual\|USB" | grep -i "keyboard.*keyboard" | cut -d "=" -f 2- | awk \'{print $1}\' | tail -1;exit 0', shell=True).decode('utf-8')
-    print("Internal Keyboard\nName: " + internal_kbname + "\nID: " + internalid)
 
-    result = subprocess.check_output('udevadm info -e | grep -o -P "(?<=by-id/usb-).*(?=-event-kbd)" | head -1;exit 0', shell=True).decode('utf-8')
-    if result != "":
-        usb_kbname = result.strip()
+    # If chromebook
+    if system_type == "2":
+        print()
+        print("Looking for keyboards...")
+        print()
+        result = subprocess.check_output('xinput list | grep -iv "Virtual\|USB" | grep -i "keyboard.*keyboard" | grep -o -P "(?<=↳).*(?=id\=)";exit 0', shell=True).decode('utf-8')
+        if result != "":
+            internal_kbname = result.strip()
+        internalid = subprocess.check_output('xinput list | grep -iv "Virtual\|USB" | grep -i "keyboard.*keyboard" | cut -d "=" -f 2- | awk \'{print $1}\' | tail -1;exit 0', shell=True).decode('utf-8')
+        print("Internal Keyboard\nName: " + internal_kbname + "\nID: " + internalid)
 
-    # Loop the following to ensure the id is picked up after 5-10 tries
-    usbid = ""
-    usbcount=0
-    while usbid == "":
-        usbid = subprocess.check_output('udevadm info -e | stdbuf -oL grep -o -P "(?<=event-kbd /dev/input/by-path/pci-0000:00:).*(?=.0-usb)";exit 0', shell=True).decode('utf-8')
-        if usbid == "":
-            usbcount += 1
-            # print('usbid not found '+ str(usbcount))
-            if usbcount == 5:
-                usbid = "0"
-        time.sleep(1)
-    print("\nUSB Keyboard\n" + "Name: " + usb_kbname + "\nID: " + usbid)
+        result = subprocess.check_output('udevadm info -e | grep -o -P "(?<=by-id/usb-).*(?=-event-kbd)" | head -1;exit 0', shell=True).decode('utf-8')
+        if result != "":
+            usb_kbname = result.strip()
+
+        # Loop the following to ensure the id is picked up after 5-10 tries
+        usbid = ""
+        usbcount=0
+        while usbid == "":
+            usbid = subprocess.check_output('udevadm info -e | stdbuf -oL grep -o -P "(?<=event-kbd /dev/input/by-path/pci-0000:00:).*(?=.0-usb) | head -n 1";exit 0', shell=True).decode('utf-8')
+            if usbid == "":
+                usbcount += 1
+                # print('usbid not found '+ str(usbcount))
+                if usbcount == 5:
+                    usbid = "0"
+            time.sleep(1)
+        print("\nUSB Keyboard\n" + "Name: " + usb_kbname + "\nID: " + usbid)
 
     if system_type == "1":
         system_type = "windows"
@@ -120,7 +123,7 @@ sys.stdout.write(reset)
 print()
 input("Press Enter to begin...")
 
-system_type = input("\nWhat type of system are you using?\n\
+system_type = input("\nWhat type of keyboard are you using? (If Mac and Windows then select Mac)\n\
     1) Windows\n\
     2) Chromebook\n\
     3) Mac\n")

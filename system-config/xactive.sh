@@ -53,35 +53,31 @@ while read -r id; do
 	if [ $timediff -gt 0 ]; then
 		if [ -n "$class" ]; then
 			# Set keymap for terminal, Alt is Super, Ctrl is Ctrl, Super is Alt
-			if [[ $internalid -gt 0 ]]; then
-				eval "$check_gt"
-				echo $?
-				if [ $? -eq 0 ]; then
-					echo "internal gui to term"
-					eval "$swapcmd_term"
+			eval "$check_gt"
+			echo $?
+			if [ $? -eq 0 ]; then
+				echo "internal gui to term"
+				eval "$swapcmd_term"
 
-					# Quick hack, will want to refactor later
-					# just resets required checks, for chromebooks that
-					# use usb windows keyboards
-					if [[ "$swapbehavior" == "both_win" ]]; then
-						check_gt="setxkbmap -query | grep -q 'ctrl_alt_win'"
-						check_tg="setxkbmap -query | grep -v 'ctrl_alt_win' 1>/dev/null"
-					fi
+				# Quick hack, will want to refactor later
+				# just resets required checks, for chromebooks that
+				# use usb windows keyboards
+				if [[ "$swapbehavior" == "both_win" ]]; then
+					check_gt="setxkbmap -query | grep -q 'ctrl_alt_win'"
+					check_tg="setxkbmap -query | grep -v 'ctrl_alt_win' 1>/dev/null"
 				fi
 			fi
 		else
 			# Set keymap for gui, Alt is Ctrl,Super is Alt, Ctrl is Super
-			if [[ $internalid -gt 0 ]]; then
-				eval "$check_tg"
-				echo $?
-				if [ $? -eq 0 ]; then
-					echo "internal term to gui"
-					eval "$swapcmd_gui"
-					if [ $? -eq 0 ] && [[ "$swapbehavior" == "both_win" ]]; then
-						eval "$fallbackcmd_gui"
-						check_gt="setxkbmap -query | grep -v 'swap_alt_win' 1>/dev/null"
-						check_tg="setxkbmap -query | grep -q 'swap_alt_win'"
-					fi
+			eval "$check_tg"
+			echo $?
+			if [ $? -eq 0 ]; then
+				echo "internal term to gui"
+				eval "$swapcmd_gui"
+				if [ $? -eq 0 ] && [[ "$swapbehavior" == "both_win" ]]; then
+					eval "$fallbackcmd_gui"
+					check_gt="setxkbmap -query | grep -v 'swap_alt_win' 1>/dev/null"
+					check_tg="setxkbmap -query | grep -q 'swap_alt_win'"
 				fi
 			fi
 		fi
