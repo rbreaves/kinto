@@ -59,12 +59,19 @@ def keyboard_detect():
     elif system_type == "2":
         system_type = "chromebook"
     elif system_type == "3":
-        system_type = "mac"
+        result = subprocess.check_output('lsmod | grep hid_apple 1>/dev/null; echo $?', shell=True).decode('utf-8')
+        if result.strip() == "0":
+            system_type = "mac"
+        else:
+            system_type = "mac_only"
+            print("Apple hid_apple driver is not loaded, a keymap that is specific for only Apple keyboards will be used.")
 
     if system_type == "windows" or system_type == "mac":
         subprocess.check_output('/bin/bash -c ./mac_wordwise.sh', shell=True).decode('utf-8')
-        cmdgui = '"/usr/bin/setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.onelvl $DISPLAY"'
-        # subprocess.check_output('echo "1" > /sys/module/hid_apple/parameters/swap_opt_cmd', shell=True).decode('utf-8')
+        cmdgui = '"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.gui $DISPLAY"'
+    elif system_type == "mac_only":
+        subprocess.check_output('/bin/bash -c ./mac_only.sh', shell=True).decode('utf-8')
+        cmdgui = '"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.gui $DISPLAY"'
     elif system_type == "chromebook":
         subprocess.check_output('/bin/bash -c ./chromebook.sh', shell=True).decode('utf-8')
         cmdgui = '"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.chromebook.gui $DISPLAY"'
@@ -75,13 +82,11 @@ def keyboard_detect():
 
     if swap_behavior == 1:
         print("Setting up " + system_type + " keyswap as a service.")
-        print("You can disable and remove the service by using the following commands.")
-        print("systemctl --user stop keyswap")
-        print("systemctl --user disable keyswap")
-        print("rm -rf ~/.config/autostart/keyswap.sh")
-        print("rm -rf ~/.config/xactive.sh")
+        print("You can disable and remove the service by using the following command in the Kinto directory.")
+        print("./uninstall.sh")
+
         keyswapcmd = '/bin/bash -c "./keyswap_service.sh 1 0 ' + system_type + ' ' + str(internalid).strip() + ' ' + str(usbid).strip() + ' ' + str(chromeswap) + '"'
-        print(keyswapcmd)
+        # print(keyswapcmd)
         subprocess.check_output(keyswapcmd, shell=True).decode('utf-8')
     else:
         print("Setting up " + system_type + " keyswap inside your profiles ~/.Xsession file.")
@@ -89,9 +94,15 @@ def keyboard_detect():
         keyswapcmd = '/bin/bash -c "./keyswap_service.sh 0 ' + cmdgui + '"'
         subprocess.check_output(keyswapcmd, shell=True).decode('utf-8')
 
-    print("Please run this command in the terminal if you are using a Windows or Macbook.")
-    print("Your keymapping will not work right on Apple keyboards without it.")
-    print("echo '1' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd")
+    if system_type == "mac":
+        print()
+        print("An Apple keyboard with the hid_apple driver was detected.")
+        print("Please run the following commands to swap alt/option and Command.")
+        print("Your Kinto keymapping will not work right on Apple keyboards without it.")
+        print()
+        print("echo '1' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd")
+        print('options hid_apple swap_opt_cmd=1" | sudo tee -a /etc/modprobe.d/hid_apple.conf')
+        print('update-initramfs -u -k all')
         
 
 
