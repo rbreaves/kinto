@@ -95,6 +95,8 @@ No longer an issue. If the Apple hid_apple driver is not detected, when an Apple
 
 ### KDE with Konsole or QT5 apps may block Super+ custom keymaps
 
+This only applies to xkb file based keymaps - intended to be global key remapping, not app specific keymaps in QT5 or konsole. App specific keymaps will continue to work fine.
+
 In the macterm branch you will find a WIP, it is possible to remap Super+T to something like Ctrl+Shift+T using xkbcomp, so that remapping certain defaults in most Terminal apps would not be required. The issue however is that KDE and Konsole (or QT5 apps?) appear to have a conflict with the custom keymap I created for Super. Until a resolution is found this feature will not be a default or optional to install.
 
 If anyone finds a solution then please contact me, create an issue or submit a pull request and I will merge it - the custom Terminal keymaps have already been made and exist in all branches.
