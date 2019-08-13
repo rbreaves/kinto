@@ -11,6 +11,7 @@ chromeswap=$6
 if [[ "$swapbehavior" == "1" ]]; then
 	swapcmd="\/bin\/bash\ \/home\/`whoami`\/.config\/xactive.sh\ ${systemtype}\ ${internalid}\ ${usbid}\ ${chromeswap}"
 	mkdir -p ~/.config/systemd/user
+	mkdir -p ~/.config/autostart
 	cp ./system-config/keyswap.service ~/.config/systemd/user/keyswap.service
 	cp ./system-config/keyswap.sh ~/.config/autostart/keyswap.sh
 	cp ./system-config/xactive.sh ~/.config/xactive.sh

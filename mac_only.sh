@@ -12,4 +12,4 @@ line=$(cat ~/.xkb/keymap/kbd.mac.gui | grep -n 'xkb_types' | cut -f1 -d:)
 sed -ie "${line}s/\"/+mac_gui(addmac_levels)\"/2" ~/.xkb/keymap/kbd.mac.gui
 sleep 1
 line=$(cat ~/.xkb/keymap/kbd.mac.term | grep -n 'xkb_symbols' | cut -f1 -d:)
-sed -ie "${line}s/\"/+altwin(alt_super_win)+mac_gui(mac_levelssym)\"/2" ~/.xkb/keymap/kbd.mac.term
+sed -ie "${line}s/\"/+altwin(alt_super_win)\"/2" ~/.xkb/keymap/kbd.mac.term
