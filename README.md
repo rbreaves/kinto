@@ -123,7 +123,7 @@ https://gist.github.com/rbreaves/f4cf8a991eaeea893999964f5e83eebb
 
 I welcome any and all contributors who want to contribute something to this project.
 
-If you are specifically wanting to contribute additional custom keymaps to help with aligning Kinto's behavior to that of a mac keyboard then I would strongly recommend that you read Ramhounds comment on Superuser (the link is below). You may also look at the .xkb directory, mac_worsewise.sh and xactive.sh files to better understand how Kinto operates so that you can test your own keymaps without having to use the systemd service or running the xactive.sh script.
+If you are specifically wanting to contribute additional custom keymaps to help with aligning Kinto's behavior to that of a mac keyboard then I would strongly recommend that you read Glen Whitney's comment on Superuser (the link is below). You may also look at the .xkb directory, mac_worsewise.sh and xactive.sh files to better understand how Kinto operates so that you can test your own keymaps without having to use the systemd service or running the xactive.sh script.
 
 https://superuser.com/questions/385748/binding-superc-superv-to-copy-and-paste
 
