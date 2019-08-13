@@ -1,7 +1,7 @@
 #!/bin/bash
 mkdir -p ~/.xkb/{keymap,symbols,types}
 cp ./.xkb/symbols/mac_gui ~/.xkb/symbols/mac_gui
-cp ./.xkb/types/mac_term ~/.xkb/types/mac_term
+cp ./.xkb/types/mac_gui ~/.xkb/types/mac_gui
 setxkbmap -option
 setxkbmap -print > ~/.xkb/keymap/kbd.mac.gui
 setxkbmap -print > ~/.xkb/keymap/kbd.mac.term
