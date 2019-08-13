@@ -91,7 +91,7 @@ def keyboard_detect():
     else:
         print("Setting up " + system_type + " keyswap inside your profiles ~/.Xsession file.")
         print("You can modify or remove the file if you want you want to remove the modification.")
-        keyswapcmd = '/bin/bash -c "./keyswap_service.sh 0 ' + cmdgui + '"'
+        keyswapcmd = '/bin/bash -c \'./keyswap_service.sh 0 ' + cmdgui + '\''
         subprocess.check_output(keyswapcmd, shell=True).decode('utf-8')
 
     if system_type == "mac":
