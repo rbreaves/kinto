@@ -35,12 +35,12 @@ X11 is the only other requirement. Wayland can be supported, but will require a 
 ```
 git clone https://github.com/rbreaves/kinto.git
 ```
-2. Install python3 (If needed)
+2. Install python3 and xprop (If needed)
 
 Debian or Ubuntu 16.04 or 18.04
 ```
 sudo apt update
-sudo apt install python3
+sudo apt install python3 x11-utils
 ```
 
 3. Follow the prompts and the script will guide you through the rest of the setup.
