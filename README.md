@@ -1,7 +1,7 @@
-# K!nt◎
+# Kint◎
 [![GitHub release](https://img.shields.io/github/release/rbreaves/kinto.svg)](https://github.com/rbreaves/kinto/releases)
 
-\- Fix the damn keyboard. -
+A better linux keyboard layout for professional mac users
 
 Memory muscle matters for programmers and developers.
 
