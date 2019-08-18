@@ -93,6 +93,7 @@ Here's what you will want to do however.
 systemctl --user status keyswap
 ```
 and pay attention to the values that come after xactive.sh in the output.
+
 2. Run the following command, replacing the 4 values below with yours.
 ```
 ~/.config/keyswap_toggle.sh win 0 0 0
