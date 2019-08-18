@@ -18,10 +18,12 @@ if [[ "$systemtype" == "windows" || "$systemtype" == "mac" ]]; then
 	swapcmd_gui="setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.gui $DISPLAY"
 	check_gt="setxkbmap -query | grep -v 'swap_alt_win' 1>/dev/null"
 	check_tg="setxkbmap -query | grep -q 'swap_alt_win'"
+# mac_only is for apple keyboards without an apple hid driver
 elif [[ "$systemtype" == "mac_only" ]]; then
 	swapcmd_gui="setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.gui $DISPLAY"
 	check_gt="setxkbmap -query | grep -v 'alt_super_win' 1>/dev/null"
 	check_tg="setxkbmap -query | grep -q 'alt_super_win'"
+# Chromebook options
 elif [[ "$swapbehavior" == "both_mac" ]]; then
 	swapcmd_gui="setxkbmap -option;setxkbmap -option ctrl:swap_lwin_lctl; xkbcomp -w0 -i $internalid -I$HOME/.xkb ~/.xkb/keymap/kbd.chromebook.gui $DISPLAY"
 	swapcmd_term="setxkbmap -option;setxkbmap -device $internalid -option 'altwin:swap_alt_win'"
