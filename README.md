@@ -80,6 +80,39 @@ Disable
 systemctl --user disable keyswap
 ```
 
+## Manually Toggling Kinto via hotkey
+
+Occasionally you may run into the Kinto keyswap not swapping your keys, this ought to be extremely rare, but if you need to manaully run the keyswap via a hotkey then you may. Of course you can also just toggle between a terminal app and any other app as well, but if you need to swap the keymap in other apps or websites, like shortcutfoo for learning macos style hotkeys, then this will be useful.
+
+I have not yet automated this, due to the wide range of DE's and each one needing the shortcut setup to be a little different.
+
+Here's what you will want to do however.
+
+1. Run a Status check on Kinto
+```
+systemctl --user status keyswap
+```
+and pay attention to the values that come after xactive.sh in the output.
+2. Run the following command, replacing the 4 values below with yours.
+```
+~/.config/keyswap_toggle.sh win 0 0 0
+```
+3. Run this command a few more times and make sure it is swapping between "gui to term" and "term to gui"
+4. Go into the DE system settings and bind the hotkeys you want to use to activate it. You may want to select two hotkey combinations, so that if you are using your modifier keys you will be using the same physical keys to activate the script.
+
+Note: If I automate this later then the shortcut keys I plan to use are Ctrl+Alt+0 (and Alt+Super+0).
+
+## Learning macOS style hotkeys on Linux
+
+If you are interested in that then websites like https://www.shortcutfoo.com would be highly useful and it is completely doable on linux as long as you use the terminal style keymap while using your browser. Sadly I have not found a way to make it work under Firefox, but it does work great under Chrome, with or without a User Agent plugin.
+
+To make sure you are in the terminal style keymap you can just simply open the terminal and turn off the service, and then switch back to Chrome.
+```
+systemctl --user stop keyswap
+```
+
+or alternatively you follow the instructions about how to manually trigger a toggle of the keyswap.
+
 ## Troubleshooting
 If your keyboard is not being autodetected and configured then please run `xinput list`, if you are on linux, and copy the output into a ticket under issues.
 
