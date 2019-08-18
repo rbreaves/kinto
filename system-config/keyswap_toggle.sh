@@ -1,7 +1,9 @@
 #!/bin/bash
 # Manual keyswap
 systemtype=$1
-swapbehavior=$2
+internalid=$2
+usbid=$3
+swapbehavior=$4
 
 swapcmd_term="setxkbmap -option;setxkbmap -option altwin:swap_alt_win"
 fallbackcmd_gui=""
