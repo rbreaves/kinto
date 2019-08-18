@@ -127,7 +127,7 @@ def kblist():
 
 print()
 print()
-print("                      K!nt" +  circleo)
+print("                      Kint" +  circleo)
 sys.stdout.write(reset)
 print(italic + "            - F!x the d" + syma + "mn k" + syme + "yb" + circleo + syma + "rd. - ")
 sys.stdout.write(reset)

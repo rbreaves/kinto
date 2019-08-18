@@ -1,7 +1,10 @@
-# Kint◎
+# Kinto
+
+![alt text](https://raw.githubusercontent.com/rbreaves/kinto/master/Kinto.png)
+
 [![GitHub release](https://img.shields.io/github/release/rbreaves/kinto.svg)](https://github.com/rbreaves/kinto/releases)
 
-A better linux keyboard layout for professional mac users
+\- A better linux keyboard layout for professional mac users \-
 
 Memory muscle matters for programmers and developers.
 
