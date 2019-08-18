@@ -12,6 +12,8 @@ If it happens on your mac keyboard then it should happen the same in linux.
 
 ## What does this do exactly?
 
+![alt text](https://raw.githubusercontent.com/rbreaves/kinto/master/kinto-demo.gif)
+
 Remaps your keyboard to behave more like you're on a mac again and below is how the keymap will behave. (Note: Kinto does support the remapping of Apple keyboards just fine, so you can safely ignore how I describe the keymapping below - since that is based on PC/Windows keyboards.)
 
 - Normal apps - Alt will be Ctrl, Win/Super will be Alt, Ctrl will be Win/Super
