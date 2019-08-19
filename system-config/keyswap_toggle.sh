@@ -22,7 +22,9 @@ elif [[ "$swapbehavior" == "none" ]]; then
 	swapcmd_gui="setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.chromebook.gui $DISPLAY"
 fi
 
-if [[ "$swapbehavior" == "both_win" ]]; then
+if [[ "$systemtype" == "mac_only" ]]; then
+	check=`setxkbmap -query | grep -c 'alt_super_win'`
+elif [[ "$swapbehavior" == "both_win" ]]; then
 	check=`setxkbmap -query | grep -q 'ctrl_alt_win'; echo $?`
 else
 	check=`setxkbmap -query | grep -c 'swap_alt_win'`
