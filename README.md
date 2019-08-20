@@ -26,7 +26,7 @@ Remaps your keyboard to behave more like you're on a mac again and below is how 
 
 ## What does Kinto require?
 
-- Python
+- Python (initial install only)
 - systemd
 - x11
 
