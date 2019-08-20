@@ -166,6 +166,10 @@ If you are specifically wanting to contribute additional custom keymaps to help 
 
 https://superuser.com/questions/385748/binding-superc-superv-to-copy-and-paste
 
+## More information about Kinto
+
+https://medium.com/@benreaves/kinto-a-mac-inspired-keyboard-mapping-for-linux-58f731817c0
+
 ## License
 
 GPL v2
