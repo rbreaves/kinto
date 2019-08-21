@@ -72,6 +72,11 @@ Start
 systemctl --user start keyswap
 ```
 
+Restart
+```
+systemctl --user restart keyswap
+```
+
 Enable
 ```
 systemctl --user enable keyswap
@@ -117,6 +122,19 @@ systemctl --user stop keyswap
 or alternatively, you can follow the instructions about how to manually trigger a toggle of the keyswap.
 
 ## Troubleshooting
+
+### Keyswap is not occurring, but it was working.
+Sometimes something about the Desktop Environment may throw xprop for a loop, it's rare, but if this occurs then you have 2 options.
+1. Restart Kinto
+```
+systemctl --user restart keyswap
+```
+2. Check the Status of Kinto and open a ticket with the output, especially if you can reliably reproduce the problem.
+```
+systemctl --user status keyswap
+```
+
+### Chromebook with external keyboard not being detected
 If your keyboard is not being autodetected and configured then please run `xinput list`, if you are on linux, and copy the output into a ticket under issues.
 
 ## Language Support
