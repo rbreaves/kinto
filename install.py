@@ -101,7 +101,7 @@ def keyboard_detect():
         print("Your Kinto keymapping will not work right on Apple keyboards without it.")
         print()
         print("echo '1' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd")
-        print('"options hid_apple swap_opt_cmd=1" | sudo tee -a /etc/modprobe.d/hid_apple.conf')
+        print('echo "options hid_apple swap_opt_cmd=1" | sudo tee -a /etc/modprobe.d/hid_apple.conf')
         print('sudo update-initramfs -u -k all')
         
 
