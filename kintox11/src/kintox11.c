@@ -224,6 +224,7 @@ int main(void){
             // printf("%s - prior app %s\n",str_window_class(d, w),prior_app);
             printf("%s\n","term");
             remap_bool = 0;
+            fflush(stdout);
             break;
         }
         else if((strcicmp(line[i], str_window_class(d, w)) == 0 && remap_bool == 0)){
@@ -233,6 +234,7 @@ int main(void){
           printf("%s\n","gui");
           // printf("no match - %s - prior app %s\n",str_window_class(d, w),prior_app);
           remap_bool = 1;
+          fflush(stdout);
           break;
         }
       }
