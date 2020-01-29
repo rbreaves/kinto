@@ -16,6 +16,8 @@ if [[ "$swapbehavior" == "1" ]]; then
 	cp ./system-config/keyswap.sh ~/.config/autostart/keyswap.sh
 	cp ./system-config/xactive.sh ~/.config/xactive.sh
 	cp ./system-config/keyswap_toggle.sh ~/.config/keyswap_toggle.sh
+	cp ./kintox11/binary/kintox11_ubuntu19-10 ~/.config/kintox11
+	cp ./kintox11/binary/appnames.csv ~/.config/appnames.csv
 	sed -i "s/{username}/`whoami`/g" ~/.config/systemd/user/keyswap.service
 	sed -i "s/ExecStart=/ExecStart=${swapcmd}/g" ~/.config/systemd/user/keyswap.service
 	systemctl --user enable keyswap
