@@ -32,6 +32,8 @@ eval "$swapcmd_gui"
 
 # If running gnome this will disable the overlay-key mapping
 gsettings set org.gnome.mutter overlay-key ''
+kwriteconfig5 --file ~/.config/kwinrc --group ModifierOnlyShortcuts --key Meta ""
+qdbus org.kde.KWin /KWin reconfigure
 
 ./kintox11 |
 while read -r id; do
@@ -41,6 +43,10 @@ while read -r id; do
 		
 		# Gnome - Set Activities Overview
 		gsettings set org.gnome.desktop.wm.keybindings panel-main-menu "['<Super>Space']"
+		# ~/.config/kglobalshortcutsrc
+		# activate widget 78=Super+Space,none,Activate Application Launcher Widget
+		# kquitapp kglobalaccel && sleep 2s && kglobalaccel5&
+		# kquitapp5 plasmashell && kstart5 plasmashell
 	fi
 
 	if [[ "$id" == "gui" ]]; then
@@ -49,6 +55,9 @@ while read -r id; do
 
 		# Gnome - Set Activities Overview
 		gsettings set org.gnome.desktop.wm.keybindings panel-main-menu "['<Ctrl>Space']"
+		# ~/.config/kglobalshortcutsrc
+		# activate widget 78=Ctrl+Space,none,Activate Application Launcher Widget
+		# kquitapp kglobalaccel && sleep 2s && kglobalaccel &
 
 		# # Fallback code
 		# if [ $? -eq 0 ] && [[ "$swapbehavior" == "both_win" ]]; then
