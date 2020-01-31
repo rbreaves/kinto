@@ -21,6 +21,20 @@
 
 Bool xerror = False;
 
+int in_int(int a[],int size,int item) 
+{ 
+    int i,pos=-1; 
+    for(i=0;i< size;i++) 
+    { 
+        if(a[i]==item) 
+        { 
+            pos=i; 
+            break; 
+        } 
+    } 
+    return pos; 
+} 
+
 int in(const char **arr, int len, char *target) {
   int i;
   for(i = 0; i < len; i++) {
@@ -99,9 +113,13 @@ int main(void){
 
   FILE *fp;
   char buffer[10240];
-  struct json_object *parsed_json, *config, *config_obj, *config_obj_name, *config_obj_run, *config_obj_appnames, *appnames_obj;
+  struct json_object *parsed_json, *config, *config_obj, 
+  *config_obj_name, *config_obj_run, *config_obj_de, 
+  *config_obj_appnames, *appnames_obj, *init, *de, 
+  *de_obj, *de_obj_id, *de_obj_active, *de_obj_run;
+
   int arraylen;
-  int appnames_len;
+  int appnames_len, init_len, de_len;
   int system(const char *command);
 
   size_t i,n; 
@@ -113,10 +131,33 @@ int main(void){
   parsed_json = json_tokener_parse(buffer);
 
   config = json_object_object_get(parsed_json, "config");
+  init = json_object_object_get(parsed_json, "init");
+  de = json_object_object_get(parsed_json, "de");
 
   arraylen = json_object_array_length(config);
+  init_len = json_object_array_length(init);
+  de_len = json_object_array_length(de);
+
   const char *name_array[arraylen];
   const char *run_array[arraylen];
+  int init_array[init_len];
+
+  int de_id_array[de_len];
+  Bool de_active_array[de_len];
+  const char *de_run_array[de_len];
+
+  // Grab all de variable info needed
+  for (i = 0; i < de_len; i++) {
+    de_obj = json_object_array_get_idx(de, i);
+    de_obj_id = json_object_object_get(de_obj, "id");
+    de_id_array[i] = json_object_get_int(de_obj_id);
+    de_obj_active = json_object_object_get(de_obj, "active");
+    de_active_array[i] = json_object_get_int(de_obj_active);
+    de_obj_run = json_object_object_get(de_obj, "run");
+    de_run_array[i] = json_object_get_string(de_obj_run);
+  }
+  // de ends
+
   int appnames_max = 0;
 
   for (i = 0; i < arraylen; i++) {
@@ -157,6 +198,13 @@ int main(void){
         // printf("%s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
       }
     }
+  }
+
+  for (i = 0; i < init_len; i++) {
+    init_array[i] = json_object_get_int(json_object_array_get_idx(init, i));
+    int de_id_idx = in_int(de_id_array, init_len, init_array[i]);
+    printf("Running init command: %s\n",de_run_array[de_id_idx]);
+    system(de_run_array[de_id_idx]);
   }
 
   Display* d;
