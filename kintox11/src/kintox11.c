@@ -119,10 +119,10 @@ int main(void){
   *de_obj, *de_obj_id, *de_obj_active, *de_obj_run;
 
   int arraylen;
-  int appnames_len, init_len, de_len;
+  int appnames_len, init_len, de_len, config_de_len;
   int system(const char *command);
 
-  size_t i,n; 
+  size_t i,n,r; 
 
   fp = fopen("kinto.json","r");
   fread(buffer, 10240, 1, fp);
@@ -155,21 +155,30 @@ int main(void){
     de_active_array[i] = json_object_get_int(de_obj_active);
     de_obj_run = json_object_object_get(de_obj, "run");
     de_run_array[i] = json_object_get_string(de_obj_run);
+    printf("de_run_array[%ld]: %s\n",i,de_run_array[i]);
   }
   // de ends
 
   int appnames_max = 0;
+  int config_de_max = 0;
 
   for (i = 0; i < arraylen; i++) {
     config_obj = json_object_array_get_idx(config, i);
     config_obj_appnames = json_object_object_get(config_obj, "appnames");
+    config_obj_de = json_object_object_get(config_obj, "de");
+
     appnames_len = json_object_array_length(config_obj_appnames);
     if (appnames_len > appnames_max){
       appnames_max = appnames_len;
     }
+    config_de_len = json_object_array_length(config_obj_de);
+    if(config_de_len > config_de_max){
+      config_de_max = config_de_len;
+    }
   }
-  const char *appnames_array[arraylen][appnames_max];
 
+  const char *appnames_array[arraylen][appnames_max];
+  int config_de_array[arraylen][config_de_max];
 
   for (i = 0; i < arraylen; i++) {
     config_obj = json_object_array_get_idx(config, i);
@@ -198,11 +207,25 @@ int main(void){
         // printf("%s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
       }
     }
+
+    config_obj_de = json_object_object_get(config_obj, "de");
+    config_de_len = json_object_array_length(config_obj_de);
+    for (n = 0; n < config_de_max; n++) {
+      if(n < config_de_len){
+        // printf("de value: %d\n",json_object_get_int(json_object_array_get_idx(config_obj_de, n)));
+        config_de_array[i][n] = json_object_get_int(json_object_array_get_idx(config_obj_de, n));
+      }
+      else{
+        // printf("de -1 value: %d\n",json_object_get_int(json_object_array_get_idx(config_obj_de, n)));
+        config_de_array[i][n] = -1;
+      }
+
+    }
   }
 
   for (i = 0; i < init_len; i++) {
     init_array[i] = json_object_get_int(json_object_array_get_idx(init, i));
-    int de_id_idx = in_int(de_id_array, init_len, init_array[i]);
+    int de_id_idx = in_int(de_id_array, de_len, init_array[i]);
     printf("Running init command: %s\n",de_run_array[de_id_idx]);
     system(de_run_array[de_id_idx]);
   }
@@ -243,6 +266,13 @@ int main(void){
                   // printf("1st if %s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
                   printf("%s\n",name_array[i]);
                   system(run_array[i]);
+                  for(r = 0; r < config_de_max; r++){
+                    if(config_de_array[i][r] != -1){
+                      int de_id_idx = in_int(de_id_array, de_len, config_de_array[i][r]);
+                      // printf("Running de command: %s\n",de_run_array[de_id_idx]);
+                      system(de_run_array[de_id_idx]);
+                    }
+                  }
                   remap_bool = 0;
                   fflush(stdout);
                   breakouter = 1;
@@ -260,6 +290,13 @@ int main(void){
                   if(gui_idx >= 0) {
                     printf("%s\n",name_array[gui_idx]);
                     system(run_array[gui_idx]);
+                  }
+                  for(r = 0; r < config_de_max; r++){
+                    if(config_de_array[gui_idx][r] != -1){
+                      int de_id_idx = in_int(de_id_array, de_len, config_de_array[gui_idx][r]);
+                      // printf("Running de command: %s\n",de_run_array[de_id_idx]);
+                      system(de_run_array[de_id_idx]);
+                    }
                   }
                   // printf("3rd elseif %s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
                   remap_bool = 1;
