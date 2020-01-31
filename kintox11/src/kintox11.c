@@ -98,7 +98,7 @@ const char * str_window_class(Display* d, Window w, char *prior_app ){
 int main(void){
 
   FILE *fp;
-  char buffer[1024];
+  char buffer[10240];
   struct json_object *parsed_json, *config, *config_obj, *config_obj_name, *config_obj_run, *config_obj_appnames, *appnames_obj;
   int arraylen;
   int appnames_len;
@@ -107,7 +107,7 @@ int main(void){
   size_t i,n; 
 
   fp = fopen("kinto.json","r");
-  fread(buffer, 1024, 1, fp);
+  fread(buffer, 10240, 1, fp);
   fclose(fp);
 
   parsed_json = json_tokener_parse(buffer);
