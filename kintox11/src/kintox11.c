@@ -6,7 +6,7 @@
   http://k-ui.jp/blog/2012/05/07/get-active-window-on-x-window-system/
  */
 // To compile
-// gcc kintox11.c -lX11 -lXmu
+// gcc kintox11.c -lX11 -lXmu -ljson-c
 //
 //
 
@@ -17,10 +17,19 @@
 #include <ctype.h>
 #include <X11/Xlib.h>           // `apt-get install libx11-dev`
 #include <X11/Xmu/WinUtil.h>    // `apt-get install libxmu-dev`
-#define LSIZ 128 // buffer
-#define RSIZ 50 // array size
+#include <json-c/json.h>        // `apt install libjson-c-dev`
 
 Bool xerror = False;
+
+int in(const char **arr, int len, char *target) {
+  int i;
+  for(i = 0; i < len; i++) {
+    if(strncmp(arr[i], target, strlen(target)) == 0) {
+      return i;
+    }
+  }
+  return -1;
+}
 
 int strcicmp(char const *a, char const *b)
 {
@@ -88,20 +97,67 @@ const char * str_window_class(Display* d, Window w, char *prior_app ){
 
 int main(void){
 
-  char line[RSIZ][LSIZ];
-  FILE *fptr = NULL; 
-  int i = 0;
-  int tot = 0;
+  FILE *fp;
+  char buffer[1024];
+  struct json_object *parsed_json, *config, *config_obj, *config_obj_name, *config_obj_run, *config_obj_appnames, *appnames_obj;
+  int arraylen;
+  int appnames_len;
+  int system(const char *command);
 
-  fptr = fopen("./appnames.csv", "r");
-  while(fgets(line[i], LSIZ, fptr)) 
-  {
-      line[i][strlen(line[i])] = '\0';
-      if( line[i][strlen(line[i])-1] == '\n' )
-          line[i][strlen(line[i])-1] = 0;
-      i++;
+  size_t i,n; 
+
+  fp = fopen("kinto.json","r");
+  fread(buffer, 1024, 1, fp);
+  fclose(fp);
+
+  parsed_json = json_tokener_parse(buffer);
+
+  config = json_object_object_get(parsed_json, "config");
+
+  arraylen = json_object_array_length(config);
+  const char *name_array[arraylen];
+  const char *run_array[arraylen];
+  int appnames_max = 0;
+
+  for (i = 0; i < arraylen; i++) {
+    config_obj = json_object_array_get_idx(config, i);
+    config_obj_appnames = json_object_object_get(config_obj, "appnames");
+    appnames_len = json_object_array_length(config_obj_appnames);
+    if (appnames_len > appnames_max){
+      appnames_max = appnames_len;
+    }
   }
-  tot = i;
+  const char *appnames_array[arraylen][appnames_max];
+
+
+  for (i = 0; i < arraylen; i++) {
+    config_obj = json_object_array_get_idx(config, i);
+    config_obj_name = json_object_object_get(config_obj, "name");
+    config_obj_run = json_object_object_get(config_obj, "run");
+    name_array[i] = json_object_get_string(config_obj_name);
+    run_array[i] = json_object_get_string(config_obj_run);
+    // printf("%s\n%s\n", json_object_get_string(config_obj_name), json_object_get_string(config_obj_run));
+
+    config_obj_appnames = json_object_object_get(config_obj, "appnames");
+    appnames_len = json_object_array_length(config_obj_appnames);
+    for (n = 0; n < appnames_len; n++) {
+      // printf("name_array[i]: %s\n",name_array[i]);
+      if(!strcicmp(name_array[i], "gui")){
+        appnames_array[i][n] = NULL;
+        // printf("%s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
+      }
+      else{
+        appnames_array[i][n] = json_object_get_string(json_object_array_get_idx(config_obj_appnames, n));
+        // printf("%s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
+      }
+    }
+    if(appnames_max > appnames_len){
+      for (n = appnames_len; n < appnames_max; n++){
+        appnames_array[i][n] = NULL;
+        // printf("%s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
+      }
+    }
+  }
 
   Display* d;
   Window w;
@@ -122,32 +178,52 @@ int main(void){
   // get active window
   w = get_focus_window(d);
 
+  int breakouter;
+
   for (;;)
   {
+    breakouter = 0;
 
     if(strcmp(str_window_class(d, w,prior_app),prior_app)){
-      int len = sizeof(line)/sizeof(line[0]);
-      // printf("length: %d\n",len);
-      int i;
-      for(i = 0; i < len; ++i){
-        // printf("i: %d\n",i);
-        // printf(strcicmp(line[i], str_window_class(d, w, prior_app)));
-        if((strcicmp(line[i], str_window_class(d, w,prior_app)) == 0 && (remap_bool == 1 || remap_bool == 2))) {
-            // printf("Gotcha!\n");
-            // printf("%s - prior app %s\n",str_window_class(d, w, prior_app),prior_app);
-            printf("%s\n","term");
-            remap_bool = 0;
-            fflush(stdout);
-            break;
+      for(i = 0; i < arraylen; ++i){
+        if(breakouter == 0){
+          if(strcmp(name_array[i],"gui")){
+            for(n = 0; n < appnames_max; ++n){
+              if (appnames_array[i][n] != NULL){
+                // printf("%s\n",appnames_array[i][n]);
+                if((strcicmp(appnames_array[i][n], str_window_class(d, w,prior_app)) == 0 && (remap_bool == 1 || remap_bool == 2))) {
+                  // printf("1st if %s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
+                  printf("%s\n",name_array[i]);
+                  system(run_array[i]);
+                  remap_bool = 0;
+                  fflush(stdout);
+                  breakouter = 1;
+                  break;
+                }
+                else if((strcicmp(appnames_array[i][n], str_window_class(d, w,prior_app)) == 0 && remap_bool == 0)){
+                  // printf("2nd elseif %s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
+                  breakouter = 1;
+                  break;
+                }
+                else if ((i == arraylen-1 || appnames_array[i][n+1] == NULL) && (remap_bool == 0 || remap_bool == 2)){
+                  char *find = "gui";
+                  int gui_idx = in(name_array, arraylen, find);
+
+                  if(gui_idx >= 0) {
+                    printf("%s\n",name_array[gui_idx]);
+                    system(run_array[gui_idx]);
+                  }
+                  // printf("3rd elseif %s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
+                  remap_bool = 1;
+                  fflush(stdout);
+                  breakouter = 1;
+                  break;
+                }
+              }
+            }
+          }
         }
-        else if((strcicmp(line[i], str_window_class(d, w,prior_app)) == 0 && remap_bool == 0)){
-          break;
-        }
-        else if (i == 49 && (remap_bool == 0 || remap_bool == 2)){
-          printf("%s\n","gui");
-          // printf("no match - %s - prior app %s\n",str_window_class(d, w, prior_app),prior_app);
-          remap_bool = 1;
-          fflush(stdout);
+        else{
           break;
         }
       }

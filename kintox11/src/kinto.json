@@ -1,0 +1,16 @@
+{"config":[{
+		"name":"gui",
+		"run":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.gui $DISPLAY",
+		"appnames":[ "" ]
+	},
+	{
+		"name":"term",
+		"run":"setxkbmap -option",
+		"appnames":[ "Gnome-terminal","konsole","terminator","sakura","guake","tilda","xterm","eterm" ]
+	},
+	{
+		"name":"eosterm",
+		"run":"setxkbmap -option",
+		"appnames":[ "io.elementary.terminal" ]
+	}]
+}
