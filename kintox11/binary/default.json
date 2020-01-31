@@ -1,0 +1,112 @@
+{"config":[{
+		"name":"gui",
+		"run":"",
+		"de":[],
+		"appnames":[ "" ]
+	},
+	{
+		"name":"term",
+		"run":"",
+		"de":[],
+		"appnames":[ "Gnome-terminal","konsole","terminator","sakura","guake","tilda","xterm","eterm" ]
+	},
+	{
+		"name":"eosterm",
+		"run":"",
+		"de":[],
+		"appnames":[ "io.elementary.terminal" ]
+	}],
+	"init": [],
+	"defaulttypes":["windows","mac","chromebook"],
+	"defaults":[{
+		"name":"Windows",
+		"active": false,
+		"type":"windows",
+		"description":"Standard Windows 104 Keyboards",
+		"gui":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.gui $DISPLAY",
+		"term":"setxkbmap -option;setxkbmap -option altwin:swap_alt_win"
+	},
+	{
+		"name":"Mac - hid driver",
+		"active": false,
+		"type":"mac",
+		"description":"Standard Mac Keyboards with Apple driver",
+		"gui":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.gui $DISPLAY",
+		"term":"setxkbmap -option",
+		"hack": "echo '1' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd;echo 'options hid_apple swap_opt_cmd=1' | sudo tee -a /etc/modprobe.d/hid_apple.conf;sudo update-initramfs -u -k all"
+	},
+	{
+		"name":"Mac Only",
+		"active": true,
+		"type":"mac",
+		"description":"Standard Mac Keyboards",
+		"gui":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.gui $DISPLAY",
+		"term":"setxkbmap -option;setxkbmap -option altwin:swap_alt_win"
+	},
+	{
+		"name":"Chromebook",
+		"active": false,
+		"type":"chromebook",
+		"description":"Standard Chromebook Keyboards",
+		"gui":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.chromebook.gui $DISPLAY",
+		"term":"setxkbmap -option;setxkbmap -option altwin:swap_alt_win"
+	},
+	{
+		"name":"Chromebook - Windows",
+		"active": false,
+		"type":"chromebook",
+		"description":"Chromebook with Windows 104 Keyboard",
+		"gui":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.chromebook.gui $DISPLAY; setxkbmap -device $usbid -option altwin:ctrl_alt_win",
+		"term":"setxkbmap -option;setxkbmap -option altwin:swap_alt_win",
+		"fallbackgui":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.chromebook.gui $DISPLAY"
+	},
+	{
+		"name":"Chromebook - Mac",
+		"active": false,
+		"type":"chromebook",
+		"description":"Chromebook with Mac Keyboard",
+		"gui":"setxkbmap -option;setxkbmap -option ctrl:swap_lwin_lctl; xkbcomp -w0 -i $internalid -I$HOME/.xkb ~/.xkb/keymap/kbd.chromebook.gui $DISPLAY",
+		"term":"setxkbmap -option;setxkbmap -device $internalid -option 'altwin:swap_alt_win'"
+	}],
+	"defaultapps":[{
+		"name":"term",
+		"appnames": [ "Gnome-terminal","konsole","terminator","sakura","guake","tilda","xterm","eterm" ]
+	},
+	{
+		"name":"eosterm",
+		"appnames": [ "io.elementary.terminal" ]
+	}],
+	"detypes":["gnome2","gnome3","kde4","kde5","xfce","i3wm"],
+	"de":[{
+		"id": 1,
+		"type": "gnome3",
+		"active": true,
+		"name":"gnome-init",
+		"description":"Gnome - Remove Superkey Overlay keybinding to Activities Overview",
+		"run":"gsettings set org.gnome.mutter overlay-key ''"
+	},
+	{
+		"id": 2,
+		"type": "gnome3",
+		"active": true,
+		"name":"gnome-term",
+		"description":"Gnome - Terminal - Superkey+Space opens Activities Overview",
+		"run":"gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Super>Space']\""
+	},
+	{
+		"id": 3,
+		"type": "gnome3",
+		"active": true,
+		"name":"gnome-gui",
+		"description":"Gnome - GUI - Ctrl+Space opens Activities Overview",
+		"run":"gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Ctrl>Space']\""
+	},
+	{
+		"id": 4,
+		"type": "kde5",
+		"active": false,
+		"name":"kde-init",
+		"description":"KDE Plasma 5 - Removes Superkey Overlay from the Launcher Menu",
+		"run":"gsettings set org.gnome.mutter overlay-key '';kwriteconfig5 --file ~/.config/kwinrc --group ModifierOnlyShortcuts --key Meta \"\";qdbus org.kde.KWin /KWin reconfigure"
+	}]
+}
