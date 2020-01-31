@@ -262,6 +262,7 @@ int main(void){
             for(n = 0; n < appnames_max; ++n){
               if (appnames_array[i][n] != NULL){
                 // printf("%s\n",appnames_array[i][n]);
+                // If statement for triggering terminal config
                 if((strcicmp(appnames_array[i][n], str_window_class(d, w,prior_app)) == 0 && (remap_bool == 1 || remap_bool == 2))) {
                   // printf("1st if %s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
                   printf("%s\n",name_array[i]);
@@ -277,12 +278,12 @@ int main(void){
                   fflush(stdout);
                   breakouter = 1;
                   break;
-                }
+                } // Else command for ignoring similar app category based on config
                 else if((strcicmp(appnames_array[i][n], str_window_class(d, w,prior_app)) == 0 && remap_bool == 0)){
                   // printf("2nd elseif %s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
                   breakouter = 1;
                   break;
-                }
+                } // Else command for triggering gui config
                 else if ((i == arraylen-1 || appnames_array[i][n+1] == NULL) && (remap_bool == 0 || remap_bool == 2)){
                   char *find = "gui";
                   int gui_idx = in(name_array, arraylen, find);
