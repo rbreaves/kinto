@@ -19,6 +19,7 @@
 	"init": [],
 	"defaulttypes":["windows","mac","chromebook"],
 	"defaults":[{
+		"id": 1,
 		"name":"Windows",
 		"active": false,
 		"type":"windows",
@@ -27,7 +28,8 @@
 		"term":"setxkbmap -option;setxkbmap -option altwin:swap_alt_win"
 	},
 	{
-		"name":"Mac - hid driver",
+		"id": 2,
+		"name":"Mac - hid driver (Recommended)",
 		"active": false,
 		"type":"mac",
 		"description":"Standard Mac Keyboards with Apple driver",
@@ -36,7 +38,8 @@
 		"hack": "echo '1' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd;echo 'options hid_apple swap_opt_cmd=1' | sudo tee -a /etc/modprobe.d/hid_apple.conf;sudo update-initramfs -u -k all"
 	},
 	{
-		"name":"Mac Only",
+		"id": 3,
+		"name":"Mac Only - (Best for VMs or non-official Mac keyboards)",
 		"active": true,
 		"type":"mac",
 		"description":"Standard Mac Keyboards",
@@ -44,6 +47,7 @@
 		"term":"setxkbmap -option;setxkbmap -option altwin:swap_alt_win"
 	},
 	{
+		"id": 4,
 		"name":"Chromebook",
 		"active": false,
 		"type":"chromebook",
@@ -52,6 +56,7 @@
 		"term":"setxkbmap -option;setxkbmap -option altwin:swap_alt_win"
 	},
 	{
+		"id": 5,
 		"name":"Chromebook - Windows",
 		"active": false,
 		"type":"chromebook",
@@ -61,6 +66,7 @@
 		"fallbackgui":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.chromebook.gui $DISPLAY"
 	},
 	{
+		"id": 6,
 		"name":"Chromebook - Mac",
 		"active": false,
 		"type":"chromebook",
