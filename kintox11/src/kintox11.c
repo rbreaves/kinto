@@ -64,9 +64,10 @@ Display* open_display(){
 }
 
 int handle_error(Display* display, XErrorEvent* error){
-  printf("ERROR: X11 error\n");
-  xerror = True;
-  return 1;
+  // printf("X11 error: type=%d, serial=%lu, code=%d\n",
+  //   error->type, error->serial, (int)error->error_code);
+  // xerror = True;
+  return 0;
 }
 
 Window get_focus_window(Display* d){
@@ -155,7 +156,7 @@ int main(void){
     de_active_array[i] = json_object_get_int(de_obj_active);
     de_obj_run = json_object_object_get(de_obj, "run");
     de_run_array[i] = json_object_get_string(de_obj_run);
-    printf("de_run_array[%ld]: %s\n",i,de_run_array[i]);
+    // printf("de_run_array[%ld]: %s\n",i,de_run_array[i]);
   }
   // de ends
 
@@ -254,11 +255,14 @@ int main(void){
   for (;;)
   {
     breakouter = 0;
-
+    // printf("%s\n","1");
+    // printf("%s\n",str_window_class(d, w,prior_app));
     if(strcmp(str_window_class(d, w,prior_app),prior_app)){
+      // printf("%s\n","2");
       for(i = 0; i < arraylen; ++i){
         if(breakouter == 0){
           if(strcmp(name_array[i],"gui")){
+            // printf("%s\n","3");
             for(n = 0; n < appnames_max; ++n){
               if (appnames_array[i][n] != NULL){
                 // printf("%s\n",appnames_array[i][n]);
@@ -281,6 +285,7 @@ int main(void){
                 } // Else command for ignoring similar app category based on config
                 else if((strcicmp(appnames_array[i][n], str_window_class(d, w,prior_app)) == 0 && remap_bool == 0)){
                   // printf("2nd elseif %s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
+                  // printf("%s\n","4");
                   breakouter = 1;
                   break;
                 } // Else command for triggering gui config
@@ -314,6 +319,7 @@ int main(void){
         }
       }
     }
+    // printf("%s\n","5");
     strcpy(prior_app,str_window_class(d, w, prior_app));
 
     XEvent e;
