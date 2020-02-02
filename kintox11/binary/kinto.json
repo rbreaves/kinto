@@ -17,7 +17,7 @@
 		"active": false,
 		"description":"Standard Windows 104 Keyboards",
 		"gui":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.gui $DISPLAY",
-		"term":"setxkbmap -option;setxkbmap -option altwin:swap_alt_win"
+		"term":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.term $DISPLAY"
 	},
 	{
 		"id": 2,
