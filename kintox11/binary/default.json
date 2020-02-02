@@ -8,85 +8,68 @@
 		"name":"term",
 		"run":"",
 		"de":[],
-		"appnames":[ "konsole","Gnome-terminal","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm" ]
-	},
-	{
-		"name":"some3rdApp",
-		"run":"",
-		"de":[],
-		"appnames":[ "some3rdApp" ]
+		"appnames":[ "Gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm" ]
 	}],
 	"init": [],
-	"defaulttypes":["windows","mac","chromebook"],
 	"defaults":[{
 		"id": 1,
 		"name":"Windows",
 		"active": false,
-		"type":"windows",
 		"description":"Standard Windows 104 Keyboards",
 		"gui":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.gui $DISPLAY",
 		"term":"setxkbmap -option;setxkbmap -option altwin:swap_alt_win"
 	},
 	{
 		"id": 2,
-		"name":"Mac - hid driver (Recommended)",
+		"name":"Mac - hid driver",
 		"active": false,
-		"type":"mac",
 		"description":"Standard Mac Keyboards with Apple driver",
 		"gui":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.gui $DISPLAY",
-		"term":"setxkbmap -option",
+		"term":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.term $DISPLAY",
 		"hack": "echo '1' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd;echo 'options hid_apple swap_opt_cmd=1' | sudo tee -a /etc/modprobe.d/hid_apple.conf;sudo update-initramfs -u -k all"
 	},
 	{
 		"id": 3,
-		"name":"Mac Only - (Best for VMs or non-official Mac keyboards)",
+		"name":"Mac Only",
 		"active": true,
-		"type":"mac",
 		"description":"Standard Mac Keyboards",
 		"gui":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.gui $DISPLAY",
-		"term":"setxkbmap -option;setxkbmap -option altwin:swap_alt_win"
+		"term":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.term $DISPLAY"
 	},
 	{
 		"id": 4,
 		"name":"Chromebook",
 		"active": false,
-		"type":"chromebook",
 		"description":"Standard Chromebook Keyboards",
 		"gui":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.chromebook.gui $DISPLAY",
-		"term":"setxkbmap -option;setxkbmap -option altwin:swap_alt_win"
+		"term":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.term $DISPLAY"
 	},
 	{
 		"id": 5,
 		"name":"Chromebook - Windows",
 		"active": false,
-		"type":"chromebook",
 		"description":"Chromebook with Windows 104 Keyboard",
 		"gui":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.chromebook.gui $DISPLAY; setxkbmap -device $usbid -option altwin:ctrl_alt_win",
-		"term":"setxkbmap -option;setxkbmap -option altwin:swap_alt_win",
+		"term":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.term $DISPLAY",
 		"fallbackgui":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.chromebook.gui $DISPLAY"
 	},
 	{
 		"id": 6,
 		"name":"Chromebook - Mac",
 		"active": false,
-		"type":"chromebook",
 		"description":"Chromebook with Mac Keyboard",
 		"gui":"setxkbmap -option;setxkbmap -option ctrl:swap_lwin_lctl; xkbcomp -w0 -i $internalid -I$HOME/.xkb ~/.xkb/keymap/kbd.chromebook.gui $DISPLAY",
-		"term":"setxkbmap -option;setxkbmap -device $internalid -option 'altwin:swap_alt_win'"
+		"term":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.term $DISPLAY"
 	}],
 	"defaultapps":[{
 		"name":"term",
-		"appnames": [ "Gnome-terminal","konsole","terminator","sakura","guake","tilda","xterm","eterm" ]
-	},
-	{
-		"name":"eosterm",
-		"appnames": [ "io.elementary.terminal" ]
+		"appnames":[ "Gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm" ]
 	}],
 	"detypes":["gnome2","gnome3","kde4","kde5","xfce","i3wm"],
 	"de":[{
 		"id": 1,
 		"type": "gnome3",
-		"active": true,
+		"active": false,
 		"name":"gnome-init",
 		"description":"Gnome - Remove Superkey Overlay keybinding to Activities Overview",
 		"run":"gsettings set org.gnome.mutter overlay-key ''"
@@ -94,7 +77,7 @@
 	{
 		"id": 2,
 		"type": "gnome3",
-		"active": true,
+		"active": false,
 		"name":"gnome-term",
 		"description":"Gnome - Terminal - Superkey+Space opens Activities Overview",
 		"run":"gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Super>Space']\""
@@ -102,7 +85,7 @@
 	{
 		"id": 3,
 		"type": "gnome3",
-		"active": true,
+		"active": false,
 		"name":"gnome-gui",
 		"description":"Gnome - GUI - Ctrl+Space opens Activities Overview",
 		"run":"gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Ctrl>Space']\""

@@ -13,4 +13,4 @@ line=$(cat ~/.xkb/keymap/kbd.chromebook.gui | grep -n 'xkb_types' | cut -f1 -d:)
 sed -ie "${line}s/\"/+mac_gui(addmac_levels)\"/2" ~/.xkb/keymap/kbd.chromebook.gui
 sleep 1
 line=$(cat ~/.xkb/keymap/kbd.chromebook.term | grep -n 'xkb_symbols' | cut -f1 -d:)
-sed -ie "${line}s/\"/+altwin(swap_alt_win)\"/2" ~/.xkb/keymap/kbd.chromebook.term
+sed -ie "${line}s/\"/+altwin(swap_alt_win)+mac_term(mac_levelssym)\"/2" ~/.xkb/keymap/kbd.chromebook.term
