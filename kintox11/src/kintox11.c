@@ -5,9 +5,12 @@
   get the active window on X window system
   http://k-ui.jp/blog/2012/05/07/get-active-window-on-x-window-system/
  */
-// To compile
+// To compile without static libraries
 // gcc kintox11.c -lX11 -lXmu -ljson-c
 //
+// To compile with static library json-c 
+// Make sure archive with object files exist ar -t /usr/local/lib/libjson-c.a
+// gcc -L/usr/local/lib/ kintox11.c -ljson-c -lXmu -lXt -lX11 -o kintox11
 //
 
 #include <stdlib.h>
