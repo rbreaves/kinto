@@ -1,19 +1,7 @@
-{"config":[{
-		"name":"gui",
-		"run":"",
-		"de":[],
-		"appnames":[ "" ]
-	},
-	{
-		"name":"term",
-		"run":"",
-		"de":[],
-		"appnames":[ "Gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm" ]
-	}],
-	"init": [],
-	"defaults":[{
+{"defaults":[{
 		"id": 1,
 		"name":"Windows",
+		"type":"windows",
 		"active": false,
 		"description":"Standard Windows 104 Keyboards",
 		"gui":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.gui $DISPLAY",
@@ -26,6 +14,7 @@
 	{
 		"id": 2,
 		"name":"Mac - hid driver",
+		"type":"mac",
 		"active": false,
 		"description":"Standard Mac Keyboards with Apple driver",
 		"gui":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.gui $DISPLAY",
@@ -39,6 +28,7 @@
 	{
 		"id": 3,
 		"name":"Mac Only",
+		"type":"mac",
 		"active": true,
 		"description":"Standard Mac Keyboards",
 		"gui":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.gui $DISPLAY",
@@ -51,6 +41,7 @@
 	{
 		"id": 4,
 		"name":"Chromebook",
+		"type":"chromebook",
 		"active": false,
 		"description":"Standard Chromebook Keyboards",
 		"gui":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.chromebook.gui $DISPLAY",
@@ -63,6 +54,7 @@
 	{
 		"id": 5,
 		"name":"Chromebook - Windows",
+		"type":"chromebook",
 		"active": false,
 		"description":"Chromebook with Windows 104 Keyboard",
 		"gui":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.chromebook.gui $DISPLAY; setxkbmap -device $usbid -option altwin:ctrl_alt_win",
@@ -76,6 +68,7 @@
 	{
 		"id": 6,
 		"name":"Chromebook - Mac",
+		"type":"chromebook",
 		"active": false,
 		"description":"Chromebook with Mac Keyboard",
 		"gui":"setxkbmap -option;setxkbmap -option ctrl:swap_lwin_lctl; xkbcomp -w0 -i $internalid -I$HOME/.xkb ~/.xkb/keymap/kbd.chromebook.gui $DISPLAY",
@@ -84,42 +77,5 @@
 		"xkb_symbols_term":"+altwin(swap_alt_win)+mac_term(mac_levelssym)",
 		"xkb_types_gui":"+mac_gui(addmac_levels)",
 		"xkb_types_term":""
-	}],
-	"defaultapps":[{
-		"name":"term",
-		"appnames":[ "Gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm" ]
-	}],
-	"detypes":["gnome2","gnome3","kde4","kde5","xfce","i3wm"],
-	"de":[{
-		"id": 1,
-		"type": "gnome3",
-		"active": false,
-		"name":"gnome-init",
-		"description":"Gnome - Remove Superkey Overlay keybinding to Activities Overview",
-		"run":"gsettings set org.gnome.mutter overlay-key ''"
-	},
-	{
-		"id": 2,
-		"type": "gnome3",
-		"active": false,
-		"name":"gnome-term",
-		"description":"Gnome - Terminal - Superkey+Space opens Activities Overview",
-		"run":"gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Super>Space']\""
-	},
-	{
-		"id": 3,
-		"type": "gnome3",
-		"active": false,
-		"name":"gnome-gui",
-		"description":"Gnome - GUI - Ctrl+Space opens Activities Overview",
-		"run":"gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Ctrl>Space']\""
-	},
-	{
-		"id": 4,
-		"type": "kde5",
-		"active": false,
-		"name":"kde-init",
-		"description":"KDE Plasma 5 - Removes Superkey Overlay from the Launcher Menu",
-		"run":"gsettings set org.gnome.mutter overlay-key '';kwriteconfig5 --file ~/.config/kwinrc --group ModifierOnlyShortcuts --key Meta \"\";qdbus org.kde.KWin /KWin reconfigure"
 	}]
 }

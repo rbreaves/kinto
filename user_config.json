@@ -1,0 +1,51 @@
+{"config":[{
+		"name":"gui",
+		"run":"",
+		"de":[],
+		"appnames":[ "" ]
+	},
+	{
+		"name":"term",
+		"run":"",
+		"de":[],
+		"appnames":[ "Gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm" ]
+	}],
+	"init": [],
+	"defaultapps":[{
+		"name":"term",
+		"appnames":[ "Gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm" ]
+	}],
+	"detypes":["gnome2","gnome3","kde4","kde5","xfce","i3wm"],
+	"de":[{
+		"id": 1,
+		"type": ["gnome3"],
+		"active": false,
+		"name":"gnome-init",
+		"description":"Gnome - Remove Superkey Overlay keybinding to Activities Overview",
+		"run":"gsettings set org.gnome.mutter overlay-key ''"
+	},
+	{
+		"id": 2,
+		"type": ["gnome3"],
+		"active": false,
+		"name":"gnome-term",
+		"description":"Gnome - Terminal - Superkey+Space opens Activities Overview",
+		"run":"gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Super>Space']\""
+	},
+	{
+		"id": 3,
+		"type": ["gnome3"],
+		"active": false,
+		"name":"gnome-gui",
+		"description":"Gnome - GUI - Ctrl+Space opens Activities Overview",
+		"run":"gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Ctrl>Space']\""
+	},
+	{
+		"id": 4,
+		"type": ["kde5"],
+		"active": false,
+		"name":"kde-init",
+		"description":"KDE Plasma 5 - Removes Superkey Overlay from the Launcher Menu",
+		"run":"gsettings set org.gnome.mutter overlay-key '';kwriteconfig5 --file ~/.config/kwinrc --group ModifierOnlyShortcuts --key Meta \"\";qdbus org.kde.KWin /KWin reconfigure"
+	}]
+}
