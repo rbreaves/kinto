@@ -128,7 +128,7 @@ int main(void){
 
   size_t i,n,r; 
 
-  fp = fopen("kinto.json","r");
+  fp = fopen("user_config.json","r");
   fread(buffer, 10240, 1, fp);
   fclose(fp);
 

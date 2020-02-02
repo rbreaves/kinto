@@ -30,7 +30,7 @@
 		"active": false,
 		"name":"gnome-term",
 		"description":"Gnome - Terminal - Superkey+Space opens Activities Overview",
-		"run":"gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Super>Space']\""
+		"run":"gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Control><Shift>Space']\""
 	},
 	{
 		"id": 3,
