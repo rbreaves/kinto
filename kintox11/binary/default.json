@@ -8,13 +8,13 @@
 		"name":"term",
 		"run":"",
 		"de":[],
-		"appnames":[ "Gnome-terminal","konsole","terminator","sakura","guake","tilda","xterm","eterm" ]
+		"appnames":[ "konsole","Gnome-terminal","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm" ]
 	},
 	{
-		"name":"eosterm",
+		"name":"some3rdApp",
 		"run":"",
 		"de":[],
-		"appnames":[ "io.elementary.terminal" ]
+		"appnames":[ "some3rdApp" ]
 	}],
 	"init": [],
 	"defaulttypes":["windows","mac","chromebook"],

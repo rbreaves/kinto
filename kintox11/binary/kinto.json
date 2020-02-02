@@ -6,15 +6,15 @@
 	},
 	{
 		"name":"term",
-		"run":"setxkbmap -option",
+		"run":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.term $DISPLAY",
 		"de":[2],
-		"appnames":[ "Gnome-terminal","konsole","terminator","sakura","guake","tilda","xterm","eterm" ]
+		"appnames":[ "konsole","Gnome-terminal","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm" ]
 	},
 	{
-		"name":"eosterm",
+		"name":"some3rdApp",
 		"run":"setxkbmap -option",
 		"de":[],
-		"appnames":[ "io.elementary.terminal" ]
+		"appnames":[ "some3rdApp" ]
 	}],
 	"init": [1],
 	"defaults":[{
