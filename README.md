@@ -29,6 +29,11 @@ Kinto works for standard Windows, Apple and Chromebook keyboards. The following 
 - Python (initial install only)
 - systemd
 - x11
+- Debian/Ubuntu based distro 16.04+
+
+If you need kintox11 recompiled for your distro please let me know and I will add a binary for your distro if my binary fails.
+
+You can also attempt to compile kintox11.c on your system as well, but you will need to compile and install json-c first as its libraries will be required to compile and run the program.
 
 Wayland support is planned, but not ready yet.
 
@@ -38,7 +43,7 @@ Wayland support is planned, but not ready yet.
 ```
 git clone https://github.com/rbreaves/kinto.git
 ```
-2. Install python3 and xprop (If needed)
+2. Install python3 (If needed)
 
 Debian or Ubuntu 16.04 or 18.04
 ```
