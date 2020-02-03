@@ -12,11 +12,16 @@ Memory muscle matters for programmers and developers.
 
 If it happens on your mac keyboard then it should happen the same in linux.
 
+Note: As of version 1.0 Kinto no longer maps Cmd/Alt to Super while using the Terminal, it is now mapping to Ctrl+Shift by default. Please reset your terminal's keymaps back to their defaults.
+
+Gnome-terminal reset
+```
+dconf reset -f /org/gnome/terminal/legacy/keybindings/
+```
+
 ## What does this do exactly?
 
-![alt text](https://raw.githubusercontent.com/rbreaves/kinto/master/kinto-demo.gif)
-
-Kinto works for standard Windows, Apple and Chromebook keyboards. The following however describes the dynamic rebinding based on a standard Windows keyboard.
+Kinto works for standard Windows, Apple and Chromebook keyboards. The following however describes the dynamic rebinding based on a standard Windows keyboard. (Alt location is Cmd for Apple keyboards)
 
 - Normal apps - Alt will be Ctrl, Win/Super will be Alt, Ctrl will be Win/Super
 
@@ -53,7 +58,68 @@ sudo apt install python3
 
 3. Follow the prompts and the script will guide you through the rest of the setup.
 ```
-./install.py
+./setup.py
+```
+
+## JSON config files
+
+Features
+- Unlimited keyboard configurations per App/category (user_config.json - config -> create app object)
+- Dynamic Desktop Environment shortcut capabilities (user_config.json - de -> create DE tweak/remap)
+
+Located at ~/.config/kinto/ you will find user_config.json which will look like the following after an install. You can modify the defaults.json file in the root directory of kinto to create additional keyboard layout types/support without needing to modify any of the underlying Kinto code. 
+
+You can also add additional Desktop Environment related tweaks to user_config.json in the install directory as well and the installer will prompt you to install them. You may also fork and submit any json or additional .xkb configurations to me for approval if you believe it makes Linux more like typing on a Mac.
+
+```
+{"config":[{
+		"name":"gui",
+		"run":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.gui $DISPLAY",
+		"de":[2],
+		"appnames":[ "" ]
+	},
+	{
+		"name":"term",
+		"run":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.term $DISPLAY",
+		"de":[2],
+		"appnames":[ "Gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm" ]
+	}],
+	"init": [1],
+	"detypes":["gnome2","gnome3","kde4","kde5","xfce","i3wm"],
+	"de":[{
+		"id": 1,
+		"type": ["gnome3"],
+		"active": false,
+		"intent":"init",
+		"name":"gnome-init",
+		"description":"Gnome - Remove Superkey Overlay keybinding to Activities Overview",
+		"run":"gsettings set org.gnome.mutter overlay-key ''",
+		"run_term":"",
+		"run_gui":""
+	},
+	{
+		"id": 2,
+		"type": ["gnome3"],
+		"active": false,
+		"intent":"gui_term",
+		"name":"Gnome Activities Overview",
+		"description":"Cmd+Space activates Activities Overview",
+		"run":"",
+		"run_term":"gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Control><Shift>Space']\"",
+		"run_gui":"gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Ctrl>Space']\""
+	},
+	{
+		"id": 3,
+		"type": ["kde5"],
+		"active": false,
+		"intent":"init",
+		"name":"kde-init",
+		"description":"KDE Plasma 5 - Removes Superkey Overlay from the Launcher Menu",
+		"run":"kwriteconfig5 --file ~/.config/kwinrc --group ModifierOnlyShortcuts --key Meta \"\";qdbus org.kde.KWin /KWin reconfigure",
+		"run_term":"",
+		"run_gui":""
+	}]
+}
 ```
 
 ## How to Control Kinto
