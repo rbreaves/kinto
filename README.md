@@ -4,7 +4,7 @@
 
 [![GitHub release](https://img.shields.io/github/release/rbreaves/kinto.svg)](https://github.com/rbreaves/kinto/releases)
 
-![alt text](https://raw.githubusercontent.com/rbreaves/kinto/master/splash.png)
+![alt text](https://github.com/rbreaves/kinto/blob/master/splash.png)
 
 \- Type in Linux like it's a Mac. \-
 
