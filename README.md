@@ -4,7 +4,9 @@
 
 [![GitHub release](https://img.shields.io/github/release/rbreaves/kinto.svg)](https://github.com/rbreaves/kinto/releases)
 
-\- A better linux keyboard layout for professional mac users \-
+![alt text](https://raw.githubusercontent.com/rbreaves/kinto/master/splash.png)
+
+\- Type in Linux like it's a Mac. \-
 
 Memory muscle matters for programmers and developers.
 
@@ -41,7 +43,7 @@ git clone https://github.com/rbreaves/kinto.git
 Debian or Ubuntu 16.04 or 18.04
 ```
 sudo apt update
-sudo apt install python3 x11-utils
+sudo apt install python3
 ```
 
 3. Follow the prompts and the script will guide you through the rest of the setup.
