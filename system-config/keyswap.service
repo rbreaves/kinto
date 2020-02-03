@@ -8,7 +8,7 @@ Type=simple
 #Group={username}
 Environment=DISPLAY=:0
 Restart=always
-WorkingDirectory=/home/{username}/.config/
+WorkingDirectory=/home/{username}/.config/kinto
 ExecStart=
 
 [Install]
