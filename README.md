@@ -2,7 +2,7 @@
 
 ![alt text](https://raw.githubusercontent.com/rbreaves/kinto/master/Kinto.png)
 
-[![GitHub release](https://img.shields.io/github/release/rbreaves/kinto.svg)](https://github.com/rbreaves/kinto/releases)
+[![GitHub release](https://img.shields.io/github/release/rbreaves/kinto.svg)](https://github.com/rbreaves/kinto/releases/latest)
 
 ![alt text](https://github.com/rbreaves/kinto/blob/master/splash.png)
 
@@ -10,7 +10,7 @@
 
 Memory muscle matters for programmers and developers.
 
-If it happens on your mac keyboard then it should happen the same in linux.
+Kinto tries to create a ZERO remapping or key rebinding solution by placing your modifiers and shortcut keys where they are expected to be ahead of time - and to do it faster than anything else. The point is to keep the user out of individually setting up new keybindings.
 
 Note: As of version 1.0 Kinto no longer maps Cmd/Alt to Super while using the Terminal, it is now mapping to Ctrl+Shift by default. Please reset your terminal's keymaps back to their defaults.
 
