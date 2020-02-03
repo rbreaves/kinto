@@ -8,9 +8,7 @@
 
 \- Type in Linux like it's a Mac. \-
 
-Memory muscle matters for programmers and developers.
-
-Kinto tries to create a ZERO remapping or key rebinding solution by placing your modifiers and shortcut keys where they are expected to be ahead of time - and to do it faster than anything else. The point is to keep the user out of individually setting up new keybindings.
+Cmd = Ctrl+Shift for all terminals.
 
 Note: As of version 1.0 Kinto no longer maps Cmd/Alt to Super while using the Terminal, it is now mapping to Ctrl+Shift by default. Please reset your terminal's keymaps back to their defaults.
 
