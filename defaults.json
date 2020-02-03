@@ -52,7 +52,7 @@
 		"gui":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.chromebook.gui $DISPLAY",
 		"term":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.term $DISPLAY",
 		"xkb_symbols_gui":"+chromebook(swap_lalt_lctrl)+mac_gui(mac_levelssym)",
-		"xkb_symbols_term":"+altwin(swap_alt_win)+mac_term(mac_levelssym)",
+		"xkb_symbols_term":"+altwin(swap_alt_win)+mac_term_chromebook(mac_levelssym)",
 		"xkb_types_gui":"+mac_gui(addmac_levels)",
 		"xkb_types_term":""
 	},
@@ -66,7 +66,7 @@
 		"term":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.term $DISPLAY",
 		"fallbackgui":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.chromebook.gui $DISPLAY",
 		"xkb_symbols_gui":"+chromebook(swap_lalt_lctrl)+mac_gui(mac_levelssym)",
-		"xkb_symbols_term":"+altwin(swap_alt_win)+mac_term(mac_levelssym)",
+		"xkb_symbols_term":"+altwin(swap_alt_win)+mac_term_chromebook(mac_levelssym)",
 		"xkb_types_gui":"+mac_gui(addmac_levels)",
 		"xkb_types_term":""
 	},
@@ -79,7 +79,7 @@
 		"gui":"setxkbmap -option;setxkbmap -option ctrl:swap_lwin_lctl; xkbcomp -w0 -i $internalid -I$HOME/.xkb ~/.xkb/keymap/kbd.chromebook.gui $DISPLAY",
 		"term":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.term $DISPLAY",
 		"xkb_symbols_gui":"+chromebook(swap_lalt_lctrl)+mac_gui(mac_levelssym)",
-		"xkb_symbols_term":"+altwin(swap_alt_win)+mac_term(mac_levelssym)",
+		"xkb_symbols_term":"+altwin(swap_alt_win)+mac_term_chromebook(mac_levelssym)",
 		"xkb_types_gui":"+mac_gui(addmac_levels)",
 		"xkb_types_term":""
 	}]

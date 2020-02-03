@@ -1,0 +1,14 @@
+default partial xkb_symbols "mac_levelssym" {
+    key <LALT> {
+      repeat= no,
+      type= "ONE_LEVEL",
+      symbols[Group1]= [ Hyper_L ],
+      actions[group1]=[ SetMods(modifiers=Shift+Control) ]
+    };
+    key <RALT> {
+      repeat= no,
+      type= "ONE_LEVEL",
+      symbols[Group1]= [ Hyper_R ],
+      actions[group1]=[ SetMods(modifiers=Shift+Control) ]
+    };
+};
