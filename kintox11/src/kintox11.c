@@ -120,7 +120,8 @@ int main(void){
   struct json_object *parsed_json, *config, *config_obj, 
   *config_obj_name, *config_obj_run, *config_obj_de, 
   *config_obj_appnames, *appnames_obj, *init, *de, 
-  *de_obj, *de_obj_id, *de_obj_active, *de_obj_run;
+  *de_obj, *de_obj_id, *de_obj_active, *de_obj_run,
+  *de_obj_runterm,*de_obj_rungui;
 
   int arraylen;
   int appnames_len, init_len, de_len, config_de_len;
@@ -149,6 +150,8 @@ int main(void){
   int de_id_array[de_len];
   Bool de_active_array[de_len];
   const char *de_run_array[de_len];
+  const char *de_runterm_array[de_len];
+  const char *de_rungui_array[de_len];
 
   // Grab all de variable info needed
   for (i = 0; i < de_len; i++) {
@@ -159,6 +162,10 @@ int main(void){
     de_active_array[i] = json_object_get_int(de_obj_active);
     de_obj_run = json_object_object_get(de_obj, "run");
     de_run_array[i] = json_object_get_string(de_obj_run);
+    de_obj_runterm = json_object_object_get(de_obj, "run_term");
+    de_runterm_array[i] = json_object_get_string(de_obj_runterm);
+    de_obj_rungui = json_object_object_get(de_obj, "run_gui");
+    de_rungui_array[i] = json_object_get_string(de_obj_rungui);
     // printf("de_run_array[%ld]: %s\n",i,de_run_array[i]);
   }
   // de ends
@@ -278,7 +285,7 @@ int main(void){
                     if(config_de_array[i][r] != -1){
                       int de_id_idx = in_int(de_id_array, de_len, config_de_array[i][r]);
                       // printf("Running de command: %s\n",de_run_array[de_id_idx]);
-                      system(de_run_array[de_id_idx]);
+                      system(de_runterm_array[de_id_idx]);
                     }
                   }
                   remap_bool = 0;
@@ -304,7 +311,7 @@ int main(void){
                     if(config_de_array[gui_idx][r] != -1){
                       int de_id_idx = in_int(de_id_array, de_len, config_de_array[gui_idx][r]);
                       // printf("Running de command: %s\n",de_run_array[de_id_idx]);
-                      system(de_run_array[de_id_idx]);
+                      system(de_rungui_array[de_id_idx]);
                     }
                   }
                   // printf("3rd elseif %s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);

@@ -1,4 +1,9 @@
-{"defaults":[{
+{"defaultapps":[{
+		"name":"term",
+		"appnames":[ "Gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm" ]
+	}],
+	"defaulttypes":["windows","mac","chromebook"],
+	"defaults":[{
 		"id": 1,
 		"name":"Windows",
 		"type":"windows",

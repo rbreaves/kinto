@@ -50,23 +50,6 @@ class bcolors:
 	CBEIGEBG2  = '\033[106m'
 	CWHITEBG2  = '\033[107m'
 
-def cmdline(command):
-    process = Popen(
-        args=command,
-        stdout=PIPE,
-        shell=True
-    )
-    return process.communicate()[0]
-
-def copytree(src, dst, symlinks=False, ignore=None):
-    for item in os.listdir(src):
-        s = os.path.join(src, item)
-        d = os.path.join(dst, item)
-        if os.path.isdir(s):
-            shutil.copytree(s, d, symlinks, ignore)
-        else:
-            shutil.copy2(s, d)
-
 def yn_choice(message, default='y'):
     choices = 'Y/n' if default.lower() in ('y', 'yes') else 'y/N'
     choice = input("%s (%s) " % (message, choices))
