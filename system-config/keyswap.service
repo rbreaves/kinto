@@ -8,7 +8,6 @@ Type=simple
 #Group={username}
 Environment=DISPLAY=:0
 Restart=always
-RestartSec=5
 WorkingDirectory=/home/{username}/.config/kinto
 ExecStart=
 
