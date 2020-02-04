@@ -100,7 +100,7 @@ Window get_top_window(Display* d, Window start){
   unsigned int nchildren;
   Status s;
 
-  printf("getting top window ... \n");
+  // printf("getting top window ... \n");
   while (parent != root) {
     w = parent;
     s = XQueryTree(d, w, &root, &parent, &children, &nchildren); // see man
@@ -113,10 +113,10 @@ Window get_top_window(Display* d, Window start){
       exit(1);
     }
 
-    printf("  get parent (window: %d)\n", (int)w);
+    // printf("  get parent (window: %d)\n", (int)w);
   }
 
-  printf("success (window: %d)\n", (int)w);
+  // printf("success (window: %d)\n", (int)w);
 
   return w;
 }
@@ -242,13 +242,13 @@ int main(void){
       }
       else{
         appnames_array[i][n] = json_object_get_string(json_object_array_get_idx(config_obj_appnames, n));
-        // printf("%s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
+        //printf("%s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
       }
     }
     if(appnames_max > appnames_len){
       for (n = appnames_len; n < appnames_max; n++){
         appnames_array[i][n] = NULL;
-        // printf("%s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
+        //printf("%s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
       }
     }
 
@@ -317,6 +317,8 @@ int main(void){
           if(strcmp(name_array[i],"gui")){
             // printf("%s\n","3");
             for(n = 0; n < appnames_max; ++n){
+              // printf("2nd elseif %s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
+              // printf("3rd elseif (i:%ld == arraylen-1:%d && appnames_array[i:%ld][n:%ld+1]:%s  == NULL) && (remap_bool: %i == 0 || 2)\n",i,arraylen-1,i,n,appnames_array[i][n+1],remap_bool);
               if (appnames_array[i][n] != NULL){
                 // printf("%s\n",appnames_array[i][n]);
                 // If statement for triggering terminal config
@@ -337,12 +339,13 @@ int main(void){
                   break;
                 } // Else command for ignoring similar app category based on config
                 else if((strcicmp(appnames_array[i][n], current_app) == 0 && remap_bool == 0)){
-                  // printf("2nd elseif %s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
+                  // printf("in 2nd elseif %s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
                   // printf("%s\n","4");
                   breakouter = 1;
                   break;
                 } // Else command for triggering gui config
-                else if ((i == arraylen-1 || appnames_array[i][n+1] == NULL) && (remap_bool == 0 || remap_bool == 2)){
+                else if ((i == arraylen-1 && (appnames_array[i][n] == NULL || appnames_max == n+1)) && (remap_bool == 0 || remap_bool == 2)){
+                  // printf("in 3rd elseif (i:%ld == arraylen-1:%d && appnames_array[i:%ld][n:%ld+1]:%s  == NULL) && (remap_bool: %i == 0 || 2)\n",i,arraylen-1,i,n,appnames_array[i][n+1],remap_bool);
                   char *find = "gui";
                   int gui_idx = in(name_array, arraylen, find);
 
@@ -357,7 +360,7 @@ int main(void){
                       system(de_rungui_array[de_id_idx]);
                     }
                   }
-                  // printf("3rd elseif %s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
+                  
                   remap_bool = 1;
                   fflush(stdout);
                   breakouter = 1;
