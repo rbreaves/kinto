@@ -10,7 +10,7 @@
 //
 // To compile with static library json-c 
 // Make sure archive with object files exist ar -t /usr/local/lib/libjson-c.a
-// gcc -L/usr/local/lib/ kintox11.c -ljson-c -lXmu -lXt -lX11 -o kintox11
+// gcc -L/usr/local/lib/ kintox11.c -ljson-c -lXmu -lXt -lX11 -O2 -o kintox11
 //
 
 #include <stdlib.h>
@@ -84,6 +84,39 @@ Window get_focus_window(Display* d){
     printf("no focus window\n");
     exit(1);
   }
+
+  return w;
+}
+
+// get the top window.
+// a top window have the following specifications.
+//  * the start window is contained the descendent windows.
+//  * the parent window is the root window.
+Window get_top_window(Display* d, Window start){
+  Window w = start;
+  Window parent = start;
+  Window root = None;
+  Window *children;
+  unsigned int nchildren;
+  Status s;
+
+  // printf("getting top window ... \n");
+  while (parent != root) {
+    w = parent;
+    s = XQueryTree(d, w, &root, &parent, &children, &nchildren); // see man
+
+    if (s)
+      XFree(children);
+
+    if(xerror){
+      printf("fail\n");
+      exit(1);
+    }
+
+    // printf("  get parent (window: %d)\n", (int)w);
+  }
+
+  // printf("success (window: %d)\n", (int)w);
 
   return w;
 }
@@ -209,13 +242,13 @@ int main(void){
       }
       else{
         appnames_array[i][n] = json_object_get_string(json_object_array_get_idx(config_obj_appnames, n));
-        // printf("%s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
+        //printf("%s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
       }
     }
     if(appnames_max > appnames_len){
       for (n = appnames_len; n < appnames_max; n++){
         appnames_array[i][n] = NULL;
-        // printf("%s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
+        //printf("%s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
       }
     }
 
@@ -243,6 +276,7 @@ int main(void){
 
   Display* d;
   Window w;
+  char *name;
 
   // for XmbTextPropertyToTextList
   setlocale(LC_ALL, ""); // see man locale
@@ -252,6 +286,7 @@ int main(void){
   XSetErrorHandler(handle_error);
 
   char * prior_app;
+  char * current_app;
   prior_app = malloc(sizeof(char)*100);
   strcpy(prior_app,"none");
 
@@ -259,27 +294,37 @@ int main(void){
 
   // get active window
   w = get_focus_window(d);
+  w = get_top_window(d, w);
+
+  // XFetchName(d, w, &name);
+  // printf("window:%#x name:%s\n", w, name);
+  printf("First window name: %s \n",str_window_class(d, w,prior_app));
 
   int breakouter;
 
   for (;;)
   {
+    current_app = str_window_class(d, w,prior_app);
     breakouter = 0;
+    // XFetchName(d, w, &name);
+    // printf("window:%#x name:%s\n", w, name);
     // printf("%s\n","1");
     // printf("%s\n",str_window_class(d, w,prior_app));
-    if(strcmp(str_window_class(d, w,prior_app),prior_app)){
+    if(strcmp(current_app,prior_app)){
       // printf("%s\n","2");
       for(i = 0; i < arraylen; ++i){
         if(breakouter == 0){
           if(strcmp(name_array[i],"gui")){
             // printf("%s\n","3");
             for(n = 0; n < appnames_max; ++n){
+              // printf("2nd elseif %s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
+              // printf("3rd elseif (i:%ld == arraylen-1:%d && appnames_array[i:%ld][n:%ld+1]:%s  == NULL) && (remap_bool: %i == 0 || 2)\n",i,arraylen-1,i,n,appnames_array[i][n+1],remap_bool);
               if (appnames_array[i][n] != NULL){
                 // printf("%s\n",appnames_array[i][n]);
                 // If statement for triggering terminal config
-                if((strcicmp(appnames_array[i][n], str_window_class(d, w,prior_app)) == 0 && (remap_bool == 1 || remap_bool == 2))) {
+                if((strcicmp(appnames_array[i][n], current_app) == 0 && (remap_bool == 1 || remap_bool == 2))) {
                   // printf("1st if %s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
-                  printf("%s\n",name_array[i]);
+                  printf("%s: %s\n",name_array[i],current_app);
                   system(run_array[i]);
                   for(r = 0; r < config_de_max; r++){
                     if(config_de_array[i][r] != -1){
@@ -293,18 +338,19 @@ int main(void){
                   breakouter = 1;
                   break;
                 } // Else command for ignoring similar app category based on config
-                else if((strcicmp(appnames_array[i][n], str_window_class(d, w,prior_app)) == 0 && remap_bool == 0)){
-                  // printf("2nd elseif %s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
+                else if((strcicmp(appnames_array[i][n], current_app) == 0 && remap_bool == 0)){
+                  // printf("in 2nd elseif %s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
                   // printf("%s\n","4");
                   breakouter = 1;
                   break;
                 } // Else command for triggering gui config
-                else if ((i == arraylen-1 || appnames_array[i][n+1] == NULL) && (remap_bool == 0 || remap_bool == 2)){
+                else if ((i == arraylen-1 && (appnames_array[i][n] == NULL || appnames_max == n+1)) && (remap_bool == 0 || remap_bool == 2)){
+                  // printf("in 3rd elseif (i:%ld == arraylen-1:%d && appnames_array[i:%ld][n:%ld+1]:%s  == NULL) && (remap_bool: %i == 0 || 2)\n",i,arraylen-1,i,n,appnames_array[i][n+1],remap_bool);
                   char *find = "gui";
                   int gui_idx = in(name_array, arraylen, find);
 
                   if(gui_idx >= 0) {
-                    printf("%s\n",name_array[gui_idx]);
+                    printf("%s: %s\n",name_array[gui_idx],current_app);
                     system(run_array[gui_idx]);
                   }
                   for(r = 0; r < config_de_max; r++){
@@ -314,7 +360,7 @@ int main(void){
                       system(de_rungui_array[de_id_idx]);
                     }
                   }
-                  // printf("3rd elseif %s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
+                  
                   remap_bool = 1;
                   fflush(stdout);
                   breakouter = 1;
