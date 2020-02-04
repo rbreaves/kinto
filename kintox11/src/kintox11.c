@@ -286,6 +286,7 @@ int main(void){
   XSetErrorHandler(handle_error);
 
   char * prior_app;
+  char * current_app;
   prior_app = malloc(sizeof(char)*100);
   strcpy(prior_app,"none");
 
@@ -303,12 +304,13 @@ int main(void){
 
   for (;;)
   {
+    current_app = str_window_class(d, w,prior_app);
     breakouter = 0;
     // XFetchName(d, w, &name);
     // printf("window:%#x name:%s\n", w, name);
     // printf("%s\n","1");
     // printf("%s\n",str_window_class(d, w,prior_app));
-    if(strcmp(str_window_class(d, w,prior_app),prior_app)){
+    if(strcmp(current_app,prior_app)){
       // printf("%s\n","2");
       for(i = 0; i < arraylen; ++i){
         if(breakouter == 0){
@@ -318,9 +320,9 @@ int main(void){
               if (appnames_array[i][n] != NULL){
                 // printf("%s\n",appnames_array[i][n]);
                 // If statement for triggering terminal config
-                if((strcicmp(appnames_array[i][n], str_window_class(d, w,prior_app)) == 0 && (remap_bool == 1 || remap_bool == 2))) {
+                if((strcicmp(appnames_array[i][n], current_app) == 0 && (remap_bool == 1 || remap_bool == 2))) {
                   // printf("1st if %s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
-                  printf("%s\n",name_array[i]);
+                  printf("%s: %s\n",name_array[i],current_app);
                   system(run_array[i]);
                   for(r = 0; r < config_de_max; r++){
                     if(config_de_array[i][r] != -1){
@@ -334,7 +336,7 @@ int main(void){
                   breakouter = 1;
                   break;
                 } // Else command for ignoring similar app category based on config
-                else if((strcicmp(appnames_array[i][n], str_window_class(d, w,prior_app)) == 0 && remap_bool == 0)){
+                else if((strcicmp(appnames_array[i][n], current_app) == 0 && remap_bool == 0)){
                   // printf("2nd elseif %s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
                   // printf("%s\n","4");
                   breakouter = 1;
@@ -345,7 +347,7 @@ int main(void){
                   int gui_idx = in(name_array, arraylen, find);
 
                   if(gui_idx >= 0) {
-                    printf("%s\n",name_array[gui_idx]);
+                    printf("%s: %s\n",name_array[gui_idx],current_app);
                     system(run_array[gui_idx]);
                   }
                   for(r = 0; r < config_de_max; r++){
