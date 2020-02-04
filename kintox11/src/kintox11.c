@@ -10,7 +10,7 @@
 //
 // To compile with static library json-c 
 // Make sure archive with object files exist ar -t /usr/local/lib/libjson-c.a
-// gcc -L/usr/local/lib/ kintox11.c -ljson-c -lXmu -lXt -lX11 -o kintox11
+// gcc -L/usr/local/lib/ kintox11.c -ljson-c -lXmu -lXt -lX11 -O2 -o kintox11
 //
 
 #include <stdlib.h>
