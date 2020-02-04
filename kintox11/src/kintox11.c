@@ -88,6 +88,39 @@ Window get_focus_window(Display* d){
   return w;
 }
 
+// get the top window.
+// a top window have the following specifications.
+//  * the start window is contained the descendent windows.
+//  * the parent window is the root window.
+Window get_top_window(Display* d, Window start){
+  Window w = start;
+  Window parent = start;
+  Window root = None;
+  Window *children;
+  unsigned int nchildren;
+  Status s;
+
+  printf("getting top window ... \n");
+  while (parent != root) {
+    w = parent;
+    s = XQueryTree(d, w, &root, &parent, &children, &nchildren); // see man
+
+    if (s)
+      XFree(children);
+
+    if(xerror){
+      printf("fail\n");
+      exit(1);
+    }
+
+    printf("  get parent (window: %d)\n", (int)w);
+  }
+
+  printf("success (window: %d)\n", (int)w);
+
+  return w;
+}
+
 
 const char * str_window_class(Display* d, Window w, char *prior_app ){
   Status s;
@@ -243,6 +276,7 @@ int main(void){
 
   Display* d;
   Window w;
+  char *name;
 
   // for XmbTextPropertyToTextList
   setlocale(LC_ALL, ""); // see man locale
@@ -259,12 +293,19 @@ int main(void){
 
   // get active window
   w = get_focus_window(d);
+  w = get_top_window(d, w);
+
+  // XFetchName(d, w, &name);
+  // printf("window:%#x name:%s\n", w, name);
+  printf("First window name: %s \n",str_window_class(d, w,prior_app));
 
   int breakouter;
 
   for (;;)
   {
     breakouter = 0;
+    // XFetchName(d, w, &name);
+    // printf("window:%#x name:%s\n", w, name);
     // printf("%s\n","1");
     // printf("%s\n",str_window_class(d, w,prior_app));
     if(strcmp(str_window_class(d, w,prior_app),prior_app)){
