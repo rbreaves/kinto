@@ -67,10 +67,10 @@ Display* open_display(){
 }
 
 int handle_error(Display* display, XErrorEvent* error){
-  // printf("X11 error: type=%d, serial=%lu, code=%d\n",
-  //   error->type, error->serial, (int)error->error_code);
-  // xerror = True;
-  return 0;
+  printf("X11 error: type=%d, serial=%lu, code=%d\n",
+    error->type, error->serial, (int)error->error_code);
+  xerror = True;
+  return 1;
 }
 
 Window get_focus_window(Display* d){
@@ -108,7 +108,7 @@ Window get_top_window(Display* d, Window start){
     if (s)
       XFree(children);
 
-    if(xerror){
+    if(xerror || w == 0){
       printf("fail\n");
       exit(1);
     }
@@ -121,6 +121,17 @@ Window get_top_window(Display* d, Window start){
   return w;
 }
 
+// search a named window (that has a WM_STATE prop)
+// on the descendent windows of the argment Window.
+Window get_named_window(Display* d, Window start){
+  Window w;
+  // printf("getting named window ... ");
+  w = XmuClientWindow(d, start); // see man
+  // if(w == start)
+  //   printf("fail\n");
+  // printf("success (window: %d)\n", (int) w);
+  return w;
+}
 
 const char * str_window_class(Display* d, Window w, char *prior_app ){
   Status s;
@@ -161,7 +172,8 @@ int main(void){
   int system(const char *command);
 
   size_t i,n,r; 
-
+  
+  printf("Importing user_config.json...\n");
   fp = fopen("user_config.json","r");
   fread(buffer, 10240, 1, fp);
   fclose(fp);
@@ -266,6 +278,8 @@ int main(void){
 
     }
   }
+  
+  printf("Data from user_config.json imported successfully.\n");
 
   for (i = 0; i < init_len; i++) {
     init_array[i] = json_object_get_int(json_object_array_get_idx(init, i));
@@ -292,9 +306,12 @@ int main(void){
 
   int remap_bool = 2;
 
+  printf("Starting keyswap...\n");
+
   // get active window
   w = get_focus_window(d);
   w = get_top_window(d, w);
+  w = get_named_window(d, w);
 
   // XFetchName(d, w, &name);
   // printf("window:%#x name:%s\n", w, name);
@@ -339,6 +356,7 @@ int main(void){
                   break;
                 } // Else command for ignoring similar app category based on config
                 else if((strcicmp(appnames_array[i][n], current_app) == 0 && remap_bool == 0)){
+                  printf("    %s\n",current_app);
                   // printf("in 2nd elseif %s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
                   // printf("%s\n","4");
                   breakouter = 1;
@@ -365,6 +383,12 @@ int main(void){
                   fflush(stdout);
                   breakouter = 1;
                   break;
+                } // GUI app still - no switching needed
+                else if ((i == arraylen-1 && appnames_max == n+1) && remap_bool == 1){
+                  printf("    %s\n",current_app);
+                }
+                else if ((i == arraylen-1 && appnames_max == n+1)){
+                  printf("%s - Failed to match any keyswap requirements\n",current_app);
                 }
               }
             }
@@ -381,6 +405,7 @@ int main(void){
     XEvent e;
     XNextEvent(d, &e);
     w = get_focus_window(d);
-
+    w = get_top_window(d, w);
+    w = get_named_window(d, w);
   }
 }
