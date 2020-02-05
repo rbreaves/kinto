@@ -4,9 +4,6 @@ PartOf=graphical-session.target
 
 [Service]
 Type=simple
-#User={username}
-#Group={username}
-Environment=DISPLAY=:0
 Restart=always
 RestartSec=1
 WorkingDirectory=/home/{username}/.config/kinto
