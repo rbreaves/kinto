@@ -1,5 +1,7 @@
 #!/bin/bash
 
+systemctl --user stop keyswap >/dev/null 2>&1
+systemctl --user disable keyswap >/dev/null 2>&1
 swapcmd="\/bin\/bash\ \/home\/`whoami`\/.config\/kinto\/xactive.sh"
 mkdir -p ~/.config/systemd/user
 mkdir -p ~/.config/autostart
@@ -11,3 +13,4 @@ sed -i "s/{username}/`whoami`/g" ~/.config/systemd/user/keyswap.service
 sed -i "s/ExecStart=/ExecStart=${swapcmd}/g" ~/.config/systemd/user/keyswap.service
 systemctl --user enable keyswap.timer
 systemctl --user start keyswap.timer
+systemctl --user start keyswap
