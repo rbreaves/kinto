@@ -327,7 +327,7 @@ int main(void){
     // printf("window:%#x name:%s\n", w, name);
     // printf("%s\n","1");
     // printf("%s\n",str_window_class(d, w,prior_app));
-    if(strcmp(current_app,prior_app)){
+    if(strcmp(current_app,prior_app) || !strcmp(current_app,"none")){
       // printf("%s\n","2");
       for(i = 0; i < arraylen; ++i){
         if(breakouter == 0){
