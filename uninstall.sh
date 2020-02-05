@@ -2,7 +2,7 @@
 
 systemctl --user stop keyswap
 systemctl --user disable keyswap
-rm -rf ~/.config/autostart/keyswap.sh
+rm -rf ~/.config/autostart/kinto.desktop
 rm -rf ~/.config/kinto
 rm -rf ~/.xkb
 
