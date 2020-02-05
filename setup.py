@@ -130,23 +130,28 @@ if(onetime):
 print("\nDynamic shortcut tweaks\n")
 
 intents = [obj for obj in user_config['de'] if(obj['intent'] == "gui_term")]
+tweaks = []
+tweaks_selected = []
 
 for index, k in enumerate(intents):
 	print(color_arr[default-1] + bcolors.BOLD + str(index+1) + '. ' + k['name'] + bcolors.ENDC)
 	print(bcolors.CYELLOW + 'Description: ' + k['description'] + bcolors.ENDC)
 	print(bcolors.CYELLOW + 'run in gui mode: ' + k['run_gui'].replace(";", "\n") + bcolors.ENDC)
 	print(bcolors.CYELLOW + 'run in terminal mode: ' + k['run_term'].replace(";", "\n") + bcolors.ENDC + '\n')
+	tweaks.append(k['id'])
 
 print(bcolors.CYELLOW + "Please enter your dynamic shortcut tweak(s) (eg 1 or 1 2 3 - leave blank to skip): " + bcolors.ENDC)
 defaultde = [int(i) for i in input().split()]
-if len(defaultde) != 0:
-	# gui
-	user_config['config'][0]['de'] = defaultde
-	# term
-	user_config['config'][1]['de'] = defaultde
 
 for d in defaultde:
-    user_config['de'][d-1]['active'] = True
+    user_config['de'][tweaks[d-1]]['active'] = True
+    tweaks_selected.append(tweaks[d-1])
+
+if len(defaultde) != 0:
+	# gui
+	user_config['config'][0]['de'] = tweaks_selected
+	# term
+	user_config['config'][1]['de'] = tweaks_selected
 
 user_config['config'][0]['run'] = keyboardconfigs[defaultkb-1]['gui']
 user_config['config'][1]['run'] = keyboardconfigs[defaultkb-1]['term']
