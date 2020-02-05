@@ -67,10 +67,10 @@ Display* open_display(){
 }
 
 int handle_error(Display* display, XErrorEvent* error){
-  // printf("X11 error: type=%d, serial=%lu, code=%d\n",
-  //   error->type, error->serial, (int)error->error_code);
-  // xerror = True;
-  return 0;
+  printf("X11 error: type=%d, serial=%lu, code=%d\n",
+    error->type, error->serial, (int)error->error_code);
+  xerror = True;
+  return 1;
 }
 
 Window get_focus_window(Display* d){
