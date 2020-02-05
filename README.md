@@ -194,6 +194,7 @@ https://superuser.com/questions/385748/binding-superc-superv-to-copy-and-paste
 
 ## More information about Kinto
 
+https://medium.com/@benreaves/kinto-v1-0-released-2018e6401d2e
 https://medium.com/@benreaves/kinto-a-mac-inspired-keyboard-mapping-for-linux-58f731817c0
 
 ## License
