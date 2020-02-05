@@ -165,17 +165,39 @@ systemctl --user stop keyswap && setxkbmap -option;setxkbmap -option altwin:swap
 
 ## Troubleshooting
 
+### Does not start when you log in or after you reboot?
+
+1. Check the status
+```
+systemctl --user status keyswap
+```
+2. Check the service journal
+```
+journalctl -xe
+```
+
+Open a ticket and send me the info.
+
 ### Keyswap is not occurring, but it was working.
 
 Now that Kinto is using a custom written C program I am not aware of any specific bugs or issues, but you can start here if you having difficulties and please report it if it is reproducible.
-
-1. Restart Kinto
+1. Get status
+```
+systemctl --user status keyswap
+```
+2. Restart Kinto
 ```
 systemctl --user restart keyswap
 ```
-2. Check the Status of Kinto and open a ticket with the output.
+3. Check the Status again and open a ticket if you need to.
 ```
 systemctl --user status keyswap
+```
+
+You can also do the following to see if it is an actual issue with kintox11 not running or your service file.
+```
+cd ~/.config/kinto
+./kintox11
 ```
 
 ## Language Support
