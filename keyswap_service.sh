@@ -13,4 +13,5 @@ cp ./system-config/xactive.sh ~/.config/kinto/xactive.sh
 sed -i "s/{username}/`whoami`/g" ~/.config/systemd/user/keyswap.service
 sed -i "s/ExecStart=/ExecStart=${swapcmd}/g" ~/.config/systemd/user/keyswap.service
 systemctl --user daemon-reload
+systemctl --user enable keyswap
 systemctl --user start keyswap
