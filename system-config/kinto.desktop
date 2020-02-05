@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Kinto
+GenericName=Kinto
+Comment=Make Linux Type Like it's a Mac
+Exec=/bin/systemctrl --user start keyswap
+Terminal=false
+Type=Application
+X-GNOME-Autostart-enabled=true
