@@ -18,6 +18,7 @@
 #include <locale.h>
 #include <string.h>
 #include <ctype.h>
+#include <unistd.h>
 #include <X11/Xlib.h>           // `apt-get install libx11-dev`
 #include <X11/Xmu/WinUtil.h>    // `apt-get install libxmu-dev`
 #include <json-c/json.h>        // `apt install libjson-c-dev`
@@ -100,16 +101,15 @@ Window get_top_window(Display* d, Window start){
   unsigned int nchildren;
   Status s;
 
-  // printf("getting top window ... \n");
-  while (parent != root) {
+  while (parent != root && parent != 0) {
     w = parent;
     s = XQueryTree(d, w, &root, &parent, &children, &nchildren); // see man
 
     if (s)
       XFree(children);
 
-    if(xerror || w == 0){
-      printf("fail\n");
+    if(xerror){
+      printf("fail to get top window: %d\n",w);
       exit(1);
     }
 
