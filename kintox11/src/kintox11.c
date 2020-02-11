@@ -59,9 +59,20 @@ int strcicmp(char const *a, char const *b)
 }
 
 Display* open_display(){
+  int i;
   Display* d = XOpenDisplay(NULL);
+  for (i = 0; i < 60; i++) {
+    if(d == NULL){
+      printf("fail to open X server display...\n");
+    }
+    else{
+      break;
+    }
+    sleep(1);
+  }
   if(d == NULL){
-    printf("fail to open X server display...\n");
+    printf("fail to open X server display for 1 minute...\n");
+    printf("Kintox11 is now exiting...\n");
     exit(1);
   }
   return d;
@@ -109,7 +120,7 @@ Window get_top_window(Display* d, Window start){
       XFree(children);
 
     if(xerror){
-      printf("fail to get top window: %d\n",w);
+      printf("fail to get top window: %ld\n",w);
       exit(1);
     }
 
