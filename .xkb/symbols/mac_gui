@@ -1,15 +1,15 @@
 default partial xkb_symbols "mac_levelssym" {
-    // LEFT to Begin Line
+    // LEFT to Begin Line or Beginning of word
     replace key <LEFT> {
         type[Group1]= "ONE_LEVEL_CTRL",
         symbols[Group1]= [         Left,         Left, NoSymbol ],
-        actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<HOME>,clearmods=Control)]
+        actions[Group1]= [      NoAction(), RedirectKey(key=<LEFT>,modifiers=Control,clearmods=Mod1), RedirectKey(key=<HOME>,clearmods=Control)]
     };
-    // Right to End of Line
+    // Right to End of Line or end of word
     replace key <RGHT> {
         type[Group1]= "ONE_LEVEL_CTRL",
         symbols[Group1]= [         Right,         Right, NoSymbol ],
-        actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<END>,clearmods=Control)]
+        actions[Group1]= [      NoAction(), RedirectKey(key=<RGHT>,modifiers=Control,clearmods=Mod1), RedirectKey(key=<END>,clearmods=Control)]
     };
     // Up to Mac Home
     replace key <UP> {
