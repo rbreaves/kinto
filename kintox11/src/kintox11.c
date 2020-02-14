@@ -312,8 +312,14 @@ int main(void){
 
   char * prior_app;
   char * current_app;
+  char * prior_category;
+  char * current_category;
   prior_app = malloc(sizeof(char)*100);
+  current_app = malloc(sizeof(char)*100);
+  prior_category = malloc(sizeof(char)*100);
+  current_category = malloc(sizeof(char)*100);
   strcpy(prior_app,"none");
+  strcpy(prior_category,"none");
 
   int remap_bool = 2;
 
@@ -332,86 +338,70 @@ int main(void){
 
   for (;;)
   {
-    current_app = str_window_class(d, w,prior_app);
-    breakouter = 0;
-    // XFetchName(d, w, &name);
-    // printf("window:%#x name:%s\n", w, name);
-    // printf("%s\n","1");
-    // printf("%s\n",str_window_class(d, w,prior_app));
-    if(strcmp(current_app,prior_app) || !strcmp(current_app,"none")){
-      // printf("%s\n","2");
-      for(i = 0; i < arraylen; ++i){
-        if(breakouter == 0){
-          if(strcmp(name_array[i],"gui")){
-            // printf("%s\n","3");
-            for(n = 0; n < appnames_max; ++n){
-              // printf("2nd elseif %s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
-              // printf("3rd elseif (i:%ld == arraylen-1:%d && appnames_array[i:%ld][n:%ld+1]:%s  == NULL) && (remap_bool: %i == 0 || 2)\n",i,arraylen-1,i,n,appnames_array[i][n+1],remap_bool);
-              if (appnames_array[i][n] != NULL){
-                // printf("%s\n",appnames_array[i][n]);
-                // If statement for triggering terminal config
-                if((strcicmp(appnames_array[i][n], current_app) == 0 && (remap_bool == 1 || remap_bool == 2))) {
-                  // printf("1st if %s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
-                  printf("%s: %s\n",name_array[i],current_app);
-                  system(run_array[i]);
-                  for(r = 0; r < config_de_max; r++){
-                    if(config_de_array[i][r] != -1){
-                      int de_id_idx = in_int(de_id_array, de_len, config_de_array[i][r]);
-                      // printf("Running de command: %s\n",de_run_array[de_id_idx]);
-                      system(de_runterm_array[de_id_idx]);
-                    }
-                  }
-                  remap_bool = 0;
-                  fflush(stdout);
-                  breakouter = 1;
-                  break;
-                } // Else command for ignoring similar app category based on config
-                else if((strcicmp(appnames_array[i][n], current_app) == 0 && remap_bool == 0)){
-                  printf("    %s\n",current_app);
-                  // printf("in 2nd elseif %s i:%ld n:%ld %s\n",name_array[i],i,n,appnames_array[i][n]);
-                  // printf("%s\n","4");
-                  breakouter = 1;
-                  break;
-                } // Else command for triggering gui config
-                else if ((i == arraylen-1 && (appnames_array[i][n] == NULL || appnames_max == n+1)) && (remap_bool == 0 || remap_bool == 2)){
-                  // printf("in 3rd elseif (i:%ld == arraylen-1:%d && appnames_array[i:%ld][n:%ld+1]:%s  == NULL) && (remap_bool: %i == 0 || 2)\n",i,arraylen-1,i,n,appnames_array[i][n+1],remap_bool);
-                  char *find = "gui";
-                  int gui_idx = in(name_array, arraylen, find);
 
-                  if(gui_idx >= 0) {
-                    printf("%s: %s\n",name_array[gui_idx],current_app);
-                    system(run_array[gui_idx]);
-                  }
-                  for(r = 0; r < config_de_max; r++){
-                    if(config_de_array[gui_idx][r] != -1){
-                      int de_id_idx = in_int(de_id_array, de_len, config_de_array[gui_idx][r]);
-                      // printf("Running de command: %s\n",de_run_array[de_id_idx]);
-                      system(de_rungui_array[de_id_idx]);
-                    }
-                  }
-                  
-                  remap_bool = 1;
-                  fflush(stdout);
-                  breakouter = 1;
-                  break;
-                } // GUI app still - no switching needed
-                else if ((i == arraylen-1 && appnames_max == n+1) && remap_bool == 1){
-                  printf("    %s\n",current_app);
-                }
-                else if ((i == arraylen-1 && appnames_max == n+1)){
-                  printf("%s - Failed to match any keyswap requirements\n",current_app);
-                }
-              }
-            }
+    strcpy(current_app,str_window_class(d, w,prior_app));
+    int category_idx;
+    // printf("current: %s\n",current_app);
+    breakouter = 0;
+
+    // Cycle through category name array
+    // printf("%d\n",arraylen);
+    for(i = 0; i < arraylen; ++i){
+      // Cycle through the maximum App name array in each category
+      for(n = 0; n < appnames_max; ++n){
+        if (appnames_array[i][n] != NULL){
+          // printf("%s\n",appnames_array[i][n]);
+          if(strcicmp(appnames_array[i][n], current_app) == 0){
+            strcpy(current_category,name_array[i]);
+            category_idx = i;
+            // printf("Match found: %s: %s\n",current_category,current_app);
+            breakouter = 1;
+            break;
           }
         }
-        else{
+        else if(i == arraylen-1 && breakouter==0){
+          // printf("No match found, default to gui");
+          strcpy(current_category,"gui");
+          category_idx = in(name_array, arraylen, current_category);
+          // printf("Match found: %s: %s\n",current_category,current_app);
+          break;
+        }
+        else if(appnames_array[i][n] == NULL){
+          break;
+        }
+        if(breakouter==1){
           break;
         }
       }
     }
-    // printf("%s\n","5");
-    strcpy(prior_app,str_window_class(d, w, prior_app));
+
+    if(strcicmp(prior_category, current_category) != 0){
+      printf("%s: %s\n",current_category,current_app);
+      // printf("run: %s\n",run_array[category_idx]);
+      system(run_array[category_idx]);
+      for(r = 0; r < config_de_max; r++){
+        if(config_de_array[category_idx][r] != -1){
+          int de_id_idx = in_int(de_id_array, de_len, config_de_array[category_idx][r]);
+          if(strcicmp(current_category, "term") == 0){
+            // printf("Running de term command: %s\n",de_runterm_array[de_id_idx]);
+            system(de_runterm_array[de_id_idx]);
+          }
+          else{
+            // printf("Running de gui command: %s\n",de_rungui_array[de_id_idx]);
+            system(de_rungui_array[de_id_idx]);
+          }
+        }
+      }
+    }
+    else if(strcicmp(prior_app, current_app) != 0){
+      int indent = strlen(current_category)+2;
+      printf("%*c%s\n", indent, ' ',current_app);
+    }
+
+    fflush(stdout);
+
+    strcpy(prior_app,current_app);
+    strcpy(prior_category,current_category);
 
     XEvent e;
     XNextEvent(d, &e);
