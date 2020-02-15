@@ -129,9 +129,9 @@ Status
 systemctl --user status keyswap
 ```
 
-Stop
+Stop (and reset keyboard to normal)
 ```
-systemctl --user stop keyswap
+systemctl --user stop keyswap && setxkbmap -option
 ```
 
 Start
