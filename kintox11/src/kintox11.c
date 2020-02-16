@@ -24,6 +24,14 @@
 #include <json-c/json.h>        // `apt install libjson-c-dev`
 #include <sys/select.h>
 #include <math.h>
+#include <sys/time.h>
+
+long long timeInMilliseconds(void) {
+    struct timeval tv;
+
+    gettimeofday(&tv,NULL);
+    return (((long long)tv.tv_sec)*1000)+(tv.tv_usec/1000);
+}
 
 static int wait_fd(int fd, double seconds)
 {
@@ -36,10 +44,36 @@ static int wait_fd(int fd, double seconds)
   return select(fd+1, &in_fds, 0, 0, &tv);
 }
 
-int XNextEventTimeout(Display *d, XEvent *e, double seconds)
+int XNextEventTimeout(Display *d, XEvent *e, double seconds, long long event_ts, int last_event, long long *event_ts_ptr, int *last_event_ptr)
 {
   if (XPending(d) || wait_fd(ConnectionNumber(d),seconds)) {
-      XNextEvent(d, e);
+      // XNextEvent(d, e);
+      // while (1) {
+      //   XNextEvent(d, e);
+      //   if(e->type != 16){
+      //     printf("Inside XNextEvent timeout\n");
+      //     break;
+      //   }
+      // }
+      while (1) {
+        XNextEvent(d, e);
+
+        long long int new_ts = timeInMilliseconds();
+
+        if(!(e->type == 22 && (e->type == last_event) && timeInMilliseconds()-event_ts < 419)){
+          // printf("%d == %d\n",e->type, last_event);
+          // printf("Timestamp: %lld\n",timeInMilliseconds()-event_ts);
+          *event_ts_ptr = new_ts;
+          *last_event_ptr = e->type;
+          // printf("in event_ts_ptr: %lld\n",*event_ts_ptr);
+          // printf("in last_event_ptr: %d\n",*last_event_ptr);
+          break;
+        }
+        *event_ts_ptr = new_ts;
+        *last_event_ptr = e->type;
+        // printf("event_ts_ptr: %lld\n",*event_ts_ptr);
+        // printf("last_event_ptr: %d\n",*last_event_ptr);
+      }
       return 0;
   } else {
       return 1;
@@ -410,11 +444,12 @@ int main(void){
   printf("First window name: %s \n",str_window_class(d, w,prior_app));
 
   int breakouter;
+  int last_event=0;
   Bool ran_onInput = 0;
+  long long int event_ts = timeInMilliseconds();
 
   for (;;)
   {
-
     strcpy(current_app,str_window_class(d, w,prior_app));
     int category_idx;
     // printf("current: %s\n",current_app);
@@ -485,24 +520,38 @@ int main(void){
     // printf("run_onInput: %ld\n",strlen(run_onInput));
     XEvent e;
     if(strlen(run_onInput) > 0){
-      while(XNextEventTimeout(d, &e, 1.5)){
+      while(XNextEventTimeout(d, &e, 1.0, event_ts, last_event, &event_ts, &last_event)){
         if(check_caret(run_onInput) && ran_onInput == 0){
-          printf("run_onInput: %s\n",run_onInput);
+          // printf("run_onInput: %s\n",run_onInput);
+          system(run_onInput);
           ran_onInput = 1;
         }
         else if(!check_caret(run_onInput) && ran_onInput == 1){
-          printf("run_normal: %s\n",run_normal);
+          // printf("run_normal: %s\n",run_normal);
+          system(run_normal);
           ran_onInput = 0;
         }
-        e.type = Expose;
-        e.xexpose.count = 0;
+        // e.type = Expose;
+        // e.xexpose.count = 0;
       }
     }
     else{
-      XNextEvent(d, &e);
+      // XNextEvent(d, &e);
+      while (1) {
+        XNextEvent(d, &e);
+
+        if(!(e.type == 22 && (e.type == last_event) && timeInMilliseconds()-event_ts < 300)){
+          // printf("%d == %d\n",e.type, last_event);
+          // printf("Timestamp: %lld\n",timeInMilliseconds()-event_ts);
+          event_ts = timeInMilliseconds();
+          last_event = e.type;
+          break;
+        }
+        event_ts = timeInMilliseconds();
+        last_event = e.type;
+      }
     }
 
-    // XNextEvent(d, &e);
     w = get_focus_window(d);
     w = get_top_window(d, w);
     w = get_named_window(d, w);
