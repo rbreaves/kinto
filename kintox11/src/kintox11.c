@@ -27,31 +27,68 @@
 
 static int wait_fd(int fd, double seconds)
 {
-    struct timeval tv;
-    fd_set in_fds;
-    FD_ZERO(&in_fds);
-    FD_SET(fd, &in_fds);
-    tv.tv_sec = trunc(seconds);
-    tv.tv_usec = (seconds - trunc(seconds))*1000000;
-    return select(fd+1, &in_fds, 0, 0, &tv);
+  struct timeval tv;
+  fd_set in_fds;
+  FD_ZERO(&in_fds);
+  FD_SET(fd, &in_fds);
+  tv.tv_sec = trunc(seconds);
+  tv.tv_usec = (seconds - trunc(seconds))*1000000;
+  return select(fd+1, &in_fds, 0, 0, &tv);
 }
 
 int XNextEventTimeout(Display *d, XEvent *e, double seconds)
 {
-    if (XPending(d) || wait_fd(ConnectionNumber(d),seconds)) {
-        XNextEvent(d, e);
-        return 0;
-    } else {
-        return 1;
-    }
+  if (XPending(d) || wait_fd(ConnectionNumber(d),seconds)) {
+      XNextEvent(d, e);
+      return 0;
+  } else {
+      return 1;
+  }
 }
 
 Bool xerror = False;
 
+char *trimwhitespace(char *str)
+{
+  char *end;
+  // Trim leading space
+  while(isspace((unsigned char)*str)) str++;
+  if(*str == 0)  // All spaces?
+    return str;
+  // Trim trailing space
+  end = str + strlen(str) - 1;
+  while(end > str && isspace((unsigned char)*end)) end--;
+  // Write new null terminator character
+  end[1] = '\0';
+  return str;
+}
+
 int check_caret()
 {
-  /*printf("caret\n");*/
-  return 1;
+  char * fpname;
+  fpname = malloc(sizeof(char)*20);
+  strcpy(fpname,"/tmp/kinto/caret");
+  if( access( fpname, F_OK ) != -1 ) {
+    char *buffer = NULL;
+    size_t size = 0;
+    FILE *fp = fopen(fpname, "r");
+    fseek(fp, 0, SEEK_END);
+    size = ftell(fp);
+    rewind(fp);
+    buffer = malloc((size + 1) * sizeof(*buffer));
+    fread(buffer, size, 1, fp);
+    buffer[size] = '\0';
+    trimwhitespace(buffer);
+    if(strncmp(buffer,"1",1) == 0){
+      // printf("caret: %s\n", buffer);
+      return 1;
+    }
+    return 0;
+  }
+  else{
+    printf("file %s does not exist\n",fpname);
+    return 0;
+  }
 }
 
 int in_int(int a[],int size,int item) 
@@ -202,10 +239,10 @@ int main(void){
   FILE *fp;
   char buffer[10240];
   struct json_object *parsed_json, *config, *config_obj, 
-  *config_obj_name, *config_obj_run, *config_obj_de, 
-  *config_obj_appnames, *appnames_obj, *init, *de, 
-  *de_obj, *de_obj_id, *de_obj_active, *de_obj_run,
-  *de_obj_runterm,*de_obj_rungui;
+  *config_obj_name, *config_obj_run, *config_obj_run_oninput, 
+  *config_obj_de, *config_obj_appnames, *appnames_obj,
+  *init, *de, *de_obj, *de_obj_id, *de_obj_active, 
+  *de_obj_run, *de_obj_runterm,*de_obj_rungui;
 
   int arraylen;
   int appnames_len, init_len, de_len, config_de_len;
@@ -230,6 +267,7 @@ int main(void){
 
   const char *name_array[arraylen];
   const char *run_array[arraylen];
+  const char *run_oninput_array[arraylen];
   int init_array[init_len];
 
   int de_id_array[de_len];
@@ -278,10 +316,14 @@ int main(void){
 
   for (i = 0; i < arraylen; i++) {
     config_obj = json_object_array_get_idx(config, i);
+
     config_obj_name = json_object_object_get(config_obj, "name");
     config_obj_run = json_object_object_get(config_obj, "run");
+    config_obj_run_oninput = json_object_object_get(config_obj, "run_onInput");
+
     name_array[i] = json_object_get_string(config_obj_name);
     run_array[i] = json_object_get_string(config_obj_run);
+    run_oninput_array[i] = json_object_get_string(config_obj_run_oninput);
     // printf("%s\n%s\n", json_object_get_string(config_obj_name), json_object_get_string(config_obj_run));
 
     config_obj_appnames = json_object_object_get(config_obj, "appnames");
@@ -339,10 +381,14 @@ int main(void){
   XSelectInput(d, DefaultRootWindow(d), SubstructureNotifyMask);
   XSetErrorHandler(handle_error);
 
+  char * run_normal;
+  char * run_onInput;
   char * prior_app;
   char * current_app;
   char * prior_category;
   char * current_category;
+  run_onInput = malloc(sizeof(char)*400);
+  run_normal = malloc(sizeof(char)*400);
   prior_app = malloc(sizeof(char)*100);
   current_app = malloc(sizeof(char)*100);
   prior_category = malloc(sizeof(char)*100);
@@ -364,6 +410,7 @@ int main(void){
   printf("First window name: %s \n",str_window_class(d, w,prior_app));
 
   int breakouter;
+  Bool ran_onInput = 0;
 
   for (;;)
   {
@@ -408,6 +455,9 @@ int main(void){
       printf("%s: %s\n",current_category,current_app);
       // printf("run: %s\n",run_array[category_idx]);
       system(run_array[category_idx]);
+      ran_onInput = 0;
+      strcpy(run_normal,run_array[category_idx]);
+      strcpy(run_onInput,run_oninput_array[category_idx]);
       for(r = 0; r < config_de_max; r++){
         if(config_de_array[category_idx][r] != -1){
           int de_id_idx = in_int(de_id_array, de_len, config_de_array[category_idx][r]);
@@ -432,14 +482,26 @@ int main(void){
     strcpy(prior_app,current_app);
     strcpy(prior_category,current_category);
 
+    // printf("run_onInput: %ld\n",strlen(run_onInput));
     XEvent e;
-    while(XNextEventTimeout(d, &e, 1.5)){
-      check_caret();
-      // Handle timeout "event"
-      // one option is to simulate an Expose event
-      e.type = Expose;
-      e.xexpose.count = 0;
+    if(strlen(run_onInput) > 0){
+      while(XNextEventTimeout(d, &e, 1.5)){
+        if(check_caret(run_onInput) && ran_onInput == 0){
+          printf("run_onInput: %s\n",run_onInput);
+          ran_onInput = 1;
+        }
+        else if(!check_caret(run_onInput) && ran_onInput == 1){
+          printf("run_normal: %s\n",run_normal);
+          ran_onInput = 0;
+        }
+        e.type = Expose;
+        e.xexpose.count = 0;
+      }
     }
+    else{
+      XNextEvent(d, &e);
+    }
+
     // XNextEvent(d, &e);
     w = get_focus_window(d);
     w = get_top_window(d, w);

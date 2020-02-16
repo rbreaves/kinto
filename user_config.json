@@ -1,12 +1,14 @@
 {"config":[{
 		"name":"gui",
 		"run":"",
+		"run_onInput":"",
 		"de":[],
 		"appnames":[ "" ]
 	},
 	{
 		"name":"term",
 		"run":"",
+		"run_onInput":"",
 		"de":[],
 		"appnames":[ "Gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm" ]
 	}],
