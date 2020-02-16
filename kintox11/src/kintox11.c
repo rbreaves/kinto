@@ -22,8 +22,37 @@
 #include <X11/Xlib.h>           // `apt-get install libx11-dev`
 #include <X11/Xmu/WinUtil.h>    // `apt-get install libxmu-dev`
 #include <json-c/json.h>        // `apt install libjson-c-dev`
+#include <sys/select.h>
+#include <math.h>
+
+static int wait_fd(int fd, double seconds)
+{
+    struct timeval tv;
+    fd_set in_fds;
+    FD_ZERO(&in_fds);
+    FD_SET(fd, &in_fds);
+    tv.tv_sec = trunc(seconds);
+    tv.tv_usec = (seconds - trunc(seconds))*1000000;
+    return select(fd+1, &in_fds, 0, 0, &tv);
+}
+
+int XNextEventTimeout(Display *d, XEvent *e, double seconds)
+{
+    if (XPending(d) || wait_fd(ConnectionNumber(d),seconds)) {
+        XNextEvent(d, e);
+        return 0;
+    } else {
+        return 1;
+    }
+}
 
 Bool xerror = False;
+
+int check_caret()
+{
+  /*printf("caret\n");*/
+  return 1;
+}
 
 int in_int(int a[],int size,int item) 
 { 
@@ -404,7 +433,14 @@ int main(void){
     strcpy(prior_category,current_category);
 
     XEvent e;
-    XNextEvent(d, &e);
+    while(XNextEventTimeout(d, &e, 1.5)){
+      check_caret();
+      // Handle timeout "event"
+      // one option is to simulate an Expose event
+      e.type = Expose;
+      e.xexpose.count = 0;
+    }
+    // XNextEvent(d, &e);
     w = get_focus_window(d);
     w = get_top_window(d, w);
     w = get_named_window(d, w);
