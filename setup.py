@@ -15,6 +15,29 @@ def cmdline(command):
     )
     return process.communicate()[0]
 
+def requirements():
+	print(bcolors.CYELLOW + "You need to install some packages, " +run_pkg+ ", for Kinto to fully remap browsers during input focus.\n" + bcolors.ENDC)
+	print("sudo apt-get install -y " + run_pkg + "\n")
+	run_install = yn_choice(bcolors.CYELLOW + "Would you like to run it now? (Will require sudo privileges.)\n" + bcolors.ENDC)
+	if(run_install):
+		os.system("sudo apt-get install -y " + run_pkg)
+		print("\n")
+
+check_xbind = symbols_gui_line = cmdline("which xbindkeys").strip()
+check_xte = symbols_gui_line = cmdline("which xte").strip()
+
+if len(check_xbind) > 0 and len(check_xte) > 0:
+	print("Xbindkeys and xte requirement is installed.")
+elif len(check_xbind) == 0 and len(check_xbind) == 0:
+	run_pkg = "xbindkeys xautomation"
+	requirements()
+elif len(check_xbind) == 0:
+	run_pkg = "xbindkeys"
+	requirements()
+elif len(check_xte) == 0:
+	run_pkg = "xautomation"
+	requirements()
+
 try:
 	f = open("defaults.json")
 except IOError:
@@ -152,9 +175,12 @@ if len(defaultde) != 0:
 	user_config['config'][0]['de'] = tweaks_selected
 	# term
 	user_config['config'][1]['de'] = tweaks_selected
+	# browsers
+	user_config['config'][2]['de'] = tweaks_selected
 
 user_config['config'][0]['run'] = keyboardconfigs[defaultkb-1]['gui']
 user_config['config'][1]['run'] = keyboardconfigs[defaultkb-1]['term']
+user_config['config'][2]['run'] = keyboardconfigs[defaultkb-1]['gui']
 
 os.remove(user_file)
 with open(user_file, 'w') as f:

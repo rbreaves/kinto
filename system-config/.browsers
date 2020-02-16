@@ -1,0 +1,5 @@
+"xte 'keydown Control_L' 'key bracketleft' 'keyup Control_L'"
+  Home + release
+
+"xte 'keydown Control_L' 'key bracketright' 'keyup Control_L'"
+  End + release

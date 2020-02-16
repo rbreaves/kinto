@@ -7,7 +7,8 @@ Type=simple
 Restart=always
 RestartSec=1
 WorkingDirectory=/home/{username}/.config/kinto
-ExecStart=
+ExecStart=/bin/bash -c "/home/{username}/.config/kinto/xactive.sh carrots"
+ExecStop=/bin/bash /home/{username}/.config/kinto/cleanup.sh
 
 [Install]
 WantedBy=default.target

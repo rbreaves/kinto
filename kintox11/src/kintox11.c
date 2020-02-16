@@ -274,8 +274,8 @@ int main(void){
   char buffer[10240];
   struct json_object *parsed_json, *config, *config_obj, 
   *config_obj_name, *config_obj_run, *config_obj_run_oninput, 
-  *config_obj_de, *config_obj_appnames, *appnames_obj,
-  *init, *de, *de_obj, *de_obj_id, *de_obj_active, 
+  *config_obj_run_offinput, *config_obj_de, *config_obj_appnames,
+  *appnames_obj, *init, *de, *de_obj, *de_obj_id, *de_obj_active, 
   *de_obj_run, *de_obj_runterm,*de_obj_rungui;
 
   int arraylen;
@@ -302,6 +302,7 @@ int main(void){
   const char *name_array[arraylen];
   const char *run_array[arraylen];
   const char *run_oninput_array[arraylen];
+  const char *run_offinput_array[arraylen];
   int init_array[init_len];
 
   int de_id_array[de_len];
@@ -354,10 +355,12 @@ int main(void){
     config_obj_name = json_object_object_get(config_obj, "name");
     config_obj_run = json_object_object_get(config_obj, "run");
     config_obj_run_oninput = json_object_object_get(config_obj, "run_onInput");
+    config_obj_run_offinput = json_object_object_get(config_obj, "run_offInput");
 
     name_array[i] = json_object_get_string(config_obj_name);
     run_array[i] = json_object_get_string(config_obj_run);
     run_oninput_array[i] = json_object_get_string(config_obj_run_oninput);
+    run_offinput_array[i] = json_object_get_string(config_obj_run_offinput);
     // printf("%s\n%s\n", json_object_get_string(config_obj_name), json_object_get_string(config_obj_run));
 
     config_obj_appnames = json_object_object_get(config_obj, "appnames");
@@ -417,11 +420,13 @@ int main(void){
 
   char * run_normal;
   char * run_onInput;
+  char * run_offInput;
   char * prior_app;
   char * current_app;
   char * prior_category;
   char * current_category;
   run_onInput = malloc(sizeof(char)*400);
+  run_offInput = malloc(sizeof(char)*400);
   run_normal = malloc(sizeof(char)*400);
   prior_app = malloc(sizeof(char)*100);
   current_app = malloc(sizeof(char)*100);
@@ -493,6 +498,7 @@ int main(void){
       ran_onInput = 0;
       strcpy(run_normal,run_array[category_idx]);
       strcpy(run_onInput,run_oninput_array[category_idx]);
+      strcpy(run_offInput,run_offinput_array[category_idx]);
       for(r = 0; r < config_de_max; r++){
         if(config_de_array[category_idx][r] != -1){
           int de_id_idx = in_int(de_id_array, de_len, config_de_array[category_idx][r]);
@@ -520,7 +526,7 @@ int main(void){
     // printf("run_onInput: %ld\n",strlen(run_onInput));
     XEvent e;
     if(strlen(run_onInput) > 0){
-      while(XNextEventTimeout(d, &e, 1.0, event_ts, last_event, &event_ts, &last_event)){
+      while(XNextEventTimeout(d, &e, .5, event_ts, last_event, &event_ts, &last_event)){
         if(check_caret(run_onInput) && ran_onInput == 0){
           // printf("run_onInput: %s\n",run_onInput);
           system(run_onInput);
@@ -528,7 +534,7 @@ int main(void){
         }
         else if(!check_caret(run_onInput) && ran_onInput == 1){
           // printf("run_normal: %s\n",run_normal);
-          system(run_normal);
+          system(run_offInput);
           ran_onInput = 0;
         }
         // e.type = Expose;
