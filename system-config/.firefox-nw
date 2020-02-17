@@ -1,0 +1,7 @@
+#"xte 'keydown Control_L' 'key bracketleft' 'keyup Control_L'"
+"xdotool key --delay 0 --clearmodifiers Control_L+bracketleft"
+  Home + Release
+
+#"xte 'keydown Control_R' 'key bracketright' 'keyup Control_R'"
+"xdotool key --delay 0 --clearmodifiers Control_L+bracketright"
+  End + Release
