@@ -90,7 +90,7 @@ if 'hack' in keyboardconfigs[defaultkb-1]:
 		os.system(keyboardconfigs[defaultkb-1]['hack'])
 
 # Setup the selected keyboards config
-os.system("cp -rf ./.xkb ~/.xkb")
+os.system("cp -rf ./.xkb ~/.xkb/")
 if os.path.isdir(homedir + "/.xkb/keymap") == False:
 	os.mkdir(homedir + "/.xkb/keymap")
 	time.sleep(0.5)
