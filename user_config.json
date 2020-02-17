@@ -31,8 +31,8 @@
     {
         "name": "chrome",
         "run": "",
-        "run_onInput": "killall xbindkeys > /dev/null 2>&1;xbindkeys -f $HOME/.config/kinto/.chrome-ww",
-        "run_offInput": "killall xbindkeys > /dev/null 2>&1;xbindkeys -f $HOME/.config/kinto/.chrome-nw",
+        "run_onInput": "xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.gui $DISPLAY",
+        "run_offInput": "xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.gui.chrome $DISPLAY",
         "symbols": "",
         "types": "",
         "de": [],
