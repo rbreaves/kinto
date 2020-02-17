@@ -14,9 +14,7 @@ cp ./kintox11/binary/kintox11 ~/.config/kinto/kintox11
 cp ./system-config/xactive.sh ~/.config/kinto/xactive.sh
 cp ./system-config/caret_status.sh ~/.config/kinto/caret_status.sh
 cp ./system-config/cleanup.sh ~/.config/kinto/cleanup.sh
-cp ./system-config/.firefox ~/.config/kinto/.firefox
-cp ./system-config/.chrome-ww ~/.config/kinto/.chrome-ww
-cp ./system-config/.chrome-nw ~/.config/kinto/.chrome-nw
+cp ./system-config/.firefox-nw ~/.config/kinto/.firefox-nw
 sed -i "s/{username}/`whoami`/g" ~/.config/systemd/user/keyswap.service
 systemctl --user daemon-reload
 systemctl --user enable keyswap

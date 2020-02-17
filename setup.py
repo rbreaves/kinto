@@ -24,17 +24,14 @@ def requirements():
 		print("\n")
 
 check_xbind = symbols_gui_line = cmdline("which xbindkeys").strip()
-check_xte = symbols_gui_line = cmdline("which xte").strip()
 check_xdotool = symbols_gui_line = cmdline("which xdotool").strip()
 
 runpkg = 0
 
-if len(check_xbind) > 0 and len(check_xte) > 0 and len(check_xdotool) > 0:
-	print("Xbindkeys, xdotool and xte requirement is installed.")
+if len(check_xbind) > 0 and len(check_xdotool) > 0:
+	print("Xbindkeys, and xdotool requirement is installed.")
 if len(check_xbind) == 0:
 	run_pkg = "xbindkeys"
-if len(check_xte) == 0:
-	run_pkg += " xautomation"
 if len(check_xdotool) == 0:
 	run_pkg += " xdotool"
 

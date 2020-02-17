@@ -22,7 +22,7 @@
         "name": "firefox",
         "run": "",
         "run_onInput": "killall xbindkeys > /dev/null 2>&1",
-        "run_offInput": "killall xbindkeys > /dev/null 2>&1;xbindkeys -f $HOME/.config/kinto/.firefox",
+        "run_offInput": "killall xbindkeys > /dev/null 2>&1;xbindkeys -f $HOME/.config/kinto/.firefox-nw",
         "symbols": "",
         "types": "",
         "de": [],
