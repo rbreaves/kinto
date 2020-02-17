@@ -495,10 +495,11 @@ int main(void){
       printf("%s: %s\n",current_category,current_app);
       // printf("run: %s\n",run_array[category_idx]);
       system(run_array[category_idx]);
-      ran_onInput = 0;
       strcpy(run_normal,run_array[category_idx]);
+      ran_onInput = 0;
       strcpy(run_onInput,run_oninput_array[category_idx]);
       strcpy(run_offInput,run_offinput_array[category_idx]);
+      system(run_offInput);
       for(r = 0; r < config_de_max; r++){
         if(config_de_array[category_idx][r] != -1){
           int de_id_idx = in_int(de_id_array, de_len, config_de_array[category_idx][r]);
