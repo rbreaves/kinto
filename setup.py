@@ -27,13 +27,16 @@ check_xbind = symbols_gui_line = cmdline("which xbindkeys").strip()
 check_xdotool = symbols_gui_line = cmdline("which xdotool").strip()
 
 runpkg = 0
+run_pkg = ""
 
 if len(check_xbind) > 0 and len(check_xdotool) > 0:
 	print("Xbindkeys, and xdotool requirement is installed.")
 if len(check_xbind) == 0:
 	run_pkg = "xbindkeys"
+	runpkg = 1
 if len(check_xdotool) == 0:
 	run_pkg += " xdotool"
+	runpkg = 1
 
 if runpkg != 0:
 	requirements()
