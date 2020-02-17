@@ -25,17 +25,20 @@ def requirements():
 
 check_xbind = symbols_gui_line = cmdline("which xbindkeys").strip()
 check_xte = symbols_gui_line = cmdline("which xte").strip()
+check_xdotool = symbols_gui_line = cmdline("which xdotool").strip()
 
-if len(check_xbind) > 0 and len(check_xte) > 0:
-	print("Xbindkeys and xte requirement is installed.")
-elif len(check_xbind) == 0 and len(check_xbind) == 0:
-	run_pkg = "xbindkeys xautomation"
-	requirements()
-elif len(check_xbind) == 0:
+runpkg = 0
+
+if len(check_xbind) > 0 and len(check_xte) > 0 and len(check_xdotool) > 0:
+	print("Xbindkeys, xdotool and xte requirement is installed.")
+if len(check_xbind) == 0:
 	run_pkg = "xbindkeys"
-	requirements()
-elif len(check_xte) == 0:
-	run_pkg = "xautomation"
+if len(check_xte) == 0:
+	run_pkg += " xautomation"
+if len(check_xdotool) == 0:
+	run_pkg += " xdotool"
+
+if runpkg != 0:
 	requirements()
 
 try:
@@ -119,6 +122,7 @@ if os.path.isdir(homedir + "/.xkb/keymap") == False:
 	time.sleep(0.5)
 os.system('setxkbmap -option')
 os.system('setxkbmap -print > ~/.xkb/keymap/kbd.mac.gui')
+os.system('setxkbmap -print > ~/.xkb/keymap/kbd.mac.gui.nw')
 os.system('setxkbmap -print > ~/.xkb/keymap/kbd.mac.term')
 time.sleep(0.5)
 
@@ -129,6 +133,9 @@ symbols_term_line = cmdline("cat ~/.xkb/keymap/kbd.mac.term | grep -n 'xkb_symbo
 cmdline('sed -i '' -e "' + symbols_gui_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_symbols_gui'] + '\\"/2" ~/.xkb/keymap/kbd.mac.gui')
 cmdline('sed -i '' -e "' + types_gui_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_types_gui'] + '\\"/2" ~/.xkb/keymap/kbd.mac.gui')
 cmdline('sed -i '' -e "' + symbols_term_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_symbols_term'] + '\\"/2" ~/.xkb/keymap/kbd.mac.term')
+
+cmdline('sed -i '' -e "' + symbols_gui_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_symbols_gui'].replace("+mac_gui(mac_levelssym)","") + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.nw')
+cmdline('sed -i '' -e "' + types_gui_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_types_gui'] + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.nw')
 
 
 user_file = homedir + '/.config/kinto/user_config.json'
@@ -175,12 +182,15 @@ if len(defaultde) != 0:
 	user_config['config'][0]['de'] = tweaks_selected
 	# term
 	user_config['config'][1]['de'] = tweaks_selected
-	# browsers
+	# firefox
 	user_config['config'][2]['de'] = tweaks_selected
+	# chrome
+	user_config['config'][3]['de'] = tweaks_selected
 
 user_config['config'][0]['run'] = keyboardconfigs[defaultkb-1]['gui']
 user_config['config'][1]['run'] = keyboardconfigs[defaultkb-1]['term']
 user_config['config'][2]['run'] = keyboardconfigs[defaultkb-1]['gui']
+user_config['config'][3]['run'] = keyboardconfigs[defaultkb-1]['gui'].replace("kbd.mac.gui","kbd.mac.gui.nw")
 
 os.remove(user_file)
 with open(user_file, 'w') as f:

@@ -19,15 +19,25 @@
 		"appnames":[ "Gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm" ]
 	},
 	{
-		"name": "browsers",
-		"run": "",
-		"run_onInput": "killall xbindkeys > /dev/null 2>&1",
-		"run_offInput": "xbindkeys -f $HOME/.config/kinto/.browsers",
-		"symbols":"",
-		"types":"",
-		"de": [],
-		"appnames":[ "Chromium","Firefox" ]
-	}],
+        "name": "firefox",
+        "run": "",
+        "run_onInput": "killall xbindkeys > /dev/null 2>&1",
+        "run_offInput": "killall xbindkeys > /dev/null 2>&1;xbindkeys -f $HOME/.config/kinto/.firefox",
+        "symbols": "",
+        "types": "",
+        "de": [],
+        "appnames": [ "Firefox" ]
+    },
+    {
+        "name": "chrome",
+        "run": "",
+        "run_onInput": "killall xbindkeys > /dev/null 2>&1;xbindkeys -f $HOME/.config/kinto/.chrome-ww",
+        "run_offInput": "killall xbindkeys > /dev/null 2>&1;xbindkeys -f $HOME/.config/kinto/.chrome-nw",
+        "symbols": "",
+        "types": "",
+        "de": [],
+        "appnames": [ "Chromium" ]
+    }],
 	"init": [],
 	"detypes":["gnome2","gnome3","kde4","kde5","xfce","i3wm"],
 	"de":[{

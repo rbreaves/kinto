@@ -99,6 +99,7 @@ char *trimwhitespace(char *str)
 
 int check_caret()
 {
+  int caretint;
   char * fpname;
   fpname = malloc(sizeof(char)*20);
   strcpy(fpname,"/tmp/kinto/caret");
@@ -113,10 +114,12 @@ int check_caret()
     fread(buffer, size, 1, fp);
     buffer[size] = '\0';
     trimwhitespace(buffer);
-    if(strncmp(buffer,"1",1) == 0){
+    caretint = atoi(buffer);
+    if(caretint == 1){
       // printf("caret: %s\n", buffer);
       return 1;
     }
+    // printf("found nothing\n");
     return 0;
   }
   else{
@@ -528,13 +531,13 @@ int main(void){
     XEvent e;
     if(strlen(run_onInput) > 0){
       while(XNextEventTimeout(d, &e, .5, event_ts, last_event, &event_ts, &last_event)){
-        if(check_caret(run_onInput) && ran_onInput == 0){
+        if(check_caret() && ran_onInput == 0){
           // printf("run_onInput: %s\n",run_onInput);
           system(run_onInput);
           ran_onInput = 1;
         }
-        else if(!check_caret(run_onInput) && ran_onInput == 1){
-          // printf("run_normal: %s\n",run_normal);
+        else if(!check_caret() && ran_onInput == 1){
+          // printf("run_offInput: %s\n",run_offInput);
           system(run_offInput);
           ran_onInput = 0;
         }

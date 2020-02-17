@@ -1,0 +1,5 @@
+"xdotool key --delay 0 --clearmodifiers Home"
+  Control + Left + Release
+
+"xdotool key --delay 0 --clearmodifiers End"
+  Control + Right + Release
