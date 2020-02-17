@@ -35,12 +35,12 @@ partial xkb_symbols "mac_chrome" {
     replace key <LEFT> {
         type[Group1]= "ONE_LEVEL_CTRL",
         symbols[Group1]= [         Left, Left, Left ],
-        actions[Group1]= [      NoAction(), NoAction(), RedirectKey(key=<LEFT>,modifiers=Mod1,clearmods=Control)]
+        actions[Group1]= [      NoAction(), RedirectKey(key=<UP>), RedirectKey(key=<LEFT>,modifiers=Mod1,clearmods=Control)]
     };
     // Forwards Button
     replace key <RGHT> {
         type[Group1]= "ONE_LEVEL_CTRL",
         symbols[Group1]= [         Right,         Right, Right ],
-        actions[Group1]= [      NoAction(), NoAction(), RedirectKey(key=<RGHT>,modifiers=Mod1,clearmods=Control)]
+        actions[Group1]= [      NoAction(), RedirectKey(key=<DOWN>), RedirectKey(key=<RGHT>,modifiers=Mod1,clearmods=Control)]
     };
 };
