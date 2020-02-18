@@ -23,12 +23,12 @@ default partial xkb_symbols "mac_levelssym" {
         symbols[Group1]= [         Down,         Down, NoSymbol ],
         actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<END>)]
     };
-    // CTRL BKSP to DELETE
-    // replace key <BKSP> {
-    //    type[Group1]= "TWO_LEVEL_CTRL",
-    //    symbols[Group1]= [       BackSpace,       BackSpace, NoSymbol ],
-    //    actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<DELE>,clearmods=Control)]
-    // };
+    // Alt BKSP to DELETE
+    replace key <BKSP> {
+       type[Group1]= "ONE_LEVEL_CTRL",
+       symbols[Group1]= [       BackSpace,       BackSpace, NoSymbol ],
+       actions[Group1]= [      NoAction(),      RedirectKey(key=<DELE>,clearmods=Mod1), NoAction()]
+    };
 };
 partial xkb_symbols "mac_chrome" {
     // Back Button
