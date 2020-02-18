@@ -47,32 +47,19 @@ static int wait_fd(int fd, double seconds)
 int XNextEventTimeout(Display *d, XEvent *e, double seconds, long long event_ts, int last_event, long long *event_ts_ptr, int *last_event_ptr)
 {
   if (XPending(d) || wait_fd(ConnectionNumber(d),seconds)) {
-      // XNextEvent(d, e);
-      // while (1) {
-      //   XNextEvent(d, e);
-      //   if(e->type != 16){
-      //     printf("Inside XNextEvent timeout\n");
-      //     break;
-      //   }
-      // }
       while (1) {
         XNextEvent(d, e);
 
         long long int new_ts = timeInMilliseconds();
 
+        // Make sure window dragging or resizing is not occuring
         if(!(e->type == 22 && (e->type == last_event) && timeInMilliseconds()-event_ts < 419)){
-          // printf("%d == %d\n",e->type, last_event);
-          // printf("Timestamp: %lld\n",timeInMilliseconds()-event_ts);
           *event_ts_ptr = new_ts;
           *last_event_ptr = e->type;
-          // printf("in event_ts_ptr: %lld\n",*event_ts_ptr);
-          // printf("in last_event_ptr: %d\n",*last_event_ptr);
           break;
         }
         *event_ts_ptr = new_ts;
         *last_event_ptr = e->type;
-        // printf("event_ts_ptr: %lld\n",*event_ts_ptr);
-        // printf("last_event_ptr: %d\n",*last_event_ptr);
       }
       return 0;
   } else {
@@ -541,15 +528,12 @@ int main(void){
           system(run_offInput);
           ran_onInput = 0;
         }
-        // e.type = Expose;
-        // e.xexpose.count = 0;
       }
     }
     else{
-      // XNextEvent(d, &e);
       while (1) {
         XNextEvent(d, &e);
-
+        // Make sure window dragging or resizing is not occuring
         if(!(e.type == 22 && (e.type == last_event) && timeInMilliseconds()-event_ts < 300)){
           // printf("%d == %d\n",e.type, last_event);
           // printf("Timestamp: %lld\n",timeInMilliseconds()-event_ts);
