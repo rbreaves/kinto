@@ -32,20 +32,22 @@ Kinto works for standard Windows, Apple and Chromebook keyboards. The following 
 - Python (initial install only)
 - systemd
 - x11
-- IBus
+- IBus*
 - Debian/Ubuntu based distro 16.04+
 
 If you need kintox11 recompiled for your distro please let me know and I will add a binary for your distro if my binary fails.
 
 You can also attempt to compile kintox11.c on your system as well, but you will need to compile and install json-c first as its libraries will be required to compile and run the program.
 
-IBUS is needed to support wordwise during browser app usage as the keymap will need to change slightly depending if the cursor/caret is on screen waiting for input. You may install ibus with the following.
+*IBUS is needed to support wordwise during browser app usage as the keymap will need to change slightly depending if the cursor/caret is on screen waiting for input. You may install ibus with the following.
 
 ```
 ibus-setup
+im-config -n ibus
 ```
+!! Please logoff and back on for IBus change to take effect!
 
-And then navigate to your "Language Support" and set "Keyboard input method system:" to IBus for full word-wise support with web browsers.
+To confirm navigate to your "Language Support" and set "Keyboard input method system:" to IBus for full word-wise support with web browsers.
 
 Wayland support is planned, but not ready yet.
 
