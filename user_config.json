@@ -36,7 +36,7 @@
         "symbols": "",
         "types": "",
         "de": [],
-        "appnames": [ "Chromium" ]
+        "appnames": [ "Chromium","Chromium-browser" ]
     }],
 	"init": [],
 	"detypes":["gnome2","gnome3","kde4","kde5","xfce","i3wm"],
