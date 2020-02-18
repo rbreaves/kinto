@@ -15,6 +15,32 @@ def cmdline(command):
     )
     return process.communicate()[0]
 
+def requirements():
+	print(bcolors.CYELLOW + "You need to install some packages, " +run_pkg+ ", for Kinto to fully remap browsers during input focus.\n" + bcolors.ENDC)
+	print("sudo apt-get install -y " + run_pkg + "\n")
+	run_install = yn_choice(bcolors.CYELLOW + "Would you like to run it now? (Will require sudo privileges.)\n" + bcolors.ENDC)
+	if(run_install):
+		os.system("sudo apt-get install -y " + run_pkg)
+		print("\n")
+
+check_xbind = symbols_gui_line = cmdline("which xbindkeys").strip()
+check_xdotool = symbols_gui_line = cmdline("which xdotool").strip()
+
+runpkg = 0
+run_pkg = ""
+
+if len(check_xbind) > 0 and len(check_xdotool) > 0:
+	print("Xbindkeys, and xdotool requirement is installed.")
+if len(check_xbind) == 0:
+	run_pkg = "xbindkeys"
+	runpkg = 1
+if len(check_xdotool) == 0:
+	run_pkg += " xdotool"
+	runpkg = 1
+
+if runpkg != 0:
+	requirements()
+
 try:
 	f = open("defaults.json")
 except IOError:
@@ -96,6 +122,8 @@ if os.path.isdir(homedir + "/.xkb/keymap") == False:
 	time.sleep(0.5)
 os.system('setxkbmap -option')
 os.system('setxkbmap -print > ~/.xkb/keymap/kbd.mac.gui')
+os.system('setxkbmap -print > ~/.xkb/keymap/kbd.mac.gui.nw')
+os.system('setxkbmap -print > ~/.xkb/keymap/kbd.mac.gui.chrome')
 os.system('setxkbmap -print > ~/.xkb/keymap/kbd.mac.term')
 time.sleep(0.5)
 
@@ -106,6 +134,11 @@ symbols_term_line = cmdline("cat ~/.xkb/keymap/kbd.mac.term | grep -n 'xkb_symbo
 cmdline('sed -i '' -e "' + symbols_gui_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_symbols_gui'] + '\\"/2" ~/.xkb/keymap/kbd.mac.gui')
 cmdline('sed -i '' -e "' + types_gui_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_types_gui'] + '\\"/2" ~/.xkb/keymap/kbd.mac.gui')
 cmdline('sed -i '' -e "' + symbols_term_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_symbols_term'] + '\\"/2" ~/.xkb/keymap/kbd.mac.term')
+
+cmdline('sed -i '' -e "' + symbols_gui_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_symbols_gui'].replace("+mac_gui(mac_levelssym)","") + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.nw')
+cmdline('sed -i '' -e "' + symbols_gui_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_symbols_gui'].replace("+mac_gui(mac_levelssym)","+mac_gui(mac_chrome)") + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.chrome')
+cmdline('sed -i '' -e "' + types_gui_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_types_gui'] + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.nw')
+cmdline('sed -i '' -e "' + types_gui_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_types_gui'] + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.chrome')
 
 
 user_file = homedir + '/.config/kinto/user_config.json'
@@ -152,9 +185,15 @@ if len(defaultde) != 0:
 	user_config['config'][0]['de'] = tweaks_selected
 	# term
 	user_config['config'][1]['de'] = tweaks_selected
+	# firefox
+	user_config['config'][2]['de'] = tweaks_selected
+	# chrome
+	user_config['config'][3]['de'] = tweaks_selected
 
 user_config['config'][0]['run'] = keyboardconfigs[defaultkb-1]['gui']
 user_config['config'][1]['run'] = keyboardconfigs[defaultkb-1]['term']
+user_config['config'][2]['run'] = keyboardconfigs[defaultkb-1]['gui']
+user_config['config'][3]['run'] = keyboardconfigs[defaultkb-1]['gui'].replace("kbd.mac.gui","kbd.mac.gui.chrome")
 
 os.remove(user_file)
 with open(user_file, 'w') as f:

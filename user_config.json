@@ -1,15 +1,43 @@
 {"config":[{
 		"name":"gui",
 		"run":"",
+		"run_onInput":"",
+		"run_offInput": "killall xbindkeys > /dev/null 2>&1",
+		"symbols":"",
+		"types":"",
 		"de":[],
 		"appnames":[ "" ]
 	},
 	{
 		"name":"term",
 		"run":"",
+		"run_onInput":"",
+		"run_offInput": "killall xbindkeys > /dev/null 2>&1",
+		"symbols":"",
+		"types":"",
 		"de":[],
 		"appnames":[ "Gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm" ]
-	}],
+	},
+	{
+        "name": "firefox",
+        "run": "",
+        "run_onInput": "killall xbindkeys > /dev/null 2>&1",
+        "run_offInput": "killall xbindkeys > /dev/null 2>&1;xbindkeys -f $HOME/.config/kinto/.firefox-nw",
+        "symbols": "",
+        "types": "",
+        "de": [],
+        "appnames": [ "Firefox" ]
+    },
+    {
+        "name": "chrome",
+        "run": "",
+        "run_onInput": "xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.gui $DISPLAY",
+        "run_offInput": "xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.gui.chrome $DISPLAY",
+        "symbols": "",
+        "types": "",
+        "de": [],
+        "appnames": [ "Chromium","Chromium-browser" ]
+    }],
 	"init": [],
 	"detypes":["gnome2","gnome3","kde4","kde5","xfce","i3wm"],
 	"de":[{

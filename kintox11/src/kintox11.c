@@ -22,8 +22,111 @@
 #include <X11/Xlib.h>           // `apt-get install libx11-dev`
 #include <X11/Xmu/WinUtil.h>    // `apt-get install libxmu-dev`
 #include <json-c/json.h>        // `apt install libjson-c-dev`
+#include <sys/select.h>
+#include <math.h>
+#include <sys/time.h>
+
+long long timeInMilliseconds(void) {
+    struct timeval tv;
+
+    gettimeofday(&tv,NULL);
+    return (((long long)tv.tv_sec)*1000)+(tv.tv_usec/1000);
+}
+
+static int wait_fd(int fd, double seconds)
+{
+  struct timeval tv;
+  fd_set in_fds;
+  FD_ZERO(&in_fds);
+  FD_SET(fd, &in_fds);
+  tv.tv_sec = trunc(seconds);
+  tv.tv_usec = (seconds - trunc(seconds))*1000000;
+  return select(fd+1, &in_fds, 0, 0, &tv);
+}
+
+int XNextEventTimeout(Display *d, XEvent *e, double seconds, long long event_ts, int last_event, long long *event_ts_ptr, int *last_event_ptr)
+{
+  if (XPending(d) || wait_fd(ConnectionNumber(d),seconds)) {
+      // XNextEvent(d, e);
+      // while (1) {
+      //   XNextEvent(d, e);
+      //   if(e->type != 16){
+      //     printf("Inside XNextEvent timeout\n");
+      //     break;
+      //   }
+      // }
+      while (1) {
+        XNextEvent(d, e);
+
+        long long int new_ts = timeInMilliseconds();
+
+        if(!(e->type == 22 && (e->type == last_event) && timeInMilliseconds()-event_ts < 419)){
+          // printf("%d == %d\n",e->type, last_event);
+          // printf("Timestamp: %lld\n",timeInMilliseconds()-event_ts);
+          *event_ts_ptr = new_ts;
+          *last_event_ptr = e->type;
+          // printf("in event_ts_ptr: %lld\n",*event_ts_ptr);
+          // printf("in last_event_ptr: %d\n",*last_event_ptr);
+          break;
+        }
+        *event_ts_ptr = new_ts;
+        *last_event_ptr = e->type;
+        // printf("event_ts_ptr: %lld\n",*event_ts_ptr);
+        // printf("last_event_ptr: %d\n",*last_event_ptr);
+      }
+      return 0;
+  } else {
+      return 1;
+  }
+}
 
 Bool xerror = False;
+
+char *trimwhitespace(char *str)
+{
+  char *end;
+  // Trim leading space
+  while(isspace((unsigned char)*str)) str++;
+  if(*str == 0)  // All spaces?
+    return str;
+  // Trim trailing space
+  end = str + strlen(str) - 1;
+  while(end > str && isspace((unsigned char)*end)) end--;
+  // Write new null terminator character
+  end[1] = '\0';
+  return str;
+}
+
+int check_caret()
+{
+  int caretint;
+  char * fpname;
+  fpname = malloc(sizeof(char)*20);
+  strcpy(fpname,"/tmp/kinto/caret");
+  if( access( fpname, F_OK ) != -1 ) {
+    char *buffer = NULL;
+    size_t size = 0;
+    FILE *fp = fopen(fpname, "r");
+    fseek(fp, 0, SEEK_END);
+    size = ftell(fp);
+    rewind(fp);
+    buffer = malloc((size + 1) * sizeof(*buffer));
+    fread(buffer, size, 1, fp);
+    buffer[size] = '\0';
+    trimwhitespace(buffer);
+    caretint = atoi(buffer);
+    if(caretint == 1){
+      // printf("caret: %s\n", buffer);
+      return 1;
+    }
+    // printf("found nothing\n");
+    return 0;
+  }
+  else{
+    printf("file %s does not exist\n",fpname);
+    return 0;
+  }
+}
 
 int in_int(int a[],int size,int item) 
 { 
@@ -173,10 +276,10 @@ int main(void){
   FILE *fp;
   char buffer[10240];
   struct json_object *parsed_json, *config, *config_obj, 
-  *config_obj_name, *config_obj_run, *config_obj_de, 
-  *config_obj_appnames, *appnames_obj, *init, *de, 
-  *de_obj, *de_obj_id, *de_obj_active, *de_obj_run,
-  *de_obj_runterm,*de_obj_rungui;
+  *config_obj_name, *config_obj_run, *config_obj_run_oninput, 
+  *config_obj_run_offinput, *config_obj_de, *config_obj_appnames,
+  *appnames_obj, *init, *de, *de_obj, *de_obj_id, *de_obj_active, 
+  *de_obj_run, *de_obj_runterm,*de_obj_rungui;
 
   int arraylen;
   int appnames_len, init_len, de_len, config_de_len;
@@ -201,6 +304,8 @@ int main(void){
 
   const char *name_array[arraylen];
   const char *run_array[arraylen];
+  const char *run_oninput_array[arraylen];
+  const char *run_offinput_array[arraylen];
   int init_array[init_len];
 
   int de_id_array[de_len];
@@ -249,10 +354,16 @@ int main(void){
 
   for (i = 0; i < arraylen; i++) {
     config_obj = json_object_array_get_idx(config, i);
+
     config_obj_name = json_object_object_get(config_obj, "name");
     config_obj_run = json_object_object_get(config_obj, "run");
+    config_obj_run_oninput = json_object_object_get(config_obj, "run_onInput");
+    config_obj_run_offinput = json_object_object_get(config_obj, "run_offInput");
+
     name_array[i] = json_object_get_string(config_obj_name);
     run_array[i] = json_object_get_string(config_obj_run);
+    run_oninput_array[i] = json_object_get_string(config_obj_run_oninput);
+    run_offinput_array[i] = json_object_get_string(config_obj_run_offinput);
     // printf("%s\n%s\n", json_object_get_string(config_obj_name), json_object_get_string(config_obj_run));
 
     config_obj_appnames = json_object_object_get(config_obj, "appnames");
@@ -310,10 +421,16 @@ int main(void){
   XSelectInput(d, DefaultRootWindow(d), SubstructureNotifyMask);
   XSetErrorHandler(handle_error);
 
+  char * run_normal;
+  char * run_onInput;
+  char * run_offInput;
   char * prior_app;
   char * current_app;
   char * prior_category;
   char * current_category;
+  run_onInput = malloc(sizeof(char)*400);
+  run_offInput = malloc(sizeof(char)*400);
+  run_normal = malloc(sizeof(char)*400);
   prior_app = malloc(sizeof(char)*100);
   current_app = malloc(sizeof(char)*100);
   prior_category = malloc(sizeof(char)*100);
@@ -335,10 +452,12 @@ int main(void){
   printf("First window name: %s \n",str_window_class(d, w,prior_app));
 
   int breakouter;
+  int last_event=0;
+  Bool ran_onInput = 0;
+  long long int event_ts = timeInMilliseconds();
 
   for (;;)
   {
-
     strcpy(current_app,str_window_class(d, w,prior_app));
     int category_idx;
     // printf("current: %s\n",current_app);
@@ -379,6 +498,11 @@ int main(void){
       printf("%s: %s\n",current_category,current_app);
       // printf("run: %s\n",run_array[category_idx]);
       system(run_array[category_idx]);
+      strcpy(run_normal,run_array[category_idx]);
+      ran_onInput = 0;
+      strcpy(run_onInput,run_oninput_array[category_idx]);
+      strcpy(run_offInput,run_offinput_array[category_idx]);
+      system(run_offInput);
       for(r = 0; r < config_de_max; r++){
         if(config_de_array[category_idx][r] != -1){
           int de_id_idx = in_int(de_id_array, de_len, config_de_array[category_idx][r]);
@@ -403,8 +527,41 @@ int main(void){
     strcpy(prior_app,current_app);
     strcpy(prior_category,current_category);
 
+    // printf("run_onInput: %ld\n",strlen(run_onInput));
     XEvent e;
-    XNextEvent(d, &e);
+    if(strlen(run_onInput) > 0){
+      while(XNextEventTimeout(d, &e, .5, event_ts, last_event, &event_ts, &last_event)){
+        if(check_caret() && ran_onInput == 0){
+          // printf("run_onInput: %s\n",run_onInput);
+          system(run_onInput);
+          ran_onInput = 1;
+        }
+        else if(!check_caret() && ran_onInput == 1){
+          // printf("run_offInput: %s\n",run_offInput);
+          system(run_offInput);
+          ran_onInput = 0;
+        }
+        // e.type = Expose;
+        // e.xexpose.count = 0;
+      }
+    }
+    else{
+      // XNextEvent(d, &e);
+      while (1) {
+        XNextEvent(d, &e);
+
+        if(!(e.type == 22 && (e.type == last_event) && timeInMilliseconds()-event_ts < 300)){
+          // printf("%d == %d\n",e.type, last_event);
+          // printf("Timestamp: %lld\n",timeInMilliseconds()-event_ts);
+          event_ts = timeInMilliseconds();
+          last_event = e.type;
+          break;
+        }
+        event_ts = timeInMilliseconds();
+        last_event = e.type;
+      }
+    }
+
     w = get_focus_window(d);
     w = get_top_window(d, w);
     w = get_named_window(d, w);
