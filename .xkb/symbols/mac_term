@@ -35,4 +35,18 @@ default partial xkb_symbols "mac_levelssym" {
         symbols[Group1]= [         RGHT,         RGHT, NoSymbol ],
         actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<END>,clearmods=Shift+Control)]
     };
+    // Full Print Screen
+    // Standard Ubuntu
+    replace key <AE03> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [         3,         numbersign, NoSymbol ],
+        actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<PRSC>,clearmods=Shift+Control) ]
+    };
+    // Region Print Screen
+    // Standard Ubuntu
+    replace key <AE04> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [         4,         dollar, NoSymbol ],
+        actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<PRSC>,clearmods=Control) ]
+    };
 };

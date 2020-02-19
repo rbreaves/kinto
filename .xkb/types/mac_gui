@@ -1,11 +1,15 @@
 default partial xkb_types "addmac_levels" {
     type "ONE_LEVEL_CTRL" {
-        modifiers= Mod1+Control;
+        modifiers= Mod1+Control+Shift;
         map[Mod1]= Level2;
         map[Control]= Level3;
         map[Mod1+Control]= Level3;
+        map[Shift+Control]= Level4;
+        map[Shift+Mod1] = Level5;
         level_name[Level1]= "Base";
         level_name[Level2]= "Alt";
-        level_name[Level3]= "With Control";
+        level_name[Level3]= "Control";
+        level_name[Level4]= "Shift with Control";
+        level_name[Level5] = "Shift Alt";
     };
 };
