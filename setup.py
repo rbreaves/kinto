@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import json, time, os
+import json, time, os, sys
 from shutil import copyfile
 from subprocess import PIPE, Popen
 from prekinto import *
@@ -23,6 +23,16 @@ def requirements():
 		os.system("sudo apt-get install -y " + run_pkg)
 		print("\n")
 
+def install_ibus():
+	print(bcolors.CYELLOW + "You need to set IBus as the default Input Method for full word-wise support and re-run this installer.\n" + bcolors.ENDC)
+	print("im-config -n ibus\n")
+	run_install = yn_choice(bcolors.CYELLOW + "Would you like to run it now? (Will require logoff and logon.)\n" + bcolors.ENDC)
+	if(run_install):
+		os.system("im-config -n ibus")
+		print("\n")
+		input("IBus has been set as the default Input Method.\nPress any key to exit and re-run after logoff & logon...")
+		sys.exit()
+
 check_xbind = symbols_gui_line = cmdline("which xbindkeys").strip()
 check_xdotool = symbols_gui_line = cmdline("which xdotool").strip()
 
@@ -40,6 +50,18 @@ if len(check_xdotool) == 0:
 
 if runpkg != 0:
 	requirements()
+
+if os.path.exists(homedir + '/.config/ibus/bus') and cmdline("ls ~/.config/ibus/bus -1rt") == "":
+	install_ibus()
+
+
+
+try:
+	f = open("defaults.json")
+except IOError:
+	print("defaults.json file is missing. Will exit.\n")
+	exit()
+f.close()
 
 try:
 	f = open("defaults.json")
