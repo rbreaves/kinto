@@ -187,7 +187,25 @@ systemctl --user status keyswap
 journalctl -xe
 ```
 
-Open a ticket and send me the info.
+You may need to manually set your DISPLAY in the systemd service file. Normally it pulls in the proper DISPLAY value but if it doesn't you can try this.
+
+```
+echo $DISPLAY
+
+# :0.0
+```
+
+nano ~/.config/systemd/user/keyswap.service
+```
+...
+[Service]
+Type=simple
+Restart=always
+Environment=DISPLAY=:0.0
+...
+```
+
+If you continue to have issues then open a ticket and send me the info.
 
 ### Keyswap is not occurring, but it was working.
 
