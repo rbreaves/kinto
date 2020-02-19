@@ -32,7 +32,7 @@ default partial xkb_symbols "mac_levelssym" {
     // END
     replace key <RGHT> {
         type[Group1]= "ONE_LEVEL_CTRL",
-        symbols[Group1]= [         RGHT,         RGHT, NoSymbol ],
+        symbols[Group1]= [         Right,         Right, NoSymbol ],
         actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<END>,clearmods=Shift+Control)]
     };
     // Full Print Screen
