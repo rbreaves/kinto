@@ -110,7 +110,7 @@ int check_caret()
     return 0;
   }
   else{
-    printf("file %s does not exist\n",fpname);
+    // printf("file %s does not exist\n",fpname);
     return 0;
   }
 }

@@ -14,7 +14,7 @@
 		"xkb_symbols_gui":"+altwin(ctrl_alt_win)+mac_gui(mac_levelssym)",
 		"xkb_symbols_term":"+altwin(swap_alt_win)+mac_term(mac_levelssym)",
 		"xkb_types_gui":"+mac_gui(addmac_levels)",
-		"xkb_types_term":""
+		"xkb_types_term":"+mac_term(addmac_levels)"
 	},
 	{
 		"id": 2,
@@ -27,7 +27,7 @@
 		"xkb_symbols_gui":"+altwin(ctrl_alt_win)+mac_gui(mac_levelssym)",
 		"xkb_symbols_term":"+altwin(swap_alt_win)+mac_term(mac_levelssym)",
 		"xkb_types_gui":"+mac_gui(addmac_levels)",
-		"xkb_types_term":"",
+		"xkb_types_term":"+mac_term(addmac_levels)",
 		"hack": "echo '1' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd;echo 'options hid_apple swap_opt_cmd=1' | sudo tee -a /etc/modprobe.d/hid_apple.conf;sudo update-initramfs -u -k all"
 	},
 	{
@@ -41,7 +41,7 @@
 		"xkb_symbols_gui":"+ctrl(swap_lwin_lctl)+ctrl(swap_rwin_rctl)+mac_gui(mac_levelssym)",
 		"xkb_symbols_term":"+altwin(alt_super_win)+mac_term(mac_levelssym)",
 		"xkb_types_gui":"+mac_gui(addmac_levels)",
-		"xkb_types_term":""
+		"xkb_types_term":"+mac_term(addmac_levels)"
 	},
 	{
 		"id": 4,
@@ -54,7 +54,7 @@
 		"xkb_symbols_gui":"+chromebook(swap_lalt_lctrl)+mac_gui(mac_levelssym)",
 		"xkb_symbols_term":"+altwin(swap_alt_win)+mac_term_chromebook(mac_levelssym)",
 		"xkb_types_gui":"+mac_gui(addmac_levels)",
-		"xkb_types_term":""
+		"xkb_types_term":"+mac_term(addmac_levels)"
 	},
 	{
 		"id": 5,
@@ -68,7 +68,7 @@
 		"xkb_symbols_gui":"+chromebook(swap_lalt_lctrl)+mac_gui(mac_levelssym)",
 		"xkb_symbols_term":"+altwin(swap_alt_win)+mac_term_chromebook(mac_levelssym)",
 		"xkb_types_gui":"+mac_gui(addmac_levels)",
-		"xkb_types_term":""
+		"xkb_types_term":"+mac_term(addmac_levels)"
 	},
 	{
 		"id": 6,
@@ -81,6 +81,6 @@
 		"xkb_symbols_gui":"+chromebook(swap_lalt_lctrl)+mac_gui(mac_levelssym)",
 		"xkb_symbols_term":"+altwin(swap_alt_win)+mac_term_chromebook(mac_levelssym)",
 		"xkb_types_gui":"+mac_gui(addmac_levels)",
-		"xkb_types_term":""
+		"xkb_types_term":"+mac_term(addmac_levels)"
 	}]
 }
