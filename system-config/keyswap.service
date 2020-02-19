@@ -5,6 +5,7 @@ PartOf=graphical-session.target
 [Service]
 Type=simple
 Restart=always
+#Environment=DISPLAY=:0.0
 RestartSec=1
 WorkingDirectory=/home/{username}/.config/kinto
 ExecStart=/bin/bash -c "/home/{username}/.config/kinto/xactive.sh carrots"

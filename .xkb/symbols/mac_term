@@ -26,13 +26,13 @@ default partial xkb_symbols "mac_levelssym" {
     // HOME
     replace key <LEFT> {
         type[Group1]= "ONE_LEVEL_CTRL",
-        symbols[Group1]= [         Up,         Up, NoSymbol ],
+        symbols[Group1]= [         Left,         Left, NoSymbol ],
         actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<HOME>,clearmods=Shift+Control)]
     };
     // END
     replace key <RGHT> {
         type[Group1]= "ONE_LEVEL_CTRL",
-        symbols[Group1]= [         Down,         Down, NoSymbol ],
+        symbols[Group1]= [         RGHT,         RGHT, NoSymbol ],
         actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<END>,clearmods=Shift+Control)]
     };
 };
