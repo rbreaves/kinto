@@ -11,4 +11,28 @@ default partial xkb_symbols "mac_levelssym" {
       symbols[Group1]= [ Hyper_R ],
       actions[group1]=[ SetMods(modifiers=Shift+Control) ]
     };
+    // Page Up
+    replace key <UP> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [         Up,         Up, NoSymbol ],
+        actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<PGUP>,clearmods=Shift+Control)]
+    };
+    // Page Down
+    replace key <DOWN> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [         Down,         Down, NoSymbol ],
+        actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<PGDN>,clearmods=Shift+Control)]
+    };
+    // HOME
+    replace key <LEFT> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [         Up,         Up, NoSymbol ],
+        actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<HOME>,clearmods=Shift+Control)]
+    };
+    // END
+    replace key <RGHT> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [         Down,         Down, NoSymbol ],
+        actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<END>,clearmods=Shift+Control)]
+    };
 };
