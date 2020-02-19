@@ -178,7 +178,7 @@ systemctl --user status keyswap
 ```
 2. Check the service journal
 ```
-journalctl -xe
+journalctl --user-unit=keyswap.service -b
 ```
 
 You may need to manually set your DISPLAY in the systemd service file. Normally it pulls in the proper DISPLAY value but if it doesn't you can try this.
