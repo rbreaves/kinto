@@ -29,6 +29,34 @@ default partial xkb_symbols "mac_levelssym" {
        symbols[Group1]= [       BackSpace,       BackSpace, NoSymbol ],
        actions[Group1]= [      NoAction(),      RedirectKey(key=<DELE>,clearmods=Mod1), NoAction()]
     };
+    // // Full Print Screen
+    // // GalliumOS
+    // replace key <AE03> {
+    //     type[Group1]= "ONE_LEVEL_CTRL",
+    //     symbols[Group1]= [         3,         3, 3, F5 ],
+    //     actions[Group1]= [      NoAction(),      NoAction(), NoAction(), RedirectKey(key=<FK05>,clearmods=Shift) ]
+    // };
+    // // Region Print Screen
+    // // GalliumOS
+    // replace key <AE04> {
+    //     type[Group1]= "ONE_LEVEL_CTRL",
+    //     symbols[Group1]= [         4,         4, 4, F5 ],
+    //     actions[Group1]= [      NoAction(),      NoAction(), NoAction(), RedirectKey(key=<FK05>) ]
+    // };
+    // // Full Print Screen
+    // // Standard Ubuntu
+    // replace key <AE03> {
+    //     type[Group1]= "ONE_LEVEL_CTRL",
+    //     symbols[Group1]= [         3,         3, 3, F5 ],
+    //     actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<PRSC>,clearmods=Shift+Control) ]
+    // };
+    // // Region Print Screen
+    // // Standard Ubuntu
+    // replace key <AE04> {
+    //     type[Group1]= "ONE_LEVEL_CTRL",
+    //     symbols[Group1]= [         4,         4, 4, F5 ],
+    //     actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<PRSC>,clearmods=Control) ]
+    // };
 };
 partial xkb_symbols "mac_chrome" {
     // Back Button
