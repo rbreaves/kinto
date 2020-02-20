@@ -68,20 +68,51 @@ Located at ~/.config/kinto/ you will find user_config.json which will look like 
 You can also add additional Desktop Environment related tweaks to user_config.json in the install directory as well and the installer will prompt you to install them. You may also fork and submit any json or additional .xkb configurations to me for approval if you believe it makes Linux more like typing on a Mac.
 
 ```
-{"config":[{
+{"config":[
+	//
+	// Each config category contains the category name, and references to the de tweaks
+	// And contains the default run commands plus what behavior they should exhibit for
+	// input fields on/off focus, if any.
+	// Symbols and types are not currently used - may later replace the need for static
+	// files with xkbcomp.
+	//
+	// If you use xbindkeys outside of Kinto then you may want to remove xbindkeys from
+	// this config after setup or rewrite the command to exclude your own xbindkeys.
+	//
+	{
 		"name":"gui",
 		"run":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.gui $DISPLAY",
 		"de":[2],
+		"appnames":[ "" ],
+		"run_onInput":"",
+		"run_offInput": "killall xbindkeys > /dev/null 2>&1",
+		"symbols":"",
+		"types":"",
+		"de":[],
 		"appnames":[ "" ]
 	},
 	{
 		"name":"term",
 		"run":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.term $DISPLAY",
 		"de":[2],
-		"appnames":[ "Gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm" ]
+		"appnames":[ "Gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm" ],
+		"run_onInput":"",
+		"run_offInput": "killall xbindkeys > /dev/null 2>&1",
+		"symbols":"",
+		"types":"",
+		"de":[],
+		"appnames":[ "" ]
 	}],
+	// Init - Array that references de objects by their ID and runs the "run" command
+	// when the app initially runs.
 	"init": [1],
+	// detypes - DE's with support or planned support
 	"detypes":["gnome2","gnome3","kde4","kde5","xfce","i3wm"],
+	// de - tweak objects and initial command to be ran on start.
+	//
+	//    Intent - init or gui_term, to signify what type of tweak it is.
+	//      run, run_term, run_gui - run is only relevant for init, and the
+	//      other two relate to gui_term and running under those modes.
 	"de":[{
 		"id": 1,
 		"type": ["gnome3"],
@@ -127,9 +158,9 @@ Status
 systemctl --user status keyswap
 ```
 
-Stop (and reset keyboard to normal)
+Stop (your keymap will return to normal)
 ```
-systemctl --user stop keyswap && setxkbmap -option
+systemctl --user stop keyswap
 ```
 
 Start
