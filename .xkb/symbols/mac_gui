@@ -26,20 +26,44 @@ default partial xkb_symbols "mac_levelssym" {
     // Up to Mac Home
     replace key <UP> {
         type[Group1]= "ONE_LEVEL_CTRL",
-        symbols[Group1]= [         Up,         Up, NoSymbol ],
-        actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<HOME>)]
+        symbols[Group1]= [
+            Up,
+            Up,
+            NoSymbol
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            RedirectKey(key=<HOME>)
+        ]
     };
     // Down to Mac End
     replace key <DOWN> {
         type[Group1]= "ONE_LEVEL_CTRL",
-        symbols[Group1]= [         Down,         Down, NoSymbol ],
-        actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<END>)]
+        symbols[Group1]= [
+            Down,
+            Down,
+            NoSymbol
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            RedirectKey(key=<END>)
+        ]
     };
     // Alt BKSP to DELETE
     replace key <BKSP> {
        type[Group1]= "ONE_LEVEL_CTRL",
-       symbols[Group1]= [       BackSpace,       BackSpace, NoSymbol ],
-       actions[Group1]= [      NoAction(),      RedirectKey(key=<DELE>,clearmods=Mod1), NoAction()]
+       symbols[Group1]= [
+           BackSpace,
+           BackSpace,
+           NoSymbol
+       ],
+       actions[Group1]= [
+           NoAction(),
+           RedirectKey(key=<DELE>,clearmods=Mod1),
+           NoAction()
+       ]
     };
     // // Full Print Screen
     // // GalliumOS
@@ -74,13 +98,29 @@ partial xkb_symbols "mac_chrome" {
     // Back Button
     replace key <LEFT> {
         type[Group1]= "ONE_LEVEL_CTRL",
-        symbols[Group1]= [         Left, Left, Left ],
-        actions[Group1]= [      NoAction(), RedirectKey(key=<UP>), RedirectKey(key=<LEFT>,modifiers=Mod1,clearmods=Control)]
+        symbols[Group1]= [
+            Left,
+            Left,
+            Left
+        ],
+        actions[Group1]= [
+            NoAction(),
+            RedirectKey(key=<UP>),
+            RedirectKey(key=<LEFT>,modifiers=Mod1,clearmods=Control)
+        ]
     };
     // Forwards Button
     replace key <RGHT> {
         type[Group1]= "ONE_LEVEL_CTRL",
-        symbols[Group1]= [         Right,         Right, Right ],
-        actions[Group1]= [      NoAction(), RedirectKey(key=<DOWN>), RedirectKey(key=<RGHT>,modifiers=Mod1,clearmods=Control)]
+        symbols[Group1]= [
+            Right,
+            Right,
+            Right
+        ],
+        actions[Group1]= [
+            NoAction(),
+            RedirectKey(key=<DOWN>),
+            RedirectKey(key=<RGHT>,modifiers=Mod1,clearmods=Control)
+        ]
     };
 };

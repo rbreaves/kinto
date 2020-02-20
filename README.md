@@ -8,14 +8,7 @@
 
 \- Type in Linux like it's a Mac. \-
 
-Cmd = Ctrl+Shift for all terminals.
-
-Note: As of version 1.0 Kinto no longer maps Cmd/Alt to Super while using the Terminal, it is now mapping to Ctrl+Shift by default. Please reset your terminal's keymaps back to their defaults.
-
-Gnome-terminal reset
-```
-dconf reset -f /org/gnome/terminal/legacy/keybindings/
-```
+Seamless copy and paste with all apps and terminals. Also the only linux remapper that is aware of your cursor/caret status - meaning it avoids shortcut conflicts within an app versus wordwise shortcuts when a text field is in use.
 
 ## What does this do exactly?
 
