@@ -134,8 +134,10 @@ Understand that as you add or modify the ~/.xkb/symbols/ files that these two gr
 Also you will have to discover the proper xkb names for keys and that they will often follow *two different* labels/names. eg RGHT vs Right ... **replace key \<RGHT\>** vs **symbols[Group1]= [ Right, ...**.
 
 A good place to get the proper names/labels are these two files.
+```
 /usr/share/X11/xkb/symbols/us
 /usr/share/X11/xkb/symbols/inet
+```
 
 Ok, so here are the detailed instructions.
 
