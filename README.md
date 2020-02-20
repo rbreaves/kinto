@@ -72,7 +72,7 @@ It depends.
 Do you want to remap keys using xkb or xbindkeys with xdotool, or something else entirely?
 The choice is yours, but I'd recommend xbindkeys with xdotool for anyone that doesn't want to spend the time or learn xkb. I prefer xkb but it completely remaps your keyboard and it could break things if done poorly.
 
-**Firefox - How to Remap using XBindKeys with Xdotool**
+**How to Remap using XBindKeys with Xdotool - Firefox**
 
 1. By default Firefox is mapped with the standard gui based xkb config, and only if no input has focus does it then run xbindkeys to map the Cmd+Left/Right arrow key location to the Back and Forwards functionality you'd expect.
 
@@ -119,7 +119,7 @@ Under normal circumstances this keymap would not have worked well had Firefox no
 
 Also the choice of xdotool over something like xte (xautomation) was explicit, xdotool allows you to hold down a modifier and continue to repeat the action(s) and xte does not.
 
-**Chrome - How to Remap Using XKB**
+**How to Remap Using XKB - Chrome**
 
 This gets to be a little more complicated, but this is what you have to do to accomplish the same on the xkb level.
 
