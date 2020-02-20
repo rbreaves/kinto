@@ -97,7 +97,7 @@ The choice is yours, but I'd recommend xbindkeys with xdotool for anyone that do
 },
 ...
 ```
-~/.config/kinto/.firefox-nw (Note additional keymaps can easily be added to this file and I will accept any PR's with keymaps that align with macs)
+~/.config/kinto/.firefox-nw
 ```
 "xdotool key --delay 0 --clearmodifiers Control_L+bracketleft"
   // Alt/Cmd + Left
@@ -106,6 +106,8 @@ The choice is yours, but I'd recommend xbindkeys with xdotool for anyone that do
 "xdotool key --delay 0 --clearmodifiers Control_L+bracketright"
   // Alt/Cmd + Right
   End + Release
+  
+# Note additional keymaps can easily be added to this file and I will accept any PR's with keymaps that align with macs
 ```
 
 Once you have made your changes you can restart the Kinto service and the changes will take affect.
