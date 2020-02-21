@@ -12,7 +12,7 @@
 		"gui":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.gui $DISPLAY",
 		"term":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.term $DISPLAY",
 		"xkb_symbols_gui":"+altwin(ctrl_alt_win)+mac_gui(mac_levelssym)",
-		"xkb_symbols_term":"+altwin(swap_alt_win)+mac_term(mac_levelssym)",
+		"xkb_symbols_term":"+altwin(swap_alt_win)+mac_term(mac_win)+mac_term(mac_global)",
 		"xkb_types_gui":"+mac_gui(addmac_levels)",
 		"xkb_types_term":"+mac_term(addmac_levels)"
 	},
@@ -25,7 +25,7 @@
 		"gui":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.gui $DISPLAY",
 		"term":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.term $DISPLAY",
 		"xkb_symbols_gui":"+altwin(ctrl_alt_win)+mac_gui(mac_levelssym)",
-		"xkb_symbols_term":"+altwin(swap_alt_win)+mac_term(mac_levelssym)",
+		"xkb_symbols_term":"+altwin(swap_alt_win)+mac_term(mac_win)+mac_term(mac_global)",
 		"xkb_types_gui":"+mac_gui(addmac_levels)",
 		"xkb_types_term":"+mac_term(addmac_levels)",
 		"hack": "echo '1' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd;echo 'options hid_apple swap_opt_cmd=1' | sudo tee -a /etc/modprobe.d/hid_apple.conf;sudo update-initramfs -u -k all"
@@ -39,7 +39,7 @@
 		"gui":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.gui $DISPLAY",
 		"term":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.term $DISPLAY",
 		"xkb_symbols_gui":"+ctrl(swap_lwin_lctl)+ctrl(swap_rwin_rctl)+mac_gui(mac_levelssym)",
-		"xkb_symbols_term":"+altwin(alt_super_win)+mac_term(mac_levelssym)",
+		"xkb_symbols_term":"+altwin(alt_super_win)+mac_term(mac_apple)+mac_term(mac_global)",
 		"xkb_types_gui":"+mac_gui(addmac_levels)",
 		"xkb_types_term":"+mac_term(addmac_levels)"
 	},
