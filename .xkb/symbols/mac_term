@@ -1,4 +1,4 @@
-default partial xkb_symbols "mac_levelssym" {
+default partial xkb_symbols "mac_apple" {
     key <LWIN> {
       repeat= no,
       type= "ONE_LEVEL",
@@ -11,6 +11,22 @@ default partial xkb_symbols "mac_levelssym" {
       symbols[Group1]= [ Hyper_R ],
       actions[group1]=[ SetMods(modifiers=Shift+Control) ]
     };
+};
+partial xkb_symbols "mac_win" {
+    key <LALT> {
+      repeat= no,
+      type= "ONE_LEVEL",
+      symbols[Group1]= [ Hyper_L ],
+      actions[group1]=[ SetMods(modifiers=Shift+Control) ]
+    };
+    key <RALT> {
+      repeat= no,
+      type= "ONE_LEVEL",
+      symbols[Group1]= [ Hyper_R ],
+      actions[group1]=[ SetMods(modifiers=Shift+Control) ]
+    };
+};
+partial xkb_symbols "mac_global" {
     // Page Up
     replace key <UP> {
         type[Group1]= "ONE_LEVEL_CTRL",
