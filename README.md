@@ -26,7 +26,7 @@ Kinto works for standard Windows, Apple and Chromebook keyboards. The following 
 - systemd
 - x11
 - IBus*
-- Fedora/REHL/Debian/Ubuntu based distro 16.04+
+- Fedora/RHEL/Debian/Ubuntu based distro 16.04+
 
 If you need kintox11 recompiled for your distro please let me know and I will add a binary for your distro if my binary fails.
 
