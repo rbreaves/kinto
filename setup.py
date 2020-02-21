@@ -15,12 +15,12 @@ def cmdline(command):
     )
     return process.communicate()[0]
 
-def requirements():
+def requirements(pkgm):
 	print(bcolors.CYELLOW + "You need to install some packages, " +run_pkg+ ", for Kinto to fully remap browsers during input focus.\n" + bcolors.ENDC)
 	print("sudo apt-get install -y " + run_pkg + "\n")
 	run_install = yn_choice(bcolors.CYELLOW + "Would you like to run it now? (Will require sudo privileges.)\n" + bcolors.ENDC)
 	if(run_install):
-		os.system("sudo apt-get install -y " + run_pkg)
+		os.system("sudo " + pkgm + " install -y " + run_pkg)
 		print("\n")
 
 def install_ibus():
@@ -33,8 +33,22 @@ def install_ibus():
 		input("IBus has been set as the default Input Method.\nPress any key to exit and re-run after logoff & logon...")
 		sys.exit()
 
-check_xbind = symbols_gui_line = cmdline("which xbindkeys").strip()
-check_xdotool = symbols_gui_line = cmdline("which xdotool").strip()
+check_x11 = cmdline("env | grep -i x11").strip()
+
+if len(check_x11) == 0:
+	print("You are not using x11, please logout and back in using x11/Xorg")
+	sys.exit()
+
+check_xbind = cmdline("which xbindkeys 2>/dev/null").strip()
+check_xdotool = cmdline("which xdotool 2>/dev/null").strip()
+pkgm = cmdline("which apt 2>/dev/null").strip()
+
+if len(pkgm) == 0:
+	pkgm = cmdline("which dnf 2>/dev/null").strip()
+if len(pkgm) == 0:
+	print("No supported package manager found. Exiting...")
+	sys.exit()
+
 
 runpkg = 0
 run_pkg = ""
@@ -49,7 +63,7 @@ if len(check_xdotool) == 0:
 	runpkg = 1
 
 if runpkg != 0:
-	requirements()
+	requirements(pkgm)
 
 if os.path.exists(homedir + '/.config/ibus/bus') and cmdline("ls ~/.config/ibus/bus -1rt") == "":
 	install_ibus()
