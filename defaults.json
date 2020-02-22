@@ -18,7 +18,7 @@
 	},
 	{
 		"id": 2,
-		"name":"Mac - hid driver",
+		"name":"Mac - hid driver (Recommended - Also supports Windows keyboards)",
 		"type":"mac",
 		"active": false,
 		"description":"Standard Mac Keyboards with Apple driver",
@@ -32,7 +32,7 @@
 	},
 	{
 		"id": 3,
-		"name":"Mac Only",
+		"name":"Mac Only (VMs & non-official Apple keyboards)",
 		"type":"mac",
 		"active": true,
 		"description":"Standard Mac Keyboards",

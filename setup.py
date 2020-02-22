@@ -17,10 +17,10 @@ def cmdline(command):
 
 def requirements(pkgm):
 	print(bcolors.CYELLOW + "You need to install some packages, " +run_pkg+ ", for Kinto to fully remap browsers during input focus.\n" + bcolors.ENDC)
-	print("sudo apt-get install -y " + run_pkg + "\n")
+	print("sudo " + pkgm + " " + run_pkg + "\n")
 	run_install = yn_choice(bcolors.CYELLOW + "Would you like to run it now? (Will require sudo privileges.)\n" + bcolors.ENDC)
 	if(run_install):
-		os.system("sudo " + pkgm + " install -y " + run_pkg)
+		os.system("sudo " + pkgm  + run_pkg)
 		print("\n")
 
 def install_ibus():
@@ -41,10 +41,24 @@ if len(check_x11) == 0:
 
 check_xbind = cmdline("which xbindkeys 2>/dev/null").strip()
 check_xdotool = cmdline("which xdotool 2>/dev/null").strip()
+
 pkgm = cmdline("which apt 2>/dev/null").strip()
 
 if len(pkgm) == 0:
 	pkgm = cmdline("which dnf 2>/dev/null").strip()
+	if len(pkgm) > 0:
+		pkgm += " install -y "
+else:
+	pkgm += " install -y "
+
+if len(pkgm) == 0:
+	pkgm = cmdline("which pacman 2>/dev/null").strip()
+	if len(pkgm) > 0:
+		pkgm += " -S "
+else:
+	print("hello")
+
+
 if len(pkgm) == 0:
 	print("No supported package manager found. Exiting...")
 	sys.exit()
