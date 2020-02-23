@@ -50,13 +50,12 @@ if len(pkgm) == 0:
 		pkgm += " install -y "
 else:
 	pkgm += " install -y "
+	pkgm = "apt-get update && sudo " + pkgm
 
 if len(pkgm) == 0:
 	pkgm = cmdline("which pacman 2>/dev/null").strip()
 	if len(pkgm) > 0:
 		pkgm += " -S "
-else:
-	print("hello")
 
 
 if len(pkgm) == 0:
