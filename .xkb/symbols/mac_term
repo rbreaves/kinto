@@ -33,10 +33,10 @@ partial xkb_symbols "mac_global" {
         symbols[Group1]= [
             Tab,
             Tab,
-            slash,
+            backslash,
             NoSymbol,
             NoSymbol,
-            slash,
+            backslash,
             Tab,
             Tab
         ],

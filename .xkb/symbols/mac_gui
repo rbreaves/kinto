@@ -191,8 +191,8 @@ default partial xkb_symbols "mac_levelssym" {
             Tab,
             NoSymbol,
             NoSymbol,
-            slash,
-            slash,
+            backslash,
+            backslash,
             Tab,
             Tab
         ],
