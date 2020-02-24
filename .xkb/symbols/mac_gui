@@ -1,40 +1,147 @@
+// Template
+// replace key <KEY> {
+//     type[Group1]= "ONE_LEVEL_CTRL",
+//     symbols[Group1]= [
+//         Base,
+//         Alt,
+//         Shift Alt,
+//         Control,
+//         Shift Control,
+//         Super,
+//         Shift Super,
+//         Control Alt,
+//         Super Control",
+//         Super Alt,
+//         Super Control Alt
+//     ],
+//     actions[Group1]= [
+//         NoAction(),
+//         RedirectKey(key=<KEY>,modifiers=NewMod,clearmods=Mod1),
+//         RedirectKey(key=<KEY>,modifiers=NewMod,clearmods=Mod1+Shift),
+//         RedirectKey(key=<KEY>,modifiers=NewMod,clearmods=Control),
+//         RedirectKey(key=<KEY>,modifiers=NewMod,clearmods=Control+Shift),
+//         RedirectKey(key=<KEY>,modifiers=NewMod,clearmods=Super),
+//         RedirectKey(key=<KEY>,modifiers=NewMod,clearmods=Super+Shift),
+//         RedirectKey(key=<KEY>,modifiers=NewMod,clearmods=Control+Alt),
+//         RedirectKey(key=<KEY>,modifiers=NewMod,clearmods=Super+Control),
+//         RedirectKey(key=<KEY>,modifiers=NewMod,clearmods=Super+Mod1),
+//         RedirectKey(key=<KEY>,modifiers=NewMod,clearmods=Control+Mod1)
+//     ]
+// };
 default partial xkb_symbols "mac_levelssym" {
+    // Fix the G key for Sublime Text
+    replace key <AC05> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            g,
+            G,
+            g,
+            G,
+            g,
+            G,
+            NoSymbol,
+            NoSymbol,
+            g,
+            g,
+            g,
+            g
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            // Pass G Normally
+            RedirectKey(key=<AC05>),
+            RedirectKey(key=<AC05>),
+            // Find Next
+            RedirectKey(key=<FK03>,clearmods=Control),
+            // Find Previous
+            RedirectKey(key=<FK03>,clearmods=Control),
+            // Sublime Goto Line
+            RedirectKey(key=<AC05>,modifiers=Control,clearmods=Super),
+            NoAction(),
+            // Sublime Quick Find
+            RedirectKey(key=<FK03>,clearmods=Mod1),
+            // Sublime Select All Matches
+            RedirectKey(key=<FK03>,modifiers=Mod1,clearmods=Super+Control),
+            NoAction(),
+            NoAction()
+        ]
+    };
     // LEFT to Begin Line or Beginning of word
     replace key <LEFT> {
         type[Group1]= "ONE_LEVEL_CTRL",
-        symbols[Group1]= [         Left,         Left, NoSymbol,NoSymbol,Left ],
+        symbols[Group1]= [
+            Left,
+            Left,
+            Left,
+            Left,
+            NoSymbol,
+            NoSymbol,
+            Left
+        ],
         actions[Group1]= [
             NoAction(),
-            RedirectKey(key=<LEFT>,modifiers=Control,clearmods=Mod1),
+            NoAction(),
+            // Wordwise
+            RedirectKey(key=<LEFT>,clearmods=Mod1),
+            RedirectKey(key=<LEFT>,clearmods=Mod1),
             RedirectKey(key=<HOME>,clearmods=Control),
-            RedirectKey(key=<HOME>,modifiers=Shift,clearmods=Control+Mod1),
-            RedirectKey(key=<LEFT>,modifiers=Shift+Control,clearmods=Mod1)
+            RedirectKey(key=<HOME>,clearmods=Control),
+            // Change workspace
+            NoAction(),
+            // Wordwise - Sublime?
+            RedirectKey(key=<LEFT>,modifiers=Mod1,clearmods=Super)
         ]
     };
     // Right to End of Line or end of word
     replace key <RGHT> {
         type[Group1]= "ONE_LEVEL_CTRL",
-        symbols[Group1]= [         Right,         Right, NoSymbol, NoSymbol,Right ],
+        symbols[Group1]= [
+            Right,
+            Right,
+            Right,
+            Right,
+            NoSymbol,
+            NoSymbol,
+            Right
+        ],
         actions[Group1]= [
             NoAction(),
-            RedirectKey(key=<RGHT>,modifiers=Control,clearmods=Mod1),
+            NoAction(),
+            // Wordwise
+            RedirectKey(key=<RGHT>,clearmods=Mod1),
+            RedirectKey(key=<RGHT>,clearmods=Mod1),
             RedirectKey(key=<END>,clearmods=Control),
-            RedirectKey(key=<END>,modifiers=Shift,clearmods=Control+Mod1),
-            RedirectKey(key=<RGHT>,modifiers=Shift+Control,clearmods=Mod1)
+            RedirectKey(key=<END>,clearmods=Control),
+            // Change workspace
+            NoAction(),
+            // Wordwise - Sublime?
+            RedirectKey(key=<RGHT>,modifiers=Mod1,clearmods=Super)
         ]
     };
-    // Up to Mac Home
+    //Up to Mac Home
     replace key <UP> {
         type[Group1]= "ONE_LEVEL_CTRL",
         symbols[Group1]= [
             Up,
             Up,
-            NoSymbol
+            Up,
+            Up,
+            NoSymbol,
+            NoSymbol,
+            Up
         ],
         actions[Group1]= [
             NoAction(),
             NoAction(),
-            RedirectKey(key=<HOME>)
+            // Wordwise
+            RedirectKey(key=<UP>,clearmods=Mod1),
+            RedirectKey(key=<UP>,clearmods=Mod1),
+            RedirectKey(key=<HOME>),
+            RedirectKey(key=<HOME>),
+            // Wordwise - Sublime?
+            RedirectKey(key=<PGUP>,clearmods=Super),
+            RedirectKey(key=<UP>,modifiers=Mod1,clearmods=Super)
         ]
     };
     // Down to Mac End
@@ -43,28 +150,67 @@ default partial xkb_symbols "mac_levelssym" {
         symbols[Group1]= [
             Down,
             Down,
-            NoSymbol
+            Down,
+            Down,
+            NoSymbol,
+            NoSymbol,
+            Down
         ],
         actions[Group1]= [
             NoAction(),
             NoAction(),
-            RedirectKey(key=<END>)
+            // Wordwise
+            RedirectKey(key=<DOWN>,clearmods=Mod1),
+            RedirectKey(key=<DOWN>,clearmods=Mod1),
+            RedirectKey(key=<END>),
+            RedirectKey(key=<END>),
+            // Wordwise - Sublime?
+            RedirectKey(key=<PGDN>,clearmods=Super),
+            RedirectKey(key=<DOWN>,modifiers=Mod1,clearmods=Super)
         ]
     };
     // Alt BKSP to DELETE
     replace key <BKSP> {
-       type[Group1]= "ONE_LEVEL_CTRL",
-       symbols[Group1]= [
-           BackSpace,
-           BackSpace,
-           NoSymbol
-       ],
-       actions[Group1]= [
-           NoAction(),
-           RedirectKey(key=<DELE>,clearmods=Mod1),
-           NoAction()
-       ]
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            BackSpace,
+            BackSpace,
+            BackSpace
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            RedirectKey(key=<DELE>,clearmods=Mod1)
+        ]
     };
+    // Cycle App and In App Tab Switching
+    replace key <TAB> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            Tab,
+            Tab,
+            NoSymbol,
+            NoSymbol,
+            slash,
+            slash,
+            Tab,
+            Tab
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            // FK18 is just to clear Alt
+            RedirectKey(key=<FK18>,clearmods=Mod1),
+            RedirectKey(key=<FK18>,clearmods=Mod1),
+            // Also need to remap on the DE level 
+            // to backslash \ for Cmd+Tab
+            RedirectKey(key=<BKSL>),
+            RedirectKey(key=<BKSL>),
+            RedirectKey(key=<TAB>,modifiers=Control,clearmods=Mod4),
+            RedirectKey(key=<TAB>,modifiers=Control+Shift,clearmods=Mod4)
+        ]
+    };
+
     // // Full Print Screen
     // // GalliumOS
     // replace key <AE03> {
@@ -101,11 +247,15 @@ partial xkb_symbols "mac_chrome" {
         symbols[Group1]= [
             Left,
             Left,
+            NoSymbol,
+            NoSymbol,
             Left
         ],
         actions[Group1]= [
             NoAction(),
-            RedirectKey(key=<UP>),
+            NoAction(),
+            RedirectKey(key=<FK18>),
+            RedirectKey(key=<FK18>),
             RedirectKey(key=<LEFT>,modifiers=Mod1,clearmods=Control)
         ]
     };
@@ -115,11 +265,15 @@ partial xkb_symbols "mac_chrome" {
         symbols[Group1]= [
             Right,
             Right,
+            NoSymbol,
+            NoSymbol,
             Right
         ],
         actions[Group1]= [
             NoAction(),
-            RedirectKey(key=<DOWN>),
+            NoAction(),
+            RedirectKey(key=<FK18>),
+            RedirectKey(key=<FK18>),
             RedirectKey(key=<RGHT>,modifiers=Mod1,clearmods=Control)
         ]
     };

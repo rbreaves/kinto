@@ -22,8 +22,8 @@ AD07=u,U
 AD08=i,I 
 AD09=o,O 
 AD10=p,P 
-AD11=racketleft,braceleft 
-AD12=racketright,braceright
+AD11=bracketleft,braceleft 
+AD12=bracketright,braceright
 AC01=a,A 
 AC02=s,S 
 AC03=d,D 
@@ -45,7 +45,7 @@ AB07=m,M
 AB08=comma,less
 AB09=period,greater
 AB10=slash,question
-BKSL=ackslash,bar
+BKSL=backslash,bar
 
 hidden partial alphanumeric_keys
 xkb_symbols=media_common
@@ -1361,7 +1361,7 @@ partial alphanumeric_keys
 xkb_symbols=pc105
 
 
-partial alphanumeric_keys
+partial alphanumeric_keysf
 xkb_symbols=htcdream
 BKSP=BackSpace
 RTRN=Return
