@@ -34,7 +34,7 @@ partial xkb_symbols "mac_global" {
             Tab,
             Tab,
             backslash,
-            NoSymbol,
+            // NoSymbol,
             NoSymbol,
             backslash,
             Tab,
@@ -45,7 +45,7 @@ partial xkb_symbols "mac_global" {
             NoAction(),
             RedirectKey(key=<BKSL>,clearmods=Shift),
             // FK18 is just to clear Alt
-            RedirectKey(key=<FK18>,clearmods=Mod1),
+            // RedirectKey(key=<FK18>,clearmods=Mod1),
             RedirectKey(key=<FK18>,clearmods=Mod1),
             // Also need to remap on the DE level 
             // to backslash \ for Cmd+Tab
