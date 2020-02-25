@@ -34,7 +34,7 @@ def install_ibus():
 		sys.exit()
 
 # check_x11 = cmdline("env | grep -i x11").strip()
-check_x11 = cmdline("loginctl show-session \"$XDG_SESSION_ID\" -p Type | awk -F= '{print $2}'").strip()
+check_x11 = cmdline("env | grep -i x11 || loginctl show-session \"$XDG_SESSION_ID\" -p Type | awk -F= '{print $2}'").strip()
 
 if len(check_x11) == 0:
 	print("You are not using x11, please logout and back in using x11/Xorg")
