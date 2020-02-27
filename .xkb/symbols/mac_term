@@ -27,49 +27,55 @@ partial xkb_symbols "mac_win" {
     };
 };
 partial xkb_symbols "mac_global" {
-    // // Cycle App and In App Tab Switching
+    // Cycle App and In App Tab Switching
     // replace key <TAB> {
     //     type[Group1]= "ONE_LEVEL_CTRL",
     //     symbols[Group1]= [
     //         Tab,
     //         Tab,
-    //         backslash,
-    //         // NoSymbol,
+    //         // backslash,
+    //         Tab,
+    //         // NoSymbol,    
     //         NoSymbol,
-    //         backslash,
+    //         // backslash,
+    //         Tab,
     //         Tab,
     //         Tab
     //     ],
     //     actions[Group1]= [
     //         NoAction(),
     //         NoAction(),
-    //         RedirectKey(key=<BKSL>,clearmods=Shift),
+    //         // RedirectKey(key=<BKSL>,clearmods=Shift),
+    //         NoAction(),
     //         // FK18 is just to clear Alt
     //         // RedirectKey(key=<FK18>,clearmods=Mod1),
+    //         // Clears Alt + Shift
     //         RedirectKey(key=<FK18>,clearmods=Mod1),
     //         // Also need to remap on the DE level 
     //         // to backslash \ for Cmd+Tab
-    //         RedirectKey(key=<TAB>),
+    //         // RedirectKey(key=<TAB>),
+    //         NoAction(),
     //         RedirectKey(key=<TAB>,modifiers=Control,clearmods=Mod4),
     //         RedirectKey(key=<TAB>,modifiers=Control+Shift,clearmods=Mod4)
     //     ]
     // };
     // Page Up
     replace key <UP> {
-        type[Group1]= "ONE_LEVEL_CTRL",
-        symbols[Group1]= [
-        Up,
-        Up,
-        NoSymbol ],
-        actions[Group1]= [
+        type[Group1]= "ONE_LEVEL_CMD",
+        symbols[Group1]= [ 
+            Up,
+            Up,
+            NoSymbol
+        ],
+        actions[Group1]= [ 
             NoAction(),
             NoAction(),
-            RedirectKey(key=<PGUP>,clearmods=Shift+Control)
+            RedirectKey(key=<PGUP>,clearmods=Shift+Control) 
         ]
     };
     // Page Down
     replace key <DOWN> {
-        type[Group1]= "ONE_LEVEL_CTRL",
+        type[Group1]= "ONE_LEVEL_CMD",
         symbols[Group1]= [
             Down,
             Down,
@@ -83,7 +89,7 @@ partial xkb_symbols "mac_global" {
     };
     // HOME
     replace key <LEFT> {
-        type[Group1]= "ONE_LEVEL_CTRL",
+        type[Group1]= "ONE_LEVEL_CMD",
         symbols[Group1]= [
             Left,
             Left,
@@ -97,7 +103,7 @@ partial xkb_symbols "mac_global" {
     };
     // END
     replace key <RGHT> {
-        type[Group1]= "ONE_LEVEL_CTRL",
+        type[Group1]= "ONE_LEVEL_CMD",
         symbols[Group1]= [
             Right,
             Right,
@@ -112,7 +118,7 @@ partial xkb_symbols "mac_global" {
     // Full Print Screen
     // Standard Ubuntu
     replace key <AE03> {
-        type[Group1]= "ONE_LEVEL_CTRL",
+        type[Group1]= "ONE_LEVEL_CMD",
         symbols[Group1]= [
             3,
             numbersign,
@@ -127,7 +133,7 @@ partial xkb_symbols "mac_global" {
     // Region Print Screen
     // Standard Ubuntu
     replace key <AE04> {
-        type[Group1]= "ONE_LEVEL_CTRL",
+        type[Group1]= "ONE_LEVEL_CMD",
         symbols[Group1]= [
             4,
             dollar,
