@@ -78,10 +78,48 @@ if len(check_xdotool) == 0:
 if runpkg != 0:
 	requirements(pkgm)
 
+distro = cmdline("awk -F= '$1==\"NAME\" { print $2 ;}' /etc/os-release").lower()
+distroVersion = cmdline("awk -F= '$1==\"VERSION_ID\" { print $2 ;}' /etc/os-release").lower()
+dename = cmdline("./system-config/dename.sh")
+
+print("Detected\nOS: " + distro + " " + distroVersion + "\nDE: " + dename + "\n")
+addhotkeys = yn_choice("Do you want to apply system level shortcuts?\nThis will add standardized shortcuts for Kinto to fully operate.\n")
+if(addhotkeys):
+	if distro == "ubuntu" and dename == "gnome":
+		cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left \"['<Primary><Alt>Left','<Super>Left']\"")
+		cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right \"['<Primary><Alt>Right','<Super>Right']\"")
+	elif distro == "pop!_os" and dename == "gnome":
+		cmdline("gsettings set org.gnome.desktop.wm.keybindings close \"['<Alt>F4','<Super>w']\"")
+		cmdline("gsettings set org.gnome.desktop.wm.keybindings toggle-maximized \"['<Alt>F10','<Primary><Super>Up']\"")
+	elif distro == "elementaryos" and dename == "gnome":
+		cmdline("gsettings set org.gnome.desktop.wm.keybindings show-desktop \"['<Super>d','<Super>Down']\"")
+		cmdline("gsettings set org.gnome.desktop.wm.keybindings toggle-maximized \"['<Alt>F10','<Super>Up']\"")
+		cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Control><Shift>Space','<Super>Space']\"")
+	elif distro == "galliumos" and dename == "xfce":
+		cmdline("xfconf-query --channel xfce4-keyboard-shortcuts --property \"/xfwm4/custom/<Super>d\" --create --type string --set \"show_desktop_key\"")
+		cmdline("xfconf-query --channel xfce4-keyboard-shortcuts --property \"/xfwm4/custom/<Alt><Shift>Tab\" --set \"cycle_reverse_windows_key\"")
+		cmdline("xfconf-query --channel xfce4-keyboard-shortcuts --property \"/xfwm4/custom/<Alt>Tab\" --set \"cycle_windows_key\"")
+		cmdline("xfconf-query --channel xfce4-keyboard-shortcuts --property \"/xfwm4/custom/<Alt><Shift>Tab\" --set \"cycle_windows_key\"")
+		cmdline("xfconf-query --channel xfce4-keyboard-shortcuts --property \"/xfwm4/custom/<Alt>Tab\" --set \"cycle_reverse_windows_key\"")
+		cmdline("xfconf-query --channel xfce4-keyboard-shortcuts --property \"/xfwm4/custom/<Super>h\" --create --type string --set \"hide_window_key\"")
+		cmdline("xfconf-query --channel xfce4-keyboard-shortcuts --property \"/commands/custom/<Primary><Shift>space\" --create --type string --set \"xfce4-popup-whiskermenu\"")
+		cmdline("xfconf-query --channel xfce4-keyboard-shortcuts --property \"/xfwm4/custom/<Super>Left\" --create --type string --set \"move_window_prev_workspace_key\"")
+		cmdline("xfconf-query --channel xfce4-keyboard-shortcuts --property \"/xfwm4/custom/<Super>Right\" --create --type string --set \"move_window_next_workspace_key\"")
+	elif distro == "fedora" and dename == "gnome":
+		cmdline("gsettings set org.gnome.desktop.wm.keybindings show-desktop \"['<Super>d']\"")
+		cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left \"['<Primary><Alt>Left','<Super>Left']\"")
+		cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right \"['<Primary><Alt>Right','<Super>Right']\"")
+	elif distro == "manjaro linux" and dename == "kde":
+		cmdline("kwriteconfig5 --file \"$HOME/.config/kglobalshortcutsrc\" --group \"kwin\" --key \"Maximize Window\" \"Alt+F10,Meta+PgUp,Maximize Window\"")
+		cmdline("kwriteconfig5 --file \"$HOME/.config/kglobalshortcutsrc\" --group \"kwin\" --key \"Minimize Window\" \"Meta+h,Meta+PgDown,Minimize Window\"")
+		cmdline("kwriteconfig5 --file \"$HOME/.config/kglobalshortcutsrc\" --group \"kwin\" --key \"Switch to Next Desktop\" \"Meta+Right,Meta+Right,Switch to Next Desktop\"")
+		cmdline("kwriteconfig5 --file \"$HOME/.config/kglobalshortcutsrc\" --group \"kwin\" --key \"Switch to Previous Desktop\" \"Meta+Left,Meta+Left,Switch to Previous Desktop\"")
+		cmdline("kquitapp5 kglobalaccel && sleep 2s && kglobalaccel5 &")
+	else:
+		print("A supported OS and DE was not found, you may not have full system level shortcuts installed.")
+
 if os.path.exists(homedir + '/.config/ibus/bus') and cmdline("ls ~/.config/ibus/bus -1rt") == "":
 	install_ibus()
-
-
 
 try:
 	f = open("defaults.json")
