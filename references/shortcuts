@@ -1,0 +1,29 @@
+# GalliumOS Notes
+
+xfconf-query -c xfce4-keyboard-shortcuts -lv | grep "show_desktop_key\|cycle_windows_key\|cycle_reverse_windows_key\|close_window_key\|maximize_window_key\|xfce4-popup-whiskermenu\|move_window_next_workspace_key\|move_window_prev_workspace_key\|hide" | grep -v "default\|<Alt>m"
+
+# Show Desktop
+xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Super>d" --create --type string --set "show_desktop_key"
+
+# Undo show desktop
+xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Super>d" --reset
+
+# GUI Alt Tab - Window Switching
+xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Alt><Shift>Tab" --set "cycle_reverse_windows_key"
+xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Alt>Tab" --set "cycle_windows_key"
+
+# Term Alt Tab - Window Switching
+xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Alt><Shift>Tab" --set "cycle_windows_key"
+xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Alt>Tab" --set "cycle_reverse_windows_key"
+
+# Hide/minimize Window
+xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Super>h" --create --type string --set "hide_window_key"
+
+# Spotlight
+xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Primary><Shift>space" --create --type string --set "xfce4-popup-whiskermenu"
+
+# Change workspace to left
+xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Super>Left" --create --type string --set "move_window_prev_workspace_key"
+
+# Change workspace to right
+xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Super>Right" --create --type string --set "move_window_next_workspace_key"
