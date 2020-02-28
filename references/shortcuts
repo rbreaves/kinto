@@ -59,3 +59,17 @@ gsettings set org.gnome.desktop.wm.keybindings show-desktop "['<Super>d']"
 # Change Workspace
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left "['<Primary><Alt>Left','<Super>Left']"
 gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right "['<Primary><Alt>Right','<Super>Right']"
+
+# Manjaro/Arch KDE
+# Maximize
+kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" \
+--key "Maximize Window" "Alt+F10,Meta+PgUp,Maximize Window"
+# Minimize
+kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" \
+--key "Minimize Window" "Meta+h,Meta+PgDown,Minimize Window"
+# Switch Desktops
+kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" \
+--key "Switch to Next Desktop" "Meta+Right,Meta+Right,Switch to Next Desktop"
+kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" \
+--key "Switch to Previous Desktop" "Meta+Left,Meta+Left,Switch to Previous Desktop"
+kquitapp5 kglobalaccel && sleep 2s && kglobalaccel5 &
