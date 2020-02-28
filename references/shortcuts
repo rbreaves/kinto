@@ -27,3 +27,35 @@ xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Super
 
 # Change workspace to right
 xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Super>Right" --create --type string --set "move_window_next_workspace_key"
+
+# PopOS
+
+# Close App Alt+F4 (Super+w)
+gsettings set org.gnome.desktop.wm.keybindings close "['<Alt>F4','<Super>w']"
+# Undo
+gsettings set org.gnome.desktop.wm.keybindings close "['<Super>w']"
+
+# Maximize Window
+gsettings set org.gnome.desktop.wm.keybindings toggle-maximized "['<Alt>F10','<Primary><Super>Up']"
+# Undo
+gsettings set org.gnome.desktop.wm.keybindings toggle-maximized "['<Primary><Super>Up']"
+
+# Ubuntu 19.10
+# Change Workspace
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left "['<Primary><Alt>Left','<Super>Left']"
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right "['<Primary><Alt>Right','<Super>Right']"
+
+# ElementaryOS
+# Show Desktop
+gsettings set org.gnome.desktop.wm.keybindings show-desktop "['<Super>d','<Super>Down']"
+# Maximize Window
+gsettings set org.gnome.desktop.wm.keybindings toggle-maximized "['<Alt>F10','<Super>Up']"
+# Spotlight
+gsettings set org.gnome.desktop.wm.keybindings panel-main-menu "['<Control><Shift>Space','<Super>Space']"
+
+# Fedora 31
+# Show Desktop
+gsettings set org.gnome.desktop.wm.keybindings show-desktop "['<Super>d']"
+# Change Workspace
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left "['<Primary><Alt>Left','<Super>Left']"
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right "['<Primary><Alt>Right','<Super>Right']"
