@@ -85,6 +85,9 @@ dename = cmdline("./system-config/dename.sh")
 print("Detected\nOS: " + distro + " " + distroVersion + "\nDE: " + dename + "\n")
 addhotkeys = yn_choice("Do you want to apply system level shortcuts?\nThis will add standardized shortcuts for Kinto to fully operate.\n")
 if(addhotkeys):
+	if dename == "gnome":
+		cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-applications \"['<Primary>F13','<Primary><Shift>F13','<Alt>Tab']\"")
+		cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward \"['<Primary>F14','<Primary><Shift>F14','<Alt><Shift>Tab']\"")
 	if distro == "ubuntu" and dename == "gnome":
 		cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left \"['<Primary><Alt>Left','<Super>Left']\"")
 		cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right \"['<Primary><Alt>Right','<Super>Right']\"")

@@ -27,11 +27,17 @@ default partial xkb_types "addmac_levels" {
         level_name[12] = "Super Control Alt";
     };
     type "ONE_LEVEL_CMD" {
-        modifiers = Shift+Control;
+        modifiers = Shift+Control+Super;
         map[Shift] = Level2;
-        map[Shift+Control] = Level2;
+        map[Shift+Control] = Level3;
+        map[Control] = Level4;
+        map[Super] = Level5;
+        map[Shift+Super] = Level6;
         level_name[Level1] = "Base";
         level_name[Level2] = "Shift";
-        level_name[Level3] = "Shift Control";
+        level_name[Level3] = "Control Shift";
+        level_name[Level4] = "Control";
+        level_name[Level5] = "Super";
+        level_name[Level6] = "Super Shift";
     };
 };

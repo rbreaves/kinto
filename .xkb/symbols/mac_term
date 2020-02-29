@@ -28,37 +28,23 @@ partial xkb_symbols "mac_win" {
 };
 partial xkb_symbols "mac_global" {
     // Cycle App and In App Tab Switching
-    // replace key <TAB> {
-    //     type[Group1]= "ONE_LEVEL_CTRL",
-    //     symbols[Group1]= [
-    //         Tab,
-    //         Tab,
-    //         // backslash,
-    //         Tab,
-    //         // NoSymbol,    
-    //         NoSymbol,
-    //         // backslash,
-    //         Tab,
-    //         Tab,
-    //         Tab
-    //     ],
-    //     actions[Group1]= [
-    //         NoAction(),
-    //         NoAction(),
-    //         // RedirectKey(key=<BKSL>,clearmods=Shift),
-    //         NoAction(),
-    //         // FK18 is just to clear Alt
-    //         // RedirectKey(key=<FK18>,clearmods=Mod1),
-    //         // Clears Alt + Shift
-    //         RedirectKey(key=<FK18>,clearmods=Mod1),
-    //         // Also need to remap on the DE level 
-    //         // to backslash \ for Cmd+Tab
-    //         // RedirectKey(key=<TAB>),
-    //         NoAction(),
-    //         RedirectKey(key=<TAB>,modifiers=Control,clearmods=Mod4),
-    //         RedirectKey(key=<TAB>,modifiers=Control+Shift,clearmods=Mod4)
-    //     ]
-    // };
+    key <FK13> { [ F13 ] };
+    key <FK14> { [ F14 ] };
+    replace key <TAB> {
+        type[Group1]= "ONE_LEVEL_CMD",
+        symbols[Group1]= [
+            Tab,
+            Tab,
+            F13,
+            NoSymbol
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            Redirect(key=<FK13>),
+            Redirect(key=<PGDN>,mods=Control,clearmods=Mod4+Super)
+        ]
+    };
     // Page Up
     replace key <UP> {
         type[Group1]= "ONE_LEVEL_CMD",

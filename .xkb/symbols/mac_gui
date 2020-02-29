@@ -183,34 +183,6 @@ default partial xkb_symbols "mac_levelssym" {
             RedirectKey(key=<DELE>,clearmods=Mod1)
         ]
     };
-    // // Cycle App and In App Tab Switching
-    // replace key <TAB> {
-    //     type[Group1]= "ONE_LEVEL_CTRL",
-    //     symbols[Group1]= [
-    //         Tab,
-    //         Tab,
-    //         NoSymbol,
-    //         NoSymbol,
-    //         backslash,
-    //         backslash,
-    //         Tab,
-    //         Tab
-    //     ],
-    //     actions[Group1]= [
-    //         NoAction(),
-    //         NoAction(),
-    //         // FK18 is just to clear Alt
-    //         RedirectKey(key=<FK18>,clearmods=Mod1),
-    //         RedirectKey(key=<FK18>,clearmods=Mod1),
-    //         // Also need to remap on the DE level 
-    //         // to backslash \ for Cmd+Tab
-    //         RedirectKey(key=<BKSL>),
-    //         RedirectKey(key=<BKSL>),
-    //         RedirectKey(key=<TAB>,modifiers=Control,clearmods=Mod4),
-    //         RedirectKey(key=<TAB>,modifiers=Control+Shift,clearmods=Mod4)
-    //     ]
-    // };
-
     // // Full Print Screen
     // // GalliumOS
     // replace key <AE03> {
@@ -239,6 +211,54 @@ default partial xkb_symbols "mac_levelssym" {
     //     symbols[Group1]= [         4,         4, 4, F5 ],
     //     actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<PRSC>,clearmods=Control) ]
     // };
+};
+partial xkb_symbols "mac_appcycle" {
+    // Cycle App and In App Tab Switching
+    key <FK13> { [ F13 ] };
+    key <FK14> { [ F14 ] };
+    replace key <TAB> {
+        type[Group1]= "ONE_LEVEL_CMD",
+        symbols[Group1]= [
+            Tab,
+            Tab,
+            F14,
+            F13,
+            NoSymbol,
+            NoSymbol
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            Redirect(key=<FK14>),
+            Redirect(key=<FK13>),
+            Redirect(key=<TAB>,mods=Control,clearmods=Mod4+Super),
+            Redirect(key=<TAB>,mods=Control,clearmods=Mod4+Super)
+        ]
+    };
+};
+partial xkb_symbols "mac_browsers" {
+    // Cycle App and In App Tab Switching
+    key <FK13> { [ F13 ] };
+    key <FK14> { [ F14 ] };
+    replace key <TAB> {
+        type[Group1]= "ONE_LEVEL_CMD",
+        symbols[Group1]= [
+            Tab,
+            Tab,
+            F14,
+            F13,
+            NoSymbol,
+            NoSymbol
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            Redirect(key=<FK14>),
+            Redirect(key=<FK13>),
+            Redirect(key=<PGDN>,mods=Control,clearmods=Mod4+Super),
+            Redirect(key=<PGUP>,mods=Control,clearmods=Mod4+Super+Shift)
+        ]
+    };
 };
 partial xkb_symbols "mac_chrome" {
     // Back Button
