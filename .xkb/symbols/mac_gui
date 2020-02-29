@@ -259,6 +259,70 @@ partial xkb_symbols "mac_browsers" {
             Redirect(key=<PGUP>,mods=Control,clearmods=Mod4+Super+Shift)
         ]
     };
+    //Up to Mac Home
+    replace key <UP> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            Up,
+            Up,
+            Up,
+            Up,
+            NoSymbol,
+            NoSymbol,
+            Up
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            // Wordwise
+            RedirectKey(key=<UP>,clearmods=Mod1),
+            RedirectKey(key=<UP>,clearmods=Mod1),
+            RedirectKey(key=<HOME>),
+            RedirectKey(key=<HOME>),
+            // Wordwise - Sublime?
+            RedirectKey(key=<PGUP>,clearmods=Super),
+            RedirectKey(key=<UP>,modifiers=Mod1,clearmods=Super)
+        ]
+    };
+    // Down to Mac End
+    replace key <DOWN> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            Down,
+            Down,
+            Down,
+            Down,
+            NoSymbol,
+            NoSymbol,
+            Down
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            // Wordwise
+            RedirectKey(key=<DOWN>,clearmods=Mod1),
+            RedirectKey(key=<DOWN>,clearmods=Mod1),
+            RedirectKey(key=<END>),
+            RedirectKey(key=<END>),
+            // Wordwise - Sublime?
+            RedirectKey(key=<PGDN>,clearmods=Super),
+            RedirectKey(key=<DOWN>,modifiers=Mod1,clearmods=Super)
+        ]
+    };
+    // Alt BKSP to DELETE
+    replace key <BKSP> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            BackSpace,
+            BackSpace,
+            BackSpace
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            RedirectKey(key=<DELE>,clearmods=Mod1)
+        ]
+    };
 };
 partial xkb_symbols "mac_chrome" {
     // Back Button
