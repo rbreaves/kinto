@@ -30,6 +30,9 @@
 // };
 default partial xkb_symbols "mac_levelssym" {
     // // Minimize window Cmd + H = Alt + F9
+    // // 2 caveats
+    // // 1 Cmd + H may not pass through on VMs
+    // // 2 may cause conflicts with apps
     // replace key <AC06> {
     //     type[Group1]= "ONE_LEVEL_CTRL",
     //     symbols[Group1]= [
@@ -37,17 +40,18 @@ default partial xkb_symbols "mac_levelssym" {
     //         H,
     //         h,
     //         H,
-    //         F9
+    //         h
     //     ],
     //     actions[Group1]= [
     //         NoAction(),
     //         NoAction(),
     //         NoAction(),
     //         NoAction(),
-    //         RedirectKey(key=<FK09>,modifiers=Mod1,clearmods=Control)
+    //         RedirectKey(key=<AC06>,modifiers=Super,clearmods=Control)
     //     ]
     // };
     // Maximize Window Ctrl + Cmd + F = Alt+F10
+    // Also maps Option + Cmd + F to Control+H for Replace - Sublime
     replace key <AC04> {
         type[Group1]= "ONE_LEVEL_CTRL",
         symbols[Group1]= [
@@ -59,7 +63,7 @@ default partial xkb_symbols "mac_levelssym" {
             F,
             f,
             F,
-            f,
+            h,
             F10
         ],
         actions[Group1]= [
@@ -71,7 +75,7 @@ default partial xkb_symbols "mac_levelssym" {
             NoAction(),
             NoAction(),
             NoAction(),
-            NoAction(),
+            RedirectKey(key=<AC06>,clearmods=Mod1),
             RedirectKey(key=<FK10>,modifiers=Mod1,clearmods=Super+Control)
         ]
     };
