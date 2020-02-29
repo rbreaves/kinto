@@ -177,8 +177,7 @@ default partial xkb_symbols "mac_levelssym" {
             Left,
             Left,
             NoSymbol,
-            NoSymbol,
-            Left
+            NoSymbol
         ],
         actions[Group1]= [
             NoAction(),
@@ -189,9 +188,7 @@ default partial xkb_symbols "mac_levelssym" {
             RedirectKey(key=<HOME>,clearmods=Control),
             RedirectKey(key=<HOME>,clearmods=Control),
             // Change workspace
-            NoAction(),
-            // Wordwise - Sublime?
-            RedirectKey(key=<LEFT>,modifiers=Mod1,clearmods=Super)
+            NoAction()
         ]
     };
     // Right to End of Line or end of word
@@ -203,8 +200,7 @@ default partial xkb_symbols "mac_levelssym" {
             Right,
             Right,
             NoSymbol,
-            NoSymbol,
-            Right
+            NoSymbol
         ],
         actions[Group1]= [
             NoAction(),
@@ -215,9 +211,7 @@ default partial xkb_symbols "mac_levelssym" {
             RedirectKey(key=<END>,clearmods=Control),
             RedirectKey(key=<END>,clearmods=Control),
             // Change workspace
-            NoAction(),
-            // Wordwise - Sublime?
-            RedirectKey(key=<RGHT>,modifiers=Mod1,clearmods=Super)
+            NoAction()
         ]
     };
     //Up to Mac Home
