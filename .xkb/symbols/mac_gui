@@ -79,7 +79,7 @@ default partial xkb_symbols "mac_levelssym" {
             RedirectKey(key=<FK10>,modifiers=Mod1,clearmods=Super+Control)
         ]
     };
-    // Close App Cmd + Q/W = Alt + F4
+    // Close App Cmd + Q = Alt + F4
     replace key <AD01> {
         type[Group1]= "ONE_LEVEL_CTRL",
         symbols[Group1]= [
@@ -91,21 +91,6 @@ default partial xkb_symbols "mac_levelssym" {
         ],
         actions[Group1]= [
             NoAction(),
-            NoAction(),
-            NoAction(),
-            NoAction(),
-            RedirectKey(key=<FK04>,modifiers=Mod1,clearmods=Control)
-        ]
-    };
-    replace key <AD02> {
-        type[Group1]= "ONE_LEVEL_CTRL",
-        symbols[Group1]= [
-            w,
-            w,
-            W,
-            F4
-        ],
-        actions[Group1]= [
             NoAction(),
             NoAction(),
             NoAction(),
