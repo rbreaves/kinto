@@ -29,6 +29,103 @@
 //     ]
 // };
 default partial xkb_symbols "mac_levelssym" {
+    // // Minimize window Cmd + H = Alt + F9
+    // replace key <AC06> {
+    //     type[Group1]= "ONE_LEVEL_CTRL",
+    //     symbols[Group1]= [
+    //         h,
+    //         H,
+    //         h,
+    //         H,
+    //         F9
+    //     ],
+    //     actions[Group1]= [
+    //         NoAction(),
+    //         NoAction(),
+    //         NoAction(),
+    //         NoAction(),
+    //         RedirectKey(key=<FK09>,modifiers=Mod1,clearmods=Control)
+    //     ]
+    // };
+    // Maximize Window Ctrl + Cmd + F = Alt+F10
+    replace key <AC04> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            f,
+            F,
+            f,
+            F,
+            f,
+            F,
+            f,
+            F,
+            f,
+            F10
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            NoAction(),
+            NoAction(),
+            NoAction(),
+            NoAction(),
+            NoAction(),
+            NoAction(),
+            NoAction(),
+            RedirectKey(key=<FK10>,modifiers=Mod1,clearmods=Super+Control)
+        ]
+    };
+    // Close App Cmd + Q/W = Alt + F4
+    replace key <AD01> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            q,
+            Q,
+            q,
+            Q,
+            F4
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            NoAction(),
+            NoAction(),
+            RedirectKey(key=<FK04>,modifiers=Mod1,clearmods=Control)
+        ]
+    };
+    replace key <AD02> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            w,
+            w,
+            W,
+            F4
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            NoAction(),
+            RedirectKey(key=<FK04>,modifiers=Mod1,clearmods=Control)
+        ]
+    };
+    // Show Desktop Cmd + F3 = Super + D
+    replace key <FK03> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            F3,
+            F3,
+            F3,
+            F3,
+            d
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            NoAction(),
+            NoAction(),
+            RedirectKey(key=<AC03>,modifiers=Super,clearmods=Control)
+        ]
+    };
     // Fix the G key for Sublime Text
     replace key <AC05> {
         type[Group1]= "ONE_LEVEL_CTRL",

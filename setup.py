@@ -78,26 +78,39 @@ if len(check_xdotool) == 0:
 if runpkg != 0:
 	requirements(pkgm)
 
-distro = cmdline("awk -F= '$1==\"NAME\" { print $2 ;}' /etc/os-release").lower()
-distroVersion = cmdline("awk -F= '$1==\"VERSION_ID\" { print $2 ;}' /etc/os-release").lower()
-dename = cmdline("./system-config/dename.sh")
+distro = cmdline("awk -F= '$1==\"NAME\" { print $2 ;}' /etc/os-release").replace('"','').strip()
+distroVersion = cmdline("awk -F= '$1==\"VERSION_ID\" { print $2 ;}' /etc/os-release").replace('"','').strip()
+dename = cmdline("./system-config/dename.sh").replace('"','').strip()
 
-print("Detected\nOS: " + distro + " " + distroVersion + "\nDE: " + dename + "\n")
-addhotkeys = yn_choice("Do you want to apply system level shortcuts?\nThis will add standardized shortcuts for Kinto to fully operate.\n")
+print("\nIf Kinto is already running it will be stopped...")
+print("If you cancel the installer you can re-run Kinto via\n systemctl --user start keyswap")
+
+cmdline("systemctl --user stop keyswap")
+addhotkeys = yn_choice("\nDo you want to apply system level shortcuts?")
 if(addhotkeys):
+	print("\nDetected " + distro + " " + distroVersion.strip() + " DE: " + dename)
+	distro = distro.lower()
 	if dename == "gnome":
 		cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-applications \"['<Primary>F13','<Primary><Shift>F13','<Alt>Tab']\"")
 		cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward \"['<Primary>F14','<Primary><Shift>F14','<Alt><Shift>Tab']\"")
+		cmdline("gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\"")
+		cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Primary><Shift>Space','<Primary>Space']\"")
 	if distro == "ubuntu" and dename == "gnome":
 		cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left \"['<Primary><Alt>Left','<Super>Left']\"")
 		cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right \"['<Primary><Alt>Right','<Super>Right']\"")
+		cmdline("gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\"")
+		cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Primary><Shift>Space','<Primary>Space']\"")
 	elif distro == "pop!_os" and dename == "gnome":
 		cmdline("gsettings set org.gnome.desktop.wm.keybindings close \"['<Alt>F4','<Super>w']\"")
 		cmdline("gsettings set org.gnome.desktop.wm.keybindings toggle-maximized \"['<Alt>F10','<Primary><Super>Up']\"")
+		cmdline("gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\"")
+		cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Primary><Shift>Space','<Primary>Space']\"")
 	elif distro == "elementaryos" and dename == "gnome":
 		cmdline("gsettings set org.gnome.desktop.wm.keybindings show-desktop \"['<Super>d','<Super>Down']\"")
 		cmdline("gsettings set org.gnome.desktop.wm.keybindings toggle-maximized \"['<Alt>F10','<Super>Up']\"")
 		cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Control><Shift>Space','<Super>Space']\"")
+		cmdline("gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\"")
+		cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Super>Space','<Primary>Space']\"")
 	elif distro == "galliumos" and dename == "xfce":
 		cmdline("xfconf-query --channel xfce4-keyboard-shortcuts --property \"/xfwm4/custom/<Super>d\" --create --type string --set \"show_desktop_key\"")
 		cmdline("xfconf-query --channel xfce4-keyboard-shortcuts --property \"/xfwm4/custom/<Alt><Shift>Tab\" --set \"cycle_reverse_windows_key\"")
@@ -112,6 +125,8 @@ if(addhotkeys):
 		cmdline("gsettings set org.gnome.desktop.wm.keybindings show-desktop \"['<Super>d']\"")
 		cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left \"['<Primary><Alt>Left','<Super>Left']\"")
 		cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right \"['<Primary><Alt>Right','<Super>Right']\"")
+		cmdline("gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\"")
+		cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Primary><Shift>Space','<Primary>Space']\"")
 	elif distro == "manjaro linux" and dename == "kde":
 		cmdline("kwriteconfig5 --file \"$HOME/.config/kglobalshortcutsrc\" --group \"kwin\" --key \"Maximize Window\" \"Alt+F10,Meta+PgUp,Maximize Window\"")
 		cmdline("kwriteconfig5 --file \"$HOME/.config/kglobalshortcutsrc\" --group \"kwin\" --key \"Minimize Window\" \"Meta+h,Meta+PgDown,Minimize Window\"")
@@ -282,7 +297,7 @@ if len(defaultde) != 0:
 
 user_config['config'][0]['run'] = keyboardconfigs[defaultkb-1]['gui']
 user_config['config'][1]['run'] = keyboardconfigs[defaultkb-1]['term']
-user_config['config'][2]['run'] = keyboardconfigs[defaultkb-1]['gui']
+user_config['config'][2]['run'] = keyboardconfigs[defaultkb-1]['gui'].replace("kbd.mac.gui","kbd.mac.gui.browsers")
 user_config['config'][3]['run'] = keyboardconfigs[defaultkb-1]['gui'].replace("kbd.mac.gui","kbd.mac.gui.chrome")
 
 os.remove(user_file)
