@@ -83,8 +83,8 @@ default partial xkb_symbols "mac_levelssym" {
             NoAction(),
             NoAction(),
             // Wordwise
-            RedirectKey(key=<LEFT>,clearmods=Mod1),
-            RedirectKey(key=<LEFT>,clearmods=Mod1),
+            RedirectKey(key=<LEFT>,mods=Control,clearmods=Mod1),
+            RedirectKey(key=<LEFT>,mods=Control,clearmods=Mod1),
             RedirectKey(key=<HOME>,clearmods=Control),
             RedirectKey(key=<HOME>,clearmods=Control),
             // Change workspace
@@ -109,8 +109,8 @@ default partial xkb_symbols "mac_levelssym" {
             NoAction(),
             NoAction(),
             // Wordwise
-            RedirectKey(key=<RGHT>,clearmods=Mod1),
-            RedirectKey(key=<RGHT>,clearmods=Mod1),
+            RedirectKey(key=<RGHT>,mods=Control,clearmods=Mod1),
+            RedirectKey(key=<RGHT>,mods=Control,clearmods=Mod1),
             RedirectKey(key=<END>,clearmods=Control),
             RedirectKey(key=<END>,clearmods=Control),
             // Change workspace
