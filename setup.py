@@ -33,7 +33,8 @@ def install_ibus():
 		input("IBus has been set as the default Input Method.\nPress any key to exit and re-run after logoff & logon...")
 		sys.exit()
 
-check_x11 = cmdline("env | grep -i x11").strip()
+# check_x11 = cmdline("env | grep -i x11").strip()
+check_x11 = cmdline("env | grep -i x11 || loginctl show-session \"$XDG_SESSION_ID\" -p Type | awk -F= '{print $2}'").strip()
 
 if len(check_x11) == 0:
 	print("You are not using x11, please logout and back in using x11/Xorg")
