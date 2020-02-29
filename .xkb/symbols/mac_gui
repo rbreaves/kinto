@@ -292,6 +292,36 @@ default partial xkb_symbols "mac_levelssym" {
     //     actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<PRSC>,clearmods=Control) ]
     // };
 };
+partial xkb_symbols "mac_appcycle_chromebook" {
+    // Cycle App and In App Tab Switching
+    key <FK13> { [ F13 ] };
+    key <FK14> { [ F14 ] };
+    replace key <TAB> {
+        type[Group1]= "ONE_LEVEL_CMD",
+        symbols[Group1]= [
+            Tab,
+            Tab,
+            F14,
+            F13,
+            NoSymbol,
+            NoSymbol
+        ],
+        actions[Group1]= [
+            // Alt
+            Redirect(key=<TAB>,mods=Control,clearmods=Mod1),
+            // Alt + Shift
+            Redirect(key=<TAB>,mods=Control,clearmods=Mod1),
+            // Control
+            Redirect(key=<FK14>),
+            // Control + Shift
+            Redirect(key=<FK13>),
+            // Super
+            NoAction(),
+            // Super + Shift
+            NoAction()
+        ]
+    };
+};
 partial xkb_symbols "mac_appcycle" {
     // Cycle App and In App Tab Switching
     key <FK13> { [ F13 ] };
@@ -307,11 +337,17 @@ partial xkb_symbols "mac_appcycle" {
             NoSymbol
         ],
         actions[Group1]= [
+            // Alt
             NoAction(),
+            // Alt + Shift
             NoAction(),
+            // Control
             Redirect(key=<FK14>),
+            // Control + Shift
             Redirect(key=<FK13>),
+            // Super
             Redirect(key=<TAB>,mods=Control,clearmods=Mod4+Super),
+            // Super + Shift
             Redirect(key=<TAB>,mods=Control,clearmods=Mod4+Super)
         ]
     };
