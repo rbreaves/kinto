@@ -271,6 +271,10 @@ if default != 3:
 	cmdline('sed -i '' -e "' + symbols_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_symbols_gui'].replace("+mac_gui(mac_levelssym)+mac_gui(mac_appcycle_chromebook)","+mac_gui(mac_levelssym)+mac_gui(mac_browsers)") + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.browsers')
 	cmdline('sed -i '' -e "' + symbols_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_symbols_gui'].replace("+mac_gui(mac_levelssym)+mac_gui(mac_appcycle_chromebook","+mac_gui(mac_browsers)+mac_gui(mac_chrome)") + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.chrome')
 else:
+	# Fix multicursor in mac_gui
+	cmdline('sed -i "s/\/\/ RedirectKey(key=<UP>), \/\/ C/RedirectKey(key=<UP>), \/\/ C/g" ~/.xkb/symbols/mac_gui')
+	cmdline('sed -i "s/RedirectKey(key=<UP>,clearmods=Mod1), \/\/ D/\/\/ RedirectKey(key=<UP>,clearmods=Mod1), \/\/ D/g" ~/.xkb/symbols/mac_gui')
+	# Fix browsers
 	cmdline('sed -i '' -e "' + symbols_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_symbols_gui'].replace("+mac_gui(mac_levelssym)+mac_gui(mac_appcycle_chromebook)","+mac_gui(mac_levelssym)+mac_gui(mac_browsers_chromebook)") + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.browsers')
 	cmdline('sed -i '' -e "' + symbols_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_symbols_gui'].replace("+mac_gui(mac_levelssym)+mac_gui(mac_appcycle_chromebook)","+mac_gui(mac_browsers_chromebook)+mac_gui(mac_chrome)") + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.chrome')
 cmdline('sed -i '' -e "' + types_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_types_gui'] + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.browsers')

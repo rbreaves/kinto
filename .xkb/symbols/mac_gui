@@ -216,7 +216,8 @@ default partial xkb_symbols "mac_levelssym" {
             NoAction(),
             // Wordwise
             RedirectKey(key=<UP>,clearmods=Mod1),
-            RedirectKey(key=<UP>,clearmods=Mod1),
+            // RedirectKey(key=<UP>), // Chromebook multicursor
+            RedirectKey(key=<UP>,clearmods=Mod1), // Default multicursor
             RedirectKey(key=<HOME>),
             RedirectKey(key=<HOME>),
             // Wordwise - Sublime?
