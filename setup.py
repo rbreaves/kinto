@@ -71,11 +71,17 @@ def setShortcuts():
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left ['']")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right ['']")
 		elif distro == "elementary" and dename == "gnome":
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-applications \"['<Primary>F13','<Primary><Shift>F13','<Alt>Tab']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward \"['<Primary>F14','<Primary><Shift>F14','<Alt><Shift>Tab']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings show-desktop \"['<Super>d','<Super>Down']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings toggle-maximized \"['<Alt>F10','<Super>Up']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Control><Shift>Space','<Super>Space']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Super>Space','<Primary>Space']\"")
+			cmdline('perl -pi -e "s/(\/\/ )(.*)(\/\/ Elementary)/\$2\$3/g" ~/.xkb/symbols/mac_term')
+			cmdline('perl -pi -e "s/(\w.*)(\/\/ Default)/\/\/ \$1\$2/g" ~/.xkb/symbols/mac_term')
+			cmdline('perl -pi -e "s/(\/\/ )(.*)(\/\/ Elementary)/\$2\$3/g" ~/.xkb/symbols/mac_gui')
+			cmdline('perl -pi -e "s/(\w.*)(\/\/ Default)/\/\/ \$1\$2/g" ~/.xkb/symbols/mac_gui')
 		elif distro == "galliumos" and dename == "xfce":
 			print("Applying GalliumOS (xfce) shortcuts...")
 			# Reset Show desktop
@@ -232,9 +238,6 @@ print("")
 
 keyboardconfigs = [obj for obj in data['defaults'] if(obj['type'] == data['defaulttypes'][default-1])]
 
-
-setShortcuts()
-
 # for k in keyboardconfigs:
 for index, k in enumerate(keyboardconfigs):
 	print(color_arr[default-1] + bcolors.BOLD + str(index+1) + '. ' + k['name'] + bcolors.ENDC)
@@ -279,14 +282,15 @@ if default != 3:
 	cmdline('sed -i '' -e "' + symbols_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_symbols_gui'].replace("+mac_gui(mac_levelssym)+mac_gui(mac_appcycle)","+mac_gui(mac_browsers)+mac_gui(mac_chrome)") + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.chrome')
 else:
 	# Fix multicursor in mac_gui
-	cmdline('sed -i "s/\/\/ RedirectKey(key=<UP>), \/\/ C/RedirectKey(key=<UP>), \/\/ C/g" ~/.xkb/symbols/mac_gui')
-	cmdline('sed -i "s/RedirectKey(key=<UP>,clearmods=Mod1), \/\/ D/\/\/ RedirectKey(key=<UP>,clearmods=Mod1), \/\/ D/g" ~/.xkb/symbols/mac_gui')
+	cmdline('perl -pi -e "s/(\/\/ )(.*)(\/\/ Chromebook)/\$2\$3/g" ~/.xkb/symbols/mac_gui')
+	cmdline('perl -pi -e "s/(\w.*)(\/\/ Default)/\/\/ \$1\$2/g" ~/.xkb/symbols/mac_gui')
 	# Fix browsers
 	cmdline('sed -i '' -e "' + symbols_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_symbols_gui'].replace("+mac_gui(mac_levelssym)+mac_gui(mac_appcycle_chromebook)","+mac_gui(mac_levelssym)+mac_gui(mac_browsers_chromebook)") + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.browsers')
 	cmdline('sed -i '' -e "' + symbols_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_symbols_gui'].replace("+mac_gui(mac_levelssym)+mac_gui(mac_appcycle_chromebook)","+mac_gui(mac_browsers_chromebook)+mac_gui(mac_chrome)") + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.chrome')
 cmdline('sed -i '' -e "' + types_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_types_gui'] + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.browsers')
 cmdline('sed -i '' -e "' + types_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_types_gui'] + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.chrome')
 
+setShortcuts()
 
 user_file = homedir + '/.config/kinto/user_config.json'
 with open(user_file, 'r') as f:
