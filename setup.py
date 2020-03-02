@@ -25,9 +25,12 @@ def requirements(pkgm):
 
 def install_ibus():
 	print(bcolors.CYELLOW + "You need to set IBus as the default Input Method for full word-wise support and re-run this installer.\n" + bcolors.ENDC)
+	print(bcolors.CYELLOW + "Confirm the IBus Setup by saying Yes and then closing the window.\n" + bcolors.ENDC)
+	print("ibus-setup\n")
 	print("im-config -n ibus\n")
 	run_install = yn_choice(bcolors.CYELLOW + "Would you like to run it now? (Will require logoff and logon.)\n" + bcolors.ENDC)
 	if(run_install):
+		os.system("ibus-setup")
 		os.system("im-config -n ibus")
 		print("\n")
 		input("IBus has been set as the default Input Method.\nPress any key to exit and re-run after logoff & logon...")
