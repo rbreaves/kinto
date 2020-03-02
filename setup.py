@@ -63,6 +63,8 @@ def setShortcuts():
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Primary><Shift>Space','<Primary>Space']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up \"['<Super>Up','<Super>Left']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down \"['<Super>Down','<Super>Right']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left ['']")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right ['']")
 		elif distro == "elementaryos" and dename == "gnome":
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings show-desktop \"['<Super>d','<Super>Down']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings toggle-maximized \"['<Alt>F10','<Super>Up']\"")
