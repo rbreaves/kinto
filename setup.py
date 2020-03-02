@@ -25,16 +25,19 @@ def requirements(pkgm):
 
 def install_ibus():
 	print(bcolors.CYELLOW + "You need to set IBus as the default Input Method for full word-wise support and re-run this installer.\n" + bcolors.ENDC)
+	print(bcolors.CYELLOW + "Confirm the IBus Setup by saying Yes and then closing the window.\n" + bcolors.ENDC)
+	print("ibus-setup\n")
 	print("im-config -n ibus\n")
 	run_install = yn_choice(bcolors.CYELLOW + "Would you like to run it now? (Will require logoff and logon.)\n" + bcolors.ENDC)
 	if(run_install):
+		os.system("ibus-setup")
 		os.system("im-config -n ibus")
 		print("\n")
 		input("IBus has been set as the default Input Method.\nPress any key to exit and re-run after logoff & logon...")
 		sys.exit()
 
 def setShortcuts():
-	distro = cmdline("awk -F= '$1==\"NAME\" { print $2 ;}' /etc/os-release").replace('"','').strip()
+	distro = cmdline("awk -F= '$1==\"NAME\" { print $2 ;}' /etc/os-release").replace('"','').strip().split(" ")[0]
 	distroVersion = cmdline("awk -F= '$1==\"VERSION_ID\" { print $2 ;}' /etc/os-release").replace('"','').strip()
 	dename = cmdline("./system-config/dename.sh").replace('"','').strip().split(" ")[0]
 	
@@ -67,7 +70,7 @@ def setShortcuts():
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down \"['<Super>Down','<Super>Right']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left ['']")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right ['']")
-		elif distro == "elementaryos" and dename == "gnome":
+		elif distro == "elementary" and dename == "gnome":
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings show-desktop \"['<Super>d','<Super>Down']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings toggle-maximized \"['<Alt>F10','<Super>Up']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Control><Shift>Space','<Super>Space']\"")
