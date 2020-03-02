@@ -52,8 +52,10 @@ def setShortcuts():
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Primary><Shift>Space','<Primary>Space']\"")
 		if distro == "ubuntu" and dename == "gnome":
-			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left \"['<Primary><Alt>Left','<Super>Left']\"")
-			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right \"['<Primary><Alt>Right','<Super>Right']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up \"['<Super>Up','<Super>Left']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down \"['<Super>Down','<Super>Right']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left ['']")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right ['']")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Primary><Shift>Space','<Primary>Space']\"")
 		elif distro == "pop!_os" and dename == "gnome":
