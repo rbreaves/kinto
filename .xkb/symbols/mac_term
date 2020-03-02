@@ -147,16 +147,14 @@ partial xkb_symbols "mac_global" {
         symbols[Group1]= [
             Left,
             Left,
-            NoSymbol // Default
-            // Left // Elementary
-            // Left // Elementary
+            NoSymbol,
+            Left
         ],
         actions[Group1]= [
             NoAction(),
             NoAction(),
-            RedirectKey(key=<HOME>,clearmods=Shift+Control) // Default
-            // Left // Elementary
-            // RedirectKey(key=<LEFT>,mods=Super,clearmods=Control) // Elementary
+            RedirectKey(key=<HOME>,clearmods=Shift+Control),
+            RedirectKey(key=<LEFT>,mods=Super,clearmods=Control)
         ]
     };
     // END
@@ -165,16 +163,14 @@ partial xkb_symbols "mac_global" {
         symbols[Group1]= [
             Right,
             Right,
-            NoSymbol // Default
-            // Right, // Elementary
-            // Right // Elementary
+            NoSymbol,
+            Right
         ],
         actions[Group1]= [
             NoAction(),
             NoAction(),
-            RedirectKey(key=<END>,clearmods=Shift+Control) // Default
-            // NoAction(), // Elementary
-            // RedirectKey(key=<RGHT>,mods=Super,clearmods=Control) // Elementary
+            RedirectKey(key=<END>,clearmods=Shift+Control),
+            RedirectKey(key=<RGHT>,mods=Super,clearmods=Control)
         ]
     };
     // Full Print Screen

@@ -113,10 +113,16 @@ def setShortcuts():
 			print('     xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Primary><Alt>Right" --create --type string --set "move_window_next_workspace_key"\n')
 		elif distro == "fedora" and dename == "gnome":
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings show-desktop \"['<Super>d']\"")
-			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left \"['<Primary><Alt>Left','<Super>Left']\"")
-			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right \"['<Primary><Alt>Right','<Super>Right']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Primary><Shift>Space','<Primary>Space']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up \"['<Super>Page_Up','<Super>Left']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down \"['<Super>Page_Down','<Super>Right']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left ['']")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right ['']")
+			cmdline("gsettings set org.gnome.mutter.keybindings toggle-tiled-right \"['<Super><Alt>Right']\"")
+			cmdline("gsettings set org.gnome.mutter.keybindings toggle-tiled-left \"['<Super><Alt>Left']\"")
+			# org.gnome.mutter.keybindings toggle-tiled-right ['<Super>Right']
+			# org.gnome.mutter.keybindings toggle-tiled-left ['<Super>Left']
 		elif distro == "manjaro linux" and dename == "kde":
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Maximize Window" "Alt+F10,Meta+PgUp,Maximize Window"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Minimize Window" "Meta+h,Meta+PgDown,Minimize Window"')

@@ -162,7 +162,8 @@ default partial xkb_symbols "mac_levelssym" {
             Left,
             Left,
             NoSymbol,
-            NoSymbol
+            NoSymbol,
+            Left
         ],
         actions[Group1]= [
             NoAction(),
@@ -173,6 +174,8 @@ default partial xkb_symbols "mac_levelssym" {
             RedirectKey(key=<HOME>,clearmods=Control),
             RedirectKey(key=<HOME>,clearmods=Control),
             // Change workspace
+            NoAction(),
+            // Super - Change workspace
             NoAction()
         ]
     };
