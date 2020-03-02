@@ -41,21 +41,30 @@ partial xkb_symbols "mac_global" {
     //         RedirectKey(key=<AC06>,modifiers=Super,clearmods=Control+Shift)
     //     ]
     // };
-    // Maximize Window Ctrl + Cmd + F = Alt+F10
-    replace key <AC04> {
-        type[Group1]= "ONE_LEVEL_CTRL",
-        symbols[Group1]= [
-            f,
-            F,
-            F
-        ],
-        actions[Group1]= [
-            NoAction(),
-            NoAction(),
-            RedirectKey(key=<FK10>,modifiers=Mod1,clearmods=Control+Shift)
-        ]
-    };
-    // Close App Cmd + Q/W = Alt + F4
+
+    //
+    // Some sort of glitch occurs on shifting F while this segment is active
+    // it is like the Control key is being held down when it isn't.
+    //
+    // // Maximize Window Ctrl + Cmd + F = Alt+F10
+    // replace key <AC04> {
+    //     type[Group1]= "ONE_LEVEL_CTRL",
+    //     symbols[Group1]= [
+    //         f,
+    //         F,
+    //         F
+    //     ],
+    //     actions[Group1]= [
+    //         // Base
+    //         NoAction(),
+    //         // Shift
+    //         NoAction(),
+    //         // Ctrl + Shift
+    //         RedirectKey(key=<FK10>,modifiers=Mod1,clearmods=Control+Shift)
+    //     ]
+    // };
+    
+    // Close App Cmd + Q = Alt + F4
     replace key <AD01> {
         type[Group1]= "ONE_LEVEL_CTRL",
         symbols[Group1]= [
@@ -69,19 +78,7 @@ partial xkb_symbols "mac_global" {
             RedirectKey(key=<FK04>,modifiers=Mod1,clearmods=Control+Shift)
         ]
     };
-    replace key <AD02> {
-        type[Group1]= "ONE_LEVEL_CTRL",
-        symbols[Group1]= [
-            w,
-            W,
-            F4
-        ],
-        actions[Group1]= [
-            NoAction(),
-            NoAction(),
-            RedirectKey(key=<FK04>,modifiers=Mod1,clearmods=Control+Shift)
-        ]
-    };
+
     // Show Desktop Cmd + F3 = Super + D
     replace key <FK03> {
         type[Group1]= "ONE_LEVEL_CTRL",
