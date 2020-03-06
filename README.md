@@ -65,6 +65,8 @@ To Uninstall Kinto
 
 ## How to Add or Change keymaps for Applications
 
+Note: All of the following is already done in Kinto (but may also change as improvements are made). The following is purely for documentation and example sake as they are real examples of how to leverage the json config to support additional keymaps.
+
 **First it is important to understand how Kinto operates.**
 
 1. It listens for any focus/active window changes
