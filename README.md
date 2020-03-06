@@ -57,6 +57,12 @@ sudo apt install python3
 ./setup.py
 ```
 
+To Uninstall Kinto
+
+```
+./uninstall.sh
+```
+
 ## How to Add or Change keymaps for Applications
 
 **First it is important to understand how Kinto operates.**
