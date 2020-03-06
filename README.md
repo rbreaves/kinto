@@ -63,9 +63,9 @@ To Uninstall Kinto
 ./uninstall.sh
 ```
 
-## How to Add an additional setxkbmap option inside Kinto
+## How to Add Setxkbmap Option inside Kinto
 
-To summarize you'll need to pull the partial out of the symbols file the option resides in and then add that to the ~/.xkb/symbols/mac_gui file and lastly reference it in the keymap file(s) you want it in.
+To summarize you'll need to pull the partial out of the symbols file the option resides in and then add that to the mac_gui file and lastly reference it in the keymap file(s) you want it in.
 
 symbols directory
 ```
