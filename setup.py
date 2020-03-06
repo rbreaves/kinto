@@ -113,12 +113,12 @@ def setShortcuts():
 			print('     xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Primary><Alt>Right" --create --type string --set "move_window_next_workspace_key"\n')
 		elif distro == "fedora" and dename == "gnome":
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings show-desktop \"['<Super>d']\"")
-			cmdline("gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\"")
-			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Primary><Shift>Space','<Primary>Space']\"")
-			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up \"['<Super>Page_Up','<Super>Left']\"")
-			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down \"['<Super>Page_Down','<Super>Right']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up \"['<Super>Up','<Super>Left']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down \"['<Super>Down','<Super>Right']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left ['']")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right ['']")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Primary><Shift>Space','<Primary>Space']\"")
 			cmdline("gsettings set org.gnome.mutter.keybindings toggle-tiled-right \"['<Super><Alt>Right']\"")
 			cmdline("gsettings set org.gnome.mutter.keybindings toggle-tiled-left \"['<Super><Alt>Left']\"")
 			# org.gnome.mutter.keybindings toggle-tiled-right ['<Super>Right']
