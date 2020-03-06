@@ -63,6 +63,29 @@ To Uninstall Kinto
 ./uninstall.sh
 ```
 
+## How to Add an additional setxkbmap option inside Kinto
+
+To summarize you'll need to pull the partial out of the symbols file the option resides in and the add that to the ~/.xkb/symbols/mac_gui file and lastly reference it in the keymap file(s) you want it in.
+
+symbols directory
+```
+/usr/share/X11/xkb/symbols/ 
+```
+
+symbols file
+```
+~/.xkb/symbols/mac_gui
+```
+
+keymap files
+```
+~/.xkb/keymap/kbd.mac.gui
+~/.xkb/keymap/kbd.mac.term
+```
+
+A more detailed explaination is here.
+https://github.com/rbreaves/kinto/issues/50#issuecomment-595953373
+
 ## How to Add or Change keymaps for Applications
 
 Note: All of the following is already done in Kinto (but may also change as improvements are made). The following is purely for documentation and example sake as they are real examples of how to leverage the json config to support additional keymaps.
