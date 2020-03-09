@@ -54,29 +54,20 @@ default partial xkb_symbols "mac_levelssym" {
     // Also maps Option + Cmd + F to Control+H for Replace - Sublime
     // AD03=e,E 
     // AC01=a,A
-    // Ctrl + E - End of Line
+    // Ctrl + A - Beginning of Line
     replace key <AC01> {
-        type[Group1]= "ONE_LEVEL_CTRL",
+        type[Group1]= "ONE_LEVEL_SUPER",
         symbols[Group1]= [
             // Base
             a,
             // Shift
             A,
-            // Alt
-            a,
-            // Shift Alt
-            A,
             // Super
             NoSymbol,
             // Shift Super
             NoSymbol
-
         ],
         actions[Group1]= [
-            NoAction(),
-            NoAction(),
-            NoAction(),
-            NoAction(),
             NoAction(),
             NoAction(),
             RedirectKey(key=<HOME>,clearmods=Super),
@@ -85,27 +76,18 @@ default partial xkb_symbols "mac_levelssym" {
     };
     // Ctrl + E - End of Line
     replace key <AD03> {
-        type[Group1]= "ONE_LEVEL_CTRL",
+        type[Group1]= "ONE_LEVEL_SUPER",
         symbols[Group1]= [
             // Base
             e,
             // Shift
             E,
-            // Alt
-            e,
-            // Shift Alt
-            E,
             // Super
             NoSymbol,
             // Shift Super
             NoSymbol
-
         ],
         actions[Group1]= [
-            NoAction(),
-            NoAction(),
-            NoAction(),
-            NoAction(),
             NoAction(),
             NoAction(),
             RedirectKey(key=<END>,clearmods=Super),
