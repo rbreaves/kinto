@@ -28,6 +28,11 @@
 //         RedirectKey(key=<KEY>,modifiers=NewMod,clearmods=Control+Mod1)
 //     ]
 // };
+hidden partial modifier_keys
+xkb_symbols "swapescape" {
+    key <CAPS> { [ Escape ] };
+    key <ESC>  { [ Caps_Lock ] };
+};
 default partial xkb_symbols "mac_levelssym" {
     // // Minimize window Cmd + H = Alt + F9
     // // 2 caveats
