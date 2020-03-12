@@ -63,6 +63,51 @@ To Uninstall Kinto
 ./uninstall.sh
 ```
 
+## How to Upgrade Kinto
+
+Simply bring down the latest in either the master branch or dev, but dev is sometimes in flux as new features are being developed. Then you can re-run the setup.py installer, it will stop the service and re-install Kinto.
+
+Note: If you have made any custom changes to ~/.xkb or ~/.config/kinto then you will need to backup or rename those directories before running an update.
+
+```
+git pull origin master
+./setup.py
+```
+
+## How to Control Kinto
+
+Under systemd this is how you control Kinto.
+
+Status
+```
+systemctl --user status keyswap
+```
+
+Stop (your keymap will return to normal)
+```
+systemctl --user stop keyswap
+```
+
+Start
+```
+systemctl --user start keyswap
+```
+
+Restart
+```
+systemctl --user restart keyswap
+```
+
+Enable
+```
+systemctl --user enable keyswap
+```
+
+Disable
+```
+systemctl --user disable keyswap
+```
+
 ## How to Add Setxkbmap Option inside Kinto
 
 To summarize you'll need to pull the partial out of the symbols file the option resides in and then add that to the mac_gui file and lastly reference it in the keymap file(s) you want it in.
@@ -352,40 +397,6 @@ You can also add additional Desktop Environment related tweaks to user_config.js
 		"run_gui":""
 	}]
 }
-```
-
-## How to Control Kinto
-
-Under systemd this is how you control Kinto.
-
-Status
-```
-systemctl --user status keyswap
-```
-
-Stop (your keymap will return to normal)
-```
-systemctl --user stop keyswap
-```
-
-Start
-```
-systemctl --user start keyswap
-```
-
-Restart
-```
-systemctl --user restart keyswap
-```
-
-Enable
-```
-systemctl --user enable keyswap
-```
-
-Disable
-```
-systemctl --user disable keyswap
 ```
 
 ## Learning macOS style hotkeys on Linux
