@@ -34,20 +34,6 @@ Binary is included and will be installed, but you can also compile kintox11.c on
 
 On most distros you can confirm navigate to your "Language Support" and set "Keyboard input method system:" to IBus for full word-wise support with web browsers. 
 
-**Manjaro with Gnome there are issues.** 
-Please see this ticket for more information.
-https://github.com/rbreaves/kinto/issues/59
-https://wiki.archlinux.org/index.php/IBus
-
-**For other Arch based distros.**
-Append the following and logoff and back on, but only after running setup.py to install all packages and the kinto service. Please report if there are any difficulties.
-nano ~/.bashrc
-```
-export GTK_IM_MODULE=xim
-export XMODIFIERS=@im=ibus
-export QT_IM_MODULE=xim
-```
-
 Wayland support is planned, but not ready yet.
 
 ## How to install
@@ -73,6 +59,24 @@ To Uninstall Kinto
 
 ```
 ./uninstall.sh
+```
+
+## Other Notes Related to Install
+
+**Manjaro with Gnome there are issues.** 
+
+Please see this ticket for more information.
+https://github.com/rbreaves/kinto/issues/59
+https://wiki.archlinux.org/index.php/IBus
+
+**For other Arch based distros.**
+
+Append the following and logoff and back on, but only after running setup.py to install all packages and the kinto service. Please report if there are any difficulties.
+nano ~/.bashrc
+```
+export GTK_IM_MODULE=xim
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=xim
 ```
 
 ## How to Upgrade Kinto
