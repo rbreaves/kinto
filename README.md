@@ -66,7 +66,9 @@ To Uninstall Kinto
 **Manjaro with Gnome there are issues.** 
 
 Please see this ticket for more information.
+
 https://github.com/rbreaves/kinto/issues/59
+
 https://wiki.archlinux.org/index.php/IBus
 
 **For other Arch based distros.**
