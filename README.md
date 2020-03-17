@@ -28,13 +28,25 @@ Kinto works for standard Windows, Apple and Chromebook keyboards. The following 
 - IBus*
 - Fedora/RHEL/Manjaro/Arch/Debian/Ubuntu based distro 16.04+
 
-If you need kintox11 recompiled for your distro please let me know and I will add a binary for your distro if my binary fails.
-
-You can also attempt to compile kintox11.c on your system as well, but you will need to compile and install json-c first as its libraries will be required to compile and run the program.
+You can compile kintox11.c on your system, but you will need to compile and install json-c first as its libraries will be required to compile and run the program.
 
 *IBus is needed to support wordwise during browser app usage as the keymap will need to change slightly depending if the cursor/caret is on screen waiting for input. Setup.py will set it but you can manually set it as well or check your current Input Method.
 
-To confirm navigate to your "Language Support" and set "Keyboard input method system:" to IBus for full word-wise support with web browsers.
+On most distros you can confirm navigate to your "Language Support" and set "Keyboard input method system:" to IBus for full word-wise support with web browsers. 
+
+**Manjaro with Gnome there are issues.** 
+Please see this ticket for more information.
+https://github.com/rbreaves/kinto/issues/59
+https://wiki.archlinux.org/index.php/IBus
+
+**For other Arch based distros.**
+Append the following and logoff and back on, but only after running setup.py to install all packages. Please report if there are any difficulties.
+nano ~/.bashrc
+```
+export GTK_IM_MODULE=xim
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=xim
+```
 
 Wayland support is planned, but not ready yet.
 
