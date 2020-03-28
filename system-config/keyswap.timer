@@ -1,0 +1,11 @@
+# keyswap.timer
+[Unit]
+Description=Runs the keyswap.service 5 seconds after boot up
+
+[Timer]
+#OnBootSec=5s
+OnActiveSec=5s
+Unit=keyswap.service
+
+[Install]
+WantedBy=default.target
