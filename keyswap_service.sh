@@ -8,6 +8,7 @@ mkdir -p ~/.config/systemd/user
 mkdir -p ~/.config/autostart
 cp ./system-config/keyswap.service ~/.config/systemd/user/keyswap.service
 cp ./system-config/kinto.desktop ~/.config/autostart/kinto.desktop
+cp ./system-config/keyswap.timer ~/.config/systemd/user/keyswap.timer
 cp ./kintox11/binary/kintox11 ~/.config/kinto/kintox11
 cp ./system-config/xactive.sh ~/.config/kinto/xactive.sh
 cp ./system-config/caret_status.sh ~/.config/kinto/caret_status.sh
@@ -20,5 +21,6 @@ if [ "${#DISPLAY}" -gt 2 ]
 	sed -i "s/#Environment/Environment/g" ~/.config/systemd/user/keyswap.service
 fi
 systemctl --user daemon-reload
-systemctl --user enable keyswap
-systemctl --user start keyswap
+sed -i "s/ExecStart=/ExecStart=${swapcmd}/g" ~/.config/systemd/user/keyswap.service
+systemctl --user enable keyswap.timer
+systemctl --user start keyswap.timer

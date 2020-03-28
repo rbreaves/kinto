@@ -2,7 +2,7 @@
 Name=Kinto
 GenericName=Kinto
 Comment=Make Linux Type Like it's a Mac
-Exec=/usr/bin/systemctl --user start keyswap
+Exec=/bin/sleep 5 /usr/bin/systemctl --user start keyswap
 Terminal=false
 Type=Application
 X-GNOME-Autostart-enabled=true
