@@ -14,9 +14,9 @@ Seamless copy and paste with all apps and terminals. Also the only linux remappe
 
 Kinto works for standard Windows, Apple and Chromebook keyboards. The following however describes the dynamic rebinding based on a standard Windows keyboard. (Alt location is Cmd for Apple keyboards)
 
-- Normal apps - Alt will be Ctrl, Win/Super will be Alt, Ctrl will be Win/Super
+- Normal apps - Alt → Ctrl, Win/Super → Alt, Ctrl → Win/Super
 
-- Terminal apps - Alt will be Ctrl+Shift, Win/Super will be Alt, Ctrl will be Ctrl
+- Terminal apps - Alt → Ctrl+Shift, Win/Super → Alt, Ctrl → Ctrl
 
 - Cursor/word-wise shortcut keys have been added to align with macOS keyboard shortcuts.
 
