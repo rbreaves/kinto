@@ -28,13 +28,11 @@ Kinto works for standard Windows, Apple and Chromebook keyboards. The following 
 - IBus*
 - Fedora/RHEL/Manjaro/Arch/Debian/Ubuntu based distro 16.04+
 
-If you need kintox11 recompiled for your distro please let me know and I will add a binary for your distro if my binary fails.
-
-You can also attempt to compile kintox11.c on your system as well, but you will need to compile and install json-c first as its libraries will be required to compile and run the program.
+Binary is included and will be installed, but you can also compile kintox11.c on your system. You will need to compile and install json-c first as its libraries will be required to compile and run the program.
 
 *IBus is needed to support wordwise during browser app usage as the keymap will need to change slightly depending if the cursor/caret is on screen waiting for input. Setup.py will set it but you can manually set it as well or check your current Input Method.
 
-To confirm navigate to your "Language Support" and set "Keyboard input method system:" to IBus for full word-wise support with web browsers.
+On most distros you can confirm navigate to your "Language Support" and set "Keyboard input method system:" to IBus for full word-wise support with web browsers. 
 
 Wayland support is planned, but not ready yet.
 
@@ -61,6 +59,71 @@ To Uninstall Kinto
 
 ```
 ./uninstall.sh
+```
+
+## Other Notes Related to Install
+
+**Manjaro with Gnome there are issues.** 
+
+Please see this ticket for more information.
+
+https://github.com/rbreaves/kinto/issues/59
+
+https://wiki.archlinux.org/index.php/IBus
+
+**For other Arch based distros.**
+
+Append the following and logoff and back on, but only after running setup.py to install all packages and the kinto service. Please report if there are any difficulties.
+nano ~/.bashrc
+```
+export GTK_IM_MODULE=xim
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=xim
+```
+
+## How to Upgrade Kinto
+
+Simply bring down the latest in either the master branch or dev, but dev is sometimes in flux as new features are being developed. Then you can re-run the setup.py installer, it will stop the service and re-install Kinto.
+
+Note: If you have made any custom changes to ~/.xkb or ~/.config/kinto then you will need to backup or rename those directories before running an update.
+
+```
+git pull origin master
+./setup.py
+```
+
+## How to Control Kinto
+
+Under systemd this is how you control Kinto.
+
+Status
+```
+systemctl --user status keyswap
+```
+
+Stop (your keymap will return to normal)
+```
+systemctl --user stop keyswap
+```
+
+Start
+```
+systemctl --user start keyswap
+```
+
+Restart
+```
+systemctl --user restart keyswap
+```
+
+Enable
+```
+systemctl --user enable keyswap
+```
+
+Disable
+```
+systemctl --user disable keyswap
 ```
 
 ## How to Add Setxkbmap Option inside Kinto
@@ -352,40 +415,6 @@ You can also add additional Desktop Environment related tweaks to user_config.js
 		"run_gui":""
 	}]
 }
-```
-
-## How to Control Kinto
-
-Under systemd this is how you control Kinto.
-
-Status
-```
-systemctl --user status keyswap
-```
-
-Stop (your keymap will return to normal)
-```
-systemctl --user stop keyswap
-```
-
-Start
-```
-systemctl --user start keyswap
-```
-
-Restart
-```
-systemctl --user restart keyswap
-```
-
-Enable
-```
-systemctl --user enable keyswap
-```
-
-Disable
-```
-systemctl --user disable keyswap
 ```
 
 ## Learning macOS style hotkeys on Linux
