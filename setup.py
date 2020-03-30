@@ -86,7 +86,8 @@ if len(check_ibus) == 0:
 if runpkg != 0:
 	requirements(pkgm)
 
-if os.path.exists(homedir + '/.config/ibus/bus') and cmdline("ls ~/.config/ibus/bus -1rt") == "":
+os.makedirs(homedir + "/.config/ibus/bus", exist_ok=True)
+if cmdline("ls ~/.config/ibus/bus -1rt") == "":
 	install_ibus()
 
 
