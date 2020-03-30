@@ -194,7 +194,7 @@ Window get_focus_window(Display* d){
 // a top window have the following specifications.
 //  * the start window is contained the descendent windows.
 //  * the parent window is the root window.
-Window get_top_window(Display* d, Window start){
+Window get_top_window(Display* d, Window start, int etype, int last_event, char const *current_app){
   Window w = start;
   Window parent = start;
   Window root = None;
@@ -202,22 +202,27 @@ Window get_top_window(Display* d, Window start){
   unsigned int nchildren;
   Status s;
 
-  while (parent != root && parent != 0) {
+  // Checking for Destroy and Unmap Notify events here too
+  // Sometimes they still get passed through and if so need
+  // to be ignored or XQueryTree will cause a segmentation fault
+  while (parent != root && parent != 0 && !(etype == 17 || etype == 18)) {
     w = parent;
+
     s = XQueryTree(d, w, &root, &parent, &children, &nchildren); // see man
 
     if (s)
       XFree(children);
 
     if(xerror){
-      printf("fail to get top window: %ld\n",w);
-      exit(1);
+      printf("fail to get top window: %ld, e.type: %d, last_event: %d, current_app: %s\n",w,etype,last_event, current_app);
+      break;
     }
 
     // printf("  get parent (window: %d)\n", (int)w);
   }
 
   // printf("success (window: %d)\n", (int)w);
+  // printf("hello\n");
 
   return w;
 }
@@ -431,7 +436,7 @@ int main(void){
 
   // get active window
   w = get_focus_window(d);
-  w = get_top_window(d, w);
+  w = get_top_window(d, w, 0, 0, current_app);
   w = get_named_window(d, w);
 
   // XFetchName(d, w, &name);
@@ -546,8 +551,35 @@ int main(void){
       }
     }
 
+    // if(strcicmp(current_app, "plasmashell") == 0){
+    //   XNextEvent(d, &e);
+    // }
+    // if(strcicmp(current_app, "plasmashell") == 0 && e.type == 18 && last_event == 22){
+    //   XNextEvent(d, &e);
+    // }
+    // if(strcicmp(prior_app, "plasmashell") == 0){
+    //   XNextEvent(d, &e);
+    // }
+    // if(strcicmp(current_app, "dolphin") == 0){
+    //   XNextEvent(d, &e);
+    // }
+    // if(strcicmp(prior_app, "dolphin") == 0){
+    //   XNextEvent(d, &e);
+    // }
+    // if(strcicmp(current_app, "dolphin") == 0  && e.type == 18 && last_event == 16){
+    //   XNextEvent(d, &e);
+    // }
+
+    // Reference http://www.rahul.net/kenton/xproto/xevents_errors.html
+    // event type 17 - DestroyNotify
+    // event type 18 - UnmapNotify
+    // Dismiss the following events by initiating another XNextEvent
+    while(e.type == 17 || e.type == 18){
+      XNextEvent(d, &e);
+    }
+
     w = get_focus_window(d);
-    w = get_top_window(d, w);
+    w = get_top_window(d, w, e.type, last_event, current_app);
     w = get_named_window(d, w);
   }
 }
