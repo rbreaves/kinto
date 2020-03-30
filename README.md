@@ -1,10 +1,10 @@
 # Kinto
 
+![kinto_carrot](https://user-images.githubusercontent.com/10969616/77842401-4744b500-7157-11ea-854a-d7dec6f9a250.gif)
+
 ![alt text](https://raw.githubusercontent.com/rbreaves/kinto/master/Kinto.png)
 
 [![GitHub release](https://img.shields.io/github/release/rbreaves/kinto.svg)](https://github.com/rbreaves/kinto/releases/latest)
-
-![alt text](https://github.com/rbreaves/kinto/blob/master/splash.png)
 
 \- Type in Linux like it's a Mac. \-
 
@@ -14,9 +14,9 @@ Seamless copy and paste with all apps and terminals. Also the only linux remappe
 
 Kinto works for standard Windows, Apple and Chromebook keyboards. The following however describes the dynamic rebinding based on a standard Windows keyboard. (Alt location is Cmd for Apple keyboards)
 
-- Normal apps - Alt will be Ctrl, Win/Super will be Alt, Ctrl will be Win/Super
+- Normal apps - Alt → Ctrl, Win/Super → Alt, Ctrl → Win/Super
 
-- Terminal apps - Alt will be Ctrl+Shift, Win/Super will be Alt, Ctrl will be Ctrl
+- Terminal apps - Alt → Ctrl+Shift, Win/Super → Alt, Ctrl → Ctrl
 
 - Cursor/word-wise shortcut keys have been added to align with macOS keyboard shortcuts.
 
