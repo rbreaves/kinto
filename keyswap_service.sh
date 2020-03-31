@@ -16,10 +16,10 @@ cp ./system-config/cleanup.sh ~/.config/kinto/cleanup.sh
 cp ./system-config/.firefox-nw ~/.config/kinto/.firefox-nw
 sed -i "s/{username}/`whoami`/g" ~/.config/systemd/user/keyswap.service
 sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ~/.config/systemd/user/keyswap.service
-if [ "${#DISPLAY}" -gt 2 ]
-	then
-	sed -i "s/#Environment/Environment/g" ~/.config/systemd/user/keyswap.service
-fi
+# if [ "${#DISPLAY}" -gt 2 ]
+# 	then
+sed -i "s/#Environment/Environment/g" ~/.config/systemd/user/keyswap.service
+# fi
 systemctl --user daemon-reload
 sed -i "s/ExecStart=/ExecStart=${swapcmd}/g" ~/.config/systemd/user/keyswap.service
 systemctl --user enable keyswap.timer
