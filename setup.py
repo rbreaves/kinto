@@ -86,10 +86,8 @@ if len(check_ibus) == 0:
 if runpkg != 0:
 	requirements(pkgm)
 
-if os.path.exists(homedir + '/.config/ibus/bus') and cmdline("ls ~/.config/ibus/bus -1rt") == "":
+if not os.path.exists(homedir + '/.config/ibus/bus') and cmdline("ls ~/.config/ibus/bus -1rt") == "":
 	install_ibus()
-
-
 
 try:
 	f = open("defaults.json")
@@ -215,7 +213,7 @@ if(onetime):
 	print(bcolors.CYELLOW + "Please enter your init tweak(s) (eg 1 or 1 2 3 - leave blank to skip): " + bcolors.ENDC)
 	defaultinit = [int(i) for i in input().split()]
 	if len(defaultinit) != 0:
-		user_config['init'] = defaultinit
+		user_config['init'] = [intents[defaultinit[0]-1]['id']]
 
 print("\nDynamic shortcut tweaks\n")
 
