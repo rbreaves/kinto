@@ -12,7 +12,7 @@ function detect_gnome()
     return 1
 }
 
-function detect_kde()
+function detect_kde4()
 {
     ps -e | grep -E '^.* kded4$' > /dev/null
     if [ $? -ne 0 ];
@@ -20,6 +20,19 @@ function detect_kde()
         return 0
     else    
         VERSION=`kded4 --version | grep -m 1 'KDE' | awk -F ':' '{print $2}' | awk '{print $1}'`
+        DESKTOP="KDE"
+        return 1
+    fi
+}
+
+function detect_kde()
+{
+    ps -e | grep -E '^.* kded5$' > /dev/null
+    if [ $? -ne 0 ];
+    then
+        return 0
+    else    
+        VERSION=`kded5 --version | grep -m 1 'KDE' | awk -F ':' '{print $2}' | awk '{print $1}'`
         DESKTOP="KDE"
         return 1
     fi
@@ -118,22 +131,25 @@ if detect_unity;
 then
     if detect_kde;
     then
-	if detect_gnome;
-	then
-	    if detect_xfce;
-	    then
-		if detect_cinnamon;
-		then
-		    if detect_mate;
-		    then
-			if detect_lxde;
-			then
-			    detect_sugar
-			fi
-		    fi
-		fi
-	    fi
-	fi
+        if detect_kde4;
+        then
+        	if detect_gnome;
+        	then
+        	    if detect_xfce;
+        	    then
+            		if detect_cinnamon;
+            		then
+            		    if detect_mate;
+            		    then
+                			if detect_lxde;
+                			then
+                			    detect_sugar
+                			fi
+            		    fi
+            		fi
+        	    fi
+        	fi
+        fi
     fi
 fi
 

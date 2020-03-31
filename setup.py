@@ -39,7 +39,7 @@ def install_ibus():
 def setShortcuts():
 	distro = cmdline("awk -F= '$1==\"NAME\" { print $2 ;}' /etc/os-release").replace('"','').strip().split(" ")[0]
 	distroVersion = cmdline("awk -F= '$1==\"VERSION_ID\" { print $2 ;}' /etc/os-release").replace('"','').strip()
-	dename = cmdline("./system-config/dename.sh").replace('"','').strip().split(" ")[0]
+	dename = cmdline("./system-config/dename.sh").replace('"','').strip().split(" ")[0].lower()
 	
 	print("\nIf Kinto is already running it will be stopped...")
 	print("If you cancel the installer you can re-run Kinto via\n systemctl --user start keyswap")
@@ -130,6 +130,7 @@ def setShortcuts():
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Switch to Previous Desktop" "Meta+Left,Meta+Left,Switch to Previous Desktop"')
 			cmdline('kquitapp5 kglobalaccel && sleep 2s && kglobalaccel5 &')
 		else:
+			print('distro: ' + distro + ' de: ' + dename)
 			print("A supported OS and DE was not found, you may not have full system level shortcuts installed.")
 
 # check_x11 = cmdline("env | grep -i x11").strip()
