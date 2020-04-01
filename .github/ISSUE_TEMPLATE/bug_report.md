@@ -7,30 +7,33 @@ assignees: rbreaves
 
 ---
 
+**Describe the bug**
+A clear and concise description of what the bug is.
+
+**Expected behavior**
+A clear and concise description of what you expected to happen.
+
 **Install Type:** Bare Metal or VM
 **Distro:** Name + Version
 **DE:** Gnome, XFCE, KDE
 **Branch:** master, dev
 **Commit:** git rev-parse --short HEAD
 
-If applicable include kinto log and the status of your input caret
+**Kinto Input Caret Status**
 ```
 cat /tmp/kinto/caret
-journalctl --user-unit=keyswap.service -b
 ```
 
-You may also run kinto in debug mode as of 1.0.6-2. This could help me resolve your problem faster.
+**Kinto Standard Log**
+```
+journalctl --user-unit=keyswap.service -b
+```
+**Kinto Debug Log (1.0.6-2+)**
 ```
 systemctl --user stop keyswap
 cd ~/.config/kinto
 ./kintox11 --debug
 ```
-
-**Describe the bug**
-A clear and concise description of what the bug is.
-
-**Expected behavior**
-A clear and concise description of what you expected to happen.
 
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
