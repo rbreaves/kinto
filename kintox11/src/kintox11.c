@@ -13,6 +13,7 @@
 // gcc -L/usr/local/lib/ kintox11.c -ljson-c -lXmu -lXt -lX11 -O2 -o kintox11
 //
 
+#define _GNU_SOURCE 1
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -26,6 +27,13 @@
 #include <sys/select.h>
 #include <math.h>
 #include <sys/time.h>
+
+char * append(char * string1, char * string2)
+{
+  char * result = NULL;
+  asprintf(&result, "%s,%s", string1, string2);
+  return result;
+}
 
 long long timeInMilliseconds(void) {
     struct timeval tv;
@@ -213,6 +221,11 @@ Window get_top_window(Display* d, Window start, int etype, char const *eventName
   Window *children;
   unsigned int nchildren;
   Status s;
+  char * ws;
+  char * wstr;
+  ws = malloc(sizeof(char)*4096);
+  wstr = malloc(sizeof(char)*100);
+  // strcpy(wstr,"test,");
 
   if(debug == true){
     printf("\n  get top window\n");
@@ -224,9 +237,13 @@ Window get_top_window(Display* d, Window start, int etype, char const *eventName
     w = parent;
 
     s = XQueryTree(d, w, &root, &parent, &children, &nchildren); // see man
-
-    if(debug == true){
-      printf("  -%s: event: %d, window_id: %ld\n",current_app,etype,w);
+    
+    sprintf(wstr, "%ld", w);
+    if ((ws != NULL) && (ws[0] == '\0')) {
+      strcpy(ws,wstr);
+    }
+    else{
+      ws = append(ws, wstr);
     }
 
     if (s)
@@ -236,12 +253,11 @@ Window get_top_window(Display* d, Window start, int etype, char const *eventName
       printf("*fail to get top window: %ld, e.type: %d, current_app: %s\n",w,etype,current_app);
       break;
     }
-
-    // printf("  get parent (window: %d)\n", (int)w);
   }
 
-  // printf("success (window: %d)\n", (int)w);
-  // printf("hello\n");
+  if(debug == true){
+    printf("  -%s: event: %d, window_id: %s\n",current_app,etype,ws);
+  }
 
   return w;
 }
