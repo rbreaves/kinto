@@ -15,6 +15,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include <locale.h>
 #include <string.h>
 #include <ctype.h>
@@ -175,15 +176,26 @@ int handle_error(Display* display, XErrorEvent* error){
   return 1;
 }
 
-Window get_focus_window(Display* d){
+Window get_focus_window(Display* d, int etype, char const *eventName, char const *current_app, bool debug){
   Window w;
   int revert_to;
-  XGetInputFocus(d, &w, &revert_to); // see man
+
+  if(debug == true){
+    printf("\n  get focus window\n");
+  }
+
+  if(!(etype == 17 || etype == 18)) {
+    XGetInputFocus(d, &w, &revert_to); // see man
+    if(debug == true){
+      printf("  -%s: event: %d, window_id: %ld\n",current_app,etype,w);
+    }
+  }
+
   if(xerror){
-    printf("Error getting focused window\n");
+    printf("*Error getting focused window, e.type: %d, current_app: %s\n",etype,current_app);
     exit(1);
   }else if(w == None){
-    printf("no focus window\n");
+    printf("*no focus window, e.type: %d, current_app: %s\n",etype,current_app);
     exit(1);
   }
 
@@ -194,7 +206,7 @@ Window get_focus_window(Display* d){
 // a top window have the following specifications.
 //  * the start window is contained the descendent windows.
 //  * the parent window is the root window.
-Window get_top_window(Display* d, Window start, int etype, int last_event, char const *current_app){
+Window get_top_window(Display* d, Window start, int etype, char const *eventName, char const *current_app, bool debug){
   Window w = start;
   Window parent = start;
   Window root = None;
@@ -202,6 +214,9 @@ Window get_top_window(Display* d, Window start, int etype, int last_event, char 
   unsigned int nchildren;
   Status s;
 
+  if(debug == true){
+    printf("\n  get top window\n");
+  }
   // Checking for Destroy and Unmap Notify events here too
   // Sometimes they still get passed through and if so need
   // to be ignored or XQueryTree will cause a segmentation fault
@@ -210,11 +225,15 @@ Window get_top_window(Display* d, Window start, int etype, int last_event, char 
 
     s = XQueryTree(d, w, &root, &parent, &children, &nchildren); // see man
 
+    if(debug == true){
+      printf("  -%s: event: %d, window_id: %ld\n",current_app,etype,w);
+    }
+
     if (s)
       XFree(children);
 
     if(xerror){
-      printf("fail to get top window: %ld, e.type: %d, last_event: %d, current_app: %s\n",w,etype,last_event, current_app);
+      printf("*fail to get top window: %ld, e.type: %d, current_app: %s\n",w,etype,current_app);
       break;
     }
 
@@ -229,10 +248,18 @@ Window get_top_window(Display* d, Window start, int etype, int last_event, char 
 
 // search a named window (that has a WM_STATE prop)
 // on the descendent windows of the argment Window.
-Window get_named_window(Display* d, Window start){
+Window get_named_window(Display* d, Window start, int etype, char const *eventName, char const *current_app, bool debug){
   Window w;
+
+  if(debug == true){
+    printf("\n  get named window\n");
+  }
   // printf("getting named window ... ");
   w = XmuClientWindow(d, start); // see man
+
+  if(debug == true){
+    printf("  -%s: event: %d, window_id: %ld\n\n",current_app,etype,w);
+  }
   // if(w == start)
   //   printf("fail\n");
   // printf("success (window: %d)\n", (int) w);
@@ -263,7 +290,53 @@ const char * str_window_class(Display* d, Window w, char *prior_app ){
   }
 }
 
-int main(void){
+int main(int argc, char *argv[]){
+
+  bool debug;
+
+  if(argc < 2){
+    debug = false;
+  }
+  if(argc > 1 && (strcmp(argv[1], "-d") == 0 || strcmp(argv[1], "--debug") == 0 )){
+    debug = true; 
+    printf("Running in debug mode\n");  
+  }
+
+  const char *eventNames[34];
+  eventNames[0] = "None";
+  eventNames[1] = "KeyPress";
+  eventNames[2] = "KeyRelease";
+  eventNames[3] = "ButtonPress";
+  eventNames[4] = "ButtonRelease";
+  eventNames[5] = "MotionNotify";
+  eventNames[6] = "EnterNotify";
+  eventNames[7] = "LeaveNotify";
+  eventNames[8] = "FocusIn";
+  eventNames[9] = "FocusOut";
+  eventNames[10] = "KeymapNotify";
+  eventNames[11] = "Expose";
+  eventNames[12] = "GraphicsExpose";
+  eventNames[13] = "NoExpose";
+  eventNames[14] = "VisibilityNotify";
+  eventNames[15] = "CreateNotify";
+  eventNames[16] = "DestroyNotify";
+  eventNames[17] = "UnmapNotify";
+  eventNames[18] = "MapNotify";
+  eventNames[19] = "MapRequest";
+  eventNames[20] = "ReparentNotify";
+  eventNames[21] = "ConfigureNotify";
+  eventNames[22] = "ConfigureRequest";
+  eventNames[23] = "ResizeRequest";
+  eventNames[25] = "CirculateNotify";
+  eventNames[26] = "CirculateRequest";
+  eventNames[27] = "PropertyNotify";
+  eventNames[28] = "SelectionClear";
+  eventNames[29] = "SelectionRequest";
+  eventNames[30] = "SelectionNotify";
+  eventNames[31] = "ColormapNotify";
+  eventNames[32] = "ClientMessage";
+  eventNames[33] = "MappingNotify";
+
 
   FILE *fp;
   char buffer[10240];
@@ -435,13 +508,13 @@ int main(void){
   printf("Starting keyswap...\n");
 
   // get active window
-  w = get_focus_window(d);
-  w = get_top_window(d, w, 0, 0, current_app);
-  w = get_named_window(d, w);
+  w = get_focus_window(d, 0, eventNames[0], current_app, debug);
+  w = get_top_window(d, w, 0, eventNames[0], current_app, debug);
+  w = get_named_window(d, w, 0, eventNames[0], current_app, debug);
 
   // XFetchName(d, w, &name);
   // printf("window:%#x name:%s\n", w, name);
-  printf("First window name: %s \n",str_window_class(d, w,prior_app));
+  printf("First window name: %s \n\n",str_window_class(d, w,prior_app));
 
   int breakouter;
   int last_event=0;
@@ -488,7 +561,9 @@ int main(void){
 
     if(strcicmp(prior_category, current_category) != 0){
       printf("%s: %s\n",current_category,current_app);
-      // printf("run: %s\n",run_array[category_idx]);
+      if(debug == true){
+        printf("run: %s\n",run_array[category_idx]);
+      }
       system(run_array[category_idx]);
       strcpy(run_normal,run_array[category_idx]);
       ran_onInput = 0;
@@ -499,11 +574,15 @@ int main(void){
         if(config_de_array[category_idx][r] != -1){
           int de_id_idx = in_int(de_id_array, de_len, config_de_array[category_idx][r]);
           if(strcicmp(current_category, "term") == 0){
-            // printf("Running de term command: %s\n",de_runterm_array[de_id_idx]);
+            if(debug == true){
+              printf("Running de term command: %s\n",de_runterm_array[de_id_idx]);
+            }
             system(de_runterm_array[de_id_idx]);
           }
           else{
-            // printf("Running de gui command: %s\n",de_rungui_array[de_id_idx]);
+            if(debug == true){
+              printf("Running de gui command: %s\n",de_rungui_array[de_id_idx]);
+            }
             system(de_rungui_array[de_id_idx]);
           }
         }
@@ -524,12 +603,16 @@ int main(void){
     if(strlen(run_onInput) > 0){
       while(XNextEventTimeout(d, &e, .5, event_ts, last_event, &event_ts, &last_event)){
         if(check_caret() && ran_onInput == 0){
-          // printf("run_onInput: %s\n",run_onInput);
+          if(debug == true){
+            printf("run_onInput: %s\n",run_onInput);
+          }
           system(run_onInput);
           ran_onInput = 1;
         }
         else if(!check_caret() && ran_onInput == 1){
-          // printf("run_offInput: %s\n",run_offInput);
+          if(debug == true){
+            printf("run_offInput: %s\n",run_offInput);
+          }
           system(run_offInput);
           ran_onInput = 0;
         }
@@ -540,8 +623,10 @@ int main(void){
         XNextEvent(d, &e);
         // Make sure window dragging or resizing is not occuring
         if(!(e.type == 22 && (e.type == last_event) && timeInMilliseconds()-event_ts < 300)){
-          // printf("%d == %d\n",e.type, last_event);
-          // printf("Timestamp: %lld\n",timeInMilliseconds()-event_ts);
+          if(debug == true){
+            printf("  event: %s %d\n",eventNames[e.type-1],e.type);
+            printf("  duration: %lldms\n",timeInMilliseconds()-event_ts);
+          }
           event_ts = timeInMilliseconds();
           last_event = e.type;
           break;
@@ -551,25 +636,6 @@ int main(void){
       }
     }
 
-    // if(strcicmp(current_app, "plasmashell") == 0){
-    //   XNextEvent(d, &e);
-    // }
-    // if(strcicmp(current_app, "plasmashell") == 0 && e.type == 18 && last_event == 22){
-    //   XNextEvent(d, &e);
-    // }
-    // if(strcicmp(prior_app, "plasmashell") == 0){
-    //   XNextEvent(d, &e);
-    // }
-    // if(strcicmp(current_app, "dolphin") == 0){
-    //   XNextEvent(d, &e);
-    // }
-    // if(strcicmp(prior_app, "dolphin") == 0){
-    //   XNextEvent(d, &e);
-    // }
-    // if(strcicmp(current_app, "dolphin") == 0  && e.type == 18 && last_event == 16){
-    //   XNextEvent(d, &e);
-    // }
-
     // Reference http://www.rahul.net/kenton/xproto/xevents_errors.html
     // event type 17 - DestroyNotify
     // event type 18 - UnmapNotify
@@ -578,8 +644,8 @@ int main(void){
       XNextEvent(d, &e);
     }
 
-    w = get_focus_window(d);
-    w = get_top_window(d, w, e.type, last_event, current_app);
-    w = get_named_window(d, w);
+    w = get_focus_window(d, e.type, eventNames[e.type-1], current_app, debug);
+    w = get_top_window(d, w, e.type, eventNames[e.type-1], current_app, debug);
+    w = get_named_window(d, w, e.type, eventNames[e.type-1], current_app, debug);
   }
 }
