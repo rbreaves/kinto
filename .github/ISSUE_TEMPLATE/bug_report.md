@@ -19,6 +19,13 @@ cat /tmp/kinto/caret
 journalctl --user-unit=keyswap.service -b
 ```
 
+You may also run kinto in debug mode as of 1.0.6-2. This could help me resolve your problem faster.
+```
+systemctl --user stop keyswap
+cd ~/.config/kinto
+./kintox11 --debug
+```
+
 **Describe the bug**
 A clear and concise description of what the bug is.
 
