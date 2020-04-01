@@ -481,6 +481,16 @@ cd ~/.config/kinto
 ./kintox11
 ```
 
+## Debug
+
+If all else fails you can now run Kinto in debug mode as of 1.0.6-2. The output will become more verbose and I'd recommend running this directly after stopping the service.
+
+```
+systemctl --user stop keyswap
+cd ~/.config/kinto
+./kintox11 --debug
+```
+
 ## Language Support
 I'd appreciate any help from people with non-US based keyboards, to help ensure that these keymaps and keyswap methods work in all or most languages.
 
