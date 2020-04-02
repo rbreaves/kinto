@@ -363,7 +363,7 @@ You can also add additional Desktop Environment related tweaks to user_config.js
 		"name":"term",
 		"run":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.term $DISPLAY",
 		"de":[2],
-		"appnames":[ "Gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm" ],
+		"appnames":[ "Gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm","kitty" ],
 		"run_onInput":"",
 		"run_offInput": "killall xbindkeys > /dev/null 2>&1",
 		"symbols":"",
