@@ -62,7 +62,7 @@ int XNextEventTimeout(Display *d, XEvent *e, double seconds, long long event_ts,
         long long int new_ts = timeInMilliseconds();
 
         // Make sure window dragging or resizing is not occuring
-        if(!(e->type == 22 && (e->type == last_event) && timeInMilliseconds()-event_ts < 419)){
+        if(!(e->type == ConfigureNotify && (e->type == last_event) && timeInMilliseconds()-event_ts < 419)){
           *event_ts_ptr = new_ts;
           *last_event_ptr = e->type;
           break;
@@ -192,7 +192,7 @@ Window get_focus_window(Display* d, int etype, char const *eventName, char const
     printf("\n  get focus window\n");
   }
 
-  if(!(etype == 17 || etype == 18)) {
+  if(!(etype == DestroyNotify || etype == UnmapNotify)) {
     XGetInputFocus(d, &w, &revert_to); // see man
     if(debug == true){
       printf("  -%s: event: %d, window_id: %ld\n",current_app,etype,w);
@@ -233,7 +233,7 @@ Window get_top_window(Display* d, Window start, int etype, char const *eventName
   // Checking for Destroy and Unmap Notify events here too
   // Sometimes they still get passed through and if so need
   // to be ignored or XQueryTree will cause a segmentation fault
-  while (parent != root && parent != 0 && !(etype == 17 || etype == 18)) {
+  while (parent != root && parent != 0 && !(etype == DestroyNotify || etype == UnmapNotify)) {
     w = parent;
 
     s = XQueryTree(d, w, &root, &parent, &children, &nchildren); // see man
@@ -638,7 +638,7 @@ int main(int argc, char *argv[]){
       while (1) {
         XNextEvent(d, &e);
         // Make sure window dragging or resizing is not occuring
-        if(!(e.type == 22 && (e.type == last_event) && timeInMilliseconds()-event_ts < 300)){
+        if(!(e.type == ConfigureNotify && (e.type == last_event) && timeInMilliseconds()-event_ts < 300)){
           if(debug == true){
             printf("  event: %s %d\n",eventNames[e.type-1],e.type);
             printf("  duration: %lldms\n",timeInMilliseconds()-event_ts);
@@ -655,8 +655,9 @@ int main(int argc, char *argv[]){
     // Reference http://www.rahul.net/kenton/xproto/xevents_errors.html
     // event type 17 - DestroyNotify
     // event type 18 - UnmapNotify
+    // event type 22 - ConfigureNotify
     // Dismiss the following events by initiating another XNextEvent
-    while(e.type == 17 || e.type == 18){
+    while(e.type != ConfigureNotify){
       XNextEvent(d, &e);
     }
 
