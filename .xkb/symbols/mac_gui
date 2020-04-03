@@ -3,6 +3,15 @@ xkb_symbols "swapescape" {
     key <CAPS> { [ Escape ] };
     key <ESC>  { [ Caps_Lock ] };
 };
+hidden partial modifier_keys
+xkb_symbols "caps_shiftlock" {
+    replace key <CAPS> { [ Shift_Lock ] };
+    modifier_map Shift { Shift_Lock };
+};
+hidden partial modifier_keys
+xkb_symbols "caps_none" {
+    key <CAPS> { [ VoidSymbol ] };
+};
 default partial xkb_symbols "mac_levelssym" {
     // LEFT to Begin Line or Beginning of word
     replace key <LEFT> {
