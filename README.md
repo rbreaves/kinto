@@ -509,6 +509,11 @@ I'd appreciate any help from people with non-US based keyboards, to help ensure 
 If you would like to attempt adding additional custom keymaps for other languages then I strongly recommend reading Glen Whitney's post here.
 https://superuser.com/questions/385748/binding-superc-superv-to-copy-and-paste
 
+## Notes about Windows 10
+Sharpkeys was used to create the layout/reg files to swap the Ctrl, Win and Alt keys. Sharpkeys was not required however because the reg keys were extracted. Autohotkey is used to manage keyswaps needed for terminal usage. Autohotkey is also used to add additional mac like keybinds for Sublime text and can be used for other apps as well.
+
+Microsoft is working on a new Powertoy Keyboard Manager that could be used with an easier to use GUI interface, but this approach should be fully sufficient for a mac like experience and autohotkeys appears to be more than capable enough to handle complex rebinding of any or most mac like shortcuts.
+
 ## Contributing
 
 I welcome any and all contributors who want to contribute something to this project.
