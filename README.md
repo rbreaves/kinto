@@ -38,13 +38,15 @@ Wayland support is planned, but not ready yet.
 
 ## Kinto for Windows 10 Requirements
 
-- WSL Ubuntu edition (you can modify windows/kinto.ahk to support more)
+- WSL Ubuntu edition
 - Powershell - run as Administrator
-- Chocolatey (setup takes care of it)
-- Python (setup takes care of it)
-- Autohotkey (setup takes care of it)
 
-Does not have complete parity with the Linux edition, but it does work and can be built on and added to as needed.
+Does not have complete parity with the Linux edition, but it does work and can be built on and added to as needed. Modify ./windows/kinto.ahk if you want to add more WSL editions or other terminals.
+
+Other programs that will be installed when you run ./setup.py
+- Chocolatey
+- Python3
+- Autohotkey
 
 ## How to install
 
