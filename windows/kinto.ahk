@@ -5,6 +5,25 @@ RCtrl & Tab::AltTab
 LWin & Tab::Send ^{Tab}
 RWin & Tab::Send ^{Tab}
 
+; Close Apps
+^q::Send !{F4}
+
+// wordwise support
+$^Left::Send {Home}
+$^+Left::Send +{Home}
+$^Right::Send {End}
+$^+Right::Send +{End}
+^Up::Send ^{Home}
+^+Up::Send ^+{Home}
+^Down::Send ^{End}
+^+Down::Send ^+{End}
+^Backspace::Send +{Home}{Delete}
+!Backspace::Send ^{Backspace}
+!Left::Send ^{Left}
+!+Left::Send ^+{Left}
+!Right::Send ^{Right}
+!+Right::Send ^+{Right}
+
 #IfWinActive ahk_exe sublime_text.exe
 	; Remap Ctrl+Shift to behave like macOS Sublimetext
 	; Will extend cursor to multiple lines
