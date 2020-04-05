@@ -40,10 +40,10 @@ Wayland support is planned, but not ready yet.
 
 - WSL Ubuntu edition
 - Powershell - run as Administrator
+- Python3
 
 Other programs that will be installed when you run ./setup.py
 - Chocolatey
-- Python3
 - Autohotkey
 
 Does not have complete parity with the Linux edition, but it does work and can be built on and added to as needed. Modify ./windows/kinto.ahk if you want to add more WSL editions or other terminals.
