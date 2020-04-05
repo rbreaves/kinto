@@ -40,6 +40,7 @@ Wayland support is planned, but not ready yet.
 
 - WSL Ubuntu edition
 - Powershell - run as Administrator
+
 Other programs that will be installed when you run ./setup.py
 - Chocolatey
 - Python3
