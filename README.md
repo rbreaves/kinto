@@ -6,7 +6,7 @@
 
 [![GitHub release](https://img.shields.io/github/release/rbreaves/kinto.svg)](https://github.com/rbreaves/kinto/releases/latest)
 
-\- Type in Linux like it's a Mac. \-
+\- Type in Linux & Windows like it's a Mac. \-
 
 Seamless copy and paste with all apps and terminals. Also the only linux remapper that is aware of your cursor/caret status - meaning it avoids shortcut conflicts within an app versus wordwise shortcuts when a text field is in use.
 
