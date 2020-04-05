@@ -29,6 +29,7 @@ Kinto works for standard Windows, Apple and Chromebook keyboards. The following 
 - Fedora/RHEL/Manjaro/Arch/Debian/Ubuntu based distro 16.04+
 
 - Windows 10 & WSL is now supported
+- WSL Ubuntu edition (you can modify windows/kinto.ahk to support more)
 - Powershell - run as Administrator (for install)
 - Chocolatey (for install)
 - Python (for install)
