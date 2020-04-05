@@ -8,7 +8,7 @@ RWin & Tab::Send ^{Tab}
 ; Close Apps
 ^q::Send !{F4}
 
-// wordwise support
+; wordwise support
 $^Left::Send {Home}
 $^+Left::Send +{Home}
 $^Right::Send {End}
