@@ -2,6 +2,14 @@ GroupAdd, terminals, ahk_exe ubuntu.exe
 
 GroupAdd, editors, ahk_exe sublime_text.exe
 
+; Cmd+Space Alternative
+LWin & vk07::return
+LWin::return
+RWin & vk07::return
+RWin::return
+^Space::Send ^{Esc}
+; ^Space::run AppName
+
 ; Cmd Tab For App Switching
 LCtrl & Tab::AltTab
 RCtrl & Tab::AltTab
