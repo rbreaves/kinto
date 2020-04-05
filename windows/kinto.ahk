@@ -1,3 +1,7 @@
+GroupAdd, terminals, ahk_exe ubuntu.exe
+
+GroupAdd, editors, ahk_exe sublime_text.exe
+
 ; Cmd Tab For App Switching
 LCtrl & Tab::AltTab
 RCtrl & Tab::AltTab
@@ -24,7 +28,7 @@ $^+Right::Send +{End}
 !Right::Send ^{Right}
 !+Right::Send ^+{Right}
 
-#IfWinActive ahk_exe sublime_text.exe
+#IfWinActive ahk_group editors
 	; Remap Ctrl+Shift to behave like macOS Sublimetext
 	; Will extend cursor to multiple lines
 	#+Up::send {shift up}^!{Up}
@@ -34,7 +38,7 @@ $^+Right::Send +{End}
 	#^g::send !{F3}
 #If
 
-#IfWinActive ahk_exe ubuntu.exe
+#IfWinActive ahk_group terminals
 	^c::Send {LCtrl down}{LShift down}c{LCtrl Up}{LShift Up}
 	#c::Send {LCtrl down}c{LCtrl Up}
 	#x::Send {LCtrl down}x{LCtrl Up}
