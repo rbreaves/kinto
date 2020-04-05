@@ -1,3 +1,10 @@
+; Cmd Tab For App Switching
+LCtrl & Tab::AltTab
+RCtrl & Tab::AltTab
+; Ctrl Tab for In-App Tab Switching
+LWin & Tab::Send ^{Tab}
+RWin & Tab::Send ^{Tab}
+
 #IfWinActive ahk_exe sublime_text.exe
 	; Remap Ctrl+Shift to behave like macOS Sublimetext
 	; Will extend cursor to multiple lines
