@@ -85,12 +85,13 @@ $^+Right::Send +{End}
 	#j::Send {LCtrl down}j{LCtrl Up}
 	#t::Send {LCtrl down}t{LCtrl Up}
 	#_::Send {LCtrl down}_{LCtrl Up}
+	#z::Send {LCtrl down}z{LCtrl Up}
 #If
 
 #IfWinActive ahk_group ConEmu
 	; Paste
 	$^v::Send {Shift down}{Insert}{Shift Up}
-	#v::^v
+	#v::Send {LCtrl down}v{LCtrl Up}
 #If
 
 #IfWinActive ahk_exe mintty.exe
