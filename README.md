@@ -28,6 +28,12 @@ Kinto works for standard Windows, Apple and Chromebook keyboards. The following 
 - IBus*
 - Fedora/RHEL/Manjaro/Arch/Debian/Ubuntu based distro 16.04+
 
+- Windows 10 & WSL is now supported
+- Powershell - run as Administrator (for install)
+- Chocolatey (for install)
+- Python (for install)
+- Autohotkey
+
 Binary is included and will be installed, but you can also compile kintox11.c on your system. You will need to compile and install json-c first as its libraries will be required to compile and run the program.
 
 *IBus is needed to support wordwise during browser app usage as the keymap will need to change slightly depending if the cursor/caret is on screen waiting for input. Setup.py will set it but you can manually set it as well or check your current Input Method.
