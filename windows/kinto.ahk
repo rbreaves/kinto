@@ -2,6 +2,7 @@ GroupAdd, terminals, ahk_exe ubuntu.exe
 GroupAdd, terminals, ahk_exe ConEmu.exe
 GroupAdd, terminals, ahk_exe ConEmu64.exe
 GroupAdd, terminals, ahk_exe powershell.exe
+GroupAdd, terminals, ahk_exe WindowsTerminal.exe
 
 GroupAdd, posix, ahk_exe ubuntu.exe
 GroupAdd, posix, ahk_exe ConEmu.exe
@@ -10,6 +11,7 @@ GroupAdd, posix, ahk_exe mintty.exe
 
 GroupAdd, ConEmu, ahk_exe ConEmu.exe
 GroupAdd, ConEmu, ahk_exe ConEmu64.exe
+GroupAdd, ConEmu, ahk_exe WindowsTerminal.exe
 
 GroupAdd, editors, ahk_exe sublime_text.exe
 
