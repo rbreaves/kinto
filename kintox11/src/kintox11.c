@@ -14,6 +14,7 @@
 //
 
 #define _GNU_SOURCE 1
+#include <pthread.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -27,59 +28,54 @@
 #include <sys/select.h>
 #include <math.h>
 #include <sys/time.h>
+#ifdef WIN32
+#include <windows.h>
+#elif _POSIX_C_SOURCE >= 199309L
+#include <time.h>   // for nanosleep
+#else
+#include <unistd.h> // for usleep
+#endif
 
-char * append(char * string1, char * string2)
-{
-  char * result = NULL;
-  asprintf(&result, "%s,%s", string1, string2);
-  return result;
-}
+const char *eventNames[34] = {"None","KeyPress","KeyRelease","ButtonPress","ButtonRelease","MotionNotify","EnterNotify","LeaveNotify","FocusIn","FocusOut","KeymapNotify","Expose","GraphicsExpose","NoExpose","VisibilityNotify","CreateNotify","DestroyNotify","UnmapNotify","MapNotify","MapRequest","ReparentNotify","ConfigureNotify","ConfigureRequest","ResizeRequest","CirculateNotify","CirculateRequest","PropertyNotify","SelectionClear","SelectionRequest","SelectionNotify","ColormapNotify","ClientMessage","MappingNotify"};
+
+#define NUM_THREADS 2
+typedef struct threadArgs * ThreadArgs;
+struct threadArgs{
+  char *run_onInput;
+  char *run_offInput;
+};
 
 long long timeInMilliseconds(void) {
-    struct timeval tv;
-
-    gettimeofday(&tv,NULL);
-    return (((long long)tv.tv_sec)*1000)+(tv.tv_usec/1000);
-}
-
-static int wait_fd(int fd, double seconds)
-{
   struct timeval tv;
-  fd_set in_fds;
-  FD_ZERO(&in_fds);
-  FD_SET(fd, &in_fds);
-  tv.tv_sec = trunc(seconds);
-  tv.tv_usec = (seconds - trunc(seconds))*1000000;
-  return select(fd+1, &in_fds, 0, 0, &tv);
+
+  gettimeofday(&tv,NULL);
+  return (((long long)tv.tv_sec)*1000)+(tv.tv_usec/1000);
 }
 
-int XNextEventTimeout(Display *d, XEvent *e, double seconds, long long event_ts, int last_event, long long *event_ts_ptr, int *last_event_ptr)
-{
-  if (XPending(d) || wait_fd(ConnectionNumber(d),seconds)) {
-      while (1) {
-        XNextEvent(d, e);
+bool debug;
+bool input_check = 0;
+long long int event_ts;
+int last_event;
 
-        long long int new_ts = timeInMilliseconds();
+Display* d;
+Window w;
+XEvent e;
 
-        // Make sure window dragging or resizing is not occuring
-        if(!(e->type == ConfigureNotify && (e->type == last_event) && timeInMilliseconds()-event_ts < 419)){
-          *event_ts_ptr = new_ts;
-          *last_event_ptr = e->type;
-          break;
-        }
-        *event_ts_ptr = new_ts;
-        *last_event_ptr = e->type;
-      }
-      return 0;
-  } else {
-      return 1;
-  }
+// cross-platform sleep function
+void sleep_ms(int milliseconds) {
+  #ifdef WIN32
+      Sleep(milliseconds);
+  #elif _POSIX_C_SOURCE >= 199309L
+      struct timespec ts;
+      ts.tv_sec = milliseconds / 1000;
+      ts.tv_nsec = (milliseconds % 1000) * 1000000;
+      nanosleep(&ts, NULL);
+  #else
+      usleep(milliseconds * 1000);
+  #endif
 }
 
-Bool xerror = False;
-
-char *trimwhitespace(char *str)
-{
+char *trimwhitespace(char *str){
   char *end;
   // Trim leading space
   while(isspace((unsigned char)*str)) str++;
@@ -93,8 +89,7 @@ char *trimwhitespace(char *str)
   return str;
 }
 
-int check_caret()
-{
+int check_caret(){
   int caretint;
   char * fpname;
   fpname = malloc(sizeof(char)*20);
@@ -124,8 +119,85 @@ int check_caret()
   }
 }
 
-int in_int(int a[],int size,int item) 
-{ 
+void *inputToggle(void *argStruct) {
+  ThreadArgs args = argStruct;
+
+  char * onInput;
+  char * offInput;
+  onInput = malloc(sizeof(char)*400);
+  offInput = malloc(sizeof(char)*400);
+  onInput = args->run_onInput;
+  offInput = args->run_offInput;
+
+  Bool ran_onInput = 0;
+
+  while(input_check){
+    if(check_caret() && ran_onInput == 0){
+      if(debug == true){
+        printf("run_onInput: %s\n",onInput);
+      }
+      system(onInput);
+      ran_onInput = 1;
+    }
+    else if(!check_caret() && ran_onInput == 1){
+      if(debug == true){
+        printf("run_offInput: %s\n",offInput);
+      }
+      system(offInput);
+      ran_onInput = 0;
+    }
+    sleep_ms(100);
+  }
+  pthread_exit(NULL);
+}
+
+void *nextPlease(void *threadid) {
+  long tid;
+  tid = (long)threadid;
+
+  // printf("Next Please Thread ID, %ld\n", tid);
+
+  // Reference http://www.rahul.net/kenton/xproto/xevents_errors.html
+  // event type 17 - DestroyNotify
+  // event type 18 - UnmapNotify
+  // event type 22 - ConfigureNotify
+  // Dismiss the following events by initiating another XNextEvent
+  XNextEvent(d, &e);
+  while(e.type != ConfigureNotify || (e.type == ConfigureNotify && last_event == ConfigureNotify && timeInMilliseconds()-event_ts < 419)){
+    XNextEvent(d, &e);
+  }
+  // Unset input thread
+  input_check = 0;
+  last_event = e.type;
+
+  if(debug == true){
+    printf("  event: %s %d\n",eventNames[e.type-1],e.type);
+    printf("  duration: %lldms\n",timeInMilliseconds()-event_ts);
+  }
+  event_ts = timeInMilliseconds();
+  
+  pthread_exit(NULL);
+}
+
+char * append(char * string1, char * string2){
+  char * result = NULL;
+  asprintf(&result, "%s,%s", string1, string2);
+  return result;
+}
+
+static int wait_fd(int fd, double seconds){
+  struct timeval tv;
+  fd_set in_fds;
+  FD_ZERO(&in_fds);
+  FD_SET(fd, &in_fds);
+  tv.tv_sec = trunc(seconds);
+  tv.tv_usec = (seconds - trunc(seconds))*1000000;
+  return select(fd+1, &in_fds, 0, 0, &tv);
+}
+
+Bool xerror = False;
+
+int in_int(int a[],int size,int item){ 
     int i,pos=-1; 
     for(i=0;i< size;i++) 
     { 
@@ -148,8 +220,7 @@ int in(const char **arr, int len, char *target) {
   return -1;
 }
 
-int strcicmp(char const *a, char const *b)
-{
+int strcicmp(char const *a, char const *b){
     for (;; a++, b++) {
         int d = tolower((unsigned char)*a) - tolower((unsigned char)*b);
         if (d != 0 || !*a)
@@ -308,7 +379,7 @@ const char * str_window_class(Display* d, Window w, char *prior_app ){
 
 int main(int argc, char *argv[]){
 
-  bool debug;
+  XInitThreads();
 
   if(argc < 2){
     debug = false;
@@ -317,42 +388,6 @@ int main(int argc, char *argv[]){
     debug = true; 
     printf("Running in debug mode\n");  
   }
-
-  const char *eventNames[34];
-  eventNames[0] = "None";
-  eventNames[1] = "KeyPress";
-  eventNames[2] = "KeyRelease";
-  eventNames[3] = "ButtonPress";
-  eventNames[4] = "ButtonRelease";
-  eventNames[5] = "MotionNotify";
-  eventNames[6] = "EnterNotify";
-  eventNames[7] = "LeaveNotify";
-  eventNames[8] = "FocusIn";
-  eventNames[9] = "FocusOut";
-  eventNames[10] = "KeymapNotify";
-  eventNames[11] = "Expose";
-  eventNames[12] = "GraphicsExpose";
-  eventNames[13] = "NoExpose";
-  eventNames[14] = "VisibilityNotify";
-  eventNames[15] = "CreateNotify";
-  eventNames[16] = "DestroyNotify";
-  eventNames[17] = "UnmapNotify";
-  eventNames[18] = "MapNotify";
-  eventNames[19] = "MapRequest";
-  eventNames[20] = "ReparentNotify";
-  eventNames[21] = "ConfigureNotify";
-  eventNames[22] = "ConfigureRequest";
-  eventNames[23] = "ResizeRequest";
-  eventNames[25] = "CirculateNotify";
-  eventNames[26] = "CirculateRequest";
-  eventNames[27] = "PropertyNotify";
-  eventNames[28] = "SelectionClear";
-  eventNames[29] = "SelectionRequest";
-  eventNames[30] = "SelectionNotify";
-  eventNames[31] = "ColormapNotify";
-  eventNames[32] = "ClientMessage";
-  eventNames[33] = "MappingNotify";
-
 
   FILE *fp;
   char buffer[10240];
@@ -491,8 +526,6 @@ int main(int argc, char *argv[]){
     system(de_run_array[de_id_idx]);
   }
 
-  Display* d;
-  Window w;
   char *name;
 
   // for XmbTextPropertyToTextList
@@ -533,9 +566,8 @@ int main(int argc, char *argv[]){
   printf("First window name: %s \n\n",str_window_class(d, w,prior_app));
 
   int breakouter;
-  int last_event=0;
-  Bool ran_onInput = 0;
-  long long int event_ts = timeInMilliseconds();
+  last_event=0;
+  event_ts = timeInMilliseconds();
 
   for (;;)
   {
@@ -582,7 +614,6 @@ int main(int argc, char *argv[]){
       }
       system(run_array[category_idx]);
       strcpy(run_normal,run_array[category_idx]);
-      ran_onInput = 0;
       strcpy(run_onInput,run_oninput_array[category_idx]);
       strcpy(run_offInput,run_offinput_array[category_idx]);
       system(run_offInput);
@@ -614,51 +645,35 @@ int main(int argc, char *argv[]){
     strcpy(prior_app,current_app);
     strcpy(prior_category,current_category);
 
-    // printf("run_onInput: %ld\n",strlen(run_onInput));
-    XEvent e;
     if(strlen(run_onInput) > 0){
-      while(XNextEventTimeout(d, &e, .5, event_ts, last_event, &event_ts, &last_event)){
-        if(check_caret() && ran_onInput == 0){
-          if(debug == true){
-            printf("run_onInput: %s\n",run_onInput);
-          }
-          system(run_onInput);
-          ran_onInput = 1;
-        }
-        else if(!check_caret() && ran_onInput == 1){
-          if(debug == true){
-            printf("run_offInput: %s\n",run_offInput);
-          }
-          system(run_offInput);
-          ran_onInput = 0;
-        }
-      }
+      input_check = 1;
     }
     else{
-      while (1) {
-        XNextEvent(d, &e);
-        // Make sure window dragging or resizing is not occuring
-        if(!(e.type == ConfigureNotify && (e.type == last_event) && timeInMilliseconds()-event_ts < 300)){
-          if(debug == true){
-            printf("  event: %s %d\n",eventNames[e.type-1],e.type);
-            printf("  duration: %lldms\n",timeInMilliseconds()-event_ts);
-          }
-          event_ts = timeInMilliseconds();
-          last_event = e.type;
-          break;
-        }
-        event_ts = timeInMilliseconds();
-        last_event = e.type;
-      }
+      input_check = 0;
     }
 
-    // Reference http://www.rahul.net/kenton/xproto/xevents_errors.html
-    // event type 17 - DestroyNotify
-    // event type 18 - UnmapNotify
-    // event type 22 - ConfigureNotify
-    // Dismiss the following events by initiating another XNextEvent
-    while(e.type != ConfigureNotify){
-      XNextEvent(d, &e);
+    pthread_t threads[NUM_THREADS];
+    int rc;
+    int i;
+    ThreadArgs args = (ThreadArgs)malloc(sizeof(struct threadArgs));
+    args->run_onInput = run_onInput;
+    args->run_offInput = run_offInput;
+    for( i = 0; i < NUM_THREADS; i++ ) {
+
+      if(i==0){
+        rc = pthread_create(&threads[i], NULL, inputToggle, args);
+      }
+      else{
+        rc = pthread_create(&threads[i], NULL, nextPlease, (void *)&i);
+      }
+      if (rc) {
+        printf("Error:unable to create thread, %d\n", rc);
+        exit(-1);
+      }
+    }
+    // wait for threads to close before continuing
+    for (int i = 0; i < NUM_THREADS; i++) {
+        pthread_join(threads[i], NULL);  
     }
 
     w = get_focus_window(d, e.type, eventNames[e.type-1], current_app, debug);
