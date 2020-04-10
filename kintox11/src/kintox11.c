@@ -606,13 +606,20 @@ int main(int argc, char *argv[]){
         }
       }
     }
-
     if(strcicmp(prior_category, current_category) != 0){
+      // printf("prior: %s, current: %s\n",prior_category,current_category);
+      // printf("%d,%d,%d,%d\n",strcicmp(prior_category, "gui"),strcicmp(current_category, "firefox"),strcicmp(current_category, "gui"),strcicmp(prior_category, "firefox"));
+      // printf("%d,%d\n",(strcicmp(prior_category, "gui") != 0 && strcicmp(prior_category, "firefox") != 0),(strcicmp(current_category, "gui") != 0 && strcicmp(current_category, "firefox") != 0));
       printf("%s: %s\n",current_category,current_app);
-      if(debug == true){
-        printf("run: %s\n",run_array[category_idx]);
+      // Make sure we're not switching between 2 GUI keymaps
+      // Firefox & Standard GUI apps
+      // strcicmp returns 0 for matches, <>0 for non-match
+      if((strcicmp(prior_category, "gui") != 0 && strcicmp(prior_category, "firefox") != 0) || (strcicmp(current_category, "gui") != 0 && strcicmp(current_category, "firefox") != 0)){
+        if(debug == true){
+          printf("run: %s\n",run_array[category_idx]);
+        }
+        system(run_array[category_idx]);
       }
-      system(run_array[category_idx]);
       strcpy(run_normal,run_array[category_idx]);
       strcpy(run_onInput,run_oninput_array[category_idx]);
       strcpy(run_offInput,run_offinput_array[category_idx]);
