@@ -111,28 +111,52 @@ default partial xkb_symbols "mac_levelssym" {
     replace key <AC04> {
         type[Group1]= "ONE_LEVEL_CTRL",
         symbols[Group1]= [
+            // Base
             f,
+            // Shift
             F,
+            // Alt
             f,
+            // Shift Alt
             F,
+            // Control
             f,
+            // Shift Control
             F,
+            // Super
             f,
+            // Shift Super
             F,
+            // Control Alt
             h,
+            // Super Control
             F10
+            // Super Alt
+            // Super Control Alt
         ],
         actions[Group1]= [
+            // Base
             NoAction(),
+            // Shift
             NoAction(),
+            // Alt
             NoAction(),
+            // Shift Alt
             NoAction(),
+            // Control
             NoAction(),
+            // Shift Control
             NoAction(),
+            // Super
             NoAction(),
+            // Shift Super
             NoAction(),
+            // Control Alt
             RedirectKey(key=<AC06>,clearmods=Mod1),
+            // Super Control
             RedirectKey(key=<FK10>,modifiers=Mod1,clearmods=Super+Control)
+            // Super Alt
+            // Super Control Alt
         ]
     };
     // Close App Cmd + Q = Alt + F4
@@ -626,17 +650,27 @@ partial xkb_symbols "mac_chrome" {
     replace key <RGHT> {
         type[Group1]= "ONE_LEVEL_CTRL",
         symbols[Group1]= [
+            // Base
             Right,
+            // Shift
             Right,
+            // Alt
             NoSymbol,
+            // Shift Alt
             NoSymbol,
+            // Control
             Right
         ],
         actions[Group1]= [
+            // Base
             NoAction(),
+            // Shift
             NoAction(),
+            // Alt
             RedirectKey(key=<FK18>),
+            // Shift Alt
             RedirectKey(key=<FK18>),
+            // Control
             RedirectKey(key=<RGHT>,modifiers=Mod1,clearmods=Control)
         ]
     };
