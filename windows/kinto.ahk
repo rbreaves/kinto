@@ -3,6 +3,7 @@ GroupAdd, terminals, ahk_exe ConEmu.exe
 GroupAdd, terminals, ahk_exe ConEmu64.exe
 GroupAdd, terminals, ahk_exe powershell.exe
 GroupAdd, terminals, ahk_exe WindowsTerminal.exe
+GroupAdd, terminals, ahk_exe Hyper.exe
 
 GroupAdd, posix, ahk_exe ubuntu.exe
 GroupAdd, posix, ahk_exe ConEmu.exe
@@ -63,6 +64,10 @@ $^+Right::Send +{End}
 	; Copy
 	^c::Send {LCtrl down}{LShift down}c{LCtrl Up}{LShift Up}
 	#c::Send {LCtrl down}c{LCtrl Up}
+	#IfWinNotActive ahk_group ConEmu
+		; Paste
+		^v::Send {LCtrl down}{LShift down}v{LCtrl Up}{LShift Up}
+	#If
 #If
 
 #IfWinActive ahk_group posix
@@ -103,11 +108,6 @@ $^+Right::Send +{End}
 	; Paste
 	$^v::Send {Shift down}{Insert}{Shift Up}
 	#v::Send {LCtrl down}v{LCtrl Up}
-#If
-
-#IfWinActive ahk_exe ubuntu.exe
-	; Paste
-	^v::Send {LCtrl down}{LShift down}v{LCtrl Up}{LShift Up}
 #If
 
 ;Disable win + l key locking (This line must come before any hotkey assignments in the .ahk file)
