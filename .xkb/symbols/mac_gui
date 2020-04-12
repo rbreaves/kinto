@@ -145,7 +145,8 @@ default partial xkb_symbols "mac_levelssym" {
             // Control Alt
             h
             // Super Control
-            // F10
+            // ,F10 // Default maximize
+            // // Nothing // KDE maximize
             // Super Alt
             // Super Control Alt
         ],
@@ -168,8 +169,9 @@ default partial xkb_symbols "mac_levelssym" {
             NoAction(),
             // Control Alt
             RedirectKey(key=<AC06>,clearmods=Mod1)
-            // Super Control - Fullscreen - glitches Ctrl+F
-            // RedirectKey(key=<FK10>,modifiers=Mod1,clearmods=Super+Control)
+            // Super Control - Fullscreen
+            // ,RedirectKey(key=<FK10>,modifiers=Mod1,clearmods=Super+Control) // Default maximize
+            // // Nothing // KDE maximize
             // Super Alt
             // Super Control Alt
         ]

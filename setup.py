@@ -15,6 +15,8 @@ def cmdline(command):
     )
     return process.communicate()[0]
 
+dename = cmdline("./system-config/dename.sh").replace('"','').strip().split(" ")[0].lower()
+
 def requirements(pkgm):
 	print(bcolors.CYELLOW + "You need to install some packages, " +run_pkg+ ", for Kinto to fully remap browsers during input focus.\n" + bcolors.ENDC)
 	print("sudo " + pkgm + " " + run_pkg + "\n")
@@ -39,7 +41,6 @@ def install_ibus():
 def setShortcuts():
 	distro = cmdline("awk -F= '$1==\"NAME\" { print $2 ;}' /etc/os-release").replace('"','').strip().split(" ")[0]
 	distroVersion = cmdline("awk -F= '$1==\"VERSION_ID\" { print $2 ;}' /etc/os-release").replace('"','').strip()
-	dename = cmdline("./system-config/dename.sh").replace('"','').strip().split(" ")[0].lower()
 	
 	print("\nIf Kinto is already running it will be stopped...")
 	print("If you cancel the installer you can re-run Kinto via\n systemctl --user start keyswap")
@@ -126,7 +127,7 @@ def setShortcuts():
 		elif distro == "manjaro linux" and dename == "kde":
 			# Remove Alt+F3 Operations Menu - Sublimetext Select-All
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Operations Menu","none,Alt+F3,Window Operations Menu"')
-			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Maximize" "Alt+F10,Meta+PgUp,Maximize Window"')
+			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Maximize" "Meta+Ctrl+F,Meta+PgUp,Maximize Window"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Minimize Window" "Meta+h,Meta+PgDown,Minimize Window"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Switch to Next Desktop" "Meta+Right,Meta+Right,Switch to Next Desktop"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Switch to Previous Desktop" "Meta+Left,Meta+Left,Switch to Previous Desktop"')
@@ -338,6 +339,12 @@ else:
 	# Fix browsers
 	cmdline('sed -i '' -e "' + symbols_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_symbols_gui'].replace("+mac_gui(mac_levelssym)+mac_gui(mac_appcycle_chromebook)","+mac_gui(mac_levelssym)+mac_gui(mac_browsers_chromebook)") + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.browsers')
 	cmdline('sed -i '' -e "' + symbols_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_symbols_gui'].replace("+mac_gui(mac_levelssym)+mac_gui(mac_appcycle_chromebook)","+mac_gui(mac_browsers_chromebook)+mac_gui(mac_chrome)") + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.chrome')
+if dename == "kde":
+	# Fix maximize shortcut
+	cmdline('perl -pi -e "s/(\/\/ )(.*)(\/\/ KDE maximize)/\$2\$3/g" ~/.xkb/symbols/mac_gui')
+else:
+	# Fix maximize shortcut
+	cmdline('perl -pi -e "s/(\/\/ )(.*)(\/\/ Default maximize)/\$2\$3/g" ~/.xkb/symbols/mac_gui')
 cmdline('sed -i '' -e "' + types_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_types_gui'] + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.browsers')
 cmdline('sed -i '' -e "' + types_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_types_gui'] + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.chrome')
 
