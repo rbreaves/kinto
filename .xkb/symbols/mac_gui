@@ -143,9 +143,9 @@ default partial xkb_symbols "mac_levelssym" {
             // Shift Super
             F,
             // Control Alt
-            h,
+            h
             // Super Control
-            F10
+            // F10
             // Super Alt
             // Super Control Alt
         ],
@@ -167,9 +167,9 @@ default partial xkb_symbols "mac_levelssym" {
             // Shift Super
             NoAction(),
             // Control Alt
-            RedirectKey(key=<AC06>,clearmods=Mod1),
-            // Super Control
-            RedirectKey(key=<FK10>,modifiers=Mod1,clearmods=Super+Control)
+            RedirectKey(key=<AC06>,clearmods=Mod1)
+            // Super Control - Fullscreen - glitches Ctrl+F
+            // RedirectKey(key=<FK10>,modifiers=Mod1,clearmods=Super+Control)
             // Super Alt
             // Super Control Alt
         ]
