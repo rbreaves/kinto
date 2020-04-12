@@ -6,7 +6,7 @@
 
 [![GitHub release](https://img.shields.io/github/release/rbreaves/kinto.svg)](https://github.com/rbreaves/kinto/releases/latest)
 
-\- Type in Linux like it's a Mac. \-
+\- Type in Linux & Windows like it's a Mac. \-
 
 Seamless copy and paste with all apps and terminals. Also the only linux remapper that is aware of your cursor/caret status - meaning it avoids shortcut conflicts within an app versus wordwise shortcuts when a text field is in use.
 
@@ -35,6 +35,18 @@ Binary is included and will be installed, but you can also compile kintox11.c on
 On most distros you can confirm navigate to your "Language Support" and set "Keyboard input method system:" to IBus for full word-wise support with web browsers. 
 
 Wayland support is planned, but not ready yet.
+
+## Kinto for Windows 10 Requirements
+
+- WSL Ubuntu edition
+- Powershell - run as Administrator
+- Python3
+
+Other programs that will be installed when you run ./setup.py
+- Chocolatey
+- Autohotkey
+
+Does not have complete parity with the Linux edition, but it does work and can be built on and added to as needed. Modify ./windows/kinto.ahk if you want to add more WSL editions or other terminals.
 
 ## How to install
 
@@ -363,7 +375,7 @@ You can also add additional Desktop Environment related tweaks to user_config.js
 		"name":"term",
 		"run":"setxkbmap -option;xkbcomp -w0 -I$HOME/.xkb ~/.xkb/keymap/kbd.mac.term $DISPLAY",
 		"de":[2],
-		"appnames":[ "Gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm" ],
+		"appnames":[ "Gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm","kitty" ],
 		"run_onInput":"",
 		"run_offInput": "killall xbindkeys > /dev/null 2>&1",
 		"symbols":"",
@@ -481,11 +493,26 @@ cd ~/.config/kinto
 ./kintox11
 ```
 
+## Debug
+
+If all else fails you can now run Kinto in debug mode as of 1.0.6-2. The output will become more verbose and I'd recommend running this directly after stopping the service.
+
+```
+systemctl --user stop keyswap
+cd ~/.config/kinto
+./kintox11 --debug
+```
+
 ## Language Support
 I'd appreciate any help from people with non-US based keyboards, to help ensure that these keymaps and keyswap methods work in all or most languages.
 
 If you would like to attempt adding additional custom keymaps for other languages then I strongly recommend reading Glen Whitney's post here.
 https://superuser.com/questions/385748/binding-superc-superv-to-copy-and-paste
+
+## Notes about Windows 10
+Sharpkeys was used to create the layout/reg files to swap the Ctrl, Win and Alt keys. Sharpkeys was not required however because the reg keys were extracted. Autohotkey is used to manage keyswaps needed for terminal usage. Autohotkey is also used to add additional mac like keybinds for Sublime text and can be used for other apps as well.
+
+Microsoft is working on a new Powertoy Keyboard Manager that could be used with an easier to use GUI interface, but this approach should be fully sufficient for a mac like experience and autohotkeys appears to be more than capable enough to handle complex rebinding of any or most mac like shortcuts.
 
 ## Contributing
 
