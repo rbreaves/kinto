@@ -124,17 +124,17 @@ def setShortcuts():
 			cmdline("gsettings set org.gnome.mutter.keybindings toggle-tiled-left \"['<Super><Alt>Left']\"")
 			# org.gnome.mutter.keybindings toggle-tiled-right ['<Super>Right']
 			# org.gnome.mutter.keybindings toggle-tiled-left ['<Super>Left']
-		elif distro == "manjaro linux" and dename == "kde":
+		elif dename == "kde":
 			# cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "krunner.desktop" --key "_launch","Alt+Space\tAlt+F2\tSearch,Alt+Space\tAlt+F2\tSearch,KRunner"')
 			# Remove Alt+F3 Operations Menu - Sublimetext Select-All
+			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Switch to Previous Desktop" "Meta+Left,Meta+Left,Switch to Previous Desktop"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Operations Menu" "none,Alt+F3,Window Operations Menu"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows" "Ctrl+F13,Alt+Tab,Walk Through Windows"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows (Reverse)" "Ctrl+Shift+F14,Alt+Shift+Backtab,Walk Through Windows (Reverse)"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Maximize" "Meta+Ctrl+F,Meta+PgUp,Maximize Window"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Minimize Window" "Meta+h,Meta+PgDown,Minimize Window"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Switch to Next Desktop" "Meta+Right,Meta+Right,Switch to Next Desktop"')
-			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Switch to Previous Desktop" "Meta+Left,Meta+Left,Switch to Previous Desktop"')
-			cmdline('kquitapp5 kglobalaccel && sleep 2s && kglobalaccel5 &')
+			os.system('kquitapp5 kglobalaccel && sleep 2s && kglobalaccel5 &')
 		else:
 			print('distro: ' + distro + ' de: ' + dename)
 			print("A supported OS and DE was not found, you may not have full system level shortcuts installed.")
