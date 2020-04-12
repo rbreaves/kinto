@@ -79,10 +79,10 @@ def setShortcuts():
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Control><Shift>Space','<Super>Space']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Super>Space','<Primary>Space']\"")
-			cmdline('perl -pi -e "s/(\/\/ )(.*)(\/\/ Elementary)/\$2\$3/g" ~/.xkb/symbols/mac_term')
-			cmdline('perl -pi -e "s/(\w.*)(\/\/ Default)/\/\/ \$1\$2/g" ~/.xkb/symbols/mac_term')
-			cmdline('perl -pi -e "s/(\/\/ )(.*)(\/\/ Elementary)/\$2\$3/g" ~/.xkb/symbols/mac_gui')
-			cmdline('perl -pi -e "s/(\w.*)(\/\/ Default)/\/\/ \$1\$2/g" ~/.xkb/symbols/mac_gui')
+			cmdline('perl -pi -e "s/(\/\/ )(.*)(\/\/ Elementary cmdtab)/\$2\$3/g" ~/.xkb/symbols/mac_term')
+			cmdline('perl -pi -e "s/(\w.*)(\/\/ Default cmdtab)/\/\/ \$1\$2/g" ~/.xkb/symbols/mac_term')
+			cmdline('perl -pi -e "s/(\/\/ )(.*)(\/\/ Elementary cmdtab)/\$2\$3/g" ~/.xkb/symbols/mac_gui')
+			cmdline('perl -pi -e "s/(\w.*)(\/\/ Default cmdtab)/\/\/ \$1\$2/g" ~/.xkb/symbols/mac_gui')
 		elif distro == "galliumos" and dename == "xfce":
 			print("Applying GalliumOS (xfce) shortcuts...")
 			# Reset Show desktop
@@ -337,8 +337,8 @@ if default != 3:
 	cmdline('sed -i '' -e "' + symbols_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_symbols_gui'].replace("+mac_gui(mac_levelssym)+mac_gui(mac_appcycle)","+mac_gui(mac_browsers)+mac_gui(mac_chrome)") + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.chrome')
 else:
 	# Fix multicursor in mac_gui
-	cmdline('perl -pi -e "s/(\/\/ )(.*)(\/\/ Chromebook)/\$2\$3/g" ~/.xkb/symbols/mac_gui')
-	cmdline('perl -pi -e "s/(\w.*)(\/\/ Default)/\/\/ \$1\$2/g" ~/.xkb/symbols/mac_gui')
+	cmdline('perl -pi -e "s/(\/\/ )(.*)(\/\/ Chromebook multicursor)/\$2\$3/g" ~/.xkb/symbols/mac_gui')
+	cmdline('perl -pi -e "s/(\w.*)(\/\/ Default multicursor)/\/\/ \$1\$2/g" ~/.xkb/symbols/mac_gui')
 	# Fix browsers
 	cmdline('sed -i '' -e "' + symbols_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_symbols_gui'].replace("+mac_gui(mac_levelssym)+mac_gui(mac_appcycle_chromebook)","+mac_gui(mac_levelssym)+mac_gui(mac_browsers_chromebook)") + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.browsers')
 	cmdline('sed -i '' -e "' + symbols_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_symbols_gui'].replace("+mac_gui(mac_levelssym)+mac_gui(mac_appcycle_chromebook)","+mac_gui(mac_browsers_chromebook)+mac_gui(mac_chrome)") + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.chrome')
