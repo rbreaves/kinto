@@ -124,7 +124,9 @@ def setShortcuts():
 			# org.gnome.mutter.keybindings toggle-tiled-right ['<Super>Right']
 			# org.gnome.mutter.keybindings toggle-tiled-left ['<Super>Left']
 		elif distro == "manjaro linux" and dename == "kde":
-			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Maximize Window" "Alt+F10,Meta+PgUp,Maximize Window"')
+			# Remove Alt+F3 Operations Menu - Sublimetext Select-All
+			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Operations Menu","none,Alt+F3,Window Operations Menu"')
+			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Maximize" "Alt+F10,Meta+PgUp,Maximize Window"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Minimize Window" "Meta+h,Meta+PgDown,Minimize Window"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Switch to Next Desktop" "Meta+Right,Meta+Right,Switch to Next Desktop"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Switch to Previous Desktop" "Meta+Left,Meta+Left,Switch to Previous Desktop"')
