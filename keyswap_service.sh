@@ -23,4 +23,4 @@ sed -i "s/#Environment/Environment/g" ~/.config/systemd/user/keyswap.service
 systemctl --user daemon-reload
 sed -i "s/ExecStart=/ExecStart=${swapcmd}/g" ~/.config/systemd/user/keyswap.service
 systemctl --user enable keyswap.timer
-systemctl --user start keyswap.timer
+systemctl --user start keyswap
