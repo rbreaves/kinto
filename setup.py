@@ -125,8 +125,11 @@ def setShortcuts():
 			# org.gnome.mutter.keybindings toggle-tiled-right ['<Super>Right']
 			# org.gnome.mutter.keybindings toggle-tiled-left ['<Super>Left']
 		elif distro == "manjaro linux" and dename == "kde":
+			# cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "krunner.desktop" --key "_launch","Alt+Space\tAlt+F2\tSearch,Alt+Space\tAlt+F2\tSearch,KRunner"')
 			# Remove Alt+F3 Operations Menu - Sublimetext Select-All
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Operations Menu","none,Alt+F3,Window Operations Menu"')
+			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows","Ctrl+F13,Alt+Tab,Walk Through Windows"')
+			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows (Reverse)","Ctrl+Shift+F14,Alt+Shift+Backtab,Walk Through Windows (Reverse)"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Maximize" "Meta+Ctrl+F,Meta+PgUp,Maximize Window"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Minimize Window" "Meta+h,Meta+PgDown,Minimize Window"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Switch to Next Desktop" "Meta+Right,Meta+Right,Switch to Next Desktop"')
@@ -342,9 +345,13 @@ else:
 if dename == "kde":
 	# Fix maximize shortcut
 	cmdline('perl -pi -e "s/(\/\/ )(.*)(\/\/ KDE maximize)/\$2\$3/g" ~/.xkb/symbols/mac_gui')
+	# term app switching
+	cmdline('perl -pi -e "s/(\/\/ )(.*)(\/\/ KDE cmdtab)/\$2\$3/g" ~/.xkb/symbols/mac_term')
 else:
 	# Fix maximize shortcut
 	cmdline('perl -pi -e "s/(\/\/ )(.*)(\/\/ Default maximize)/\$2\$3/g" ~/.xkb/symbols/mac_gui')
+	# term app switching
+	cmdline('perl -pi -e "s/(\/\/ )(.*)(\/\/ Default cmdtab)/\$2\$3/g" ~/.xkb/symbols/mac_term')
 cmdline('sed -i '' -e "' + types_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_types_gui'] + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.browsers')
 cmdline('sed -i '' -e "' + types_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_types_gui'] + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.chrome')
 
