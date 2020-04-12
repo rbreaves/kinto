@@ -36,7 +36,6 @@ def install_ibus():
 		input("IBus has been set as the default Input Method.\nPress any key to exit and re-run after logoff & logon...")
 		sys.exit()
 
-<<<<<<< HEAD
 def setShortcuts():
 	distro = cmdline("awk -F= '$1==\"NAME\" { print $2 ;}' /etc/os-release").replace('"','').strip().split(" ")[0]
 	distroVersion = cmdline("awk -F= '$1==\"VERSION_ID\" { print $2 ;}' /etc/os-release").replace('"','').strip()
@@ -133,7 +132,7 @@ def setShortcuts():
 		else:
 			print('distro: ' + distro + ' de: ' + dename)
 			print("A supported OS and DE was not found, you may not have full system level shortcuts installed.")
-=======
+
 def windows_setup():
 	keymaps = ["Apple keyboard standard", "Apple keyboard w/ Caps lock as Esc", "Windows keyboard standard", "Windows keyboard w/ Caps lock as Esc","Uninstall"]
 	for index, item in enumerate(keymaps):
@@ -165,8 +164,6 @@ def windows_setup():
 		print("If using WSL then please remember to right click on title bar -> Properties -> Edit Options -> Use Ctrl+Shift+C/V as Copy/Paste and enable it.")
 	else:
 		os.system("del \"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp\\kinto.ahk\"")
-
->>>>>>> master
 
 # check_x11 = cmdline("env | grep -i x11").strip()
 check_x11 = cmdline("(env | grep -i x11 || loginctl show-session \"$XDG_SESSION_ID\" -p Type) | awk -F= '{print $2}'").strip()
