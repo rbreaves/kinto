@@ -93,9 +93,11 @@ partial xkb_symbols "mac_global" {
             RedirectKey(key=<AC03>,modifiers=Super,clearmods=Control+Shift)
         ]
     };
+
     // Cycle App and In App Tab Switching
     key <FK13> { [ F13 ] };
     key <FK14> { [ F14 ] };
+
     replace key <TAB> {
         type[Group1]= "ONE_LEVEL_CMD",
         symbols[Group1]= [
@@ -113,9 +115,10 @@ partial xkb_symbols "mac_global" {
             Redirect(key=<PGDN>,mods=Control,clearmods=Mod4+Super) // Default
         ]
     };
+
     // Page Up
     replace key <UP> {
-        type[Group1]= "ONE_LEVEL_CMD",
+        type[Group1]= "ONE_LEVEL_CTRL",
         symbols[Group1]= [ 
             Up,
             Up,
@@ -127,9 +130,10 @@ partial xkb_symbols "mac_global" {
             RedirectKey(key=<PGUP>,clearmods=Shift+Control) 
         ]
     };
+
     // Page Down
     replace key <DOWN> {
-        type[Group1]= "ONE_LEVEL_CMD",
+        type[Group1]= "ONE_LEVEL_CTRL",
         symbols[Group1]= [
             Down,
             Down,

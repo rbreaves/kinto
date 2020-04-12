@@ -40,4 +40,14 @@ default partial xkb_types "addmac_levels" {
         level_name[Level5] = "Super";
         level_name[Level6] = "Super Shift";
     };
+    type "ONE_LEVEL_SUPER" {
+        modifiers = Shift+Super;
+        map[Shift] = Level2;
+        map[Super] = Level3;
+        map[Shift+Super] = Level4;
+        level_name[Level1] = "Base";
+        level_name[Level2] = "Shift";
+        level_name[Level3] = "Super";
+        level_name[Level4] = "Super Shift";
+    };
 };
