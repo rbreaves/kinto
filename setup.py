@@ -15,6 +15,8 @@ def cmdline(command):
     )
     return process.communicate()[0]
 
+dename = cmdline("./system-config/dename.sh").replace('"','').strip().split(" ")[0].lower()
+
 def requirements(pkgm):
 	print(bcolors.CYELLOW + "You need to install some packages, " +run_pkg+ ", for Kinto to fully remap browsers during input focus.\n" + bcolors.ENDC)
 	print("sudo " + pkgm + " " + run_pkg + "\n")
@@ -35,6 +37,107 @@ def install_ibus():
 		print("\n")
 		input("IBus has been set as the default Input Method.\nPress any key to exit and re-run after logoff & logon...")
 		sys.exit()
+
+def setShortcuts():
+	distro = cmdline("awk -F= '$1==\"NAME\" { print $2 ;}' /etc/os-release").replace('"','').strip().split(" ")[0]
+	distroVersion = cmdline("awk -F= '$1==\"VERSION_ID\" { print $2 ;}' /etc/os-release").replace('"','').strip()
+	
+	print("\nIf Kinto is already running it will be stopped...")
+	print("If you cancel the installer you can re-run Kinto via\n systemctl --user start keyswap")
+
+	cmdline("systemctl --user stop keyswap")
+	print("\nDetected " + distro + " " + distroVersion.strip() + " DE: " + dename + "\n")
+	addhotkeys = yn_choice("\nDo you want to apply system level shortcuts?")
+	if(addhotkeys):
+		distro = distro.lower()
+		if dename == "gnome":
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-applications \"['<Primary>F13','<Primary><Shift>F13','<Alt>Tab']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward \"['<Primary>F14','<Primary><Shift>F14','<Alt><Shift>Tab']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Primary><Shift>Space','<Primary>Space']\"")
+		if distro == "ubuntu" and dename == "gnome":
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up \"['<Super>Up','<Super>Left']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down \"['<Super>Down','<Super>Right']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left ['']")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right ['']")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Primary><Shift>Space','<Primary>Space']\"")
+		elif distro == "pop!_os" and dename == "gnome":
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings close \"['<Alt>F4','<Super>w']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings toggle-maximized \"['<Alt>F10','<Primary><Super>Up']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Primary><Shift>Space','<Primary>Space']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up \"['<Super>Up','<Super>Left']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down \"['<Super>Down','<Super>Right']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left ['']")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right ['']")
+		elif distro == "elementary" and dename == "gnome":
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-applications \"['<Primary>F13','<Primary><Shift>F13','<Alt>Tab']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward \"['<Primary>F14','<Primary><Shift>F14','<Alt><Shift>Tab']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings show-desktop \"['<Super>d','<Super>Down']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings toggle-maximized \"['<Alt>F10','<Super>Up']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Control><Shift>Space','<Super>Space']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Super>Space','<Primary>Space']\"")
+			cmdline('perl -pi -e "s/(\/\/ )(.*)(\/\/ Elementary)/\$2\$3/g" ~/.xkb/symbols/mac_term')
+			cmdline('perl -pi -e "s/(\w.*)(\/\/ Default)/\/\/ \$1\$2/g" ~/.xkb/symbols/mac_term')
+			cmdline('perl -pi -e "s/(\/\/ )(.*)(\/\/ Elementary)/\$2\$3/g" ~/.xkb/symbols/mac_gui')
+			cmdline('perl -pi -e "s/(\w.*)(\/\/ Default)/\/\/ \$1\$2/g" ~/.xkb/symbols/mac_gui')
+		elif distro == "galliumos" and dename == "xfce":
+			print("Applying GalliumOS (xfce) shortcuts...")
+			# Reset Show desktop
+			cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Primary><Alt>d" --reset')
+			cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Super>d" --create --type string --set "show_desktop_key"')
+			# Reset App Cycle
+			cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Alt>Tab" --reset')
+			cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Alt><Shift>Tab" --reset')
+			cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Primary>backslash" --create --type string --set "cycle_windows_key"')
+			cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Primary><Shift>backslash" --create --type string --set "cycle_reverse_windows_key"')
+			# cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Super>h" --create --type string --set "hide_window_key"')
+			# Don't need to undo other maps for menu
+			cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Primary>space" --create --type string --set "xfce4-popup-whiskermenu"')
+			cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Primary><Shift>space" --create --type string --set "xfce4-popup-whiskermenu"')
+			# Reset move to desktop shortcuts
+			cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Primary><Alt>Home" --reset')
+			cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Primary><Alt>End" --reset')
+			cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Primary><Alt>Left" --reset')
+			cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Primary><Alt>Right" --reset')
+			os.system('xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Primary><Alt>Left" --create --type string --set "move_window_prev_workspace_key"')
+			os.system('xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Primary><Alt>Right" --create --type string --set "move_window_next_workspace_key"')
+			# Reset Change Workspace
+			cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Primary><Alt>Left" --reset')
+			cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Primary><Alt>Right" --reset')
+			cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Super>Left" --create --type string --set "left_workspace_key"')
+			cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Super>Right" --create --type string --set "right_workspace_key"')
+			print("\nYou may need to run these commands manually to make sure they are set, if you want to move windows between desktops.\n")
+			print('     xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Primary><Alt>Left" --create --type string --set "move_window_prev_workspace_key"')
+			print('     xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Primary><Alt>Right" --create --type string --set "move_window_next_workspace_key"\n')
+		elif distro == "fedora" and dename == "gnome":
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings show-desktop \"['<Super>d']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up \"['<Super>Up','<Super>Left']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down \"['<Super>Down','<Super>Right']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left ['']")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right ['']")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\"")
+			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Primary><Shift>Space','<Primary>Space']\"")
+			cmdline("gsettings set org.gnome.mutter.keybindings toggle-tiled-right \"['<Super><Alt>Right']\"")
+			cmdline("gsettings set org.gnome.mutter.keybindings toggle-tiled-left \"['<Super><Alt>Left']\"")
+			# org.gnome.mutter.keybindings toggle-tiled-right ['<Super>Right']
+			# org.gnome.mutter.keybindings toggle-tiled-left ['<Super>Left']
+		elif distro == "manjaro linux" and dename == "kde":
+			# cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "krunner.desktop" --key "_launch","Alt+Space\tAlt+F2\tSearch,Alt+Space\tAlt+F2\tSearch,KRunner"')
+			# Remove Alt+F3 Operations Menu - Sublimetext Select-All
+			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Operations Menu","none,Alt+F3,Window Operations Menu"')
+			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows","Ctrl+F13,Alt+Tab,Walk Through Windows"')
+			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows (Reverse)","Ctrl+Shift+F14,Alt+Shift+Backtab,Walk Through Windows (Reverse)"')
+			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Maximize" "Meta+Ctrl+F,Meta+PgUp,Maximize Window"')
+			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Minimize Window" "Meta+h,Meta+PgDown,Minimize Window"')
+			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Switch to Next Desktop" "Meta+Right,Meta+Right,Switch to Next Desktop"')
+			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Switch to Previous Desktop" "Meta+Left,Meta+Left,Switch to Previous Desktop"')
+			cmdline('kquitapp5 kglobalaccel && sleep 2s && kglobalaccel5 &')
+		else:
+			print('distro: ' + distro + ' de: ' + dename)
+			print("A supported OS and DE was not found, you may not have full system level shortcuts installed.")
 
 def windows_setup():
 	keymaps = ["Apple keyboard standard", "Apple keyboard w/ Caps lock as Esc", "Windows keyboard standard", "Windows keyboard w/ Caps lock as Esc","Uninstall"]
@@ -68,9 +171,8 @@ def windows_setup():
 	else:
 		os.system("del \"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp\\kinto.ahk\"")
 
-
 # check_x11 = cmdline("env | grep -i x11").strip()
-check_x11 = cmdline("env | grep -i x11 || loginctl show-session \"$XDG_SESSION_ID\" -p Type | awk -F= '{print $2}'").strip()
+check_x11 = cmdline("(env | grep -i x11 || loginctl show-session \"$XDG_SESSION_ID\" -p Type) | awk -F= '{print $2}'").strip()
 
 if len(check_x11) == 0:
 	if os.name != 'nt':
@@ -92,6 +194,7 @@ if len(pkgm) == 0:
 	if len(pkgm) > 0:
 		pkgm += " check-update;sudo dnf install -y "
 else:
+	pkgm += " install -y "
 	pkgm += " update; sudo apt-get install -y "
 
 if len(pkgm) == 0:
@@ -215,8 +318,8 @@ if os.path.isdir(homedir + "/.xkb/keymap") == False:
 	time.sleep(0.5)
 os.system('setxkbmap -option')
 os.system('setxkbmap -print > ~/.xkb/keymap/kbd.mac.gui')
-os.system('setxkbmap -print > ~/.xkb/keymap/kbd.mac.gui.nw')
 os.system('setxkbmap -print > ~/.xkb/keymap/kbd.mac.gui.chrome')
+os.system('setxkbmap -print > ~/.xkb/keymap/kbd.mac.gui.browsers')
 os.system('setxkbmap -print > ~/.xkb/keymap/kbd.mac.term')
 time.sleep(0.5)
 
@@ -228,17 +331,37 @@ cmdline('sed -i '' -e "' + types_line + 's/\\"/' + keyboardconfigs[defaultkb-1][
 cmdline('sed -i '' -e "' + symbols_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_symbols_term'] + '\\"/2" ~/.xkb/keymap/kbd.mac.term')
 cmdline('sed -i '' -e "' + types_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_types_term'] + '\\"/2" ~/.xkb/keymap/kbd.mac.term')
 
-cmdline('sed -i '' -e "' + symbols_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_symbols_gui'].replace("+mac_gui(mac_levelssym)","") + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.nw')
-cmdline('sed -i '' -e "' + symbols_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_symbols_gui'].replace("+mac_gui(mac_levelssym)","+mac_gui(mac_chrome)") + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.chrome')
-cmdline('sed -i '' -e "' + types_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_types_gui'] + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.nw')
+# Set chrome file accordingly for chromebooks or normal
+if default != 3:
+	cmdline('sed -i '' -e "' + symbols_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_symbols_gui'].replace("+mac_gui(mac_levelssym)+mac_gui(mac_appcycle)","+mac_gui(mac_levelssym)+mac_gui(mac_browsers)") + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.browsers')
+	cmdline('sed -i '' -e "' + symbols_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_symbols_gui'].replace("+mac_gui(mac_levelssym)+mac_gui(mac_appcycle)","+mac_gui(mac_browsers)+mac_gui(mac_chrome)") + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.chrome')
+else:
+	# Fix multicursor in mac_gui
+	cmdline('perl -pi -e "s/(\/\/ )(.*)(\/\/ Chromebook)/\$2\$3/g" ~/.xkb/symbols/mac_gui')
+	cmdline('perl -pi -e "s/(\w.*)(\/\/ Default)/\/\/ \$1\$2/g" ~/.xkb/symbols/mac_gui')
+	# Fix browsers
+	cmdline('sed -i '' -e "' + symbols_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_symbols_gui'].replace("+mac_gui(mac_levelssym)+mac_gui(mac_appcycle_chromebook)","+mac_gui(mac_levelssym)+mac_gui(mac_browsers_chromebook)") + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.browsers')
+	cmdline('sed -i '' -e "' + symbols_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_symbols_gui'].replace("+mac_gui(mac_levelssym)+mac_gui(mac_appcycle_chromebook)","+mac_gui(mac_browsers_chromebook)+mac_gui(mac_chrome)") + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.chrome')
+if dename == "kde":
+	# Fix maximize shortcut
+	cmdline('perl -pi -e "s/(\/\/ )(.*)(\/\/ KDE maximize)/\$2\$3/g" ~/.xkb/symbols/mac_gui')
+	# term app switching
+	cmdline('perl -pi -e "s/(\/\/ )(.*)(\/\/ KDE cmdtab)/\$2\$3/g" ~/.xkb/symbols/mac_term')
+else:
+	# Fix maximize shortcut
+	cmdline('perl -pi -e "s/(\/\/ )(.*)(\/\/ Default maximize)/\$2\$3/g" ~/.xkb/symbols/mac_gui')
+	# term app switching
+	cmdline('perl -pi -e "s/(\/\/ )(.*)(\/\/ Default cmdtab)/\$2\$3/g" ~/.xkb/symbols/mac_term')
+cmdline('sed -i '' -e "' + types_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_types_gui'] + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.browsers')
 cmdline('sed -i '' -e "' + types_line + 's/\\"/' + keyboardconfigs[defaultkb-1]['xkb_types_gui'] + '\\"/2" ~/.xkb/keymap/kbd.mac.gui.chrome')
 
+setShortcuts()
 
 user_file = homedir + '/.config/kinto/user_config.json'
 with open(user_file, 'r') as f:
     user_config = json.load(f)
 
-onetime = yn_choice("One time initialization tweaks are available. Would you like to view them?")
+onetime = yn_choice("\nOne time initialization tweaks are available. Would you like to view them?")
 print("")
 if(onetime):
 	intents = [obj for obj in user_config['de'] if(obj['intent'] == "init")]
@@ -285,7 +408,7 @@ if len(defaultde) != 0:
 
 user_config['config'][0]['run'] = keyboardconfigs[defaultkb-1]['gui']
 user_config['config'][1]['run'] = keyboardconfigs[defaultkb-1]['term']
-user_config['config'][2]['run'] = keyboardconfigs[defaultkb-1]['gui']
+user_config['config'][2]['run'] = keyboardconfigs[defaultkb-1]['gui'].replace("kbd.mac.gui","kbd.mac.gui.browsers")
 user_config['config'][3]['run'] = keyboardconfigs[defaultkb-1]['gui'].replace("kbd.mac.gui","kbd.mac.gui.chrome")
 
 os.remove(user_file)

@@ -1,0 +1,75 @@
+# GalliumOS Notes
+
+xfconf-query -c xfce4-keyboard-shortcuts -lv | grep "show_desktop_key\|cycle_windows_key\|cycle_reverse_windows_key\|close_window_key\|maximize_window_key\|xfce4-popup-whiskermenu\|move_window_next_workspace_key\|move_window_prev_workspace_key\|hide" | grep -v "default\|<Alt>m"
+
+# Show Desktop
+xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Super>d" --create --type string --set "show_desktop_key"
+
+# Undo show desktop
+xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Super>d" --reset
+
+# GUI Alt Tab - Window Switching
+xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Alt><Shift>Tab" --set "cycle_reverse_windows_key"
+xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Alt>Tab" --set "cycle_windows_key"
+
+# Term Alt Tab - Window Switching
+xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Alt><Shift>Tab" --set "cycle_windows_key"
+xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Alt>Tab" --set "cycle_reverse_windows_key"
+
+# Hide/minimize Window
+xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Super>h" --create --type string --set "hide_window_key"
+
+# Spotlight
+xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Primary><Shift>space" --create --type string --set "xfce4-popup-whiskermenu"
+
+# Change workspace to left
+xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Super>Left" --create --type string --set "move_window_prev_workspace_key"
+
+# Change workspace to right
+xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Super>Right" --create --type string --set "move_window_next_workspace_key"
+
+# PopOS
+
+# Close App Alt+F4 (Super+w)
+gsettings set org.gnome.desktop.wm.keybindings close "['<Alt>F4','<Super>w']"
+# Undo
+gsettings set org.gnome.desktop.wm.keybindings close "['<Super>w']"
+
+# Maximize Window
+gsettings set org.gnome.desktop.wm.keybindings toggle-maximized "['<Alt>F10','<Primary><Super>Up']"
+# Undo
+gsettings set org.gnome.desktop.wm.keybindings toggle-maximized "['<Primary><Super>Up']"
+
+# Ubuntu 19.10
+# Change Workspace
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left "['<Primary><Alt>Left','<Super>Left']"
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right "['<Primary><Alt>Right','<Super>Right']"
+
+# ElementaryOS
+# Show Desktop
+gsettings set org.gnome.desktop.wm.keybindings show-desktop "['<Super>d','<Super>Down']"
+# Maximize Window
+gsettings set org.gnome.desktop.wm.keybindings toggle-maximized "['<Alt>F10','<Super>Up']"
+# Spotlight
+gsettings set org.gnome.desktop.wm.keybindings panel-main-menu "['<Control><Shift>Space','<Super>Space']"
+
+# Fedora 31
+# Show Desktop
+gsettings set org.gnome.desktop.wm.keybindings show-desktop "['<Super>d']"
+# Change Workspace
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left "['<Primary><Alt>Left','<Super>Left']"
+gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right "['<Primary><Alt>Right','<Super>Right']"
+
+# Manjaro/Arch KDE
+# Maximize
+kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" \
+--key "Maximize Window" "Alt+F10,Meta+PgUp,Maximize Window"
+# Minimize
+kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" \
+--key "Minimize Window" "Meta+h,Meta+PgDown,Minimize Window"
+# Switch Desktops
+kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" \
+--key "Switch to Next Desktop" "Meta+Right,Meta+Right,Switch to Next Desktop"
+kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" \
+--key "Switch to Previous Desktop" "Meta+Left,Meta+Left,Switch to Previous Desktop"
+kquitapp5 kglobalaccel && sleep 2s && kglobalaccel5 &

@@ -1,0 +1,1411 @@
+name[Group1]=English (US)
+TLDE=grave,asciitilde
+AE01=1,exclam
+AE02=2,at
+AE03=3,numbersign
+AE04=4,dollar
+AE05=5,percent
+AE06=6,asciicircum
+AE07=7,ampersand 
+AE08=8,asterisk
+AE09=9,parenleft 
+AE10=0,parenright
+AE11=minus,underscore
+AE12=equal,plus
+AD01=q,Q 
+AD02=w,W 
+AD03=e,E 
+AD04=r,R 
+AD05=t,T 
+AD06=y,Y 
+AD07=u,U 
+AD08=i,I 
+AD09=o,O 
+AD10=p,P 
+AD11=bracketleft,braceleft 
+AD12=bracketright,braceright
+AC01=a,A 
+AC02=s,S 
+AC03=d,D 
+AC04=f,F 
+AC05=g,G 
+AC06=h,H 
+AC07=j,J 
+AC08=k,K 
+AC09=l,L 
+AC10=semicolon,colon 
+AC11=apostrophe,quotedbl
+AB01=z,Z 
+AB02=x,X 
+AB03=c,C 
+AB04=v,V 
+AB05=b,B 
+AB06=n,N 
+AB07=m,M 
+AB08=comma,less
+AB09=period,greater
+AB10=slash,question
+BKSL=backslash,bar
+
+hidden partial alphanumeric_keys
+xkb_symbols=media_common
+I01=XF86AudioMedia
+I10=XF86AudioPrev
+I19=XF86AudioNext
+I20=XF86AudioMute
+I22=XF86AudioPlay, XF86AudioPause
+I24=XF86AudioStop, XF86Eject
+I2E=XF86AudioLowerVolume
+I30=XF86AudioRaiseVolume
+K5A=XF86Eject
+K6C=XF86Eject
+
+hidden partial alphanumeric_keys
+xkb_symbols=nav_common
+I21=XF86Calculator
+I32=XF86WWW
+I65=XF86Search
+I66=XF86Favorites
+I67=XF86Reload
+I68=XF86Stop
+I69=XF86Forward
+I6A=XF86Back
+I6B=XF86MyComputer
+I6C=XF86Mail
+I6D=XF86AudioMedia
+
+hidden partial alphanumeric_keys
+xkb_symbols=acpi_common
+I5E=XF86PowerOff
+I5F=XF86Standby
+I63=XF86WakeUp
+I74=XF86Battery
+I76=XF86WLAN
+I16=XF86Sleep
+
+partial alphanumeric_keys
+xkb_symbols=evdev
+MUTE=XF86AudioMute
+VOL-=XF86AudioLowerVolume
+VOL+=XF86AudioRaiseVolume
+POWR=XF86PowerOff
+STOP=Cancel
+AGAI=Redo
+PROP=SunProps
+UNDO=Undo
+FRNT=SunFront
+COPY=XF86Copy
+OPEN=XF86Open
+PAST=XF86Paste
+FIND=Find
+CUT=XF86Cut
+HELP=Help
+LNFD=Linefeed
+
+
+HKTG=Hiragana_Katakana
+HENK=Henkan
+MUHE=Muhenkan
+KATA=Katakana
+HIRA=Hiragana
+RO=Romaji
+
+HNGL=Hangul
+HJCV=Hangul_Hanja
+FK21=XF86TouchpadToggle
+FK22=XF86TouchpadOn
+FK23=XF86TouchpadOff
+FK20=XF86AudioMicMute
+I126=plusminus
+I128=XF86LaunchA
+I147=XF86MenuKB
+I148=XF86Calculator
+I150=XF86Sleep
+I151=XF86WakeUp
+I152=XF86Explorer
+I153=XF86Send
+I155=XF86Xfer
+I156=XF86Launch1
+I157=XF86Launch2
+I158=XF86WWW
+I159=XF86DOS
+I160=XF86ScreenSaver
+I161=XF86RotateWindows
+I162=XF86TaskPane
+I163=XF86Mail
+I164=XF86Favorites
+I165=XF86MyComputer
+I166=XF86Back
+I167=XF86Forward
+I169=XF86Eject
+I170=XF86Eject, XF86Eject
+I171=XF86AudioNext
+I172=XF86AudioPlay, XF86AudioPause
+I173=XF86AudioPrev
+I174=XF86AudioStop, XF86Eject
+I175=XF86AudioRecord
+I176=XF86AudioRewind
+I177=XF86Phone
+I179=XF86Tools
+I180=XF86HomePage
+I181=XF86Reload
+I182=XF86Close
+I185=XF86ScrollUp
+I186=XF86ScrollDown
+I187=parenleft
+I188=parenright
+I189=XF86New
+I190=Redo
+I192=XF86LaunchA
+I193=XF86LaunchC
+I194=XF86LaunchD
+I195=XF86LaunchE
+I196=XF86LaunchF
+I208=XF86AudioPlay
+I209=XF86AudioPause
+I210=XF86Launch3
+I211=XF86Launch4
+I212=XF86LaunchB
+I213=XF86Suspend
+I214=XF86Close
+I215=XF86AudioPlay
+I216=XF86AudioForward
+I218=Print
+I220=XF86WebCam
+I223=XF86Mail
+I225=XF86Search
+I227=XF86Finance
+I229=XF86Shop
+I231=Cancel
+I232=XF86MonBrightnessDown
+I233=XF86MonBrightnessUp
+I234=XF86AudioMedia
+I235=XF86Display
+I239=XF86Send
+I240=XF86Reply
+I241=XF86MailForward
+I242=XF86Save
+I243=XF86Documents
+I244=XF86Battery
+I245=XF86Bluetooth
+I246=XF86WLAN
+FK13=XF86Tools
+FK14=XF86Launch5
+FK15=XF86Launch6
+FK16=XF86Launch7
+FK17=XF86Launch8
+FK18=XF86Launch9
+
+
+
+partial alphanumeric_keys
+xkb_symbols=airkey
+I13=XF86AudioNext
+I15=XF86AudioPlay, XF86AudioPause
+I16=XF86Mail
+I18=XF86AudioPrev
+I19=XF86AudioMute
+I24=XF86WWW
+I26=XF86AudioLowerVolume
+I2D=XF86AudioRaiseVolume
+I2F=XF86Terminal
+I31=XF86AudioStop, XF86Eject
+
+partial alphanumeric_keys
+xkb_symbols=acer_c300
+I17=F14
+I1F=F13
+I20=XF86AudioMute
+I2E=XF86AudioLowerVolume
+I30=XF86AudioRaiseVolume
+I5E=XF86Launch2
+I75=Help
+IR7C=XF86Launch1
+
+partial alphanumeric_keys
+xkb_symbols=acer_ferrari4k
+I24=dollar
+I25=EuroSign
+I26=XF86Display
+I70=Help
+I71=XF86Launch1
+I72=XF86Launch2
+I73=XF86Launch3
+I74=XF86Launch4
+
+partial alphanumeric_keys
+xkb_symbols=acer_laptop
+
+
+
+
+
+partial alphanumeric_keys
+xkb_symbols=azonaRF2300
+I02=XF86HomePage
+I17=XF86AudioStop
+I1E=XF86AudioRaiseVolume
+I1F=XF86AudioPlay, XF86AudioPause
+I22=XF86AudioNext
+I24=XF86AudioPrev
+I25=XF86AudioLowerVolume
+I26=XF86AudioMute
+I3C=XF86Copy
+I78=XF86Cut
+
+
+
+partial alphanumeric_keys
+xkb_symbols=brother
+I10=XF86ScrollUp
+I12=XF86AudioPlay, XF86AudioPause
+I17=XF86AudioPrev
+I18=XF86ScrollDown
+I19=XF86ZoomOut
+I1E=XF86AudioMute
+I21=XF86WWW
+I22=Menu
+I23=XF86AudioStop
+I24=XF86Calculator
+I25=XF86Xfer
+I26=XF86Mail
+I2E=XF86AudioNext
+I30=XF86AudioRaiseVolume
+I32=XF86ZoomIn
+I68=XF86AudioLowerVolume
+
+
+
+partial alphanumeric_keys
+xkb_symbols=btc5113rf
+I10=XF86AudioStop
+I12=XF86AudioMute
+I19=XF86AudioPlay, XF86AudioPause
+I1E=XF86AudioRaiseVolume
+I20=XF86Favorites
+I21=XF86Eject
+I22=XF86AudioPrev
+I24=XF86AudioNext
+I25=XF86AudioLowerVolume
+I26=XF86Back
+I30=XF86WWW
+I32=XF86Search
+
+partial alphanumeric_keys
+xkb_symbols=btc9000
+I10=XF86AudioStop
+I12=XF86AudioMute
+I19=XF86AudioPlay, XF86AudioPause
+I1E=XF86AudioRaiseVolume
+I20=XF86Favorites
+I21=XF86AudioMedia
+I22=XF86AudioPrev
+I24=XF86AudioNext
+I25=XF86AudioLowerVolume
+I26=XF86Reload
+I2E=XF86Mail
+I30=XF86HomePage
+I32=XF86Search
+
+partial alphanumeric_keys
+xkb_symbols=btc9000a
+I10=XF86AudioStop
+I12=XF86AudioMute
+I19=XF86AudioPlay, XF86AudioPause
+I1E=XF86AudioRaiseVolume
+I20=XF86Favorites
+I21=XF86Eject
+I22=XF86AudioPrev
+I24=XF86AudioNext
+I25=XF86AudioLowerVolume
+I26=XF86HomePage
+I2E=Help
+I30=XF86WWW
+I32=XF86Search
+
+xkb_symbols=btc9001ah
+I02=XF86HomePage
+I17=XF86AudioStop
+I1E=XF86AudioRaiseVolume
+I1F=XF86AudioPlay, XF86AudioPause
+I22=XF86AudioNext
+I24=XF86AudioPrev
+I25=XF86AudioLowerVolume
+I26=XF86AudioMute
+I6C=XF86Mail
+RWIN=XF86Eject
+
+partial alphanumeric_keys
+xkb_symbols=btc5090
+I26=XF86Start
+I33=XF86Eject
+
+partial alphanumeric_keys
+xkb_symbols=btc9019u
+FK17=XF86Search
+I02=XF86HomePage
+
+
+
+partial alphanumeric_keys
+xkb_symbols=cherryblue
+FK16=XF86Reload
+I02=XF86HomePage
+I17=XF86AudioStop
+I1E=XF86AudioRaiseVolume
+I1F=XF86AudioPlay, XF86AudioPause
+I22=XF86AudioNext
+I24=XF86AudioPrev
+I25=XF86AudioLowerVolume
+I26=XF86AudioMute
+I63=XF86Standby
+PRSC=XF86Terminal
+IR7C=XF86Go
+
+partial alphanumeric_keys
+xkb_symbols=cherryblueb
+FK16=XF86Reload
+I02=XF86HomePage
+I07=XF86Forward
+I08=XF86Back
+I0A=XF86Copy
+I0B=XF86ScrollUp
+I12=XF86ScrollDown
+I17=XF86Cut
+I18=XF86Paste
+I1E=XF86AudioRaiseVolume
+I25=XF86AudioLowerVolume
+I26=XF86AudioMute
+I2C=XF86Book
+I32=XF86Finance
+I63=XF86Standby
+I67=XF86AudioRewind
+I70=XF86Eject
+I71=XF86Book
+I72=XF86Book
+PRSC=XF86Terminal
+IR7C=XF86Go
+
+partial alphanumeric_keys
+xkb_symbols=cherrybluea
+I6D=XF86Go
+
+partial alphanumeric_keys
+xkb_symbols=cherrycyboard
+FK17=XF86Search
+I02=XF86HomePage
+K67=XF86Terminal
+IR7C=XF86AudioMedia
+
+partial alphanumeric_keys
+xkb_symbols=cherrycmexpert
+FK15=XF86Mail
+
+
+
+partial alphanumeric_keys
+xkb_symbols=chicony
+I12=XF86AudioMute
+I17=XF86Mail
+I19=XF86AudioLowerVolume
+I1E=XF86Forward
+I20=XF86AudioNext
+I21=XF86AudioPlay, XF86AudioPause
+I22=XF86AudioPrev
+I23=XF86AudioRaiseVolume
+I24=XF86AudioStop
+I25=XF86Back
+I26=XF86LaunchB
+I2E=XF86LaunchC
+I30=XF86LaunchA
+I32=XF86WWW
+I5F=XF86ContrastAdjust
+I63=XF86BrightnessAdjust
+
+partial alphanumeric_keys
+xkb_symbols=chicony0108
+
+partial alphanumeric_keys
+xkb_symbols=chicony0420
+I01=XF86AudioMedia
+K67=XF86MyComputer
+
+partial alphanumeric_keys
+xkb_symbols=chicony9885
+I12=XF86AudioMute
+I17=XF86Mail
+I19=XF86AudioLowerVolume
+I1E=XF86Forward
+I20=XF86AudioNext
+I21=XF86AudioPlay, XF86AudioPause
+I22=XF86AudioPrev
+I23=XF86AudioRaiseVolume
+I24=XF86AudioStop
+I25=XF86Back
+I26=XF86LaunchB
+I2E=XF86LaunchC
+I30=XF86LaunchA
+I32=XF86WWW
+
+
+
+partial alphanumeric_keys
+xkb_symbols=compaqeak8
+I13=XF86Community
+I14=XF86Market
+I15=XF86Meeting
+I1A=XF86Search
+I1B=XF86News
+I1E=XF86Mail
+I1F=XF86HomePage
+I23=XF86WWW
+
+partial alphanumeric_keys
+xkb_symbols=compaqik7
+I12=XF86LightBulb
+I1E=XF86Mail
+I21=XF86Search
+I23=Help
+I25=XF86VendorHome
+I26=XF86HomePage
+I32=XF86Shop
+
+partial alphanumeric_keys
+xkb_symbols=compaqik13
+I1E=XF86Mail
+I1F=XF86Go
+I21=XF86Search
+I23=XF86WWW
+I32=XF86Shop
+
+partial alphanumeric_keys
+xkb_symbols=compaqik18
+I12=XF86LightBulb
+I18=XF86Eject
+I1E=XF86Mail
+I1F=XF86Go
+I21=XF86Search
+I23=XF86WWW
+I25=XF86VendorHome
+I26=XF86Community
+I32=XF86Shop
+I68=Print
+
+partial alphanumeric_keys
+xkb_symbols=armada
+I1A=XF86Search
+I1E=XF86Mail
+I1F=XF86HomePage
+I23=XF86WWW
+I6F=XF86AudioMedia
+
+partial alphanumeric_keys
+xkb_symbols=presario
+I14=XF86Q
+I18=XF86Launch2
+I1E=XF86Mail
+I1F=XF86Launch1
+I23=XF86WWW
+I32=XF86Shop
+I75=XF86AudioMedia
+
+partial alphanumeric_keys
+xkb_symbols=ipaq
+FK16=XF86Shop
+I02=XF86Standby
+I65=XF86Search
+I66=XF86Travel
+I69=XF86BackForward
+I6A=XF86Q
+I6C=XF86Mail
+
+
+
+partial alphanumeric_keys
+xkb_symbols=dell
+I12=XF86Mail
+I1E=XF86Search
+I26=XF86HomePage
+
+partial alphanumeric_keys
+xkb_symbols=dellm65
+I04=XF86PowerOff
+LWIN=Super_L
+
+partial alphanumeric_keys
+xkb_symbols=inspiron
+I02=XF86AudioStop
+I04=XF86AudioNext
+I21=XF86Eject
+I56=XF86Display
+IR7D=XF86AudioPrev
+IR7C=XF86AudioPlay, XF86AudioPause
+
+partial alphanumeric_keys
+xkb_symbols=dellusbmm
+I02=XF86HomePage
+K67=XF86MyComputer
+IR7C=XF86AudioMedia
+
+
+
+partial alphanumeric_keys
+xkb_symbols=diamond
+I6D=XF86Go
+
+
+
+partial alphanumeric_keys
+xkb_symbols=ennyah_dkb1008
+IR7C=XF86AudioMedia
+
+
+
+partial alphanumeric_keys
+xkb_symbols=genius
+I12=XF86AudioRaiseVolume
+I17=XF86Calculator
+I19=XF86AudioLowerVolume
+I1E=XF86Forward
+I21=XF86AudioNext
+I23=XF86AudioPrev
+I25=XF86Back
+I26=XF86ScreenSaver
+I2E=XF86Mail
+I30=XF86Eject
+I32=XF86WWW
+
+partial alphanumeric_keys
+xkb_symbols=geniuscomfy2
+I23=Return
+
+
+
+partial alphanumeric_keys
+xkb_symbols=gyration
+FK16=XF86Reload
+I02=XF86HomePage
+I17=XF86AudioStop
+I1E=XF86AudioRaiseVolume
+I1F=XF86AudioPlay, XF86AudioPause
+I22=XF86AudioNext
+I24=XF86AudioPrev
+I25=XF86AudioLowerVolume
+I26=XF86AudioMute
+
+
+
+partial alphanumeric_keys
+xkb_symbols=hpi6
+I02=XF86HomePage
+I12=XF86Search
+I14=XF86VendorHome
+I15=XF86Community
+I16=XF86AudioMedia
+I18=XF86Eject
+I1E=XF86Shop
+I1F=XF86Launch1
+I26=Help
+I27=XF86Finance
+I39=Print
+I75=Help
+
+partial alphanumeric_keys
+xkb_symbols=hp250x
+I12=XF86Tools
+I17=XF86Search
+I18=XF86Eject
+I1E=XF86Mail
+I20=XF86AudioMute
+I21=XF86Launch5
+I22=XF86Launch3
+I23=XF86Launch2
+I24=XF86Launch4
+I25=XF86Standby
+I26=Help
+I2E=XF86AudioLowerVolume
+I30=XF86AudioRaiseVolume
+I32=XF86WWW
+
+partial alphanumeric_keys
+xkb_symbols=hpxe3gc
+I71=Help
+I72=XF86Launch1
+I73=XF86WWW
+I74=XF86Mail
+
+partial alphanumeric_keys
+xkb_symbols=hpxe3gf
+I73=Help
+I74=XF86Launch1
+
+partial alphanumeric_keys
+xkb_symbols=hpxt1000
+I71=XF86Launch3
+I72=Help
+I73=XF86Launch2
+I74=XF86Launch1
+
+partial alphanumeric_keys
+xkb_symbols=hpzt11xx
+I71=XF86Launch3
+I72=Help
+I73=XF86Launch2
+I74=XF86Launch1
+
+partial alphanumeric_keys
+xkb_symbols=hpdv5
+I12=XF86ScreenSaver
+I32=XF86WWW
+I75=Help
+K6D=XF86Launch1
+
+partial alphanumeric_keys
+xkb_symbols=hpxe4xxx
+I70=Help
+I71=XF86Launch2
+I73=XF86Launch1
+
+partial alphanumeric_keys
+xkb_symbols=hp500fa
+I73=Help
+I74=XF86Launch1
+
+partial alphanumeric_keys
+xkb_symbols=hp5xx
+I73=Help
+I74=XF86Launch1
+
+
+
+partial alphanumeric_keys
+xkb_symbols=honeywell_euroboard
+I10=XF86Game
+I12=XF86AudioPrev
+I17=XF86Eject
+I18=XF86Launch2
+I19=XF86AudioPlay, XF86AudioPause
+I1E=XF86Launch1
+I20=XF86AudioMute
+I22=XF86AudioNext
+I23=XF86AudioStop
+I24=XF86Mail
+I25=XF86ScreenSaver
+I26=XF86Calculator
+I2E=XF86AudioLowerVolume
+I30=XF86AudioRaiseVolume
+I32=XF86WWW
+
+
+
+partial alphanumeric_keys
+xkb_symbols=rapidaccess
+I12=XF86AudioMute
+I17=XF86Launch2
+I1E=XF86AudioLowerVolume
+I20=XF86AudioRaiseVolume
+I21=XF86AudioNext
+I22=XF86AudioPause
+I22=XF86AudioPlay, XF86AudioPause
+I23=XF86AudioPrev
+I24=XF86AudioStop
+I25=XF86Standby
+I26=Help
+I2E=XF86Launch4
+I30=XF86Launch3
+I32=XF86Launch1
+
+partial alphanumeric_keys
+xkb_symbols=rapidaccess2
+I12=XF86AudioNext
+I17=XF86Favorites
+I1E=XF86AudioMute
+I20=XF86AudioStop
+I21=XF86AudioLowerVolume
+I22=XF86AudioPlay, XF86AudioPause
+I23=XF86AudioRaiseVolume
+I24=XF86AudioPrev
+I25=XF86HomePage
+I26=XF86Shop
+I2E=XF86Search
+I30=XF86MyComputer
+I32=XF86VendorHome
+
+partial alphanumeric_keys
+xkb_symbols=thinkpad60
+I1F=XF86VendorHome
+
+partial alphanumeric_keys
+xkb_symbols=ibm_spacesaver
+NMLK=type="ONE_LEVEL",
+symbols[Group1]= [ Num_Lock ]
+
+
+
+
+hidden partial alphanumeric_keys
+xkb_symbols=logitech_base
+I02=XF86HomePage
+I15=XF86Community
+I16=XF86ScrollClick
+I21=XF86VendorHome
+I3B=XF86New
+I3C=XF86Reply
+I43=XF86MyComputer
+I44=XF86Documents
+I57=XF86Pictures
+I58=XF86Music
+
+hidden partial alphanumeric_keys
+xkb_symbols=logitech_set3
+I17=XF86AudioStop
+I1E=XF86AudioRaiseVolume
+I1F=XF86AudioPlay, XF86AudioPause
+I22=XF86AudioNext
+I24=XF86AudioPrev
+I25=XF86AudioLowerVolume
+I26=XF86AudioMute
+I69=XF86Go
+IR7C=XF86AudioMedia
+
+partial alphanumeric_keys
+xkb_symbols=logiaccess
+FK13=XF86MailForward
+FK14=XF86Send
+I11=XF86Messenger
+I12=XF86WebCam
+
+partial alphanumeric_keys
+xkb_symbols=logicda
+
+partial alphanumeric_keys
+xkb_symbols=logicink
+I11=XF86Shop
+I12=XF86VendorHome
+I13=XF86Finance
+I14=XF86Start
+
+partial alphanumeric_keys
+xkb_symbols=logiex110
+
+partial alphanumeric_keys
+xkb_symbols=logiinkse
+I11=XF86Messenger
+I12=XF86WebCam
+I13=XF86VendorHome
+I14=XF86Shop
+
+partial alphanumeric_keys
+xkb_symbols=logiinkseusb
+
+partial alphanumeric_keys
+xkb_symbols=logiitc
+I2F=XF86AudioRaiseVolume
+
+I30=XF86Launch1
+
+partial alphanumeric_keys
+xkb_symbols=logiik
+I12=Find
+I17=Print
+I18=XF86Favorites
+I19=XF86Reload
+I1E=XF86Search
+I20=XF86HotLinks
+I22=XF86Forward
+I23=XF86HomePage
+I24=XF86Stop
+I25=XF86OpenURL
+I26=XF86AddFavorite
+I32=XF86History
+I7A=XF86WWW
+
+partial alphanumeric_keys
+xkb_symbols=itouch
+I1F=XF86AudioMute
+I2B=XF86AudioLowerVolume
+I2D=XF86AudioRaiseVolume
+
+partial alphanumeric_keys
+xkb_symbols=logiultraxc
+FK16=XF86AudioMute
+FK17=XF86AudioLowerVolume
+I2B=XF86AudioNext
+I2D=XF86AudioPrev
+I2C=XF86AudioPlay, XF86AudioPause
+KPDC=XF86AudioRaiseVolume
+
+partial alphanumeric_keys
+xkb_symbols=logidinovo
+I02=XF86HomePage
+I12=XF86Standby
+I17=XF86Search
+I21=XF86AudioRaiseVolume
+K66=XF86AudioLowerVolume
+KPDC=XF86AudioMute
+IR7C=XF86AudioMedia
+
+partial alphanumeric_keys
+xkb_symbols=logidinovoedge
+I02=XF86HomePage
+I6C=XF86Mail
+FK17=XF86Search
+IR7C=XF86AudioMedia
+
+partial alphanumeric_keys
+xkb_symbols=logitech_g15
+AE13=XF86Messenger
+HKTG=XF86Launch7
+key  <I02=XF86Launch9
+key  <I04=XF86Phone
+key  <I08=XF86LaunchD
+key  <I09=XF86Support
+key  <I0F=XF86LaunchF
+key  <I16=XF86LogOff
+key  <I18=XF86Launch5
+key  <I21=XF86Travel
+key  <I23=XF86Spell
+key  <I31=XF86Launch4
+key  <I3C=XF86Music
+key  <I42=XF86Forward
+key  <I43=XF86Send
+key  <I57=XF86Save
+key  <I64=XF86Pictures
+key  <I67=XF86LaunchA
+key  <I76=XF86iTouch
+key  <I77=XF86Launch3
+key  <I79=XF86ToDoList
+key  <I7B=XF86Calculator
+key  <K5A=XF86VendorHome
+key  <K5D=XF86Away
+key  <K5E=XF86WebCam
+key  <K5F=XF86Launch0
+key  <K63=XF86Launch6
+key  <K6D=XF86Calendar
+key  <K71=XF86LaunchB
+key  <K72=XF86LaunchC
+key  <K74=XF86WWW
+key  <K75=XF86LaunchE
+II5D=XF86Launch1
+IR7D=XF86Launch2
+IR7C=XF86Launch8
+
+
+
+partial alphanumeric_keys
+xkb_symbols=mx1998
+DOWN=XF86ScrollDown
+I12=XF86AudioRewind
+I17=XF86Close
+I18=XF86Xfer
+I1E=XF86AudioRecord
+I21=XF86Documents
+I23=XF86Game
+I25=XF86Calculator
+I26=Menu
+I32=XF86WWW
+I57=XF86WakeUp
+I68=XF86DOS
+I7A=XF86ScreenSaver
+UP=XF86ScrollUp
+
+partial alphanumeric_keys
+xkb_symbols=mx2500
+I12=XF86Clear
+I13=XF86Phone
+I14=XF86DOS
+I17=XF86Close
+I18=XF86Xfer
+I1E=XF86Eject
+I1F=XF86Documents
+I26=XF86News
+I6B=XF86WakeUp
+I6D=XF86RotateWindows
+
+partial alphanumeric_keys
+xkb_symbols=mx2750
+I32=XF86Launch0
+
+
+
+partial alphanumeric_keys
+xkb_symbols=microsoft4000
+I192=XF86Launch1
+I193=XF86Launch2
+I194=XF86Launch3
+I195=XF86Launch4
+I196=XF86Launch5
+
+partial alphanumeric_keys
+xkb_symbols=microsoft7000
+I07=Undo
+I09=XF86New
+I0A=Redo
+I0E=XF86MailForward
+I2F=XF86Close
+I39=Print
+I55=XF86Save
+I5A=XF86Send
+I62=Help
+I64=XF86Reply
+I76=parenleft
+I7B=parenright
+K59=KP_Equal
+K64=XF86Open
+
+partial alphanumeric_keys
+xkb_symbols=microsoftinet
+I68=XF86AudioStop
+
+partial alphanumeric_keys
+xkb_symbols=microsoftprousb
+FK16=XF86Reload
+I01=XF86AudioMedia
+I02=XF86HomePage
+I17=XF86AudioStop
+I1E=XF86AudioRaiseVolume
+I1F=XF86AudioPlay, XF86AudioPause
+I22=XF86AudioNext
+I24=XF86AudioPrev
+I25=XF86AudioLowerVolume
+I26=XF86AudioMute
+I63=XF86Standby
+
+partial alphanumeric_keys
+xkb_symbols=microsoftprooem
+FK17=XF86Search
+I02=XF86HomePage
+I63=XF86Standby
+K67=XF86MyComputer
+
+partial alphanumeric_keys
+xkb_symbols=microsoftprose
+FK16=XF86Reload
+I02=XF86HomePage
+I17=XF86AudioStop
+I1E=XF86AudioRaiseVolume
+I1F=XF86AudioPlay, XF86AudioPause
+I22=XF86AudioNext
+I24=XF86AudioPrev
+I25=XF86AudioLowerVolume
+I26=XF86AudioMute
+I63=XF86Standby
+I68=XF86AudioStop
+PRSC=XF86MyComputer
+IR7C=XF86AudioMedia
+
+partial alphanumeric_keys
+xkb_symbols=microsoftoffice
+BRK=XF86Calendar
+END=Undo
+I02=XF86HomePage
+I1E=XF86AudioLowerVolume
+I25=XF86AudioRaiseVolume
+I26=XF86AudioMute
+I3C=XF86Cut
+I4A=XF86LogOff
+I54=XF86ApplicationLeft
+I55=XF86TaskPane
+I56=XF86Spell
+I57=XF86WWW
+I58=XF86New
+I59=XF86Open
+I5A=XF86Close
+I62=Help
+I64=XF86Save
+I67=Print
+I6D=XF86OfficeHome
+I70=Redo
+I71=XF86Reply
+I72=XF86MailForward
+I73=XF86Send
+I78=XF86Copy
+MOAR=XF86ApplicationRight
+RCTL=XF86Paste
+
+partial alphanumeric_keys
+xkb_symbols=microsoftmult
+AE13=XF86Messenger
+FK14=XF86New
+FK15=XF86Open
+FK16=XF86Close
+FK17=XF86Reply
+I07=Redo
+I08=Undo
+I16=XF86LogOff
+I23=XF86Spell
+I3B=Help
+I3C=XF86Music
+I42=XF86Forward
+I43=XF86Send
+I57=XF86Save
+I58=Print
+I64=XF86Pictures
+I80=XF86Documents
+
+
+
+partial alphanumeric_keys
+xkb_symbols=oretec
+I10=XF86ScrollUp
+I12=XF86AudioPlay, XF86AudioPause
+I17=XF86AudioPrev
+I18=XF86ScrollDown
+I19=XF86ZoomOut
+I1E=XF86AudioMute
+I21=XF86WWW
+I22=Menu
+I23=XF86AudioStop
+I24=XF86Calculator
+I25=XF86Xfer
+I26=XF86Mail
+I2E=XF86AudioNext
+I30=XF86AudioRaiseVolume
+I32=XF86ZoomIn
+I68=XF86AudioLowerVolume
+
+
+
+partial alphanumeric_keys
+xkb_symbols=propeller
+I12=XF86AudioRewind
+I17=XF86Close
+I18=XF86Xfer
+I1E=XF86AudioRecord
+I21=XF86Documents
+I23=XF86Game
+I25=XF86Calculator
+I26=Menu
+I32=XF86WWW
+I68=XF86DOS
+I7A=XF86Standby
+
+
+
+partial alphanumeric_keys
+xkb_symbols=qtronix
+I10=XF86ScrollDown
+I12=XF86Forward
+I13=XF86WakeUp
+I17=XF86Search
+I18=XF86Standby
+I19=XF86ScrollUp
+I1E=XF86Back
+I1F=XF86Reload
+I20=XF86AudioRaiseVolume
+I21=XF86AudioPrev
+I22=XF86AudioPlay, XF86AudioPause
+I23=XF86AudioNext
+I24=XF86AudioStop
+I25=XF86HomePage
+I26=XF86AudioMute
+I2E=XF86AudioLowerVolume
+I30=XF86AudioRecord
+I31=XF86PowerOff
+I32=XF86Stop
+I68=XF86Calculator
+
+
+
+partial alphanumeric_keys
+xkb_symbols=samsung4500
+AE13=XF86Launch4
+I02=XF86Launch1
+I04=XF86Launch3
+I06=XF86Launch5
+I09=XF86Close
+I0A=XF86Book
+I18=XF86Eject
+I26=Help
+I59=XF86Explorer
+IR7D=XF86Launch2
+
+partial alphanumeric_keys
+xkb_symbols=samsung4510
+I02=XF86Launch1
+I04=XF86Launch3
+I18=XF86Eject
+IR7D=XF86Launch2
+
+
+
+partial alphanumeric_keys
+xkb_symbols=sk1300
+I12=XF86Eject
+I1E=XF86Forward
+I20=XF86WWW
+I25=XF86Standby
+I26=XF86Back
+I32=XF86Stop
+
+partial alphanumeric_keys
+xkb_symbols=sk2500
+I12=XF86AudioRewind
+I17=XF86Close
+I18=XF86Eject
+I18=XF86Eject
+I19=XF86Forward
+I1E=XF86AudioRecord
+I23=XF86Xfer
+I25=XF86PowerOff
+I26=Menu
+I7A=XF86ScreenSaver
+
+partial alphanumeric_keys
+xkb_symbols=sk6200
+I12=XF86Favorites
+I14=XF86AudioLowerVolume
+I16=XF86AudioRaiseVolume
+I17=XF86Back
+I19=XF86Forward
+I1E=XF86WWW
+I20=XF86AudioMute
+I21=XF86AudioNext
+I22=XF86AudioPlay, XF86AudioPause
+I23=XF86AudioPrev
+I24=XF86AudioStop
+I32=XF86Mail
+
+partial alphanumeric_keys
+xkb_symbols=sk7100
+I12=XF86AudioPause
+I17=XF86Close
+I18=XF86Video
+I1E=XF86Eject
+I25=XF86CD
+I26=XF86Display
+I32=XF86WWW
+
+
+
+partial alphanumeric_keys
+xkb_symbols=sven
+I10=XF86AudioPlay, XF86AudioPause
+I12=XF86Forward
+I17=XF86AudioRaiseVolume
+I18=XF86ZoomOut
+I19=XF86AudioPrev
+I1A=XF86AudioStop
+I1E=XF86HomePage
+I20=XF86Mail
+I21=XF86ZoomIn
+I22=XF86MyComputer
+I23=XF86Stop
+I24=XF86ScreenSaver
+I25=XF86AudioLowerVolume
+I26=XF86AudioMute
+I28=XF86Calculator
+I29=XF86Reload
+I2E=XF86Search
+I30=XF86Favorites
+I31=XF86ScrollUp
+I32=XF86ScrollDown
+I62=XF86AudioNext
+I68=XF86Back
+
+partial alphanumeric_keys
+xkb_symbols=sven303
+I11=XF86PowerOff
+I12=XF86Sleep
+I16=XF86WakeUp
+
+
+
+partial alphanumeric_keys
+xkb_symbols=symplon
+HOME=XF86RotationPB
+I13=XF86SplitScreen
+I14=XF86Support
+I17=XF86New
+I21=XF86User2KB
+I25=XF86RotationKB
+I26=XF86MenuKB
+I6B=XF86User1KB
+PAUS=XF86UserPB
+UP=XF86MenuPB
+
+partial alphanumeric_keys
+xkb_symbols=toshiba_s3000
+I06=XF86Launch1
+I13=XF86Launch2
+I71=XF86WWW
+I73=XF86Mail
+I75=XF86AudioRaiseVolume
+I76=XF86AudioLowerVolume
+
+partial alphanumeric_keys
+xkb_symbols=trust
+I11=XF86ScreenSaver
+I1E=XF86Eject
+
+partial alphanumeric_keys
+xkb_symbols=trustda
+I12=XF86AudioRewind
+I17=XF86Close
+I18=XF86Eject
+I1E=XF86AudioRecord
+I23=XF86Xfer
+I25=XF86Standby
+I26=Help
+I32=XF86WWW
+I7A=XF86Away
+
+partial alphanumeric_keys
+xkb_symbols=yahoo
+I11=XF86AudioPrev
+I12=XF86AudioPlay, XF86AudioPause
+I1E=XF86AudioStop
+I1F=XF86AudioNext
+I20=XF86AudioRecord
+I21=XF86AudioLowerVolume
+I22=XF86AudioRaiseVolume
+I23=XF86AudioMute
+I24=XF86Close
+I25=XF86Calculator
+I26=Help
+I27=XF86Mail
+I28=XF86WWW
+
+partial alphanumeric_keys
+xkb_symbols=apple
+II65=XF86BrightnessAdjust
+I54=XF86BrightnessAdjust
+I20=XF86AudioMute
+I2E=XF86AudioLowerVolume
+I30=XF86AudioRaiseVolume
+I56=XF86RotateWindows
+I57=XF86Launch0
+I58=XF86Launch1
+I59=XF86Launch2
+I5E=XF86PowerOff
+K5D=F13
+K5E=F14
+K5F=F15
+K6C=XF86Eject
+II5D=F16
+KPEQ=KP_Equal
+
+partial alphanumeric_keys
+xkb_symbols=cymotionlinux
+I07=Undo
+I0A=Redo
+I0F=XF86ScrollDown
+I17=XF86Launch2
+I1F=XF86Launch1
+I28=XF86MenuKB
+I2B=XF86Launch3
+I3C=XF86Cut
+I78=XF86Copy
+K65=XF86Paste
+K75=XF86ScrollUp
+IR7C=XF86AudioMedia
+
+partial alphanumeric_keys
+xkb_symbols=silvercrest
+I02=XF86HomePage
+I21=XF86Launch2
+K67=XF86Launch1
+
+partial alphanumeric_keys
+xkb_symbols=emachines
+I32=XF86iTouch
+KP0=KP_0
+KP1=KP_1
+KP2=KP_2
+KP3=KP_3
+KP4=KP_4
+KP5=KP_5
+KP6=KP_6
+KP7=KP_7
+KP8=KP_8
+KP9=KP_9
+KPAD=KP_Add
+KPDL=KP_Decimal
+KPDV=KP_Divide
+KPMU=KP_Multiply
+KPSU=KP_Subtract
+
+partial alphanumeric_keys
+xkb_symbols=benqx
+I02=XF86ModeLock
+I21=XF86WWW
+I2B=XF86Go
+I31=XF86Calendar
+
+partial alphanumeric_keys
+xkb_symbols=classmate
+I2E=XF86AudioLowerVolume
+I30=XF86AudioRaiseVolume
+
+partial alphanumeric_keys
+xkb_symbols=unitekkb1925
+I0C=XF86AudioMute
+I11=XF86PowerOff
+I12=XF86Sleep
+I16=XF86WakeUp
+I18=XF86Search
+I1A=XF86Reload
+
+partial alphanumeric_keys
+xkb_symbols=creativedw7000
+I66=XF86Pictures
+
+
+
+partial alphanumeric_keys
+xkb_symbols=compalfl90
+I54=XF86MonBrightnessUp
+II65=XF86MonBrightnessDown
+
+partial alphanumeric_keys
+xkb_symbols=pc105
+
+
+partial alphanumeric_keysf
+xkb_symbols=htcdream
+BKSP=BackSpace
+RTRN=Return
+
+AE01=1, 1, exclam, exclam
+AE02=2, 2, at, at
+AE03=3, 3, numbersign, numbersign
+AE04=4, 4, dollar, dollar
+AE05=5, 5, percent, percent
+AE06=6, 6, dead_circumflex, dead_circumflex
+AE07=7, 7, ampersand, ampersand
+AE08=8, 8, asterisk, asterisk
+AE09=9, 9, parenleft, parenleft
+AE10=0, 0, parenright, parenright
+
+LFSH=Shift_L
+SPCE=space
+AB09=period, period, slash, slash
+RTSH=Shift_R
+
+modifier_map Shift=LFSH,RTSH
+
+partial alphanumeric_keys
+xkb_symbols=chromebook
+FK01=XF86Back
+FK02=XF86Forward
+FK03=XF86Reload
+FK04=F11
+FK06=XF86MonBrightnessDown
+FK07=XF86MonBrightnessUp
+FK08=XF86AudioMute
+FK09=XF86AudioLowerVolume
+FK10=XF86AudioRaiseVolume
+BKSP=BackSpace, BackSpace, Delete
+UP=Up, Up, Prior, Up
+DOWN=Down, Down, Next, Down
+LEFT=Left, Left, Home, Left
+RGHT=Right, Right, End, Right
+LWIN=Super_L, Super_L, Caps_Lock, Super_L
+
+partial alphanumeric_keys
+xkb_symbols=teck227
+HIRA=Hiragana
+
+partial alphanumeric_keys
+xkb_symbols=teck229
+
