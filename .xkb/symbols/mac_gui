@@ -49,6 +49,10 @@ xkb_symbols "swapescape" {
     key <ESC>  { [ Caps_Lock ] };
 };
 hidden partial modifier_keys
+xkb_symbols "caps_escape" {
+    key <CAPS> { [ Escape ] };
+};
+hidden partial modifier_keys
 xkb_symbols "caps_shiftlock" {
     replace key <CAPS> { [ Shift_Lock ] };
     modifier_map Shift { Shift_Lock };
