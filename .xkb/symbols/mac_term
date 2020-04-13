@@ -104,14 +104,14 @@ partial xkb_symbols "mac_global" {
             Tab,
             Tab,
             // F13 // Default cmdtab
-            // F14 // KDE cmdtab
+            // F13 // KDE cmdtab
             // Right // Elementary ecmdtab
         ],
         actions[Group1]= [
             NoAction(),
             NoAction(),
             // Redirect(key=<FK13>) // Default cmdtab
-            // Redirect(key=<FK14>) // KDE cmdtab
+            // Redirect(key=<FK13>) // KDE cmdtab
             // Redirect(key=<RGHT>,mods=Control+Shift,clearmods=Mod4+Super) // Elementary cmdtab
         ]
     };

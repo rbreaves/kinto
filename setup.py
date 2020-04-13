@@ -18,19 +18,19 @@ def cmdline(command):
 dename = cmdline("./system-config/dename.sh").replace('"','').strip().split(" ")[0].lower()
 
 def requirements(pkgm):
-	print(bcolors.CYELLOW + "You need to install some packages, " +run_pkg+ ", for Kinto to fully remap browsers during input focus.\n" + bcolors.ENDC)
+	print(bcolors.CYELLOW2 + "You need to install some packages, " +run_pkg+ ", for Kinto to fully remap browsers during input focus.\n" + bcolors.ENDC)
 	print("sudo " + pkgm + " " + run_pkg + "\n")
-	run_install = yn_choice(bcolors.CYELLOW + "Would you like to run it now? (Will require sudo privileges.)\n" + bcolors.ENDC)
+	run_install = yn_choice(bcolors.CYELLOW2 + "Would you like to run it now? (Will require sudo privileges.)\n" + bcolors.ENDC)
 	if(run_install):
 		os.system("sudo " + pkgm  + run_pkg)
 		print("\n")
 
 def install_ibus():
-	print(bcolors.CYELLOW + "You need to set IBus as the default Input Method for full word-wise support and re-run this installer.\n" + bcolors.ENDC)
-	print(bcolors.CYELLOW + "Confirm the IBus Setup by saying Yes and then closing the window.\n" + bcolors.ENDC)
+	print(bcolors.CYELLOW2 + "You need to set IBus as the default Input Method for full word-wise support and re-run this installer.\n" + bcolors.ENDC)
+	print(bcolors.CYELLOW2 + "Confirm the IBus Setup by saying Yes and then closing the window.\n" + bcolors.ENDC)
 	print("ibus-setup\n")
 	print("im-config -n ibus\n")
-	run_install = yn_choice(bcolors.CYELLOW + "Would you like to run it now? (Will require logoff and logon.)\n" + bcolors.ENDC)
+	run_install = yn_choice(bcolors.CYELLOW2 + "Would you like to run it now? (Will require logoff and logon.)\n" + bcolors.ENDC)
 	if(run_install):
 		os.system("ibus-setup")
 		os.system("im-config -n ibus")
@@ -51,6 +51,8 @@ def setShortcuts():
 	if(addhotkeys):
 		distro = distro.lower()
 		if dename == "gnome":
+			cmdline('dconf dump /org/gnome/desktop/wm/keybindings/ > keybindings_`date +"%Y.%m.%d-%s"`.conf')
+			cmdline('dconf dump /org/gnome/mutter/keybindings/ > mutter_`date +"%Y.%m.%d-%s"`.conf')
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-applications \"['<Primary>F13','<Primary><Shift>F13','<Alt>Tab']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward \"['<Primary>F14','<Primary><Shift>F14','<Alt><Shift>Tab']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\"")
@@ -124,17 +126,18 @@ def setShortcuts():
 			cmdline("gsettings set org.gnome.mutter.keybindings toggle-tiled-left \"['<Super><Alt>Left']\"")
 			# org.gnome.mutter.keybindings toggle-tiled-right ['<Super>Right']
 			# org.gnome.mutter.keybindings toggle-tiled-left ['<Super>Left']
-		elif distro == "manjaro linux" and dename == "kde":
+		elif dename == "kde":
 			# cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "krunner.desktop" --key "_launch","Alt+Space\tAlt+F2\tSearch,Alt+Space\tAlt+F2\tSearch,KRunner"')
 			# Remove Alt+F3 Operations Menu - Sublimetext Select-All
+			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Switch to Previous Desktop" "Meta+Left,Meta+Left,Switch to Previous Desktop"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Operations Menu" "none,Alt+F3,Window Operations Menu"')
-			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows" "Ctrl+F13,Alt+Tab,Walk Through Windows"')
+			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows" "Ctrl+Shift+F13,Alt+Tab,Walk Through Windows"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows (Reverse)" "Ctrl+Shift+F14,Alt+Shift+Backtab,Walk Through Windows (Reverse)"')
-			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Maximize" "Meta+Ctrl+F,Meta+PgUp,Maximize Window"')
+			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Maximize Window" "none,Meta+PgUp,Maximize Window"')
+			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Maximize" "Meta+Ctrl+F,Alt+F10,Maximize Window"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Minimize Window" "Meta+h,Meta+PgDown,Minimize Window"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Switch to Next Desktop" "Meta+Right,Meta+Right,Switch to Next Desktop"')
-			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Switch to Previous Desktop" "Meta+Left,Meta+Left,Switch to Previous Desktop"')
-			cmdline('kquitapp5 kglobalaccel && sleep 2s && kglobalaccel5 &')
+			os.system('kquitapp5 kglobalaccel && sleep 2s && kglobalaccel5 &')
 		else:
 			print('distro: ' + distro + ' de: ' + dename)
 			print("A supported OS and DE was not found, you may not have full system level shortcuts installed.")
@@ -170,6 +173,39 @@ def windows_setup():
 		print("If using WSL then please remember to right click on title bar -> Properties -> Edit Options -> Use Ctrl+Shift+C/V as Copy/Paste and enable it.")
 	else:
 		os.system("del \"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp\\kinto.ahk\"")
+
+def Uninstall():
+	print("You selected to Uninstall Kinto.\n")
+	restore = yn_choice("\nYour DE is " + dename + ".\n\nY: Restore hotkeys from backup\nN: Reset OS/DE hotkeys\nWhich option would you prefer?")
+	print("")
+	if(restore):
+		if dename == "gnome":
+			print("Restoring DE hotkeys...")
+			wmkeys = cmdline('ls | grep -m1 "keybinding"')
+			mutterkeys = cmdline('ls | grep -m1 "mutter"')
+			if len(wmkeys) > 0:
+				print('dconf load /org/gnome/desktop/wm/keybindings/ < ' + wmkeys)
+				cmdline('dconf load /org/gnome/desktop/wm/keybindings/ < ' + wmkeys)
+			else:
+				print('Gnome Desktop keybindings backup not found...')
+			if len(mutterkeys) > 0:
+				print('dconf load /org/gnome/mutter/keybindings/ < ' + mutterkeys)
+				cmdline('dconf load /org/gnome/mutter/keybindings/ < ' + mutterkeys)
+			if len(wmkeys) > 0 or len(mutterkeys) > 0:
+				print("Gnome hotkeys have been successfully restored.")
+			print("./uninstall.sh\n")
+			cmdline("./uninstall.sh")
+			print("Done.")
+	else:
+		if dename == "gnome":
+			print("Resetting DE hotkeys...\n")
+			print("gsettings reset-recursively org.gnome.desktop.wm.keybindings")
+			cmdline("gsettings reset-recursively org.gnome.desktop.wm.keybindings")
+			print("gsettings reset-recursively org.gnome.mutter.keybindings")
+			cmdline("gsettings reset-recursively org.gnome.mutter.keybindings")
+			print("./uninstall.sh\n")
+			cmdline("./uninstall.sh")
+			print("Done.")
 
 # check_x11 = cmdline("env | grep -i x11").strip()
 check_x11 = cmdline("(env | grep -i x11 || loginctl show-session \"$XDG_SESSION_ID\" -p Type) | awk -F= '{print $2}'").strip()
@@ -255,6 +291,34 @@ if os.path.isdir(homedir + "/.config/kinto") == False:
 	os.mkdir(homedir + "/.config/kinto")
 	time.sleep(0.5)
 
+with open('defaults.json') as json_file:
+	data = json.load(json_file)
+
+color_arr = [bcolors.CBEIGE,bcolors.CRED2,bcolors.CGREEN,bcolors.CYELLOW ]
+
+print("\nKinto - Type in Linux like it's a Mac.\n")
+
+for index, item in enumerate(data['defaulttypes']):
+	ossym = ""
+	if item == "windows":
+		ossym = u'\u2756'
+	elif item == "mac":
+		ossym = u'\u2318'
+	elif item == "chromebook":
+		ossym = u'\u2707'
+	print("%s    %i. %s  %s %s" % (color_arr[index], index+1, ossym, item.capitalize(), bcolors.ENDC))
+
+print("%s    %i. Uninstall %s" % (color_arr[3], len(data['defaulttypes'])+1, bcolors.ENDC))
+
+default = 0
+while not int(default) in range(1,len(data['defaulttypes'])+2):
+	default = int(input(bcolors.CYELLOW2 + "\nPlease enter your keyboard type (1 - " + str(len(data['defaulttypes'])) + ") : " + bcolors.ENDC))
+print("")
+
+if default == len(data['defaulttypes'])+1:
+	Uninstall()
+	exit()
+
 try:
 	f = open(homedir + "/.config/kinto/user_config.json")
 	rewrite = yn_choice("~/.config/kinto/user_config.json already exists. Do you want to overwrite it with a new config?")
@@ -269,45 +333,23 @@ except IOError:
 finally:
     f.close()
 
-with open('defaults.json') as json_file:
-	data = json.load(json_file)
-
-color_arr = [bcolors.CBLUE,bcolors.CRED,bcolors.CGREEN]
-
-print("\nKinto - Type in Linux like it's a Mac.\n")
-
-for index, item in enumerate(data['defaulttypes']):
-	ossym = ""
-	if item == "windows":
-		ossym = u'\u2756'
-	elif item == "mac":
-		ossym = u'\u2318'
-	elif item == "chromebook":
-		ossym = u'\u2707'
-	print("%s    %i. %s  %s %s" % (color_arr[index], index+1, ossym, item.capitalize(), bcolors.ENDC))
-
-default = 0
-while not int(default) in range(1,len(data['defaulttypes'])+1):
-	default = int(input(bcolors.CYELLOW + "\nPlease enter your keyboard type (1 - " + str(len(data['defaulttypes'])) + ") : " + bcolors.ENDC))
-print("")
-
 keyboardconfigs = [obj for obj in data['defaults'] if(obj['type'] == data['defaulttypes'][default-1])]
 
 # for k in keyboardconfigs:
 for index, k in enumerate(keyboardconfigs):
 	print(color_arr[default-1] + bcolors.BOLD + str(index+1) + '. ' + k['name'] + bcolors.ENDC)
-	print(bcolors.CYELLOW + 'Description: ' + k['description'] + bcolors.ENDC)
+	print(bcolors.CYELLOW2 + 'Description: ' + k['description'] + bcolors.ENDC)
 
 print("")
 defaultkb = 0
 while not int(defaultkb) in range(1,len(keyboardconfigs)+1):
-	defaultkb = int(input(bcolors.CYELLOW + "Please enter your keyboard config (1 - " + str(len(keyboardconfigs)) + ") : " + bcolors.ENDC))
+	defaultkb = int(input(bcolors.CYELLOW2 + "Please enter your keyboard config (1 - " + str(len(keyboardconfigs)) + ") : " + bcolors.ENDC))
 print("")
 
 if 'hack' in keyboardconfigs[defaultkb-1]:
-	print(bcolors.CYELLOW + "You have selected a keyboard config that needs the following command to be ran.\n" + bcolors.ENDC)
+	print(bcolors.CYELLOW2 + "You have selected a keyboard config that needs the following command to be ran.\n" + bcolors.ENDC)
 	print(keyboardconfigs[defaultkb-1]['hack'].replace(";", "\n") + "\n")
-	runhack = yn_choice(bcolors.CYELLOW + "Would you like to run it now? (Will require sudo privileges. Will exit on No.)" + bcolors.ENDC)
+	runhack = yn_choice(bcolors.CYELLOW2 + "Would you like to run it now? (Will require sudo privileges. Will exit on No.)" + bcolors.ENDC)
 	if(runhack):
 		os.system(keyboardconfigs[defaultkb-1]['hack'])
 
@@ -368,10 +410,10 @@ if(onetime):
 
 	for index, k in enumerate(intents):
 		print(color_arr[default-1] + bcolors.BOLD + str(index+1) + '. ' + k['name'] + bcolors.ENDC)
-		print(bcolors.CYELLOW + 'Description: ' + k['description'] + bcolors.ENDC)
-		print(bcolors.CYELLOW + 'run: ' + k['run'].replace(";", "\n") + bcolors.ENDC + '\n')
+		print(bcolors.CYELLOW2 + 'Description: ' + k['description'] + bcolors.ENDC)
+		print(bcolors.CYELLOW2 + 'run: ' + k['run'].replace(";", "\n") + bcolors.ENDC + '\n')
 
-	print(bcolors.CYELLOW + "Please enter your init tweak(s) (eg 1 or 1 2 3 - leave blank to skip): " + bcolors.ENDC)
+	print(bcolors.CYELLOW2 + "Please enter your init tweak(s) (eg 1 or 1 2 3 - leave blank to skip): " + bcolors.ENDC)
 	defaultinit = [int(i) for i in input().split()]
 	if len(defaultinit) != 0:
 		user_config['init'] = [intents[defaultinit[0]-1]['id']]
@@ -384,12 +426,12 @@ tweaks_selected = []
 
 for index, k in enumerate(intents):
 	print(color_arr[default-1] + bcolors.BOLD + str(index+1) + '. ' + k['name'] + bcolors.ENDC)
-	print(bcolors.CYELLOW + 'Description: ' + k['description'] + bcolors.ENDC)
-	print(bcolors.CYELLOW + 'run in gui mode: ' + k['run_gui'].replace(";", "\n") + bcolors.ENDC)
-	print(bcolors.CYELLOW + 'run in terminal mode: ' + k['run_term'].replace(";", "\n") + bcolors.ENDC + '\n')
+	print(bcolors.CYELLOW2 + 'Description: ' + k['description'] + bcolors.ENDC)
+	print(bcolors.CYELLOW2 + 'run in gui mode: ' + k['run_gui'].replace(";", "\n") + bcolors.ENDC)
+	print(bcolors.CYELLOW2 + 'run in terminal mode: ' + k['run_term'].replace(";", "\n") + bcolors.ENDC + '\n')
 	tweaks.append(k['id'])
 
-print(bcolors.CYELLOW + "Please enter your dynamic shortcut tweak(s) (eg 1 or 1 2 3 - leave blank to skip): " + bcolors.ENDC)
+print(bcolors.CYELLOW2 + "Please enter your dynamic shortcut tweak(s) (eg 1 or 1 2 3 - leave blank to skip): " + bcolors.ENDC)
 defaultde = [int(i) for i in input().split()]
 
 for d in defaultde:
