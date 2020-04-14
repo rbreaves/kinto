@@ -87,6 +87,7 @@ def setShortcuts():
 			cmdline('perl -pi -e "s/(\w.*)(\/\/ Default cmdtab)/\/\/ \$1\$2/g" ~/.xkb/symbols/mac_gui')
 		elif distro == "galliumos" and dename == "xfce":
 			print("Applying GalliumOS (xfce) shortcuts...")
+			cmdline('cp ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml ./xfce4-keyboard-shortcuts_`date +"%Y.%m.%d-%s"`.xml')
 			# Reset Show desktop
 			cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Primary><Alt>d" --reset')
 			cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Super>d" --create --type string --set "show_desktop_key"')
@@ -129,6 +130,8 @@ def setShortcuts():
 		elif dename == "kde":
 			# cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "krunner.desktop" --key "_launch","Alt+Space\tAlt+F2\tSearch,Alt+Space\tAlt+F2\tSearch,KRunner"')
 			# Remove Alt+F3 Operations Menu - Sublimetext Select-All
+			cmdline('cp ~/.config/kwinrc ./kwinrc_`date +"%Y.%m.%d-%s"`')
+			cmdline('cp ~/.config/kglobalshortcutsrc ./kde_kglobalshortcutsrc_`date +"%Y.%m.%d-%s"`')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Switch to Previous Desktop" "Meta+Left,Meta+Left,Switch to Previous Desktop"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Operations Menu" "none,Alt+F3,Window Operations Menu"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows" "Ctrl+Shift+F13,Alt+Tab,Walk Through Windows"')
@@ -193,9 +196,22 @@ def Uninstall():
 				cmdline('dconf load /org/gnome/mutter/keybindings/ < ' + mutterkeys)
 			if len(wmkeys) > 0 or len(mutterkeys) > 0:
 				print("Gnome hotkeys have been successfully restored.")
+		elif dename == "kde":
+			print("Restoring DE hotkeys...")
+			kwinkeys = cmdline('ls | grep -m1 "kwinrc"').strip()
+			kdekeys = cmdline('ls | grep -m1 "kglobalshortcutsrc"').strip()
+			cmdline('cp ./' + kdekeys + ' ~/.config/kglobalshortcutsrc')
+			cmdline('cp ./' + kwinkeys + ' ~/.config/kwinrc')
+		elif dename == "xfce":
+			print("Restoring DE hotkeys...")
+			xfcekeys = cmdline('ls | grep -m1 "xfce4-keyboard"').strip()
+			cmdline('cp ./' + xfcekeys + ' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml')
+		if dename == "gnome" or dename == "kde" or dename == "xfce":
 			print("./uninstall.sh\n")
 			cmdline("./uninstall.sh")
 			print("Done.")
+		if dename == "kde" or dename == "xfce":
+			print("Please log off and back on for your original hotkeys to take effect.")
 	else:
 		if dename == "gnome":
 			print("Resetting DE hotkeys...\n")
@@ -203,9 +219,19 @@ def Uninstall():
 			cmdline("gsettings reset-recursively org.gnome.desktop.wm.keybindings")
 			print("gsettings reset-recursively org.gnome.mutter.keybindings")
 			cmdline("gsettings reset-recursively org.gnome.mutter.keybindings")
+		elif dename == "kde":
+			print("Resetting DE hotkeys...\n")
+			cmdline('mv ~/.config/kwinrc ~/.config/kwinrc.kinto')
+			cmdline('mv ~/.config/kglobalshortcutsrc ~/.config/kglobalshortcutsrc.kinto')
+		elif dename == "xfce":
+			print("Resetting DE hotkeys...\n")
+			cmdline('cp /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml')
+		if dename == "gnome" or dename == "kde" or dename == "xfce":
 			print("./uninstall.sh\n")
 			cmdline("./uninstall.sh")
 			print("Done.")
+		if dename == "kde" or dename == "xfce":
+			print("Please log off and back on for your original DE hotkeys to take effect.")
 
 # check_x11 = cmdline("env | grep -i x11").strip()
 check_x11 = cmdline("(env | grep -i x11 || loginctl show-session \"$XDG_SESSION_ID\" -p Type) | awk -F= '{print $2}'").strip()
