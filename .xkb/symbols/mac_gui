@@ -534,7 +534,7 @@ partial xkb_symbols "mac_appcycle" {
             // Control + Shift
             Redirect(key=<FK14>),
             // Control
-            Redirect(key=<FK13>,mods=Shift),
+            Redirect(key=<FK13>),
             // Super
             Redirect(key=<TAB>,mods=Control,clearmods=Mod4+Super),
             // Super + Shift
