@@ -87,6 +87,7 @@ def setShortcuts():
 			cmdline('perl -pi -e "s/(\w.*)(\/\/ Default cmdtab)/\/\/ \$1\$2/g" ~/.xkb/symbols/mac_gui')
 		elif distro == "galliumos" and dename == "xfce":
 			print("Applying GalliumOS (xfce) shortcuts...")
+			cmdline('cp ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml ./xfce4-keyboard-shortcuts_`date +"%Y.%m.%d-%s"`.xml')
 			# Reset Show desktop
 			cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Primary><Alt>d" --reset')
 			cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Super>d" --create --type string --set "show_desktop_key"')
@@ -197,15 +198,19 @@ def Uninstall():
 				print("Gnome hotkeys have been successfully restored.")
 		elif dename == "kde":
 			print("Restoring DE hotkeys...")
-			kwinkeys = cmdline('ls | grep -m1 "kwinrc"')
-			kdekeys = cmdline('ls | grep -m1 "kglobalshortcutsrc"')
-			cmdline('cp ./' + kdekeys.strip() + ' ~/.config/kglobalshortcutsrc')
-			cmdline('cp ./' + kwinkeys.strip() + ' ~/.config/kwinrc')
-		if dename == "gnome" or dename == "kde":
+			kwinkeys = cmdline('ls | grep -m1 "kwinrc"').strip()
+			kdekeys = cmdline('ls | grep -m1 "kglobalshortcutsrc"').strip()
+			cmdline('cp ./' + kdekeys + ' ~/.config/kglobalshortcutsrc')
+			cmdline('cp ./' + kwinkeys + ' ~/.config/kwinrc')
+		elif dename == "xfce":
+			print("Restoring DE hotkeys...")
+			xfcekeys = cmdline('ls | grep -m1 "xfce4-keyboard"').strip()
+			cmdline('cp ./' + xfcekeys + ' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml')
+		if dename == "gnome" or dename == "kde" or dename == "xfce":
 			print("./uninstall.sh\n")
 			cmdline("./uninstall.sh")
 			print("Done.")
-		if dename == "kde":
+		if dename == "kde" or dename == "xfce":
 			print("Please log off and back on for your original hotkeys to take effect.")
 	else:
 		if dename == "gnome":
@@ -218,11 +223,14 @@ def Uninstall():
 			print("Resetting DE hotkeys...\n")
 			cmdline('mv ~/.config/kwinrc ~/.config/kwinrc.kinto')
 			cmdline('mv ~/.config/kglobalshortcutsrc ~/.config/kglobalshortcutsrc.kinto')
-		if dename == "gnome" or dename == "kde":
+		elif dename == "xfce":
+			print("Resetting DE hotkeys...\n")
+			cmdline('cp /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml')
+		if dename == "gnome" or dename == "kde" or dename == "xfce":
 			print("./uninstall.sh\n")
 			cmdline("./uninstall.sh")
 			print("Done.")
-		if dename == "kde":
+		if dename == "kde" or dename == "xfce":
 			print("Please log off and back on for your original DE hotkeys to take effect.")
 
 # check_x11 = cmdline("env | grep -i x11").strip()
