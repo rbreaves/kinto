@@ -2,14 +2,14 @@ default partial xkb_symbols "mac_apple" {
     key <LWIN> {
       repeat= no,
       type= "ONE_LEVEL",
-      symbols[Group1]= [ Hyper_L ],
-      actions[group1]=[ SetMods(modifiers=Shift+Control) ]
+      symbols[Group1]= [ Control_L ],
+      actions[group1]=[ SetMods(modifiers=Control+Shift) ]
     };
     key <RWIN> {
       repeat= no,
       type= "ONE_LEVEL",
-      symbols[Group1]= [ Hyper_R ],
-      actions[group1]=[ SetMods(modifiers=Shift+Control) ]
+      symbols[Group1]= [ Control_R ],
+      actions[group1]=[ SetMods(modifiers=Control+Shift) ]
     };
 };
 partial xkb_symbols "mac_win" {
@@ -111,7 +111,7 @@ partial xkb_symbols "mac_global" {
             NoAction(),
             NoAction(),
             // Redirect(key=<FK13>) // Default cmdtab
-            // Redirect(key=<FK13>) // KDE cmdtab
+            // Redirect(key=<FK13>,clearmods=Shift) // KDE cmdtab
             // Redirect(key=<RGHT>,mods=Control+Shift,clearmods=Mod4+Super) // Elementary cmdtab
         ]
     };
