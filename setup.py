@@ -135,7 +135,7 @@ def setShortcuts():
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Switch to Previous Desktop" "Meta+Left,Meta+Left,Switch to Previous Desktop"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Operations Menu" "none,Alt+F3,Window Operations Menu"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows" "Ctrl+F13,Alt+Tab,Walk Through Windows"')
-			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows Alternative" "Ctrl+Shift+F13,none,Walk Through Windows"')
+			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows Alternative" "none,none,Walk Through Windows"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows (Reverse)" "Ctrl+Shift+F14,Alt+Shift+Backtab,Walk Through Windows (Reverse)"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Maximize Window" "none,Meta+PgUp,Maximize Window"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Maximize" "Meta+Ctrl+F,Alt+F10,Maximize Window"')
@@ -145,6 +145,14 @@ def setShortcuts():
 		else:
 			print('distro: ' + distro + ' de: ' + dename)
 			print("A supported OS and DE was not found, you may not have full system level shortcuts installed.")
+		if dename == "gnome":
+			# Apply dconf update to make updates survive reboots
+			cmdline('dconf dump /org/gnome/desktop/wm/keybindings/ > tempkb.conf')
+			cmdline('dconf dump /org/gnome/mutter/keybindings/ > tempmt.conf')
+			cmdline('dconf load /org/gnome/desktop/wm/keybindings/ < tempkb.conf')
+			cmdline('dconf load /org/gnome/mutter/keybindings/ < tempmt.conf')
+			cmdline('sleep 1 && rm -f ./tempkb.conf;rm -f ./tempmt.conf')
+			# cmdline('dconf update')
 
 def windows_setup():
 	keymaps = ["Apple keyboard standard", "Apple keyboard w/ Caps lock as Esc", "Windows keyboard standard", "Windows keyboard w/ Caps lock as Esc","Uninstall"]
