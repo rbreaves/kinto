@@ -145,6 +145,14 @@ def setShortcuts():
 		else:
 			print('distro: ' + distro + ' de: ' + dename)
 			print("A supported OS and DE was not found, you may not have full system level shortcuts installed.")
+		if dename == "gnome":
+			# Apply dconf update to make updates survive reboots
+			cmdline('dconf dump /org/gnome/desktop/wm/keybindings/ > tempkb.conf')
+			cmdline('dconf dump /org/gnome/mutter/keybindings/ > tempmt.conf')
+			cmdline('dconf load /org/gnome/desktop/wm/keybindings/ < tempkb.conf')
+			cmdline('dconf load /org/gnome/mutter/keybindings/ < tempmt.conf')
+			cmdline('sleep 1 && rm -f ./tempkb.conf;rm -f ./tempmt.conf')
+			# cmdline('dconf update')
 
 def windows_setup():
 	keymaps = ["Apple keyboard standard", "Apple keyboard w/ Caps lock as Esc", "Windows keyboard standard", "Windows keyboard w/ Caps lock as Esc","Uninstall"]
