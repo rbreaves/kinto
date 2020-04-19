@@ -127,6 +127,16 @@ define_keymap(None,{
     K("Super-Shift-Tab"): K("LC-Shift-Tab"), # Default
     K("LC-Grave") : K("LC-Shift-Tab"), # Default
 
+    # Wordwise
+    K("RC-Left"): K("Home"), # Beginning of Line
+    K("RC-Right"): K("End"), # End of Line
+    K("M-Left"): K("C-Left"), # Left of Word
+    K("M-Right"): K("C-Right"), # Right of Word
+    K("RC-Up"): K("C-Home"), # Beginning of File
+    K("RC-Down"): K("C-End"), # End of File
+    K("M-Backspace"): K("Delete"), # Delete
+    # K(""): pass_through_key, # cancel
+    # K(""): K(""), #
 })
 
 # define_keymap(re.compile("Gnome-terminal|io.elementary.terminal|terminator|sakura|guake|tilda|xterm|eterm|kitty"),{
