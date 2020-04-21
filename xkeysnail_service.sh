@@ -8,6 +8,7 @@ if [ $# -eq 0 ]; then
 	echo "  1) Windows & Mac (HID driver)"
 	echo "  2) Mac Only & VMs on Macbooks"
 	echo "  3) Chromebook"
+	echo "  4) Uninstall"
 
 	read n
 
@@ -36,7 +37,7 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	yes | cp -rf ./xkeysnail-config/xkeysnail.service ./xkeysnail-config/xkeysnail.service.new
 	sed -i "s/{username}/`whoami`/g" ./xkeysnail-config/xkeysnail.service.new
 	sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ./xkeysnail-config/xkeysnail.service.new
-else
+elif ! [[ $1 == "4" || $1 == "uninstall" ]]; then
 	echo "Expected argument was not provided"
 fi
 
@@ -78,8 +79,14 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 
 	# remove kintox11 login startup
 	rm ~/.config/autostart/kinto.desktop
-else
+elif ! [[ $1 == "4" || $1 == "uninstall" ]]; then
 	echo "Expected argument was not provided"
+else
+	echo "Uninstalling Kinto - xkeysnail (udev)"
+	echo '0' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd;echo 'options hid_apple swap_opt_cmd=0' | sudo tee -a /etc/modprobe.d/hid_apple.conf;sudo update-initramfs -u -k all
+	sudo systemctl stop xkeysnail
+	sudo systemctl disable xkeysnail
+	rm -rf ~/.config/kinto
 fi
 
 
