@@ -15,6 +15,10 @@ if [ $# -eq 0 ]; then
 fi
 
 if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1 == "chromebook" ]]; then
+	if ! [ -x "$(command -v inotifywait)" ]; then
+		echo "Will need to install inotify-tools to restart key remapper live for config file changes..."
+		sudo ./system-config/unipkg.sh inotify-tools
+	fi
 	# echo "Transferring files..."
 	mkdir -p ~/.config/kinto
 	
@@ -23,9 +27,13 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	echo -e '#!/bin/sh\rxhost +SI:localuser:root' > ~/.kde/Autostart/kintohost.sh
 	chmod +x ~/.kde/Autostart/kintohost.sh
 
-	cp ./xkeysnail-config/kinto.py ./xkeysnail-config/kinto.py.new
-	cp ./xkeysnail-config/prexk.sh ~/.config/kinto/prexk.sh
-	cp ./xkeysnail-config/xkeysnail.service ./xkeysnail-config/xkeysnail.service.new
+	# KDE startup - xhost fix
+	yes | cp -rf ./xkeysnail-config/xkeysnail.desktop ~/.config/autostart/xkeysnail.desktop
+
+	yes | cp -rf ./xkeysnail-config/xkeystart.sh ~/.config/kinto/xkeystart.sh
+	yes | cp -rf ./xkeysnail-config/kinto.py ./xkeysnail-config/kinto.py.new
+	yes | cp -rf ./xkeysnail-config/prexk.sh ~/.config/kinto/prexk.sh
+	yes | cp -rf ./xkeysnail-config/xkeysnail.service ./xkeysnail-config/xkeysnail.service.new
 	sed -i "s/{username}/`whoami`/g" ./xkeysnail-config/xkeysnail.service.new
 	sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ./xkeysnail-config/xkeysnail.service.new
 else
@@ -54,9 +62,6 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	sudo systemctl start xkeysnail
 
 	echo "Adding xhost fix..."
-
-	# KDE startup - xhost fix
-	cp ./xkeysnail-config/xkeysnail.desktop ~/.config/autostart/xkeysnail.desktop
 
 	LINE='xhost +SI:localuser:root'
 
