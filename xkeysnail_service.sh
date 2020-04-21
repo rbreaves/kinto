@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# set about:config?filter=ui.key.menuAccessKeyFocuses
+# to false for wordwise to work in Firefox
 
 if [ $# -eq 0 ]; then
 	echo "Install Kinto - xkeysnail (udev)"
@@ -43,6 +45,7 @@ fi
 if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1 == "chromebook" ]]; then
 	mv ./xkeysnail-config/kinto.py.new ~/.config/kinto/kinto.py
 	sudo mv ./xkeysnail-config/xkeysnail.service.new /etc/systemd/system/xkeysnail.service 
+	xhost +SI:localuser:root
 	git clone --depth 1 https://github.com/rbreaves/xkeysnail.git
 	cd xkeysnail
 	sudo pip3 install --upgrade .
