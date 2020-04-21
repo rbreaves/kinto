@@ -11,15 +11,15 @@ define_conditional_modmap(lambda wm_class: wm_class not in ("Gnome-terminal","ko
     # Key.RIGHT_ALT: Key.RIGHT_CTRL,  # Chromebook
     # Key.RIGHT_CTRL: Key.RIGHT_ALT,  # Chromebook
 
-    # Default Mac/Win
-    Key.LEFT_ALT: Key.RIGHT_CTRL,   # WinMac
-    Key.LEFT_META: Key.LEFT_ALT,    # WinMac
-    Key.LEFT_CTRL: Key.LEFT_META,   # WinMac
-    Key.RIGHT_ALT: Key.RIGHT_CTRL,  # WinMac
-    Key.RIGHT_META: Key.RIGHT_ALT,  # WinMac
-    Key.RIGHT_CTRL: Key.RIGHT_META, # WinMac
+    # # Default Mac/Win
+    # Key.LEFT_ALT: Key.RIGHT_CTRL,   # WinMac
+    # Key.LEFT_META: Key.LEFT_ALT,    # WinMac
+    # Key.LEFT_CTRL: Key.LEFT_META,   # WinMac
+    # Key.RIGHT_ALT: Key.RIGHT_CTRL,  # WinMac
+    # Key.RIGHT_META: Key.RIGHT_ALT,  # WinMac
+    # Key.RIGHT_CTRL: Key.RIGHT_META, # WinMac
 
-    # # Mac Only
+    # Mac Only
     # Key.LEFT_META: Key.RIGHT_CTRL,  # Mac
     # Key.LEFT_CTRL: Key.LEFT_META,   # Mac
     # Key.RIGHT_META: Key.RIGHT_CTRL, # Mac
@@ -29,20 +29,20 @@ define_conditional_modmap(lambda wm_class: wm_class not in ("Gnome-terminal","ko
 # [Conditional modmap] Change modifier keys in certain applications
 define_conditional_modmap(re.compile("Gnome-terminal|konsole|io.elementary.terminal|terminator|sakura|guake|tilda|xterm|eterm|kitty"), {
     # # Chromebook
-    # Key.LEFT_ALT: Key.RIGHT_CTRL,
+    # Key.LEFT_ALT: Key.RIGHT_CTRL,     # Chromebook
     # # Left Ctrl Stays Left Ctrl
-    # Key.LEFT_META: Key.LEFT_ALT,
-    # Key.RIGHT_ALT: Key.RIGHT_CTRL,
-    # Key.RIGHT_CTRL: Key.RIGHT_ALT,
+    # Key.LEFT_META: Key.LEFT_ALT,      # Chromebook
+    # Key.RIGHT_ALT: Key.RIGHT_CTRL,    # Chromebook
+    # Key.RIGHT_CTRL: Key.RIGHT_ALT,    # Chromebook
     # # Right Meta does not exist on chromebooks
 
-    # Default Mac/Win
-    Key.LEFT_ALT: Key.RIGHT_CTRL,   # WinMac
-    Key.LEFT_META: Key.LEFT_ALT,    # WinMac
-    Key.LEFT_CTRL: Key.LEFT_CTRL,   # WinMac
-    Key.RIGHT_ALT: Key.RIGHT_CTRL,  # WinMac
-    Key.RIGHT_META: Key.RIGHT_ALT,  # WinMac
-    Key.RIGHT_CTRL: Key.LEFT_CTRL,  # WinMac
+    # # Default Mac/Win
+    # Key.LEFT_ALT: Key.RIGHT_CTRL,   # WinMac
+    # Key.LEFT_META: Key.LEFT_ALT,    # WinMac
+    # Key.LEFT_CTRL: Key.LEFT_CTRL,   # WinMac
+    # Key.RIGHT_ALT: Key.RIGHT_CTRL,  # WinMac
+    # Key.RIGHT_META: Key.RIGHT_ALT,  # WinMac
+    # Key.RIGHT_CTRL: Key.LEFT_CTRL,  # WinMac
 
     # # Mac Only
     # Key.LEFT_META: Key.RIGHT_CTRL,  # Mac
@@ -120,11 +120,11 @@ define_keymap(None,{
     K("RC-Shift-Tab"): K("RC-Shift-F13"),
     K("RC-Grave"): K("RC-Shift-F13"),
     # In-App Tab switching
-    # K("M-Tab"): K("C-Tab"),                   # Chromebook
-    # K("M-Shift-Tab"): K("C-Shift-Tab"),       # Chromebook
+    # K("M-Tab"): K("C-Tab"),                   # Chromebook - In-App Tab switching
+    # K("M-Shift-Tab"): K("C-Shift-Tab"),       # Chromebook - In-App Tab switching
     K("Super-Tab"): K("LC-Tab"),                # Default
     K("Super-Shift-Tab"): K("LC-Shift-Tab"),    # Default
-    K("LC-Grave") : K("LC-Shift-Tab"),          # Default
+    K("LC-Grave") : K("LC-Shift-Tab"),
 
     # Wordwise
     K("RC-Left"): K("Home"),        # Beginning of Line

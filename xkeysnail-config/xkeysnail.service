@@ -1,0 +1,15 @@
+[Unit]
+Description=xkeysnail
+
+[Service]
+Type=simple
+KillMode=process
+ExecStartPre=/sbin/runuser -l {username} -c /home/{username}/.config/kinto/prexk.sh
+ExecStart=/usr/bin/sudo /usr/local/bin/xkeysnail --quiet --watch /home/{username}/.config/kinto/kinto.py
+ExecStop=/usr/bin/sudo /usr/bin/killall xkeysnail
+Restart=on-failure
+RestartSec=3
+Environment=DISPLAY={displayid}
+
+[Install]
+WantedBy=graphical.target
