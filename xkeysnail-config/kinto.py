@@ -60,6 +60,8 @@ define_keymap(re.compile("Sublime_text"),{
     K("Super-M-up"): K("C-up"),                 # scroll_lines up
     K("C-down"): pass_through_key,              # cancel scroll_lines down
     K("Super-M-down"): K("C-down"),             # scroll_lines down
+    K("Super-Shift-up"): K("M-Shift-up"),       # multi-cursor up
+    K("Super-Shift-down"): K("M-Shift-down"),   # multi-cursor down
     K("C-PAGE_DOWN"): pass_through_key,         # cancel next_view
     K("C-PAGE_UP"): pass_through_key,           # cancel prev_view
     K("C-Shift-left_brace"): K("C-PAGE_DOWN"),  # next_view
@@ -127,15 +129,17 @@ define_keymap(None,{
     K("LC-Grave") : K("LC-Shift-Tab"),
 
     # Wordwise
-    K("RC-Left"): K("Home"),        # Beginning of Line
-    K("RC-Right"): K("End"),        # End of Line
-    K("M-Left"): K("C-Left"),       # Left of Word
-    K("M-Right"): K("C-Right"),     # Right of Word
-    K("RC-Up"): K("C-Home"),        # Beginning of File
-    K("RC-Down"): K("C-End"),       # End of File
-    K("M-Backspace"): K("Delete"),  # Delete
-    # K(""): pass_through_key,        # cancel
-    # K(""): K(""),                   #
+    K("RC-Left"): K("Home"),            # Beginning of Line
+    K("RC-Right"): K("End"),            # End of Line
+    # K("RC-Left"): K("C-LEFT_BRACE"),    # Firefox-nw - Back
+    # K("RC-Right"): K("C-RIGHT_BRACE"),  # Firefox-nw - Forward
+    K("M-Left"): K("C-Left"),           # Left of Word
+    K("M-Right"): K("C-Right"),         # Right of Word
+    K("RC-Up"): K("C-Home"),            # Beginning of File
+    K("RC-Down"): K("C-End"),           # End of File
+    K("M-Backspace"): K("Delete"),      # Delete
+    # K(""): pass_through_key,            # cancel
+    # K(""): K(""),                       #
 })
 
 # define_keymap(re.compile("Gnome-terminal|io.elementary.terminal|terminator|sakura|guake|tilda|xterm|eterm|kitty"),{
