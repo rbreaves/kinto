@@ -10,3 +10,6 @@ fi
 if systemctl -q --user is-enabled keyswap; then
 	systemctl --user disable keyswap
 fi
+
+mkdir -p /tmp/kinto
+cp /home/{username}/.config/kinto/kinto.py /tmp/kinto/kinto.py

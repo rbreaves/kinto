@@ -16,6 +16,7 @@ if [ $# -eq 0 ]; then
 fi
 
 if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1 == "chromebook" ]]; then
+	sudo systemctl enable xkeysnail >/dev/null 2>&1
 	if ! [ -x "$(command -v inotifywait)" ]; then
 		echo "Will need to install inotify-tools to restart key remapper live for config file changes..."
 		sudo ./system-config/unipkg.sh inotify-tools
@@ -36,6 +37,7 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	yes | cp -rf ./xkeysnail-config/prexk.sh ~/.config/kinto/prexk.sh
 	yes | cp -rf ./xkeysnail-config/xkeysnail.service ./xkeysnail-config/xkeysnail.service.new
 	sed -i "s/{username}/`whoami`/g" ./xkeysnail-config/xkeysnail.service.new
+	sed -i "s/{username}/`whoami`/g" ~/.config/kinto/prexk.sh
 	sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ./xkeysnail-config/xkeysnail.service.new
 elif ! [[ $1 == "4" || $1 == "uninstall" ]]; then
 	echo "Expected argument was not provided"
