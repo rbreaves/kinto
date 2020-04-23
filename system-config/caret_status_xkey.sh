@@ -18,34 +18,34 @@ while (true);do
 		echo "firefox wordwise"
 		# echo "$check"
 		# Sets original config
-		perl -pi -e "s/(# )(.*)(# Beginning of Line)/\$2\$3/g" /tmp/kinto/kinto.py
-		perl -pi -e "s/(# )(.*)(# End of Line)/\$2\$3/g" /tmp/kinto/kinto.py
-		perl -pi -e "s/(\w.*)(# Firefox-nw)/# \$1\$2/g" /tmp/kinto/kinto.py
+		perl -pi -e "s/[^\n]\s{3}#\s(K.*)(# Beginning of Line)/\$2\$3/g" /tmp/kinto/kinto.py
+		perl -pi -e "s/[^\n]\s{3}#\s(K.*)(# End of Line)/\$2\$3/g" /tmp/kinto/kinto.py
+		perl -pi -e "s/[^\n]\s{3}(K.*)(# Firefox-nw)/# \$1\$2/g" /tmp/kinto/kinto.py
 		lastcheck=1
 		ww=1
 	elif [ "${check}" == "ff nw" ] && [ "${lastcheck}" != 2 ]; then
 		echo "firefox no wordwise"
 		# echo "$check"
 		# Sets new config
-		perl -pi -e "s/(# )(.*)(# Firefox-nw)/\$2\$3/g" /tmp/kinto/kinto.py
-		perl -pi -e "s/(\w.*)(# Beginning of Line)/# \$1\$2/g" /tmp/kinto/kinto.py
-		perl -pi -e "s/(\w.*)(# End of Line)/# \$1\$2/g" /tmp/kinto/kinto.py
+		perl -pi -e "s/[^\n]\s{3}#\s(K.*)(# Firefox-nw)/\$2\$3/g" /tmp/kinto/kinto.py
+		perl -pi -e "s/[^\n]\s{3}(K.*)(# Beginning of Line)/# \$1\$2/g" /tmp/kinto/kinto.py
+		perl -pi -e "s/[^\n]\s{3}(K.*)(# End of Line)/# \$1\$2/g" /tmp/kinto/kinto.py
 		lastcheck=2
 		ww=0
 	elif [ "${check}" == "chrome ww 1" ] && [ "${lastcheck}" != 3 ]; then
 		echo "chrome wordwise"
 		# echo "$check"
 		# Sets original config
-		perl -pi -e "s/(\w.*)(# Beginning of Line)/\$1\$2/g" /tmp/kinto/kinto.py
-		perl -pi -e "s/(\w.*)(# End of Line)/\$1\$2/g" /tmp/kinto/kinto.py
+		perl -pi -e "s/[^\n]\s{3}(K.*)(# Beginning of Line)/\$1\$2/g" /tmp/kinto/kinto.py
+		perl -pi -e "s/[^\n]\s{3}(K.*)(# End of Line)/\$1\$2/g" /tmp/kinto/kinto.py
 		lastcheck=3
 		ww=1
 	elif [ "${check}" == "chrome nw" ] && [ "${lastcheck}" != 4 ]; then
 		echo "chrome no wordwise"
 		# echo "$check"
 		# Sets new config
-		perl -pi -e "s/(# )(.*)(# Beginning of Line)/\$2\$3/g" /tmp/kinto/kinto.py
-		perl -pi -e "s/(# )(.*)(# End of Line)/\$2\$3/g" /tmp/kinto/kinto.py
+		perl -pi -e "s/[^\n]\s{3}#\s(K.*)(# Beginning of Line)/\$2\$3/g" /tmp/kinto/kinto.py
+		perl -pi -e "s/[^\n]\s{3}#\s(K.*)(# End of Line)/\$2\$3/g" /tmp/kinto/kinto.py
 		lastcheck=4
 		ww=0
 	elif [ "${check}" == "reset" ] && [ "${lastcheck}" != 5 ]; then
