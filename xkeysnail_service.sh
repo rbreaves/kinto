@@ -62,7 +62,7 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	sudo pip3 install --upgrade .
 	sudo systemctl enable xkeysnail
 	sudo systemctl daemon-reload
-	sudo systemctl start xkeysnail
+	sudo systemctl restart xkeysnail
 
 	echo "Adding xhost fix..."
 

@@ -51,6 +51,24 @@ define_conditional_modmap(re.compile("Gnome-terminal|konsole|io.elementary.termi
     # Key.RIGHT_CTRL: Key.LEFT_CTRL,  # Mac
 })
 
+# Keybindings for VS Code
+define_keymap(re.compile("Code"),{
+    K("C-g"): pass_through_key,                 # cancel Go to Line...
+    K("Super-g"): K("C-g"),                     # Go to Line...
+    K("F3"): pass_through_key,                  # cancel Find next
+    K("C-h"): pass_through_key,                 # cancel replace
+    K("C-M-f"): K("C-h"),                       # replace
+    K("C-Shift-h"): pass_through_key,           # cancel replace_next
+    K("C-M-e"): K("C-Shift-h"),                 # replace_next
+    K("f3"): pass_through_key,                  # cancel find_next
+    K("C-g"): K("f3"),                          # find_next
+    K("Shift-f3"): pass_through_key,            # cancel find_prev
+    K("C-Shift-g"): K("Shift-f3"),              # find_prev
+    K("Super-C-g"): K("C-f2"),                  # Sublime - find_all_under
+    K("Super-Shift-up"): K("M-Shift-up"),       # multi-cursor up
+    K("Super-Shift-down"): K("M-Shift-down"),   # multi-cursor down
+}, "Code")
+
 # Keybindings for Sublime Text
 define_keymap(re.compile("Sublime_text"),{
     K("C-Super-up"): K("M-o"),                  # Switch file
