@@ -35,10 +35,14 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	yes | cp -rf ./xkeysnail-config/xkeystart.sh ~/.config/kinto/xkeystart.sh
 	yes | cp -rf ./xkeysnail-config/kinto.py ./xkeysnail-config/kinto.py.new
 	yes | cp -rf ./xkeysnail-config/prexk.sh ~/.config/kinto/prexk.sh
+	yes | cp -rf ./xkeysnail-config/start-xkeysnail.sh ~/.config/kinto/start-xkeysnail.sh
 	yes | cp -rf ./xkeysnail-config/xkeysnail.service ./xkeysnail-config/xkeysnail.service.new
+	yes | cp -rf ./xkeysnail-config/user_xkeysnail.service ~/.config/systemd/user/xkeysnail.service
+	# yes | cp -rf ./xkeysnail-config/xkeysnail.timer ~/.config/systemd/user/xkeysnail.timer
 	sed -i "s/{username}/`whoami`/g" ./xkeysnail-config/xkeysnail.service.new
 	sed -i "s/{username}/`whoami`/g" ~/.config/kinto/prexk.sh
 	sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ./xkeysnail-config/xkeysnail.service.new
+	sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ~/.config/kinto/prexk.sh
 elif ! [[ $1 == "4" || $1 == "uninstall" ]]; then
 	echo "Expected argument was not provided"
 fi
@@ -60,7 +64,7 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	git clone --depth 1 https://github.com/rbreaves/xkeysnail.git
 	cd xkeysnail
 	sudo pip3 install --upgrade .
-	sudo systemctl enable xkeysnail
+	sudo systemctl enable xkeysnail.service
 	sudo systemctl daemon-reload
 	sudo systemctl restart xkeysnail
 
@@ -86,8 +90,10 @@ elif ! [[ $1 == "4" || $1 == "uninstall" ]]; then
 else
 	echo "Uninstalling Kinto - xkeysnail (udev)"
 	echo '0' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd;echo 'options hid_apple swap_opt_cmd=0' | sudo tee -a /etc/modprobe.d/hid_apple.conf;sudo update-initramfs -u -k all
-	sudo systemctl stop xkeysnail
-	sudo systemctl disable xkeysnail
+	# sudo systemctl stop xkeysnail.timer
+	# sudo systemctl disable xkeysnail.timer
+	sudo systemctl enable xkeysnail
+	sudo systemctl restart xkeysnail
 	rm -rf ~/.config/kinto
 fi
 
