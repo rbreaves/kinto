@@ -19,7 +19,7 @@ define_conditional_modmap(lambda wm_class: wm_class not in ("Gnome-terminal","ko
     # Key.RIGHT_META: Key.RIGHT_ALT,  # WinMac
     # Key.RIGHT_CTRL: Key.RIGHT_META, # WinMac
 
-    # Mac Only
+    # # Mac Only
     # Key.LEFT_META: Key.RIGHT_CTRL,  # Mac
     # Key.LEFT_CTRL: Key.LEFT_META,   # Mac
     # Key.RIGHT_META: Key.RIGHT_CTRL, # Mac
@@ -51,6 +51,50 @@ define_conditional_modmap(re.compile("Gnome-terminal|konsole|io.elementary.termi
     # Key.RIGHT_CTRL: Key.LEFT_CTRL,  # Mac
 })
 
+define_keymap(None,{
+    # Cmd Tab - App Switching Default
+    K("RC-Tab"): K("RC-F13"),
+    K("RC-Shift-Tab"): K("RC-Shift-F13"),
+    K("RC-Grave"): K("RC-Shift-F13"),
+    # In-App Tab switching
+    # K("M-Tab"): K("C-Tab"),                   # Chromebook - In-App Tab switching
+    # K("M-Shift-Tab"): K("C-Shift-Tab"),       # Chromebook - In-App Tab switching
+    K("Super-Tab"): K("LC-Tab"),                # Default
+    K("Super-Shift-Tab"): K("LC-Shift-Tab"),    # Default
+    K("LC-Grave") : K("LC-Shift-Tab"),
+
+    # Wordwise
+    K("RC-Left"): K("Home"),            # Beginning of Line
+    K("RC-Right"): K("End"),            # End of Line
+    # K("RC-Left"): K("C-LEFT_BRACE"),    # Firefox-nw - Back
+    # K("RC-Right"): K("C-RIGHT_BRACE"),  # Firefox-nw - Forward
+    K("RC-Up"): K("C-Home"),            # Beginning of File
+    K("RC-Down"): K("C-End"),           # End of File
+    K("M-Backspace"): K("Delete"),      # Delete
+    # K(""): pass_through_key,            # cancel
+    # K(""): K(""),                       #
+})
+
+define_keymap(lambda wm_class: wm_class not in ("Code"),{
+    # Wordwise remaining - for Everything but VS Code
+    K("M-Left"): K("C-Left"),           # Left of Word
+    K("M-Right"): K("C-Right"),         # Right of Word
+    # ** VS Code fix **
+    #   Electron issue precludes normal keybinding fix.
+    #   Alt menu auto-focus/toggle gets in the way.
+    #
+    #   refer to ./xkeysnail-config/vscode_keybindings.json
+    # **
+    #
+    # ** Firefox fix **
+    #   User will need to set "ui.key.menuAccessKeyFocuses"
+    #   under about:config to false.
+    #
+    #   https://superuser.com/questions/770301/pentadactyl-how-to-disable-menu-bar-toggle-by-alt
+    # **
+    #
+})
+
 # Keybindings for VS Code
 define_keymap(re.compile("Code"),{
     K("C-g"): pass_through_key,                 # cancel Go to Line...
@@ -67,6 +111,8 @@ define_keymap(re.compile("Code"),{
     K("Super-C-g"): K("C-f2"),                  # Sublime - find_all_under
     K("Super-Shift-up"): K("M-Shift-up"),       # multi-cursor up
     K("Super-Shift-down"): K("M-Shift-down"),   # multi-cursor down
+    # K(""): pass_through_key,                    # cancel
+    # K(""): K(""),                               #
 }, "Code")
 
 # Keybindings for Sublime Text
@@ -134,38 +180,6 @@ define_keymap(re.compile("Sublime_text"),{
     # K(""): K(""),                               #
 }, "Sublime Text")
 
-define_keymap(None,{
-    # Cmd Tab - App Switching Default
-    K("RC-Tab"): K("RC-F13"),
-    K("RC-Shift-Tab"): K("RC-Shift-F13"),
-    K("RC-Grave"): K("RC-Shift-F13"),
-    # In-App Tab switching
-    # K("M-Tab"): K("C-Tab"),                   # Chromebook - In-App Tab switching
-    # K("M-Shift-Tab"): K("C-Shift-Tab"),       # Chromebook - In-App Tab switching
-    K("Super-Tab"): K("LC-Tab"),                # Default
-    K("Super-Shift-Tab"): K("LC-Shift-Tab"),    # Default
-    K("LC-Grave") : K("LC-Shift-Tab"),
-
-    # Wordwise
-    K("RC-Left"): K("Home"),            # Beginning of Line
-    K("RC-Right"): K("End"),            # End of Line
-    # K("RC-Left"): K("C-LEFT_BRACE"),    # Firefox-nw - Back
-    # K("RC-Right"): K("C-RIGHT_BRACE"),  # Firefox-nw - Forward
-    K("M-Left"): K("C-Left"),           # Left of Word
-    K("M-Right"): K("C-Right"),         # Right of Word
-    K("RC-Up"): K("C-Home"),            # Beginning of File
-    K("RC-Down"): K("C-End"),           # End of File
-    K("M-Backspace"): K("Delete"),      # Delete
-    # K(""): pass_through_key,            # cancel
-    # K(""): K(""),                       #
-})
-
-# define_keymap(re.compile("Gnome-terminal|io.elementary.terminal|terminator|sakura|guake|tilda|xterm|eterm|kitty"),{
-#     # Ctrl Tab - In App Tab Switching
-#     # LC is already set
-#     K("LC-Grave") : K("LC-Shift-Tab"),
-# }, "Terminals tab switching")
-
 define_keymap(re.compile("konsole"),{
     # Ctrl Tab - In App Tab Switching
     K("LC-Tab") : K("Shift-Right"),
@@ -173,8 +187,6 @@ define_keymap(re.compile("konsole"),{
     K("LC-Grave") : K("Shift-Left"),
 
 }, "Konsole tab switching")
-
-
 
 define_keymap(re.compile("Gnome-terminal|konsole|io.elementary.terminal|terminator|sakura|guake|tilda|xterm|eterm|kitty"),{
     # Ctrl Tab - In App Tab Switching
@@ -225,8 +237,3 @@ define_keymap(re.compile("Gnome-terminal|konsole|io.elementary.terminal|terminat
     K("RC-SLASH"): K("C-Shift-SLASH"),
     K("RC-KPASTERISK"): K("C-Shift-KPASTERISK"),
 }, "terminals")
-
-# define_keymap(re.compile("Chromium-browser"),{
-#     # K("RC-Tab"): K("C-F13"),
-#     # K("RC-Shift-Tab"): K("C-f1"),
-# }, "Chromium-browser")
