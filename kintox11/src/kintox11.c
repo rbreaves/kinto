@@ -98,6 +98,9 @@ int check_caret(){
     char *buffer = NULL;
     size_t size = 0;
     FILE *fp = fopen(fpname, "r");
+    if (fp == NULL){
+        return (0);
+    }
     fseek(fp, 0, SEEK_END);
     size = ftell(fp);
     rewind(fp);
@@ -106,6 +109,7 @@ int check_caret(){
     buffer[size] = '\0';
     trimwhitespace(buffer);
     caretint = atoi(buffer);
+    fclose(fp);
     if(caretint == 1){
       // printf("caret: %s\n", buffer);
       return 1;
