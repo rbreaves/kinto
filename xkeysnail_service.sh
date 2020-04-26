@@ -34,12 +34,18 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 
 	yes | cp -rf ./xkeysnail-config/xkeystart.sh ~/.config/kinto/xkeystart.sh
 	yes | cp -rf ./xkeysnail-config/kinto.py ./xkeysnail-config/kinto.py.new
+	yes | cp -rf ./xkeysnail-config/limitedadmins ./xkeysnail-config/limitedadmins.new
 	yes | cp -rf ./xkeysnail-config/prexk.sh ~/.config/kinto/prexk.sh
-	yes | cp -rf ./xkeysnail-config/start-xkeysnail.sh ~/.config/kinto/start-xkeysnail.sh
 	yes | cp -rf ./xkeysnail-config/xkeysnail.service ./xkeysnail-config/xkeysnail.service.new
-	yes | cp -rf ./xkeysnail-config/user_xkeysnail.service ~/.config/systemd/user/xkeysnail.service
 	# yes | cp -rf ./xkeysnail-config/xkeysnail.timer ~/.config/systemd/user/xkeysnail.timer
 	sed -i "s/{username}/`whoami`/g" ./xkeysnail-config/xkeysnail.service.new
+	sed -i "s#{xhost}#`which xhost`#g" ./xkeysnail-config/xkeysnail.service.new
+	sed -i "s/{username}/`whoami`/g" ./xkeysnail-config/limitedadmins.new
+	sed -i "s#{systemctl}#`which systemctl`#g" ./xkeysnail-config/limitedadmins.new
+	sudo chown root:root ./xkeysnail-config/limitedadmins.new
+	sudo mv ./xkeysnail-config/limitedadmins.new /etc/sudoers.d/limitedadmins
+	sed -i "s#{systemctl}#`which systemctl`#g" ~/.config/autostart/xkeysnail.desktop
+	sed -i "s#{xhost}#`which xhost`#g" ~/.config/autostart/xkeysnail.desktop
 	sed -i "s/{username}/`whoami`/g" ~/.config/kinto/prexk.sh
 	sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ./xkeysnail-config/xkeysnail.service.new
 	sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ~/.config/kinto/prexk.sh
@@ -84,16 +90,23 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	# grep -qF -- "$LINE" ~/.xinitrc || echo "$LINE" >> ~/.xinitrc
 
 	# remove kintox11 login startup
-	rm ~/.config/autostart/kinto.desktop
+	if test -f "~/.config/autostart/kinto.desktop"; then
+		rm ~/.config/autostart/kinto.desktop
+	fi
 elif ! [[ $1 == "4" || $1 == "uninstall" ]]; then
 	echo "Expected argument was not provided"
 else
 	echo "Uninstalling Kinto - xkeysnail (udev)"
-	echo '0' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd;echo 'options hid_apple swap_opt_cmd=0' | sudo tee -a /etc/modprobe.d/hid_apple.conf;sudo update-initramfs -u -k all
-	# sudo systemctl stop xkeysnail.timer
-	# sudo systemctl disable xkeysnail.timer
-	sudo systemctl enable xkeysnail
-	sudo systemctl restart xkeysnail
+	# Undo Apple keyboard cmd & alt swap
+	if test -f "/sys/module/hid_apple/parameters/swap_opt_cmd" && [ `cat /sys/module/hid_apple/parameters/swap_opt_cmd` == "1" ]; then
+		echo '0' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd
+		echo 'options hid_apple swap_opt_cmd=0' | sudo tee -a /etc/modprobe.d/hid_apple.conf
+		sudo update-initramfs -u -k all
+	fi
+	sudo systemctl stop xkeysnail
+	sudo systemctl disable xkeysnail
+	sudo rm /etc/sudoers.d/limitedadmins
+	rm ~/.config/autostart/xkeysnail.desktop
 	rm -rf ~/.config/kinto
 fi
 

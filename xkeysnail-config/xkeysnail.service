@@ -4,7 +4,7 @@ Description=xkeysnail
 [Service]
 Type=simple
 KillMode=process
-ExecStartPre=/usr/bin/xhost +SI:localuser:root;/sbin/runuser -l {username} -c /home/{username}/.config/kinto/prexk.sh
+ExecStartPre=/bin/bash -c "{xhost} +SI:localuser:root && /sbin/runuser -l {username} -c /home/{username}/.config/kinto/prexk.sh"
 ExecStart=/usr/bin/sudo /bin/bash -c '/home/{username}/.config/kinto/xkeystart.sh "/tmp/kinto/kinto.py"'
 ExecStop=/usr/bin/sudo /usr/bin/killall xkeysnail
 Restart=on-failure
