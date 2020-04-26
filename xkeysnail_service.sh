@@ -19,8 +19,8 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	while true; do
 	read -p "Would you like to enable experimental support for mac back/forward hotkeys in Firefox & Chrome (shares the same hotkey combo as wordwise when needed)? (y/n)" yn
 	case $yn in
-		[Yy]* ) exp='/sbin/runuser -l {username} -c "export DISPLAY={displayid};/home/{username}/.config/kinto/caret_status_xkey.sh\&";'; break;;
-		[Nn]* ) exp=" "; break;;
+		[Yy]* ) exp='/sbin/runuser -l {username} -c "export DISPLAY={displayid};/home/{username}/.config/kinto/caret_status_xkey.sh\&";'; expsh='"/home/{username}/.config/kinto/caret_status_xkey.sh"'; break;;
+		[Nn]* ) exp=" "; expsh=" " break;;
 		# * ) echo "Please answer yes or no.";;
 	esac
 	done
@@ -47,7 +47,12 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	yes | cp -rf ./system-config/caret_status_xkey.sh ~/.config/kinto/caret_status_xkey.sh
 	yes | cp -rf ./xkeysnail-config/xkeysnail.service ./xkeysnail-config/xkeysnail.service.new
 	# yes | cp -rf ./xkeysnail-config/xkeysnail.timer ~/.config/systemd/user/xkeysnail.timer
-		sed -i "s#{experimental-caret}#$exp#g" ./xkeysnail-config/xkeysnail.service.new
+	sed -i "s#{experimental-caret}#$exp#g" ./xkeysnail-config/xkeysnail.service.new
+	if [ "$expsh" != " " ];then
+		sed -i "s#{kill-caret}#/usr/bin/pkill -f $expsh#g" ./xkeysnail-config/xkeysnail.service.new
+	else
+		sed -i "s#{kill-caret}#$expsh#g" ./xkeysnail-config/xkeysnail.service.new
+	fi
 	sed -i "s/{username}/`whoami`/g" ./xkeysnail-config/xkeysnail.service.new
 	sed -i "s#{xhost}#`which xhost`#g" ./xkeysnail-config/xkeysnail.service.new
 	sed -i "s/{username}/`whoami`/g" ./xkeysnail-config/limitedadmins.new
