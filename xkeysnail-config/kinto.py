@@ -68,6 +68,8 @@ define_keymap(None,{
     K("RC-Right"): K("End"),            # End of Line
     # K("RC-Left"): K("C-LEFT_BRACE"),    # Firefox-nw - Back
     # K("RC-Right"): K("C-RIGHT_BRACE"),  # Firefox-nw - Forward
+    # K("RC-Left"): K("M-LEFT"),          # Chrome-nw - Back
+    # K("RC-Right"): K("M-RIGHT"),        # Chrome-nw - Forward
     K("RC-Up"): K("C-Home"),            # Beginning of File
     K("RC-Down"): K("C-End"),           # End of File
     K("M-Backspace"): K("Delete"),      # Delete

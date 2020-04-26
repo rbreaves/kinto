@@ -1,5 +1,12 @@
 #!/bin/bash
 
+for pid in $(pidof -x caret_status_xkey.sh); do
+    if [ $pid != $$ ]; then
+        echo "[$(date)] : caret_status_xkey.sh : Process is already running with PID $pid"
+        exit 1
+    fi
+done
+
 mkdir -p /tmp/kinto
 echo "0" > /tmp/kinto/caret
 
