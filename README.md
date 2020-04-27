@@ -75,11 +75,11 @@ To Uninstall Kinto
 ## Shortcut Creation
 
 **Keys**
-| Value| Description|
-| ----- |:--------:|
-|C,Ctrl|Control|
-|M,Alt| Alt/Option|
-|Super | Win/Super|
+| Value| Description|Mac/Kinto Equivalent|
+| ----- |:--------:|:--------:|
+|C,Ctrl|Control|Cmd|
+|M,Alt| Alt/Option|Alt/Option|
+|Super | Win/Super|Ctrl|
 
 You can define new keymaps for your specific app via this method. You also do not have to cancel out the original keybinding if you do not need or want to, but you can do so with "pass_through_key".
 
@@ -88,7 +88,7 @@ You can define new keymaps for your specific app via this method. You also do no
 # Keybindings for Sublime Text
 define_keymap(re.compile("Sublime_text"),{
     K("C-h"): pass_through_key,          # cancel replace
-    K("Ctrl-Alt-f"): K("Ctrl-h"),                # replace
+    K("Ctrl-Alt-f"): K("Ctrl-h"),        # replace
     K("C-M-v"): [K("C-k"), K("C-v")],    # paste_from_history
 }
 ```
