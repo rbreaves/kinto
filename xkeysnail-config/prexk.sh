@@ -12,5 +12,5 @@ if systemctl -q --user is-enabled keyswap; then
 fi
 
 # export DISPLAY={displayid};/usr/bin/xhost +SI:localuser:root
-mkdir -p /tmp/kinto
-cp /home/{username}/.config/kinto/kinto.py /tmp/kinto/kinto.py
+mkdir -p /tmp/kinto/xkeysnail
+cp /home/{username}/.config/kinto/kinto.py /tmp/kinto/xkeysnail/kinto.py

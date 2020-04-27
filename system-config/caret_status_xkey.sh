@@ -7,7 +7,7 @@ for pid in $(pidof -x caret_status_xkey.sh); do
     fi
 done
 
-mkdir -p /tmp/kinto
+mkdir -p /tmp/kinto/xkeysnail
 echo "0" > /tmp/kinto/caret
 
 millitime=`date +%s%3N`
@@ -58,20 +58,20 @@ while (true);do
 		if [ "${check}" == "ff nw" ] && [ "${lastcheck}" != 1 ]; then
 			echo "firefox no wordwise"
 			# Sets new config
-			perl -pi -e "s/[^\n]\s{3}(K.*)(# Chrome-nw)/    # \$1\$2/g;s/[^\n]\s{3}#\s(K.*)(# Firefox-nw)/    \$1\$2/g;s/[^\n]\s{3}(K.*)(# Beginning of Line)/    # \$1\$2/g;s/[^\n]\s{3}(K.*)(# End of Line)/    # \$1\$2/g" /tmp/kinto/kinto.py 2>/dev/null
+			perl -pi -e "s/[^\n]\s{3}(K.*)(# Chrome-nw)/    # \$1\$2/g;s/[^\n]\s{3}#\s(K.*)(# Firefox-nw)/    \$1\$2/g;s/[^\n]\s{3}(K.*)(# Beginning of Line)/    # \$1\$2/g;s/[^\n]\s{3}(K.*)(# End of Line)/    # \$1\$2/g" /tmp/kinto/xkeysnail/kinto.py 2>/dev/null
 			lastcheck=1
 			ww=0
 		elif [ "${check}" == "chrome nw" ] && [ "${lastcheck}" != 2 ]; then
 			echo "chrome no wordwise"
 			# Sets new config
-			perl -pi -e "s/[^\n]\s{3}(K.*)(# Firefox-nw)/    # \$1\$2/g;s/[^\n]\s{3}(K.*)(# Beginning of Line)/    # \$1\$2/g;s/[^\n]\s{3}(K.*)(# End of Line)/    # \$1\$2/g;s/[^\n]\s{3}#\s(K.*)(# Chrome-nw)/    \$1\$2/g" /tmp/kinto/kinto.py 2>/dev/null
+			perl -pi -e "s/[^\n]\s{3}(K.*)(# Firefox-nw)/    # \$1\$2/g;s/[^\n]\s{3}(K.*)(# Beginning of Line)/    # \$1\$2/g;s/[^\n]\s{3}(K.*)(# End of Line)/    # \$1\$2/g;s/[^\n]\s{3}#\s(K.*)(# Chrome-nw)/    \$1\$2/g" /tmp/kinto/xkeysnail/kinto.py 2>/dev/null
 			lastcheck=2
 			ww=0
 		elif ([ "${check}" != "chrome nw" ] && [ "${check}" != "ff nw" ] && [ "${lastcheck}" != 3 ]) || ([ "${appname2}" != "Firefox" ] && [ "${appname2}" != "Chromium" ] && [ "${appname2}" != "Chromium-browser" ] && [ "${appname2}" != "Google-chrome" ] && [ "${appname2}" != "Epiphany" ] && [ "${check}" == "reset" ] && [ "${lastcheck}" != 3 ]); then
 			echo "wordwise"
 			# Sets original config
-			perl -pi -e "s/[^\n]\s{3}(K.*)(# Firefox-nw)/    # \$1\$2/g;s/[^\n]\s{3}#\s(K.*)(# Beginning of Line)/    \$1\$2/g;s/[^\n]\s{3}#\s(K.*)(# End of Line)/    \$1\$2/g;s/[^\n]\s{3}(K.*)(# Chrome-nw)/    # \$1\$2/g" /tmp/kinto/kinto.py 2>/dev/null
-			# cp /home/ryan/.config/kinto/kinto.py /tmp/kinto/kinto.py
+			perl -pi -e "s/[^\n]\s{3}(K.*)(# Firefox-nw)/    # \$1\$2/g;s/[^\n]\s{3}#\s(K.*)(# Beginning of Line)/    \$1\$2/g;s/[^\n]\s{3}#\s(K.*)(# End of Line)/    \$1\$2/g;s/[^\n]\s{3}(K.*)(# Chrome-nw)/    # \$1\$2/g" /tmp/kinto/xkeysnail/kinto.py 2>/dev/null
+			# cp /home/ryan/.config/kinto/kinto.py /tmp/kinto/xkeysnail/kinto.py
 			lastcheck=3
 		fi
 	fi

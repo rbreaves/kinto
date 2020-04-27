@@ -17,7 +17,7 @@ fi
 
 if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1 == "chromebook" ]]; then
 	while true; do
-	read -rep $'\nExperimental Support for Firefox/Chrome Back/Forward buttons (Cmd+Left/Right)? (y/n)\n' yn
+	read -rep $'\nExperimental Support for Firefox/Chrome Back/Forward hotkeys (Cmd+Left/Right)?\n(Keys could get stuck, switch windows or press ctrl &/or super to release) (y/n)\n' yn
 	case $yn in
 		[Yy]* ) exp='/sbin/runuser -l {username} -c "export DISPLAY={displayid};/home/{username}/.config/kinto/caret_status_xkey.sh\&";'; expsh='"/home/{username}/.config/kinto/caret_status_xkey.sh"'; break;;
 		[Nn]* ) exp=" "; expsh=" " break;;
@@ -48,7 +48,7 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	yes | cp -rf ./xkeysnail-config/xkeystart.sh ~/.config/kinto/xkeystart.sh
 	yes | cp -rf ./xkeysnail-config/kinto.py ./xkeysnail-config/kinto.py.new
 	yes | cp -rf ./xkeysnail-config/limitedadmins ./xkeysnail-config/limitedadmins.new
-	yes | cp -rf ./xkeysnail-config/prexk.sh ~/.config/kinto/prexk.sh
+	yes | cp -rf ./xkeysnail-config/fprexk.sh ~/.config/kinto/prexk.sh
 	yes | cp -rf ./system-config/caret_status_xkey.sh ~/.config/kinto/caret_status_xkey.sh
 	yes | cp -rf ./xkeysnail-config/xkeysnail.service ./xkeysnail-config/xkeysnail.service.new
 	# yes | cp -rf ./xkeysnail-config/xkeysnail.timer ~/.config/systemd/user/xkeysnail.timer
