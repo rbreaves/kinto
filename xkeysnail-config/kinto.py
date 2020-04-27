@@ -64,17 +64,21 @@ define_keymap(None,{
     K("LC-Grave") : K("LC-Shift-Tab"),
 
     # Wordwise
-    K("RC-Left"): K("Home"),            # Beginning of Line
-    K("RC-Right"): K("End"),            # End of Line
-    # K("RC-Left"): K("C-LEFT_BRACE"),    # Firefox-nw - Back
-    # K("RC-Right"): K("C-RIGHT_BRACE"),  # Firefox-nw - Forward
-    # K("RC-Left"): K("M-LEFT"),          # Chrome-nw - Back
-    # K("RC-Right"): K("M-RIGHT"),        # Chrome-nw - Forward
-    K("RC-Up"): K("C-Home"),            # Beginning of File
-    K("RC-Down"): K("C-End"),           # End of File
-    K("M-Backspace"): K("Delete"),      # Delete
-    # K(""): pass_through_key,            # cancel
-    # K(""): K(""),                       #
+    K("RC-Left"): K("Home"),                # Beginning of Line
+    K("RC-Shift-Left"): K("Shift-Home"),    # Select all to Beginning of Line
+    K("RC-Right"): K("End"),                # End of Line
+    K("RC-Shift-Right"): K("Shift-End"),    # Select all to End of Line
+    # K("RC-Left"): K("C-LEFT_BRACE"),        # Firefox-nw - Back
+    # K("RC-Right"): K("C-RIGHT_BRACE"),      # Firefox-nw - Forward
+    # K("RC-Left"): K("M-LEFT"),              # Chrome-nw - Back
+    # K("RC-Right"): K("M-RIGHT"),            # Chrome-nw - Forward
+    K("RC-Up"): K("C-Home"),                # Beginning of File
+    K("RC-Shift-Up"): K("C-Shift-Home"),    # Select all to Beginning of File
+    K("RC-Down"): K("C-End"),               # End of File
+    K("RC-Shift-Down"): K("C-Shift-End"),   # Select all to End of File
+    K("M-Backspace"): K("Delete"),          # Delete
+    # K(""): pass_through_key,                # cancel
+    # K(""): K(""),                           #
 })
 
 define_keymap(lambda wm_class: wm_class not in ("Code"),{
