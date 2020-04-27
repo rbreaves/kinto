@@ -29,6 +29,11 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 		echo "Will need to install inotify-tools to restart key remapper live for config file changes..."
 		sudo ./system-config/unipkg.sh inotify-tools
 	fi
+	if ! [ -x "$(command -v pip3)" ]; then
+		echo "Will need to install python3-pip..."
+		sudo ./system-config/unipkg.sh python3-pip
+	fi
+	
 	# echo "Transferring files..."
 	mkdir -p ~/.config/kinto
 	
