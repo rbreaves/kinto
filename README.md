@@ -72,14 +72,21 @@ To Uninstall Kinto
 ./setup.py
 ```
 
-## Shortcut Creation
+## Shortcut Creation (Xkeysnail)
 
-**Keys**
+**GUI Keys**
 | Value| Description|Mac/Kinto Equivalent|
 | ----- |:--------:|:--------:|
 |C,Ctrl|Control|Cmd|
 |M,Alt| Alt/Option|Alt/Option|
 |Super | Win/Super|Ctrl|
+
+**Terminal Keys**
+| Value| Description|Mac/Kinto Equivalent|
+| ----- |:--------:|:--------:|
+|RC,RCtrl|Right Control on Left & Right Alt/Cmd key|Cmd|
+|M,Alt| Alt/Option|Alt/Option|
+|Ctrl | Ctrl|Ctrl|
 
 You can define new keymaps for your specific app via this method. You also do not have to cancel out the original keybinding if you do not need or want to, but you can do so with "pass_through_key".
 
