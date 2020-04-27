@@ -83,8 +83,10 @@ define_keymap(None,{
 
 define_keymap(lambda wm_class: wm_class not in ("Code"),{
     # Wordwise remaining - for Everything but VS Code
-    K("M-Left"): K("C-Left"),           # Left of Word
-    K("M-Right"): K("C-Right"),         # Right of Word
+    K("M-Left"): K("C-Left"),               # Left of Word
+    K("M-Shift-Left"): K("C-Shift-Left"),   # Select Left of Word
+    K("M-Right"): K("C-Right"),             # Right of Word
+    K("M-Shift-Right"): K("C-Shift-Right"), # Select Right of Word
     # ** VS Code fix **
     #   Electron issue precludes normal keybinding fix.
     #   Alt menu auto-focus/toggle gets in the way.

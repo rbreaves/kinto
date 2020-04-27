@@ -17,5 +17,15 @@
     {
         "key": "alt+left",
         "command": "cursorWordLeft"
+    },
+    {
+        "key": "shift+alt+left",
+        "command": "cursorWordStartLeftSelect",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "shift+alt+right",
+        "command": "cursorWordEndRightSelect",
+        "when": "textInputFocus"
     }
 ]
