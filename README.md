@@ -72,6 +72,35 @@ To Uninstall Kinto
 ./setup.py
 ```
 
+## Shortcut Creation
+
+**Keys**
+C,Ctrl = Control
+M,Alt = Alt/Option
+Super = Win/Super
+
+You can define new keymaps for your specific app via this method. You also do not have to cancel out the original keybinding if you do not need or want to, but you can do so with "pass_through_key".
+
+### Defining Keymaps Per App
+```
+# Keybindings for Sublime Text
+define_keymap(re.compile("Sublime_text"),{
+    K("C-h"): pass_through_key,          # cancel replace
+    K("C-M-f"): K("C-h"),                # replace
+    K("C-M-v"): [K("C-k"), K("C-v")],    # paste_from_history
+}
+```
+
+In the above example I am also showing that you can define a single shortcut to enact multiple shortcut keys if needed by defining an array of shortcuts to trigger.
+
+You can also make changes to the file in your /tmp/kinto/xkeysnail/kinto.py location and see them take affect in real time, but for your changes to be permanent you will need to make your changes in the ~/.config/kinto/kinto.py location & restart the xkeysnail service.
+
+```
+sudo systemctl restart xkeysnail
+```
+
+More information can be seen on the readme page of [xkeysnail](https://github.com/mooz/xkeysnail).
+
 ## Other Notes Related to Install
 
 **Manjaro with Gnome there are issues.** 
