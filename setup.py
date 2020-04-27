@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import json, time, os, sys
+import json, time, os, sys, subprocess, shlex
 from shutil import copyfile
 from subprocess import PIPE, Popen
 from prekinto import *
@@ -329,9 +329,17 @@ if os.path.isdir(homedir + "/.config/kinto") == False:
 with open('defaults.json') as json_file:
 	data = json.load(json_file)
 
+
 color_arr = [bcolors.CBEIGE,bcolors.CRED2,bcolors.CGREEN,bcolors.CYELLOW ]
 
 print("\nKinto - Type in Linux like it's a Mac.\n")
+
+kintotype = int(input(color_arr[2] + "1) Kinto - xkeysnail (udev/x11) - Recommended\n" + color_arr[0] + "2) Kinto - Original xkb/x11 implementation\n\n" + bcolors.ENDC))
+print("")
+if(kintotype == 1):
+	setShortcuts()
+	subprocess.check_call(shlex.split("./xkeysnail_service.sh"))
+	exit()
 
 for index, item in enumerate(data['defaulttypes']):
 	ossym = ""

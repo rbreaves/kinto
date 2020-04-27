@@ -17,7 +17,7 @@ fi
 
 if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1 == "chromebook" ]]; then
 	while true; do
-	read -p "Would you like to enable experimental support for mac back/forward hotkeys in Firefox & Chrome (shares the same hotkey combo as wordwise when needed)? (y/n)" yn
+	read -rep $'\nExperimental Support for Firefox/Chrome Back/Forward buttons (Cmd+Left/Right)? (y/n)\n' yn
 	case $yn in
 		[Yy]* ) exp='/sbin/runuser -l {username} -c "export DISPLAY={displayid};/home/{username}/.config/kinto/caret_status_xkey.sh\&";'; expsh='"/home/{username}/.config/kinto/caret_status_xkey.sh"'; break;;
 		[Nn]* ) exp=" "; expsh=" " break;;
@@ -82,14 +82,14 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	mv ./xkeysnail-config/kinto.py.new ~/.config/kinto/kinto.py
 	sudo mv ./xkeysnail-config/xkeysnail.service.new /etc/systemd/system/xkeysnail.service 
 	xhost +SI:localuser:root
-	git clone --depth 1 https://github.com/rbreaves/xkeysnail.git
+	git clone --depth 1 https://github.com/mooz/xkeysnail.git
 	cd xkeysnail
 	sudo pip3 install --upgrade .
 	sudo systemctl enable xkeysnail.service
 	sudo systemctl daemon-reload
 	sudo systemctl restart xkeysnail
 
-	echo "Adding xhost fix..."
+	echo -e "Adding xhost fix...\n"
 
 	LINE='xhost +SI:localuser:root'
 
@@ -107,6 +107,19 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	# remove kintox11 login startup
 	if test -f "~/.config/autostart/kinto.desktop"; then
 		rm ~/.config/autostart/kinto.desktop
+	fi
+
+	echo -e "Kinto install is \e[1m\e[32mcomplete\e[0m.\n"
+	if `sudo systemctl is-active --quiet xkeysnail`;then
+		echo -e "Kinto \e[1m\e[32mxkeysnail service is running\e[0m.\n"
+		echo "Commands for controlling Kinto's xkeysnail service"
+		echo "sudo systemctl restart xkeysnail"
+		echo "sudo systemctl stop xkeysnail"
+		echo "sudo systemctl start xkeysnail"
+		echo "sudo systemctl status xkeysnail"
+	else
+		echo -e "Kinto \e[1m\e[91mxkeysnail service has failed.\e[0m"
+		echo "You can run 'sudo systemctl status xkeysnail' for more info"
 	fi
 elif ! [[ $1 == "4" || $1 == "uninstall" ]]; then
 	echo "Expected argument was not provided"
