@@ -110,6 +110,9 @@ sudo systemctl restart xkeysnail
 
 More information can be seen on the readme page of [xkeysnail](https://github.com/mooz/xkeysnail).
 
+## Shortcut Creation (XKB)
+The older xkb shortcut method info can be read about in ticket [#125](https://github.com/rbreaves/kinto/issues/125).
+
 ## Other Notes Related to Install
 
 **Manjaro with Gnome there are issues.** 
