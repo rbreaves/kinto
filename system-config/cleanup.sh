@@ -7,3 +7,4 @@ killall xbindkeys > /dev/null 2>&1 || :
 
 gsettings set org.gnome.desktop.wm.keybindings switch-applications "['<Alt>Tab']"
 gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward "['<Shift><Alt>Tab']"
+pkill -f /.config/kinto/xactive.sh
