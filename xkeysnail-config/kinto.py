@@ -70,9 +70,10 @@ define_keymap(None,{
     # In-App Tab switching
     # K("M-Tab"): K("C-Tab"),                       # Chromebook - In-App Tab switching
     # K("M-Shift-Tab"): K("C-Shift-Tab"),           # Chromebook - In-App Tab switching
-    K("Super-Tab"): K("LC-Tab"),                    # Default
-    K("Super-Shift-Tab"): K("LC-Shift-Tab"),        # Default
-    K("LC-Grave") : K("LC-Shift-Tab"),
+    # K("M-Grave") : K("C-Shift-Tab"),              # Chromebook - In-App Tab switching
+    K("Super-Tab"): K("LC-Tab"),                  # Default
+    K("Super-Shift-Tab"): K("LC-Shift-Tab"),      # Default
+    K("LC-Grave") : K("LC-Shift-Tab"),            # Default
 
     # Wordwise
     K("RC-Left"): K("Home"),                      # Beginning of Line
