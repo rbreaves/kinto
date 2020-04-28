@@ -51,6 +51,14 @@ define_conditional_modmap(re.compile("Gnome-terminal|konsole|io.elementary.termi
     # Key.RIGHT_CTRL: Key.LEFT_CTRL,  # Mac
 })
 
+# Keybindings for Nautilus
+define_keymap(re.compile("Org.gnome.Nautilus"),{
+    K("RC-Up"): K("M-Up"),          # Go Up dir
+    K("RC-Down"): K("M-Down"),      # Go Down dir
+    K("RC-Left"): K("M-Left"),      # Go Back
+    K("RC-Right"): K("M-Right"),    # Go Forward
+})
+
 define_keymap(None,{
     # Cmd Tab - App Switching Default
     K("RC-Tab"): K("RC-F13"),
