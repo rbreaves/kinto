@@ -61,32 +61,35 @@ define_keymap(re.compile("Org.gnome.Nautilus"),{
 
 define_keymap(None,{
     # Cmd Tab - App Switching Default
-    K("RC-Tab"): K("RC-F13"),
-    K("RC-Shift-Tab"): K("RC-Shift-F13"),
-    K("RC-Grave"): K("RC-Shift-F13"),
+    K("RC-Tab"): K("RC-F13"),                     # Default
+    K("RC-Shift-Tab"): K("RC-Shift-F13"),         # Default
+    K("RC-Grave"): K("RC-Shift-F13"),             # Default
+    # K("RC-Tab"): K("RC-backslash"),               # Chromebook
+    # K("RC-Shift-Tab"): K("RC-Shift-backslash"),   # Chromebook
+    # K("RC-Grave"): K("RC-Shift-backslash"),       # Chromebook
     # In-App Tab switching
-    # K("M-Tab"): K("C-Tab"),                   # Chromebook - In-App Tab switching
-    # K("M-Shift-Tab"): K("C-Shift-Tab"),       # Chromebook - In-App Tab switching
-    K("Super-Tab"): K("LC-Tab"),                # Default
-    K("Super-Shift-Tab"): K("LC-Shift-Tab"),    # Default
+    # K("M-Tab"): K("C-Tab"),                       # Chromebook - In-App Tab switching
+    # K("M-Shift-Tab"): K("C-Shift-Tab"),           # Chromebook - In-App Tab switching
+    K("Super-Tab"): K("LC-Tab"),                    # Default
+    K("Super-Shift-Tab"): K("LC-Shift-Tab"),        # Default
     K("LC-Grave") : K("LC-Shift-Tab"),
 
     # Wordwise
-    K("RC-Left"): K("Home"),                # Beginning of Line
-    K("RC-Shift-Left"): K("Shift-Home"),    # Select all to Beginning of Line
-    K("RC-Right"): K("End"),                # End of Line
-    K("RC-Shift-Right"): K("Shift-End"),    # Select all to End of Line
-    # K("RC-Left"): K("C-LEFT_BRACE"),        # Firefox-nw - Back
-    # K("RC-Right"): K("C-RIGHT_BRACE"),      # Firefox-nw - Forward
-    # K("RC-Left"): K("M-LEFT"),              # Chrome-nw - Back
-    # K("RC-Right"): K("M-RIGHT"),            # Chrome-nw - Forward
-    K("RC-Up"): K("C-Home"),                # Beginning of File
-    K("RC-Shift-Up"): K("C-Shift-Home"),    # Select all to Beginning of File
-    K("RC-Down"): K("C-End"),               # End of File
-    K("RC-Shift-Down"): K("C-Shift-End"),   # Select all to End of File
-    K("M-Backspace"): K("Delete"),          # Delete
-    # K(""): pass_through_key,                # cancel
-    # K(""): K(""),                           #
+    K("RC-Left"): K("Home"),                      # Beginning of Line
+    K("RC-Shift-Left"): K("Shift-Home"),          # Select all to Beginning of Line
+    K("RC-Right"): K("End"),                      # End of Line
+    K("RC-Shift-Right"): K("Shift-End"),          # Select all to End of Line
+    # K("RC-Left"): K("C-LEFT_BRACE"),              # Firefox-nw - Back
+    # K("RC-Right"): K("C-RIGHT_BRACE"),            # Firefox-nw - Forward
+    # K("RC-Left"): K("M-LEFT"),                    # Chrome-nw - Back
+    # K("RC-Right"): K("M-RIGHT"),                  # Chrome-nw - Forward
+    K("RC-Up"): K("C-Home"),                      # Beginning of File
+    K("RC-Shift-Up"): K("C-Shift-Home"),          # Select all to Beginning of File
+    K("RC-Down"): K("C-End"),                     # End of File
+    K("RC-Shift-Down"): K("C-Shift-End"),         # Select all to End of File
+    K("M-Backspace"): K("Delete"),                # Delete
+    # K(""): pass_through_key,                      # cancel
+    # K(""): K(""),                                 #
 })
 
 define_keymap(lambda wm_class: wm_class not in ("Code"),{
