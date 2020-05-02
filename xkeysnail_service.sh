@@ -78,14 +78,21 @@ if [ $# -eq 0 ]; then
 fi
 
 if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1 == "chromebook" ]]; then
-	while true; do
-	read -rep $'\nExperimental Support for Firefox/Chrome Back/Forward hotkeys (Cmd+Left/Right)?\n(Keys could get stuck, switch windows or press ctrl &/or super to release) (y/n)\n' yn
-	case $yn in
-		[Yy]* ) exp='/sbin/runuser -l {username} -c "export DISPLAY={displayid};/home/{username}/.config/kinto/caret_status_xkey.sh\&";'; expsh='"/home/{username}/.config/kinto/caret_status_xkey.sh"'; break;;
-		[Nn]* ) exp=" "; expsh=" " break;;
-		# * ) echo "Please answer yes or no.";;
-	esac
-	done
+	branch=$(git rev-parse --abbrev-ref HEAD)
+	if [ "$branch" == "dev" ] || [ "$branch" == "alpha" ];then
+		while true; do
+		read -rep $'\nExperimental Support for Firefox/Chrome Back/Forward hotkeys (Cmd+Left/Right)?\n(Keys could get stuck, switch windows or press ctrl &/or super to release) (y/n)\n' yn
+		case $yn in
+			[Yy]* ) exp='/sbin/runuser -l {username} -c "export DISPLAY={displayid};/home/{username}/.config/kinto/caret_status_xkey.sh\&";'; expsh='"/home/{username}/.config/kinto/caret_status_xkey.sh"'; break;;
+			[Nn]* ) exp=" "; expsh=" " break;;
+			# * ) echo "Please answer yes or no.";;
+		esac
+		done
+	else
+		echo -e "\nSupport for Firefox/Chrome Back/Forward hotkeys (Cmd+Left/Right) disabled on $branch w/ xkeysnail \n"
+		exp=" "
+		expsh=" "
+	fi
 	sudo systemctl enable xkeysnail >/dev/null 2>&1
 	if ! [ -x "$(command -v inotifywait)" ]; then
 		echo "Will need to install inotify-tools to restart key remapper live for config file changes..."
