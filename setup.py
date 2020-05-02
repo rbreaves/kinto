@@ -26,6 +26,7 @@ def requirements(pkgm):
 		print("\n")
 
 def install_ibus():
+	global distro
 	print(bcolors.CYELLOW2 + "You need to set IBus as the default Input Method for full word-wise support and re-run this installer.\n" + bcolors.ENDC)
 	print(bcolors.CYELLOW2 + "Confirm the IBus Setup by saying Yes and then closing the window.\n" + bcolors.ENDC)
 	print("ibus-setup\n")
