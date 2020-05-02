@@ -1,24 +1,6 @@
 // Place your key bindings in this file to override the defaultsauto[]
 [
     {
-        "key": "alt+left",
-        "command": "-workbench.action.terminal.focusPreviousPane",
-        "when": "terminalFocus"
-    },
-    {
-        "key": "alt+right",
-        "command": "-workbench.action.terminal.focusNextPane",
-        "when": "terminalFocus"
-    },
-    {
-        "key": "alt+right",
-        "command": "cursorWordRight"
-    },
-    {
-        "key": "alt+left",
-        "command": "cursorWordLeft"
-    },
-    {
         "key": "shift+alt+left",
         "command": "cursorWordStartLeftSelect",
         "when": "textInputFocus"

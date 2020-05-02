@@ -117,6 +117,15 @@ define_keymap(lambda wm_class: wm_class not in ("Code"),{
 
 # Keybindings for VS Code
 define_keymap(re.compile("Code"),{
+    # Wordwise remaining - for VS Code
+    K("M-Left"): K("C-M-Left"),                 # Left of Word
+    K("M-Right"): K("C-M-Right"),               # Right of Word
+    # Shift select word has a bug that prevents selection
+    # use ./xkeysnail-config/vscode_keybindings.json
+    # K("M-Shift-Left"): K("C-Shift-Left"),       # Select Left of Word
+    # K("M-Shift-Right"): K("C-Shift-Right"),     # Select Right of Word
+    
+    # VS Code Shortcuts
     K("C-g"): pass_through_key,                 # cancel Go to Line...
     K("Super-g"): K("C-g"),                     # Go to Line...
     K("F3"): pass_through_key,                  # cancel Find next
