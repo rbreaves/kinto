@@ -87,8 +87,16 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	mv ./xkeysnail-config/kinto.py.new ~/.config/kinto/kinto.py
 	sudo mv ./xkeysnail-config/xkeysnail.service.new /etc/systemd/system/xkeysnail.service 
 	xhost +SI:localuser:root
-	git clone --depth 1 https://github.com/mooz/xkeysnail.git
+	git clone --depth 1 https://github.com/rbreaves/xkeysnail.git
 	cd xkeysnail
+	giturl=$(git ls-remote --get-url)
+	if [ "$geturl" != "https://github.com/rbreaves/xkeysnail.git" ];then
+		cd ..
+		rm -rf ./xkeysnail
+		git clone --depth 1 https://github.com/rbreaves/xkeysnail.git
+		cd xkeysnail
+	fi
+	git pull origin master
 	sudo pip3 install --upgrade .
 	sudo systemctl enable xkeysnail.service
 	sudo systemctl daemon-reload
