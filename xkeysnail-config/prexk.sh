@@ -1,14 +1,12 @@
 #!/bin/bash
 
-if systemctl -q --user is-enabled keyswap.timer; then
-	systemctl --user stop keyswap.timer
-	systemctl --user disable keyswap.timer
+if [ -f /home/{username}/.config/systemd/user/keyswap.timer ]; then
+	systemctl --user stop keyswap.timer >/dev/null 2>&1
+	systemctl --user disable keyswap.timer >/dev/null 2>&1
 fi
-if systemctl -q --user is-active keyswap; then
-	systemctl --user stop keyswap
-fi
-if systemctl -q --user is-enabled keyswap; then
-	systemctl --user disable keyswap
+if [ -f /home/{username}/.config/systemd/user/keyswap.service ]; then
+	systemctl --user stop keyswap >/dev/null 2>&1
+	systemctl --user disable keyswap >/dev/null 2>&1
 fi
 
 # export DISPLAY={displayid};/usr/bin/xhost +SI:localuser:root
