@@ -3,6 +3,68 @@
 # set about:config?filter=ui.key.menuAccessKeyFocuses
 # to false for wordwise to work in Firefox
 
+function uninstall {
+	typeset -l dename
+	dename=$(./system-config/dename.sh | cut -d " " -f1)
+
+	while true; do
+	read -rep $'\nPress R to restore your original shortcuts.\nPress F to reset to factory shortcuts. (f/r)\n' yn
+		case $yn in
+			[Ff]* ) yn="f"; break;;
+			[Rr]* ) yn="r";break;;
+			* ) echo "Please answer yes or no.";;
+		esac
+	done
+
+	if [ "$yn" == "f" ];then
+		echo "Reset to factory shortcuts"
+		if [ "$dename" == "gnome" ];then
+			echo "Resetting DE hotkeys..."
+			echo "gsettings reset-recursively org.gnome.desktop.wm.keybindings"
+			gsettings reset-recursively org.gnome.desktop.wm.keybindings
+			echo "gsettings reset-recursively org.gnome.mutter.keybindings"
+			gsettings reset-recursively org.gnome.mutter.keybindings
+		elif [ "$dename" == "kde" ];then
+			echo "Resetting DE hotkeys..."
+			mv ~/.config/kwinrc ~/.config/kwinrc.kinto
+			mv ~/.config/kglobalshortcutsrc ~/.config/kglobalshortcutsrc.kinto
+		elif [ "$dename" == "xfce" ];then
+			echo "Resetting DE hotkeys..."
+			cp /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
+		fi
+	elif [ "$yn" == "r" ]; then
+		echo "Restore original user shortcuts"
+		if [ "$dename" == "gnome" ]; then
+			echo "Restoring DE hotkeys..."
+			wmkeys=$(ls | grep -m1 "keybinding")
+			mutterkeys=$(ls | grep -m1 "mutter")
+			if [[ ${#wmkeys} > 0 ]]; then
+				echo "dconf load /org/gnome/desktop/wm/keybindings/ < $wmkeys"
+				dconf load /org/gnome/desktop/wm/keybindings/ < "$wmkeys"
+			else
+				echo "Gnome Desktop keybindings backup not found..."
+			fi
+			if [[ ${#mutterkeys} > 0 ]]; then
+				echo "dconf load /org/gnome/mutter/keybindings/ < $mutterkeys"
+				dconf load /org/gnome/mutter/keybindings/ <"$mutterkeys"
+			fi
+			if [[ ${#wmkeys} > 0 ]] || [[ ${#mutterkeys} > 0 ]]; then
+				echo "Gnome hotkeys have been successfully restored."
+			fi
+		elif [ "$dename" == "kde" ]; then
+			echo "Restoring DE hotkeys..."
+			kwinkeys = $(ls | grep -m1 "kwinrc")
+			kdekeys = $(ls | grep -m1 "kglobalshortcutsrc")
+			cp ./"$kdekeys" ~/.config/kglobalshortcutsrc
+			cp ./"$kwinkeys" ~/.config/kwinrc
+		elif [ "$dename" == "xfce" ]; then
+			echo "Restoring DE hotkeys..."
+			xfcekeys = $(ls | grep -m1 "xfce4-keyboard")
+			cp ./"$xfcekeys" ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
+		fi
+	fi
+}
+
 if [ $# -eq 0 ]; then
 	echo "Install Kinto - xkeysnail (udev)"
 	echo "  1) Windows & Mac (HID driver)"
@@ -138,6 +200,7 @@ elif ! [[ $1 == "4" || $1 == "uninstall" ]]; then
 	echo "Expected argument was not provided"
 else
 	echo "Uninstalling Kinto - xkeysnail (udev)"
+	uninstall
 	# Undo Apple keyboard cmd & alt swap
 	if test -f "/sys/module/hid_apple/parameters/swap_opt_cmd" && [ `cat /sys/module/hid_apple/parameters/swap_opt_cmd` == "1" ]; then
 		echo '0' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd
@@ -150,5 +213,3 @@ else
 	rm ~/.config/autostart/xkeysnail.desktop
 	rm -rf ~/.config/kinto
 fi
-
-
