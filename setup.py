@@ -47,6 +47,7 @@ def install_ibus():
 		sys.exit()
 
 def setShortcuts():
+	global distro
 	distroVersion = cmdline("awk -F= '$1==\"VERSION_ID\" { print $2 ;}' /etc/os-release").replace('"','').strip()
 	
 	print("\nIf Kinto is already running it will be stopped...")
