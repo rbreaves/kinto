@@ -14,7 +14,7 @@ def cmdline(command):
         shell=True
     )
     return process.communicate()[0]
-
+distro = cmdline("awk -F= '$1==\"NAME\" { print $2 ;}' /etc/os-release").replace('"','').strip().split(" ")[0]
 dename = cmdline("./system-config/dename.sh").replace('"','').strip().split(" ")[0].lower()
 
 def requirements(pkgm):
@@ -29,17 +29,24 @@ def install_ibus():
 	print(bcolors.CYELLOW2 + "You need to set IBus as the default Input Method for full word-wise support and re-run this installer.\n" + bcolors.ENDC)
 	print(bcolors.CYELLOW2 + "Confirm the IBus Setup by saying Yes and then closing the window.\n" + bcolors.ENDC)
 	print("ibus-setup\n")
-	print("im-config -n ibus\n")
+	print("im-config -n ibus or im-chooser\n")
 	run_install = yn_choice(bcolors.CYELLOW2 + "Would you like to run it now? (Will require logoff and logon.)\n" + bcolors.ENDC)
 	if(run_install):
-		os.system("ibus-setup")
-		os.system("im-config -n ibus")
-		print("\n")
-		input("IBus has been set as the default Input Method.\nPress any key to exit and re-run after logoff & logon...")
+		if distro=="fedora":
+			os.system("ibus-setup")
+			os.system("im-chooser")
+			print("\n")
+			print("IBus needs to have Input Method set to your language.")
+			print("im-chooser needs IBus to be selected & closed.")
+			input("Will need to log off and back on for it take effect...")
+		else:
+			os.system("ibus-setup")
+			os.system("im-config -n ibus")
+			print("\n")
+			input("IBus has been set as the default Input Method.\nPress any key to exit and re-run after logoff & logon...")
 		sys.exit()
 
 def setShortcuts():
-	distro = cmdline("awk -F= '$1==\"NAME\" { print $2 ;}' /etc/os-release").replace('"','').strip().split(" ")[0]
 	distroVersion = cmdline("awk -F= '$1==\"VERSION_ID\" { print $2 ;}' /etc/os-release").replace('"','').strip()
 	
 	print("\nIf Kinto is already running it will be stopped...")
