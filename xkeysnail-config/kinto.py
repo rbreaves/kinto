@@ -4,7 +4,7 @@ import re
 from xkeysnail.transform import *
 
 # [Global modemap] Change modifier keys as in xmodmap
-define_conditional_modmap(lambda wm_class: wm_class not in ("Gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm","kitty"),{
+define_conditional_modmap(lambda wm_class: wm_class not in ("Gnome-terminal","konsole","Io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm","kitty"),{
     # # Chromebook
     # Key.LEFT_ALT: Key.RIGHT_CTRL,   # Chromebook
     # Key.LEFT_CTRL: Key.LEFT_ALT,    # Chromebook
