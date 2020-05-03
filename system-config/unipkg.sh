@@ -9,7 +9,7 @@ elif pkgmgr="$( which dnf )" 2> /dev/null; then
    $pkgmgr check-update; $pkgmgr install -y "$1"
 elif pkgmgr="$( which pacman )" 2> /dev/null; then
    echo "Arch-based"
-   $pkgmgr -Syy; $pkgmr -S "$1"
+   $pkgmgr -Syy; yes | pkgmr -S "$1"
 else
    echo "Package manager not found, please install $1" >&2
    exit 1
