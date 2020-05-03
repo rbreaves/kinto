@@ -3,8 +3,12 @@
 import re
 from xkeysnail.transform import *
 
+terminals = ["gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm","kitty"]
+terminals = [term.casefold() for term in terminals]
+termStr = "|".join(str(x) for x in terminals)
+
 # [Global modemap] Change modifier keys as in xmodmap
-define_conditional_modmap(lambda wm_class: wm_class not in ("Gnome-terminal","konsole","Io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm","kitty"),{
+define_conditional_modmap(lambda wm_class: wm_class.casefold() not in terminals,{
     # # Chromebook
     # Key.LEFT_ALT: Key.RIGHT_CTRL,   # Chromebook
     # Key.LEFT_CTRL: Key.LEFT_ALT,    # Chromebook
@@ -27,7 +31,7 @@ define_conditional_modmap(lambda wm_class: wm_class not in ("Gnome-terminal","ko
 })
 
 # [Conditional modmap] Change modifier keys in certain applications
-define_conditional_modmap(re.compile("Gnome-terminal|konsole|Io.elementary.terminal|terminator|sakura|guake|tilda|xterm|eterm|kitty"), {
+define_conditional_modmap(re.compile(termStr, re.IGNORECASE), {
     # # Chromebook
     # Key.LEFT_ALT: Key.RIGHT_CTRL,     # Chromebook
     # # Left Ctrl Stays Left Ctrl
@@ -52,7 +56,7 @@ define_conditional_modmap(re.compile("Gnome-terminal|konsole|Io.elementary.termi
 })
 
 # Keybindings for Nautilus
-define_keymap(re.compile("Org.gnome.Nautilus"),{
+define_keymap(re.compile("org.gnome.nautilus", re.IGNORECASE),{
     K("RC-Up"): K("M-Up"),          # Go Up dir
     K("RC-Down"): K("M-Down"),      # Go Down dir
     K("RC-Left"): K("M-Left"),      # Go Back
@@ -93,7 +97,7 @@ define_keymap(None,{
     # K(""): K(""),                                 #
 })
 
-define_keymap(lambda wm_class: wm_class not in ("Code"),{
+define_keymap(lambda wm_class: wm_class.casefold() not in ("code"),{
     # Wordwise remaining - for Everything but VS Code
     K("M-Left"): K("C-Left"),               # Left of Word
     K("M-Shift-Left"): K("C-Shift-Left"),   # Select Left of Word
@@ -116,7 +120,7 @@ define_keymap(lambda wm_class: wm_class not in ("Code"),{
 })
 
 # Keybindings for VS Code
-define_keymap(re.compile("Code"),{
+define_keymap(re.compile("code", re.IGNORECASE),{
     # Wordwise remaining - for VS Code
     # Alt-F19 hack fixes Alt menu activation
     K("M-Left"): [K("M-F19"),K("C-Left")],                  # Left of Word
@@ -144,7 +148,7 @@ define_keymap(re.compile("Code"),{
 }, "Code")
 
 # Keybindings for Sublime Text
-define_keymap(re.compile("Sublime_text"),{
+define_keymap(re.compile("Sublime_text", re.IGNORECASE),{
     K("C-Super-up"): K("M-o"),                  # Switch file
     K("C-M-f"): K("f11"),                       # toggle_full_screen
     K("C-M-v"): [K("C-k"), K("C-v")],           # paste_from_history
@@ -208,7 +212,7 @@ define_keymap(re.compile("Sublime_text"),{
     # K(""): K(""),                               #
 }, "Sublime Text")
 
-define_keymap(re.compile("konsole"),{
+define_keymap(re.compile("konsole", re.IGNORECASE),{
     # Ctrl Tab - In App Tab Switching
     K("LC-Tab") : K("Shift-Right"),
     K("LC-Shift-Tab") : K("Shift-Left"),
@@ -216,7 +220,7 @@ define_keymap(re.compile("konsole"),{
 
 }, "Konsole tab switching")
 
-define_keymap(re.compile("Io.elementary.terminal"),{
+define_keymap(re.compile("Io.elementary.terminal", re.IGNORECASE),{
     # Ctrl Tab - In App Tab Switching
     K("LC-Tab") : K("LC-Shift-Right"),
     K("LC-Shift-Tab") : K("LC-Shift-Left"),
@@ -224,11 +228,11 @@ define_keymap(re.compile("Io.elementary.terminal"),{
 
 }, "Elementary Terminal tab switching")
 
-define_keymap(re.compile("Gnome-terminal|konsole|Io.elementary.terminal|terminator|sakura|guake|tilda|xterm|eterm|kitty"),{
+define_keymap(re.compile(termStr, re.IGNORECASE),{
     # Ctrl Tab - In App Tab Switching
-    # K("LC-Tab") : K("LC-PAGE_DOWN"),
-    # K("LC-Shift-Tab") : K("LC-PAGE_UP"),
-    # K("LC-Grave") : K("LC-PAGE_UP"),
+    K("LC-Tab") : K("LC-PAGE_DOWN"),
+    K("LC-Shift-Tab") : K("LC-PAGE_UP"),
+    K("LC-Grave") : K("LC-PAGE_UP"),
     # Converts Cmd to use Ctrl-Shift
     K("RC-Tab"): K("RC-F13"),
     K("RC-Shift-Tab"): K("RC-Shift-F13"),
