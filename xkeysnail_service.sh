@@ -3,6 +3,9 @@
 # set about:config?filter=ui.key.menuAccessKeyFocuses
 # to false for wordwise to work in Firefox
 
+typeset -l distro
+distro=$(awk -F= '$1=="NAME" { print $2 ;}' /etc/os-release)
+
 function uninstall {
 	typeset -l dename
 	dename=$(./system-config/dename.sh | cut -d " " -f1)
@@ -102,7 +105,22 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 		echo "Will need to install python3-pip..."
 		sudo ./system-config/unipkg.sh python3-pip
 	fi
-	
+	if ! [ -x "$(command -v python3-config)" ]; then
+		if [ "$distro" == "ubuntu" ] || [ "$distro" == "debian" ]; then
+			pydev="python3-dev"
+		elif [ "$distro" == "fedora" ]; then
+			pydev="python3-devel"
+		fi
+		if [ "$distro" == "gnome" ] || [ "$distro" == "fedora" ] || [ "$distro" == "debian" ]; then
+			echo "Will need to install $pydev..."
+			sudo ./system-config/unipkg.sh "$pydev"
+		fi
+	fi
+	if ! [ -x "$(command -v xhost)" ]; then
+		if [ "$distro" == "\"manjaro linux\"" ]; then
+			sudo ./system-config/unipkg.sh xorg-xhost
+		fi
+	fi
 	# echo "Transferring files..."
 	mkdir -p ~/.config/kinto
 	
@@ -154,7 +172,18 @@ fi
 
 if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1 == "chromebook" ]]; then
 	mv ./xkeysnail-config/kinto.py.new ~/.config/kinto/kinto.py
-	sudo mv ./xkeysnail-config/xkeysnail.service.new /etc/systemd/system/xkeysnail.service 
+	# if [ "$distro" == "fedora" ];then
+	sudo rm /etc/systemd/system/xkeysnail.service
+	if [ -d /usr/lib/systemd/system ];then
+		xkeypath="/usr/lib/systemd/system/"
+	elif [ -d /lib/systemd/system ];then
+		xkeypath="/lib/systemd/system/"
+	fi
+	sudo mv ./xkeysnail-config/xkeysnail.service.new "$xkeypath"xkeysnail.service && echo "Service file added to "$xkeypath"xkeysnail.service"
+	sudo chown -R root:root "$xkeypath"xkeysnail.service && echo "Ownership set for root..." || echo "Failed to set ownership..."
+	sudo chmod 644 "$xkeypath"xkeysnail.service && echo "Permissions set to 644..." || echo "Failed to set permissions..."
+	sudo ln -s "$xkeypath"xkeysnail.service /etc/systemd/system/xkeysnail.service && echo "Created soft symlink..." || echo "Failed to create soft symlink..."
+	sudo ln -s "$xkeypath"xkeysnail.service /etc/systemd/system/graphical.target.wants/xkeysnail.service && echo "Created soft symlink for graphical target..." || echo "Failed to create soft symlink for graphical target..."
 	xhost +SI:localuser:root
 	git clone --depth 1 https://github.com/rbreaves/xkeysnail.git
 	cd xkeysnail
@@ -167,8 +196,13 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	fi
 	git pull origin master
 	sudo pip3 install --upgrade .
-	sudo systemctl enable xkeysnail.service
 	sudo systemctl daemon-reload
+	sudo systemctl --state=not-found --all | grep xkeysnail
+	if [ "$distro" == "fedora" ];then
+		systemctl enable xkeysnail.service
+	else
+		sudo systemctl enable xkeysnail.service
+	fi
 	sudo systemctl restart xkeysnail
 
 	echo -e "Adding xhost fix...\n"
@@ -202,6 +236,7 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	else
 		echo -e "Kinto \e[1m\e[91mxkeysnail service has failed.\e[0m"
 		echo "You can run 'sudo systemctl status xkeysnail' for more info"
+		echo "You can also run 'sudo journalctl -u xkeysnail'"
 	fi
 elif ! [[ $1 == "4" || $1 == "uninstall" ]]; then
 	echo "Expected argument was not provided"
@@ -219,4 +254,10 @@ else
 	sudo rm /etc/sudoers.d/limitedadmins
 	rm ~/.config/autostart/xkeysnail.desktop
 	rm -rf ~/.config/kinto
+	sudo rm /etc/systemd/system/xkeysnail.service
+	sudo rm /etc/systemd/system/graphical.target.wants/xkeysnail.service
+	sudo rm /usr/lib/systemd/system/xkeysnail.service
+	sudo systemctl daemon-reload
+	sudo systemctl --state=not-found --all | grep xkeysnail
+	exit 0
 fi

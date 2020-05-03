@@ -27,7 +27,7 @@ define_conditional_modmap(lambda wm_class: wm_class not in ("Gnome-terminal","ko
 })
 
 # [Conditional modmap] Change modifier keys in certain applications
-define_conditional_modmap(re.compile("Gnome-terminal|konsole|io.elementary.terminal|terminator|sakura|guake|tilda|xterm|eterm|kitty"), {
+define_conditional_modmap(re.compile("Gnome-terminal|konsole|Io.elementary.terminal|terminator|sakura|guake|tilda|xterm|eterm|kitty"), {
     # # Chromebook
     # Key.LEFT_ALT: Key.RIGHT_CTRL,     # Chromebook
     # # Left Ctrl Stays Left Ctrl
@@ -216,11 +216,19 @@ define_keymap(re.compile("konsole"),{
 
 }, "Konsole tab switching")
 
-define_keymap(re.compile("Gnome-terminal|konsole|io.elementary.terminal|terminator|sakura|guake|tilda|xterm|eterm|kitty"),{
+define_keymap(re.compile("Io.elementary.terminal"),{
     # Ctrl Tab - In App Tab Switching
-    K("LC-Tab") : K("LC-PAGE_DOWN"),
-    K("LC-Shift-Tab") : K("LC-PAGE_UP"),
-    K("LC-Grave") : K("LC-PAGE_UP"),
+    K("LC-Tab") : K("LC-Shift-Right"),
+    K("LC-Shift-Tab") : K("LC-Shift-Left"),
+    K("LC-Grave") : K("LC-Shift-Left"),
+
+}, "Elementary Terminal tab switching")
+
+define_keymap(re.compile("Gnome-terminal|konsole|Io.elementary.terminal|terminator|sakura|guake|tilda|xterm|eterm|kitty"),{
+    # Ctrl Tab - In App Tab Switching
+    # K("LC-Tab") : K("LC-PAGE_DOWN"),
+    # K("LC-Shift-Tab") : K("LC-PAGE_UP"),
+    # K("LC-Grave") : K("LC-PAGE_UP"),
     # Converts Cmd to use Ctrl-Shift
     K("RC-Tab"): K("RC-F13"),
     K("RC-Shift-Tab"): K("RC-Shift-F13"),
