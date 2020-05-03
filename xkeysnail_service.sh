@@ -169,16 +169,18 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	mv ./xkeysnail-config/kinto.py.new ~/.config/kinto/kinto.py
 	# if [ "$distro" == "fedora" ];then
 	sudo rm /etc/systemd/system/xkeysnail.service
-	sudo mv ./xkeysnail-config/xkeysnail.service.new /usr/lib/systemd/system/xkeysnail.service
-	sudo chown -R root:root /usr/lib/systemd/system/xkeysnail.service
-	sudo chmod 644 /usr/lib/systemd/system/xkeysnail.service
-	sudo ln -s /usr/lib/systemd/system/xkeysnail.service /etc/systemd/system/xkeysnail.service
-	sudo ln -s /usr/lib/systemd/system/xkeysnail.service /etc/systemd/system/graphical.target.wants/xkeysnail.service
-	# else
-	#	sudo mv ./xkeysnail-config/xkeysnail.service.new /etc/systemd/system/xkeysnail.service 
-	#	sudo chown -R root:root /etc/systemd/system/xkeysnail.service
-	#	sudo chmod 644 /etc/systemd/system/xkeysnail.service
-	# fi
+	if [ -d /usr/lib/systemd/system ];then
+		echo "1"
+		xkeypath="/usr/lib/systemd/system/"
+	elif [ -d /lib/systemd/system ];then
+		echo "2"
+		xkeypath="/lib/systemd/system/"
+	fi
+	sudo mv ./xkeysnail-config/xkeysnail.service.new "$xkeypath"xkeysnail.service && echo "Service file added to "$xkeypath"xkeysnail.service"
+	sudo chown -R root:root "$xkeypath"xkeysnail.service && echo "Ownership set for root..." || echo "Failed to set ownership..."
+	sudo chmod 644 "$xkeypath"xkeysnail.service && echo "Permissions set to 644..." || echo "Failed to set permissions..."
+	sudo ln -s "$xkeypath"xkeysnail.service /etc/systemd/system/xkeysnail.service && echo "Created soft symlink..." || echo "Failed to create soft symlink..."
+	sudo ln -s "$xkeypath"xkeysnail.service /etc/systemd/system/graphical.target.wants/xkeysnail.service && echo "Created soft symlink for graphical target..." || echo "Failed to create soft symlink for graphical target..."
 	xhost +SI:localuser:root
 	git clone --depth 1 https://github.com/rbreaves/xkeysnail.git
 	cd xkeysnail
@@ -231,6 +233,7 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	else
 		echo -e "Kinto \e[1m\e[91mxkeysnail service has failed.\e[0m"
 		echo "You can run 'sudo systemctl status xkeysnail' for more info"
+		echo "You can also run 'sudo journalctl -u xkeysnail'"
 	fi
 elif ! [[ $1 == "4" || $1 == "uninstall" ]]; then
 	echo "Expected argument was not provided"
