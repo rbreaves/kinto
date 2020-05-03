@@ -26,7 +26,8 @@ Kinto works for standard Windows, Apple and Chromebook keyboards. The following 
 - systemd
 - x11
 - IBus*
-- Fedora/RHEL/Manjaro/Arch/Debian/Ubuntu based distro 16.04+
+- Manjaro/Arch/Debian/Ubuntu based distro 16.04+
+- Fedora/RHEL (may not work w/ xkeysnail, but original xkb version does)
 - xkeysnail (Recommended, but optional)
 
 *IBus is needed to support wordwise during browser app usage as the keymap will need to change slightly depending if the cursor/caret is on screen waiting for input. Setup.py will set it but you can manually set it as well or check your current Input Method.
