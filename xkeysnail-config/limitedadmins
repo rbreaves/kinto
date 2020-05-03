@@ -1,0 +1,5 @@
+# /etc/sudoers.d/limitedadmins
+%{username} ALL=NOPASSWD: {systemctl} restart xkeysnail
+%{username} ALL=NOPASSWD: {systemctl} start xkeysnail
+%{username} ALL=NOPASSWD: {systemctl} stop xkeysnail
+%{username} ALL=NOPASSWD: {systemctl} status xkeysnail

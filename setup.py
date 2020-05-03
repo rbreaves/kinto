@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import json, time, os, sys
+import json, time, os, sys, subprocess, shlex
 from shutil import copyfile
 from subprocess import PIPE, Popen
 from prekinto import *
@@ -62,8 +62,12 @@ def setShortcuts():
 		if dename == "gnome":
 			cmdline('dconf dump /org/gnome/desktop/wm/keybindings/ > keybindings_`date +"%Y.%m.%d-%s"`.conf')
 			cmdline('dconf dump /org/gnome/mutter/keybindings/ > mutter_`date +"%Y.%m.%d-%s"`.conf')
-			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-applications \"['<Primary>F13','<Primary><Shift>F13','<Alt>Tab']\"")
-			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward \"['<Primary>F14','<Primary><Shift>F14','<Alt><Shift>Tab']\"")
+			if(kintotype == 1):
+				cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-applications \"['<Primary>Tools','<Alt>Tab']\"")
+				cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward \"['<Primary><Shift>Tools','<Alt><Shift>Tab']\"")
+			else:
+				cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-applications \"['<Primary>F13','<Primary><Shift>F13','<Alt>Tab']\"")
+				cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward \"['<Primary>F14','<Primary><Shift>F14','<Alt><Shift>Tab']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Primary><Shift>Space','<Primary>Space']\"")
 		if distro == "ubuntu" and dename == "gnome":
@@ -83,8 +87,12 @@ def setShortcuts():
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left ['']")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right ['']")
 		elif distro == "elementary" and dename == "gnome":
-			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-applications \"['<Primary>F13','<Primary><Shift>F13','<Alt>Tab']\"")
-			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward \"['<Primary>F14','<Primary><Shift>F14','<Alt><Shift>Tab']\"")
+			if(kintotype == 1):
+				cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-applications \"['<Primary>Tools','<Alt>Tab']\"")
+				cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward \"['<Primary><Shift>Tools','<Alt><Shift>Tab']\"")
+			else:
+				cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-applications \"['<Primary>F13','<Primary><Shift>F13','<Alt>Tab']\"")
+				cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward \"['<Primary>F14','<Primary><Shift>F14','<Alt><Shift>Tab']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings show-desktop \"['<Super>d','<Super>Down']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings toggle-maximized \"['<Alt>F10','<Super>Up']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Control><Shift>Space','<Super>Space']\"")
@@ -143,9 +151,13 @@ def setShortcuts():
 			cmdline('cp ~/.config/kglobalshortcutsrc ./kde_kglobalshortcutsrc_`date +"%Y.%m.%d-%s"`')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Switch to Previous Desktop" "Meta+Left,Meta+Left,Switch to Previous Desktop"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Operations Menu" "none,Alt+F3,Window Operations Menu"')
-			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows" "Ctrl+F13,Alt+Tab,Walk Through Windows"')
+			if(kintotype == 1):
+				cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows" "Ctrl+Tools,Alt+Tab,Walk Through Windows"')
+				cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows (Reverse)" "Ctrl+Shift+Tools,Alt+Shift+Backtab,Walk Through Windows (Reverse)"')
+			else:
+				cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows" "Ctrl+F13,Alt+Tab,Walk Through Windows"')
+				cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows (Reverse)" "Ctrl+Shift+F14,Alt+Shift+Backtab,Walk Through Windows (Reverse)"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows Alternative" "none,none,Walk Through Windows"')
-			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows (Reverse)" "Ctrl+Shift+F14,Alt+Shift+Backtab,Walk Through Windows (Reverse)"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Maximize Window" "none,Meta+PgUp,Maximize Window"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Maximize" "Meta+Ctrl+F,Alt+F10,Maximize Window"')
 			cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Minimize Window" "Meta+h,Meta+PgDown,Minimize Window"')
@@ -338,9 +350,17 @@ if os.path.isdir(homedir + "/.config/kinto") == False:
 with open('defaults.json') as json_file:
 	data = json.load(json_file)
 
+
 color_arr = [bcolors.CBEIGE,bcolors.CRED2,bcolors.CGREEN,bcolors.CYELLOW ]
 
 print("\nKinto - Type in Linux like it's a Mac.\n")
+
+kintotype = int(input(color_arr[2] + "1) Kinto - xkeysnail (udev/x11) - Recommended\n" + color_arr[0] + "2) Kinto - Original xkb/x11 implementation\n\n" + bcolors.ENDC))
+print("")
+if(kintotype == 1):
+	setShortcuts()
+	subprocess.check_call(shlex.split("./xkeysnail_service.sh"))
+	exit()
 
 for index, item in enumerate(data['defaulttypes']):
 	ossym = ""

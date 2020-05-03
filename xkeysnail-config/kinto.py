@@ -11,13 +11,13 @@ define_conditional_modmap(lambda wm_class: wm_class not in ("Gnome-terminal","ko
     # Key.RIGHT_ALT: Key.RIGHT_CTRL,  # Chromebook
     # Key.RIGHT_CTRL: Key.RIGHT_ALT,  # Chromebook
 
-    # Default Mac/Win
-    Key.LEFT_ALT: Key.RIGHT_CTRL,   # WinMac
-    Key.LEFT_META: Key.LEFT_ALT,    # WinMac
-    Key.LEFT_CTRL: Key.LEFT_META,   # WinMac
-    Key.RIGHT_ALT: Key.RIGHT_CTRL,  # WinMac
-    Key.RIGHT_META: Key.RIGHT_ALT,  # WinMac
-    Key.RIGHT_CTRL: Key.RIGHT_META, # WinMac
+    # # Default Mac/Win
+    # Key.LEFT_ALT: Key.RIGHT_CTRL,   # WinMac
+    # Key.LEFT_META: Key.LEFT_ALT,    # WinMac
+    # Key.LEFT_CTRL: Key.LEFT_META,   # WinMac
+    # Key.RIGHT_ALT: Key.RIGHT_CTRL,  # WinMac
+    # Key.RIGHT_META: Key.RIGHT_ALT,  # WinMac
+    # Key.RIGHT_CTRL: Key.RIGHT_META, # WinMac
 
     # # Mac Only
     # Key.LEFT_META: Key.RIGHT_CTRL,  # Mac
@@ -27,22 +27,22 @@ define_conditional_modmap(lambda wm_class: wm_class not in ("Gnome-terminal","ko
 })
 
 # [Conditional modmap] Change modifier keys in certain applications
-define_conditional_modmap(re.compile("Gnome-terminal|konsole|io.elementary.terminal|terminator|sakura|guake|tilda|xterm|eterm|kitty"), {
+define_conditional_modmap(re.compile("Gnome-terminal|konsole|Io.elementary.terminal|terminator|sakura|guake|tilda|xterm|eterm|kitty"), {
     # # Chromebook
-    # Key.LEFT_ALT: Key.RIGHT_CTRL,
+    # Key.LEFT_ALT: Key.RIGHT_CTRL,     # Chromebook
     # # Left Ctrl Stays Left Ctrl
-    # Key.LEFT_META: Key.LEFT_ALT,
-    # Key.RIGHT_ALT: Key.RIGHT_CTRL,
-    # Key.RIGHT_CTRL: Key.RIGHT_ALT,
+    # Key.LEFT_META: Key.LEFT_ALT,      # Chromebook
+    # Key.RIGHT_ALT: Key.RIGHT_CTRL,    # Chromebook
+    # Key.RIGHT_CTRL: Key.RIGHT_ALT,    # Chromebook
     # # Right Meta does not exist on chromebooks
 
-    # Default Mac/Win
-    Key.LEFT_ALT: Key.RIGHT_CTRL,   # WinMac
-    Key.LEFT_META: Key.LEFT_ALT,    # WinMac
-    Key.LEFT_CTRL: Key.LEFT_CTRL,   # WinMac
-    Key.RIGHT_ALT: Key.RIGHT_CTRL,  # WinMac
-    Key.RIGHT_META: Key.RIGHT_ALT,  # WinMac
-    Key.RIGHT_CTRL: Key.LEFT_CTRL,  # WinMac
+    # # Default Mac/Win
+    # Key.LEFT_ALT: Key.RIGHT_CTRL,   # WinMac
+    # Key.LEFT_META: Key.LEFT_ALT,    # WinMac
+    # Key.LEFT_CTRL: Key.LEFT_CTRL,   # WinMac
+    # Key.RIGHT_ALT: Key.RIGHT_CTRL,  # WinMac
+    # Key.RIGHT_META: Key.RIGHT_ALT,  # WinMac
+    # Key.RIGHT_CTRL: Key.LEFT_CTRL,  # WinMac
 
     # # Mac Only
     # Key.LEFT_META: Key.RIGHT_CTRL,  # Mac
@@ -50,6 +50,98 @@ define_conditional_modmap(re.compile("Gnome-terminal|konsole|io.elementary.termi
     # Key.RIGHT_META: Key.RIGHT_CTRL, # Mac
     # Key.RIGHT_CTRL: Key.LEFT_CTRL,  # Mac
 })
+
+# Keybindings for Nautilus
+define_keymap(re.compile("Org.gnome.Nautilus"),{
+    K("RC-Up"): K("M-Up"),          # Go Up dir
+    K("RC-Down"): K("M-Down"),      # Go Down dir
+    K("RC-Left"): K("M-Left"),      # Go Back
+    K("RC-Right"): K("M-Right"),    # Go Forward
+})
+
+define_keymap(None,{
+    # Cmd Tab - App Switching Default
+    K("RC-Tab"): K("RC-F13"),                     # Default
+    K("RC-Shift-Tab"): K("RC-Shift-F13"),         # Default
+    K("RC-Grave"): K("RC-Shift-F13"),             # Default
+    # K("RC-Tab"): K("RC-backslash"),               # Chromebook
+    # K("RC-Shift-Tab"): K("RC-Shift-backslash"),   # Chromebook
+    # K("RC-Grave"): K("RC-Shift-backslash"),       # Chromebook
+    # In-App Tab switching
+    # K("M-Tab"): K("C-Tab"),                       # Chromebook - In-App Tab switching
+    # K("M-Shift-Tab"): K("C-Shift-Tab"),           # Chromebook - In-App Tab switching
+    # K("M-Grave") : K("C-Shift-Tab"),              # Chromebook - In-App Tab switching
+    K("Super-Tab"): K("LC-Tab"),                  # Default
+    K("Super-Shift-Tab"): K("LC-Shift-Tab"),      # Default
+    K("LC-Grave") : K("LC-Shift-Tab"),            # Default
+
+    # Wordwise
+    K("RC-Left"): K("Home"),                      # Beginning of Line
+    K("RC-Shift-Left"): K("Shift-Home"),          # Select all to Beginning of Line
+    K("RC-Right"): K("End"),                      # End of Line
+    K("RC-Shift-Right"): K("Shift-End"),          # Select all to End of Line
+    # K("RC-Left"): K("C-LEFT_BRACE"),              # Firefox-nw - Back
+    # K("RC-Right"): K("C-RIGHT_BRACE"),            # Firefox-nw - Forward
+    # K("RC-Left"): K("M-LEFT"),                    # Chrome-nw - Back
+    # K("RC-Right"): K("M-RIGHT"),                  # Chrome-nw - Forward
+    K("RC-Up"): K("C-Home"),                      # Beginning of File
+    K("RC-Shift-Up"): K("C-Shift-Home"),          # Select all to Beginning of File
+    K("RC-Down"): K("C-End"),                     # End of File
+    K("RC-Shift-Down"): K("C-Shift-End"),         # Select all to End of File
+    K("M-Backspace"): K("Delete"),                # Delete
+    # K(""): pass_through_key,                      # cancel
+    # K(""): K(""),                                 #
+})
+
+define_keymap(lambda wm_class: wm_class not in ("Code"),{
+    # Wordwise remaining - for Everything but VS Code
+    K("M-Left"): K("C-Left"),               # Left of Word
+    K("M-Shift-Left"): K("C-Shift-Left"),   # Select Left of Word
+    K("M-Right"): K("C-Right"),             # Right of Word
+    K("M-Shift-Right"): K("C-Shift-Right"), # Select Right of Word
+    # ** VS Code fix **
+    #   Electron issue precludes normal keybinding fix.
+    #   Alt menu auto-focus/toggle gets in the way.
+    #
+    #   refer to ./xkeysnail-config/vscode_keybindings.json
+    # **
+    #
+    # ** Firefox fix **
+    #   User will need to set "ui.key.menuAccessKeyFocuses"
+    #   under about:config to false.
+    #
+    #   https://superuser.com/questions/770301/pentadactyl-how-to-disable-menu-bar-toggle-by-alt
+    # **
+    #
+})
+
+# Keybindings for VS Code
+define_keymap(re.compile("Code"),{
+    # Wordwise remaining - for VS Code
+    # Alt-F19 hack fixes Alt menu activation
+    K("M-Left"): [K("M-F19"),K("C-Left")],                  # Left of Word
+    K("M-Right"): [K("M-F19"),K("C-Right")],                # Right of Word
+    K("M-Shift-Left"): [K("M-F19"),K("C-Shift-Left")],      # Select Left of Word
+    K("M-Shift-Right"): [K("M-F19"),K("C-Shift-Right")],    # Select Right of Word
+    
+    # VS Code Shortcuts
+    K("C-g"): pass_through_key,                 # cancel Go to Line...
+    K("Super-g"): K("C-g"),                     # Go to Line...
+    K("F3"): pass_through_key,                  # cancel Find next
+    K("C-h"): pass_through_key,                 # cancel replace
+    K("C-M-f"): K("C-h"),                       # replace
+    K("C-Shift-h"): pass_through_key,           # cancel replace_next
+    K("C-M-e"): K("C-Shift-h"),                 # replace_next
+    K("f3"): pass_through_key,                  # cancel find_next
+    K("C-g"): K("f3"),                          # find_next
+    K("Shift-f3"): pass_through_key,            # cancel find_prev
+    K("C-Shift-g"): K("Shift-f3"),              # find_prev
+    K("Super-C-g"): K("C-f2"),                  # Sublime - find_all_under
+    K("Super-Shift-up"): K("M-Shift-up"),       # multi-cursor up
+    K("Super-Shift-down"): K("M-Shift-down"),   # multi-cursor down
+    # K(""): pass_through_key,                    # cancel
+    # K(""): K(""),                               #
+}, "Code")
 
 # Keybindings for Sublime Text
 define_keymap(re.compile("Sublime_text"),{
@@ -60,6 +152,8 @@ define_keymap(re.compile("Sublime_text"),{
     K("Super-M-up"): K("C-up"),                 # scroll_lines up
     K("C-down"): pass_through_key,              # cancel scroll_lines down
     K("Super-M-down"): K("C-down"),             # scroll_lines down
+    K("Super-Shift-up"): K("M-Shift-up"),       # multi-cursor up
+    K("Super-Shift-down"): K("M-Shift-down"),   # multi-cursor down
     K("C-PAGE_DOWN"): pass_through_key,         # cancel next_view
     K("C-PAGE_UP"): pass_through_key,           # cancel prev_view
     K("C-Shift-left_brace"): K("C-PAGE_DOWN"),  # next_view
@@ -114,36 +208,6 @@ define_keymap(re.compile("Sublime_text"),{
     # K(""): K(""),                               #
 }, "Sublime Text")
 
-define_keymap(None,{
-    # Cmd Tab - App Switching Default
-    K("RC-Tab"): K("RC-F13"),
-    K("RC-Shift-Tab"): K("RC-Shift-F13"),
-    K("RC-Grave"): K("RC-Shift-F13"),
-    # In-App Tab switching
-    # K("M-Tab"): K("C-Tab"),                   # Chromebook
-    # K("M-Shift-Tab"): K("C-Shift-Tab"),       # Chromebook
-    K("Super-Tab"): K("LC-Tab"),                # Default
-    K("Super-Shift-Tab"): K("LC-Shift-Tab"),    # Default
-    K("LC-Grave") : K("LC-Shift-Tab"),          # Default
-
-    # Wordwise
-    K("RC-Left"): K("Home"),        # Beginning of Line
-    K("RC-Right"): K("End"),        # End of Line
-    K("M-Left"): K("C-Left"),       # Left of Word
-    K("M-Right"): K("C-Right"),     # Right of Word
-    K("RC-Up"): K("C-Home"),        # Beginning of File
-    K("RC-Down"): K("C-End"),       # End of File
-    K("M-Backspace"): K("Delete"),  # Delete
-    # K(""): pass_through_key,        # cancel
-    # K(""): K(""),                   #
-})
-
-# define_keymap(re.compile("Gnome-terminal|io.elementary.terminal|terminator|sakura|guake|tilda|xterm|eterm|kitty"),{
-#     # Ctrl Tab - In App Tab Switching
-#     # LC is already set
-#     K("LC-Grave") : K("LC-Shift-Tab"),
-# }, "Terminals tab switching")
-
 define_keymap(re.compile("konsole"),{
     # Ctrl Tab - In App Tab Switching
     K("LC-Tab") : K("Shift-Right"),
@@ -152,13 +216,19 @@ define_keymap(re.compile("konsole"),{
 
 }, "Konsole tab switching")
 
-
-
-define_keymap(re.compile("Gnome-terminal|konsole|io.elementary.terminal|terminator|sakura|guake|tilda|xterm|eterm|kitty"),{
+define_keymap(re.compile("Io.elementary.terminal"),{
     # Ctrl Tab - In App Tab Switching
-    K("LC-Tab") : K("LC-PAGE_DOWN"),
-    K("LC-Shift-Tab") : K("LC-PAGE_UP"),
-    K("LC-Grave") : K("LC-PAGE_UP"),
+    K("LC-Tab") : K("LC-Shift-Right"),
+    K("LC-Shift-Tab") : K("LC-Shift-Left"),
+    K("LC-Grave") : K("LC-Shift-Left"),
+
+}, "Elementary Terminal tab switching")
+
+define_keymap(re.compile("Gnome-terminal|konsole|Io.elementary.terminal|terminator|sakura|guake|tilda|xterm|eterm|kitty"),{
+    # Ctrl Tab - In App Tab Switching
+    # K("LC-Tab") : K("LC-PAGE_DOWN"),
+    # K("LC-Shift-Tab") : K("LC-PAGE_UP"),
+    # K("LC-Grave") : K("LC-PAGE_UP"),
     # Converts Cmd to use Ctrl-Shift
     K("RC-Tab"): K("RC-F13"),
     K("RC-Shift-Tab"): K("RC-Shift-F13"),
@@ -203,8 +273,3 @@ define_keymap(re.compile("Gnome-terminal|konsole|io.elementary.terminal|terminat
     K("RC-SLASH"): K("C-Shift-SLASH"),
     K("RC-KPASTERISK"): K("C-Shift-KPASTERISK"),
 }, "terminals")
-
-# define_keymap(re.compile("Chromium-browser"),{
-#     # K("RC-Tab"): K("C-F13"),
-#     # K("RC-Shift-Tab"): K("C-f1"),
-# }, "Chromium-browser")
