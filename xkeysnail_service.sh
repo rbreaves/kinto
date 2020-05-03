@@ -116,6 +116,11 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 			sudo ./system-config/unipkg.sh "$pydev"
 		fi
 	fi
+	if ! [ -x "$(command -v xhost)" ]; then
+		if [ "$distro" == "\"manjaro linux\"" ]; then
+			sudo ./system-config/unipkg.sh xorg-xhost
+		fi
+	fi
 	# echo "Transferring files..."
 	mkdir -p ~/.config/kinto
 	
@@ -170,10 +175,8 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	# if [ "$distro" == "fedora" ];then
 	sudo rm /etc/systemd/system/xkeysnail.service
 	if [ -d /usr/lib/systemd/system ];then
-		echo "1"
 		xkeypath="/usr/lib/systemd/system/"
 	elif [ -d /lib/systemd/system ];then
-		echo "2"
 		xkeypath="/lib/systemd/system/"
 	fi
 	sudo mv ./xkeysnail-config/xkeysnail.service.new "$xkeypath"xkeysnail.service && echo "Service file added to "$xkeypath"xkeysnail.service"
