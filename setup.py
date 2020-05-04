@@ -358,8 +358,9 @@ print("\nKinto - Type in Linux like it's a Mac.\n")
 kintotype = int(input(color_arr[2] + "1) Kinto - xkeysnail (udev/x11) - Recommended\n" + color_arr[0] + "2) Kinto - Original xkb/x11 implementation\n\n" + bcolors.ENDC))
 print("")
 if(kintotype == 1):
-	setShortcuts()
 	subprocess.check_call(shlex.split("./xkeysnail_service.sh"))
+	if os.path.isdir(homedir + "/.config/kinto") == True:
+		setShortcuts()
 	exit()
 
 for index, item in enumerate(data['defaulttypes']):
