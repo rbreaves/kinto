@@ -116,7 +116,9 @@ The older xkb shortcut method info can be read about in ticket [#125](https://gi
 
 ## Other Notes Related to Install
 
-**Manjaro with Gnome there are issues.** 
+**Manjaro with Gnome there are issues with caret/input checking.**
+
+Only impacts back/forward hotkeys for web browsers.
 
 Please see this ticket for more information.
 
