@@ -238,7 +238,7 @@ def Uninstall():
 			cmdline('cp ./' + xfcekeys + ' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml')
 		if dename == "gnome" or dename == "kde" or dename == "xfce":
 			print("./uninstall.sh\n")
-			cmdline("./uninstall.sh")
+			subprocess.check_call(shlex.split("./uninstall.sh"))
 			print("Done.")
 		if dename == "kde" or dename == "xfce":
 			print("Please log off and back on for your original hotkeys to take effect.")
@@ -258,7 +258,7 @@ def Uninstall():
 			cmdline('cp /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml')
 		if dename == "gnome" or dename == "kde" or dename == "xfce":
 			print("./uninstall.sh\n")
-			cmdline("./uninstall.sh")
+			subprocess.check_call(shlex.split("./uninstall.sh"))
 			print("Done.")
 		if dename == "kde" or dename == "xfce":
 			print("Please log off and back on for your original DE hotkeys to take effect.")
