@@ -85,9 +85,9 @@ To Uninstall Kinto
 **Terminal Keys**
 | Value| Description|Mac/Kinto Equivalent|
 | ----- |:--------:|:--------:|
-|RC,RCtrl|Right Control on Left & Right Alt/Cmd key|Cmd|
-|M,Alt| Alt/Option|Alt/Option|
-|Ctrl | Ctrl|Ctrl|
+|RC,RCtrl|Right Control → Left & Right Alt/Cmd key|Cmd|
+|M,Alt|Alt/Option|Alt/Option|
+|LC,LCtrl |Left Control|Ctrl|
 
 You can define new keymaps for your specific app via this method. You also do not have to cancel out the original keybinding if you do not need or want to, but you can do so with "pass_through_key".
 
