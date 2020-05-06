@@ -154,6 +154,8 @@ def setShortcuts():
 			if(kintotype == 1):
 				cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows" "Ctrl+Tools,Alt+Tab,Walk Through Windows"')
 				cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows (Reverse)" "Ctrl+Shift+Tools,Alt+Shift+Backtab,Walk Through Windows (Reverse)"')
+				cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows of Current Application" "Alt+F6,none,Walk Through Windows of Current Application"')
+				cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows of Current Application (Reverse)" "Alt+Shift+F6,none,Walk Through Windows of Current Application (Reverse)"')
 			else:
 				cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows" "Ctrl+F13,Alt+Tab,Walk Through Windows"')
 				cmdline('kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Walk Through Windows (Reverse)" "Ctrl+Shift+F14,Alt+Shift+Backtab,Walk Through Windows (Reverse)"')

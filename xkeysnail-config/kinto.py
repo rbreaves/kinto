@@ -67,7 +67,8 @@ define_keymap(None,{
     # Cmd Tab - App Switching Default
     K("RC-Tab"): K("RC-F13"),                     # Default
     K("RC-Shift-Tab"): K("RC-Shift-F13"),         # Default
-    K("RC-Grave"): K("RC-Shift-F13"),             # Default
+    K("RC-Grave"): K("M-F6"),                     # Default
+    K("RC-Shift-Grave"): K("M-Shift-F6"),         # Default
     # K("RC-Tab"): K("RC-backslash"),               # Chromebook
     # K("RC-Shift-Tab"): K("RC-Shift-backslash"),   # Chromebook
     # K("RC-Grave"): K("RC-Shift-backslash"),       # Chromebook
@@ -77,7 +78,6 @@ define_keymap(None,{
     # K("M-Grave") : K("C-Shift-Tab"),              # Chromebook - In-App Tab switching
     K("Super-Tab"): K("LC-Tab"),                  # Default
     K("Super-Shift-Tab"): K("LC-Shift-Tab"),      # Default
-    K("LC-Grave") : K("LC-Shift-Tab"),            # Default
 
     # Wordwise
     K("RC-Left"): K("Home"),                      # Beginning of Line
