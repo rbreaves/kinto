@@ -218,7 +218,7 @@ def Uninstall():
 		if dename == "gnome":
 			print("Restoring DE hotkeys...")
 			wmkeys = cmdline('ls | grep -m1 "keybinding"')
-			mutterkeys = cmdline('ls | grep -m1 "mutter"')
+			mutterkeys = cmdline('ls | grep -m1 "mutter_"')
 			if len(wmkeys) > 0:
 				print('dconf load /org/gnome/desktop/wm/keybindings/ < ' + wmkeys)
 				cmdline('dconf load /org/gnome/desktop/wm/keybindings/ < ' + wmkeys)

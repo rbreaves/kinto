@@ -44,7 +44,7 @@ function uninstall {
 		if [ "$dename" == "gnome" ]; then
 			echo "Restoring DE hotkeys..."
 			wmkeys=$(ls | grep -m1 "keybinding")
-			mutterkeys=$(ls | grep -m1 "mutter")
+			mutterkeys=$(ls | grep -m1 "mutter_")
 			if [[ ${#wmkeys} > 0 ]]; then
 				echo "dconf load /org/gnome/desktop/wm/keybindings/ < $wmkeys"
 				dconf load /org/gnome/desktop/wm/keybindings/ < "$wmkeys"
