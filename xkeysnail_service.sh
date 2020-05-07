@@ -27,6 +27,10 @@ function uninstall {
 			gsettings reset-recursively org.gnome.desktop.wm.keybindings
 			echo "gsettings reset-recursively org.gnome.mutter.keybindings"
 			gsettings reset-recursively org.gnome.mutter.keybindings
+			echo "gsettings set org.gnome.mutter overlay-key 'super'"
+			gsettings set org.gnome.mutter overlay-key 'super'
+			dconf dump /org/gnome/mutter/ > mutter.conf
+			dconf load /org/gnome/mutter/ < mutter.conf
 		elif [ "$dename" == "kde" ];then
 			echo "Resetting DE hotkeys..."
 			mv ~/.config/kwinrc ~/.config/kwinrc.kinto
@@ -73,7 +77,7 @@ if [ $# -eq 0 ]; then
 	echo "  1) Windows & Mac (HID driver)"
 	echo "  2) Mac Only & VMs on Macbooks"
 	echo "  3) Chromebook"
-	echo "  4) Uninstall"
+	# echo "  4) Uninstall"
 
 	read n
 

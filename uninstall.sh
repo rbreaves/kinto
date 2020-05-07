@@ -14,5 +14,6 @@ rm ~/.config/systemd/user/keyswap.timer
 rm -rf ~/.config/autostart/kinto.desktop
 rm -rf ~/.config/kinto
 rm -rf ~/.xkb
-systemctl daemon-reload
+sudo systemctl daemon-reload
 sed -i '/xkb/d' ~/.Xsession 2>/dev/null
+exit 0
