@@ -10,6 +10,34 @@
 
 Seamless copy and paste with all apps and terminals. Also the only linux remapper that is aware of your cursor/caret status - meaning it avoids shortcut conflicts within an app versus wordwise shortcuts when a text field is in use. (xkeysnail implementation of Kinto has caret checking disabled in master for now.)
 
+## Table of Contents
+
+[What does this do exactly?](#What-does-this-do-exactly)
+
+[What does Kinto require?](#What-does-Kinto-require)
+
+[How to install](#How-to-install)
+
+[Shortcut Creation (Xkeysnail)](#Shortcut-Creation-Xkeysnail)
+
+[Other Notes Related to Install](#Other-Notes-Related-to-Install)
+
+[How to Upgrade/Control Kinto](#How-to-Upgrade-Kinto)
+
+[Troubleshooting](#Troubleshooting)
+
+[Language Support](#Language-Support)
+
+[Related or Useful Resources](#Related-or-Useful-Resources)
+
+[Contributing](#Contributing)
+
+[More information about Kinto](#More-information-about-Kinto)
+
+[License](#License)
+
+[Credits and Contributions](#Credits-and-Contributions)
+
 ## What does this do exactly?
 
 Kinto works for standard Windows, Apple and Chromebook keyboards. The following however describes the dynamic rebinding based on a standard Windows keyboard. (Alt location is Cmd for Apple keyboards)
@@ -36,7 +64,7 @@ On most distros you can confirm navigate to your "Language Support" and set "Key
 
 Wayland support is planned, but not ready yet.
 
-## Kinto for Windows 10 Requirements
+### Kinto for Windows 10 Requirements
 
 - WSL Ubuntu edition
 - Powershell - run as Administrator
@@ -191,7 +219,6 @@ systemctl --user disable keyswap
 sudo systemctl disable xkeysnail
 ```
 
-
 ## Learning macOS style hotkeys on Linux
 
 You can use websites like https://www.shortcutfoo.com in Google Chrome while using the terminal style keymap, but Firefox is not compatible due to detecting "cmd" as keycode 224. Chrome detects Win/Super/Cmd as keycode 91 on all OS's.
@@ -315,16 +342,98 @@ sudo systemctl start xkeysnail
 sudo systemctl status xkeysnail
 ```
 
+## Notes about Windows 10
+Sharpkeys was used to create the layout/reg files to swap the Ctrl, Win and Alt keys. Sharpkeys was not required however because the reg keys were extracted. Autohotkey is used to manage keyswaps needed for terminal usage. Autohotkey is also used to add additional mac like keybinds for Sublime text and can be used for other apps as well.
+
+Microsoft is working on a new Powertoy Keyboard Manager that could be used with an easier to use GUI interface, but this approach should be fully sufficient for a mac like experience and autohotkeys appears to be more than capable enough to handle complex rebinding of any or most mac like shortcuts.
+
 ## Language Support
 I'd appreciate any help from people with non-US based keyboards, to help ensure that these keymaps and keyswap methods work in all or most languages.
 
 If you would like to attempt adding additional custom keymaps for other languages then I strongly recommend reading Glen Whitney's post here.
 https://superuser.com/questions/385748/binding-superc-superv-to-copy-and-paste
 
-## Notes about Windows 10
-Sharpkeys was used to create the layout/reg files to swap the Ctrl, Win and Alt keys. Sharpkeys was not required however because the reg keys were extracted. Autohotkey is used to manage keyswaps needed for terminal usage. Autohotkey is also used to add additional mac like keybinds for Sublime text and can be used for other apps as well.
+## Related or Useful Resources
 
-Microsoft is working on a new Powertoy Keyboard Manager that could be used with an easier to use GUI interface, but this approach should be fully sufficient for a mac like experience and autohotkeys appears to be more than capable enough to handle complex rebinding of any or most mac like shortcuts.
+[Xkeysnail](https://github.com/mooz/xkeysnail) by mooz
+
+Yet another keyboard remapping tool for X environment
+
+[fusuma](https://github.com/iberianpig/fusuma) by iberianpig
+
+Multitouch gestures with libinput driver on Linux
+
+[pykeymacs](https://github.com/zhanghai/pykeymacs) by zhanghai
+
+Emacs style keyboard macros implemented in Python
+
+[Dynamic Wallpapers](https://github.com/adi1090x/dynamic-wallpaper) by adi1090x
+
+Simple bash script to set a Dynamic Wallpaper according to certain conditions.
+
+[macify-linux](https://github.com/Jonchun/macify-linux) by JonChun
+
+Automated setup scripts to transform Linux into macOS. (Uses Kinto for key remaps)
+
+[AutoHotKey](https://github.com/AutoHotkey/AutoHotkey) by AutoHotkey
+
+AutoHotkey is a powerful and easy to use scripting language for desktop automation on Windows.
+
+[ibus-typing-booster](https://github.com/mike-fabian/ibus-typing-booster) by mike-fabian
+
+ibus-typing-booster is a completion input method for faster typing
+
+[twemoji color font](https://github.com/eosrei/twemoji-color-font) by eosrei
+
+Twitter Unicode 12 emoji color SVGinOT font for Linux/MacOS/Windows
+
+[iTerm2 Color Schemes](https://github.com/mbadolato/iTerm2-Color-Schemes) by mbadolato
+
+Over 225 terminal color schemes/themes for iTerm/iTerm2. Includes ports to Terminal, Konsole, PuTTY, Xresources, XRDB, Remmina, Termite, XFCE, Tilda, FreeBSD VT, Terminator, Kitty...
+
+[PowerToys](https://github.com/microsoft/PowerToys) by microsoft
+
+Windows system utilities to maximize productivity
+
+[espanso](https://github.com/federico-terzi/espanso) by federico-terzi
+
+Cross-platform Text Expander written in Rust
+
+[GalliumOS](https://github.com/GalliumOS/galliumos-distro) by GalliumOS
+
+Docs, issues, and artwork sources for GalliumOS
+
+[eOS-X](https://github.com/ipproductions/eOS-X) by ipproductions
+
+Dark & Light Theme w/ OSX controls for Elementary OS
+
+[Autorandr](https://github.com/phillipberndt/autorandr) by phillipberndt
+
+Auto-detect the connected display hardware and load the appropriate X11 setup using xrandr
+
+[Barrier](https://github.com/debauchee/barrier) by debauchee
+
+Open-source KVM software
+
+[Synergy Free Binaries](https://github.com/amankhoza/synergy-binaries) by amankhoza
+
+The latest freely available Synergy binaries
+
+[Synergy Official](https://symless.com/) by Symless
+
+Latest Official Synergy
+
+[Karabiner-Elements](https://github.com/pqrs-org/Karabiner-Elements) by pqrs-org
+
+Karabiner-Elements is a powerful utility for keyboard customization on macOS Sierra (10.12) or later. 
+
+[mbpfan](https://github.com/linux-on-mac/mbpfan) by linux-on-mac
+
+A simple daemon to control fan speed on all MacBook/MacBook Pros (probably all Apple computers) for Linux Kernel 3 and newer
+
+[vala-panel](https://github.com/rilian-la-te/vala-panel) by rilian-la-te
+
+Vala rewrite of SimplePanel - GitHub mirror (Global Menu for XFCE)
 
 ## Contributing
 
