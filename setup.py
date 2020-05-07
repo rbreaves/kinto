@@ -70,6 +70,7 @@ def setShortcuts():
 				cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward \"['<Primary>F14','<Primary><Shift>F14','<Alt><Shift>Tab']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Primary><Shift>Space','<Primary>Space']\"")
+			cmdline("gsettings set org.gnome.mutter overlay-key ''")
 		if distro == "ubuntu" and dename == "gnome":
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up \"['<Super>Up','<Super>Left']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down \"['<Super>Down','<Super>Right']\"")
@@ -251,6 +252,10 @@ def Uninstall():
 			cmdline("gsettings reset-recursively org.gnome.desktop.wm.keybindings")
 			print("gsettings reset-recursively org.gnome.mutter.keybindings")
 			cmdline("gsettings reset-recursively org.gnome.mutter.keybindings")
+			print("gsettings set org.gnome.mutter overlay-key 'super'")
+			cmdline("gsettings set org.gnome.mutter overlay-key 'super'")
+			cmdline('dconf dump /org/gnome/mutter/ > mutter.conf')
+			cmdline('dconf load /org/gnome/mutter/ < mutter.conf')
 		elif dename == "kde":
 			print("Resetting DE hotkeys...\n")
 			cmdline('mv ~/.config/kwinrc ~/.config/kwinrc.kinto')
@@ -357,12 +362,25 @@ color_arr = [bcolors.CBEIGE,bcolors.CRED2,bcolors.CGREEN,bcolors.CYELLOW ]
 
 print("\nKinto - Type in Linux like it's a Mac.\n")
 
-kintotype = int(input(color_arr[2] + "1) Kinto - xkeysnail (udev/x11) - Recommended\n" + color_arr[0] + "2) Kinto - Original xkb/x11 implementation\n\n" + bcolors.ENDC))
+kintotype = int(input(color_arr[2] +
+	"1) Kinto - xkeysnail (udev/x11) - Recommended\n" + color_arr[0] +
+	"2) Kinto - Original xkb/x11 implementation\n" + color_arr[3] +
+	"3) Uninstall Kinto - xkeysnail\n" +
+	"4) Uninstall Kinto - Original xkb\n\n"
+	+ bcolors.ENDC))
 print("")
 if(kintotype == 1):
 	subprocess.check_call(shlex.split("./xkeysnail_service.sh"))
 	if os.path.isdir(homedir + "/.config/kinto") == True:
 		setShortcuts()
+	exit()
+
+if(kintotype == 3):
+	subprocess.check_call(shlex.split("./xkeysnail_service.sh uninstall"))
+	exit()
+
+if(kintotype == 4):
+	Uninstall()
 	exit()
 
 for index, item in enumerate(data['defaulttypes']):

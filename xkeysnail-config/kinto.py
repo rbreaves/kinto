@@ -3,7 +3,7 @@
 import re
 from xkeysnail.transform import *
 
-terminals = ["gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm","kitty"]
+terminals = ["gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm","kitty","alacritty"]
 terminals = [term.casefold() for term in terminals]
 termStr = "|".join(str(x) for x in terminals)
 
@@ -220,7 +220,7 @@ define_keymap(re.compile("konsole", re.IGNORECASE),{
 
 }, "Konsole tab switching")
 
-define_keymap(re.compile("Io.elementary.terminal", re.IGNORECASE),{
+define_keymap(re.compile("Io.elementary.terminal|kitty", re.IGNORECASE),{
     # Ctrl Tab - In App Tab Switching
     K("LC-Tab") : K("LC-Shift-Right"),
     K("LC-Shift-Tab") : K("LC-Shift-Left"),
