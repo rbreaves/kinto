@@ -30,6 +30,7 @@ def windows_setup():
 		print("Will now install chocolatey and autohotkey with elevated privileges...")
 		print("This install will fail if you are not running with elevated privileges")
 		os.system('powershell -executionpolicy bypass ".\\windows\\autohotkey.ps1"')
+		os.system('refreshenv')
 		print("\nWill now install Ubuntu Terminal Theme as default...")
 		os.system("regedit " + path + "\\windows\\theme_ubuntu.reg")
 		print("Copying autohotkey combinations for Terminals & Editors...")
