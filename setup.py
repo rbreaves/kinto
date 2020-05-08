@@ -25,14 +25,20 @@ def windows_setup():
 		os.system("regedit " + path + "\\windows\\standard_ctrlalt_capsesc_swap.reg")
 	elif default == 5:
 		os.system("regedit " + path + "\\windows\\remove_keyswap.reg")
+	stvscode = yn_choice(bcolors.CYELLOW2 + "Would you like to use Sublime Text 3 keymaps in VS Code?\n" + bcolors.ENDC)
 	if default > 0 and default < 5:
 		print("Will now install chocolatey and autohotkey with elevated privileges...")
 		print("This install will fail if you are not running with elevated privileges")
 		os.system('powershell -executionpolicy bypass ".\\windows\\autohotkey.ps1"')
+		os.system('refreshenv')
 		print("\nWill now install Ubuntu Terminal Theme as default...")
 		os.system("regedit " + path + "\\windows\\theme_ubuntu.reg")
 		print("Copying autohotkey combinations for Terminals & Editors...")
-		os.system("copy /Y " + path + "\\windows\\kinto.ahk \"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp\\kinto.ahk\"")
+		os.system("copy /Y " + path + "\\windows\\kinto.ahk " + path + "\\windows\\kinto-new.ahk")
+		if(stvscode):
+			os.system('perl -pi -e "s/(; )(.*)(; ST2CODE)/$2$3/g" ./windows/kinto-new.ahk')
+		os.system("copy /Y " + path + "\\windows\\kinto-new.ahk \"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp\\kinto.ahk\"")
+		os.system("del /f .\\windows\\kinto-new.ahk")
 		print("\nPlease log off and back on for changes to take full effect.")
 		print("If using WSL then please remember to right click on title bar -> Properties -> Edit Options -> Use Ctrl+Shift+C/V as Copy/Paste and enable it.")
 	else:

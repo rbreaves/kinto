@@ -1,9 +1,13 @@
+SetTitleMatchMode, 2
+
 GroupAdd, terminals, ahk_exe ubuntu.exe
 GroupAdd, terminals, ahk_exe ConEmu.exe
 GroupAdd, terminals, ahk_exe ConEmu64.exe
 GroupAdd, terminals, ahk_exe powershell.exe
 GroupAdd, terminals, ahk_exe WindowsTerminal.exe
 GroupAdd, terminals, ahk_exe Hyper.exe
+GroupAdd, terminals, ahk_exe Cmd.exe
+GroupAdd, terminals, Fluent Terminal ahk_class ApplicationFrameWindow
 
 GroupAdd, posix, ahk_exe ubuntu.exe
 GroupAdd, posix, ahk_exe ConEmu.exe
@@ -15,6 +19,11 @@ GroupAdd, ConEmu, ahk_exe ConEmu64.exe
 GroupAdd, ConEmu, ahk_exe WindowsTerminal.exe
 
 GroupAdd, editors, ahk_exe sublime_text.exe
+GroupAdd, editors, ahk_exe VSCodium.exe
+GroupAdd, editors, ahk_exe Code.exe
+
+GroupAdd, vscode, ahk_exe VSCodium.exe
+GroupAdd, vscode, ahk_exe Code.exe
 
 ; Cmd+Space Alternative
 LWin & vk07::return
@@ -56,7 +65,17 @@ $^+Right::Send +{End}
 !Right::Send ^{Right}
 !+Right::Send ^+{Right}
 
-#IfWinActive ahk_group editors
+; ; Sublime Text Remaps for VS Code                           ; ST2CODE
+; #IfWinActive ahk_group vscode                               ; ST2CODE
+; 	; Remap Ctrl+Shift to behave like macOS Sublimetext ; ST2CODE
+; 	; Will extend cursor to multiple lines              ; ST2CODE
+; 	#+Up::send ^!{Up}                                   ; ST2CODE
+; 	#+Down::send ^!{Down}                               ; ST2CODE
+; 	; Remap Ctrl+Cmd+G to select all matches            ; ST2CODE
+; 	#^g::send ^+{L}                                     ; ST2CODE
+; #If                                                         ; ST2CODE
+
+#IfWinActive ahk_exe sublime_text.exe
 	; Remap Ctrl+Shift to behave like macOS Sublimetext
 	; Will extend cursor to multiple lines
 	#+Up::send {shift up}^!{Up}
@@ -64,6 +83,11 @@ $^+Right::Send +{End}
 
 	; Remap Ctrl+Cmd+G to select all matches
 	#^g::send !{F3}
+#If
+
+; Not sure why this fix is needed
+#IfWinActive ahk_exe Firefox.exe
+	^v::send ^v
 #If
 
 #IfWinActive ahk_group terminals
