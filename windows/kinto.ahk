@@ -4,6 +4,7 @@ GroupAdd, terminals, ahk_exe ConEmu64.exe
 GroupAdd, terminals, ahk_exe powershell.exe
 GroupAdd, terminals, ahk_exe WindowsTerminal.exe
 GroupAdd, terminals, ahk_exe Hyper.exe
+GroupAdd, terminals, ahk_exe Cmd.exe
 
 GroupAdd, posix, ahk_exe ubuntu.exe
 GroupAdd, posix, ahk_exe ConEmu.exe
