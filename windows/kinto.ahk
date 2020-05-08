@@ -86,6 +86,11 @@ $^+Right::Send +{End}
 	#^g::send !{F3}
 #If
 
+; Not sure why this fix is needed
+#IfWinActive ahk_exe Firefox.exe
+	^v::send ^v
+#If
+
 #IfWinActive ahk_group terminals
 	; Copy
 	^c::Send {LCtrl down}{LShift down}c{LCtrl Up}{LShift Up}
