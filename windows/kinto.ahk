@@ -34,6 +34,12 @@ RWin & Tab::Send ^{Tab}
 ; Close Apps
 ^q::Send !{F4}
 
+; Full Screenshot
+^+3::Send {PrintScreen}
+
+; Region Screenshot
+^+4::Send #+{S}
+
 ; wordwise support
 $^Left::Send {Home}
 $^+Left::Send +{Home}
