@@ -36,9 +36,25 @@ RWin::return
 ; Cmd Tab For App Switching
 LCtrl & Tab::AltTab
 RCtrl & Tab::AltTab
+
 ; Ctrl Tab for In-App Tab Switching
-LWin & Tab::Send ^{Tab}
-RWin & Tab::Send ^{Tab}
+; https://autohotkey.com/board/topic/72433-controltab/
+#if GetKeyState("LWin")
+*Tab::
+if(!GetKeyState("LControl"))
+	Send {LControl Down}
+Send {Tab}
+SetTimer, WaitForWinUp, 10
+ToolTip trigger
+return
+
+WaitForWinUp:
+if(!GetKeyState("LWin", "P"))
+{
+	Send {LControl Up}
+	SetTimer, WaitForWinUp, Off
+}
+return
 
 ; Close Apps
 ^q::Send !{F4}
