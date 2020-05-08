@@ -6,6 +6,38 @@ from prekinto import *
 
 homedir = os.path.expanduser("~")
 
+def windows_setup():
+	keymaps = ["Apple keyboard standard", "Apple keyboard w/ Caps lock as Esc", "Windows keyboard standard", "Windows keyboard w/ Caps lock as Esc","Uninstall"]
+	for index, item in enumerate(keymaps):
+		print("    %i. %s" % (index+1, item.capitalize()))
+	default = 0
+	while not int(default) in range(1,len(keymaps)+1):
+		default = int(input("\nPlease enter your desired keymap (1 - " + str(len(keymaps)) + ") : "))
+	print("")
+	path= cmdline('echo %cd%')[:-1]
+	if default == 1:
+		os.system("regedit " + path + "\\windows\\macbook_winctrl_swap.reg")
+	elif default == 2:
+		os.system("regedit " + path + "\\windows\\macbook_winctrl_capsesc_swap.reg")
+	elif default == 3:
+		os.system("regedit " + path + "\\windows\\standard_ctrlalt_swap.reg")
+	elif default == 4:
+		os.system("regedit " + path + "\\windows\\standard_ctrlalt_capsesc_swap.reg")
+	elif default == 5:
+		os.system("regedit " + path + "\\windows\\remove_keyswap.reg")
+	if default > 0 and default < 5:
+		print("Will now install chocolatey and autohotkey with elevated privileges...")
+		print("This install will fail if you are not running with elevated privileges")
+		os.system('powershell -executionpolicy bypass ".\\windows\\autohotkey.ps1"')
+		print("\nWill now install Ubuntu Terminal Theme as default...")
+		os.system("regedit " + path + "\\windows\\theme_ubuntu.reg")
+		print("Copying autohotkey combinations for Terminals & Editors...")
+		os.system("copy /Y " + path + "\\windows\\kinto.ahk \"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp\\kinto.ahk\"")
+		print("\nPlease log off and back on for changes to take full effect.")
+		print("If using WSL then please remember to right click on title bar -> Properties -> Edit Options -> Use Ctrl+Shift+C/V as Copy/Paste and enable it.")
+	else:
+		os.system("del \"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp\\kinto.ahk\"")
+
 def cmdline(command):
     process = Popen(
         args=command,
@@ -14,6 +46,19 @@ def cmdline(command):
         shell=True
     )
     return process.communicate()[0]
+
+# check_x11 = cmdline("env | grep -i x11").strip()
+check_x11 = cmdline("(env | grep -i x11 || loginctl show-session \"$XDG_SESSION_ID\" -p Type) | awk -F= '{print $2}'").strip()
+
+if len(check_x11) == 0:
+	if os.name != 'nt':
+		print("You are not using x11, please logout and back in using x11/Xorg")
+		sys.exit()
+	else:
+		print("\nYou are detected as running Windows.")
+		windows_setup()
+		sys.exit()
+
 distro = cmdline("awk -F= '$1==\"NAME\" { print $2 ;}' /etc/os-release").replace('"','').strip().split(" ")[0]
 dename = cmdline("./system-config/dename.sh").replace('"','').strip().split(" ")[0].lower()
 
@@ -178,38 +223,6 @@ def setShortcuts():
 			cmdline('sleep 1 && rm -f ./tempkb.conf;rm -f ./tempmt.conf')
 			# cmdline('dconf update')
 
-def windows_setup():
-	keymaps = ["Apple keyboard standard", "Apple keyboard w/ Caps lock as Esc", "Windows keyboard standard", "Windows keyboard w/ Caps lock as Esc","Uninstall"]
-	for index, item in enumerate(keymaps):
-		print("    %i. %s" % (index+1, item.capitalize()))
-	default = 0
-	while not int(default) in range(1,len(keymaps)+1):
-		default = int(input("\nPlease enter your desired keymap (1 - " + str(len(keymaps)) + ") : "))
-	print("")
-	path= cmdline('echo %cd%')[:-1]
-	if default == 1:
-		os.system("regedit " + path + "\\windows\\macbook_winctrl_swap.reg")
-	elif default == 2:
-		os.system("regedit " + path + "\\windows\\macbook_winctrl_capsesc_swap.reg")
-	elif default == 3:
-		os.system("regedit " + path + "\\windows\\standard_ctrlalt_swap.reg")
-	elif default == 4:
-		os.system("regedit " + path + "\\windows\\standard_ctrlalt_capsesc_swap.reg")
-	elif default == 5:
-		os.system("regedit " + path + "\\windows\\remove_keyswap.reg")
-	if default > 0 and default < 5:
-		print("Will now install chocolatey and autohotkey with elevated privileges...")
-		print("This install will fail if you are not running with elevated privileges")
-		os.system('powershell -executionpolicy bypass ".\\windows\\autohotkey.ps1"')
-		print("\nWill now install Ubuntu Terminal Theme as default...")
-		os.system("regedit " + path + "\\windows\\theme_ubuntu.reg")
-		print("Copying autohotkey combinations for Terminals & Editors...")
-		os.system("copy /Y " + path + "\\windows\\kinto.ahk \"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp\\kinto.ahk\"")
-		print("\nPlease log off and back on for changes to take full effect.")
-		print("If using WSL then please remember to right click on title bar -> Properties -> Edit Options -> Use Ctrl+Shift+C/V as Copy/Paste and enable it.")
-	else:
-		os.system("del \"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp\\kinto.ahk\"")
-
 def Uninstall():
 	print("You selected to Uninstall Kinto.\n")
 	restore = yn_choice("\nYour DE is " + dename + ".\n\nY: Restore hotkeys from backup\nN: Reset OS/DE hotkeys\nWhich option would you prefer?")
@@ -269,18 +282,6 @@ def Uninstall():
 			print("Done.")
 		if dename == "kde" or dename == "xfce":
 			print("Please log off and back on for your original DE hotkeys to take effect.")
-
-# check_x11 = cmdline("env | grep -i x11").strip()
-check_x11 = cmdline("(env | grep -i x11 || loginctl show-session \"$XDG_SESSION_ID\" -p Type) | awk -F= '{print $2}'").strip()
-
-if len(check_x11) == 0:
-	if os.name != 'nt':
-		print("You are not using x11, please logout and back in using x11/Xorg")
-		sys.exit()
-	else:
-		print("You are detected as running Windows.")
-		windows_setup()
-		sys.exit()
 
 check_xbind = cmdline("which xbindkeys 2>/dev/null").strip()
 check_xdotool = cmdline("which xdotool 2>/dev/null").strip()
