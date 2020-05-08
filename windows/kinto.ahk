@@ -15,6 +15,11 @@ GroupAdd, ConEmu, ahk_exe ConEmu64.exe
 GroupAdd, ConEmu, ahk_exe WindowsTerminal.exe
 
 GroupAdd, editors, ahk_exe sublime_text.exe
+GroupAdd, editors, ahk_exe VSCodium.exe
+GroupAdd, editors, ahk_exe Code.exe
+
+GroupAdd, vscode, ahk_exe VSCodium.exe
+GroupAdd, vscode, ahk_exe Code.exe
 
 ; Cmd+Space Alternative
 LWin & vk07::return
@@ -56,7 +61,18 @@ $^+Right::Send +{End}
 !Right::Send ^{Right}
 !+Right::Send ^+{Right}
 
-#IfWinActive ahk_group editors
+; ; Sublime Text Remaps for VS Code
+; #IfWinActive ahk_group vscode
+; 	; Remap Ctrl+Shift to behave like macOS Sublimetext
+; 	; Will extend cursor to multiple lines
+; 	#+Up::send ^!{Up}
+; 	#+Down::send ^!{Down}
+; 
+; 	; Remap Ctrl+Cmd+G to select all matches
+; 	#^g::send ^+{L}
+; #If
+
+#IfWinActive ahk_exe sublime_text.exe
 	; Remap Ctrl+Shift to behave like macOS Sublimetext
 	; Will extend cursor to multiple lines
 	#+Up::send {shift up}^!{Up}
