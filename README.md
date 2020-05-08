@@ -48,6 +48,10 @@ Kinto works for standard Windows, Apple and Chromebook keyboards. The following 
 
 - Cursor/word-wise shortcut keys have been added to align with macOS keyboard shortcuts.
 
+Does Kinto have to have specific keyamps for individual apps?
+
+I'd say 90+% of the time no, but every OS has their default conventions that sometimes run afoul to macs. For this reason you can easily edit kinto.py or kinto.ahk to support the few shortcut keys Kinto may miss. If you do add additional support please consider forking this project and sharing your new keymaps with the rest of us!
+
 ## What does Kinto require?
 
 - Python (initial install only)
@@ -363,6 +367,18 @@ Yet another keyboard remapping tool for X environment
 
 Multitouch gestures with libinput driver on Linux
 
+[Fluent Terminal - Windows only](https://github.com/felixse/FluentTerminal) by felixse
+
+A Terminal Emulator based on UWP and web technologies.
+
+[PowerToys - Windows only](https://github.com/microsoft/PowerToys) by microsoft
+
+Windows system utilities to maximize productivity
+
+[AutoHotKey - Windows only](https://github.com/AutoHotkey/AutoHotkey) by AutoHotkey
+
+AutoHotkey is a powerful and easy to use scripting language for desktop automation on Windows.
+
 [pykeymacs](https://github.com/zhanghai/pykeymacs) by zhanghai
 
 Emacs style keyboard macros implemented in Python
@@ -375,10 +391,6 @@ Simple bash script to set a Dynamic Wallpaper according to certain conditions.
 
 Automated setup scripts to transform Linux into macOS. (Uses Kinto for key remaps)
 
-[AutoHotKey](https://github.com/AutoHotkey/AutoHotkey) by AutoHotkey
-
-AutoHotkey is a powerful and easy to use scripting language for desktop automation on Windows.
-
 [ibus-typing-booster](https://github.com/mike-fabian/ibus-typing-booster) by mike-fabian
 
 ibus-typing-booster is a completion input method for faster typing
@@ -390,10 +402,6 @@ Twitter Unicode 12 emoji color SVGinOT font for Linux/MacOS/Windows
 [iTerm2 Color Schemes](https://github.com/mbadolato/iTerm2-Color-Schemes) by mbadolato
 
 Over 225 terminal color schemes/themes for iTerm/iTerm2. Includes ports to Terminal, Konsole, PuTTY, Xresources, XRDB, Remmina, Termite, XFCE, Tilda, FreeBSD VT, Terminator, Kitty...
-
-[PowerToys](https://github.com/microsoft/PowerToys) by microsoft
-
-Windows system utilities to maximize productivity
 
 [espanso](https://github.com/federico-terzi/espanso) by federico-terzi
 
