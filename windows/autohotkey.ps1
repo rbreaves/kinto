@@ -10,3 +10,6 @@ else{
 if(-not(test-path "C:\Program Files\AutoHotkey\AutoHotkey.exe")){
 	choco install autohotkey.install
 }
+if(-not(test-path "C:\Strawberry\")){
+	choco install strawberryperl
+}

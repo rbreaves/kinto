@@ -65,16 +65,15 @@ $^+Right::Send +{End}
 !Right::Send ^{Right}
 !+Right::Send ^+{Right}
 
-; ; Sublime Text Remaps for VS Code
-; #IfWinActive ahk_group vscode
-; 	; Remap Ctrl+Shift to behave like macOS Sublimetext
-; 	; Will extend cursor to multiple lines
-; 	#+Up::send ^!{Up}
-; 	#+Down::send ^!{Down}
-; 
-; 	; Remap Ctrl+Cmd+G to select all matches
-; 	#^g::send ^+{L}
-; #If
+; ; Sublime Text Remaps for VS Code                           ; ST2CODE
+; #IfWinActive ahk_group vscode                               ; ST2CODE
+; 	; Remap Ctrl+Shift to behave like macOS Sublimetext ; ST2CODE
+; 	; Will extend cursor to multiple lines              ; ST2CODE
+; 	#+Up::send ^!{Up}                                   ; ST2CODE
+; 	#+Down::send ^!{Down}                               ; ST2CODE
+; 	; Remap Ctrl+Cmd+G to select all matches            ; ST2CODE
+; 	#^g::send ^+{L}                                     ; ST2CODE
+; #If                                                         ; ST2CODE
 
 #IfWinActive ahk_exe sublime_text.exe
 	; Remap Ctrl+Shift to behave like macOS Sublimetext
