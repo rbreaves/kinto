@@ -289,52 +289,54 @@ def Uninstall():
 		if dename == "kde" or dename == "xfce":
 			print("Please log off and back on for your original DE hotkeys to take effect.")
 
-check_xbind = cmdline("which xbindkeys 2>/dev/null").strip()
-check_xdotool = cmdline("which xdotool 2>/dev/null").strip()
-check_ibus = cmdline("which ibus-setup 2>/dev/null").strip()
+def kintoImpOne():
 
-pkgm = cmdline("which apt-get 2>/dev/null").strip()
+	check_xbind = cmdline("which xbindkeys 2>/dev/null").strip()
+	check_xdotool = cmdline("which xdotool 2>/dev/null").strip()
+	check_ibus = cmdline("which ibus-setup 2>/dev/null").strip()
 
-if len(pkgm) == 0:
-	pkgm = cmdline("which dnf 2>/dev/null").strip()
-	if len(pkgm) > 0:
-		pkgm += " check-update;sudo dnf install -y "
-else:
-	pkgm += " install -y "
-	pkgm += " update; sudo apt-get install -y "
+	pkgm = cmdline("which apt-get 2>/dev/null").strip()
 
-if len(pkgm) == 0:
-	pkgm = cmdline("which pacman 2>/dev/null").strip()
-	if len(pkgm) > 0:
-		pkgm += " -Syy; sudo pacman -S "
+	if len(pkgm) == 0:
+		pkgm = cmdline("which dnf 2>/dev/null").strip()
+		if len(pkgm) > 0:
+			pkgm += " check-update;sudo dnf install -y "
+	else:
+		pkgm += " install -y "
+		pkgm += " update; sudo apt-get install -y "
 
-
-if len(pkgm) == 0:
-	print("No supported package manager found. Exiting...")
-	sys.exit()
+	if len(pkgm) == 0:
+		pkgm = cmdline("which pacman 2>/dev/null").strip()
+		if len(pkgm) > 0:
+			pkgm += " -Syy; sudo pacman -S "
 
 
-runpkg = 0
-run_pkg = ""
+	if len(pkgm) == 0:
+		print("No supported package manager found. Exiting...")
+		sys.exit()
 
-if len(check_xbind) > 0 and len(check_xdotool) > 0 and len(check_ibus) > 0:
-	print("Xbindkeys, xdotool and IBus requirement is installed.")
-if len(check_xbind) == 0:
-	run_pkg = "xbindkeys"
-	runpkg = 1
-if len(check_xdotool) == 0:
-	run_pkg += " xdotool"
-	runpkg = 1
-if len(check_ibus) == 0:
-	# may differ with distro, but for now
-	run_pkg += " ibus"
-	runpkg = 1
 
-if runpkg != 0:
-	requirements(pkgm)
+	runpkg = 0
+	run_pkg = ""
 
-if not os.path.exists(homedir + '/.config/ibus/bus') and cmdline("ls ~/.config/ibus/bus -1rt") == "":
-	install_ibus()
+	if len(check_xbind) > 0 and len(check_xdotool) > 0 and len(check_ibus) > 0:
+		print("Xbindkeys, xdotool and IBus requirement is installed.")
+	if len(check_xbind) == 0:
+		run_pkg = "xbindkeys"
+		runpkg = 1
+	if len(check_xdotool) == 0:
+		run_pkg += " xdotool"
+		runpkg = 1
+	if len(check_ibus) == 0:
+		# may differ with distro, but for now
+		run_pkg += " ibus"
+		runpkg = 1
+
+	if runpkg != 0:
+		requirements(pkgm)
+
+	if not os.path.exists(homedir + '/.config/ibus/bus') and cmdline("ls ~/.config/ibus/bus -1rt") == "":
+		install_ibus()
 
 try:
 	f = open("defaults.json")
@@ -389,6 +391,8 @@ if(kintotype == 3):
 if(kintotype == 4):
 	Uninstall()
 	exit()
+
+kintoImpOne()
 
 for index, item in enumerate(data['defaulttypes']):
 	ossym = ""

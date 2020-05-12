@@ -120,9 +120,9 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 			sudo ./system-config/unipkg.sh "$pydev"
 		fi
 	fi
-	if ! [ -x "$(command -v xhost)" ]; then
+	if ! [ -x "$(command -v xhost)" ] || ! [ -x "$(command -v gcc)" ]; then
 		if [ "$distro" == "\"manjaro linux\"" ]; then
-			sudo ./system-config/unipkg.sh xorg-xhost
+			sudo ./system-config/unipkg.sh "xorg-xhost gcc"
 		fi
 	fi
 	# echo "Transferring files..."
