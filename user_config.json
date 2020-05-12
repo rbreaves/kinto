@@ -16,7 +16,7 @@
 		"symbols":"",
 		"types":"",
 		"de":[],
-		"appnames":[ "Gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm","kitty","alacritty","mate-terminal" ]
+		"appnames":[ "Gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm","kitty","alacritty","mate-terminal","tilix" ]
 	},
 	{
         "name": "firefox",
