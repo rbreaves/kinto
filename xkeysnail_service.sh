@@ -72,6 +72,69 @@ function uninstall {
 	fi
 }
 
+function budgieUninstall {
+	if [ -f /usr/bin/budgie-desktop ];then
+		read -n 1 -s -r -p "Your system may log you off immediately during the restoration of budgie-daemon. Press any key to continue..."
+		bdmd5="$(md5sum /usr/bin/budgie-daemon | awk '{ print $1 }')"
+		oldbdmd5=$(md5sum ./budgie-daemon_10.5.1.bak | awk '{ print $1 }')
+		if [ "$bdmd5" != "$oldbdmd5" ]; then
+			echo -e "\nReplacing budgie-daemon with backup..."
+			sudo pkill budgie-daemon && sudo cp ./budgie-daemon_10.5.1.bak /usr/bin/budgie-daemon
+		else
+			echo -e "\nBudgie-daemon is already an original."
+		fi
+	fi
+}
+
+function budgieUpdate {
+	# Check for budgie and install App Switching hack
+	if [ -f /usr/bin/budgie-desktop ];then
+		while true; do
+			read -rep $'Would you like to update Budgie to support proper App Switching? (y/n)\n(Your system will immediately log you out after this runs.)\n' yn
+			case $yn in
+				[Yy]* ) yn="y"; break;;
+				[Nn]* ) yn="n";break;;
+				* ) echo "Please answer yes or no.";;
+			esac
+		done
+		if [ "$yn" == "y" ]; then
+			budgieVersion="$(/usr/bin/budgie-desktop --version | awk '{ print $2; }' | head -n1)"
+			if [ "$budgieVersion" == "10.5.1" ]; then
+				if ! [ -f ./system-config/budgie-daemon_10.5.1 ]; then
+					wget https://github.com/rbreaves/budgie-desktop/raw/43d3b44243b0bcaee3262a79818024a651475b58/binaries/budgie-daemon_10.5.1 -O ./system-config/budgie-daemon_10.5.1
+				fi
+				bdmd5=$(md5sum /usr/bin/budgie-daemon | awk '{ print $1 }')
+				newbdmd5=$(md5sum ./system-config/budgie-daemon_10.5.1 | awk '{ print $1 }')
+				if [ "$bdmd5" != "$newbdmd5" ]; then
+					cp /usr/bin/budgie-daemon ./budgie-daemon_"$budgieVersion".bak
+					sudo pkill budgie-daemon && sudo cp ./system-config/budgie-daemon_10.5.1 /usr/bin/budgie-daemon
+					echo "Updated Budgie to use App Switching Patch"
+				else
+					echo "Budgie-daemon already patched, skipping replacement."
+				fi
+			else
+				echo "Your Budgie version was $budgieVersion and the patch is for 10.5.1."
+				while true; do
+					read -rep $'Would you like to replace it any ways? (y/n)\n(A backup will be made)\n' yn
+					case $yn in
+						[Yy]* ) yn="y"; break;;
+						[Nn]* ) yn="n";break;;
+						* ) echo "Please answer yes or no.";;
+					esac
+				done
+				if [ "$yn" == "y" ]; then
+					if ! [ -f ./system-config/budgie-daemon_10.5.1 ]; then
+						wget https://github.com/rbreaves/budgie-desktop/raw/43d3b44243b0bcaee3262a79818024a651475b58/binaries/budgie-daemon_10.5.1 -O ./system-config/budgie-daemon_10.5.1
+					fi
+					cp /usr/bin/budgie-daemon ./budgie-daemon_"$budgieVersion".bak
+					sudo pkill budgie-daemon && sudo cp ./system-config/budgie-daemon_10.5.1 /usr/bin/budgie-daemon
+					echo "Updated Budgie to use App Switching Patch"
+				fi
+			fi
+		fi
+	fi
+}
+
 if [ $# -eq 0 ]; then
 	echo "Install Kinto - xkeysnail (udev)"
 	echo "  1) Windows & Mac (HID driver)"
@@ -125,6 +188,7 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 			sudo ./system-config/unipkg.sh "xorg-xhost gcc"
 		fi
 	fi
+
 	# echo "Transferring files..."
 	mkdir -p ~/.config/kinto
 	
@@ -200,6 +264,7 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	fi
 	git pull origin master
 	sudo pip3 install --upgrade .
+	cd ..
 	sudo systemctl daemon-reload
 	sudo systemctl --state=not-found --all | grep xkeysnail
 	if [ "$distro" == "fedora" ];then
@@ -242,9 +307,7 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 		echo "You can run 'sudo systemctl status xkeysnail' for more info"
 		echo "You can also run 'sudo journalctl -u xkeysnail'"
 	fi
-elif ! [[ $1 == "4" || $1 == "uninstall" ]]; then
-	echo "Expected argument was not provided"
-else
+elif [[ $1 == "4" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	echo "Uninstalling Kinto - xkeysnail (udev)"
 	uninstall
 	# Undo Apple keyboard cmd & alt swap
@@ -263,5 +326,10 @@ else
 	sudo rm /usr/lib/systemd/system/xkeysnail.service
 	sudo systemctl daemon-reload
 	sudo systemctl --state=not-found --all | grep xkeysnail
+	budgieUninstall
 	exit 0
+elif [[ $1 == "5" || $1 == "budgieUpdate" ]]; then
+	budgieUpdate
+else
+	echo "Expected argument was not provided"
 fi
