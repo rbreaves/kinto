@@ -7,6 +7,9 @@ terminals = ["gnome-terminal","konsole","io.elementary.terminal","terminator","s
 terminals = [term.casefold() for term in terminals]
 termStr = "|".join(str(x) for x in terminals)
 
+mscodes = ["code","vscodium"]
+codeStr = "|".join(str(x) for x in mscodes)
+
 # [Global modemap] Change modifier keys as in xmodmap
 define_conditional_modmap(lambda wm_class: wm_class.casefold() not in terminals,{
     # # Chromebook
@@ -97,7 +100,7 @@ define_keymap(None,{
     # K(""): K(""),                                 #
 })
 
-define_keymap(lambda wm_class: wm_class.casefold() not in ("code"),{
+define_keymap(lambda wm_class: wm_class.casefold() not in mscodes,{
     # Wordwise remaining - for Everything but VS Code
     K("M-Left"): K("C-Left"),               # Left of Word
     K("M-Shift-Left"): K("C-Shift-Left"),   # Select Left of Word
@@ -120,7 +123,7 @@ define_keymap(lambda wm_class: wm_class.casefold() not in ("code"),{
 })
 
 # Keybindings for VS Code
-define_keymap(re.compile("code", re.IGNORECASE),{
+define_keymap(re.compile(codeStr, re.IGNORECASE),{
     # Wordwise remaining - for VS Code
     # Alt-F19 hack fixes Alt menu activation
     K("M-Left"): [K("M-F19"),K("C-Left")],                  # Left of Word
@@ -128,6 +131,11 @@ define_keymap(re.compile("code", re.IGNORECASE),{
     K("M-Shift-Left"): [K("M-F19"),K("C-Shift-Left")],      # Select Left of Word
     K("M-Shift-Right"): [K("M-F19"),K("C-Shift-Right")],    # Select Right of Word
     
+    # K("C-PAGE_DOWN"): pass_through_key,         # cancel next_view
+    # K("C-PAGE_UP"): pass_through_key,           # cancel prev_view
+    K("C-M-Left"): K("C-PAGE_UP"),              # next_view
+    K("C-M-Right"): K("C-PAGE_DOWN"),           # prev_view
+
     # VS Code Shortcuts
     K("C-g"): pass_through_key,                 # cancel Go to Line...
     K("Super-g"): K("C-g"),                     # Go to Line...
