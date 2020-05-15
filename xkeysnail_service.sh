@@ -253,13 +253,15 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	sudo ln -s "$xkeypath"xkeysnail.service /etc/systemd/system/xkeysnail.service && echo "Created soft symlink..." || echo "Failed to create soft symlink..."
 	sudo ln -s "$xkeypath"xkeysnail.service /etc/systemd/system/graphical.target.wants/xkeysnail.service && echo "Created soft symlink for graphical target..." || echo "Failed to create soft symlink for graphical target..."
 	xhost +SI:localuser:root
-	git clone --depth 1 https://github.com/rbreaves/xkeysnail.git
+	git clone --depth 5 https://github.com/rbreaves/xkeysnail.git
+	git checkout 51c369084e0045a8410d227bab52411bf84fb65b
 	cd xkeysnail
 	giturl=$(git ls-remote --get-url)
 	if [ "$geturl" != "https://github.com/rbreaves/xkeysnail.git" ];then
 		cd ..
 		rm -rf ./xkeysnail
-		git clone --depth 1 https://github.com/rbreaves/xkeysnail.git
+		git clone --depth 5 https://github.com/rbreaves/xkeysnail.git
+		git checkout 51c369084e0045a8410d227bab52411bf84fb65b
 		cd xkeysnail
 	fi
 	git pull origin master
