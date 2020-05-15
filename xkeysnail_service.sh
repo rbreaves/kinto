@@ -224,8 +224,6 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	sed -i "s/{username}/`whoami`/g" ~/.config/kinto/prexk.sh
 	sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ./xkeysnail-config/xkeysnail.service.new
 	sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ~/.config/kinto/prexk.sh
-elif ! [[ $1 == "4" || $1 == "uninstall" ]]; then
-	echo "Expected argument was not provided"
 fi
 
 if [[ $1 == "1" || $1 == "winmac" ]]; then
@@ -253,16 +251,17 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	sudo ln -s "$xkeypath"xkeysnail.service /etc/systemd/system/xkeysnail.service && echo "Created soft symlink..." || echo "Failed to create soft symlink..."
 	sudo ln -s "$xkeypath"xkeysnail.service /etc/systemd/system/graphical.target.wants/xkeysnail.service && echo "Created soft symlink for graphical target..." || echo "Failed to create soft symlink for graphical target..."
 	xhost +SI:localuser:root
-	git clone --depth 5 https://github.com/rbreaves/xkeysnail.git
-	git checkout 51c369084e0045a8410d227bab52411bf84fb65b
+	git clone --depth 10 https://github.com/rbreaves/xkeysnail.git || git pull --depth 10
 	cd xkeysnail
+	git checkout 51c369084e0045a8410d227bab52411bf84fb65b
 	giturl=$(git ls-remote --get-url)
-	if [ "$geturl" != "https://github.com/rbreaves/xkeysnail.git" ];then
+	if [ "$giturl" != "https://github.com/rbreaves/xkeysnail.git" ];then
+		echo -e "\nreplacing xkeysnail with fork...\n"
 		cd ..
 		rm -rf ./xkeysnail
-		git clone --depth 5 https://github.com/rbreaves/xkeysnail.git
-		git checkout 51c369084e0045a8410d227bab52411bf84fb65b
+		git clone --depth 10 https://github.com/rbreaves/xkeysnail.git
 		cd xkeysnail
+		git checkout 51c369084e0045a8410d227bab52411bf84fb65b
 	fi
 	git pull origin master
 	sudo pip3 install --upgrade .
