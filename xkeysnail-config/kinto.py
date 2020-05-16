@@ -3,7 +3,7 @@
 import re
 from xkeysnail.transform import *
 
-terminals = ["gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm","kitty","alacritty","mate-terminal","tilix"]
+terminals = ["gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm","kitty","alacritty","mate-terminal","tilix","xfce4-terminal"]
 terminals = [term.casefold() for term in terminals]
 termStr = "|".join(str(x) for x in terminals)
 
@@ -68,19 +68,19 @@ define_keymap(re.compile("org.gnome.nautilus", re.IGNORECASE),{
 
 define_keymap(None,{
     # Cmd Tab - App Switching Default
-    K("RC-Tab"): K("RC-F13"),                     # Default
-    K("RC-Shift-Tab"): K("RC-Shift-F13"),         # Default
-    K("RC-Grave"): K("M-F6"),                     # Default
-    K("RC-Shift-Grave"): K("M-Shift-F6"),         # Default
-    # K("RC-Tab"): K("RC-backslash"),               # Chromebook
-    # K("RC-Shift-Tab"): K("RC-Shift-backslash"),   # Chromebook
-    # K("RC-Grave"): K("RC-Shift-backslash"),       # Chromebook
+    K("RC-Tab"): K("RC-F13"),                     # Default not-xfce4
+    K("RC-Shift-Tab"): K("RC-Shift-F13"),         # Default not-xfce4
+    K("RC-Grave"): K("M-F6"),                     # Default not-xfce4
+    K("RC-Shift-Grave"): K("M-Shift-F6"),         # Default not-xfce4
+    # K("RC-Tab"): K("RC-backslash"),               # xfce4
+    # K("RC-Shift-Tab"): K("RC-Shift-backslash"),   # xfce4
+    # K("RC-Grave"): K("RC-Shift-backslash"),       # xfce4
     # In-App Tab switching
     # K("M-Tab"): K("C-Tab"),                       # Chromebook - In-App Tab switching
     # K("M-Shift-Tab"): K("C-Shift-Tab"),           # Chromebook - In-App Tab switching
     # K("M-Grave") : K("C-Shift-Tab"),              # Chromebook - In-App Tab switching
-    K("Super-Tab"): K("LC-Tab"),                  # Default
-    K("Super-Shift-Tab"): K("LC-Shift-Tab"),      # Default
+    K("Super-Tab"): K("LC-Tab"),                  # Default not-chromebook
+    K("Super-Shift-Tab"): K("LC-Shift-Tab"),      # Default not-chromebook
 
     # Wordwise
     K("RC-Left"): K("Home"),                      # Beginning of Line

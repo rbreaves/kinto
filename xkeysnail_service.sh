@@ -5,10 +5,10 @@
 
 typeset -l distro
 distro=$(awk -F= '$1=="NAME" { print $2 ;}' /etc/os-release)
+typeset -l dename
+dename=$(./system-config/dename.sh | cut -d " " -f1)
 
 function uninstall {
-	typeset -l dename
-	dename=$(./system-config/dename.sh | cut -d " " -f1)
 
 	while true; do
 	read -rep $'\nPress R to restore your original shortcuts.\nPress F to reset to factory shortcuts. (f/r)\n' yn
@@ -229,10 +229,19 @@ fi
 if [[ $1 == "1" || $1 == "winmac" ]]; then
 	echo '1' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd;echo 'options hid_apple swap_opt_cmd=1' | sudo tee -a /etc/modprobe.d/hid_apple.conf;sudo update-initramfs -u -k all
 	perl -pi -e "s/(# )(.*)(# WinMac)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
+	if [[ $dename == "xfce" ]]; then
+		perl -pi -e "s/(# )(.*)(# xfce4)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
+		perl -pi -e "s/(\w.*)(# Default not-xfce4)/# \$1\$2/g" ./xkeysnail-config/kinto.py.new
+	fi
 elif [[ $1 == "2" || $1 == "mac" ]]; then
 	perl -pi -e "s/(# )(.*)(# Mac)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
+	if [[ $dename == "xfce" ]]; then
+		perl -pi -e "s/(# )(.*)(# xfce4)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
+		perl -pi -e "s/(\w.*)(# Default not-xfce4)/# \$1\$2/g" ./xkeysnail-config/kinto.py.new
+	fi
 elif [[ $1 == "3" || $1 == "chromebook" ]]; then
 	perl -pi -e "s/(# )(.*)(# Chromebook)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
+	perl -pi -e "s/(# )(.*)(# xfce4)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
 	perl -pi -e "s/(\w.*)(# Default)/# \$1\$2/g" ./xkeysnail-config/kinto.py.new
 fi
 
@@ -263,7 +272,6 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 		cd xkeysnail
 		git checkout 51c369084e0045a8410d227bab52411bf84fb65b
 	fi
-	git pull origin master
 	sudo pip3 install --upgrade .
 	cd ..
 	sudo systemctl daemon-reload
