@@ -122,6 +122,7 @@ def setShortcuts():
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Primary><Shift>Space','<Primary>Space']\"")
 			cmdline("gsettings set org.gnome.mutter overlay-key ''")
+			cmdline("gsettings set org.gnome.shell.keybindings toggle-application-view \"['LaunchB']\"")
 		if distro == "ubuntu" and dename == "gnome":
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up \"['<Super>Up','<Super>Left']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down \"['<Super>Down','<Super>Right']\"")
