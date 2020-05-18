@@ -70,6 +70,9 @@ define_keymap(re.compile("org.gnome.nautilus", re.IGNORECASE),{
 })
 
 define_keymap(None,{
+    # Basic App hotkey functions
+    K("RC-Q"): K("Alt-F4"),
+    K("RC-H"): K("Alt-F9"),
     # Cmd Tab - App Switching Default
     K("RC-Tab"): K("RC-F13"),                     # Default not-xfce4
     K("RC-Shift-Tab"): K("RC-Shift-F13"),         # Default not-xfce4
@@ -254,7 +257,6 @@ define_keymap(re.compile(termStr, re.IGNORECASE),{
     K("RC-MINUS"): K("C-Shift-MINUS"),
     K("RC-EQUAL"): K("C-Shift-EQUAL"),
     K("RC-BACKSPACE"): K("C-Shift-BACKSPACE"),
-    K("RC-Q"): K("C-Shift-Q"),
     K("RC-W"): K("C-Shift-W"),
     K("RC-E"): K("C-Shift-E"),
     K("RC-R"): K("C-Shift-R"),
