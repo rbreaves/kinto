@@ -173,12 +173,12 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 		sudo ./system-config/unipkg.sh python3-pip
 	fi
 	if ! [ -x "$(command -v python3-config)" ]; then
-		if [ "$distro" == "ubuntu" ] || [ "$distro" == "debian" ]; then
+		if [ "$distro" == "ubuntu" ] || [ "$distro" == "debian" ] || [ "$distro" == '"linux mint"' ]; then
 			pydev="python3-dev"
 		elif [ "$distro" == "fedora" ]; then
 			pydev="python3-devel"
 		fi
-		if [ "$distro" == "gnome" ] || [ "$distro" == "fedora" ] || [ "$distro" == "debian" ]; then
+		if [ "$distro" == "gnome" ] || [ "$distro" == "fedora" ] || [ "$distro" == "debian" ] || [ "$distro" == '"linux mint"' ]; then
 			echo "Will need to install $pydev..."
 			sudo ./system-config/unipkg.sh "$pydev"
 		fi
@@ -187,6 +187,9 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 		if [ "$distro" == "\"manjaro linux\"" ]; then
 			sudo ./system-config/unipkg.sh "xorg-xhost gcc"
 		fi
+	fi
+	if [ "$distro" == '"linux mint"' ]; then
+		pip3 install setuptools
 	fi
 
 	# echo "Transferring files..."

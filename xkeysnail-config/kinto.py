@@ -3,6 +3,9 @@
 import re
 from xkeysnail.transform import *
 
+# Use the following for testing terminal keymaps
+# terminals = [ "", ... ]
+# xbindkeys -mk
 terminals = ["gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm","kitty","alacritty","mate-terminal","tilix","xfce4-terminal"]
 terminals = [term.casefold() for term in terminals]
 termStr = "|".join(str(x) for x in terminals)
@@ -84,8 +87,10 @@ define_keymap(None,{
 
     # Wordwise
     K("RC-Left"): K("Home"),                      # Beginning of Line
+    K("Super-a"): K("Home"),                      # Beginning of Line
     K("RC-Shift-Left"): K("Shift-Home"),          # Select all to Beginning of Line
     K("RC-Right"): K("End"),                      # End of Line
+    K("Super-e"): K("End"),                       # End of Line
     K("RC-Shift-Right"): K("Shift-End"),          # Select all to End of Line
     # K("RC-Left"): K("C-LEFT_BRACE"),              # Firefox-nw - Back
     # K("RC-Right"): K("C-RIGHT_BRACE"),            # Firefox-nw - Forward

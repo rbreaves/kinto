@@ -110,7 +110,7 @@ def setShortcuts():
 	addhotkeys = yn_choice("\nDo you want to apply system level shortcuts?")
 	if(addhotkeys):
 		distro = distro.lower()
-		if dename == "gnome":
+		if dename == "gnome" or dename == "mate":
 			cmdline('dconf dump /org/gnome/desktop/wm/keybindings/ > keybindings_`date +"%Y.%m.%d-%s"`.conf')
 			cmdline('dconf dump /org/gnome/mutter/keybindings/ > mutter_`date +"%Y.%m.%d-%s"`.conf')
 			if(kintotype == 1):
@@ -121,9 +121,10 @@ def setShortcuts():
 				cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward \"['<Primary>F14','<Primary><Shift>F14','<Alt><Shift>Tab']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Primary><Shift>Space','<Primary>Space']\"")
-			cmdline("gsettings set org.gnome.mutter overlay-key ''")
 			cmdline("gsettings set org.gnome.shell.keybindings toggle-application-view \"['LaunchB']\"")
-		if distro == "ubuntu" and dename == "gnome":
+			if dename != "mate":
+				cmdline("gsettings set org.gnome.mutter overlay-key ''")
+		if (distro == "ubuntu" and dename == "gnome") or (distro == "linux" and dename == "mate") or (distro == "ubuntu" and dename == "mate"):
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up \"['<Super>Up','<Super>Left']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down \"['<Super>Down','<Super>Right']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left ['']")
