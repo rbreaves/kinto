@@ -48,7 +48,7 @@ Kinto works for standard Windows, Apple and Chromebook keyboards. The following 
 
 - Cursor/word-wise shortcut keys have been added to align with macOS keyboard shortcuts.
 
-Does Kinto have to have specific keyamps for individual apps?
+Does Kinto have to have specific keymaps for individual apps?
 
 I'd say 90+% of the time no, but every OS has their default conventions that sometimes run afoul to macs. For this reason you can easily edit kinto.py or kinto.ahk to support the few shortcut keys Kinto may miss. If you do add additional support please consider forking this project and sharing your new keymaps with the rest of us!
 
