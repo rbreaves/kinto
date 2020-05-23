@@ -103,7 +103,11 @@ define_keymap(None,{
     K("RC-Shift-Up"): K("C-Shift-Home"),          # Select all to Beginning of File
     K("RC-Down"): K("C-End"),                     # End of File
     K("RC-Shift-Down"): K("C-Shift-End"),         # Select all to End of File
-    K("M-Backspace"): K("Delete"),                # Delete
+    # K("M-Backspace"): K("Delete"),                # Chromebook - Delete
+    K("Super-Backspace"): K("C-Backspace"),       # Default not-chromebook - Delete Left Word of Cursor
+    K("Super-Delete"): K("C-Delete"),             # Default not-chromebook - Delete Right Word of Cursor
+    K("Alt-Backspace"): K("C-Backspace"),       # Default not-chromebook - Delete Left Word of Cursor
+    K("Alt-Delete"): K("C-Delete"),             # Default not-chromebook - Delete Right Word of Cursor
     # K(""): pass_through_key,                      # cancel
     # K(""): K(""),                                 #
 })
