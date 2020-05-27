@@ -78,6 +78,8 @@ Other programs that will be installed when you run ./setup.py
 - Chocolatey
 - Autohotkey
 
+Note: Sublime Text users should disable screen rotation hotkeys as they will interfere with multi-cursor and possibly other combos. See https://windowsloop.com/disable-screen-rotation-keyboard-shortcut/ for details.
+
 Does not have complete parity with the Linux edition, but it does work and can be built on and added to as needed. Modify ./windows/kinto.ahk if you want to add more WSL editions or other terminals.
 
 ## How to install
