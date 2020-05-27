@@ -140,14 +140,15 @@ if [ $# -eq 0 ]; then
 	echo "  1) Windows & Mac (HID driver)"
 	echo "  2) Mac Only & VMs on Macbooks"
 	echo "  3) Chromebook"
-	# echo "  4) Uninstall"
+	echo "  4) Windows w/ Kinto - aka Linux VM"
+	# echo "  5) Uninstall"
 
 	read n
 
 	set "$n"
 fi
 
-if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1 == "chromebook" ]]; then
+if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "4" || $1 == "kintowin" || $1 == "winmac" || $1 == "mac" || $1 == "chromebook" ]]; then
 	branch=$(git rev-parse --abbrev-ref HEAD)
 	if [ "$branch" == "dev" ] || [ "$branch" == "alpha" ];then
 		while true; do
@@ -246,9 +247,11 @@ elif [[ $1 == "3" || $1 == "chromebook" ]]; then
 	perl -pi -e "s/(# )(.*)(# Chromebook)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
 	perl -pi -e "s/(# )(.*)(# xfce4)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
 	perl -pi -e "s/(\w.*)(# Default)/# \$1\$2/g" ./xkeysnail-config/kinto.py.new
+elif [[ $1 == "4" || $1 == "kintowin" ]]; then
+	perl -pi -e "s/(# )(.*)(# KintoWin)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
 fi
 
-if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1 == "chromebook" ]]; then
+if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "4" || $1 == "kintowin" || $1 == "winmac" || $1 == "mac" || $1 == "chromebook" ]]; then
 	mv ./xkeysnail-config/kinto.py.new ~/.config/kinto/kinto.py
 	# if [ "$distro" == "fedora" ];then
 	sudo rm /etc/systemd/system/xkeysnail.service
@@ -319,7 +322,7 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 		echo "You can run 'sudo systemctl status xkeysnail' for more info"
 		echo "You can also run 'sudo journalctl -u xkeysnail'"
 	fi
-elif [[ $1 == "4" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
+elif [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	echo "Uninstalling Kinto - xkeysnail (udev)"
 	uninstall
 	# Undo Apple keyboard cmd & alt swap
