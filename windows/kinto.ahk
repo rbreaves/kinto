@@ -12,7 +12,9 @@ GroupAdd, terminals, Fluent Terminal ahk_class ApplicationFrameWindow
 GroupAdd, posix, ahk_exe ubuntu.exe
 GroupAdd, posix, ahk_exe ConEmu.exe
 GroupAdd, posix, ahk_exe ConEmu64.exe
+GroupAdd, posix, ahk_exe Hyper.exe
 GroupAdd, posix, ahk_exe mintty.exe
+GroupAdd, posix, Fluent Terminal ahk_class ApplicationFrameWindow
 
 GroupAdd, ConEmu, ahk_exe ConEmu.exe
 GroupAdd, ConEmu, ahk_exe ConEmu64.exe
@@ -117,6 +119,9 @@ $^+Right::Send +{End}
 #If
 
 #IfWinActive ahk_group posix
+	; Open/Close Tab for those that support it
+	^t::Send {LCtrl down}{LShift down}t{LCtrl Up}{LShift Up}
+	^w::Send {LCtrl down}{LShift down}w{LCtrl Up}{LShift Up}
 	; End of Line
 	#e::Send {LCtrl down}e{LCtrl Up}
 	^e::return
