@@ -44,7 +44,7 @@ define_conditional_modmap(re.compile(termStr, re.IGNORECASE), {
     # Key.LEFT_ALT: Key.RIGHT_CTRL,     # Chromebook
     # # Left Ctrl Stays Left Ctrl
     # Key.LEFT_META: Key.LEFT_ALT,      # Chromebook
-    # Key.RIGHT_ALT: Key.RIGHT_CTRL,    # Chromebook
+    # Key.RIGHT_ALT: Key.RIGHT_CTRL,    # Chromebook - Multi-language (Remove)
     # Key.RIGHT_CTRL: Key.RIGHT_ALT,    # Chromebook
     # # Right Meta does not exist on chromebooks
 
@@ -52,7 +52,7 @@ define_conditional_modmap(re.compile(termStr, re.IGNORECASE), {
     # Key.LEFT_ALT: Key.RIGHT_CTRL,   # WinMac
     # Key.LEFT_META: Key.LEFT_ALT,    # WinMac
     # Key.LEFT_CTRL: Key.LEFT_CTRL,   # WinMac
-    # Key.RIGHT_ALT: Key.RIGHT_CTRL,  # WinMac
+    # Key.RIGHT_ALT: Key.RIGHT_CTRL,  # WinMac - Multi-language (Remove)
     # Key.RIGHT_META: Key.RIGHT_ALT,  # WinMac
     # Key.RIGHT_CTRL: Key.LEFT_CTRL,  # WinMac
 
