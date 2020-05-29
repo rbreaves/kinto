@@ -149,6 +149,15 @@ if [ $# -eq 0 ]; then
 fi
 
 if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "4" || $1 == "kintowin" || $1 == "winmac" || $1 == "mac" || $1 == "chromebook" ]]; then
+	rightalt=false
+	while true; do
+	read -rep $'\nDo you want multi-language support (the right Alt key will not remap)? (y/n)\n' yn
+	case $yn in
+		[Yy]* ) rightalt=true; break;;
+		[Nn]* ) break;;
+		# * ) echo "Please answer yes or no.";;
+	esac
+	done
 	branch=$(git rev-parse --abbrev-ref HEAD)
 	if [ "$branch" == "dev" ] || [ "$branch" == "alpha" ];then
 		while true; do
@@ -249,6 +258,11 @@ elif [[ $1 == "3" || $1 == "chromebook" ]]; then
 	perl -pi -e "s/(\w.*)(# Default)/# \$1\$2/g" ./xkeysnail-config/kinto.py.new
 elif [[ $1 == "4" || $1 == "kintowin" ]]; then
 	perl -pi -e "s/(# )(.*)(# KintoWin)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
+fi
+
+if "$rightalt"; then
+	echo "Enabling mutli-language support."
+	perl -pi -e "s/(\w.*)(Multi-language)/# \$1\$2/g" ./xkeysnail-config/kinto.py.new
 fi
 
 if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "4" || $1 == "kintowin" || $1 == "winmac" || $1 == "mac" || $1 == "chromebook" ]]; then
