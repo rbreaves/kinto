@@ -19,20 +19,15 @@ A clear and concise description of what you expected to happen.
 **Branch:** master, dev
 **Commit:** git rev-parse --short HEAD
 
-**Kinto Input Caret Status**
+Logs and status if relevant
 ```
-cat /tmp/kinto/caret
-```
+# xkeysnail
+sudo systemctl status xkeysnail
+sudo journalctl --unit=xkeysnail.service -b
 
-**Kinto Standard Log**
-```
+# xkb
+systemctl --user status keyswap
 journalctl --user-unit=keyswap.service -b
-```
-**Kinto Debug Log (1.0.6-2+)**
-```
-systemctl --user stop keyswap
-cd ~/.config/kinto
-./kintox11 --debug
 ```
 
 **Screenshots**
