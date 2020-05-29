@@ -155,7 +155,14 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "4" || $1 == "kintowin" || $1
 	case $yn in
 		[Yy]* ) rightalt=true; break;;
 		[Nn]* ) break;;
-		# * ) echo "Please answer yes or no.";;
+	esac
+	done
+	vssublime=false
+	while true; do
+	read -rep $'\nWould you like to give VS Code Sublime Text keymaps? (y/n)\n' yn
+	case $yn in
+		[Yy]* ) vssublime=true; break;;
+		[Nn]* ) break;;
 	esac
 	done
 	branch=$(git rev-parse --abbrev-ref HEAD)
@@ -239,6 +246,11 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "4" || $1 == "kintowin" || $1
 	sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ~/.config/kinto/prexk.sh
 fi
 
+if $vssublime ; then
+	echo "Enabled VS Code Sublime Text remap."
+	perl -pi -e "s/(# )(.*)(- Sublime)/\$2\$3/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
+fi
+
 if [[ $1 == "1" || $1 == "winmac" ]]; then
 	echo '1' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd;echo 'options hid_apple swap_opt_cmd=1' | sudo tee -a /etc/modprobe.d/hid_apple.conf;sudo update-initramfs -u -k all
 	perl -pi -e "s/(# )(.*)(# WinMac)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
@@ -260,9 +272,9 @@ elif [[ $1 == "4" || $1 == "kintowin" ]]; then
 	perl -pi -e "s/(# )(.*)(# KintoWin)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
 fi
 
-if "$rightalt"; then
-	echo "Enabling mutli-language support."
-	perl -pi -e "s/(\w.*)(Multi-language)/# \$1\$2/g" ./xkeysnail-config/kinto.py.new
+if $rightalt ; then
+	echo "Enabled mutli-language support."
+	perl -pi -e "s/(\w.*)(Multi-language)/# \$1\$2/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
 fi
 
 if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "4" || $1 == "kintowin" || $1 == "winmac" || $1 == "mac" || $1 == "chromebook" ]]; then
