@@ -27,6 +27,31 @@ GroupAdd, editors, ahk_exe Code.exe
 GroupAdd, vscode, ahk_exe VSCodium.exe
 GroupAdd, vscode, ahk_exe Code.exe
 
+; Close Apps
+^q::Send !{F4}
+
+; Full Screenshot
+^+3::Send {PrintScreen}
+
+; Region Screenshot
+^+4::Send #+{S}
+
+; wordwise support
+$^Left::Send {Home}
+$^+Left::Send +{Home}
+$^Right::Send {End}
+$^+Right::Send +{End}
+^Up::Send ^{Home}
+^+Up::Send ^+{Home}
+^Down::Send ^{End}
+^+Down::Send ^+{End}
+^Backspace::Send +{Home}{Delete}
+!Backspace::Send ^{Backspace}
+!Left::Send ^{Left}
+!+Left::Send ^+{Left}
+!Right::Send ^{Right}
+!+Right::Send ^+{Right}
+
 ; Cmd+Space Alternative
 LWin & vk07::return
 LWin::return
@@ -58,40 +83,15 @@ if(!GetKeyState("LWin", "P"))
 }
 return
 
-; Close Apps
-^q::Send !{F4}
-
-; Full Screenshot
-^+3::Send {PrintScreen}
-
-; Region Screenshot
-^+4::Send #+{S}
-
-; wordwise support
-$^Left::Send {Home}
-$^+Left::Send +{Home}
-$^Right::Send {End}
-$^+Right::Send +{End}
-^Up::Send ^{Home}
-^+Up::Send ^+{Home}
-^Down::Send ^{End}
-^+Down::Send ^+{End}
-^Backspace::Send +{Home}{Delete}
-!Backspace::Send ^{Backspace}
-!Left::Send ^{Left}
-!+Left::Send ^+{Left}
-!Right::Send ^{Right}
-!+Right::Send ^+{Right}
-
-; ; Sublime Text Remaps for VS Code                           ; ST2CODE
-; #IfWinActive ahk_group vscode                               ; ST2CODE
-; 	; Remap Ctrl+Shift to behave like macOS Sublimetext ; ST2CODE
-; 	; Will extend cursor to multiple lines              ; ST2CODE
-; 	#+Up::send ^!{Up}                                   ; ST2CODE
-; 	#+Down::send ^!{Down}                               ; ST2CODE
-; 	; Remap Ctrl+Cmd+G to select all matches            ; ST2CODE
-; 	#^g::send ^+{L}                                     ; ST2CODE
-; #If                                                         ; ST2CODE
+; Sublime Text Remaps for VS Code                           ; ST2CODE
+#IfWinActive ahk_group vscode                               ; ST2CODE
+	; Remap Ctrl+Shift to behave like macOS Sublimetext ; ST2CODE
+	; Will extend cursor to multiple lines              ; ST2CODE
+	#+Up::send ^!{Up}                                   ; ST2CODE
+	#+Down::send ^!{Down}                               ; ST2CODE
+	; Remap Ctrl+Cmd+G to select all matches            ; ST2CODE
+	#^g::send ^+{L}                                     ; ST2CODE
+#If                                                         ; ST2CODE
 
 #IfWinActive ahk_exe sublime_text.exe
 	; Remap Ctrl+Shift to behave like macOS Sublimetext
