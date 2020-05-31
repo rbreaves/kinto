@@ -30,6 +30,9 @@ GroupAdd, vscode, ahk_exe Code.exe
 ; Close Apps
 ^q::Send !{F4}
 
+; Emoji Panel
+#^Space::Send {LWin down};{LWin up}
+
 ; Full Screenshot
 ^+3::Send {PrintScreen}
 
@@ -83,13 +86,13 @@ if(!GetKeyState("LWin", "P"))
 }
 return
 
-; Sublime Text Remaps for VS Code                           ; ST2CODE
+; Sublime Text Remaps for VS Code
 #IfWinActive ahk_group vscode                               ; ST2CODE
-	; Remap Ctrl+Shift to behave like macOS Sublimetext ; ST2CODE
-	; Will extend cursor to multiple lines              ; ST2CODE
+	; Remap Ctrl+Shift to behave like macOS Sublimetext
+	; Will extend cursor to multiple lines
 	#+Up::send ^!{Up}                                   ; ST2CODE
 	#+Down::send ^!{Down}                               ; ST2CODE
-	; Remap Ctrl+Cmd+G to select all matches            ; ST2CODE
+	; Remap Ctrl+Cmd+G to select all matches
 	#^g::send ^+{L}                                     ; ST2CODE
 #If                                                         ; ST2CODE
 
