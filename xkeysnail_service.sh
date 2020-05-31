@@ -148,21 +148,24 @@ if [ $# -eq 0 ]; then
 	set "$n"
 fi
 
+# multi-language
+rightalt=false
+# VS code remap
+vssublime=false
+
 if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "4" || $1 == "kintowin" || $1 == "winmac" || $1 == "mac" || $1 == "chromebook" ]]; then
-	rightalt=false
 	while true; do
-	read -rep $'\nDo you want multi-language support (the right Alt key will not remap)? (y/n)\n' yn
+	read -rep $'\nDo you want multi-language support (the right Alt key will not remap)? (y/N)\n' yn
 	case $yn in
 		[Yy]* ) rightalt=true; break;;
-		[Nn]* ) break;;
+		* ) break;;
 	esac
 	done
-	vssublime=false
 	while true; do
-	read -rep $'\nWould you like to give VS Code Sublime Text keymaps? (y/n)\n' yn
+	read -rep $'\nWould you like to give VS Code Sublime Text keymaps? (y/N)\n' yn
 	case $yn in
 		[Yy]* ) vssublime=true; break;;
-		[Nn]* ) break;;
+		* ) break;;
 	esac
 	done
 	branch=$(git rev-parse --abbrev-ref HEAD)
@@ -244,11 +247,10 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "4" || $1 == "kintowin" || $1
 	sed -i "s/{username}/`whoami`/g" ~/.config/kinto/prexk.sh
 	sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ./xkeysnail-config/xkeysnail.service.new
 	sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ~/.config/kinto/prexk.sh
-fi
 
-if $vssublime ; then
-	echo "Enabled VS Code Sublime Text remap."
-	perl -pi -e "s/(# )(.*)(- Sublime)/\$2\$3/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
+	if $vssublime ; then
+		perl -pi -e "s/(# )(.*)(- Sublime)/\$2\$3/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
+	fi
 fi
 
 if [[ $1 == "1" || $1 == "winmac" ]]; then
@@ -273,7 +275,6 @@ elif [[ $1 == "4" || $1 == "kintowin" ]]; then
 fi
 
 if $rightalt ; then
-	echo "Enabled mutli-language support."
 	perl -pi -e "s/(\w.*)(Multi-language)/# \$1\$2/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
 fi
 
@@ -347,6 +348,13 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "4" || $1 == "kintowin" || $1
 		echo -e "Kinto \e[1m\e[91mxkeysnail service has failed.\e[0m"
 		echo "You can run 'sudo systemctl status xkeysnail' for more info"
 		echo "You can also run 'sudo journalctl -u xkeysnail'"
+	fi
+	echo ""
+	if $vssublime ; then
+		echo -e "\e[1m\e[32mEnabled\e[0m VS Code Sublime Text remap."
+	fi
+	if $rightalt ; then
+		echo -e "\e[1m\e[32mEnabled\e[0m mutli-language support."
 	fi
 elif [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	echo "Uninstalling Kinto - xkeysnail (udev)"
