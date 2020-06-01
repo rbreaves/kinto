@@ -3,9 +3,19 @@
 # pip3 install pynput
 # pip3 install --no-deps pynput
 
-from pynput.keyboard import Key, Listener
-import sys, subprocess, time
+# from pynput.keyboard import Key, Listener
+import sys, subprocess, time, os
+from subprocess import PIPE, Popen
 delay=3
+
+def cmdline(command):
+    process = Popen(
+        args=command,
+        stdout=PIPE,
+        universal_newlines=True,
+        shell=True
+    )
+    return process.communicate()[0]
 
 class color:
    PURPLE = '\033[95m'
@@ -49,7 +59,7 @@ modifier_keys = {
 }
 
 def set_key(key):
-    global modifiery_keys
+    global modifier_keys
     print("\nWhich key would you like to set?\n")
 
     while True:
@@ -71,7 +81,7 @@ def set_key(key):
         modifier_keys[key] = "Cmd"
 
 def set_cap():
-    global modifiery_keys
+    global modifier_keys
     print("\nWhich key would you like to swap?\n")
 
     while True:
@@ -90,59 +100,58 @@ def set_cap():
     elif keytype == 2:
         modifier_keys["capslock"] = "Ctrl-dup"
     elif keytype == 3:
-        modifier_keys["capswap"] = "Esc"
+        modifier_keys["capswap"] = "Escape"
 
 def is_primary(key):
-    global modifiery_keys
-    if not (str(key).replace("Key.", "").title() == "Enter" or str(key).replace("Key.", "").title() == "Esc"):
+    global modifier_keys
+    if not (str(key).replace("Key.", "").title() == "Enter" or str(key).replace("Key.", "").title() == "Escape"):
         print(str(key).replace("Key.", "").title() + " will be remapped to Ctrl, the Cmd ⌘  key position.")
         # countdown(3)
         modifier_keys["primary"] = str(key).replace("Key.", "").title()
-        return False
-    elif str(key).replace("Key.", "").title() == "Esc":
-        modifier_keys["primary"] = "Esc"
+    elif str(key).replace("Key.", "").title() == "Escape":
+        modifier_keys["primary"] = "Escape"
         # countdown(3)
-        return False
     else:
         return True
+    return False
 
 def is_secondary(key):
-    global modifiery_keys
-    if not (str(key).replace("Key.", "").title() == "Enter" or str(key).replace("Key.", "").title() == "Esc"):
+    global modifier_keys
+    if not (str(key).replace("Key.", "").title() == "Enter" or str(key).replace("Key.", "").title() == "Escape"):
         print(str(key).replace("Key.", "").title() + " will be remapped to Alt, the Option ⌥  key position.")
         # countdown(3)
         modifier_keys["secondary"] = str(key).replace("Key.", "").title()
         return False
-    elif str(key).replace("Key.", "").title() == "Esc":
-        modifier_keys["secondary"] = "Esc"
+    elif str(key).replace("Key.", "").title() == "Escape":
+        modifier_keys["secondary"] = "Escape"
         # countdown(3)
         return False
     else:
         return True
 
 def is_rprimary(key):
-    global modifiery_keys
-    if not (str(key).replace("Key.", "").title() == "Enter" or str(key).replace("Key.", "").title() == "Esc"):
+    global modifier_keys
+    if not (str(key).replace("Key.", "").title() == "Enter" or str(key).replace("Key.", "").title() == "Escape"):
         print(str(key).replace("Key.", "").title() + " will be remapped to Ctrl, the Cmd ⌘  key position.")
         # countdown(3)
         modifier_keys["rprimary"] = str(key).replace("Key.", "").title()
         return False
-    elif str(key).replace("Key.", "").title() == "Esc":
-        modifier_keys["rprimary"] = "Esc"
+    elif str(key).replace("Key.", "").title() == "Escape":
+        modifier_keys["rprimary"] = "Escape"
         # countdown(3)
         return False
     else:
         return True
 
 def is_rsecondary(key):
-    global modifiery_keys
-    if not (str(key).replace("Key.", "").title() == "Enter" or str(key).replace("Key.", "").title() == "Esc"):
+    global modifier_keys
+    if not (str(key).replace("Key.", "").title() == "Enter" or str(key).replace("Key.", "").title() == "Escape"):
         print(str(key).replace("Key.", "").title() + " will be remapped to Alt, the Option ⌥  key position.")
         # countdown(3)
         modifier_keys["rsecondary"] = str(key).replace("Key.", "").title()
         return False
-    elif str(key).replace("Key.", "").title() == "Esc":
-        modifier_keys["rsecondary"] = "Esc"
+    elif str(key).replace("Key.", "").title() == "Escape":
+        modifier_keys["rsecondary"] = "Escape"
         # countdown(3)
         return False
     else:
@@ -153,25 +162,32 @@ print(color.UNDERLINE + color.YELLOW + "\n\nPlease ignore the FN key." + color.E
 input("Press Enter to continue...\n\n")
 print(chr(27) + "[2J")
 
+counter = 0
+
 while True:
-    global modifiery_keys
-    
     
     print(color.UNDERLINE + color.YELLOW + "\n\nPress the 1st key Left of the spacebar" + color.END + " (Press Esc to set manaully)\n")
     print("    👇 \n")
     print(" □ □ ▣ ░░░░░░░\n")
-    with Listener(
-        on_release=is_primary,suppress=True) as listener:
-            try:
-                listener.join()
-            except MyException as e:
-                print('{0} was pressed'.format(e.args[0]))
+    # listener = Listener(on_release=is_primary,suppress=True)
+    # listener.start()
 
-    if modifier_keys["primary"] != "Esc":
+    # with Listener(
+    #     on_release=is_primary,suppress=True) as listener:
+    #         try:
+    #             listener.join()
+    #         except MyException as e:
+    #             print('{0} was pressed'.format(e.args[0]))
+
+    modifier_keys["primary"] = cmdline("xbindkeys -k | awk 'END {print $NF}'").strip()
+    print(modifier_keys["primary"] + " will be remapped to Ctrl, the Cmd ⌘  key position.")
+
+    if modifier_keys["primary"] != "Escape":
         choice = yn_choice("Is this correct?")
         if(choice):
-            print("Left Physical " + modifier_keys["primary"] + " = Ctrl/Cmd ⌘")
+            # print("Left Physical " + modifier_keys["primary"] + " = Ctrl/Cmd ⌘")
             # listener.stop()
+            # input("Press Enter to continue...\n\n")
             break
     else:
         set_key("primary")
@@ -179,29 +195,32 @@ while True:
         # listener.stop()
         input("Press Enter to continue...\n\n")
         break
+    counter += 1
+    print(str(counter)+"\n")
+    time.sleep(1)
 
 print(chr(27) + "[2J")
 
-print(listener)
-
 while True:
-    global modifiery_keys
     print(color.UNDERLINE + color.YELLOW + "\n\nPress the 2nd key Left of the spacebar" + color.END + " (Press Esc to set manaully)\n")
     print("  👇\n")
     print(" □ ▣ □ ░░░░░░░\n")
     
-    with Listener(
-        on_release=is_secondary,suppress=True) as listener:
-            try:
-                listener.join()
-            except MyException as e:
-                print('{0} was pressed'.format(e.args[0]))
+    # with Listener(
+    #     on_release=is_secondary,suppress=True) as listener:
+    #         try:
+    #             listener.join()
+    #         except MyException as e:
+    #             print('{0} was pressed'.format(e.args[0]))
+    modifier_keys["secondary"] = cmdline("xbindkeys -k | awk 'END {print $NF}'").strip()
+    print(modifier_keys["secondary"] + " will be remapped to Alt, the Option ⌥  key position.")
 
-    if modifier_keys["secondary"] != "Esc":
+    if modifier_keys["secondary"] != "Escape":
         choice = yn_choice("Is this correct?")
         if(choice):
             # listener.stop()
             # print("Left Physical " + modifier_keys["secondary"] + " = Alt/Option ⌥")
+            # input("Press Enter to continue...\n\n")
             break
     else:
         set_key("secondary")
@@ -213,23 +232,25 @@ while True:
 print(chr(27) + "[2J")
 
 while True:
-    global modifiery_keys
     print(color.UNDERLINE + color.YELLOW + "\n\nPress the 1st key Right of the spacebar" + color.END + " (Press Esc to set manaully)\n")
     print("        👇 \n")
     print(" ░░░░░░░ ▣ □ \n")
     
-    with Listener(
-        on_release=is_rprimary,suppress=True) as listener:
-            try:
-                listener.join()
-            except MyException as e:
-                print('{0} was pressed'.format(e.args[0]))
+    # with Listener(
+    #     on_release=is_rprimary,suppress=True) as listener:
+    #         try:
+    #             listener.join()
+    #         except MyException as e:
+    #             print('{0} was pressed'.format(e.args[0]))
+    modifier_keys["rprimary"] = cmdline("xbindkeys -k | awk 'END {print $NF}'").strip()
+    print(modifier_keys["rprimary"] + " will be remapped to Ctrl, the Cmd ⌘  key position.")
 
-    if modifier_keys["rprimary"] != "Esc":
+    if modifier_keys["rprimary"] != "Escape":
         choice = yn_choice("Is this correct?")
         if(choice):
             # listener.stop()
             # print("Right Physical " + modifier_keys["rprimary"] + " = Ctrl/Cmd ⌘")
+            # input("Press Enter to continue...\n\n")
             break
     else:
         set_key("rprimary")
@@ -244,21 +265,22 @@ while True:
     print(color.UNDERLINE + color.YELLOW + "\n\nPress the 2nd key Right of the spacebar" + color.END + " (Press Esc to set manaully)\n")
     print("          👇\n")
     print(" ░░░░░░░ □ ▣ \n")
-    
 
-    
-    with Listener(
-        on_release=is_rsecondary,suppress=True) as listener:
-            try:
-                listener.join()
-            except MyException as e:
-                print('{0} was pressed'.format(e.args[0]))
+    # with Listener(
+    #     on_release=is_rsecondary,suppress=True) as listener:
+    #         try:
+    #             listener.join()
+    #         except MyException as e:
+    #             print('{0} was pressed'.format(e.args[0]))
+    modifier_keys["rsecondary"] = cmdline("xbindkeys -k | awk 'END {print $NF}'").strip()
+    print(modifier_keys["rsecondary"] + " will be remapped to Alt, the Option ⌥  key position.")
 
-    if modifier_keys["rsecondary"] != "Esc":
+    if modifier_keys["rsecondary"] != "Escape":
         choice = yn_choice("Is this correct?")
         if(choice):
             # listener.stop()
             # print("Right Physical " + modifier_keys["rsecondary"] + " = Alt/Option ⌥")
+            # modifier_keys["rsecondary"] = str(os.system("xbindkeys -k | awk 'END {print $NF}'"))
             break
     else:
         set_key("rsecondary")
@@ -276,7 +298,7 @@ if modifier_keys["secondary"] != "Ctrl":
     print(" ▣ □ □ ░░░░░░░\n")
 
     print("Note: Super may still activate Ctrl based shortcuts\n")
-    print("at times depending on application or system level shortcut.\n")
+    print("at times depending on application or system level shortcuts.\n")
     print("This will only be done to align shortcuts to their expected functionality.\n")
 
     input("Press Enter to continue...\n\n")
