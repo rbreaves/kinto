@@ -167,7 +167,7 @@ counter = 0
 while True:
     
     print(color.UNDERLINE + color.YELLOW + "\n\nPress the 1st key Left of the spacebar" + color.END + " (Press Esc to set manaully)\n")
-    print("    👇 \n")
+    print("    👇")
     print(" □ □ ▣ ░░░░░░░\n")
     # listener = Listener(on_release=is_primary,suppress=True)
     # listener.start()
@@ -203,7 +203,7 @@ print(chr(27) + "[2J")
 
 while True:
     print(color.UNDERLINE + color.YELLOW + "\n\nPress the 2nd key Left of the spacebar" + color.END + " (Press Esc to set manaully)\n")
-    print("  👇\n")
+    print("  👇")
     print(" □ ▣ □ ░░░░░░░\n")
     
     # with Listener(
@@ -233,8 +233,8 @@ print(chr(27) + "[2J")
 
 while True:
     print(color.UNDERLINE + color.YELLOW + "\n\nPress the 1st key Right of the spacebar" + color.END + " (Press Esc to set manaully)\n")
-    print("        👇 \n")
-    print(" ░░░░░░░ ▣ □ \n")
+    print("        👇")
+    print(" ░░░░░░░ ▣ □")
     
     # with Listener(
     #     on_release=is_rprimary,suppress=True) as listener:
@@ -263,8 +263,8 @@ print(chr(27) + "[2J")
 
 while True:
     print(color.UNDERLINE + color.YELLOW + "\n\nPress the 2nd key Right of the spacebar" + color.END + " (Press Esc to set manaully)\n")
-    print("          👇\n")
-    print(" ░░░░░░░ □ ▣ \n")
+    print("          👇")
+    print(" ░░░░░░░ □ ▣")
 
     # with Listener(
     #     on_release=is_rsecondary,suppress=True) as listener:
@@ -291,10 +291,10 @@ while True:
 
 print(chr(27) + "[2J")
 
-if modifier_keys["secondary"] != "Ctrl":
+if not (modifier_keys["secondary"] == "Ctrl" or modifier_keys["secondary"] == "Control_R"):
     print(color.UNDERLINE + color.YELLOW + "GUI Usage (Physical Ctrl key)\n"+ color.END)
-    print("Ctrl key will be mapped to Super. (Search key on chromebooks)\n")
-    print("👇\n")
+    print("Ctrl key will be mapped to Super. (Search key on chromebooks)")
+    print("👇")
     print(" ▣ □ □ ░░░░░░░\n")
 
     print("Note: Super may still activate Ctrl based shortcuts\n")
@@ -305,19 +305,33 @@ if modifier_keys["secondary"] != "Ctrl":
     # print(chr(27) + "[2J")
 
     print(color.UNDERLINE + color.YELLOW + "Terminal Usage" + color.END + "\n")
-    print("Ctrl key will be the Ctrl key.\n")
-    print("👇\n")
-    print(" ▣ □ □ ░░░░░░░\n\n")
-    print("The Cmd ⌘  key position during terminal usage will usually be Ctrl+Shift.\n")
-    print("    👇 \n")
-    print(" □ □ ▣ ░░░░░░░\n\n")
-    input("Press Enter to continue...\n\n")
+    print("Ctrl key will be the Ctrl key.")
+    print("👇")
+    print(" ▣ □ □ ░░░░░░░\n")
+    print("The Cmd ⌘  key position during terminal usage will usually be Ctrl+Shift.")
+    print("    👇 ")
+    print(" □ □ ▣ ░░░░░░░\n")
+    input("Press Enter to continue...\n")
 else:
     print("Chromebook detected.")
 
+    print(color.UNDERLINE + color.YELLOW + "GUI Usage\n"+ color.END)
+    print("Search key (capslock position) on chromebooks will be Super\n")
+
+    print("Note: Super may still activate Ctrl based shortcuts")
+    print("at times depending on application or system level shortcuts.\n")
+    print("Efforts have been made though to use the physical Ctrl key")
+    print("when it makes sense to do so, and more often than standard")
+    print("keyboards. How it feels to type is more important than technical")
+    print("accuracy.\n")
+    print("If you believe an improvement can be made or an error was made")
+    print("please let me know on github or you can fork this project.\n")
+
+    input("Press Enter to continue...\n\n")
+
     print(color.UNDERLINE + color.YELLOW + "Terminal Usage" + color.END + "\n")
-    print(" □ capslock/search key = Alt\n")
-    print(" shift\n")
+    print(" □ capslock/search key = Alt")
+    print(" shift")
     print(" ▣ □ ░░░░░░░")
     print("☝️\n")
 
