@@ -68,6 +68,8 @@ if len(check_x11) == 0:
 distro = cmdline("awk -F= '$1==\"NAME\" { print $2 ;}' /etc/os-release").replace('"','').strip().split(" ")[0]
 dename = cmdline("./system-config/dename.sh").replace('"','').strip().split(" ")[0].lower()
 
+run_pkg = ""
+
 def requirements(pkgm):
 	print(bcolors.CYELLOW2 + "You need to install some packages, " +run_pkg+ ", for Kinto to fully remap browsers during input focus.\n" + bcolors.ENDC)
 	print("sudo " + pkgm + " " + run_pkg + "\n")
@@ -321,7 +323,7 @@ def kintoImpOne():
 
 
 	runpkg = 0
-	run_pkg = ""
+	global run_pkg
 
 	if len(check_xbind) > 0 and len(check_xdotool) > 0 and len(check_ibus) > 0:
 		print("Xbindkeys, xdotool and IBus requirement is installed.")
@@ -337,6 +339,7 @@ def kintoImpOne():
 		runpkg = 1
 
 	if runpkg != 0:
+		print(runpkg)
 		requirements(pkgm)
 
 	if not os.path.exists(homedir + '/.config/ibus/bus') and cmdline("ls ~/.config/ibus/bus -1rt") == "":

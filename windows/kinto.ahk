@@ -106,25 +106,41 @@ return
 	#^g::send !{F3}
 #If
 
-; Not sure why this fix is needed
-#IfWinActive ahk_exe Firefox.exe
-	^v::send ^v
-#If
-
 #IfWinActive ahk_group terminals
 	; Copy
 	^c::Send {LCtrl down}{LShift down}c{LCtrl Up}{LShift Up}
 	#c::Send {LCtrl down}c{LCtrl Up}
-	#IfWinNotActive ahk_group ConEmu
-		; Paste
-		^v::Send {LCtrl down}{LShift down}v{LCtrl Up}{LShift Up}
-	#If
+	; Paste
+	$^v::
+	If not WinActive("ahk_group ConEmu") && not WinActive("ahk_exe cmd.exe"){
+	 	Send {LCtrl down}{LShift down}v{LCtrl Up}{LShift Up}
+	}
+	else{
+		Send ^v
+	}
+	return
 #If
 
 #IfWinActive ahk_group posix
 	; Open/Close Tab for those that support it
-	^t::Send {LCtrl down}{LShift down}t{LCtrl Up}{LShift Up}
-	^w::Send {LCtrl down}{LShift down}w{LCtrl Up}{LShift Up}
+	$^t::
+	If not WinActive("ahk_group ConEmu"){
+		Send {LCtrl down}{LShift down}t{LCtrl Up}{LShift Up}
+	}
+	else{
+		Send ^t
+	}
+	return
+
+	$^w::
+	If not WinActive("ahk_group ConEmu"){
+		Send {LCtrl down}{LShift down}w{LCtrl Up}{LShift Up}
+	}
+	else{
+		Send ^w
+	}
+	return
+
 	; End of Line
 	#e::Send {LCtrl down}e{LCtrl Up}
 	^e::return
@@ -149,11 +165,11 @@ return
 	#z::Send {LCtrl down}z{LCtrl Up}
 #If
 
-#IfWinActive ahk_group ConEmu
-	; Paste
-	$^v::Send {Shift down}{Insert}{Shift Up}
-	#v::Send {LCtrl down}v{LCtrl Up}
-#If
+; #IfWinActive ahk_group ConEmu
+;	; Paste
+;	$^v::Send {Shift down}{Insert}{Shift Up}
+;	#v::Send {LCtrl down}v{LCtrl Up}
+; #If
 
 #IfWinActive ahk_exe mintty.exe
 	; Copy
