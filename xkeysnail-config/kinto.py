@@ -178,7 +178,7 @@ define_keymap(re.compile(codeStr, re.IGNORECASE),{
 # Keybindings for Sublime Text
 define_keymap(re.compile("Sublime_text", re.IGNORECASE),{
     K("C-Super-up"): K("M-o"),                  # Switch file
-    K("C-M-f"): K("f11"),                       # toggle_full_screen
+    K("Super-RC-f"): K("f11"),                  # toggle_full_screen
     K("C-M-v"): [K("C-k"), K("C-v")],           # paste_from_history
     K("C-up"): pass_through_key,                # cancel scroll_lines up
     K("Super-M-up"): K("C-up"),                 # scroll_lines up
