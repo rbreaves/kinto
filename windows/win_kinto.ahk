@@ -29,30 +29,35 @@ GroupAdd, vscode, ahk_exe Code.exe
 
 ; New AltTab and CtrlTab fix
 *tab:: 
-{   
-    if (GetKeyState("LCtrl", "P") AND GetKeyState("LShift", "P") = false) {     
-        Send {LCtrl down}{LAlt up}{tab}
+{
+	; if (GetKeyState("Tertiary", "P") AND GetKeyState("LShift", "P") = false) {  
+    if (GetKeyState("LCtrl", "P") AND GetKeyState("LShift", "P") = false) {
+    	; Send {LCtrl down}{Secondary up}{tab}
+        Send {LCtrl down}{LWin up}{tab}
         KeyWait, tab
-    } else if (GetKeyState("LCtrl", "P") AND GetKeyState("LShift", "P")) {  
-        Send {LCtrl down}{LAlt up}{LShift down}{tab}
+    ; } else if (GetKeyState("Tertiary", "P") AND GetKeyState("LShift", "P")) {
+    } else if (GetKeyState("LCtrl", "P") AND GetKeyState("LShift", "P")) {
+    	; Send {LCtrl down}{Secondary up}{LShift down}{tab}
+        Send {LCtrl down}{LWin up}{LShift down}{tab}
         KeyWait, tab
+        ; return
     ; } else if (GetKeyState("Primary", "P") AND GetKeyState("LShift", "P") = false) { 
-    } else if (GetKeyState("LWin", "P") AND GetKeyState("LShift", "P") = false) {     
+    } else if (GetKeyState("LAlt", "P") AND GetKeyState("LShift", "P") = false) {     
         Send {LAlt down}{tab}
         KeyWait, tab
-    ; } else if (GetKeyState("Primary", "P") AND GetKeyState("LShift", "P")) { 
-    } else if (GetKeyState("LWin", "P") AND GetKeyState("LShift", "P")) {  
+    ; ; } else if (GetKeyState("Primary", "P") AND GetKeyState("LShift", "P")) { 
+    } else if (GetKeyState("LAlt", "P") AND GetKeyState("LShift", "P")) {  
         Send {LAlt down}{LShift down}{tab}
         KeyWait, tab
-    ; } else if (GetKeyState("Secondary", "P") AND GetKeyState("LShift", "P") = false) { 
-    } else if (GetKeyState("LAlt", "P") AND GetKeyState("LShift", "P") = false) {     
+    ; } else if (GetKeyState("Secondary", "P") AND GetKeyState("LShift", "P")) { 
+    } else if (GetKeyState("LWin", "P") AND GetKeyState("LShift", "P")) = false {  
         return
-    ; ; } else if (GetKeyState("Secondary", "P") AND GetKeyState("LShift", "P")) { 
-    } else if (GetKeyState("LAlt", "P") AND GetKeyState("LShift", "P")) {  
+    ; } else if (GetKeyState("Secondary", "P") AND GetKeyState("LShift", "P")) {
+    } else if (GetKeyState("LWin", "P") AND GetKeyState("LShift", "P")) {  
         return
-    } else {   
+    } else {
         send {Blind}{tab}
-    }      
+    }
     return
 }
 
@@ -64,17 +69,19 @@ tab::Send {tab}
 ; Secondary::LAlt
 ; Tertiary::LWin
 
+$LAlt::LCtrl
+$LWin::LAlt
 $LCtrl::LWin
-$LWin::LCtrl
 
 ; Hack to disable start menu on winkey
-; $LCtrl up::Send {Ctrl down}{Primary up}{Ctrl up}
+; $LCtrl up::Send {Ctrl down}{LWin up}{Ctrl up}
 $LCtrl up::Send {Ctrl down}{LWin up}{Ctrl up}
 
 ; temporary hack to ensure keys don't get stuck
 ; impacts Alt-Tab fix
 ; Primary up::Send {LAlt up}{LCtrl up}
-$LWin up::Send {LWin up}{LAlt up}{LCtrl up}
+$LAlt up::Send {LWin up}{LAlt up}{LCtrl up}
+; $LWin up::Send {LWin down}{LAlt up}{LCtrl up}{LWin up}
 
 ; Close Apps 
 ^q::Send !{F4}
@@ -128,25 +135,37 @@ $^+Right::Send +{End}
 #If
 
 #IfWinActive ahk_group terminals
+	; Sigint Interrupt
+	; $#c::Send {Ctrl down}c{Ctrl up}
+
+	; $#c up::Send {c up}{Ctrl up}
+
+	; #c up::
+	; SetKeyDelay -1
+	; Send {c Up}{Ctrl up}
+	; return
+
 	; Copy
 	^c::
 	SetKeyDelay -1
-	Send {Blind}{LShift down}{c DownTemp}
-	return
+	Send {Ctrl down}{Shift down}{c DownTemp}
+	; return
 
 	^c up::
 	SetKeyDelay -1
-	Send {Blind}{c Up}{LShift Up}
-	return
+	Send {c Up}{Ctrl up}{Shift up}
+	; return
 
 	; Paste
-	^v::
-	If not WinActive("ahk_group ConEmu") && not WinActive("ahk_exe cmd.exe"){
-		SetKeyDelay -1
-		Send {Blind}{LShift down}{v DownTemp}
-	}
-	else{
-		Send {Blind}v
+	*v::
+	if (GetKeyState("LCtrl")){
+		If not WinActive("ahk_group ConEmu") && not WinActive("ahk_exe cmd.exe"){
+			SetKeyDelay -1
+			Send {Blind}{LShift down}{v DownTemp}
+		}
+		else{
+			Send {Blind}v
+		}
 	}
 	return
 
