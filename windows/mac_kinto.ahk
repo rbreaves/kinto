@@ -148,19 +148,14 @@ $^+Right::Send +{End}
 
 	; Paste
 	^v::
-	If not WinActive("ahk_group ConEmu") && not WinActive("ahk_exe cmd.exe"){
-		SetKeyDelay -1
-		Send {Blind}{LShift down}{v DownTemp}
+	If WinActive("ahk_group posix"){
+		Send {Blind}{Shift down}v{Shift up}
 	}
 	else{
 		Send {Blind}v
 	}
 	return
 
-	^v up::
-	SetKeyDelay -1
-	Send {Blind}{v Up}{LShift Up}
-	return
 #If
 
 #IfWinActive ahk_group posix

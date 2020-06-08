@@ -137,16 +137,6 @@ $^+Right::Send +{End}
 #If
 
 #IfWinActive ahk_group terminals
-	; Sigint Interrupt
-	; $#c::Send {Ctrl down}c{Ctrl up}
-
-	; $#c up::Send {c up}{Ctrl up}
-
-	; #c up::
-	; SetKeyDelay -1
-	; Send {c Up}{Ctrl up}
-	; return
-
 	; Copy
 	^c::
 	SetKeyDelay -1
@@ -162,21 +152,13 @@ $^+Right::Send +{End}
 	$#c::Send {Ctrl down}c{Ctrl up}
 
 	; Paste
-	*v::
-	if (GetKeyState("LCtrl")){
-		If not WinActive("ahk_group ConEmu") && not WinActive("ahk_exe cmd.exe"){
-			SetKeyDelay -1
-			Send {Blind}{LShift down}{v DownTemp}
-		}
-		else{
-			Send {Blind}v
-		}
+	^v::
+	If WinActive("ahk_group posix"){
+		Send {Blind}{Shift down}v{Shift up}
 	}
-	return
-
-	^v up::
-	SetKeyDelay -1
-	Send {Blind}{v Up}{LShift Up}
+	else{
+		Send {Blind}v
+	}
 	return
 #If
 
