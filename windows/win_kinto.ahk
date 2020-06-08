@@ -151,12 +151,15 @@ $^+Right::Send +{End}
 	^c::
 	SetKeyDelay -1
 	Send {Ctrl down}{Shift down}{c DownTemp}
-	; return
+	return
 
 	^c up::
 	SetKeyDelay -1
 	Send {c Up}{Ctrl up}{Shift up}
-	; return
+	return
+
+	; Sigints - interrupt
+	$#c::Send {Ctrl down}c{Ctrl up}
 
 	; Paste
 	*v::
@@ -224,6 +227,7 @@ $^+Right::Send +{End}
 	; Clear Terminal and Scroll Buffer
 	^k::Send clear && printf '\e[3J'{Enter}
 	; Nano editor shortcuts
+	#g::Send {LCtrl down}g{LCtrl Up}
 	#k::Send {LCtrl down}k{LCtrl Up}
 	#x::Send {LCtrl down}x{LCtrl Up}
 	#o::Send {LCtrl down}o{LCtrl Up}
@@ -235,6 +239,8 @@ $^+Right::Send +{End}
 	#t::Send {LCtrl down}t{LCtrl Up}
 	#_::Send {LCtrl down}_{LCtrl Up}
 	#z::Send {LCtrl down}z{LCtrl Up}
+	#y::Send {LCtrl down}y{LCtrl Up}
+	#v::Send {LCtrl down}v{LCtrl Up}
 #If
 
 ; #IfWinActive ahk_group ConEmu
