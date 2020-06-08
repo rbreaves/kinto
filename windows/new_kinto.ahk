@@ -58,6 +58,8 @@ GroupAdd, vscode, ahk_exe Code.exe
 
 tab::Send {tab}
 
++tab::Send {Shift down}{tab}{Shift up}
+
 ; Basic Remap
 ;
 ; Primary::LCtrl
