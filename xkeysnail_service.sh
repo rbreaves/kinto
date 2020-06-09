@@ -173,7 +173,7 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "4" || $1 == "kintowin" || $1
 		while true; do
 		read -rep $'\nExperimental Support for Firefox/Chrome Back/Forward hotkeys (Cmd+Left/Right)?\n(Keys could get stuck, switch windows or press ctrl &/or super to release) (y/n)\n' yn
 		case $yn in
-			[Yy]* ) exp='/sbin/runuser -l {username} -c "export DISPLAY={displayid};/home/{username}/.config/kinto/caret_status_xkey.sh\&";'; expsh='"/home/{username}/.config/kinto/caret_status_xkey.sh"'; break;;
+			[Yy]* ) exp='/sbin/runuser -l {username} -c "export DISPLAY={displayid};{homedir}/.config/kinto/caret_status_xkey.sh\&";'; expsh='"{homedir}/.config/kinto/caret_status_xkey.sh"'; break;;
 			[Nn]* ) exp=" "; expsh=" " break;;
 			# * ) echo "Please answer yes or no.";;
 		esac
@@ -214,7 +214,7 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "4" || $1 == "kintowin" || $1
 
 	# echo "Transferring files..."
 	mkdir -p ~/.config/kinto
-	
+
 	# KDE xhost fix
 	mkdir -p ~/.kde/Autostart
 	echo -e '#!/bin/sh\rxhost +SI:localuser:root' > ~/.kde/Autostart/kintohost.sh
@@ -237,14 +237,16 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "4" || $1 == "kintowin" || $1
 		sed -i "s#{kill-caret}#$expsh#g" ./xkeysnail-config/xkeysnail.service.new
 	fi
 	sed -i "s/{username}/`whoami`/g" ./xkeysnail-config/xkeysnail.service.new
+	sed -i "s#{homedir}#`echo "$HOME"`#g" ./xkeysnail-config/xkeysnail.service.new
 	sed -i "s#{xhost}#`which xhost`#g" ./xkeysnail-config/xkeysnail.service.new
 	sed -i "s/{username}/`whoami`/g" ./xkeysnail-config/limitedadmins.new
+	sed -i "s#{homedir}#`echo "$HOME"`#g" ./xkeysnail-config/limitedadmins.new
 	sed -i "s#{systemctl}#`which systemctl`#g" ./xkeysnail-config/limitedadmins.new
 	sudo chown root:root ./xkeysnail-config/limitedadmins.new
 	sudo mv ./xkeysnail-config/limitedadmins.new /etc/sudoers.d/limitedadmins
 	sed -i "s#{systemctl}#`which systemctl`#g" ~/.config/autostart/xkeysnail.desktop
 	sed -i "s#{xhost}#`which xhost`#g" ~/.config/autostart/xkeysnail.desktop
-	sed -i "s/{username}/`whoami`/g" ~/.config/kinto/prexk.sh
+	sed -i "s#{homedir}#`echo "$HOME"`#g" ~/.config/kinto/prexk.sh
 	sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ./xkeysnail-config/xkeysnail.service.new
 	sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ~/.config/kinto/prexk.sh
 
