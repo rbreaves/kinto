@@ -1,8 +1,6 @@
 # Kinto
 
-![kinto_carrot](https://user-images.githubusercontent.com/10969616/77842401-4744b500-7157-11ea-854a-d7dec6f9a250.gif)
-
-![alt text](https://raw.githubusercontent.com/rbreaves/kinto/master/Kinto.png)
+![kinto-color-128](https://user-images.githubusercontent.com/10969616/84222805-1d383900-aa9e-11ea-9d95-11849706c511.png)
 
 [![GitHub release](https://img.shields.io/github/release/rbreaves/kinto.svg)](https://github.com/rbreaves/kinto/releases/latest)
 
