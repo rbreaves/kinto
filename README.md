@@ -1,6 +1,7 @@
 # Kinto
 
-![kinto-color-128](https://user-images.githubusercontent.com/10969616/84222805-1d383900-aa9e-11ea-9d95-11849706c511.png)
+![kinto-color-131](https://user-images.githubusercontent.com/10969616/84360699-20abed00-ab90-11ea-9c26-391c030226f7.png)
+
 
 [![GitHub release](https://img.shields.io/github/release/rbreaves/kinto.svg)](https://github.com/rbreaves/kinto/releases/latest)
 
