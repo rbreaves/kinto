@@ -44,7 +44,9 @@ Kinto works for standard Windows, Apple and Chromebook keyboards. The following 
 **GUI**
 |**Physical**| Ctrl  |  Win/Alt |  Alt/Cmd | Spacebar|
 |---|---|---|---|---|
-|**Virtual**|  Win/Super | Alt  |  RCtrl |Spacebar|
+|**Virtual**|  Win/Super* | Alt  |  RCtrl |Spacebar|
+
+*Win/Super will properly remap to LCtrl when needed to fully support expected keymaps.
 
 **Terminal**
 |**Physical**| Ctrl  |  Win/Alt |  Alt/Cmd | Spacebar|
