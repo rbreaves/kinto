@@ -80,6 +80,10 @@ Other programs that will be installed when you run ./setup.py
 
 Does not have complete parity with the Linux edition, but it does work and can be built on and added to as needed. Modify ./windows/kinto.ahk if you want to add more WSL editions or other terminals.
 
+<img src="https://user-images.githubusercontent.com/10969616/84471498-100c7d00-ac4b-11ea-972d-60c1907831ec.png" width="50%">
+<img src="https://user-images.githubusercontent.com/10969616/84471501-10a51380-ac4b-11ea-9e0e-c19a7ebfad6d.png" width="50%">
+
+
 ## How to install
 
 1. clone this repo
