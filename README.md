@@ -42,14 +42,14 @@ Seamless copy and paste with all apps and terminals. Also the only linux remappe
 Kinto works for standard Windows, Apple and Chromebook keyboards. The following however describes the dynamic rebinding based on a standard Windows/Mac keyboard.
 
 **GUI**
-| Ctrl  |  Win/Alt |  Alt/Cmd | Spacebar|
-|---|---|---|---|
-|  Win/Super | Alt  |  RCtrl |Spacebar|
+|**Physical**| Ctrl  |  Win/Alt |  Alt/Cmd | Spacebar|
+|---|---|---|---|---|
+|**Virtual**|  Win/Super | Alt  |  RCtrl |Spacebar|
 
 **Terminal**
-| Ctrl  |  Win/Alt |  Alt/Cmd | Spacebar|
-|---|---|---|---|
-|  LCtrl | Alt  |  RCtrl |Spacebar|
+|**Physical**| Ctrl  |  Win/Alt |  Alt/Cmd | Spacebar|
+|---|---|---|---|---|
+|**Virtual**|  LCtrl | Alt  |  RCtrl |Spacebar|
 
 - Cursor/word-wise shortcut keys have been added to align with macOS keyboard shortcuts.
 
