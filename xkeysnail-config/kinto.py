@@ -29,9 +29,6 @@ define_conditional_modmap(lambda wm_class: wm_class.casefold() not in terminals,
     # Key.RIGHT_META: Key.RIGHT_ALT,  # WinMac
     # Key.RIGHT_CTRL: Key.RIGHT_META, # WinMac
 
-    # # KintoWin
-    # Key.LEFT_CTRL: Key.RIGHT_CTRL,   # KintoWin
-
     # # Mac Only
     # Key.LEFT_META: Key.RIGHT_CTRL,  # Mac
     # Key.LEFT_CTRL: Key.LEFT_META,   # Mac
