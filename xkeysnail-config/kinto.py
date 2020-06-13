@@ -54,10 +54,6 @@ define_conditional_modmap(re.compile(termStr, re.IGNORECASE), {
     # Key.RIGHT_META: Key.RIGHT_ALT,  # WinMac
     # Key.RIGHT_CTRL: Key.LEFT_CTRL,  # WinMac
 
-    # # KintoWin
-    # Key.LEFT_CTRL: Key.RIGHT_CTRL,   # KintoWin
-    # Key.LEFT_META: Key.LEFT_CTRL,    # KintoWin
-
     # # Mac Only
     # Key.LEFT_META: Key.RIGHT_CTRL,  # Mac
     # # Left Ctrl Stays Left Ctrl
