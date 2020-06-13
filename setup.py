@@ -7,39 +7,46 @@ from prekinto import *
 homedir = os.path.expanduser("~")
 
 def windows_setup():
-	keymaps = ["Apple keyboard standard", "Apple keyboard w/ Caps lock as Esc", "Windows keyboard standard", "Windows keyboard w/ Caps lock as Esc","Uninstall"]
+	keymaps = ["Apple keyboard standard", "Windows keyboard standard","Uninstall"]
 	for index, item in enumerate(keymaps):
 		print("    %i. %s" % (index+1, item.capitalize()))
 	default = 0
 	while not int(default) in range(1,len(keymaps)+1):
 		default = int(input("\nPlease enter your desired keymap (1 - " + str(len(keymaps)) + ") : "))
 	print("")
+	# Short DOS path notation
 	path= cmdline('echo %cd%')[:-1]
+	print("Copying autohotkey combinations for Terminals & Editors...")
+	os.system("copy /Y " + path + "\\windows\\kinto.ahk " + path + "\\windows\\kinto-new.ahk")
 	if default == 1:
-		os.system("regedit " + path + "\\windows\\macbook_winctrl_swap.reg")
+		os.system('perl -pi -e "s/(; )(.*)(; MacModifiers)/$2$3/g" ./windows/kinto-new.ahk')
+		# os.system("regedit " + path + "\\windows\\macbook_winctrl_swap.reg")
 	elif default == 2:
-		os.system("regedit " + path + "\\windows\\macbook_winctrl_capsesc_swap.reg")
+		os.system('perl -pi -e "s/(; )(.*)(; WinModifiers)/$2$3/g" ./windows/kinto-new.ahk')
+		# os.system("regedit " + path + "\\windows\\standard_ctrlalt_swap.reg")
 	elif default == 3:
-		os.system("regedit " + path + "\\windows\\standard_ctrlalt_swap.reg")
-	elif default == 4:
-		os.system("regedit " + path + "\\windows\\standard_ctrlalt_capsesc_swap.reg")
-	elif default == 5:
 		os.system("regedit " + path + "\\windows\\remove_keyswap.reg")
 	stvscode = yn_choice(bcolors.CYELLOW2 + "Would you like to use Sublime Text 3 keymaps in VS Code?\n" + bcolors.ENDC)
-	if default > 0 and default < 5:
+	if default > 0 and default < 3:
 		print("Will now install chocolatey and autohotkey with elevated privileges...")
 		print("This install will fail if you are not running with elevated privileges")
 		os.system('powershell -executionpolicy bypass ".\\windows\\autohotkey.ps1"')
 		os.system('refreshenv')
 		print("\nWill now install Ubuntu Terminal Theme as default...")
 		os.system("regedit " + path + "\\windows\\theme_ubuntu.reg")
-		print("Copying autohotkey combinations for Terminals & Editors...")
-		os.system("copy /Y " + path + "\\windows\\kinto.ahk " + path + "\\windows\\kinto-new.ahk")
 		if(stvscode):
 			os.system('perl -pi -e "s/(; )(.*)(; ST2CODE)/$2$3/g" ./windows/kinto-new.ahk')
-		os.system("copy /Y " + path + "\\windows\\kinto-new.ahk \"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp\\kinto.ahk\"")
+		os.system('copy /Y ' + path + '\\windows\\kinto-start.vbs "%userprofile%\\.kinto\\kinto-start.vbs"')
+		os.system('mklink "%userprofile%\\Start Menu\\Programs\\Startup\\kinto-start.vbs" "%userprofile%\\.kinto\\kinto-start.vbs"')
+		os.system('cp '+ path + '\\windows\\NoShell.vbs "%userprofile%\\.kinto\\NoShell.vbs"')
+		os.system('cp '+ path + '\\windows\\toggle_kb.bat "%userprofile%\\.kinto\\toggle_kb.bat"')
+		os.system('cp '+ path + '\\windows\\kinto-new.ahk "%userprofile%\\.kinto\\kinto.ahk"')
+		os.system('robocopy '+ path + '\\assets "%userprofile%\\.kinto\\assets" /E')
 		os.system("del /f .\\windows\\kinto-new.ahk")
-		print("\nPlease log off and back on for changes to take full effect.")
+		os.system("del \"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp\\kinto.ahk\"")
+		os.system("%userprofile%\\AppData\\Roaming\\Microsoft\\Windows\\STARTM~1\\Programs\\Startup\\kinto-start.vbs")
+
+	# 	# print("\nPlease log off and back on for changes to take full effect.")
 		print("If using WSL then please remember to right click on title bar -> Properties -> Edit Options -> Use Ctrl+Shift+C/V as Copy/Paste and enable it.")
 	else:
 		os.system("del \"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp\\kinto.ahk\"")

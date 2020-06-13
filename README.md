@@ -1,8 +1,7 @@
 # Kinto
 
-![kinto_carrot](https://user-images.githubusercontent.com/10969616/77842401-4744b500-7157-11ea-854a-d7dec6f9a250.gif)
+![kinto-color-132](https://user-images.githubusercontent.com/10969616/84361571-7d5bd780-ab91-11ea-81bc-4d3a2ca51c4e.png)
 
-![alt text](https://raw.githubusercontent.com/rbreaves/kinto/master/Kinto.png)
 
 [![GitHub release](https://img.shields.io/github/release/rbreaves/kinto.svg)](https://github.com/rbreaves/kinto/releases/latest)
 
@@ -40,15 +39,23 @@ Seamless copy and paste with all apps and terminals. Also the only linux remappe
 
 ## What does this do exactly?
 
-Kinto works for standard Windows, Apple and Chromebook keyboards. The following however describes the dynamic rebinding based on a standard Windows keyboard. (Alt location is Cmd for Apple keyboards)
-
-- Normal apps - Alt → Ctrl, Win/Super → Alt, Ctrl → Win/Super
-
-- Terminal apps - Alt → Ctrl+Shift, Win/Super → Alt, Ctrl → Ctrl
+Kinto works for standard Windows, Apple and Chromebook keyboards. The following however describes the dynamic rebinding based on a standard Windows/Mac keyboard.
 
 - Cursor/word-wise shortcut keys have been added to align with macOS keyboard shortcuts.
 
-Does Kinto have to have specific keyamps for individual apps?
+**GUI**
+|**Physical**| Ctrl  |  Win/Alt |  Alt/Cmd | Spacebar|
+|---|---|---|---|---|
+|**Virtual**|  Win/Super* | Alt  |  RCtrl |Spacebar|
+
+*Win/Super will properly remap to LCtrl when needed to fully support expected keymaps.
+
+**Terminal**
+|**Physical**| Ctrl  |  Win/Alt |  Alt/Cmd | Spacebar|
+|---|---|---|---|---|
+|**Virtual**|  LCtrl | Alt  |  RCtrl |Spacebar|
+
+Does Kinto have to have specific keymaps for individual apps?
 
 I'd say 90+% of the time no, but every OS has their default conventions that sometimes run afoul to macs. For this reason you can easily edit kinto.py or kinto.ahk to support the few shortcut keys Kinto may miss. If you do add additional support please consider forking this project and sharing your new keymaps with the rest of us!
 
@@ -78,7 +85,15 @@ Other programs that will be installed when you run ./setup.py
 - Chocolatey
 - Autohotkey
 
-Does not have complete parity with the Linux edition, but it does work and can be built on and added to as needed. Modify ./windows/kinto.ahk if you want to add more WSL editions or other terminals.
+Note: Sublime Text users should disable screen rotation hotkeys as they will interfere with multi-cursor and possibly other combos. See https://windowsloop.com/disable-screen-rotation-keyboard-shortcut/ for details.
+
+Does not have complete parity with the Linux edition, but it is getting very close now. Only lacks some Sublime Text 3 remaps at this point.
+
+Users can now hotswap between Apple and Windows based keyboards without having to logoff and back on, and Windows is currently the only implementation with a system tray (but this feature is coming to Budgie, XFCE, Mate, Gnome, and lastly KDE).
+
+<img src="https://user-images.githubusercontent.com/10969616/84471498-100c7d00-ac4b-11ea-972d-60c1907831ec.png" width="50%">
+<img src="https://user-images.githubusercontent.com/10969616/84471501-10a51380-ac4b-11ea-9e0e-c19a7ebfad6d.png" width="50%">
+
 
 ## How to install
 
@@ -345,11 +360,6 @@ Start
 sudo systemctl start xkeysnail
 sudo systemctl status xkeysnail
 ```
-
-## Notes about Windows 10
-Sharpkeys was used to create the layout/reg files to swap the Ctrl, Win and Alt keys. Sharpkeys was not required however because the reg keys were extracted. Autohotkey is used to manage keyswaps needed for terminal usage. Autohotkey is also used to add additional mac like keybinds for Sublime text and can be used for other apps as well.
-
-Microsoft is working on a new Powertoy Keyboard Manager that could be used with an easier to use GUI interface, but this approach should be fully sufficient for a mac like experience and autohotkeys appears to be more than capable enough to handle complex rebinding of any or most mac like shortcuts.
 
 ## Language Support
 I'd appreciate any help from people with non-US based keyboards, to help ensure that these keymaps and keyswap methods work in all or most languages.
