@@ -140,7 +140,6 @@ if [ $# -eq 0 ]; then
 	echo "  1) Windows & Mac (HID driver)"
 	echo "  2) Mac Only & VMs on Macbooks"
 	echo "  3) Chromebook"
-	echo "  4) Windows w/ Kinto - aka Linux VM"
 	# echo "  5) Uninstall"
 
 	read n
@@ -153,7 +152,7 @@ rightalt=false
 # VS code remap
 vssublime=false
 
-if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "4" || $1 == "kintowin" || $1 == "winmac" || $1 == "mac" || $1 == "chromebook" ]]; then
+if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1 == "chromebook" ]]; then
 	while true; do
 	read -rep $'\nDo you want multi-language support (the right Alt key will not remap)? (y/N)\n' yn
 	case $yn in
@@ -272,15 +271,13 @@ elif [[ $1 == "3" || $1 == "chromebook" ]]; then
 	perl -pi -e "s/(# )(.*)(# Chromebook)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
 	perl -pi -e "s/(# )(.*)(# xfce4)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
 	perl -pi -e "s/(\w.*)(# Default)/# \$1\$2/g" ./xkeysnail-config/kinto.py.new
-elif [[ $1 == "4" || $1 == "kintowin" ]]; then
-	perl -pi -e "s/(# )(.*)(# KintoWin)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
 fi
 
 if $rightalt ; then
 	perl -pi -e "s/(\w.*)(Multi-language)/# \$1\$2/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
 fi
 
-if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "4" || $1 == "kintowin" || $1 == "winmac" || $1 == "mac" || $1 == "chromebook" ]]; then
+if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1 == "chromebook" ]]; then
 	mv ./xkeysnail-config/kinto.py.new ~/.config/kinto/kinto.py
 	# if [ "$distro" == "fedora" ];then
 	sudo rm /etc/systemd/system/xkeysnail.service
