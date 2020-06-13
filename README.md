@@ -373,6 +373,10 @@ https://superuser.com/questions/385748/binding-superc-superv-to-copy-and-paste
 
 Yet another keyboard remapping tool for X environment
 
+[mac-precision-touchpad](https://github.com/imbushuo/mac-precision-touchpad) by imbushuo
+
+Windows 10 touchpad to precision touchpad driver
+
 [fusuma](https://github.com/iberianpig/fusuma) by iberianpig
 
 Multitouch gestures with libinput driver on Linux
