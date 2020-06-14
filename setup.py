@@ -7,39 +7,46 @@ from prekinto import *
 homedir = os.path.expanduser("~")
 
 def windows_setup():
-	keymaps = ["Apple keyboard standard", "Apple keyboard w/ Caps lock as Esc", "Windows keyboard standard", "Windows keyboard w/ Caps lock as Esc","Uninstall"]
+	keymaps = ["Apple keyboard standard", "Windows keyboard standard","Uninstall"]
 	for index, item in enumerate(keymaps):
 		print("    %i. %s" % (index+1, item.capitalize()))
 	default = 0
 	while not int(default) in range(1,len(keymaps)+1):
 		default = int(input("\nPlease enter your desired keymap (1 - " + str(len(keymaps)) + ") : "))
 	print("")
+	# Short DOS path notation
 	path= cmdline('echo %cd%')[:-1]
+	print("Copying autohotkey combinations for Terminals & Editors...")
+	os.system("copy /Y " + path + "\\windows\\kinto.ahk " + path + "\\windows\\kinto-new.ahk")
 	if default == 1:
-		os.system("regedit " + path + "\\windows\\macbook_winctrl_swap.reg")
+		os.system('perl -pi -e "s/(; )(.*)(; MacModifiers)/$2$3/g" ./windows/kinto-new.ahk')
+		# os.system("regedit " + path + "\\windows\\macbook_winctrl_swap.reg")
 	elif default == 2:
-		os.system("regedit " + path + "\\windows\\macbook_winctrl_capsesc_swap.reg")
+		os.system('perl -pi -e "s/(; )(.*)(; WinModifiers)/$2$3/g" ./windows/kinto-new.ahk')
+		# os.system("regedit " + path + "\\windows\\standard_ctrlalt_swap.reg")
 	elif default == 3:
-		os.system("regedit " + path + "\\windows\\standard_ctrlalt_swap.reg")
-	elif default == 4:
-		os.system("regedit " + path + "\\windows\\standard_ctrlalt_capsesc_swap.reg")
-	elif default == 5:
 		os.system("regedit " + path + "\\windows\\remove_keyswap.reg")
 	stvscode = yn_choice(bcolors.CYELLOW2 + "Would you like to use Sublime Text 3 keymaps in VS Code?\n" + bcolors.ENDC)
-	if default > 0 and default < 5:
+	if default > 0 and default < 3:
 		print("Will now install chocolatey and autohotkey with elevated privileges...")
 		print("This install will fail if you are not running with elevated privileges")
 		os.system('powershell -executionpolicy bypass ".\\windows\\autohotkey.ps1"')
 		os.system('refreshenv')
 		print("\nWill now install Ubuntu Terminal Theme as default...")
 		os.system("regedit " + path + "\\windows\\theme_ubuntu.reg")
-		print("Copying autohotkey combinations for Terminals & Editors...")
-		os.system("copy /Y " + path + "\\windows\\kinto.ahk " + path + "\\windows\\kinto-new.ahk")
 		if(stvscode):
 			os.system('perl -pi -e "s/(; )(.*)(; ST2CODE)/$2$3/g" ./windows/kinto-new.ahk')
-		os.system("copy /Y " + path + "\\windows\\kinto-new.ahk \"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp\\kinto.ahk\"")
+		os.system('copy /Y ' + path + '\\windows\\kinto-start.vbs "%userprofile%\\.kinto\\kinto-start.vbs"')
+		os.system('mklink "%userprofile%\\Start Menu\\Programs\\Startup\\kinto-start.vbs" "%userprofile%\\.kinto\\kinto-start.vbs"')
+		os.system('cp '+ path + '\\windows\\NoShell.vbs "%userprofile%\\.kinto\\NoShell.vbs"')
+		os.system('cp '+ path + '\\windows\\toggle_kb.bat "%userprofile%\\.kinto\\toggle_kb.bat"')
+		os.system('cp '+ path + '\\windows\\kinto-new.ahk "%userprofile%\\.kinto\\kinto.ahk"')
+		os.system('robocopy '+ path + '\\assets "%userprofile%\\.kinto\\assets" /E')
 		os.system("del /f .\\windows\\kinto-new.ahk")
-		print("\nPlease log off and back on for changes to take full effect.")
+		os.system("del \"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp\\kinto.ahk\"")
+		os.system("%userprofile%\\AppData\\Roaming\\Microsoft\\Windows\\STARTM~1\\Programs\\Startup\\kinto-start.vbs")
+
+	# 	# print("\nPlease log off and back on for changes to take full effect.")
 		print("If using WSL then please remember to right click on title bar -> Properties -> Edit Options -> Use Ctrl+Shift+C/V as Copy/Paste and enable it.")
 	else:
 		os.system("del \"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp\\kinto.ahk\"")
@@ -112,7 +119,7 @@ def setShortcuts():
 	addhotkeys = yn_choice("\nDo you want to apply system level shortcuts?")
 	if(addhotkeys):
 		distro = distro.lower()
-		if dename == "gnome" or dename == "mate":
+		if dename == "gnome" or dename == "mate" or dename == "budgie":
 			cmdline('dconf dump /org/gnome/desktop/wm/keybindings/ > keybindings_`date +"%Y.%m.%d-%s"`.conf')
 			cmdline('dconf dump /org/gnome/mutter/keybindings/ > mutter_`date +"%Y.%m.%d-%s"`.conf')
 			if(kintotype == 1):
@@ -122,11 +129,19 @@ def setShortcuts():
 				cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-applications \"['<Primary>F13','<Primary><Shift>F13','<Alt>Tab']\"")
 				cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward \"['<Primary>F14','<Primary><Shift>F14','<Alt><Shift>Tab']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\"")
+			#
+			# Leaving run dialog disabled for now
+			# Too slow on appearing, compared to the app menu
+			#
+			# if dename != "budgie":
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Primary><Shift>Space','<Primary>Space']\"")
+			# else:
+			# 	cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Alt>F1']\"")
+			# 	cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-run-dialog \"['<Primary><Shift>Space','<Primary>Space']\"")
 			cmdline("gsettings set org.gnome.shell.keybindings toggle-application-view \"['LaunchB']\"")
 			if dename != "mate":
 				cmdline("gsettings set org.gnome.mutter overlay-key ''")
-		if (distro == "ubuntu" and dename == "gnome") or (distro == "linux" and dename == "mate") or (distro == "ubuntu" and dename == "mate"):
+		if (distro == "ubuntu" and dename == "gnome") or (distro == "ubuntu" and dename == "budgie") or (distro == "linux" and dename == "mate") or (distro == "ubuntu" and dename == "mate"):
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up \"['<Super>Up','<Super>Left']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down \"['<Super>Down','<Super>Right']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left ['']")
@@ -160,8 +175,8 @@ def setShortcuts():
 			cmdline('perl -pi -e "s/(\w.*)(\/\/ Default cmdtab)/\/\/ \$1\$2/g" ~/.xkb/symbols/mac_gui')
 		# elif distro == "budgie" and dename == "gnome":
 		# 	print("Apply budgie shortcuts here")
-		elif (distro == "galliumos" and dename == "xfce") or (distro == "ubuntu" and dename == "xfce"):
-			print("Applying GalliumOS (xfce) shortcuts...")
+		elif (dename == "xfce"):
+			print("Applying xfce shortcuts...")
 			cmdline('cp ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml ./xfce4-keyboard-shortcuts_`date +"%Y.%m.%d-%s"`.xml')
 			# Reset Show desktop
 			cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Primary><Alt>d" --reset')
@@ -225,7 +240,8 @@ def setShortcuts():
 			os.system('kquitapp5 kglobalaccel && sleep 2s && kglobalaccel5 &')
 		else:
 			print('distro: ' + distro + ' de: ' + dename)
-			print("A supported OS and DE was not found, you may not have full system level shortcuts installed.")
+			print(bcolors.CRED2 + "A supported OS and DE was not found, you may not have full system level shortcuts installed." + bcolors.ENDC)
+			print(bcolors.CRED2 + "You may want to find your DE or Window Manager settings and manually set Alt-Tab & other OS related shortcuts." + bcolors.ENDC)
 		if dename == "gnome":
 			# Apply dconf update to make updates survive reboots
 			cmdline('dconf dump /org/gnome/desktop/wm/keybindings/ > tempkb.conf')

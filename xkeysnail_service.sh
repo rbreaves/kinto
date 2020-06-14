@@ -72,6 +72,20 @@ function uninstall {
 	fi
 }
 
+function removeAppleKB {
+	# Undo Apple keyboard cmd & alt swap
+	if test -f "/sys/module/hid_apple/parameters/swap_opt_cmd" && [ `cat /sys/module/hid_apple/parameters/swap_opt_cmd` == "1" ]; then
+		echo '0' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd
+		echo 'options hid_apple swap_opt_cmd=0' | sudo tee -a /etc/modprobe.d/hid_apple.conf
+		sudo update-initramfs -u -k all
+	fi
+	if test -f "/sys/module/applespi/parameters/swap_opt_cmd" && [ `cat /sys/module/applespi/parameters/swap_opt_cmd` == "1" ]; then
+		echo '0' | sudo tee -a /sys/module/applespi/parameters/swap_opt_cmd
+		echo 'options applespi swap_opt_cmd=0' | sudo tee -a /etc/modprobe.d/applespi.conf
+		sudo update-initramfs -u -k all
+	fi
+}
+
 function budgieUninstall {
 	if [ -f /usr/bin/budgie-desktop ];then
 		read -n 1 -s -r -p "Your system may log you off immediately during the restoration of budgie-daemon. Press any key to continue..."
@@ -101,7 +115,7 @@ function budgieUpdate {
 			budgieVersion="$(/usr/bin/budgie-desktop --version | awk '{ print $2; }' | head -n1)"
 			if [ "$budgieVersion" == "10.5.1" ]; then
 				if ! [ -f ./system-config/budgie-daemon_10.5.1 ]; then
-					wget https://github.com/rbreaves/budgie-desktop/raw/43d3b44243b0bcaee3262a79818024a651475b58/binaries/budgie-daemon_10.5.1 -O ./system-config/budgie-daemon_10.5.1
+					wget https://github.com/rbreaves/budgie-desktop/raw/f112e0e349c021c1bbfa7e45c16083eae0d92fac/binaries/budgie-daemon_10.5.1 -O ./system-config/budgie-daemon_10.5.1
 				fi
 				bdmd5=$(md5sum /usr/bin/budgie-daemon | awk '{ print $1 }')
 				newbdmd5=$(md5sum ./system-config/budgie-daemon_10.5.1 | awk '{ print $1 }')
@@ -140,7 +154,6 @@ if [ $# -eq 0 ]; then
 	echo "  1) Windows & Mac (HID driver)"
 	echo "  2) Mac Only & VMs on Macbooks"
 	echo "  3) Chromebook"
-	echo "  4) Windows w/ Kinto - aka Linux VM"
 	# echo "  5) Uninstall"
 
 	read n
@@ -153,7 +166,7 @@ rightalt=false
 # VS code remap
 vssublime=false
 
-if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "4" || $1 == "kintowin" || $1 == "winmac" || $1 == "mac" || $1 == "chromebook" ]]; then
+if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1 == "chromebook" ]]; then
 	while true; do
 	read -rep $'\nDo you want multi-language support (the right Alt key will not remap)? (y/N)\n' yn
 	case $yn in
@@ -173,7 +186,7 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "4" || $1 == "kintowin" || $1
 		while true; do
 		read -rep $'\nExperimental Support for Firefox/Chrome Back/Forward hotkeys (Cmd+Left/Right)?\n(Keys could get stuck, switch windows or press ctrl &/or super to release) (y/n)\n' yn
 		case $yn in
-			[Yy]* ) exp='/sbin/runuser -l {username} -c "export DISPLAY={displayid};/home/{username}/.config/kinto/caret_status_xkey.sh\&";'; expsh='"/home/{username}/.config/kinto/caret_status_xkey.sh"'; break;;
+			[Yy]* ) exp='/sbin/runuser -l {username} -c "export DISPLAY={displayid};{homedir}/.config/kinto/caret_status_xkey.sh\&";'; expsh='"{homedir}/.config/kinto/caret_status_xkey.sh"'; break;;
 			[Nn]* ) exp=" "; expsh=" " break;;
 			# * ) echo "Please answer yes or no.";;
 		esac
@@ -214,7 +227,7 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "4" || $1 == "kintowin" || $1
 
 	# echo "Transferring files..."
 	mkdir -p ~/.config/kinto
-	
+
 	# KDE xhost fix
 	mkdir -p ~/.kde/Autostart
 	echo -e '#!/bin/sh\rxhost +SI:localuser:root' > ~/.kde/Autostart/kintohost.sh
@@ -237,14 +250,16 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "4" || $1 == "kintowin" || $1
 		sed -i "s#{kill-caret}#$expsh#g" ./xkeysnail-config/xkeysnail.service.new
 	fi
 	sed -i "s/{username}/`whoami`/g" ./xkeysnail-config/xkeysnail.service.new
+	sed -i "s#{homedir}#`echo "$HOME"`#g" ./xkeysnail-config/xkeysnail.service.new
 	sed -i "s#{xhost}#`which xhost`#g" ./xkeysnail-config/xkeysnail.service.new
 	sed -i "s/{username}/`whoami`/g" ./xkeysnail-config/limitedadmins.new
+	sed -i "s#{homedir}#`echo "$HOME"`#g" ./xkeysnail-config/limitedadmins.new
 	sed -i "s#{systemctl}#`which systemctl`#g" ./xkeysnail-config/limitedadmins.new
 	sudo chown root:root ./xkeysnail-config/limitedadmins.new
 	sudo mv ./xkeysnail-config/limitedadmins.new /etc/sudoers.d/limitedadmins
 	sed -i "s#{systemctl}#`which systemctl`#g" ~/.config/autostart/xkeysnail.desktop
 	sed -i "s#{xhost}#`which xhost`#g" ~/.config/autostart/xkeysnail.desktop
-	sed -i "s/{username}/`whoami`/g" ~/.config/kinto/prexk.sh
+	sed -i "s#{homedir}#`echo "$HOME"`#g" ~/.config/kinto/prexk.sh
 	sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ./xkeysnail-config/xkeysnail.service.new
 	sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ~/.config/kinto/prexk.sh
 
@@ -254,13 +269,22 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "4" || $1 == "kintowin" || $1
 fi
 
 if [[ $1 == "1" || $1 == "winmac" ]]; then
-	echo '1' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd;echo 'options hid_apple swap_opt_cmd=1' | sudo tee -a /etc/modprobe.d/hid_apple.conf;sudo update-initramfs -u -k all
+	if ls /sys/module | grep hid_apple >/dev/null 2>&1 ; then
+		echo '1' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd;echo 'options hid_apple swap_opt_cmd=1' | sudo tee -a /etc/modprobe.d/hid_apple.conf;sudo update-initramfs -u -k all
+	fi
+	if ls /sys/module | grep applespi >/dev/null 2>&1 ; then
+		echo '1' | sudo tee -a /sys/module/applespi/parameters/swap_opt_cmd;echo 'options applespi swap_opt_cmd=1' | sudo tee -a /etc/modprobe.d/applespi.conf;sudo update-initramfs -u -k all
+	fi
+	if ! ls /sys/module | grep apple ; then
+		removeAppleKB
+	fi
 	perl -pi -e "s/(# )(.*)(# WinMac)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
 	if [[ $dename == "xfce" ]]; then
 		perl -pi -e "s/(# )(.*)(# xfce4)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
 		perl -pi -e "s/(\w.*)(# Default not-xfce4)/# \$1\$2/g" ./xkeysnail-config/kinto.py.new
 	fi
 elif [[ $1 == "2" || $1 == "mac" ]]; then
+	removeAppleKB
 	perl -pi -e "s/(# )(.*)(# Mac)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
 	if [[ $dename == "xfce" ]]; then
 		perl -pi -e "s/(# )(.*)(# xfce4)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
@@ -270,15 +294,13 @@ elif [[ $1 == "3" || $1 == "chromebook" ]]; then
 	perl -pi -e "s/(# )(.*)(# Chromebook)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
 	perl -pi -e "s/(# )(.*)(# xfce4)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
 	perl -pi -e "s/(\w.*)(# Default)/# \$1\$2/g" ./xkeysnail-config/kinto.py.new
-elif [[ $1 == "4" || $1 == "kintowin" ]]; then
-	perl -pi -e "s/(# )(.*)(# KintoWin)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
 fi
 
 if $rightalt ; then
 	perl -pi -e "s/(\w.*)(Multi-language)/# \$1\$2/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
 fi
 
-if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "4" || $1 == "kintowin" || $1 == "winmac" || $1 == "mac" || $1 == "chromebook" ]]; then
+if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1 == "chromebook" ]]; then
 	mv ./xkeysnail-config/kinto.py.new ~/.config/kinto/kinto.py
 	# if [ "$distro" == "fedora" ];then
 	sudo rm /etc/systemd/system/xkeysnail.service
@@ -359,12 +381,7 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "4" || $1 == "kintowin" || $1
 elif [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	echo "Uninstalling Kinto - xkeysnail (udev)"
 	uninstall
-	# Undo Apple keyboard cmd & alt swap
-	if test -f "/sys/module/hid_apple/parameters/swap_opt_cmd" && [ `cat /sys/module/hid_apple/parameters/swap_opt_cmd` == "1" ]; then
-		echo '0' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd
-		echo 'options hid_apple swap_opt_cmd=0' | sudo tee -a /etc/modprobe.d/hid_apple.conf
-		sudo update-initramfs -u -k all
-	fi
+	removeAppleKB
 	sudo systemctl stop xkeysnail
 	sudo systemctl disable xkeysnail
 	sudo rm /etc/sudoers.d/limitedadmins

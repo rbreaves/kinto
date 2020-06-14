@@ -1,14 +1,13 @@
 # Kinto
 
-![kinto_carrot](https://user-images.githubusercontent.com/10969616/77842401-4744b500-7157-11ea-854a-d7dec6f9a250.gif)
+![kinto-color-132](https://user-images.githubusercontent.com/10969616/84361571-7d5bd780-ab91-11ea-81bc-4d3a2ca51c4e.png)
 
-![alt text](https://raw.githubusercontent.com/rbreaves/kinto/master/Kinto.png)
 
 [![GitHub release](https://img.shields.io/github/release/rbreaves/kinto.svg)](https://github.com/rbreaves/kinto/releases/latest)
 
 \- Type in Linux & Windows like it's a Mac. \-
 
-Seamless copy and paste with all apps and terminals. Also the only linux remapper that is aware of your cursor/caret status - meaning it avoids shortcut conflicts within an app versus wordwise shortcuts when a text field is in use. (xkeysnail implementation of Kinto has caret checking disabled in master for now.)
+Seamless copy and paste with all apps and terminals. The zero effort solution.
 
 ## Table of Contents
 
@@ -40,15 +39,23 @@ Seamless copy and paste with all apps and terminals. Also the only linux remappe
 
 ## What does this do exactly?
 
-Kinto works for standard Windows, Apple and Chromebook keyboards. The following however describes the dynamic rebinding based on a standard Windows keyboard. (Alt location is Cmd for Apple keyboards)
-
-- Normal apps - Alt → Ctrl, Win/Super → Alt, Ctrl → Win/Super
-
-- Terminal apps - Alt → Ctrl+Shift, Win/Super → Alt, Ctrl → Ctrl
+Kinto works for standard Windows, Apple and Chromebook keyboards. The following however describes the dynamic rebinding based on a standard Windows/Mac keyboard.
 
 - Cursor/word-wise shortcut keys have been added to align with macOS keyboard shortcuts.
 
-Does Kinto have to have specific keyamps for individual apps?
+**GUI**
+|**Physical**| Ctrl  |  Win/Alt |  Alt/Cmd | Spacebar|
+|---|---|---|---|---|
+|**Virtual**|  Win/Super* | Alt  |  RCtrl |Spacebar|
+
+*Win/Super will properly remap to LCtrl when needed to fully support expected keymaps.
+
+**Terminal**
+|**Physical**| Ctrl  |  Win/Alt |  Alt/Cmd | Spacebar|
+|---|---|---|---|---|
+|**Virtual**|  LCtrl | Alt  |  RCtrl |Spacebar|
+
+Does Kinto have to have specific keymaps for individual apps?
 
 I'd say 90+% of the time no, but every OS has their default conventions that sometimes run afoul to macs. For this reason you can easily edit kinto.py or kinto.ahk to support the few shortcut keys Kinto may miss. If you do add additional support please consider forking this project and sharing your new keymaps with the rest of us!
 
@@ -78,7 +85,15 @@ Other programs that will be installed when you run ./setup.py
 - Chocolatey
 - Autohotkey
 
-Does not have complete parity with the Linux edition, but it does work and can be built on and added to as needed. Modify ./windows/kinto.ahk if you want to add more WSL editions or other terminals.
+Note: Sublime Text users should disable screen rotation hotkeys as they will interfere with multi-cursor and possibly other combos. See https://windowsloop.com/disable-screen-rotation-keyboard-shortcut/ for details.
+
+Does not have complete parity with the Linux edition, but it is getting very close now. Only lacks some Sublime Text 3 remaps at this point.
+
+Users can now hotswap between Apple and Windows based keyboards without having to logoff and back on, and Windows is currently the only implementation with a system tray (but this feature is coming to Budgie, XFCE, Mate, Gnome, and lastly KDE).
+
+<img src="https://user-images.githubusercontent.com/10969616/84471498-100c7d00-ac4b-11ea-972d-60c1907831ec.png" width="50%">
+<img src="https://user-images.githubusercontent.com/10969616/84471501-10a51380-ac4b-11ea-9e0e-c19a7ebfad6d.png" width="50%">
+
 
 ## How to install
 
@@ -346,11 +361,6 @@ sudo systemctl start xkeysnail
 sudo systemctl status xkeysnail
 ```
 
-## Notes about Windows 10
-Sharpkeys was used to create the layout/reg files to swap the Ctrl, Win and Alt keys. Sharpkeys was not required however because the reg keys were extracted. Autohotkey is used to manage keyswaps needed for terminal usage. Autohotkey is also used to add additional mac like keybinds for Sublime text and can be used for other apps as well.
-
-Microsoft is working on a new Powertoy Keyboard Manager that could be used with an easier to use GUI interface, but this approach should be fully sufficient for a mac like experience and autohotkeys appears to be more than capable enough to handle complex rebinding of any or most mac like shortcuts.
-
 ## Language Support
 I'd appreciate any help from people with non-US based keyboards, to help ensure that these keymaps and keyswap methods work in all or most languages.
 
@@ -363,11 +373,20 @@ https://superuser.com/questions/385748/binding-superc-superv-to-copy-and-paste
 
 Yet another keyboard remapping tool for X environment
 
+[mac-precision-touchpad](https://github.com/imbushuo/mac-precision-touchpad) by imbushuo
+
+Windows 10 touchpad to precision touchpad driver
+
 [fusuma](https://github.com/iberianpig/fusuma) by iberianpig
 
 Multitouch gestures with libinput driver on Linux
 
+[Facetime HD Camera for Linux](https://github.com/patjak/bcwc_pcie) by patjak
+
+Linux driver for Facetime HD on macbooks
+
 [Fluent Terminal - Windows only](https://github.com/felixse/FluentTerminal) by felixse
+
 
 A Terminal Emulator based on UWP and web technologies.
 
@@ -464,7 +483,7 @@ GPL v2
 
 I would just like to thank a few people here directly that have helped me tremendously with completing this project and without their support, direct, indirect or otherwise I would have had difficulty completing this undertaking. I will list these things off in chronological order mostly.
 
-First off I'd like to thank the Stackoverflow and Stackexchange community. I have probably rubbed some mods the wrong way over there, but the people from the community in general are extremely helpful and gracious and without their contributions would have made this much more difficult. The person I'd like to thank most though from over there is Glen Whitney. Without his detailed explaining of how to rebind keys in xkb this would not have come together at all, as every other remapping solution were non-starters as complexity increases.
+First off I'd like to thank the Stackoverflow and Stackexchange community. I have probably rubbed some mods the wrong way over there, but the people from the community in general are extremely helpful and gracious and without their contributions would have made this much more difficult. The person I'd like to thank most though from over there is Glen Whitney. Without his detailed explaining of how to rebind keys in xkb this would not have come together at all, as every other remapping solution were non-starters as complexity increases. *Kinto today no longer uses xkb, but Glen Whitney did provide the basis of a workable method that helped me pursue this method and think it was a worthwhile project to pursue, so for that I thank him.*
 
 Secondarily I'd like to thank Christian Eriksson*, as he provided information that kept me up at night.. literally. Even after I implemented a similar bash script to one he had suggested I knew that fully implementing a c/c++ solution was where Kinto needed to head to and his explaination was better than I remember it being now that I have gone back to read it again. He also never provided a full implementation of a c/c++ solution - he did hit on the pain points pretty well of what one would need to do and watch out for. I am not sure where I got the first example code of implementing a c based solution, but he definitely went over it well.
 
@@ -472,6 +491,10 @@ Secondarily I'd like to thank Christian Eriksson*, as he provided information th
 Kui and his gist file** was really the c based solution that I found had the fewest issues to resolve to making it a reliable solution. It didn't account for all failures very well, aka BadWindow issues, but it made for a great foundation on which Kintox11 is built. I cannot thank him enough for putting it out there for others to work with.
 
 Lastly these four people were also very helpful to me as well. @probonopd for being one of the first people to install and use Kinto and gave me the initial feedback to include wordwise support! He also has really great articles*** posted on HackerNews & Medium about UI/UX design. Another person I'd like to thank is @owzim, his feedback allowed me to rapidly iterate and fix several bugs to support additional platforms better. The last two are members of the #ubuntu channel in IRC on freenode, tarzeau ( @alexmyczko ) and sarnold. Alex contributing a proper Makefile, so the project can be packaged properly, and sarnold help me find that IBus could resolve an issue I was having with needing to detect the caret status.
+
+**Updated 6/13/2020**
+
+I would also like to thank Jonathan Chun for his patience in helping me work through a very difficult problem related to Alt-Tab switching, which led to the current xkeysnail iteration of Kinto for Linux that far exceeds the original xkb implementation. There are also several others that have created issue tickets that have contributed greatly.
 
 If I left anyone out then I apologize, that was not intentional. I am happy to say that this project is at a state of completion. Bug fixes will primarily be the only activity happening going forward and possibly a rewrite for Wayland at some point. Contributions as mentioned above are welcomed, and will be merged into master if they help with the goal of making typing on linux more like a mac.
 

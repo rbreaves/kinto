@@ -29,9 +29,6 @@ define_conditional_modmap(lambda wm_class: wm_class.casefold() not in terminals,
     # Key.RIGHT_META: Key.RIGHT_ALT,  # WinMac
     # Key.RIGHT_CTRL: Key.RIGHT_META, # WinMac
 
-    # # KintoWin
-    # Key.LEFT_CTRL: Key.RIGHT_CTRL,   # KintoWin
-
     # # Mac Only
     # Key.LEFT_META: Key.RIGHT_CTRL,  # Mac
     # Key.LEFT_CTRL: Key.LEFT_META,   # Mac
@@ -56,10 +53,6 @@ define_conditional_modmap(re.compile(termStr, re.IGNORECASE), {
     # Key.RIGHT_ALT: Key.RIGHT_CTRL,  # WinMac - Multi-language (Remove)
     # Key.RIGHT_META: Key.RIGHT_ALT,  # WinMac
     # Key.RIGHT_CTRL: Key.LEFT_CTRL,  # WinMac
-
-    # # KintoWin
-    # Key.LEFT_CTRL: Key.RIGHT_CTRL,   # KintoWin
-    # Key.LEFT_META: Key.LEFT_CTRL,    # KintoWin
 
     # # Mac Only
     # Key.LEFT_META: Key.RIGHT_CTRL,  # Mac
@@ -178,7 +171,7 @@ define_keymap(re.compile(codeStr, re.IGNORECASE),{
 # Keybindings for Sublime Text
 define_keymap(re.compile("Sublime_text", re.IGNORECASE),{
     K("C-Super-up"): K("M-o"),                  # Switch file
-    K("C-M-f"): K("f11"),                       # toggle_full_screen
+    K("Super-RC-f"): K("f11"),                  # toggle_full_screen
     K("C-M-v"): [K("C-k"), K("C-v")],           # paste_from_history
     K("C-up"): pass_through_key,                # cancel scroll_lines up
     K("Super-M-up"): K("C-up"),                 # scroll_lines up
