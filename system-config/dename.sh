@@ -1,5 +1,17 @@
 #!/bin/bash
 
+function detect_budgie()
+{
+	ps -e | grep -E '^.* budgie-wm' > /dev/null
+	if [ $? -ne 0 ];
+	then
+	return 0
+	fi
+	VERSION=`dpkg-query -l | grep budgie-core | awk '{print $3}'`
+	DESKTOP="budgie"
+	return 1
+}
+
 function detect_gnome()
 {
 	ps -e | grep -E '^.* gnome-session' > /dev/null
@@ -133,17 +145,20 @@ then
 	then
 		if detect_kde4;
 		then
-			if detect_gnome;
+			if detect_budgie;
 			then
-				if detect_xfce;
+				if detect_gnome;
 				then
-					if detect_cinnamon;
+					if detect_xfce;
 					then
-						if detect_mate;
+						if detect_cinnamon;
 						then
-							if detect_lxde;
+							if detect_mate;
 							then
-								detect_sugar
+								if detect_lxde;
+								then
+									detect_sugar
+								fi
 							fi
 						fi
 					fi
