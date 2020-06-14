@@ -72,6 +72,20 @@ function uninstall {
 	fi
 }
 
+function removeAppleKB {
+	# Undo Apple keyboard cmd & alt swap
+	if test -f "/sys/module/hid_apple/parameters/swap_opt_cmd" && [ `cat /sys/module/hid_apple/parameters/swap_opt_cmd` == "1" ]; then
+		echo '0' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd
+		echo 'options hid_apple swap_opt_cmd=0' | sudo tee -a /etc/modprobe.d/hid_apple.conf
+		sudo update-initramfs -u -k all
+	fi
+	if test -f "/sys/module/applespi/parameters/swap_opt_cmd" && [ `cat /sys/module/applespi/parameters/swap_opt_cmd` == "1" ]; then
+		echo '0' | sudo tee -a /sys/module/applespi/parameters/swap_opt_cmd
+		echo 'options applespi swap_opt_cmd=0' | sudo tee -a /etc/modprobe.d/applespi.conf
+		sudo update-initramfs -u -k all
+	fi
+}
+
 function budgieUninstall {
 	if [ -f /usr/bin/budgie-desktop ];then
 		read -n 1 -s -r -p "Your system may log you off immediately during the restoration of budgie-daemon. Press any key to continue..."
@@ -255,13 +269,22 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 fi
 
 if [[ $1 == "1" || $1 == "winmac" ]]; then
-	echo '1' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd;echo 'options hid_apple swap_opt_cmd=1' | sudo tee -a /etc/modprobe.d/hid_apple.conf;sudo update-initramfs -u -k all
+	if ls /sys/module | grep hid_apple >/dev/null 2>&1 ; then
+		echo '1' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd;echo 'options hid_apple swap_opt_cmd=1' | sudo tee -a /etc/modprobe.d/hid_apple.conf;sudo update-initramfs -u -k all
+	fi
+	if ls /sys/module | grep applespi >/dev/null 2>&1 ; then
+		echo '1' | sudo tee -a /sys/module/applespi/parameters/swap_opt_cmd;echo 'options applespi swap_opt_cmd=1' | sudo tee -a /etc/modprobe.d/applespi.conf;sudo update-initramfs -u -k all
+	fi
+	if ! ls /sys/module | grep apple ; then
+		removeAppleKB
+	fi
 	perl -pi -e "s/(# )(.*)(# WinMac)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
 	if [[ $dename == "xfce" ]]; then
 		perl -pi -e "s/(# )(.*)(# xfce4)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
 		perl -pi -e "s/(\w.*)(# Default not-xfce4)/# \$1\$2/g" ./xkeysnail-config/kinto.py.new
 	fi
 elif [[ $1 == "2" || $1 == "mac" ]]; then
+	removeAppleKB
 	perl -pi -e "s/(# )(.*)(# Mac)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
 	if [[ $dename == "xfce" ]]; then
 		perl -pi -e "s/(# )(.*)(# xfce4)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
@@ -358,12 +381,7 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 elif [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	echo "Uninstalling Kinto - xkeysnail (udev)"
 	uninstall
-	# Undo Apple keyboard cmd & alt swap
-	if test -f "/sys/module/hid_apple/parameters/swap_opt_cmd" && [ `cat /sys/module/hid_apple/parameters/swap_opt_cmd` == "1" ]; then
-		echo '0' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd
-		echo 'options hid_apple swap_opt_cmd=0' | sudo tee -a /etc/modprobe.d/hid_apple.conf
-		sudo update-initramfs -u -k all
-	fi
+	removeAppleKB
 	sudo systemctl stop xkeysnail
 	sudo systemctl disable xkeysnail
 	sudo rm /etc/sudoers.d/limitedadmins
