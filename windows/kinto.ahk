@@ -64,7 +64,7 @@ GroupAdd, posix, ahk_exe ConEmu.exe
 GroupAdd, posix, ahk_exe ConEmu64.exe
 GroupAdd, posix, ahk_exe Hyper.exe
 GroupAdd, posix, ahk_exe mintty.exe
-GroupAdd, terminals, ahk_exe Terminus.exe
+GroupAdd, posix, ahk_exe Terminus.exe
 GroupAdd, posix, Fluent Terminal ahk_class ApplicationFrameWindow
 
 GroupAdd, ConEmu, ahk_exe ConEmu.exe
