@@ -381,7 +381,12 @@ Windows 10 touchpad to precision touchpad driver
 
 Multitouch gestures with libinput driver on Linux
 
+[Facetime HD Camera for Linux](https://github.com/patjak/bcwc_pcie) by patjak
+
+Linux driver for Facetime HD on macbooks
+
 [Fluent Terminal - Windows only](https://github.com/felixse/FluentTerminal) by felixse
+
 
 A Terminal Emulator based on UWP and web technologies.
 
