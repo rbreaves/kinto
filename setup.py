@@ -175,8 +175,8 @@ def setShortcuts():
 			cmdline('perl -pi -e "s/(\w.*)(\/\/ Default cmdtab)/\/\/ \$1\$2/g" ~/.xkb/symbols/mac_gui')
 		# elif distro == "budgie" and dename == "gnome":
 		# 	print("Apply budgie shortcuts here")
-		elif (distro == "galliumos" and dename == "xfce") or (distro == "ubuntu" and dename == "xfce"):
-			print("Applying GalliumOS (xfce) shortcuts...")
+		elif (dename == "xfce"):
+			print("Applying xfce shortcuts...")
 			cmdline('cp ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml ./xfce4-keyboard-shortcuts_`date +"%Y.%m.%d-%s"`.xml')
 			# Reset Show desktop
 			cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Primary><Alt>d" --reset')
