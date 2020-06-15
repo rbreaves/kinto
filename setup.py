@@ -37,6 +37,8 @@ def windows_setup():
 		if(stvscode):
 			os.system('perl -pi -e "s/(; )(.*)(; ST2CODE)/$2$3/g" ./windows/kinto-new.ahk')
 		os.system('copy /Y ' + path + '\\windows\\kinto-start.vbs "%userprofile%\\.kinto\\kinto-start.vbs"')
+		os.system('copy /Y ' + path + '\\windows\\usb.vbs "%userprofile%\\.kinto\\usb.vbs"')
+		os.system('copy /Y ' + path + '\\windows\\usb.vbs "%userprofile%\\.kinto\\detectUSB.vbs"')
 		os.system('mklink "%userprofile%\\Start Menu\\Programs\\Startup\\kinto-start.vbs" "%userprofile%\\.kinto\\kinto-start.vbs"')
 		os.system('cp '+ path + '\\windows\\NoShell.vbs "%userprofile%\\.kinto\\NoShell.vbs"')
 		os.system('cp '+ path + '\\windows\\toggle_kb.bat "%userprofile%\\.kinto\\toggle_kb.bat"')
