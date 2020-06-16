@@ -5,9 +5,15 @@
 DetectHiddenWindows, On
 Run, %A_ScriptDir%\detectUSB.ahk
 
-I_Icon = %A_ScriptDir%\assets\kinto-white.ico
-IfExist, %I_Icon%
-Menu, Tray, Icon, %I_Icon%
+; I_Icon = %A_ScriptDir%\assets\kinto-white.ico           ; MacModifiers
+; IfExist, %I_Icon%                                       ; MacModifiers
+; Menu, Tray, Icon, %I_Icon%,, 1                          ; MacModifiers
+; Menu, Tray, Tip, Mac - Kinto                            ; MacModifiers
+
+; I_Icon = %A_ScriptDir%\assets\kinto-white-invert.ico    ; WinModifiers
+; IfExist, %I_Icon%                                       ; WinModifiers
+; Menu, Tray, Icon, %I_Icon%,, 1                          ; WinModifiers
+; Menu, Tray, Tip, Windows - Kinto                        ; WinModifiers
 
 ; Set Tray menu
 ; Menu, Tray, Standard
@@ -19,7 +25,6 @@ Menu, Tray, Add, Returns to Desktop, min
 Menu, Tray, Add
 Menu, Tray, Add, Close, Exit
 Menu, Tray, Click, 1
-Menu, Tray, Tip, Kinto
 
 winkb(){
     Run, %A_ScriptDir%\NoShell.vbs %A_ScriptDir%\toggle_kb.bat win, %A_ScriptDir%
@@ -32,15 +37,20 @@ mackb(){
 min(){
 ; Refocus last active Window
 Send {LAlt down}{tab}{LAlt up}
-}
+}  
 
 tray_suspend(){
     suspend toggle
     if (a_isSuspended = 1){
         menu, tray, check  , Suspend Kinto
+        I_Icon = %A_ScriptDir%\assets\kinto-color-invert.ico
+        Menu, Tray, Icon, %I_Icon%,, 1
+        Menu, Tray, Tip, Suspended - Kinto
     }
     else{
         menu, tray, unCheck, Suspend Kinto
+        I_Icon = %A_ScriptDir%\assets\kinto-white.ico
+        Menu, Tray, Icon, %I_Icon%,,1
     }
     ; Refocus last active Window
     Send {LAlt down}{tab}{LAlt up}
