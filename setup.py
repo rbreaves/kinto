@@ -26,6 +26,11 @@ def windows_setup():
 		# os.system("regedit " + path + "\\windows\\standard_ctrlalt_swap.reg")
 	elif default == 3:
 		os.system("regedit " + path + "\\windows\\remove_keyswap.reg")
+		os.system("del /f .\\windows\\kinto-new.ahk")
+		os.system("del \"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp\\kinto.ahk\"")
+		os.system("taskkill /IM autohotkey.exe")
+		os.system('rd /s /q %userprofile%\\.kinto')
+		os.system('del "%userprofile%\\AppData\\Roaming\\Microsoft\\Windows\\STARTM~1\\Programs\\Startup\\kinto-start.vbs"')
 	stvscode = yn_choice(bcolors.CYELLOW2 + "Would you like to use Sublime Text 3 keymaps in VS Code?\n" + bcolors.ENDC)
 	if default > 0 and default < 3:
 		print("Will now install chocolatey and autohotkey with elevated privileges...")
