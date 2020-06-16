@@ -118,6 +118,7 @@ define_keymap(lambda wm_class: wm_class.casefold() not in mscodes,{
     K("M-Shift-Left"): K("C-Shift-Left"),   # Select Left of Word
     K("M-Right"): K("C-Right"),             # Right of Word
     K("M-Shift-Right"): K("C-Shift-Right"), # Select Right of Word
+    K("M-Shift-g"): K("C-Shift-g"),         # View source control
     # ** VS Code fix **
     #   Electron issue precludes normal keybinding fix.
     #   Alt menu auto-focus/toggle gets in the way.

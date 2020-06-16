@@ -2,9 +2,18 @@
 #NoEnv
 #Persistent
 
-I_Icon = %A_ScriptDir%\assets\kinto-white.ico
-IfExist, %I_Icon%
-Menu, Tray, Icon, %I_Icon%
+DetectHiddenWindows, On
+Run, %A_ScriptDir%\detectUSB.ahk
+
+; I_Icon = %A_ScriptDir%\assets\kinto-white.ico           ; MacModifiers
+; IfExist, %I_Icon%                                       ; MacModifiers
+; Menu, Tray, Icon, %I_Icon%,, 1                          ; MacModifiers
+; Menu, Tray, Tip, Mac - Kinto                            ; MacModifiers
+
+; I_Icon = %A_ScriptDir%\assets\kinto-white-invert.ico    ; WinModifiers
+; IfExist, %I_Icon%                                       ; WinModifiers
+; Menu, Tray, Icon, %I_Icon%,, 1                          ; WinModifiers
+; Menu, Tray, Tip, Windows - Kinto                        ; WinModifiers
 
 ; Set Tray menu
 ; Menu, Tray, Standard
@@ -16,7 +25,6 @@ Menu, Tray, Add, Returns to Desktop, min
 Menu, Tray, Add
 Menu, Tray, Add, Close, Exit
 Menu, Tray, Click, 1
-Menu, Tray, Tip, Kinto
 
 winkb(){
     Run, %A_ScriptDir%\NoShell.vbs %A_ScriptDir%\toggle_kb.bat win, %A_ScriptDir%
@@ -29,22 +37,72 @@ mackb(){
 min(){
 ; Refocus last active Window
 Send {LAlt down}{tab}{LAlt up}
-}
+}  
 
 tray_suspend(){
     suspend toggle
     if (a_isSuspended = 1){
         menu, tray, check  , Suspend Kinto
+        I_Icon = %A_ScriptDir%\assets\kinto-color-invert.ico
+        Menu, Tray, Icon, %I_Icon%,, 1
+        Menu, Tray, Tip, Suspended - Kinto
+        IfWinExist, detectUSB.ahk
+            WinClose
     }
     else{
         menu, tray, unCheck, Suspend Kinto
+;         I_Icon = %A_ScriptDir%\assets\kinto-white.ico           ; MacModifiers
+;         I_Icon = %A_ScriptDir%\assets\kinto-white-invert.ico    ; WinModifiers
+        Menu, Tray, Icon, %I_Icon%,,1
+        Run, %A_ScriptDir%\detectUSB.ahk
     }
     ; Refocus last active Window
     Send {LAlt down}{tab}{LAlt up}
 }
 
 Exit() {
+    IfWinExist, detectUSB.ahk
+        WinClose
+
     ExitApp
+}
+
+OnMessage(0x219, "notify_change")
+return
+
+lastkb = ""
+
+DllCall("AllocConsole")
+WinHide % "ahk_id " DllCall("GetConsoleWindow", "ptr")
+
+notify_change(wParam, lParam, msg, hwnd) 
+{
+    global lastkb
+    ; kbtype = % ComObjCreate("WScript.Shell").Exec("cscript /nologo usb.vbs").StdOut.ReadAll()
+    DetectHiddenWindows On
+    Run %ComSpec%,, Hide, pid
+    WinWait ahk_pid %pid%
+    DllCall("AttachConsole", "UInt", pid)
+    WshShell := ComObjCreate("Wscript.Shell")
+    exec := WshShell.Exec("cscript /nologo usb.vbs")
+    kbtype := exec.StdOut.ReadAll()
+    DllCall("FreeConsole")
+    Process Close, %pid%
+    if lastkb != %kbtype%
+    {
+
+        if InStr(kbtype, "Apple")
+        {
+            ; MsgBox, Apple
+            Run, %A_ScriptDir%\NoShell.vbs %A_ScriptDir%\toggle_kb.bat mac, %A_ScriptDir%
+        }
+        else{
+            ; MsgBox, Windows
+            Run, %A_ScriptDir%\NoShell.vbs %A_ScriptDir%\toggle_kb.bat win, %A_ScriptDir%
+        }
+        ; MsgBox % kbtype
+    }
+    lastkb = %kbtype%
 }
 
 SetTitleMatchMode, 2
@@ -64,7 +122,7 @@ GroupAdd, posix, ahk_exe ConEmu.exe
 GroupAdd, posix, ahk_exe ConEmu64.exe
 GroupAdd, posix, ahk_exe Hyper.exe
 GroupAdd, posix, ahk_exe mintty.exe
-GroupAdd, terminals, ahk_exe Terminus.exe
+GroupAdd, posix, ahk_exe Terminus.exe
 GroupAdd, posix, Fluent Terminal ahk_class ApplicationFrameWindow
 
 GroupAdd, ConEmu, ahk_exe ConEmu.exe
@@ -181,15 +239,16 @@ $^+Right::Send +{End}
 ; Cmd+Space Alternative
 ^Space::Send ^{Esc}
 
-; ; Sublime Text Remaps for VS Code
-#IfWinActive ahk_group vscode                               ; ST2CODE
+; Sublime Text Remaps for VS Code
+#IfWinActive ahk_group vscode
     ; Remap Ctrl+Shift to behave like macOS Sublimetext
     ; Will extend cursor to multiple lines
-    #+Up::send ^!{Up}                                   ; ST2CODE
-    #+Down::send ^!{Down}                               ; ST2CODE
+;    #+Up::send ^!{Up}                                   ; ST2CODE
+;    #+Down::send ^!{Down}                               ; ST2CODE
     ; Remap Ctrl+Cmd+G to select all matches
-    #^g::send ^+{L}                                     ; ST2CODE
-#If                                                         ; ST2CODE
+;    #^g::send ^+{L}                                     ; ST2CODE
+    !+g::send ^+{G}                                     ; View source control
+#If
 
 #IfWinActive ahk_exe sublime_text.exe
     ; Remap Ctrl+Shift to behave like macOS Sublimetext

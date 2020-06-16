@@ -1,0 +1,3630 @@
+#
+#	List of USB Keyboard ID's
+#
+#	Filter: ^((?!eyboard|^[0-9]).)*$
+#
+#	Maintained by Stephen J. Gowdy <linux.usb.ids@gmail.com>
+#	If you have any new entries, please submit them via
+#		http://www.linux-usb.org/usb-ids.html
+#	or send entries as patches (diff -u old new) in the
+#	body of your email (a bot will attempt to deal with it).
+#	The latest version can be obtained from
+#		http://www.linux-usb.org/usb.ids
+#
+# Version: 2020.06.14
+# Date:    2020-06-14 20:34:07
+#
+
+# Vendors, devices and interfaces. Please keep sorted.
+
+# Syntax:
+# vendor  vendor_name
+#	device  device_name				<-- single tab
+#		interface  interface_name		<-- two tabs
+#
+
+0001  Fry's Electronics
+0002  Ingram
+0003  Club Mac
+0004  Nebraska Furniture Mart
+0011  Unknown
+0053  Planex
+0078  Microntek
+0079  DragonRise Inc.
+0080  Unknown
+0085  Boeye Technology Co., Ltd.
+0102  miniSTREAK
+0105  Trust International B.V.
+0127  IBP
+0145  Unknown
+017c  MLK
+0200  TP-Link
+0204  Chipsbank Microelectronics Co., Ltd
+0218  Hangzhou Worlde
+02ad  HUMAX Co., Ltd.
+0303  Mini Automation Controller
+0324  OCZ Technology Inc
+0325  OCZ Technology Inc
+0386  LTS
+03d9  Shenzhen Sinote Tech-Electron Co., Ltd
+03da  Bernd Walter Computer Technology
+03e7  Intel
+03e8  EndPoints, Inc.
+03e9  Thesys Microelectronics
+03ea  Data Broadcasting Corp.
+03eb  Atmel Corp.
+	2015  at90usbkey sample firmware (HID keyboard)
+	2042  LUFA Keyboard Demo Application
+	204d  LUFA Combined Mouse and Keyboard Demo Application
+	2061  LUFA Combined Mass Storage and Keyboard Demo Application
+	6127  AT91SAM HID Keyboard Demo Application
+03ec  Iwatsu America, Inc.
+03ed  Mitel Corp.
+03ee  Mitsumi
+	5609  Japanese Keyboard
+03f0  HP, Inc
+	0024  KU-0316 Keyboard
+	010c  Multimedia Keyboard Hub
+	0122  HID Internet Keyboard
+	020c  Multimedia Keyboard
+	0324  SK-2885 keyboard
+	034a  Elite Keyboard
+	050c  5219 Wireless Keyboard
+	0924  Modular Smartcard Keyboard
+	0b0c  Wireless Keyboard and Optical Mouse receiver
+	0d4a  SK-2025 Keyboard
+	0f0c  Wireless Keyboard and Optical Mouse receiver
+	1024  Smart Card Keyboard
+	1027  Virtual keyboard and mouse
+	1524  Smart Card Keyboard - KR
+	1624  Smart Card Keyboard - JP
+	2b4a  Business Slim Keyboard
+	304a  Slim Keyboard
+	354a  Slim Keyboard
+03f1  Genoa Technology
+03f2  Oak Technology, Inc.
+03f3  Adaptec, Inc.
+03f4  Diebold, Inc.
+03f5  Siemens Electromechanical
+03f8  Epson Imaging Technology Center
+03f9  KeyTronic Corp.
+	0100  KT-2001 Keyboard
+	0101  Keyboard
+	0102  Keyboard Mouse
+03fb  OPTi, Inc.
+03fc  Elitegroup Computer Systems
+03fd  Xilinx, Inc.
+03fe  Farallon Comunications
+0400  National Semiconductor Corp.
+0401  National Registry, Inc.
+0402  ALi Corp.
+0403  Future Technology Devices International, Ltd
+	8371  PS/2 Keyboard And Mouse
+0404  NCR Corp.
+	0320  5932-USB Keyboard
+	0322  5932-USB Enhanced Keyboard
+	0323  5932-USB Enhanced Keyboard, Flash-Recovery/Download
+	032a  K016: USB-MSR ISO 3-Track MSR: HID Keyboard Mode
+0405  Synopsys, Inc.
+0406  Fujitsu-ICL Computers
+0407  Fujitsu Personal Systems, Inc.
+0408  Quanta Computer, Inc.
+0409  NEC Corp.
+	0011  PC98 Series Layout Keyboard Mouse
+	0014  Japanese Keyboard
+	0019  109 Japanese Keyboard with Bus-Powered Hub
+	001a  PC98 Series Layout Keyboard with Bus-Powered Hub
+	0025  Mini Keyboard with Bus-Powered Hub
+	0034  109 Japanese Keyboard with One-touch start buttons
+	003f  Wireless Keyboard with One-touch start buttons
+	004f  Wireless Keyboard with One-touch start buttons
+	0094  Japanese Keyboard with One-touch start buttons
+	0095  Japanese Keyboard
+040a  Kodak Co.
+040b  Weltrend Semiconductor
+	2000  wired Keyboard [Dynex DX-WRK1401]
+040c  VTech Computers, Ltd
+040d  VIA Technologies, Inc.
+040e  MCCI
+040f  Echo Speech Corp.
+0411  BUFFALO INC. (formerly MelCo., Inc.)
+0412  Award Software International
+0413  Leadtek Research, Inc.
+0414  Giga-Byte Technology Co., Ltd
+0416  Winbond Electronics Corp.
+	551e  Keyboard
+	551f  Keyboard w/ Sys and Media
+	5521  Keyboard
+0417  Symbios Logic
+0418  AST Research
+0419  Samsung Info. Systems America, Inc.
+041a  Phoenix Technologies, Ltd
+041b  d'TV
+041d  S3, Inc.
+041e  Creative Technology, Ltd
+	2801  Prodikeys PC-MIDI multifunction keyboard
+041f  LCS Telegraphics
+0420  Chips and Technologies
+0421  Nokia Mobile Phones
+0422  ADI Systems, Inc.
+0423  Computer Access Technology Corp.
+0424  Microchip Technology, Inc. (formerly SMSC)
+0425  Motorola Semiconductors HK, Ltd
+	0101  G-Tech Wireless Mouse & Keyboard
+0426  Integrated Device Technology, Inc.
+0427  Motorola Electronics Taiwan, Ltd
+0428  Advanced Gravis Computer Tech, Ltd
+0429  Cirrus Logic
+042a  Ericsson Austrian, AG
+042b  Intel Corp.
+042c  Innovative Semiconductors, Inc.
+042d  Micronics
+042e  Acer, Inc.
+042f  Molex, Inc.
+0430  Sun Microsystems, Inc.
+	0002  109 Keyboard
+	0005  Type 6 Keyboard
+	000a  109 Japanese Keyboard
+	000b  109 Japanese Keyboard
+	0082  109 Japanese Keyboard
+	0083  109 Japanese Keyboard
+	00a2  Type 7 Keyboard
+	a111  remote keyboard for P4 chip
+0431  Itac Systems, Inc.
+0432  Unisys Corp.
+0433  Alps Electric, Inc.
+	abab  Keyboard
+0434  Samsung Info. Systems America, Inc.
+0435  Hyundai Electronics America
+0436  Taugagreining HF
+0437  Framatome Connectors USA
+0438  Advanced Micro Devices, Inc.
+0439  Voice Technologies Group
+043d  Lexmark International, Inc.
+043e  LG Electronics USA, Inc.
+043f  RadiSys Corp.
+0440  Eizo Nanao Corp.
+0441  Winbond Systems Lab.
+0442  Ericsson, Inc.
+0443  Gateway, Inc.
+	000e  Multimedia Keyboard
+	002e  Millennium Keyboard
+0445  Lucent Technologies, Inc.
+0446  NMB Technologies Corp.
+	6781  Keyboard with PS/2 Mouse Port
+	6782  Keyboard
+0447  Momentum Microsystems
+0449  Duta Multi Robotik
+044a  Shamrock Tech. Co., Ltd
+044b  WSI
+044c  CCL/ITRI
+044d  Siemens Nixdorf AG
+044e  Alps Electric Co., Ltd
+	1104  Japanese Keyboard
+044f  ThrustMaster, Inc.
+0450  DFI, Inc.
+0451  Texas Instruments, Inc.
+	e010  TI SmartPad Keyboard
+0452  Mitsubishi Electronics America, Inc.
+0453  CMD Technology
+	6781  NMB Keyboard
+	6783  Chicony Composite Keyboard
+0454  Vobis Microcomputer AG
+0455  Telematics International, Inc.
+0456  Analog Devices, Inc.
+0457  Silicon Integrated Systems Corp.
+0458  KYE Systems Corp. (Mouse Systems)
+	004c  Slimstar Pro Keyboard
+0459  Adobe Systems, Inc.
+045a  SONICblue, Inc.
+045b  Hitachi, Ltd
+045d  Nortel Networks, Ltd
+045e  Microsoft Corp.
+	000b  Natural Keyboard Elite
+	001c  Internet Keyboard Pro
+	001d  Natural Keyboard Pro
+	002b  Internet Keyboard Pro
+	002d  Internet Keyboard
+	0048  Office Keyboard 1.0A
+	005c  Office Keyboard (106/109)
+	005f  Wireless MultiMedia Keyboard
+	0061  Wireless MultiMedia Keyboard (106/109)
+	0063  Wireless Natural MultiMedia Keyboard
+	0065  Wireless Natural MultiMedia Keyboard (106/109)
+	006d  eHome Remote Control Keyboard keys
+	0070  Wireless MultiMedia Keyboard
+	0071  Wireless MultiMedia Keyboard (106/109)
+	0072  Wireless Natural MultiMedia Keyboard
+	0073  Wireless Natural MultiMedia Keyboard (106/109)
+	0080  Digital Media Pro Keyboard
+	00b0  Digital Media Pro Keyboard
+	00b4  Digital Media Keyboard 1.0A
+	00db  Natural Ergonomic Keyboard 4000 V1.0
+	00dd  Comfort Curve Keyboard 2000 V1.0
+	071f  Mouse/Keyboard 2.4GHz Transceiver V2.0
+	0730  Digital Media Keyboard 3000
+	0750  Wired Keyboard 600
+	0752  Wired Keyboard 400
+	0780  Comfort Curve Keyboard 3000
+	0799  Surface Pro embedded keyboard
+	07b6  Comfort Curve Keyboard 3000
+	07b9  Wired Keyboard 200
+	07cd  Surface Keyboard
+	07f8  Wired Keyboard 600 (model 1576)
+	0800  Wireless keyboard (All-in-One-Media)
+	fff8  Keyboard
+0460  Ace Cad Enterprise Co., Ltd
+0461  Primax Electronics, Ltd
+	0010  HP PR1101U / Primax PMX-KPR1101U Keyboard
+	4d01  Comfort Keyboard / Kensington Orbit Elite
+	4d8a  HP Multimedia Keyboard
+	4e04  Lenovo Keyboard KB1021
+	4e6f  Acer Wired Keyboard Model KBAY211
+0463  MGE UPS Systems
+0464  AMP/Tycoelectronics Corp.
+0467  AT&T Paradyne
+0468  Wieson Technologies Co., Ltd
+046a  Cherry GmbH
+	0001  Keyboard
+	0004  CyBoard Keyboard
+	0005  XX33 SmartCard Reader Keyboard
+	0008  Wireless Keyboard and Mouse
+	0011  G83 (RS 6000) Keyboard
+	0023  Keyboard
+	0027  CyMotion Master Solar Keyboard
+	002a  Wireless Mouse & Keyboard
+	003c  Raptor Gaming Keyboard
+	003d  Raptor Gaming Keyboard Integrated Hub
+	0041  G86 6240 Keyboard
+	0081  eHealth Keyboard G87 1504
+	00a1  SmartCard Reader Keyboard KC 1000 SC
+	010d  MX-Board 3.0 Keyboard
+	b090  Keyboard
+046b  American Megatrends, Inc.
+	0001  Keyboard
+	0101  PS/2 Keyboard, Mouse & Joystick Ports
+	ff10  Virtual Keyboard and Mouse
+046c  Toshiba Corp., Digital Media Equipment
+046d  Logitech, Inc.
+	0203  M2452 Keyboard
+	c221  G11/G15 Keyboard / Keyboard
+	c222  G15 Keyboard / LCD
+	c223  G11/G15 Keyboard / USB Hub
+	c225  G11/G15 Keyboard / G keys
+	c226  G15 Refresh Keyboard
+	c227  G15 Refresh Keyboard
+	c228  G19 Gaming Keyboard
+	c229  G19 Gaming Keyboard Macro Interface
+	c22a  Gaming Keyboard G110
+	c22b  Gaming Keyboard G110 G-keys
+	c22d  G510 Gaming Keyboard
+	c22e  G510 Gaming Keyboard onboard audio
+	c248  G105 Gaming Keyboard
+	c24d  G710 Gaming Keyboard
+	c301  iTouch Keyboard
+	c302  iTouch Pro Keyboard
+	c303  iTouch Keyboard
+	c305  Internet Keyboard
+	c307  Internet Keyboard
+	c308  Internet Navigator Keyboard
+	c309  Y-BF37 [Internet Navigator Keyboard]
+	c30b  NetPlay Keyboard
+	c30e  UltraX Keyboard (Y-BL49)
+	c30f  Logicool HID-Compliant Keyboard (106 key)
+	c311  Y-UF49 [Internet Pro Keyboard]
+	c312  DeLuxe 250 Keyboard
+	c313  Internet 350 Keyboard
+	c315  Classic Keyboard 200
+	c316  HID-Compliant Keyboard
+	c317  Wave Corded Keyboard
+	c318  Illuminated Keyboard
+	c31b  Compact Keyboard K300
+	c31c  Keyboard K120
+	c31d  Media Keyboard K200
+	c31f  Comfort Keyboard K290
+	c326  Washable Keyboard K310
+	c328  Corded Keyboard K280e
+	c32b  G910 Orion Spark Mechanical Keyboard
+	c335  G910 Orion Spectrum Mechanical Keyboard
+	c33a  G413 Gaming Keyboard
+	c503  Cordless Mouse+Keyboard Receiver
+	c504  Cordless Mouse+Keyboard Receiver
+	c505  Cordless Mouse+Keyboard Receiver
+	c509  Cordless Keyboard & Mouse
+	c529  Logitech Keyboard + Mice
+	c703  Elite Keyboard Y-RP20 + Mouse MX900 (Bluetooth)
+	c714  diNovo Edge Keyboard
+	c71f  diNovo Mini Wireless Keyboard
+	cab1  Cordless Keyboard for Wii HID Receiver
+046e  Behavior Tech. Computer Corp.
+	0100  Keyboard
+	5250  KeyMaestro Multimedia Keyboard
+	5273  KeyMaestro Multimedia Keyboard
+	5308  KeyMaestro Keyboard
+	5408  KeyMaestro Multimedia Keyboard/Hub
+	5500  Portable Keyboard 86+9 keys (Model 6100C US)
+	6782  BTC 7932 mouse+keyboard
+046f  Crystal Semiconductor
+0471  Philips (or NXP)
+	0401  Semiconductors CICT Keyboard
+	0402  PS/2 Mouse on Semiconductors CICT Keyboard
+0472  Chicony Electronics Co., Ltd
+	0065  PFU-65 Keyboard [Chicony]
+0473  Sanyo Information Business Co., Ltd
+0474  Sanyo Electric Co., Ltd
+0475  Relisys/Teco Information System
+0476  AESP
+0477  Seagate Technology, Inc.
+0478  Connectix Corp.
+0479  Advanced Peripheral Laboratories
+047a  Semtech Corp.
+047b  Silitek Corp.
+	0001  Keyboard
+	0002  Keyboard and Mouse
+	0011  SK-1688U Keyboard
+	00f9  SK-1789u Keyboard
+	0101  BlueTooth Keyboard and Mouse
+	050e  Internet Compact Keyboard
+047c  Dell Computer Corp.
+047d  Kensington
+047e  Agere Systems, Inc. (Lucent)
+047f  Plantronics, Inc.
+0480  Toshiba America Inc
+0481  Zenith Data Systems
+0482  Kyocera Corp.
+0483  STMicroelectronics
+0484  Specialix
+0485  Nokia Monitors
+0486  ASUS Computers, Inc.
+0487  Stewart Connector
+0488  Cirque Corp.
+0489  Foxconn / Hon Hai
+048a  S-MOS Systems, Inc.
+048c  Alps Electric Ireland, Ltd
+048d  Integrated Technology Express, Inc.
+048f  Eicon Tech.
+0490  United Microelectronics Corp.
+0491  Capetronic
+0492  Samsung SemiConductor, Inc.
+0493  MAG Technology Co., Ltd
+0495  ESS Technology, Inc.
+0496  Micron Electronics
+0497  Smile International
+0498  Capetronic (Kaohsiung) Corp.
+0499  Yamaha Corp.
+	1054  S90XS Keyboard/Music Synthesizer
+	1617  PSR-E353 digital keyboard
+049a  Gandalf Technologies, Ltd
+049b  Curtis Computer Products
+049c  Acer Advanced Labs, Inc.
+	0002  Keyboard (???)
+049d  VLSI Technology
+049f  Compaq Computer Corp.
+	000e  Internet Keyboard
+	0051  KU-0133 Easy Access Interner Keyboard
+04a0  Digital Equipment Corp.
+04a1  SystemSoft Corp.
+04a2  FirePower Systems
+04a3  Trident Microsystems, Inc.
+04a4  Hitachi, Ltd
+04a5  Acer Peripherals Inc. (now BenQ Corp.)
+	0001  Keyboard
+04a6  Nokia Display Products
+04a7  Visioneer
+04a8  Multivideo Labs, Inc.
+04a9  Canon, Inc.
+04aa  DaeWoo Telecom, Ltd
+04ab  Chromatic Research
+04ac  Micro Audiometrics Corp.
+04ad  Dooin Electronics
+04af  Winnov L.P.
+04b0  Nikon Corp.
+04b1  Pan International
+04b3  IBM Corp.
+	3003  Rapid Access III Keyboard
+	3004  Media Access Pro Keyboard
+	300a  Rapid Access IIIe Keyboard
+	3016  UltraNav Keyboard Hub
+	3018  UltraNav Keyboard
+	301b  SK-8815 Keyboard
+	301c  Enhanced Performance Keyboard
+	3020  Enhanced Performance Keyboard
+	3025  NetVista Full Width Keyboard
+	4604  Keyboard w/ Card Reader
+04b4  Cypress Semiconductor Corp.
+	0101  Keyboard/Hub
+	0102  Keyboard with APM
+	5201  Combi Keyboard-Hub (Hub)
+	5202  Combi Keyboard-Hub (Keyboard)
+	8329  USB To keyboard/Mouse Converter
+04b5  ROHM LSI Systems USA, LLC
+04b6  Hint Corp.
+04b7  Compal Electronics, Inc.
+04b8  Seiko Epson Corp.
+04b9  Rainbow Technologies, Inc.
+04ba  Toucan Systems, Ltd
+04bb  I-O Data Device, Inc.
+04bd  Toshiba Electronics Taiwan Corp.
+04be  Telia Research AB
+04bf  TDK Corp.
+04c1  U.S. Robotics (3Com)
+04c2  Methode Electronics Far East PTE, Ltd
+04c3  Maxi Switch, Inc.
+04c4  Lockheed Martin Energy Research
+04c5  Fujitsu, Ltd
+04c6  Toshiba America Electronic Components
+04c7  Micro Macro Technologies
+04c8  Konica Corp.
+04ca  Lite-On Technology Corp.
+	0020  USB Keyboard
+	004b  Keyboard
+	004f  SK-9020 keyboard
+04cb  Fuji Photo Film Co., Ltd
+04cc  ST-Ericsson
+04cd  Tatung Co. Of America
+04ce  ScanLogic Corp.
+04cf  Myson Century, Inc.
+	0022  OCZ Alchemy Series Elixir II Keyboard
+04d0  Digi International
+04d1  ITT Canon
+04d2  Altec Lansing Technologies
+04d3  VidUS, Inc.
+04d4  LSI Logic, Inc.
+04d5  Forte Technologies, Inc.
+04d6  Mentor Graphics
+04d7  Oki Semiconductor
+04d8  Microchip Technology, Inc.
+04d9  Holtek Semiconductor, Inc.
+	0006  Wired Keyboard (78/79 key) [RPI Wired Keyboard 5]
+	0022  Portable Keyboard
+	0348  Keyboard
+	1203  Keyboard
+	1400  PS/2 keyboard + mouse controller
+	1503  Keyboard
+	1603  Keyboard
+	1702  Keyboard LKS02
+	1818  Keyboard [Diatec Filco Majestouch 2]
+	2011  Keyboard [Diatec Filco Majestouch 1]
+	2013  Keyboard [Das Keyboard]
+	2221  Keyboard
+	2323  Keyboard
+	4545  Keyboard [Diatec Majestouch 2 Tenkeyless]
+	a01c  wireless multimedia keyboard with trackball [Trust ADURA 17911]
+	a055  Keyboard
+	a096  Keyboard
+04da  Panasonic (Matsushita)
+04db  Hypertec Pty, Ltd
+04dc  Huan Hsin Holdings, Ltd
+04dd  Sharp Corp.
+04de  MindShare, Inc.
+04df  Interlink Electronics
+04e1  Iiyama North America, Inc.
+04e2  Exar Corp.
+04e3  Zilog, Inc.
+04e4  ACC Microelectronics
+04e5  Promise Technology
+04e6  SCM Microsystems, Inc.
+	5151  SCR338 Keyboard Smart Card Reader
+04e7  Elo TouchSystems
+04e8  Samsung Electronics Co., Ltd
+04e9  PC-Tel, Inc.
+04ea  Brooktree Corp.
+04eb  Northstar Systems, Inc.
+04ec  Tokyo Electron Device, Ltd
+04ed  Annabooks
+04ef  Pacific Electronic International, Inc.
+04f0  Daewoo Electronics Co., Ltd
+04f1  Victor Company of Japan, Ltd
+04f2  Chicony Electronics Co., Ltd
+	0001  KU-8933 Keyboard
+	0002  NT68P81 Keyboard
+	0110  KU-2971 Keyboard
+	0111  KU-9908 Keyboard
+	0112  KU-8933 Keyboard with PS/2 Mouse port
+	0116  KU-2971/KU-0325 Keyboard
+	0201  Gaming Keyboard KPD0250
+	0402  Genius LuxeMate i200 Keyboard
+	0403  KU-0420 keyboard
+	0618  RG-0618U Wireless HID Receiver & KG-0609 Wireless Keyboard with Touchpad
+	0760  Acer KU-0760 Keyboard
+	0833  KU-0833 Keyboard
+	0841  HP Multimedia Keyboard
+	1061  HP KG-1061 Wireless Keyboard+Mouse
+	1121  Periboard 717 Mini Wireless Keyboard
+04f3  Elan Microelectronics Corp.
+	0103  ActiveJet K-2024 Multimedia Keyboard
+	01a4  Wireless Keyboard
+04f4  Harting Elektronik, Inc.
+04f5  Fujitsu-ICL Systems, Inc.
+04f6  Norand Corp.
+04f7  Newnex Technology Corp.
+04f8  FuturePlus Systems
+04f9  Brother Industries, Ltd
+04fa  Dallas Semiconductor
+04fb  Biostar Microtech International Corp.
+04fc  Sunplus Technology Co., Ltd
+	05d8  Wireless keyboard/mouse
+04fd  Soliton Systems, K.K.
+04fe  PFU, Ltd
+	0006  Happy Hacking Keyboard Lite2
+04ff  E-CMOS Corp.
+0500  Siam United Hi-Tech
+	0001  DART Keyboard Mouse
+	0002  DART-2 Keyboard
+0501  Fujikura DDK, Ltd
+0502  Acer, Inc.
+0503  Hitachi America, Ltd
+0504  Hayes Microcomputer Products
+0506  3Com Corp.
+0507  Hosiden Corp.
+0508  Clarion Co., Ltd
+0509  Aztech Systems, Ltd
+050a  Cinch Connectors
+050b  Cable System International
+050c  InnoMedia, Inc.
+050d  Belkin Components
+	0200  Nostromo SpeedPad n52te Gaming Keyboard
+050e  Neon Technology, Inc.
+050f  KC Technology, Inc.
+0510  Sejin Electron, Inc.
+	0001  Keyboard
+	1000  Keyboard with PS/2 Mouse Port
+0511  N'Able (DataBook) Technologies, Inc.
+0512  Hualon Microelectronics Corp.
+0513  digital-X, Inc.
+0514  FCI Electronics
+0515  ACTC
+0516  Longwell Electronics
+0517  Butterfly Communications
+0518  EzKEY Corp.
+	0002  EZ-9900C Keyboard
+0519  Star Micronics Co., Ltd
+051a  WYSE Technology
+051b  Silicon Graphics
+051c  Shuttle, Inc.
+051d  American Power Conversion
+051e  Scientific Atlanta, Inc.
+051f  IO Systems (Elite Electronics), Inc.
+0520  Taiwan Semiconductor Manufacturing Co.
+0521  Airborn Connectors
+0522  Advanced Connectek, Inc.
+0523  ATEN GmbH
+0524  Sola Electronics
+0525  Netchip Technology, Inc.
+0526  Temic MHS S.A.
+0527  ALTRA
+0528  ATI Technologies, Inc.
+0529  Aladdin Knowledge Systems
+052a  Crescent Heart Software
+052b  Tekom Technologies, Inc.
+052c  Canon Information Systems, Inc.
+052d  Avid Electronics Corp.
+052e  Standard Microsystems Corp.
+052f  Unicore Software, Inc.
+0530  American Microsystems, Inc.
+0531  Wacom Technology Corp.
+0532  Systech Corp.
+0533  Alcatel Mobile Phones
+0534  Motorola, Inc.
+0535  LIH TZU Electric Co., Ltd
+0536  Hand Held Products (Welch Allyn, Inc.)
+0537  Inventec Corp.
+0538  Caldera International, Inc. (SCO)
+0539  Shyh Shiun Terminals Co., Ltd
+053a  PrehKeyTec GmbH
+053b  Global Village Communication
+053c  Institut of Microelectronic & Mechatronic Systems
+053d  Silicon Architect
+053e  Mobility Electronics
+053f  Synopsys, Inc.
+0540  UniAccess AB
+0541  Sirf Technology, Inc.
+0543  ViewSonic Corp.
+0544  Cristie Electronics, Ltd
+0545  Xirlink, Inc.
+0546  Polaroid Corp.
+0547  Anchor Chips, Inc.
+0548  Tyan Computer Corp.
+0549  Pixera Corp.
+054a  Fujitsu Microelectronics, Inc.
+054b  New Media Corp.
+054c  Sony Corp.
+054d  Try Corp.
+054e  Proside Corp.
+054f  WYSE Technology Taiwan
+0550  Fuji Xerox Co., Ltd
+0551  CompuTrend Systems, Inc.
+0552  Philips Monitors
+0553  STMicroelectronics Imaging Division (VLSI Vision)
+0554  Dictaphone Corp.
+0555  ANAM S&T Co., Ltd
+0556  Asahi Kasei Microsystems Co., Ltd
+0557  ATEN International Co., Ltd
+	2004  UC-100KM PS/2 Mouse and Keyboard adapter
+	2212  Keyboard/Mouse
+0558  Truevision, Inc.
+0559  Cadence Design Systems, Inc.
+055a  Kenwood USA
+055b  KnowledgeTek, Inc.
+055c  Proton Electronic Ind.
+055d  Samsung Electro-Mechanics Co.
+	0001  Keyboard
+	6780  Keyboard V1
+	6781  Keyboard Mouse
+055e  CTX Opto-Electronics Corp.
+055f  Mustek Systems, Inc.
+0560  Interface Corp.
+0561  Oasis Design, Inc.
+0562  Telex Communications, Inc.
+0563  Immersion Corp.
+0564  Kodak Digital Product Center, Japan Ltd. (formerly Chinon Industries Inc.)
+0565  Peracom Networks, Inc.
+0566  Monterey International Corp.
+	3002  Keyboard
+	3013  BakkerElkhuizen Wired Keyboard S-board 840 Design
+	3020  BakkerElkhuizen Wired Keyboard S-board 840 Design USB-Hub
+	3107  Keyboard
+0567  Xyratex International, Ltd
+0568  Quartz Ingenierie
+0569  SegaSoft
+056a  Wacom Co., Ltd
+056b  Decicon, Inc.
+056c  eTEK Labs
+056d  EIZO Corp.
+056e  Elecom Co., Ltd
+056f  Korea Data Systems Co., Ltd
+0570  Epson America
+0571  Interex, Inc.
+0572  Conexant Systems (Rockwell), Inc.
+0573  Zoran Co. Personal Media Division (Nogatech)
+0574  City University of Hong Kong
+0575  Philips Creative Display Solutions
+0576  BAFO/Quality Computer Accessories
+0577  ELSA
+0578  Intrinsix Corp.
+0579  GVC Corp.
+057a  Samsung Electronics America
+057b  Y-E Data, Inc.
+057c  AVM GmbH
+057d  Shark Multimedia, Inc.
+057e  Nintendo Co., Ltd
+057f  QuickShot, Ltd
+0580  Denron, Inc.
+0581  Racal Data Group
+0582  Roland Corp.
+0583  Padix Co., Ltd (Rockfire)
+0584  RATOC System, Inc.
+0585  FlashPoint Technology, Inc.
+0586  ZyXEL Communications Corp.
+	2011  Scorpion-980N keyboard
+0587  America Kotobuki Electronics Industries, Inc.
+0588  Sapien Design
+0589  Victron
+058a  Nohau Corp.
+058b  Infineon Technologies
+058c  In Focus Systems
+058d  Micrel Semiconductor
+058e  Tripath Technology, Inc.
+058f  Alcor Micro Corp.
+	2802  Monterey Keyboard
+	9410  Keyboard
+	9472  Keyboard Hub
+0590  Omron Corp.
+0591  Questra Consulting
+0592  Powerware Corp.
+0593  Incite
+0594  Princeton Graphic Systems
+0595  Zoran Microelectronics, Ltd
+0596  MicroTouch Systems, Inc.
+0597  Trisignal Communications
+0598  Niigata Canotec Co., Inc.
+0599  Brilliance Semiconductor, Inc.
+059a  Spectrum Signal Processing, Inc.
+059b  Iomega Corp.
+059c  A-Trend Technology Co., Ltd
+059d  Advanced Input Devices
+059e  Intelligent Instrumentation
+059f  LaCie, Ltd
+05a0  Vetronix Corp.
+05a1  USC Corp.
+05a2  Fuji Film Microdevices Co., Ltd
+05a3  ARC International
+05a4  Ortek Technology, Inc.
+	1000  WKB-1000S Wireless Ergo Keyboard with Touchpad
+	2000  WKB-2000 Wireless Keyboard with Touchpad
+	9720  Keyboard Mouse
+	9722  Keyboard
+	9731  MCK-600W/MCK-800USB Keyboard
+05a5  Sampo Technology Corp.
+05a6  Cisco Systems, Inc.
+	0a01  Virtual Keyboard/Mouse
+05a7  Bose Corp.
+05a8  Spacetec IMC Corp.
+05a9  OmniVision Technologies, Inc.
+05aa  Utilux South China, Ltd
+05ab  In-System Design
+05ac  Apple, Inc.
+	0201  USB Keyboard [Alps or Logitech, M2452]
+	0202  Keyboard [ALPS]
+	0205  Extended Keyboard [Mitsumi]
+	0206  Extended Keyboard [Mitsumi]
+	020b  Pro Keyboard [Mitsumi, A1048/US layout]
+	020c  Extended Keyboard [Mitsumi]
+	020d  Pro Keyboard [Mitsumi, A1048/JIS layout]
+	020e  Internal Keyboard/Trackpad (ANSI)
+	020f  Internal Keyboard/Trackpad (ISO)
+	0214  Internal Keyboard/Trackpad (ANSI)
+	0215  Internal Keyboard/Trackpad (ISO)
+	0216  Internal Keyboard/Trackpad (JIS)
+	0217  Internal Keyboard/Trackpad (ANSI)
+	0218  Internal Keyboard/Trackpad (ISO)
+	0219  Internal Keyboard/Trackpad (JIS)
+	021a  Internal Keyboard/Trackpad (ANSI)
+	021b  Internal Keyboard/Trackpad (ISO)
+	021c  Internal Keyboard/Trackpad (JIS)
+	021d  Aluminum Mini Keyboard (ANSI)
+	021e  Aluminum Mini Keyboard (ISO)
+	021f  Aluminum Mini Keyboard (JIS)
+	0220  Aluminum Keyboard (ANSI)
+	0221  Aluminum Keyboard (ISO)
+	0222  Aluminum Keyboard (JIS)
+	0223  Internal Keyboard/Trackpad (ANSI)
+	0224  Internal Keyboard/Trackpad (ISO)
+	0225  Internal Keyboard/Trackpad (JIS)
+	0229  Internal Keyboard/Trackpad (ANSI)
+	022a  Internal Keyboard/Trackpad (MacBook Pro) (ISO)
+	022b  Internal Keyboard/Trackpad (MacBook Pro) (JIS)
+	0230  Internal Keyboard/Trackpad (MacBook Pro 4,1) (ANSI)
+	0231  Internal Keyboard/Trackpad (MacBook Pro 4,1) (ISO)
+	0232  Internal Keyboard/Trackpad (MacBook Pro 4,1) (JIS)
+	0236  Internal Keyboard/Trackpad (ANSI)
+	0237  Internal Keyboard/Trackpad (ISO)
+	0238  Internal Keyboard/Trackpad (JIS)
+	023f  Internal Keyboard/Trackpad (ANSI)
+	0240  Internal Keyboard/Trackpad (ISO)
+	0241  Internal Keyboard/Trackpad (JIS)
+	0242  Internal Keyboard/Trackpad (ANSI)
+	0243  Internal Keyboard/Trackpad (ISO)
+	0244  Internal Keyboard/Trackpad (JIS)
+	0245  Internal Keyboard/Trackpad (ANSI)
+	0246  Internal Keyboard/Trackpad (ISO)
+	0247  Internal Keyboard/Trackpad (JIS)
+	024a  Internal Keyboard/Trackpad (MacBook Air) (ISO)
+	024d  Internal Keyboard/Trackpad (MacBook Air) (ISO)
+	024f  Aluminium Keyboard (ANSI)
+	0250  Aluminium Keyboard (ISO)
+	0252  Internal Keyboard/Trackpad (ANSI)
+	0253  Internal Keyboard/Trackpad (ISO)
+	0254  Internal Keyboard/Trackpad (JIS)
+	0259  Internal Keyboard/Trackpad
+	025a  Internal Keyboard/Trackpad
+	0263  Apple Internal Keyboard / Trackpad (MacBook Retina)
+	0267  Magic Keyboard A1644
+	0273  Internal Keyboard/Trackpad (ISO)
+	1001  Keyboard Hub [ALPS]
+	1002  Extended Keyboard Hub [Mitsumi]
+	1003  Hub in Pro Keyboard [Mitsumi, A1048]
+	1006  Hub in Aluminum Keyboard
+	820a  Bluetooth HID Keyboard
+05ad  Y.C. Cable U.S.A., Inc.
+05ae  Synopsys, Inc.
+05af  Jing-Mold Enterprise Co., Ltd
+	0806  HP SK806A Keyboard
+	0809  Wireless Keyboard and Mouse
+	3062  Cordless Keyboard
+05b0  Fountain Technologies, Inc.
+05b1  First International Computer, Inc.
+05b4  LG Semicon Co., Ltd
+05b5  Dialogic Corp.
+05b6  Proxima Corp.
+05b7  Medianix Semiconductor, Inc.
+05b8  SYSGRATION
+05b9  Philips Research Laboratories
+05ba  DigitalPersona, Inc.
+05bb  Grey Cell Systems
+05bc  3G Green Green Globe Co., Ltd
+05bd  RAFI GmbH & Co. KG
+05be  Tyco Electronics (Raychem)
+05bf  S & S Research
+05c0  Keil Software
+05c1  Kawasaki Microelectronics, Inc.
+05c2  Media Phonics (Suisse) S.A.
+05c5  Digi International, Inc.
+05c6  Qualcomm, Inc.
+05c7  Qtronix Corp.
+	2001  Keyboard
+	2011  SCorpius Keyboard
+05c8  Cheng Uei Precision Industry Co., Ltd (Foxlink)
+05c9  Semtech Corp.
+05ca  Ricoh Co., Ltd
+05cb  PowerVision Technologies, Inc.
+05cc  ELSA AG
+05cd  Silicom, Ltd
+05ce  sci-worx GmbH
+05cf  Sung Forn Co., Ltd
+05d0  GE Medical Systems Lunar
+05d1  Brainboxes, Ltd
+05d2  Wave Systems Corp.
+05d3  Tohoku Ricoh Co., Ltd
+05d5  Super Gate Technology Co., Ltd
+05d6  Philips Semiconductors, CICT
+05d7  Thomas & Betts Corp.
+05d8  Ultima Electronics Corp.
+05d9  Axiohm Transaction Solutions
+05da  Microtek International, Inc.
+05db  Sun Corp. (Suntac?)
+05dc  Lexar Media, Inc.
+05dd  Delta Electronics, Inc.
+05df  Silicon Vision, Inc.
+05e0  Symbol Technologies
+05e1  Syntek Semiconductor Co., Ltd
+05e2  ElecVision, Inc.
+05e3  Genesys Logic, Inc.
+	000a  Keyboard with PS/2 Port
+	0504  HID Keyboard Filter
+05e4  Red Wing Corp.
+05e5  Fuji Electric Co., Ltd
+05e6  Keithley Instruments
+05e8  ICC, Inc.
+05e9  Kawasaki LSI
+05eb  FFC, Ltd
+05ec  COM21, Inc.
+05ee  Cytechinfo Inc.
+05ef  AVB, Inc. [anko?]
+05f0  Canopus Co., Ltd
+05f1  Compass Communications
+05f2  Dexin Corp., Ltd
+05f3  PI Engineering, Inc.
+	0007  Kinesis Advantage PRO MPC/USB Keyboard
+	0203  Y-mouse Keyboard & Mouse Adapter
+05f5  Unixtar Technology, Inc.
+05f6  AOC International
+05f7  RFC Distribution(s) PTE, Ltd
+05f9  PSC Scanning, Inc.
+	2206  Gryphon series (keyboard emulation mode)
+05fa  Siemens Telecommunications Systems, Ltd
+	3301  Keyboard with PS/2 Mouse Port
+	3302  Keyboard
+	3303  Keyboard with PS/2 Mouse Port
+05fc  Harman
+05fd  InterAct, Inc.
+05fe  Chic Technology Corp.
+05ff  LeCroy Corp.
+0600  Barco Display Systems
+0601  Jazz Hipster Corp.
+0602  Vista Imaging, Inc.
+0603  Novatek Microelectronics Corp.
+	0002  Sino Wealth keyboard/mouse 2.4 GHz receiver
+	00f1  Keyboard (Labtec Ultra Flat Keyboard)
+	00f2  Keyboard (Labtec Ultra Flat Keyboard)
+0604  Jean Co., Ltd
+0605  Anchor C&C Co., Ltd
+0606  Royal Information Electronics Co., Ltd
+0607  Bridge Information Co., Ltd
+0608  Genrad Ads
+0609  SMK Manufacturing, Inc.
+060a  Worthington Data Solutions, Inc.
+060b  Solid Year
+	0001  MacAlly Keyboard
+	0230  KSK-8003 UX Keyboard
+	0540  DeltaCo TB-106U Keyboard
+	1006  Japanese Keyboard - 260U
+	2101  Keyboard
+	2231  KSK-6001 UELX Keyboard
+	2270  Gigabyte K8100 Aivia Gaming Keyboard
+	500a  Cougar 500k Gaming Keyboard
+	5253  Thermaltake MEKA G-Unit Gaming Keyboard
+	5811  ACK-571U Wireless Keyboard
+	5903  Japanese Keyboard - 595U
+	6002  SolidTek USB Keyboard
+	6003  Japanese Keyboard - 600HM
+	6231  Thermaltake eSPORTS Meka Keyboard
+060c  EEH Datalink GmbH
+060d  Auctor Corp.
+060e  Transmonde Technologies, Inc.
+060f  Joinsoon Electronics Mfg. Co., Ltd
+0610  Costar Electronics, Inc.
+0611  Totoku Electric Co., Ltd
+0613  TransAct Technologies, Inc.
+0614  Bio-Rad Laboratories
+0615  Quabbin Wire & Cable Co., Inc.
+0616  Future Techno Designs PVT, Ltd
+0617  Swiss Federal Insitute of Technology
+0618  MacAlly
+0619  Seiko Instruments, Inc.
+061a  Veridicom International, Inc.
+061b  Promptus Communications, Inc.
+061c  Act Labs, Ltd
+061d  Quatech, Inc.
+061e  Nissei Electric Co.
+0620  Alaris, Inc.
+0621  ODU-Steckverbindungssysteme GmbH & Co. KG
+0622  Iotech, Inc.
+0623  Littelfuse, Inc.
+0624  Avocent Corp.
+	0249  Virtual Keyboard/Mouse
+	0402  Cisco Virtual Keyboard and Mouse
+0625  TiMedia Technology Co., Ltd
+0626  Nippon Systems Development Co., Ltd
+0627  Adomax Technology Co., Ltd
+0628  Tasking Software, Inc.
+0629  Zida Technologies, Ltd
+062a  MosArt Semiconductor Corp.
+	0102  Wireless Keyboard/Mouse Combo [MK1152WC]
+	0201  Defender Office Keyboard (K7310) S Zodiak KM-9010
+	4101  Wireless Keyboard/Mouse
+062b  Greatlink Electronics Taiwan, Ltd
+062c  Institute for Information Industry
+062d  Taiwan Tai-Hao Enterprises Co., Ltd
+062e  Mainsuper Enterprises Co., Ltd
+062f  Sin Sheng Terminal & Machine, Inc.
+0631  JUJO Electronics Corp.
+0633  Cyrix Corp.
+0634  Micron Technology, Inc.
+0635  Methode Electronics, Inc.
+0636  Sierra Imaging, Inc.
+0638  Avision, Inc.
+0639  Chrontel, Inc.
+063a  Techwin Corp.
+063b  Taugagreining HF
+063c  Yamaichi Electronics Co., Ltd (Sakura)
+063d  Fong Kai Industrial Co., Ltd
+063e  RealMedia Technology, Inc.
+063f  New Technology Cable, Ltd
+0640  Hitex Development Tools
+0641  Woods Industries, Inc.
+0642  VIA Medical Corp.
+0644  TEAC Corp.
+0645  Who? Vision Systems, Inc.
+0646  UMAX
+0647  Acton Research Corp.
+0648  Inside Out Networks
+0649  Weli Science Co., Ltd
+064b  Analog Devices, Inc. (White Mountain DSP)
+064c  Ji-Haw Industrial Co., Ltd
+064d  TriTech Microelectronics, Ltd
+064e  Suyin Corp.
+064f  WIBU-Systems AG
+0650  Dynapro Systems
+0651  Likom Technology Sdn. Bhd.
+0652  Stargate Solutions, Inc.
+0653  CNF, Inc.
+0654  Granite Microsystems, Inc.
+0655  Space Shuttle Hi-Tech Co., Ltd
+0656  Glory Mark Electronic, Ltd
+0657  Tekcon Electronics Corp.
+0658  Sigma Designs, Inc.
+0659  Aethra
+065a  Optoelectronics Co., Ltd
+	0001  Opticon OPR-2001 / NLV-1001 (keyboard mode)
+065b  Tracewell Systems
+065e  Silicon Graphics
+065f  Good Way Technology Co., Ltd & GWC technology Inc.
+0660  TSAY-E (BVI) International, Inc.
+0661  Hamamatsu Photonics K.K.
+0662  Kansai Electric Co., Ltd
+0663  Topmax Electronic Co., Ltd
+0664  ET&T Technology Co., Ltd.
+0665  Cypress Semiconductor
+0667  Aiwa Co., Ltd
+0668  WordWand
+0669  Oce' Printing Systems GmbH
+066a  Total Technologies, Ltd
+066b  Linksys, Inc.
+066d  Entrega, Inc.
+066e  Acer Semiconductor America, Inc.
+066f  SigmaTel, Inc.
+0670  Sequel Imaging
+0672  Labtec, Inc.
+0673  HCL
+	5000  Keyboard
+0674  Key Mouse Electronic Enterprise Co., Ltd
+0675  DrayTek Corp.
+0676  Teles AG
+0677  Aiwa Co., Ltd
+0678  ACard Technology Corp.
+067b  Prolific Technology, Inc.
+067c  Efficient Networks, Inc.
+067d  Hohner Corp.
+067e  Intermec Technologies Corp.
+	0801  HID Keyboard, Barcode scanner
+067f  Virata, Ltd
+0680  Realtek Semiconductor Corp., CPP Div. (Avance Logic)
+0681  Siemens Information and Communication Products
+0682  Victor Company of Japan, Ltd
+0684  Actiontec Electronics, Inc.
+0685  ZD Incorporated
+0686  Minolta Co., Ltd
+068a  Pertech, Inc.
+068b  Potrans International, Inc.
+068e  CH Products, Inc.
+068f  Nihon KOHDEN
+0690  Golden Bridge Electech, Inc.
+0693  Hagiwara Sys-Com Co., Ltd
+0694  Lego Group
+0698  Chuntex (CTX)
+0699  Tektronix, Inc.
+069a  Askey Computer Corp.
+069b  Thomson, Inc.
+069d  Hughes Network Systems (HNS)
+069e  Welcat Inc.
+069f  Allied Data Technologies BV
+06a2  Topro Technology, Inc.
+06a3  Saitek PLC
+	8000  Gamers' Keyboard
+	8020  Eclipse Keyboard
+	8021  Eclipse II Keyboard
+06a4  Xiamen Doowell Electron Co., Ltd
+06a5  Divio
+06a7  MicroStore, Inc.
+06a8  Topaz Systems, Inc.
+06a9  Westell
+06aa  Sysgration, Ltd
+06ac  Fujitsu Laboratories of America, Inc.
+06ad  Greatland Electronics Taiwan, Ltd
+06ae  Professional Multimedia Testing Centre
+06af  Harting, Inc. of North America
+06b8  Pixela Corp.
+06b9  Alcatel Telecom
+06ba  Smooth Cord & Connector Co., Ltd
+06bb  EDA, Inc.
+06bc  Oki Data Corp.
+06bd  AGFA-Gevaert NV
+06be  AME Optimedia Technology Co., Ltd
+06bf  Leoco Corp.
+06c2  Phidgets Inc. (formerly GLAB)
+06c4  Bizlink International Corp.
+06c5  Hagenuk, GmbH
+06c6  Infowave Software, Inc.
+06c8  SIIG, Inc.
+06c9  Taxan (Europe), Ltd
+06ca  Newer Technology, Inc.
+06cb  Synaptics, Inc.
+06cc  Terayon Communication Systems
+06cd  Keyspan
+06ce  Contec
+06cf  SpheronVR AG
+06d0  LapLink, Inc.
+06d1  Daewoo Electronics Co., Ltd
+06d3  Mitsubishi Electric Corp.
+06d4  Cisco Systems
+06d5  Toshiba
+	4000  Japanese Keyboard
+06d6  Aashima Technology B.V.
+06d7  Network Computing Devices (NCD)
+06d8  Technical Marketing Research, Inc.
+06da  Phoenixtec Power Co., Ltd
+06db  Paradyne
+06dc  Foxlink Image Technology Co., Ltd
+06de  Heisei Electronics Co., Ltd
+06e0  Multi-Tech Systems, Inc.
+06e1  ADS Technologies, Inc.
+06e4  Alcatel Microelectronics
+06e6  Tiger Jet Network, Inc.
+06ea  Sirius Technologies
+06eb  PC Expert Tech. Co., Ltd
+06ef  I.A.C. Geometrische Ingenieurs B.V.
+06f0  T.N.C Industrial Co., Ltd
+06f1  Opcode Systems, Inc.
+06f2  Emine Technology Co.
+	0011  KVM Switch Keyboard
+06f6  Wintrend Technology Co., Ltd
+06f7  Wailly Technology Ltd
+06f8  Guillemot Corp.
+06f9  ASYST electronic d.o.o.
+06fa  HSD S.r.L
+06fc  Motorola Semiconductor Products Sector
+06fd  Boston Acoustics
+06fe  Gallant Computer, Inc.
+0701  Supercomal Wire & Cable SDN. BHD.
+0703  Bvtech Industry, Inc.
+0705  NKK Corp.
+0706  Ariel Corp.
+0707  Standard Microsystems Corp.
+0708  Putercom Co., Ltd
+0709  Silicon Systems, Ltd (SSL)
+070a  Oki Electric Industry Co., Ltd
+070d  Comoss Electronic Co., Ltd
+070e  Excel Cell Electronic Co., Ltd
+0710  Connect Tech, Inc.
+0711  Magic Control Technology Corp.
+	0260  PS/2 Keyboard and Mouse
+0713  Interval Research Corp.
+0714  NewMotion, Inc.
+0717  ZNK Corp.
+0718  Imation Corp.
+0719  Tremon Enterprises Co., Ltd
+071b  Domain Technologies, Inc.
+071c  Xionics Document Technologies, Inc.
+071d  Eicon Networks Corp.
+071e  Ariston Technologies
+0720  Keyence Corp.
+0723  Centillium Communications Corp.
+0726  Vanguard International Semiconductor-America
+0729  Amitm
+072e  Sunix Co., Ltd
+072f  Advanced Card Systems, Ltd
+0731  Susteen, Inc.
+0732  Goldfull Electronics & Telecommunications Corp.
+0733  ViewQuest Technologies, Inc.
+0734  Lasat Communications A/S
+0735  Asuscom Network
+0736  Lorom Industrial Co., Ltd
+0738  Mad Catz, Inc.
+	a109  S.T.R.I.K.E.7 Keyboard
+073a  Chaplet Systems, Inc.
+073b  Suncom Technologies
+073c  Industrial Electronic Engineers, Inc.
+073d  Eutron S.p.a.
+073e  NEC, Inc.
+0742  Stollmann
+0745  Syntech Information Co., Ltd
+0746  Onkyo Corp.
+0747  Labway Corp.
+0748  Strong Man Enterprise Co., Ltd
+0749  EVer Electronics Corp.
+074a  Ming Fortune Industry Co., Ltd
+074b  Polestar Tech. Corp.
+074c  C-C-C Group PLC
+074d  Micronas GmbH
+074e  Digital Stream Corp.
+0755  Aureal Semiconductor
+0757  Network Technologies, Inc.
+0758  Carl Zeiss Microscopy GmbH
+075b  Sophisticated Circuits, Inc.
+0763  M-Audio
+0764  Cyber Power System, Inc.
+0765  X-Rite, Inc.
+0766  Jess-Link Products Co., Ltd
+0767  Tokheim Corp.
+0768  Camtel Technology Corp.
+0769  Surecom Technology Corp.
+076a  Smart Technology Enablers, Inc.
+076b  OmniKey AG
+	a011  CCID Smart Card Reader Keyboard
+076c  Partner Tech
+076d  Denso Corp.
+076e  Kuan Tech Enterprise Co., Ltd
+076f  Jhen Vei Electronic Co., Ltd
+0770  Welch Allyn, Inc - Medical Division
+0771  Observator Instruments BV
+0772  Your data Our Care
+0774  AmTRAN Technology Co., Ltd
+0775  Longshine Electronics Corp.
+0776  Inalways Corp.
+0777  Comda Enterprise Corp.
+0778  Volex, Inc.
+0779  ON Semiconductor (formerly Fairchild)
+077a  Sankyo Seiki Mfg. Co., Ltd
+077b  Linksys
+077c  Forward Electronics Co., Ltd
+	0005  NEC Keyboard
+077d  Griffin Technology
+077e  Softing AG
+077f  Well Excellent & Most Corp.
+0780  Sagem Monetel GmbH
+0781  SanDisk Corp.
+0782  Trackerball
+0783  C3PO
+0784  Vivitar, Inc.
+0785  NTT-ME
+0789  Logitec Corp.
+078b  Happ Controls, Inc.
+078c  GTCO/CalComp
+078e  Brincom, Inc.
+0790  Pro-Image Manufacturing Co., Ltd
+0791  Copartner Wire and Cable Mfg. Corp.
+0792  Axis Communications AB
+0793  Wha Yu Industrial Co., Ltd
+0794  ABL Electronics Corp.
+0795  RealChip, Inc.
+0796  Certicom Corp.
+0797  Grandtech Semiconductor Corp.
+0798  Optelec
+0799  Altera
+079b  Sagem
+079d  Alfadata Computer Corp.
+07a1  Digicom S.p.A.
+07a2  National Technical Systems
+07a3  Onnto Corp.
+07a4  Be, Inc.
+07a6  ADMtek, Inc.
+07aa  Corega K.K.
+07ab  Freecom Technologies
+07af  Microtech
+07b0  Trust Technologies
+07b1  IMP, Inc.
+07b2  Motorola BCS, Inc.
+07b3  Plustek, Inc.
+07b4  Olympus Optical Co., Ltd
+07b5  Mega World International, Ltd
+07b6  Marubun Corp.
+07b7  TIME Interconnect, Ltd
+07b8  AboCom Systems Inc
+07bc  Canon Computer Systems, Inc.
+07bd  Webgear, Inc.
+07be  Veridicom
+07c0  Code Mercenaries Hard- und Software GmbH
+07c1  Keisokugiken
+07c4  Datafab Systems, Inc.
+07c5  APG Cash Drawer
+07c6  ShareWave, Inc.
+07c7  Powertech Industrial Co., Ltd
+07c8  B.U.G., Inc.
+07c9  Allied Telesyn International
+07ca  AVerMedia Technologies, Inc.
+07cb  Kingmax Technology, Inc.
+07cc  Carry Computer Eng., Co., Ltd
+07cd  Elektor
+07ce  Nidec Copal
+07cf  Casio Computer Co., Ltd
+	6802  MIDI Keyboard
+	6803  CTK-3500 (MIDI keyboard)
+07d0  Dazzle
+07d1  D-Link System
+07d2  Aptio Products, Inc.
+07d3  Cyberdata Corp.
+07d5  Radiant Systems
+07d7  GCC Technologies, Inc.
+07da  Arasan Chip Systems
+07de  Diamond Multimedia
+07df  David Electronics Co., Ltd
+07e0  NCP engineering GmbH
+07e1  Ambient Technologies, Inc.
+07e2  Elmeg GmbH & Co., Ltd
+07e3  Planex Communications, Inc.
+07e4  Movado Enterprise Co., Ltd
+07e5  QPS, Inc.
+07e6  Allied Cable Corp.
+07e7  Mirvo Toys, Inc.
+07e8  Labsystems
+07ea  Iwatsu Electric Co., Ltd
+07eb  Double-H Technology Co., Ltd
+07ec  Taiyo Electric Wire & Cable Co., Ltd
+07ee  Torex Retail (formerly Logware)
+07ef  STSN
+07f2  Microcomputer Applications, Inc.
+07f6  Circuit Assembly Corp.
+07f7  Century Corp.
+07f9  Dotop Technology, Inc.
+07fa  DrayTek Corp.
+07fc  Thomann
+	1113  SWISSONIC EasyKeys61 Midikeyboard
+07fd  Mark of the Unicorn
+07ff  Unknown
+0801  MagTek
+	0001  Mini Swipe Reader (Keyboard Emulation)
+0802  Mako Technologies, LLC
+0803  Zoom Telephonics, Inc.
+0809  Genicom Technology, Inc.
+080a  Evermuch Technology Co., Ltd
+080b  Cross Match Technologies
+080c  Datalogic S.p.A.
+080d  Teco Image Systems Co., Ltd
+0810  Personal Communication Systems, Inc.
+0813  Mattel, Inc.
+0819  eLicenser
+081a  MG Logic
+081b  Indigita Corp.
+081c  Mipsys
+081e  AlphaSmart, Inc.
+081f  Manta
+0822  Reudo Corp.
+0825  GC Protronics
+0826  Data Transit
+0827  BroadLogic, Inc.
+0828  Sato Corp.
+0829  DirecTV Broadband, Inc. (Telocity)
+082d  Handspring
+0830  Palm, Inc.
+0832  Kouwell Electronics Corp.
+0833  Sourcenext Corp.
+0835  Action Star Enterprise Co., Ltd
+0836  TrekStor
+0839  Samsung Techwin Co., Ltd
+083a  Accton Technology Corp.
+083f  Global Village
+0840  Argosy Research, Inc.
+0841  Rioport.com, Inc.
+0844  Welland Industrial Co., Ltd
+0846  NetGear, Inc.
+084d  Minton Optic Industry Co., Inc.
+084e  KB Gear
+084f  Empeg
+0850  Fast Point Technologies, Inc.
+0851  Macronix International Co., Ltd
+0852  CSEM
+0853  Topre Corporation
+	0200  RealForce Compact Keyboard
+0854  ActiveWire, Inc.
+0856  B&B Electronics
+0858  Hitachi Maxell, Ltd
+0859  Minolta Systems Laboratory, Inc.
+085a  Xircom
+085c  ColorVision, Inc.
+0862  Teletrol Systems, Inc.
+0863  Filanet Corp.
+0864  NetGear, Inc.
+0867  Data Translation, Inc.
+086a  Emagic Soft- und Hardware GmbH
+086c  DeTeWe - Deutsche Telephonwerke AG & Co.
+086e  System TALKS, Inc.
+086f  MEC IMEX, Inc.
+0870  Metricom
+0871  SanDisk, Inc.
+0873  Xpeed, Inc.
+0874  A-Tec Subsystem, Inc.
+0879  Comtrol Corp.
+087c  Adesso/Kbtek America, Inc.
+087d  Jaton Corp.
+087e  Fujitsu Computer Products of America
+087f  QualCore Logic Inc.
+0880  APT Technologies, Inc.
+0883  Recording Industry Association of America (RIAA)
+0885  Boca Research, Inc.
+0886  XAC Automation Corp.
+0887  Hannstar Electronics Corp.
+088a  TechTools
+088b  MassWorks, Inc.
+088c  Swecoin AB
+088e  iLok
+0892  DioGraphy, Inc.
+0894  TSI Incorporated
+0897  Lauterbach
+089c  United Technologies Research Cntr.
+089d  Icron Technologies Corp.
+089e  NST Co., Ltd
+089f  Primex Aerospace Co.
+08a5  e9, Inc.
+08a6  Toshiba TEC
+08a8  Andrea Electronics
+08a9  CWAV Inc.
+08ac  Macraigor Systems LLC
+08ae  Macally (Mace Group, Inc.)
+08b0  Metrohm
+08b4  Sorenson Vision, Inc.
+08b7  NATSU
+08b8  J. Gordon Electronic Design, Inc.
+08b9  RadioShack Corp. (Tandy)
+08bb  Texas Instruments
+08bd  Citizen Watch Co., Ltd
+08c3  Precise Biometrics
+	0003  100 SC BioKeyboard
+	0006  100 A BioKeyboard
+08c4  Proxim, Inc.
+08c7  Key Nice Enterprise Co., Ltd
+08c8  2Wire, Inc.
+08c9  Nippon Telegraph and Telephone Corp.
+08ca  Aiptek International, Inc.
+08cd  Jue Hsun Ind. Corp.
+08ce  Long Well Electronics Corp.
+08cf  Productivity Enhancement Products
+08d1  smartBridges, Inc.
+08d3  Virtual Ink
+08d4  Fujitsu Siemens Computers
+08d8  IXXAT Automation GmbH
+08d9  Increment P Corp.
+08dd  Billionton Systems, Inc.
+08de  ???
+08df  Spyrus, Inc.
+08e3  Olitec, Inc.
+08e4  Pioneer Corp.
+08e5  Litronic
+08e6  Gemalto (was Gemplus)
+08e7  Pan-International Wire & Cable
+08e8  Integrated Memory Logic
+08e9  Extended Systems, Inc.
+08ea  Ericsson, Inc., Blue Ridge Labs
+08ec  M-Systems Flash Disk Pioneers
+08ed  MediaTek Inc.
+08ee  CCSI/Hesso
+08f0  Corex Technologies
+08f1  CTI Electronics Corp.
+08f2  Gotop Information Inc.
+08f5  SysTec Co., Ltd
+08f6  Logic 3 International, Ltd
+08f7  Vernier
+08f8  Keen Top International Enterprise Co., Ltd
+08f9  Wipro Technologies
+08fa  Caere
+08fb  Socket Communications
+08fc  Sicon Cable Technology Co., Ltd
+08fd  Digianswer A/S
+08ff  AuthenTec, Inc.
+0900  Pinnacle Systems, Inc.
+0901  VST Technologies
+0906  Faraday Technology Corp.
+0908  Siemens AG
+	04b3  keyboard front panel Cockpit
+0909  Audio-Technica Corp.
+090a  Trumpion Microelectronics, Inc.
+090b  Neurosmith
+090c  Silicon Motion, Inc. - Taiwan (formerly Feiya Technology Corp.)
+090d  Multiport Computer Vertriebs GmbH
+090e  Shining Technology, Inc.
+090f  Fujitsu Devices, Inc.
+0910  Alation Systems, Inc.
+0911  Philips Speech Processing
+0912  Voquette, Inc.
+0915  GlobeSpan, Inc.
+0917  SmartDisk Corp.
+0919  Tiger Electronics
+091e  Garmin International
+0920  Echelon Co.
+0921  GoHubs, Inc.
+0922  Dymo-CoStar Corp.
+0923  IC Media Corp.
+0924  Xerox
+0925  Lakeview Research
+0927  Summus, Ltd
+0928  PLX Technology, Inc. (formerly Oxford Semiconductor, Ltd)
+0929  American Biometric Co.
+092a  Toshiba Information & Industrial Sys. And Services
+092b  Sena Technologies, Inc.
+092f  Northern Embedded Science/CAVNEX
+0930  Toshiba Corp.
+0931  Harmonic Data Systems, Ltd
+0932  Crescentec Corp.
+0933  Quantum Corp.
+0934  Spirent Communications
+0936  NuTesla
+0939  Lumberg, Inc.
+093a  Pixart Imaging, Inc.
+093b  Plextor Corp.
+093c  Intrepid Control Systems, Inc.
+093d  InnoSync, Inc.
+093e  J.S.T. Mfg. Co., Ltd
+093f  Olympia Telecom Vertriebs GmbH
+0940  Japan Storage Battery Co., Ltd
+0941  Photobit Corp.
+0942  i2Go.com, LLC
+0943  HCL Technologies India Private, Ltd
+0944  KORG, Inc.
+	010d  nanoKEY MIDI keyboard
+0945  Pasco Scientific
+0948  Kronauer music in digital
+094b  Linkup Systems Corp.
+094d  Cable Television Laboratories
+094f  Yano
+0951  Kingston Technology
+0954  RPM Systems Corp.
+0955  NVIDIA Corp.
+0956  BSquare Corp.
+0957  Agilent Technologies, Inc.
+0958  CompuLink Research, Inc.
+0959  Cologne Chip AG
+095a  Portsmith
+095b  Medialogic Corp.
+095c  K-Tec Electronics
+095d  Polycom, Inc.
+0964  BITRAN
+0967  Acer NeWeb Corp.
+0968  Catalyst Enterprises, Inc.
+096e  Feitian Technologies, Inc.
+0971  Gretag-Macbeth AG
+0973  Schlumberger
+0974  Datagraphix, a business unit of Anacomp
+0975  OL'E Communications, Inc.
+0976  Adirondack Wire & Cable
+0977  Lightsurf Technologies
+0978  Beckhoff GmbH
+0979  Jeilin Technology Corp., Ltd
+097a  Minds At Work LLC
+097b  Knudsen Engineering, Ltd
+097c  Marunix Co., Ltd
+097d  Rosun Technologies, Inc.
+097e  Biopac Systems Inc.
+097f  Barun Electronics Co., Ltd
+0981  Oak Technology, Ltd
+0984  Apricorn
+0985  cab Produkttechnik GmbH & Co KG
+0986  Matsushita Electric Works, Ltd.
+098c  Vitana Corp.
+098d  INDesign
+098e  Integrated Intellectual Property, Inc.
+098f  Kenwood TMI Corp.
+0993  Gemstar eBook Group, Ltd
+0996  Integrated Telecom Express, Inc.
+099a  Zippy Technology Corp.
+	0638  Sanwa Supply Inc. Small Keyboard
+	610c  EL-610 Super Mini Electron luminescent Keyboard
+	6330  SANWA Supply Inc. Slim Keyboard
+	713a  WK-713 Multimedia Keyboard
+	7160  Hyper Slim Keyboard
+099e  Trimble Navigation, Ltd
+09a3  PairGain Technologies
+09a4  Contech Research, Inc.
+09a5  VCON Telecommunications
+09a6  Poinchips
+09a7  Data Transmission Network Corp.
+09a8  Lin Shiung Enterprise Co., Ltd
+09a9  Smart Card Technologies Co., Ltd
+09aa  Intersil Corp.
+09ab  Japan Cash Machine Co., Ltd.
+09ae  Tripp Lite
+09b0  Fargo
+09b2  Franklin Electronic Publishers, Inc.
+09b3  Altius Solutions, Inc.
+09b4  MDS Telephone Systems
+09b5  Celltrix Technology Co., Ltd
+09bc  Grundig
+09be  MySmart.Com
+09bf  Auerswald GmbH & Co. KG
+09c0  Genpix Electronics, LLC
+09c1  Arris Interactive LLC
+09c2  Nisca Corp.
+09c3  HID Global
+09c4  ACTiSYS Corp.
+09c5  Memory Corp.
+09ca  BMC Messsysteme GmbH
+09cb  FLIR Systems
+09cc  Workbit Corp.
+09cd  Psion Dacom Home Networks, Ltd
+09ce  City Electronics, Ltd
+09cf  Electronics Testing Center, Taiwan
+09d1  NeoMagic, Inc.
+09d2  Vreelin Engineering, Inc.
+09d3  Com One
+09d7  NovAtel Inc.
+09d8  ELATEC GmbH
+09d9  KRF Tech, Ltd
+09da  A4Tech Co., Ltd.
+	0260  KV-300H Isolation Keyboard
+09db  Measurement Computing Corp.
+09dc  Aimex Corp.
+09dd  Fellowes, Inc.
+09df  Addonics Technologies Corp.
+09e1  Intellon Corp.
+09e5  Jo-Dan International, Inc.
+09e6  Silutia, Inc.
+09e7  Real 3D, Inc.
+09e8  AKAI  Professional M.I. Corp.
+	0071  MPK25 MIDI Keyboard
+	0076  LPK25 MIDI Keyboard
+09e9  Chen-Source, Inc.
+09eb  IM Networks, Inc.
+09ef  Xitel
+09f3  GoFlight, Inc.
+09f5  AresCom
+09f6  RocketChips, Inc.
+09f7  Edu-Science (H.K.), Ltd
+09f8  SoftConnex Technologies, Inc.
+09f9  Bay Associates
+09fa  Mtek Vision
+09fb  Altera
+09ff  Gain Technology Corp.
+0a00  Liquid Audio
+0a01  ViA, Inc.
+0a05  Unknown Manufacturer
+0a07  Ontrak Control Systems Inc.
+0a0b  Cybex Computer Products Co.
+0a0d  Servergy, Inc
+0a11  Xentec, Inc.
+0a12  Cambridge Silicon Radio, Ltd
+0a13  Telebyte, Inc.
+0a14  Spacelabs Medical, Inc.
+0a15  Scalar Corp.
+0a16  Trek Technology (S) PTE, Ltd
+0a17  Pentax Corp.
+0a18  Heidelberger Druckmaschinen AG
+0a19  Hua Geng Technologies, Inc.
+0a21  Medtronic Physio Control Corp.
+0a22  Century Semiconductor USA, Inc.
+0a27  Datacard Group
+0a2c  AK-Modul-Bus Computer GmbH
+0a34  TG3 Electronics, Inc.
+	0110  Deck 82-key backlit keyboard
+0a35  Radikal Technologies
+0a39  Gilat Satellite Networks, Ltd
+0a3a  PentaMedia Co., Ltd
+0a3c  NTT DoCoMo, Inc.
+0a3d  Varo Vision
+0a3f  Swissonic AG
+0a43  Boca Systems, Inc.
+0a46  Davicom Semiconductor, Inc.
+0a47  Hirose Electric
+0a48  I/O Interconnect
+0a4a  Ploytec GmbH
+0a4b  Fujitsu Media Devices, Ltd
+0a4c  Computex Co., Ltd
+0a4d  Evolution Electronics, Ltd
+	008e  MK-249C MIDI Keyboard
+	00a3  MK-461C MIDI Keyboard
+0a4e  Steinberg Soft-und Hardware GmbH
+0a4f  Litton Systems, Inc.
+0a50  Mimaki Engineering Co., Ltd
+0a51  Sony Electronics, Inc.
+0a52  Jebsee Electronics Co., Ltd
+0a53  Portable Peripheral Co., Ltd
+0a5a  Electronics For Imaging, Inc.
+0a5b  EAsics NV
+0a5c  Broadcom Corp.
+	4502  Keyboard (Boot Interface Subclass)
+	5803  BCM5880 Secure Applications Processor with secure keyboard
+0a5d  Diatrend Corp.
+0a5f  Zebra
+0a62  MPMan
+0a66  ClearCube Technology
+0a67  Medeli Electronics Co., Ltd
+0a68  Comaide Corp.
+0a69  Chroma ate, Inc.
+0a6b  Green House Co., Ltd
+0a6c  Integrated Circuit Systems, Inc.
+0a6d  UPS Manufacturing
+0a6e  Benwin
+0a6f  Core Technology, Inc.
+0a70  International Game Technology
+0a71  VIPColor Technologies USA, Inc.
+0a72  Sanwa Denshi
+0a73  Mackie Designs
+0a7d  NSTL, Inc.
+0a7e  Octagon Systems Corp.
+0a80  Rexon Technology Corp., Ltd
+0a81  Chesen Electronics Corp.
+	0101  Keyboard
+	0103  Keyboard
+	0205  PS/2 Keyboard+Mouse Adapter
+0a82  Syscan
+0a83  NextComm, Inc.
+0a84  Maui Innovative Peripherals
+0a85  Idexx Labs
+0a86  NITGen Co., Ltd
+0a89  Aktiv
+0a8d  Picturetel
+0a8e  Japan Aviation Electronics Industry, Ltd
+0a90  Candy Technology Co., Ltd
+0a91  Globlink Technology, Inc.
+0a92  EGO SYStems, Inc.
+0a93  C Technologies AB
+0a94  Intersense
+0aa3  Lava Computer Mfg., Inc.
+0aa4  Develco Elektronik
+0aa5  First International Digital
+0aa6  Perception Digital, Ltd
+0aa7  Wincor Nixdorf International GmbH
+	0100  POS Keyboard, TA58P-USB
+	0101  POS Keyboard, TA85P-USB
+	0102  POS Keyboard, TA59-USB
+	0103  POS Keyboard, TA60-USB
+	0104  SNIkey Keyboard, SNIKey-KB-USB
+	0502  Hub SNIKey Keyboard
+0aa8  TriGem Computer, Inc.
+0aa9  Baromtec Co.
+0aaa  Japan CBM Corp.
+0aab  Vision Shape Europe SA
+0aac  iCompression, Inc.
+0aad  Rohde & Schwarz GmbH & Co. KG
+0aae  NEC infrontia Corp. (Nitsuko)
+0aaf  Digitalway Co., Ltd
+0ab0  Arrow Strong Electronics Co., Ltd
+0ab1  FEIG ELECTRONIC GmbH
+0aba  Ellisys
+0abe  Stereo-Link
+0abf  Diolan
+0ac3  Sanyo Semiconductor Company Micro
+0ac4  Leco Corp.
+0ac5  I & C Corp.
+0ac6  Singing Electrons, Inc.
+0ac7  Panwest Corp.
+0ac8  Z-Star Microelectronics Corp.
+0ac9  Micro Solutions, Inc.
+0aca  OPEN Networks Ltd
+0acc  Koga Electronics Co.
+0acd  ID Tech
+0ace  ZyDAS
+0acf  Intoto, Inc.
+0ad0  Intellix Corp.
+0ad1  Remotec Technology, Ltd
+0ad2  Service & Quality Technology Co., Ltd
+0ada  Data Encryption Systems Ltd.
+0ae3  Allion Computer, Inc.
+0ae4  Taito Corp.
+0ae7  Neodym Systems, Inc.
+0ae8  System Support Co., Ltd
+0ae9  North Shore Circuit Design L.L.P.
+0aea  SciEssence, LLC
+0aeb  TTP Communications, Ltd
+0aec  Neodio Technologies Corp.
+0af0  Option
+0af6  Silver I Co., Ltd
+0af7  B2C2, Inc.
+0af9  Hama, Inc.
+0afa  DMC Co., Ltd.
+0afc  Zaptronix Ltd
+0afd  Tateno Dennou, Inc.
+0afe  Cummins Engine Co.
+0aff  Jump Zone Network Products, Inc.
+0b00  INGENICO
+0b05  ASUSTek Computer, Inc.
+0b0b  Datamax-O'Neil
+0b0c  Todos AB
+0b0d  ProjectLab
+0b0e  GN Netcom
+0b0f  AVID Technology
+0b10  Pcally
+0b11  I Tech Solutions Co., Ltd
+0b1e  Electronic Warfare Assoc., Inc. (EWA)
+0b1f  Insyde Software Corp.
+0b20  TransDimension, Inc.
+0b21  Yokogawa Electric Corp.
+0b22  Japan System Development Co., Ltd
+0b23  Pan-Asia Electronics Co., Ltd
+0b24  Link Evolution Corp.
+0b27  Ritek Corp.
+0b28  Kenwood Corp.
+0b2c  Village Center, Inc.
+0b30  PNY Technologies, Inc.
+0b33  Contour Design, Inc.
+0b37  Hitachi ULSI Systems Co., Ltd
+0b38  Gear Head
+	0003  Keyboard
+	0010  107-Key Keyboard
+0b39  Omnidirectional Control Technology, Inc.
+0b3a  IPaxess
+0b3b  Tekram Technology Co., Ltd
+0b3c  Olivetti Techcenter
+0b3e  Kikusui Electronics Corp.
+0b41  Hal Corp.
+0b43  Play.com, Inc.
+0b47  Sportbug.com, Inc.
+0b48  TechnoTrend AG
+0b49  ASCII Corp.
+0b4b  Pine Corp. Ltd.
+0b4d  Graphtec America, Inc.
+0b4e  Musical Electronics, Ltd
+0b50  Dumpries Co., Ltd
+0b51  Comfort Keyboard Co.
+	0020  Comfort Keyboard
+0b52  Colorado MicroDisplay, Inc.
+0b54  Sinbon Electronics Co., Ltd
+0b56  TYI Systems, Ltd
+0b57  Beijing HanwangTechnology Co., Ltd
+0b59  Lake Communications, Ltd
+0b5a  Corel Corp.
+0b5f  Green Electronics Co., Ltd
+0b60  Nsine, Ltd
+0b61  NEC Viewtechnology, Ltd
+0b62  Orange Micro, Inc.
+0b63  ADLink Technology, Inc.
+0b64  Wonderful Wire Cable Co., Ltd
+0b65  Expert Magnetics Corp.
+0b66  Cybiko Inc.
+0b67  Fairbanks Scales
+0b69  CacheVision
+0b6a  Maxim Integrated Products
+0b6f  Nagano Japan Radio Co., Ltd
+0b70  PortalPlayer, Inc.
+0b71  SHIN-EI Sangyo Co., Ltd
+0b72  Embedded Wireless Technology Co., Ltd
+0b73  Computone Corp.
+0b75  Roland DG Corp.
+0b79  Sunrise Telecom, Inc.
+0b7a  Zeevo, Inc.
+0b7b  Taiko Denki Co., Ltd
+0b7c  ITRAN Communications, Ltd
+0b7d  Astrodesign, Inc.
+0b81  id3 Technologies
+0b84  Rextron Technology, Inc.
+0b85  Elkat Electronics, Sdn., Bhd.
+0b86  Exputer Systems, Inc.
+0b87  Plus-One I & T, Inc.
+0b88  Sigma Koki Co., Ltd, Technology Center
+0b89  Advanced Digital Broadcast, Ltd
+0b8c  SMART Technologies Inc.
+0b95  ASIX Electronics Corp.
+0b96  Sewon Telecom
+0b97  O2 Micro, Inc.
+0b98  Playmates Toys, Inc.
+0b99  Audio International, Inc.
+0b9b  Dipl.-Ing. Stefan Kunde
+0b9d  Softprotec Co.
+0b9f  Chippo Technologies
+0baf  U.S. Robotics
+0bb0  Concord Camera Corp.
+0bb1  Infinilink Corp.
+0bb2  Ambit Microsystems Corp.
+0bb3  Ofuji Technology
+0bb4  HTC (High Tech Computer Corp.)
+0bb5  Murata Manufacturing Co., Ltd
+0bb6  Network Alchemy
+0bb7  Joytech Computer Co., Ltd
+0bb8  Hitachi Semiconductor and Devices Sales Co., Ltd
+0bb9  Eiger M&C Co., Ltd
+0bba  ZAccess Systems
+0bbb  General Meters Corp.
+0bbc  Assistive Technology, Inc.
+0bbd  System Connection, Inc.
+0bc0  Knilink Technology, Inc.
+0bc1  Fuw Yng Electronics Co., Ltd
+0bc2  Seagate RSS LLC
+0bc3  IPWireless, Inc.
+0bc4  Microcube Corp.
+0bc5  JCN Co., Ltd
+0bc6  ExWAY, Inc.
+0bc7  X10 Wireless Technology, Inc.
+0bc8  Telmax Communications
+0bc9  ECI Telecom, Ltd
+0bca  Startek Engineering, Inc.
+0bcb  Perfect Technic Enterprise Co., Ltd
+0bd7  Andrew Pargeter & Associates
+0bda  Realtek Semiconductor Corp.
+0bdb  Ericsson Business Mobile Networks BV
+0bdc  Y Media Corp.
+0bdd  Orange PCS
+0be2  Kanda Tsushin Kogyo Co., Ltd
+0be3  TOYO Corp.
+0be4  Elka International, Ltd
+0be5  DOME imaging systems, Inc.
+0be6  Dong Guan Humen Wonderful Wire Cable Factory
+0bed  MEI
+0bee  LTK Industries, Ltd
+0bef  Way2Call Communications
+0bf0  Pace Micro Technology PLC
+0bf1  Intracom S.A.
+0bf2  Konexx
+0bf6  Addonics Technologies, Inc.
+0bf7  Sunny Giken, Inc.
+0bf8  Fujitsu Siemens Computers
+	100c  Keyboard FSC KBPC PX
+	1017  Keyboard KB SCR
+0bfb  Grass Valley Group
+0bfd  Kvaser AB
+0c00  FireFly Mouse Mat
+0c04  MOTO Development Group, Inc.
+0c05  Appian Graphics
+0c06  Hasbro Games, Inc.
+0c07  Infinite Data Storage, Ltd
+0c08  Agate
+0c09  Comjet Information System
+0c0a  Highpoint Technologies, Inc.
+0c0b  Dura Micro, Inc. (Acomdata)
+0c12  Zeroplus
+0c15  Iris Graphics
+0c16  Gyration, Inc.
+0c17  Cyberboard A/S
+0c18  SynerTek Korea, Inc.
+0c19  cyberPIXIE, Inc.
+0c1a  Silicon Motion, Inc.
+0c1b  MIPS Technologies
+0c1c  Hang Zhou Silan Electronics Co., Ltd
+0c1f  Magicard
+0c22  Tally Printer Corp.
+0c23  Lernout + Hauspie
+0c24  Taiyo Yuden
+0c25  Sampo Corp.
+0c26  Prolific Technology Inc.
+0c27  RFIDeas, Inc
+0c2e  Metrologic Instruments
+	0204  Metrologic MS7120 Barcode Scanner (keyboard mode)
+0c30  Mutoh Industries Ltd
+0c35  Eagletron, Inc.
+0c36  E Ink Corp.
+0c37  e.Digital
+0c38  Der An Electric Wire & Cable Co., Ltd
+0c39  IFR
+0c3a  Furui Precise Component (Kunshan) Co., Ltd
+0c3b  Komatsu, Ltd
+0c3c  Radius Co., Ltd
+0c3d  Innocom, Inc.
+0c3e  Nextcell, Inc.
+0c44  Motorola iDEN
+0c45  Microdia
+	652f  Backlit Gaming Keyboard
+0c46  WaveRider Communications, Inc.
+0c4a  ALGE-TIMING GmbH
+0c4b  Reiner SCT Kartensysteme GmbH
+0c4c  Needham's Electronics
+0c52  Sealevel Systems, Inc.
+0c53  ViewPLUS, Inc.
+0c54  Glory, Ltd
+0c55  Spectrum Digital, Inc.
+0c56  Billion Bright, Ltd
+0c57  Imaginative Design Operation Co., Ltd
+0c58  Vidar Systems Corp.
+0c59  Dong Guan Shinko Wire Co., Ltd
+0c5a  TRS International Mfg., Inc.
+0c5e  Xytronix Research & Design
+0c60  Apogee Electronics Corp.
+0c62  Chant Sincere Co., Ltd
+0c63  Toko, Inc.
+0c64  Signality System Engineering Co., Ltd
+0c65  Eminence Enterprise Co., Ltd
+0c66  Rexon Electronics Corp.
+0c67  Concept Telecom, Ltd
+0c6a  ACS
+0c6c  JETI Technische Instrumente GmbH
+0c70  MCT Elektronikladen
+0c72  PEAK System
+0c74  Optronic Laboratories Inc.
+0c76  JMTek, LLC.
+0c77  Sipix Group, Ltd
+0c78  Detto Corp.
+0c79  NuConnex Technologies Pte., Ltd
+0c7a  Wing-Span Enterprise Co., Ltd
+0c86  NDA Technologies, Inc.
+0c88  Kyocera Wireless Corp.
+0c89  Honda Tsushin Kogyo Co., Ltd
+0c8a  Pathway Connectivity, Inc.
+0c8b  Wavefly Corp.
+0c8c  Coactive Networks
+0c8d  Tempo
+0c8e  Cesscom Co., Ltd
+0c8f  Applied Microsystems
+0c94  Cryptera
+0c98  Berkshire Products, Inc.
+0c99  Innochips Co., Ltd
+0c9a  Hanwool Robotics Corp.
+0c9b  Jobin Yvon, Inc.
+0c9c  Brand Innovators BV
+0c9d  SemTek
+0ca2  Zyfer
+0ca3  Sega Corp.
+0ca4  ST&T Instrument Corp.
+0ca5  BAE Systems Canada, Inc.
+0ca6  Castles Technology Co., Ltd
+0ca7  Information Systems Laboratories
+0caa  Allied Telesis KK.
+0cad  Motorola CGISS
+0cae  Ascom Business Systems, Ltd
+0caf  Buslink
+0cb0  Flying Pig Systems
+0cb1  Innovonics, Inc.
+0cb6  Celestix Networks, Pte., Ltd
+0cb7  Singatron Enterprise Co., Ltd
+0cb8  Opticis Co., Ltd
+0cba  Trust Electronic (Shanghai) Co., Ltd
+0cbb  Shanghai Darong Electronics Co., Ltd
+0cbc  Palmax Technology Co., Ltd
+0cbd  Pentel Co., Ltd (Electronics Equipment Div.)
+0cbe  Keryx Technologies, Inc.
+0cbf  Union Genius Computer Co., Ltd
+0cc0  Kuon Yi Industrial Corp.
+0cc1  Given Imaging, Ltd
+0cc2  Timex Corp.
+0cc3  Rimage Corp.
+0cc4  emsys GmbH
+0cc5  Sendo
+0cc6  Intermagic Corp.
+0cc8  Technotools Corp.
+0cc9  BroadMAX Technologies, Inc.
+0cca  Amphenol
+0ccb  SKNet Co., Ltd
+0ccc  Domex Technology Corp.
+0ccd  TerraTec Electronic GmbH
+0cd4  Bang Olufsen
+0cd5  LabJack Corporation
+0cd6  Scheidt & Bachmann
+0cd7  NewChip S.r.l.
+0cd8  JS Digitech, Inc.
+0cd9  Hitachi Shin Din Cable, Ltd
+0cde  Z-Com
+0ce5  Validation Technologies International
+0ce9  Pico Technology
+0cf1  e-Conn Electronic Co., Ltd
+0cf2  ENE Technology, Inc.
+0cf3  Qualcomm Atheros Communications
+0cf4  Fomtex Corp.
+0cf5  Cellink Co., Ltd
+0cf6  Compucable Corp.
+0cf7  ishoni Networks
+0cf8  Clarisys, Inc.
+0cf9  Central System Research Co., Ltd
+0cfa  Inviso, Inc.
+0cfc  Minolta-QMS, Inc.
+0cff  SAFA MEDIA Co., Ltd.
+0d06  telos EDV Systementwicklung GmbH
+0d08  UTStarcom
+0d0b  Contemporary Controls
+0d0c  Astron Electronics Co., Ltd
+0d0d  MKNet Corp.
+0d0e  Hybrid Networks, Inc.
+0d0f  Feng Shin Cable Co., Ltd
+0d10  Elastic Networks
+0d11  Maspro Denkoh Corp.
+0d12  Hansol Electronics, Inc.
+0d13  BMF Corp.
+0d14  Array Comm, Inc.
+0d15  OnStream b.v.
+0d16  Hi-Touch Imaging Technologies Co., Ltd
+0d17  NALTEC, Inc.
+0d18  coaXmedia
+0d19  Hank Connection Industrial Co., Ltd
+0d28  NXP
+0d2f  Andamiro
+0d32  Leo Hui Electric Wire & Cable Co., Ltd
+0d33  AirSpeak, Inc.
+0d34  Rearden Steel Technologies
+0d35  Dah Kun Co., Ltd
+0d3a  Posiflex Technologies, Inc.
+0d3c  Sri Cable Technology, Ltd
+0d3d  Tangtop Technology Co., Ltd
+	0001  HID Keyboard
+0d3e  Fitcom, inc.
+0d3f  MTS Systems Corp.
+0d40  Ascor, Inc.
+0d41  Ta Yun Terminals Industrial Co., Ltd
+0d42  Full Der Co., Ltd
+0d46  Kobil Systems GmbH
+0d48  Promethean Limited
+0d49  Maxtor
+0d4a  NF Corp.
+0d4b  Grape Systems, Inc.
+0d4c  Tedas AG
+0d4d  Coherent, Inc.
+0d4e  Agere Systems Netherland BV
+0d4f  EADS Airbus France
+0d50  Cleware GmbH
+0d51  Volex (Asia) Pte., Ltd
+0d53  HMI Co., Ltd
+0d54  Holon Corp.
+0d55  ASKA Technologies, Inc.
+0d56  AVLAB Technology, Inc.
+0d57  Solomon Microtech, Ltd
+0d59  TRC Simulators b.v.
+0d5c  SMC Networks, Inc.
+0d5e  Myacom, Ltd
+0d5f  CSI, Inc.
+0d60  IVL Technologies, Ltd
+0d61  Meilu Electronics (Shenzhen) Co., Ltd
+0d62  Darfon Electronics Corp.
+	0004  Keyboard
+	001b  Keyboard
+	001c  Benq X120 Internet Keyboard Pro
+	2021  AM805 Keyboard
+	2106  Dell L20U Multimedia Keyboard
+	910e  HP Business Slim Keyboard
+0d63  Fritz Gegauf AG
+0d64  DXG Technology Corp.
+0d65  KMJP Co., Ltd
+0d66  TMT
+0d67  Advanet, Inc.
+0d68  Super Link Electronics Co., Ltd
+0d69  NSI
+0d6a  Megapower International Corp.
+0d6b  And-Or Logic
+0d70  Try Computer Co., Ltd
+0d71  Hirakawa Hewtech Corp.
+0d72  Winmate Communication, Inc.
+0d73  Hit's Communications, Inc.
+0d76  MFP Korea, Inc.
+0d77  Power Sentry/Newpoint
+0d78  Japan Distributor Corp.
+0d7a  MARX Datentechnik GmbH
+0d7b  Wellco Technology Co., Ltd
+0d7c  Taiwan Line Tek Electronic Co., Ltd
+0d7d  Phison Electronics Corp.
+0d7e  American Computer & Digital Components
+0d7f  Essential Reality LLC
+0d80  H.R. Silvine Electronics, Inc.
+0d81  TechnoVision
+0d83  Think Outside, Inc.
+0d87  Dolby Laboratories Inc.
+0d89  Oz Software
+0d8a  King Jim Co., Ltd
+0d8b  Ascom Telecommunications, Ltd
+0d8c  C-Media Electronics, Inc.
+0d8d  Promotion & Display Technology, Ltd
+0d8e  Global Sun Technology, Inc.
+0d8f  Pitney Bowes
+0d90  Sure-Fire Electrical Corp.
+0d96  Skanhex Technology, Inc.
+0d97  Santa Barbara Instrument Group
+0d98  Mars Semiconductor Corp.
+0d99  Trazer Technologies, Inc.
+0d9a  RTX AS
+0d9b  Tat Shing Electrical Co.
+0d9c  Chee Chen Hi-Technology Co., Ltd
+0d9d  Sanwa Supply, Inc.
+0d9e  Avaya
+0d9f  Powercom Co., Ltd
+0da0  Danger Research
+0da1  Suzhou Peter's Precise Industrial Co., Ltd
+0da2  Land Instruments International, Ltd
+0da3  Nippon Electro-Sensory Devices Corp.
+0da4  Polar Electro Oy
+0da7  IOGear, Inc.
+0da8  softDSP Co., Ltd
+0dab  Cubig Group
+0dad  Westover Scientific
+0db0  Micro Star International
+0db1  Wen Te Electronics Co., Ltd
+0db2  Shian Hwi Plug Parts, Plastic Factory
+0db3  Tekram Technology Co., Ltd
+0db4  Chung Fu Chen Yeh Enterprise Corp.
+0db5  Access IS
+	013a  Barcode Module - Virtual Keyboard
+0db7  ELCON Systemtechnik
+0dba  Digidesign
+0dbc  A&D Medical
+0dbe  Jiuh Shiuh Precision Industry Co., Ltd
+0dbf  Jess-Link International
+0dc0  G7 Solutions (formerly Great Notions)
+0dc1  Tamagawa Seiki Co., Ltd
+0dc3  Athena Smartcard Solutions, Inc.
+0dc4  inXtron, Inc.
+0dc5  SDK Co., Ltd
+0dc6  Precision Squared Technology Corp.
+	2301  Wireless Touchpad Keyboard
+0dc7  First Cable Line, Inc.
+0dcd  NetworkFab Corp.
+0dd0  Access Solutions
+0dd1  Contek Electronics Co., Ltd
+0dd2  Power Quotient International Co., Ltd
+0dd3  MediaQ
+0dd4  Custom Engineering SPA
+0dd5  California Micro Devices
+0dd7  Kocom Co., Ltd
+0dd8  Netac Technology Co., Ltd
+0dd9  HighSpeed Surfing
+0dda  Integrated Circuit Solution, Inc.
+0ddb  Tamarack, Inc.
+0ddd  Datelink Technology Co., Ltd
+0dde  Ubicom, Inc.
+0de0  BD Consumer Healthcare
+0de7  USBmicro
+0dea  UTECH Electronic (D.G.) Co., Ltd.
+0ded  Novasonics
+0dee  Lifetime Memory Products
+0def  Full Rise Electronic Co., Ltd
+0df4  NET&SYS
+0df6  Sitecom Europe B.V.
+0df7  Mobile Action Technology, Inc.
+0dfa  Toyo Communication Equipment Co., Ltd
+0dfc  GeneralTouch Technology Co., Ltd
+0e03  Nippon Systemware Co., Ltd
+0e08  Winbest Technology Co., Ltd
+0e0b  Amigo Technology Inc.
+0e0c  Gesytec
+0e0d  PicoQuant GmbH
+0e0f  VMware, Inc.
+	0006  Virtual Keyboard
+0e16  JMTek, LLC
+0e17  Walex Electronic, Ltd
+0e1a  Unisys
+0e1b  Crewave
+0e1e  Green Hills Software
+0e20  Pegasus Technologies Ltd.
+0e21  Cowon Systems, Inc.
+0e22  Symbian Ltd.
+0e23  Liou Yuane Enterprise Co., Ltd
+0e25  VinChip Systems, Inc.
+0e26  J-Phone East Co., Ltd
+0e30  HeartMath LLC
+0e34  Micro Computer Control Corp.
+0e35  3Pea Technologies, Inc.
+0e36  TiePie engineering
+0e38  Stratitec, Inc.
+0e39  Smart Modular Technologies, Inc.
+0e3a  Neostar Technology Co., Ltd
+0e3b  Mansella, Ltd
+0e41  Line6, Inc.
+0e44  Sun-Riseful Technology Co., Ltd.
+0e48  Julia Corp., Ltd
+0e4a  Shenzhen Bao Hing Electric Wire & Cable Mfr. Co.
+0e4c  Radica Games, Ltd
+0e50  TechnoData Interware
+0e55  Speed Dragon Multimedia, Ltd
+0e56  Kingston Technology Company, Inc.
+0e5a  Active Co., Ltd
+0e5b  Union Power Information Industrial Co., Ltd
+0e5c  Bitland Information Technology Co., Ltd
+0e5d  Neltron Industrial Co., Ltd
+0e5e  Conwise Technology Co., Ltd.
+0e66  Hawking Technologies
+0e67  Fossil, Inc.
+0e6a  Megawin Technology Co., Ltd
+	02c0  Defender Gaming Keyboard
+	030b  Truly Ergonomic Computer Keyboard (Device Firmware Update mode)
+	030c  Truly Ergonomic Computer Keyboard
+	6001  GEMBIRD Flexible keyboard KB-109F-B-DE
+0e6f  Logic3
+0e70  Tokyo Electronic Industry Co., Ltd
+0e72  Hsi-Chin Electronics Co., Ltd
+0e75  TVS Electronics, Ltd
+0e79  Archos, Inc.
+0e7b  On-Tech Industry Co., Ltd
+0e7e  Gmate, Inc.
+0e82  Ching Tai Electric Wire & Cable Co., Ltd
+0e83  Shin An Wire & Cable Co.
+0e8c  Well Force Electronic Co., Ltd
+0e8d  MediaTek Inc.
+0e8f  GreenAsia Inc.
+	0021  Multimedia Keyboard Controller
+	0022  multimedia keyboard controller
+0e90  WiebeTech, LLC
+0e91  VTech Engineering Canada, Ltd
+0e92  C's Glory Enterprise Co., Ltd
+0e93  eM Technics Co., Ltd
+0e95  Future Technology Co., Ltd
+0e96  Aplux Communications, Ltd
+0e97  Fingerworks, Inc.
+	0908  Composite HID (Keyboard and Mouse)
+0e98  Advanced Analogic Technologies, Inc.
+0e99  Parallel Dice Co., Ltd
+0e9a  TA HSING Industries, Ltd
+0e9b  ADTEC Corp.
+0e9c  Streamzap, Inc.
+0e9f  Tamura Corp.
+0ea0  Ours Technology, Inc.
+0ea6  Nihon Computer Co., Ltd
+0ea7  MSL Enterprises Corp.
+0ea8  CenDyne, Inc.
+0ead  Humax Co., Ltd
+0eb0  NovaTech
+0eb1  WIS Technologies, Inc.
+0eb2  Y-S Electronic Co., Ltd
+0eb3  Saint Technology Corp.
+0eb7  Endor AG
+0eb8  Mettler Toledo
+0ebb  Thermo Fisher Scientific
+0ebe  VWeb Corp.
+0ebf  Omega Technology of Taiwan, Inc.
+0ec0  LHI Technology (China) Co., Ltd
+0ec1  Abit Computer Corp.
+0ec2  Sweetray Industrial, Ltd
+0ec3  Axell Co., Ltd
+0ec4  Ballracing Developments, Ltd
+0ec5  GT Information System Co., Ltd
+0ec6  InnoVISION Multimedia, Ltd
+0ec7  Theta Link Corp.
+0ecd  Lite-On IT Corp.
+0ece  TaiSol Electronics Co., Ltd
+0ecf  Phogenix Imaging, LLC
+0ed1  WinMaxGroup
+0ed2  Kyoto Micro Computer Co., Ltd
+0ed3  Wing-Tech Enterprise Co., Ltd
+0ed5  Fiberbyte
+0eda  Noriake Itron Corp.
+0edf  e-MDT Co., Ltd
+0ee0  Shima Seiki Mfg., Ltd
+0ee1  Sarotech Co., Ltd
+0ee2  AMI Semiconductor, Inc.
+0ee3  ComTrue Technology Corp.
+0ee4  Sunrich Technology, Ltd
+0eee  Digital Stream Technology, Inc.
+0eef  D-WAV Scientific Co., Ltd
+0ef0  Hitachi Cable, Ltd
+0ef1  Aichi Micro Intelligent Corp.
+0ef2  I/O Magic Corp.
+0ef3  Lynn Products, Inc.
+0ef4  DSI Datotech
+0ef5  PointChips
+0ef6  Yield Microelectronics Corp.
+0ef7  SM Tech Co., Ltd (Tulip)
+0efd  Oasis Semiconductor
+0efe  Wem Technology, Inc.
+0f03  Unitek UPS Systems
+0f06  Visual Frontier Enterprise Co., Ltd
+0f08  CSL Wire & Plug (Shen Zhen) Co.
+0f0c  CAS Corp.
+0f0d  Hori Co., Ltd
+0f0e  Energy Full Corp.
+0f0f  Silego Technology Inc
+0f11  LD Didactic GmbH
+0f12  Mars Engineering Corp.
+0f13  Acetek Technology Co., Ltd
+0f14  Ingenico
+0f18  Finger Lakes Instrumentation
+0f19  Oracom Co., Ltd
+0f1b  Onset Computer Corp.
+0f1c  Funai Electric Co., Ltd
+0f1d  Iwill Corp.
+0f21  IOI Technology Corp.
+0f22  Senior Industries, Inc.
+0f23  Leader Tech Manufacturer Co., Ltd
+0f24  Flex-P Industries, Snd., Bhd.
+0f2d  ViPower, Inc.
+0f2e  Geniality Maple Technology Co., Ltd
+0f2f  Priva Design Services
+0f30  Jess Technology Co., Ltd
+0f31  Chrysalis Development
+0f32  YFC-BonEagle Electric Co., Ltd
+0f37  Kokuyo Co., Ltd
+0f38  Nien-Yi Industrial Corp.
+0f39  TG3 Electronics
+	0404  Recreated ZX Spectrum Keyboard
+	0876  Keyboard [87 Francium Pro]
+	1086  DK2108SZ Keyboard [Ducky Zero]
+0f3d  Airprime, Incorporated
+0f41  RDC Semiconductor Co., Ltd
+0f42  Nital Consulting Services, Inc.
+0f44  Polhemus
+0f49  Evolis SA
+0f4b  St. John Technology Co., Ltd
+0f4c  WorldWide Cable Opto Corp.
+0f4d  Microtune, Inc.
+0f4e  Freedom Scientific
+0f52  Wing Key Electrical Co., Ltd
+0f53  Dongguan White Horse Cable Factory, Ltd
+0f54  Kawai Musical Instruments Mfg. Co., Ltd
+0f55  AmbiCom, Inc.
+0f5c  Prairiecomm, Inc.
+0f5d  NewAge International, LLC
+0f5f  Key Technology Corp.
+0f60  NTK, Ltd
+0f61  Varian, Inc.
+0f62  Acrox Technologies Co., Ltd
+0f63  LeapFrog Enterprises
+0f68  Kobe Steel, Ltd
+0f69  Dionex Corp.
+0f6a  Vibren Technologies, Inc.
+0f6e  INTELLIGENT SYSTEMS
+0f73  DFI
+0f78  Guntermann & Drunck GmbH
+0f7c  DQ Technology, Inc.
+0f7d  NetBotz, Inc.
+0f7e  Fluke Corp.
+0f88  VTech Holdings, Ltd
+0f8b  Yazaki Corp.
+0f8c  Young Generation International Corp.
+0f8d  Uniwill Computer Corp.
+0f8e  Kingnet Technology Co., Ltd
+0f8f  Soma Networks
+0f97  CviLux Corp.
+0f98  CyberBank Corp.
+0f9c  Hyun Won, Inc.
+0f9e  Lucent Technologies
+0fa3  Starconn Electronic Co., Ltd
+0fa4  ATL Technology
+0fa5  Sotec Co., Ltd
+0fa7  Epox Computer Co., Ltd
+0fa8  Logic Controls, Inc.
+0faf  Winpoint Electronic Corp.
+0fb0  Haurtian Wire & Cable Co., Ltd
+0fb1  Inclose Design, Inc.
+0fb2  Juan-Chern Industrial Co., Ltd
+0fb6  Heber Ltd
+0fb8  Wistron Corp.
+0fb9  AACom Corp.
+0fba  San Shing Electronics Co., Ltd
+0fbb  Bitwise Systems, Inc.
+0fc1  Mitac Internatinal Corp.
+0fc2  Plug and Jack Industrial, Inc.
+0fc5  Delcom Engineering
+0fc6  Dataplus Supplies, Inc.
+0fca  Research In Motion, Ltd.
+0fce  Sony Ericsson Mobile Communications AB
+0fcf  Dynastream Innovations, Inc.
+0fd0  Tulip Computers B.V.
+0fd1  Giant Electronics Ltd.
+0fd2  Seac Banche
+0fd4  Tenovis GmbH & Co., KG
+0fd5  Direct Access Technology, Inc.
+0fd9  Elgato Systems GmbH
+0fda  Quantec Networks GmbH
+0fdc  Micro Plus
+0fde  Oregon Scientific
+0fe0  Osterhout Design Group
+0fe2  Air Techniques
+0fe4  IN-Tech Electronics, Ltd
+0fe5  Greenconn (U.S.A.), Inc.
+0fe6  ICS Advent
+0fe9  DVICO
+0fea  United Computer Accessories
+0feb  CRS Electronic Co., Ltd
+0fec  UMC Electronics Co., Ltd
+0fed  Access Co., Ltd
+0fee  Xsido Corp.
+0fef  MJ Research, Inc.
+0ff6  Core Valley Co., Ltd
+0ff7  CHI SHING Computer Accessories Co., Ltd
+0ffc  Clavia DMI AB
+0ffd  EarlySense
+0fff  Aopen, Inc.
+1000  Speed Tech Corp.
+1001  Ritronics Components (S) Pte., Ltd
+1003  Sigma Corp.
+1004  LG Electronics, Inc.
+1005  Apacer Technology, Inc.
+1006  iRiver, Ltd.
+1009  Emuzed, Inc.
+100a  AV Chaseway, Ltd
+100b  Chou Chin Industrial Co., Ltd
+100d  Netopia, Inc.
+1010  Fukuda Denshi Co., Ltd
+1011  Mobile Media Tech.
+1012  SDKM Fibres, Wires & Cables Berhad
+1013  TST-Touchless Sensor Technology AG
+1014  Densitron Technologies PLC
+1015  Softronics Pty., Ltd
+1016  Xiamen Hung's Enterprise Co., Ltd
+1017  Speedy Industrial Supplies, Pte., Ltd
+1019  Elitegroup Computer Systems (ECS)
+1020  Labtec
+	0006  Wireless Keyboard
+	0106  Wireless Optical Mouse/Keyboard
+1022  Shinko Shoji Co., Ltd
+1025  Hyper-Paltek
+1026  Newly Corp.
+1027  Time Domain
+1028  Inovys Corp.
+1029  Atlantic Coast Telesys
+102a  Ramos Technology Co., Ltd
+102b  Infotronic America, Inc.
+102c  Etoms Electronics Corp.
+102d  Winic Corp.
+1031  Comax Technology, Inc.
+1032  C-One Technology Corp.
+1033  Nucam Corp.
+1038  SteelSeries ApS
+1039  devolo AG
+103a  PSA
+103d  Stanton
+1043  iCreate Technologies Corp.
+1044  Chu Yuen Enterprise Co., Ltd
+1046  Winbond Electronics Corp. [hex]
+1048  Targus Group International
+104b  Mylex / Buslogic
+104c  AMCO TEC International, Inc.
+104d  Newport Corporation
+104f  WB Electronics
+1050  Yubico.com
+1053  Immanuel Electronics Co., Ltd
+1054  BMS International Beheer N.V.
+1055  Complex Micro Interconnection Co., Ltd
+1056  Hsin Chen Ent Co., Ltd
+1057  ON Semiconductor
+1058  Western Digital Technologies, Inc.
+1059  Giesecke & Devrient GmbH
+105b  Foxconn International, Inc.
+105c  Hong Ji Electric Wire & Cable (Dongguan) Co., Ltd
+105d  Delkin Devices, Inc.
+105e  Valence Semiconductor Design, Ltd
+105f  Chin Shong Enterprise Co., Ltd
+1060  Easthome Industrial Co., Ltd
+1063  Motorola Electronics Taiwan, Ltd [hex]
+1065  CCYU Technology
+1068  Micropi Elettronica
+106a  Loyal Legend, Ltd
+106c  Curitel Communications, Inc.
+106d  San Chieh Manufacturing, Ltd
+106e  ConectL
+106f  Money Controls
+1076  GCT Semiconductor, Inc.
+107b  Gateway, Inc.
+107d  Arlec Australia, Ltd
+107e  Midoriya Electric Co., Ltd
+107f  KidzMouse, Inc.
+1082  Shin-Etsukaken Co., Ltd
+1083  Canon Electronics, Inc.
+1084  Pantech Co., Ltd
+108a  Chloride Power Protection
+108b  Grand-tek Technology Co., Ltd
+	0005  HID Keyboard/Mouse PS/2 Translator
+108c  Robert Bosch GmbH
+108e  Lotes Co., Ltd.
+1091  Numerik Jena
+1099  Surface Optics Corp.
+109a  DATASOFT Systems GmbH
+109b  Hisense
+109f  eSOL Co., Ltd
+10a0  Hirotech, Inc.
+10a3  Mitsubishi Materials Corp.
+10a9  SK Teletech Co., Ltd
+10aa  Cables To Go
+10ab  USI Co., Ltd
+10ac  Honeywell, Inc.
+10ae  Princeton Technology Corp.
+10af  Liebert Corp.
+10b5  Comodo (PLX?)
+10b8  DiBcom
+10bb  TM Technology, Inc.
+10bc  Dinging Technology Co., Ltd
+10bd  TMT Technology, Inc.
+10bf  SmartHome
+10c3  Universal Laser Systems, Inc.
+10c4  Silicon Labs
+10c5  Sanei Electric, Inc.
+10c6  Intec, Inc.
+10cb  Eratech
+10cc  GBM Connector Co., Ltd
+10cd  Kycon, Inc.
+10ce  Silicon Labs
+10cf  Velleman Components, Inc.
+10d1  Hottinger Baldwin Measurement
+10d2  RayComposer - R. Adams
+10d4  Man Boon Manufactory, Ltd
+10d5  Uni Class Technology Co., Ltd
+	5552  KVM Human Interface Composite Device (Keyboard/Mouse ports)
+10d6  Actions Semiconductor Co., Ltd
+10de  Authenex, Inc.
+10df  In-Win Development, Inc.
+10e0  Post-Op Video, Inc.
+10e1  CablePlus, Ltd
+10e2  Nada Electronics, Ltd
+10ec  Vast Technologies, Inc.
+10f0  Nexio Co., Ltd
+10f1  Importek
+10f5  Turtle Beach
+10f8  Cesys GmbH
+10fb  Pictos Technologies, Inc.
+10fd  Anubis Electronics, Ltd
+10fe  Thrane & Thrane
+1100  VirTouch, Ltd
+1101  EasyPass Industrial Co., Ltd
+1108  Brightcom Technologies, Ltd
+110a  Moxa Technologies Co., Ltd.
+1110  Analog Devices Canada, Ltd (Allied Telesyn)
+1111  Pandora International Ltd.
+1112  YM ELECTRIC CO., Ltd
+1113  Medion AG
+111e  VSO Electric Co., Ltd
+112a  RedRat
+112e  Master Hill Electric Wire and Cable Co., Ltd
+112f  Cellon International, Inc.
+1130  Tenx Technology, Inc.
+1131  Integrated System Solution Corp.
+1132  Toshiba Corp., Digital Media Equipment [hex]
+1136  CTS Electronincs
+113c  Arin Tech Co., Ltd
+113d  Mapower Electronics Co., Ltd
+113f  Integrated Biometrics, LLC
+1141  V One Multimedia, Pte., Ltd
+1142  CyberScan Technologies, Inc.
+1145  Japan Radio Company
+1146  Shimane SANYO Electric Co., Ltd.
+1147  Ever Great Electric Wire and Cable Co., Ltd
+114b  Sphairon Access Systems GmbH
+114c  Tinius Olsen Testing Machine Co., Inc.
+114d  Alpha Imaging Technology Corp.
+114f  Wavecom
+115b  Salix Technology Co., Ltd.
+1162  Secugen Corp.
+1163  DeLorme Publishing, Inc.
+1164  YUAN High-Tech Development Co., Ltd
+1165  Telson Electronics Co., Ltd
+1166  Bantam Interactive Technologies
+1167  Salient Systems Corp.
+1168  BizConn International Corp.
+116e  Gigastorage Corp.
+116f  Silicon 10 Technology Corp.
+1175  Shengyih Steel Mold Co., Ltd
+117d  Santa Electronic, Inc.
+117e  JNC, Inc.
+1182  Venture Corp., Ltd
+1183  Compaq Computer Corp. [hex] (Digital Dream ??)
+1184  Kyocera Elco Corp.
+1188  Bloomberg L.P.
+1189  Acer Communications & Multimedia
+118f  You Yang Technology Co., Ltd
+1190  Tripace
+1191  Loyalty Founder Enterprise Co., Ltd
+1196  Yankee Robotics, LLC
+1197  Technoimagia Co., Ltd
+1198  StarShine Technology Corp.
+1199  Sierra Wireless, Inc.
+119a  ZHAN QI Technology Co., Ltd
+119b  ruwido austria GmbH
+	0400  Infrared Keyboard V2.01
+11a0  Chipcon AS
+11a3  Technovas Co., Ltd
+11aa  GlobalMedia Group, LLC
+11ab  Exito Electronics Co., Ltd
+11ac  Nike
+11b0  ATECH FLASH TECHNOLOGY
+11be  R&D International NV
+11c0  Betop
+11c5  Inmax
+11c9  Nacon
+11ca  VeriFone Inc
+11db  Topfield Co., Ltd.
+11e6  K.I. Technology Co. Ltd.
+11f5  Siemens AG
+11f6  Prolific
+11f7  Alcatel (?)
+1203  TSC Auto ID Technology Co., Ltd
+1209  Generic
+	0cbd  Andrzej Szombierski kuku.eu.org keyboard
+	2201  Dygma Shortcut Keyboard
+	2300  Keyboardio Model 01 Bootloader
+	2301  Keyboardio Model 01
+	2328  K.T.E.C. Keyboard Device
+	345c  kinX Keyboard Controller
+	a1e5  Atreus Keyboards Atreus Keyboard
+	bb00  keyplus split keyboard firmware
+	bb02  keyplus nRF24 wireless keyboard dongle
+120e  Hudson Soft Co., Ltd
+120f  Magellan
+1210  DigiTech
+121e  Jungsoft Co., Ltd
+121f  Panini S.p.A.
+1220  TC Electronic
+1221  Unknown manufacturer
+1222  TiPro
+	faca  programmable keyboard
+1223  SKYCABLE ENTERPRISE. CO., LTD.
+1228  Datapaq Limited
+1230  Chipidea-Microelectronica, S.A.
+1233  Denver Electronics
+1234  Brain Actuated Technologies
+1235  Focusrite-Novation
+	0012  Nocturn Keyboard
+1241  Belkin
+	0504  Wireless Trackball Keyboard
+	1503  Keyboard
+	1603  Keyboard
+	f767  Keyboard
+1243  Holtek Semiconductor, Inc.
+	e000  Unique NFC/RFID reader (keyboard emulation)
+124a  AirVast
+124b  Nyko (Honey Bee)
+124c  MXI - Memory Experts International, Inc.
+125c  Apogee Inc.
+125d  JMicron
+125f  A-DATA Technology Co., Ltd.
+1260  Standard Microsystems Corp.
+1264  Covidien Energy-based Devices
+1266  Pirelli Broadband Solutions
+1267  Logic3 / SpectraVideo plc
+	0103  G-720 Keyboard
+126c  Aristocrat Technologies
+126d  Bel Stewart
+126e  Strobe Data, Inc.
+126f  TwinMOS
+1274  Ensoniq
+1275  Xaxero Marine Software Engineering, Ltd.
+1278  Starlight Xpress
+1283  zebris Medical GmbH
+1286  Marvell Semiconductor, Inc.
+1291  Qualcomm Flarion Technologies, Inc. / Leadtek Research, Inc.
+1292  Innomedia
+1293  Belkin Components [hex]
+	2101  104-key keyboard
+1294  RISO KAGAKU CORP.
+1297  DekTec
+129b  CyberTAN Technology
+12a7  Trendchip Technologies Corp.
+12ab  Honey Bee Electronic International Ltd.
+12b8  Zhejiang Xinya Electronic Technology Co., Ltd.
+12b9  E28
+12ba  Licensed by Sony Computer Entertainment America
+12bd  Gembird
+12c4  Autocue Group Ltd
+12cf  DEXIN
+12d1  Huawei Technologies Co., Ltd.
+12d2  LINE TECH INDUSTRIAL CO., LTD.
+12d3  LINAK
+12d6  EMS Dr. Thomas Wuensche
+12d7  BETTER WIRE FACTORY CO., LTD.
+12d8  Araneus Information Systems Oy
+12e6  Waldorf Music GmbH
+12ef  Tapwave, Inc.
+12f2  ViewPlus Technologies, Inc.
+12f5  Dynamic System Electronics Corp.
+12f7  Memorex Products, Inc.
+12fd  AIN Comm. Technology Co., Ltd
+12ff  Fascinating Electronics, Inc.
+1306  FM20 Barcode Scanner
+1307  Transcend Information, Inc.
+1308  Shuttle, Inc.
+1310  Roper
+1312  ICS Electronics
+1313  ThorLabs
+131d  Natural Point
+1325  ams AG
+132a  Envara Inc.
+132b  Konica Minolta
+133e  Kemper Digital GmbH
+1342  Mobility
+	0201  EasiDock 200 Keyboard and Mouse Port
+1343  Citizen Systems
+1345  Sino Lite Technology Corp.
+1347  Moravian Instruments
+1348  Katsuragawa Electric Co., Ltd.
+134c  PanJit International Inc.
+134e  Digby's Bitpile, Inc. DBA D Bit
+1357  P&E Microcomputer Systems
+135e  Insta GmbH
+135f  Control Development Inc.
+1366  SEGGER
+136b  STEC
+136e  Andor Technology Ltd.
+1370  Swissbit
+1371  CNet Technology Inc.
+1376  Vimtron Electronics Co., Ltd.
+1377  Sennheiser electronic GmbH & Co. KG
+137b  SCAPS GmbH
+137c  YASKAWA ELECTRIC CORP.
+1385  Netgear, Inc
+138a  Validity Sensors, Inc.
+138e  Jungo LTD
+1390  TOMTOM B.V.
+1391  IdealTEK, Inc.
+1395  Sennheiser Communications
+1397  BEHRINGER International GmbH
+1398  Q-tec
+13ad  Baltech
+13b0  PerkinElmer Optoelectronics
+13b1  Linksys
+13b2  Alesis
+13b3  Nippon Dics Co., Ltd.
+13ba  PCPlay
+	0017  PS/2 Keyboard+Mouse Adapter
+13be  Ricoh Printing Systems, Ltd.
+13ca  JyeTai Precision Industrial Co., Ltd.
+13cf  Wisair Ltd.
+13d0  Techsan Electronics Co., Ltd.
+13d1  A-Max Technology Macao Commercial Offshore Co. Ltd.
+13d2  Shark Multimedia
+13d3  IMC Networks
+13d7  Guidance Software, Inc.
+13dc  ALEREON, INC.
+13dd  i.Tech Dynamic Limited
+13e1  Kaibo Wire & Cable (Shenzhen) Co., Ltd.
+13e5  Rane
+13e6  TechnoScope Co., Ltd.
+13ea  Hengstler
+13ec  Zydacron
+13ee  MosArt
+13fd  Initio Corporation
+13fe  Kingston Technology Company Inc.
+1400  Axxion Group Corp.
+1402  Bowe Bell & Howell
+1403  Sitronix
+1404  Fundamental Software, Inc.
+1409  IDS Imaging Development Systems GmbH
+140e  Telechips, Inc.
+1410  Novatel Wireless
+1415  Nam Tai E&E Products Ltd. or OmniVision Technologies, Inc.
+1419  ABILITY ENTERPRISE CO., LTD.
+1421  Sensor Technology
+1424  Posnet Polska S.A.
+1429  Vega Technologies Industrial (Austria) Co.
+142a  Thales E-Transactions
+142b  Arbiter Systems, Inc.
+1430  RedOctane
+1431  Pertech Resources, Inc.
+1435  Wistron NeWeb
+1436  Denali Software, Inc.
+143c  Altek Corporation
+1443  Digilent
+1446  X.J.GROUP
+1451  Force Dimension
+1452  Dai Nippon Printing, Inc
+1453  Radio Shack
+1456  Extending Wire & Cable Co., Ltd.
+1457  First International Computer, Inc.
+145f  Trust
+	0176  Isla Keyboard
+	01e5  Keyboard [GXT 830]
+1460  Tatung Co.
+1461  Staccato Communications
+1462  Micro Star International
+146b  BigBen Interactive
+1472  Huawei-3Com
+147a  Formosa Industrial Computing, Inc.
+147e  Upek
+147f  Hama GmbH & Co., KG
+1482  Vaillant
+1484  Elsa AG [hex]
+1485  Silicom
+1487  DSP Group, Ltd.
+148e  EVATRONIX SA
+148f  Ralink Technology, Corp.
+1491  Futronic Technology Co. Ltd.
+1493  Suunto
+1497  Panstrong Company Ltd.
+1498  Microtek International Inc.
+149a  Imagination Technologies
+14aa  WideView Technology Inc.
+14ad  CTK Corporation
+14ae  Printronix Inc.
+14af  ATP Electronics Inc.
+14b0  StarTech.com Ltd.
+14b2  Ralink Technology, Corp.
+14c0  Rockwell Automation, Inc.
+14c2  Gemlight Computer, Ltd
+14c8  Zytronic
+14cd  Super Top
+14d8  JAMER INDUSTRIES CO., LTD.
+14dd  Raritan Computer, Inc.
+14e0  WiNRADiO Communications
+14e1  Dialogue Technology Corp.
+14e5  SAIN Information & Communications Co., Ltd.
+14ea  Planex Communications
+14ed  Shure Inc.
+14f7  TechniSat Digital GmbH
+1500  Ellisys
+1501  Pine-Tum Enterprise Co., Ltd.
+1504  Bixolon CO LTD
+1509  First International Computer, Inc.
+1513  medMobile
+1514  Actel
+1516  CompUSA
+1518  Cheshire Engineering Corp.
+1519  Comneon
+151f  Opal Kelly Incorporated
+1520  Bitwire Corp.
+1524  ENE Technology Inc
+1527  Silicon Portals
+1529  UBIQUAM Co., Ltd.
+152a  Thesycon Systemsoftware & Consulting GmbH
+152b  MIR Srl
+152d  JMicron Technology Corp. / JMicron USA Technology Corp.
+152e  LG (HLDS)
+1532  Razer USA, Ltd
+	0023  Gaming Keyboard [TRON]
+	002b  Gaming Keyboard [Star Wars: The Old Republic]
+	004a  RZ03-0133 Gaming Lapboard, Keyboard Mouse Combo, Dongle [Turret Dongle]
+	0102  Tarantula Keyboard
+	0103  Gaming Keyboard [Reclusa]
+	0105  Gaming Keyboard [ProType]
+	0106  Gaming Keyboard [ProType]
+	0109  Lycosa Keyboard
+	010b  Gaming Keyboard [Arctosa]
+	0118  RZ03-0080, Gaming Keyboard [Deathstalker Essential]
+	0119  Gaming Keyboard [Lycosa]
+	011e  Gaming Keyboard Dock [Edge Keyboard Dock]
+	0200  Gaming Keyboard [Reclusa]
+	020d  Cynosa Pro keyboard (Cynosa Pro Bundle)
+	021b  Gaming Keyboard [BlackWidow X Tournament Edition]
+	0221  RZ03-0203 Gaming Keyboard [BlackWidow Chroma V2]
+	023f  RZ03-0274 Gaming Keyboard [Cynosa Lite]
+	0904  R201-0282 Gaming Keyboard, Mouse Combination [Turret For Xbox One]
+153b  TerraTec Electronic GmbH
+1546  U-Blox AG
+1547  SG Intec Ltd & Co KG
+154a  Celectronic GmbH
+154b  PNY
+154d  ConnectCounty Holdings Berhad
+154e  D&M Holdings, Inc. (Denon/Marantz)
+154f  SNBC CO., Ltd
+1554  Prolink Microsystems Corp.
+1557  OQO
+1568  Sunf Pu Technology Co., Ltd
+156f  Quantum Corporation
+1570  ALLTOP TECHNOLOGY CO., LTD.
+157b  Ketron SRL
+157e  TRENDnet
+1582  Fiberline
+1587  SMA Technologie AG
+158d  Oakley Inc.
+158e  JDS Uniphase Corporation (JDSU)
+1598  Kunshan Guoji Electronics Co., Ltd.
+15a2  Freescale Semiconductor, Inc.
+15a4  Afatech Technologies, Inc.
+15a8  Teams Power Limited
+15a9  Gemtek
+15aa  Gearway Electronics (Dong Guan) Co., Ltd.
+15ad  VMware Inc.
+15ba  Olimex Ltd.
+	003c  TERES Keyboard+Touchpad
+15c0  XL Imaging
+15c2  SoundGraph Inc.
+15c5  Advance Multimedia Internet Technology Inc. (AMIT)
+15c6  Laboratoires MXM
+15c8  KTF Technologies
+15c9  D-Box Technologies
+15ca  Textech International Ltd.
+15d5  Coulomb Electronics Ltd.
+15d9  Trust International B.V.
+15dc  Hynix Semiconductor Inc.
+15e0  Seong Ji Industrial Co., Ltd.
+15e1  RSA
+15e4  Numark
+15e8  SohoWare
+15e9  Pacific Digital Corp.
+15ec  Belcarra Technologies Corp.
+15f4  HanfTek
+1604  Tascam
+1605  ACCES I/O Products, Inc.
+1606  Umax
+1608  Inside Out Networks [hex]
+160a  VIA Technologies, Inc.
+160e  INRO
+1614  Amoi Electronics
+1617  Sony Corp.
+1619  L & K Precision Technology Co., Ltd.
+161c  Digitech Systems
+1621  Wionics Research
+1628  Stonestreet One, Inc.
+162a  Airgo Networks Inc.
+162f  WiQuest Communications, Inc.
+1630  2Wire, Inc.
+1631  Good Way Technology
+1633  AIM GmbH
+1645  Entrega [hex]
+1649  SofTec Microsystems
+164a  ChipX
+164c  Matrix Vision GmbH
+1657  Struck Innovative Systeme GmbH
+165b  Frontier Design Group
+165c  Kondo Kagaku
+1660  Creatix Polymedia GmbH
+1667  GIGA-TMS INC.
+	0005  PCR330A RFID Reader (125 kHz, keyboard emulation)
+1668  Actiontec Electronics, Inc. [hex]
+1669  PiKRON Ltd. [hex]
+166a  Clipsal
+1677  China Huada Integrated Circuit Design (Group) Co., Ltd. (CIDC Group)
+1679  Total Phase
+167b  Pure Digital Technologies, Inc.
+1680  Golden Bridge Electech Inc.
+1681  Prevo Technologies, Inc.
+1682  Maxwise Production Enterprise Ltd.
+1684  Godspeed Computer Corp.
+1685  Delock
+1686  ZOOM Corporation
+1687  Kingmax Digital Inc.
+1688  Saab AB
+1689  Razer USA, Ltd
+168c  Atheros Communications
+1690  Askey Computer Corp. [hex]
+1696  Hitachi Video and Information System, Inc.
+1697  VTec Test, Inc.
+16a5  Shenzhen Zhengerya Cable Co., Ltd.
+16a6  Unigraf
+16ab  Global Sun Technology
+16ac  Dongguan ChingLung Wire & Cable Co., Ltd.
+16b4  iStation
+16b5  Persentec, Inc.
+16c0  Van Ooijen Technische Informatica
+	047c  Teensy Keyboard
+	047d  Teensy Keyboard+Debug
+	0482  Teensyduino Keyboard+Mouse+Joystick
+	0487  Teensyduino Serial+Keyboard+Mouse+Joystick
+	05df  HID device except mice, keyboards, and joysticks
+	27d9  HID device except mice, keyboards, and joysticks
+	27db  Keyboard
+16ca  Wireless Cables, Inc.
+16cc  silex technology, Inc.
+16d0  MCS
+16d1  Suprema Inc.
+16d3  Frontline Test Equipment, Inc.
+16d5  AnyDATA Corporation
+16d6  JABLOCOM s.r.o.
+16d8  CMOTECH Co., Ltd.
+16dc  Wiener, Plein & Baus
+16de  Telemecanique
+16df  King Billion Electronics Co., Ltd.
+16f0  GN ReSound A/S
+16f5  Futurelogic Inc.
+1702  FDI-MATELEC
+1706  BlueView Technologies, Inc.
+1707  ARTIMI
+170b  Swissonic
+170d  Avnera
+1711  Leica Microsystems
+1724  Meyer Instruments (MIS)
+1725  Vitesse Semiconductor
+1726  Axesstel, Inc.
+172f  Waltop International Corp.
+1733  Cellink Technology Co., Ltd
+1736  CANON IMAGING SYSTEM TECHNOLOGIES INC.
+1737  802.11g Adapter [Linksys WUSB54GC v3]
+173a  Roche
+173d  QSENN
+	0002  GP-K7000 keyboard
+1740  Senao
+1743  General Atomics
+1748  MQP Electronics
+174c  ASMedia Technology Inc.
+174f  Syntek
+1753  GERTEC Telecomunicacoes Ltda.
+1756  ENENSYS Technologies
+1759  LucidPort Technology, Inc.
+1761  ASUSTek Computer, Inc. (wrong ID)
+1770  MSI
+	ff00  steel series rgb keyboard
+1772  System Level Solutions, Inc.
+1776  Arowana
+1777  Microscan Systems, Inc.
+177f  Sweex
+1781  Multiple Vendors
+1782  Spreadtrum Communications Inc.
+1784  TopSeed Technology Corp.
+1787  ATI AIB
+1788  ShenZhen Litkconn Technology Co., Ltd.
+178e  ASUSTek Computer, Inc. (wrong ID)
+1796  Printrex, Inc.
+1797  JALCO CO., LTD.
+1799  Thales Norway A/S
+179d  Ricavision International, Inc.
+17a0  Samson Technologies Corp.
+17a4  Concept2
+17a5  Advanced Connection Technology Inc.
+17a7  MICOMSOFT CO., LTD.
+17a8  Kamstrup A/S
+17b3  Grey Innovation
+17b5  Lunatone
+17ba  SAURIS GmbH
+17c3  Singim International Corp.
+17cc  Native Instruments
+17cf  Hip Hing Cable & Plug Mfy. Ltd.
+17d0  Sanford L.P.
+17d3  Korea Techtron Co., Ltd.
+17e9  DisplayLink
+17eb  Cornice, Inc.
+17ef  Lenovo
+	6007  Smartcard Keyboard
+	6009  ThinkPad Keyboard with TrackPoint
+	6014  Mini Wireless Keyboard N5901
+	6022  Ultraslim Plus Wireless Keyboard and Mouse
+	602d  Black Silk Keyboard
+	6032  Wireless Dongle for Keyboard and Mouse
+	6047  ThinkPad Compact Keyboard with TrackPoint
+	609b  Professional Wireless Keyboard and Mouse Combo
+	609c  Professional Wireless Keyboard
+	b000  Virtual Keyboard and Mouse
+	b003  Virtual Keyboard and Mouse / Mass Storage
+17f4  WaveSense
+17f5  K.K. Rocky
+17f6  Unicomp, Inc.
+	0709  Model M Keyboard
+	0822  Ruffian 6 Keyboard v3 [Model M]
+1809  Advantech
+1822  Twinhan
+1831  Gwo Jinn Industries Co., Ltd.
+1832  Huizhou Shenghua Industrial Co., Ltd.
+183d  VIVOphone
+1843  Vaisala
+1849  ASRock Incorporation
+184f  K2L GmbH
+1852  GYROCOM C&C Co., LTD
+1854  Memory Devices Ltd.
+185b  Compro
+1861  Tech Technology Industrial Company
+1862  Teridian Semiconductor Corp.
+1870  Nexio Co., Ltd
+1871  Aveo Technology Corp.
+1873  Navilock
+187c  Alienware Corporation
+187f  Siano Mobile Silicon
+1892  Vast Technologies, Inc.
+1894  Topseed
+1897  Evertop Wire Cable Co.
+189f  3Shape A/S
+18a4  CSSN
+18a5  Verbatim, Ltd
+18b1  Petalynx
+18b4  e3C Technologies
+18b6  Mikkon Technology Limited
+18b7  Zotek Electronic Co., Ltd.
+18c5  AMIT Technology, Inc.
+18cd  Ecamm
+18d1  Google Inc.
+18d5  Starline International Group Limited
+18d9  Kaba
+18dc  LKC Technologies, Inc.
+18dd  Planon System Solutions Inc.
+18e3  Fitipower Integrated Technology Inc
+18e8  Qcom
+18ea  Matrox Graphics, Inc.
+18ec  Arkmicro Technologies Inc.
+18ef  ELV Elektronik AG
+18f8  [Maxxter]
+18fb  Scriptel Corporation
+18fd  FineArch Inc.
+1901  GE Healthcare
+1908  GEMBIRD
+190d  Motorola GSG
+1914  Alco Digital Devices Limited
+1915  Nordic Semiconductor ASA
+191c  Innovative Technology LTD
+1923  FitLinxx
+1926  NextWindow
+1928  Proceq SA
+192f  Avago Technologies, Pte.
+1930  Shenzhen Xianhe Technology Co., Ltd.
+1931  Ningbo Broad Telecommunication Co., Ltd.
+1934  Feature Integration Technology Inc. (Fintek)
+1935  Elektron Music Machines
+1938  Meinberg Funkuhren GmbH & Co. KG
+1941  Dream Link
+1943  Sensoray Co., Inc.
+1949  Lab126, Inc.
+194f  PreSonus Audio Electronics, Inc.
+1951  Hyperstone AG
+1953  Ironkey Inc.
+1954  Radiient Technologies
+195d  Itron Technology iONE
+	7777  Scorpius wireless keyboard
+1965  Uniden Corporation
+1967  CASIO HITACHI Mobile Communications Co., Ltd.
+196b  Wispro Technology Inc.
+1970  Dane-Elec Corp. USA
+1975  Dongguan Guneetal Wire & Cable Co., Ltd.
+1976  Chipsbrand Microelectronics (HK) Co., Ltd.
+1977  T-Logic
+197d  Leuze electronic
+1989  Nuconn Technology Corp.
+198f  Beceem Communications Inc.
+1990  Acron Precision Industrial Co., Ltd.
+1995  Trillium Technology Pty. Ltd.
+1996  PixeLINK
+199b  MicroStrain, Inc.
+199e  The Imaging Source Europe GmbH
+199f  Benica Corporation
+19a8  Biforst Technology Inc.
+19ab  Bodelin
+19af  S Life
+19b2  Batronix
+19b4  Celestron
+19b5  B & W Group
+19b6  Infotech Logistic, LLC
+19b9  Data Robotics
+19c2  Futuba
+19ca  Mindtribe
+19cf  Parrot SA
+19d2  ZTE WCDMA Technologies MSM
+19db  KFI Printers
+19e1  WeiDuan Electronic Accessory (S.Z.) Co., Ltd.
+19e8  Industrial Technology Research Institute
+19ef  Pak Heng Technology (Shenzhen) Co., Ltd.
+19f7  RODE Microphones
+19fa  Gampaq Co.Ltd
+19ff  Dynex
+1a08  Bellwood International, Inc.
+1a0a  USB-IF non-workshop
+1a12  KES Co., Ltd.
+1a1d  Veho
+1a25  Amphenol East Asia Ltd.
+1a2a  Seagate Branded Solutions
+1a2c  China Resource Semico Co., Ltd
+	0021  Keyboard
+	0024  Multimedia Keyboard
+1a32  Quanta Microsystems, Inc.
+1a34  ACRUX
+1a36  Biwin Technology Ltd.
+1a40  Terminus Technology Inc.
+1a41  Action Electronics Co., Ltd.
+1a44  VASCO Data Security International
+1a4a  Silicon Image
+1a4b  SafeBoot International B.V.
+1a5a  Tandberg Data
+1a61  Abbott Diabetes Care
+1a6a  Spansion Inc.
+1a6d  SamYoung Electronics Co., Ltd
+1a6e  Global Unichip Corp.
+1a6f  Sagem Orga GmbH
+1a72  Physik Instrumente
+1a79  Bayer Health Care LLC
+1a7b  Lumberg Connect  GmbH & Co. KG
+1a7c  Evoluent
+1a81  Holtek Semiconductor, Inc.
+1a86  QinHeng Electronics
+1a89  Dynalith Systems Co., Ltd.
+1a8b  SGS Taiwan Ltd.
+1a8d  BandRich, Inc.
+1a98  Leica Camera AG
+1aa4  Data Drive Thru, Inc.
+1aa5  UBeacon Technologies, Inc.
+1aa6  eFortune Technology Corp.
+1aad  KeeTouch
+1ab1  Rigol Technologies
+1acb  Salcomp Plc
+1acc  Midiplus Co, Ltd.
+1ad1  Desay Wire Co., Ltd.
+1ad4  APS
+1adb  SEL C662 Serial Cable
+1ae4  ic-design Reinhard Gottinger GmbH
+1ae7  X-TENSIONS
+1aed  High Top Precision Electronic Co., Ltd.
+1aef  Conntech Electronic (Suzhou) Corporation
+1af1  Connect One Ltd.
+1afe  A. Eberle GmbH & Co. KG
+1b04  Meilhaus Electronic GmbH
+1b0e  BLUTRONICS S.r.l.
+1b1c  Corsair
+	0a60  Vengeance K60 Keyboard
+	1b04  Raptor K50 Keyboard
+	1b07  Vengeance K65 Gaming Keyboard
+	1b08  Vengeance K95 Keyboard
+	1b09  Vengeance K70R keyboard
+	1b11  K95 RGB Mechanical Gaming Keyboard
+	1b13  Vengeance K70RGB keyboard
+1b1f  eQ-3 Entwicklung GmbH
+1b20  MStar Semiconductor, Inc.
+1b22  WiLinx Corp.
+1b26  Cellex Power Products, Inc.
+1b27  Current Electronics Inc.
+1b28  NAVIsis Inc.
+1b32  Ugobe Life Forms, Inc.
+1b36  ViXS Systems, Inc.
+1b3b  iPassion Technology Inc.
+1b3f  Generalplus Technology Inc.
+1b47  Energizer Holdings, Inc.
+1b48  Plastron Precision Co., Ltd.
+1b52  ARH Inc.
+1b59  K.S. Terminals Inc.
+1b5a  Chao Zhou Kai Yuan Electric Co., Ltd.
+1b65  The Hong Kong Standards and Testing Centre Ltd.
+1b71  Fushicai
+1b72  ATERGI TECHNOLOGY CO., LTD.
+1b73  Fresco Logic
+1b75  Ovislink Corp.
+1b76  Legend Silicon Corp.
+1b80  Afatech
+1b86  Dongguan Guanshang Electronics Co., Ltd.
+1b88  ShenMing Electron (Dong Guan) Co., Ltd.
+1b8c  Altium Limited
+1b8d  e-MOVE Technology Co., Ltd.
+1b8e  Amlogic, Inc.
+1b8f  MA LABS, Inc.
+1b96  N-Trig
+1b98  YMax Communications Corp.
+1b99  Shenzhen Yuanchuan Electronic
+1ba1  JINQ CHERN ENTERPRISE CO., LTD.
+1ba2  Lite Metals & Plastic (Shenzhen) Co., Ltd.
+1ba4  Ember Corporation
+1ba6  Abilis Systems
+1ba8  China Telecommunication Technology Labs
+1bad  Harmonix Music
+1bae  Vuzix Corporation
+1bbb  T & A Mobile Phones
+1bc4  Ford Motor Co.
+1bc5  AVIXE Technology (China) Ltd.
+1bc7  Telit Wireless Solutions
+1bce  Contac Cable Industrial Limited
+1bcf  Sunplus Innovation Technology Inc.
+	05c5  SPRF2413A [2.4GHz Wireless Keyboard/Mouse Receiver]
+	05cf  Micro keyboard & mouse receiver
+1bd0  Hangzhou Riyue Electronic Co., Ltd.
+1bd5  BG Systems, Inc.
+1bde  P-TWO INDUSTRIES, INC.
+1bef  Shenzhen Tongyuan Network-Communication Cables Co., Ltd
+1bf0  RealVision Inc.
+1bf5  Extranet Systems Inc.
+1bf6  Orient Semiconductor Electronics, Ltd.
+1bfd  TouchPack
+1c02  Kreton Corporation
+1c04  QNAP System Inc.
+1c0c  Ionics EMS, Inc.
+1c0d  Relm Wireless
+1c10  Lanterra Industrial Co., Ltd.
+1c13  ALECTRONIC LIMITED
+1c1a  Datel Electronics Ltd.
+1c1b  Volkswagen of America, Inc.
+1c1f  Goldvish S.A.
+1c20  Fuji Electric Device Technology Co., Ltd.
+1c21  ADDMM LLC
+1c22  ZHONGSHAN CHIANG YU ELECTRIC CO., LTD.
+1c26  Shanghai Haiying Electronics Co., Ltd.
+1c27  HuiYang D & S Cable Co., Ltd.
+1c29  Elster GmbH
+1c31  LS Cable Ltd.
+1c34  SpringCard
+1c37  Authorizer Technologies, Inc.
+1c3d  NONIN MEDICAL INC.
+1c3e  Wep Peripherals
+1c40  EZPrototypes
+1c49  Cherng Weei Technology Corp.
+1c4f  SiGma Micro
+	0002  Keyboard TRACER Gamma Ivory
+	000e  Genius KB-120 Keyboard
+	0026  Keyboard
+1c6b  Philips & Lite-ON Digital Solutions Corporation
+1c6c  Skydigital Inc.
+1c73  AMT
+1c77  Kaetat Industrial Co., Ltd.
+1c78  Datascope Corp.
+1c79  Unigen Corporation
+1c7a  LighTuning Technology Inc.
+1c7b  LUXSHARE PRECISION INDUSTRY (SHENZHEN) CO., LTD.
+1c83  Schomaecker GmbH
+1c87  2N TELEKOMUNIKACE a.s.
+1c88  Somagic, Inc.
+1c89  HONGKONG WEIDIDA ELECTRON LIMITED
+1c8e  ASTRON INTERNATIONAL CORP.
+1c98  ALPINE ELECTRONICS, INC.
+1c9e  OMEGA TECHNOLOGY
+1ca0  ACCARIO Inc.
+1ca1  Symwave
+1cac  Kinstone
+1cb3  Aces Electronic Co., Ltd.
+1cb4  OPEX CORPORATION
+1cb6  IdeaCom Technology Inc.
+1cbe  Luminary Micro Inc.
+1cbf  FORTAT SKYMARK INDUSTRIAL COMPANY
+1cc0  PlantSense
+1cca  NextWave Broadband Inc.
+1ccd  Bodatong Technology (Shenzhen) Co., Ltd.
+1cd4  adp corporation
+1cd5  Firecomms Ltd.
+1cd6  Antonio Precise Products Manufactory Ltd.
+1cde  Telecommunications Technology Association (TTA)
+1cdf  WonTen Technology Co., Ltd.
+1ce0  EDIMAX TECHNOLOGY CO., LTD.
+1ce1  Amphenol KAE
+1cf1  Dresden Elektronik
+1cfc  ANDES TECHNOLOGY CORPORATION
+1cfd  Flextronics Digital Design Japan, LTD.
+1d03  iCON
+1d07  Solid-Motion
+1d08  NINGBO HENTEK DRAGON ELECTRONICS CO., LTD.
+1d09  TechFaith Wireless Technology Limited
+1d0a  Johnson Controls, Inc. The Automotive Business Unit
+1d0b  HAN HUA CABLE & WIRE TECHNOLOGY (J.X.) CO., LTD.
+1d0f  Sonix Technology Co., Ltd.
+1d14  ALPHA-SAT TECHNOLOGY LIMITED
+1d17  C-Thru Music Ltd.
+	0001  AXiS-49 Harmonic Table MIDI Keyboard
+1d19  Dexatek Technology Ltd.
+1d1f  Diostech Co., Ltd.
+1d20  SAMTACK INC.
+1d27  ASUS
+1d34  Dream Cheeky
+1d45  Touch
+1d4d  PEGATRON CORPORATION
+1d50  OpenMoko, Inc.
+	6027  Key64 Keyboard
+	6028  Teensy 2.0 Development Board [ErgoDox Keyboard]
+	6033  frobiac / adnw keyboard
+	609c  antiAFK keyboard
+	60a3  keyboard (bootloader)
+	60e8  Alpen Clack keyboard
+	60e9  keyman64 keyboard itercepter
+1d57  Xenta
+	0005  Wireless Receiver (Keyboard and Mouse)
+	32da  2.4GHz Receiver (Keyboard and Mouse)
+	ac01  Wireless Receiver (Keyboard and Mouse)
+1d5b  Smartronix, Inc.
+1d5c  Fresco Logic
+1d6b  Linux Foundation
+1d90  Citizen
+1d9d  Sigma Sport
+1de1  Actions Microelectronics Co.
+1e0e  Qualcomm / Option
+1e10  Point Grey Research, Inc.
+1e17  Mirion Technologies Dosimetry Services Division
+1e1d  Kanguru Solutions
+1e1f  INVIA
+1e29  Festo AG & Co. KG
+1e3d  Chipsbank Microelectronics Co., Ltd
+1e41  Cleverscope
+1e4e  Cubeternet
+1e54  TypeMatrix
+	2030  2030 USB Keyboard
+1e68  TrekStor GmbH & Co. KG
+1e71  NZXT
+1e74  Coby Electronics Corporation
+1e7d  ROCCAT
+	30d4  Arvo Keyboard
+1ea7  SHARKOON Technologies GmbH
+	0066  [Mediatrack Edge Mini Keyboard]
+	2007  SHARK ZONE K30 Illuminated Gaming Keyboard
+1ebb  NuCORE Technology, Inc.
+1eda  AirTies Wireless Networks
+1edb  Blackmagic design
+1ee8  ONDA COMMUNICATION S.p.a.
+1ef6  EADS Deutschland GmbH
+1f28  Cal-Comp
+1f3a  Onda (unverified)
+1f44  The Neat Company
+1f48  H-TRONIC GmbH
+1f4d  G-Tek Electronics Group
+1f6f  Aliph
+1f75  Innostor Technology Corporation
+1f82  TANDBERG
+1f84  Alere, Inc.
+1f87  Stantum
+1f9b  Ubiquiti Networks, Inc.
+1fab  Samsung Opto-Electroncs Co., Ltd.
+1fbd  Delphin Technology AG
+1fc9  NXP Semiconductors
+1fde  ILX Lightwave Corporation
+1fe7  Vertex Wireless Co., Ltd.
+1ff7  CVT Electronics.Co.,Ltd
+1fff  Ideofy Inc.
+2001  D-Link Corp.
+2002  DAP Technologies
+2003  detectomat
+200c  Reloop
+2013  PCTV Systems
+2019  PLANEX
+203d  Encore Electronics Inc.
+2040  Hauppauge
+2047  Texas Instruments
+2058  Nano River Technology
+2077  Taicang T&W Electronics Co. Ltd
+2080  Barnes & Noble
+2086  SIMPASS
+2087  Cando
+20a0  Clay Logic
+20b1  XMOS Ltd
+20b3  Hanvon
+20b7  Qi Hardware
+20ce  Minicircuits
+20df  Simtec Electronics
+20f1  NET New Electronic Technology GmbH
+20f4  TRENDnet
+20f7  XIMEA
+2100  RT Systems
+2101  ActionStar
+2109  VIA Labs, Inc.
+2113  Softkinetic
+2149  Advanced Silicon S.A.
+2162  Creative (?)
+2184  GW Instek
+21a1  Emotiv Systems Pty. Ltd.
+21d6  Agecodagis SARL
+2207  Fuzhou Rockchip Electronics Company
+2222  MacAlly
+	0004  iWebKey Keyboard
+2227  SAMWOO Enterprise
+2232  Silicon Motion
+2233  RadioShack Corporation
+2237  Kobo Inc.
+224f  APDM
+225d  Morpho
+228d  8D Technologies inc.
+22a6  Pie Digital, Inc.
+22b8  Motorola PCS
+22b9  eTurboTouch Technology, Inc.
+22ba  Technology Innovation Holdings, Ltd
+22c9  StepOver GmbH
+22cd  Kinova Robotics Inc.
+22e0  secunet Security Networks AG
+2304  Pinnacle Systems, Inc.
+2318  Shining Technologies, Inc. [hex]
+2341  Arduino SA
+2357  TP-Link
+2373  Pumatronix Ltda
+2375  Digit@lway, Inc.
+2406  SANHO Digital Electronics Co., Ltd.
+2443  Aessent Technology Ltd
+2478  Tripp-Lite
+248a  Maxxter
+249c  M2Tech s.r.l.
+24e1  Paratronic
+2516  Cooler Master Co., Ltd.
+	0004  Storm QuickFire Rapid Mechanical Keyboard
+	0020  QuickFire Rapid-i Keyboard
+2548  Pulse-Eight
+25b5  FlatFrog
+2632  TwinMOS
+2639  Xsens
+2650  Electronics For Imaging, Inc. [hex]
+2659  Sundtek
+2676  Basler AG
+2717  Xiaomi Inc.
+2730  Citizen
+2735  DigitalWay
+273f  Hughski Limited
+2770  NHJ, Ltd
+27b8  ThingM
+27c6  Shenzhen Goodix Technology Co.,Ltd.
+2821  ASUSTek Computer Inc.
+2899  Toptronic Industrial Co., Ltd
+289b  Dracal/Raphnet technologies
+	000a  Dreamcast (Keyboard mode)
+	000b  Gamecube/N64 controller v2.9 (Keyboard mode)
+28de  Valve Software
+2931  Jolla Oy
+2939  Zaber Technologies Inc.
+2a03  dog hunter AG
+2a37  RTD Embedded Technologies, Inc.
+2a45  Meizu Corp.
+2ac7  Ultrahaptics Ltd.
+2b24  KeepKey LLC
+2c02  Planex Communications
+2c1a  Dolphin Peripherals
+2c23  Supermicro Computer Incorporated
+2c7c  Quectel Wireless Solutions Co., Ltd.
+2cdc  Sea & Sun Technology GmbH
+2dcf  Dialog Semiconductor
+2fb2  Fujitsu, Ltd
+3016  Boundary Devices, LLC
+30a4  Blues Wireless
+30c2  UNPARALLEL Innovation, Lda
+30c9  Luxvisions Innotech Limited
+30ee  Fujitsu Connected Technologies Limited
+3125  Eagletron
+3136  Navini Networks
+3176  Whanam Electronics Co., Ltd
+3195  Link Instruments
+3275  VidzMedia Pte Ltd
+3333  InLine
+3334  AEI
+3340  Yakumo
+3344  Leaguer Microelectronics (LME)
+3504  Micro Star
+3538  Power Quotient International Co., Ltd
+3579  DIVA
+357d  Sharkoon
+3636  InVibro
+3838  WEM
+3923  National Instruments Corp.
+40bb  I-O Data
+4101  i-rocks
+4102  iRiver, Ltd.
+413c  Dell Computer Corp.
+	0000  DRAC 5 Virtual Keyboard and Mouse
+	1001  Keyboard Hub
+	1002  Keyboard Hub
+	1003  Keyboard Hub
+	1005  Multimedia Pro Keyboard Hub
+	2001  Keyboard HID Support
+	2002  SK-8125 Keyboard
+	2003  Keyboard
+	2005  RT7D50 Keyboard
+	2010  Keyboard
+	2011  Multimedia Pro Keyboard
+	2100  SK-3106 Keyboard
+	2101  SmartCard Reader Keyboard
+	2105  Model L100 Keyboard
+	2106  Dell QuietKey Keyboard
+	8157  Integrated Keyboard
+	8161  Integrated Keyboard
+4146  USBest Technology
+4168  Targus
+4242  USB Design by Example
+4255  GoPro
+4317  Broadcom Corp.
+4348  WinChipHead
+4572  Shuttle, Inc.
+4586  Panram
+4670  EMS Production
+4752  Miditech
+4757  GW Instek
+4766  Aceeca
+4855  Memorex
+4971  SimpleTech
+4d46  Musical Fidelity
+5032  Grandtec
+5041  Linksys (?)
+50c2  Averatec (?)
+5173  Sweex
+5219  I-Tetra
+5345  Owon
+534c  SatoshiLabs
+5354  Meyer Instruments (MIS)
+544d  Transmeta Corp.
+5543  UC-Logic Technology Corp.
+5555  Epiphan Systems Inc.
+55aa  OnSpec Electronic, Inc.
+5654  Gotview
+5656  Uni-Trend Group Limited
+595a  IRTOUCHSYSTEMS Co. Ltd.
+5986  Acer, Inc
+59e3  Nonolith Labs
+5a57  Zinwell
+6000  Beholder International Ltd.
+601a  Ingenic Semiconductor Ltd.
+6189  Sitecom
+6244  LightingSoft AG
+6253  TwinHan Technology Co., Ltd
+636c  CoreLogic, Inc.
+6472  Unknown (Sony?)
+6547  Arkmicro Technologies Inc.
+6615  IRTOUCHSYSTEMS Co. Ltd.
+6666  Prototype product Vendor ID
+6677  WiseGroup, Ltd.
+6891  3Com
+695c  Opera1
+6993  Yealink Network Technology Co., Ltd.
+6a75  Shanghai Jujo Electronics Co., Ltd
+7104  CME (Central Music Co.)
+	2202  UF5/UF6/UF7/UF8 MIDI Master Keyboard
+726c  StackFoundry LLC
+734c  TBS Technologies China
+7373  Beijing STONE Technology Co. Ltd.
+7392  Edimax Technology Co., Ltd
+8086  Intel Corp.
+	0dad  Cherry MiniatureCard Keyboard
+8087  Intel Corp.
+80ee  VirtualBox
+8282  Keio
+8341  EGO Systems, Inc.
+8564  Transcend Information, Inc.
+8644  Intenso GmbG
+8e06  CH Products, Inc.
+9016  Sitecom
+9022  TeVii Technology Ltd.
+9148  GeoLab, Ltd
+9710  MosChip Semiconductor
+9849  Bestmedia CD Recordable GmbH & Co. KG
+9999  Odeon
+99fa  Grandtec
+9ac4  J. Westhues
+9e88  Marvell Semiconductor, Inc.
+		01  Keyboard
+		01  Keyboard
+	006  Keyboard
+HUT 07  Keyboard
+	001  Keyboard ErrorRollOver
+	002  Keyboard POSTfail
+	003  Keyboard Error Undefined
+	032  # and ~ (Hash and Tilde, Non-US Keyboard near right shift)
+	064  \ and | (Backslash and Bar, UK and Non-US Keyboard near left shift)
+	065  Keyboard Application (Windows Key for Win95 or Compose)

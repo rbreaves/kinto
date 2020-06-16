@@ -26,6 +26,11 @@ def windows_setup():
 		# os.system("regedit " + path + "\\windows\\standard_ctrlalt_swap.reg")
 	elif default == 3:
 		os.system("regedit " + path + "\\windows\\remove_keyswap.reg")
+		os.system("del /f .\\windows\\kinto-new.ahk")
+		os.system("del \"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp\\kinto.ahk\"")
+		os.system("taskkill /IM autohotkey.exe")
+		os.system('rd /s /q %userprofile%\\.kinto')
+		os.system('del "%userprofile%\\AppData\\Roaming\\Microsoft\\Windows\\STARTM~1\\Programs\\Startup\\kinto-start.vbs"')
 	stvscode = yn_choice(bcolors.CYELLOW2 + "Would you like to use Sublime Text 3 keymaps in VS Code?\n" + bcolors.ENDC)
 	if default > 0 and default < 3:
 		print("Will now install chocolatey and autohotkey with elevated privileges...")
@@ -37,6 +42,8 @@ def windows_setup():
 		if(stvscode):
 			os.system('perl -pi -e "s/(; )(.*)(; ST2CODE)/$2$3/g" ./windows/kinto-new.ahk')
 		os.system('copy /Y ' + path + '\\windows\\kinto-start.vbs "%userprofile%\\.kinto\\kinto-start.vbs"')
+		os.system('copy /Y ' + path + '\\windows\\usb.vbs "%userprofile%\\.kinto\\usb.vbs"')
+		os.system('copy /Y ' + path + '\\windows\\usb.vbs "%userprofile%\\.kinto\\detectUSB.vbs"')
 		os.system('mklink "%userprofile%\\Start Menu\\Programs\\Startup\\kinto-start.vbs" "%userprofile%\\.kinto\\kinto-start.vbs"')
 		os.system('cp '+ path + '\\windows\\NoShell.vbs "%userprofile%\\.kinto\\NoShell.vbs"')
 		os.system('cp '+ path + '\\windows\\toggle_kb.bat "%userprofile%\\.kinto\\toggle_kb.bat"')
