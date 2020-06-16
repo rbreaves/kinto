@@ -46,11 +46,15 @@ tray_suspend(){
         I_Icon = %A_ScriptDir%\assets\kinto-color-invert.ico
         Menu, Tray, Icon, %I_Icon%,, 1
         Menu, Tray, Tip, Suspended - Kinto
+        IfWinExist, detectUSB.ahk
+            WinClose
     }
     else{
         menu, tray, unCheck, Suspend Kinto
-        I_Icon = %A_ScriptDir%\assets\kinto-white.ico
+;         I_Icon = %A_ScriptDir%\assets\kinto-white.ico           ; MacModifiers
+;         I_Icon = %A_ScriptDir%\assets\kinto-white-invert.ico    ; WinModifiers
         Menu, Tray, Icon, %I_Icon%,,1
+        Run, %A_ScriptDir%\detectUSB.ahk
     }
     ; Refocus last active Window
     Send {LAlt down}{tab}{LAlt up}
