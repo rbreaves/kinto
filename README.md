@@ -61,7 +61,7 @@ I'd say 90+% of the time no, but every OS has their default conventions that som
 
 ## What does Kinto require?
 
-- Python (initial install only)
+- Python
 - systemd
 - x11
 - IBus*
@@ -77,9 +77,8 @@ Wayland support is planned, but not ready yet.
 
 ### Kinto for Windows 10 Requirements
 
-- WSL Ubuntu edition
 - Powershell - run as Administrator
-- Python3
+- [Python3](https://www.python.org/downloads/windows/)
 
 Other programs that will be installed when you run ./setup.py
 - Chocolatey
