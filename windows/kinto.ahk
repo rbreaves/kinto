@@ -5,6 +5,8 @@
 DetectHiddenWindows, On
 Run, %A_ScriptDir%\detectUSB.ahk
 
+Run, C:\Users\%A_UserName%\.keypressosd\KeypressOSD_kinto.ahk
+
 ; I_Icon = %A_ScriptDir%\assets\kinto-white.ico           ; MacModifiers
 ; IfExist, %I_Icon%                                       ; MacModifiers
 ; Menu, Tray, Icon, %I_Icon%,, 1                          ; MacModifiers
@@ -48,6 +50,9 @@ tray_suspend(){
         Menu, Tray, Tip, Suspended - Kinto
         IfWinExist, detectUSB.ahk
             WinClose
+        IfWinExist, KeypressOSD_kinto.ahk
+            WinClose
+        Run, C:\Users\%A_UserName%\.keypressosd\KeypressOSD.ahk
     }
     else{
         menu, tray, unCheck, Suspend Kinto
@@ -55,6 +60,9 @@ tray_suspend(){
 ;         I_Icon = %A_ScriptDir%\assets\kinto-white-invert.ico    ; WinModifiers
         Menu, Tray, Icon, %I_Icon%,,1
         Run, %A_ScriptDir%\detectUSB.ahk
+        IfWinExist, KeypressOSD.ahk
+            WinClose
+        Run, C:\Users\%A_UserName%\.keypressosd\KeypressOSD_kinto.ahk
     }
     ; Refocus last active Window
     Send {LAlt down}{tab}{LAlt up}
@@ -63,7 +71,11 @@ tray_suspend(){
 Exit() {
     IfWinExist, detectUSB.ahk
         WinClose
-
+    IfWinExist, KeypressOSD.ahk
+        WinClose, C:\Users\%A_UserName%\.keypressosd\KeypressOSD.ahk ahk_class AutoHotkey
+    IfWinExist, KeypressOSD_kinto.ahk
+        WinClose, C:\Users\%A_UserName%\.keypressosd\KeypressOSD_kinto.ahk ahk_class AutoHotkey
+            
     ExitApp
 }
 
