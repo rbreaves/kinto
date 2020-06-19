@@ -122,6 +122,8 @@ To Uninstall Kinto
 
 ## How to Install (Windows)
 
+Video Tutorial: [How to Install Kinto.sh on Windows 10](https://youtu.be/sRk8A8krz40)
+
 Install
 ```
 python setup.py
