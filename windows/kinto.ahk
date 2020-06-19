@@ -67,44 +67,6 @@ Exit() {
     ExitApp
 }
 
-OnMessage(0x219, "notify_change")
-return
-
-lastkb = ""
-
-DllCall("AllocConsole")
-WinHide % "ahk_id " DllCall("GetConsoleWindow", "ptr")
-
-notify_change(wParam, lParam, msg, hwnd) 
-{
-    global lastkb
-    ; kbtype = % ComObjCreate("WScript.Shell").Exec("cscript /nologo usb.vbs").StdOut.ReadAll()
-    DetectHiddenWindows On
-    Run %ComSpec%,, Hide, pid
-    WinWait ahk_pid %pid%
-    DllCall("AttachConsole", "UInt", pid)
-    WshShell := ComObjCreate("Wscript.Shell")
-    exec := WshShell.Exec("cscript /nologo usb.vbs")
-    kbtype := exec.StdOut.ReadAll()
-    DllCall("FreeConsole")
-    Process Close, %pid%
-    if lastkb != %kbtype%
-    {
-
-        if InStr(kbtype, "Apple")
-        {
-            ; MsgBox, Apple
-            Run, %A_ScriptDir%\NoShell.vbs %A_ScriptDir%\toggle_kb.bat mac, %A_ScriptDir%
-        }
-        else{
-            ; MsgBox, Windows
-            Run, %A_ScriptDir%\NoShell.vbs %A_ScriptDir%\toggle_kb.bat win, %A_ScriptDir%
-        }
-        ; MsgBox % kbtype
-    }
-    lastkb = %kbtype%
-}
-
 SetTitleMatchMode, 2
 
 GroupAdd, terminals, ahk_exe ubuntu.exe
