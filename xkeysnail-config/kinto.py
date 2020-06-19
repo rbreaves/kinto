@@ -175,9 +175,9 @@ define_keymap(re.compile("Sublime_text", re.IGNORECASE),{
     K("Super-RC-f"): K("f11"),                  # toggle_full_screen
     K("C-M-v"): [K("C-k"), K("C-v")],           # paste_from_history
     K("C-up"): pass_through_key,                # cancel scroll_lines up
-    K("Super-M-up"): K("C-up"),                 # scroll_lines up
+    K("C-M-up"): K("C-up"),                     # scroll_lines up
     K("C-down"): pass_through_key,              # cancel scroll_lines down
-    K("Super-M-down"): K("C-down"),             # scroll_lines down
+    K("C-M-down"): K("C-down"),                 # scroll_lines down
     K("Super-Shift-up"): K("M-Shift-up"),       # multi-cursor up
     K("Super-Shift-down"): K("M-Shift-down"),   # multi-cursor down
     K("C-PAGE_DOWN"): pass_through_key,         # cancel next_view
@@ -207,9 +207,9 @@ define_keymap(re.compile("Sublime_text", re.IGNORECASE),{
     # K("M-C-g"): K("M-Refresh"),                 # Chromebook - find_all_under
     K("Super-C-g"): K("M-f3"),                  # Default - find_all_under
     K("C-Shift-up"): pass_through_key,          # cancel swap_line_up
-    K("Super-C-up"): K("C-Shift-up"),           # swap_line_up
+    K("Super-M-up"): K("C-Shift-up"),           # swap_line_up
     K("C-Shift-down"): pass_through_key,        # cancel swap_line_down
-    K("Super-C-down"): K("C-Shift-down"),       # swap_line_down
+    K("Super-M-down"): K("C-Shift-down"),       # swap_line_down
     K("C-Pause"): pass_through_key,             # cancel cancel_build
     K("Super-c"): K("C-Pause"),                 # cancel_build
     K("f9"): pass_through_key,                  # cancel sort_lines case_s false

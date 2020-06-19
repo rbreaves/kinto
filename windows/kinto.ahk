@@ -213,13 +213,60 @@ $^+Right::Send +{End}
 #If
 
 #IfWinActive ahk_exe sublime_text.exe
-    ; Remap Ctrl+Shift to behave like macOS Sublimetext
-    ; Will extend cursor to multiple lines
-    #+Up::send {shift up}^!{Up}
-    #+Down::send {shift up}^!{Down}
-
-    ; Remap Ctrl+Cmd+G to select all matches
-    #^g::send !{F3}
+    #^Up::send !{O}                                         ; Switch file
+    #^f::send {F11}                                         ; toggle_full_screen
+    ^!v::send {Ctrl Down}k{Ctrl Up}{Ctrl Down}v{Ctrl Up}    ; paste_from_history
+    ^Up::Return                                             ; cancel scroll_lines up
+    ^!Up::send ^{Up}                                        ; scroll_lines up
+    ^Down::Return                                           ; cancel scroll_lines down
+    ^!Down::send ^{Down}                                    ; scroll_lines down
+    #+Up::send {shift up}^!{Up}                             ; multi-cursor up
+    #+Down::send {shift up}^!{Down}                         ; multi-cursor down
+    ^PgDn::Return                                           ; cancel next_view
+    ^PgUp::Return                                           ; cancel prev_view
+    ^+{::send ^{PgDn}                                       ; next_view
+    ^+}::send ^{PgUp}                                       ; prev_view
+    ^!Right::send ^{PgDn}                                   ; next_view
+    ^!Left::send ^{PgUp}                                    ; prev_view
+    Insert::Return                                          ; cancel toggle_overwrite
+    ^!O::send {Insert}                                      ; toggle_overwrite
+    !c::Return                                              ; cancel toggle_case_sensitive
+    ^!c::send !{c}                                          ; toggle_case_sensitive
+    ^h::Return                                              ; cancel replace
+    ^!f::send ^{h}                                          ; replace
+    ^+h::Return                                             ; cancel replace_next
+    ^!e::send ^+{h}                                         ; replace_next
+    F3::Return                                              ; cancel find_next
+    ^g::send {F3}                                           ; find_next
+    *F3::Return                                             ; cancel find_prev, find_under, find_all_under
+    ^+g::send +{F3}                                         ; find_prev
+    #!g::send ^{F3}                                         ; find_under
+    #!+g::send ^+{F3}                                       ; find_under_prev
+    #^g::send !{F3}                                         ; find_all_under
+    ^+Up::Return                                            ; cancel swap_line_up
+    #!Up::send ^+{Up}                                       ; swap_line_up
+    ^+Down::Return                                          ; cancel swap_line_down
+    #!Down::send ^+{Down}                                   ; swap_line_down
+    ^Pause::Return                                          ; cancel cancel_build
+    #c::send ^{Pause}                                       ; cancel_build
+    F9::Return                                              ; cancel sort_lines case_s false
+    F5::send {F9}                                           ; sort_lines case_s false
+    #F9::Return                                             ; cancel sort_lines case_s true
+    #F5::send #{F9}                                         ; sort_lines case_s true
+    !+1::Return                                             ; cancel set_layout
+    ^!1::send !+1                                           ; set_layout
+    !+2::Return                                             ; cancel set_layout
+    ^!2::send !+2                                           ; set_layout
+    !+3::Return                                             ; cancel set_layout
+    ^!3::send !+3                                           ; set_layout
+    !+4::Return                                             ; cancel set_layout
+    ^!4::send !+4                                           ; set_layout
+    !+5::Return                                             ; cancel set_layout
+    ^!5::send !+5                                           ; set_layout
+    !+8::Return                                             ; cancel set_layout
+    ^!8::send !+8                                           ; set_layout
+    !+9::Return                                             ; cancel set_layout
+    ^!9::send !+9                                           ; set_layout
 #If
 
 #IfWinActive ahk_group terminals
