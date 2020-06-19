@@ -31,8 +31,8 @@ def windows_setup():
 		os.system("taskkill /IM autohotkey.exe")
 		os.system('rd /s /q %userprofile%\\.kinto')
 		os.system('del "%userprofile%\\AppData\\Roaming\\Microsoft\\Windows\\STARTM~1\\Programs\\Startup\\kinto-start.vbs"')
-	stvscode = yn_choice(bcolors.CYELLOW2 + "Would you like to use Sublime Text 3 keymaps in VS Code?\n" + bcolors.ENDC)
 	if default > 0 and default < 3:
+		stvscode = yn_choice(bcolors.CYELLOW2 + "Would you like to use Sublime Text 3 keymaps in VS Code?\n" + bcolors.ENDC)
 		print("Will now install chocolatey and autohotkey with elevated privileges...")
 		print("This install will fail if you are not running with elevated privileges")
 		os.system('powershell -executionpolicy bypass ".\\windows\\autohotkey.ps1"')
