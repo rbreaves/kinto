@@ -21,6 +21,8 @@ Seamless copy and paste with all apps and terminals. The zero effort solution.
 
 [Shortcut Creation (Xkeysnail)](#Shortcut-Creation-Xkeysnail)
 
+[Shortcut Creation (Autohotkey)](#Shortcut-Creation-Autohotkey)
+
 [Other Notes Related to Install](#Other-Notes-Related-to-Install)
 
 [How to Upgrade/Control Kinto](#How-to-Upgrade-Kinto)
@@ -64,6 +66,8 @@ Compared to most other remappers ***this is a complete system-wide remap of your
 It also retains some of the most commonly used system level shortcut keys, such as Cmd-C/V, Cmd-Tab, and Ctrl-Tab among others. You will keep seamless copy & paste between all apps, ability to switch Windows while still using the physical Cmd/Alt key position; switch tabs in your favorite terminals, code editors, or web browsers. Depending on your OS and/or Desktop Environment you may also be able to switch Virtual Desktop environments the same way as well and other basic system level shortcuts.
 
 If your OS and macOS have similar functionality on the system level, but only differ by a slight difference of a shortcut command then Kinto likely supports it already. If Kinto doesn't have what you need then you can open up a support ticket and it will be added. You can also fork the project to add the fix and I will merge it via a PR you make.
+
+Additionally, if you are using a cross-platform app and if it happens to have a few shortcut keys that differ then that can very easily be added to either the kinto.py or kinto.ahk configuration files which on Windows is located here `~/.kinto/kinto.ahk` and on Linux it can be found here `~/.config/kinto/kinto.py`. More info can be found here [Shortcut Creation (Xkeysnail)](#Shortcut-Creation-Xkeysnail) for Linux.
 
 ## What does Kinto require?
 
@@ -178,6 +182,46 @@ sudo systemctl restart xkeysnail
 ```
 
 More information can be seen on the readme page of [xkeysnail](https://github.com/mooz/xkeysnail).
+
+## Shortcut Creation (Autohotkey)
+
+This applies to the Windows version of Kinto and how to add additional support for Applications. The configuration file location is `~/.kinto/kinto.ahk` and after updating it you will want to right click on the tray icon and click on setting your keyboard type again and it will re-apply the latest changes.
+
+Windows 10 has a couple of ways that you need to be aware of when trying to add a specific application, the typical method of how to add any exe program, but then there is also the newer UWP app format that some applications use which will require a similar but different method, both will be discussed.
+
+### Defining Keymaps Per App by EXE Name
+You can use the following legend **but** realize that these remaps reference the Virtual keys in the diagrams mentioned near the beginning of this document, so **do not** confuse it with the physical key unless they happen to be the same key.
+
+|Autohotkey Symbol|Virtual key|Description|
+|---|---|---|
+|^,Ctrl|Control|Primary modifier, 1st rock from the spacebar|
+|!,Alt|Alt|Secondary modifier, 2nd rock from the spacebar|
+|#,Win|Win/Super|Tertiary modifier, 3rd rock from the spacebar|
+
+```
+...
+#IfWinActive ahk_exe sublime_text.exe
+    #^Up::send !{O}                                         ; Switch file
+    #^f::send {F11}                                         ; toggle_full_screen
+    ^!v::send {Ctrl Down}k{Ctrl Up}{Ctrl Down}v{Ctrl Up}    ; paste_from_history
+    ...
+#If
+...
+```
+
+With this being Autohotkey you can easily pull knowledge from the Autohotkey forums for just about any issue you may have as well.
+
+### Defining Keymaps Per UWP App
+
+```
+#If WinActive("- OneNote ahk_class ApplicationFrameWindow", "OneNote")
+...
+    ; Add your keymaps here
+...
+#If
+```
+
+I don't have too many examples on this one have only ran into a single UWP app, and most developers seem to be shying away from it. Kinto currently support "Fluent Terminal" which is a UWP app, but it is also being grouped together with other Terminal apps for hotkey remapping. You may take a look at that, but you may also create a new Autohotkey file and use the Window Spy feature built into Autohotkey to help you discover the full name and class names of any application.
 
 ## Shortcut Creation (XKB)
 The older xkb shortcut method info can be read about in ticket [#125](https://github.com/rbreaves/kinto/issues/125).
@@ -345,7 +389,7 @@ cd ~/.config/kinto
 ./kintox11
 ```
 
-## Debug
+## Debug (Linux - xkb method only)
 
 If all else fails you can now run Kinto in debug mode as of 1.0.6-2. The output will become more verbose and I'd recommend running this directly after stopping the service.
 
