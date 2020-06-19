@@ -61,7 +61,7 @@ I'd say 90+% of the time no, but every OS has their default conventions that som
 
 ## What does Kinto require?
 
-- Python (initial install only)
+- Python
 - systemd
 - x11
 - IBus*
@@ -77,9 +77,9 @@ Wayland support is planned, but not ready yet.
 
 ### Kinto for Windows 10 Requirements
 
-- WSL Ubuntu edition
+- [Git for Windows](https://git-scm.com/download/win)
 - Powershell - run as Administrator
-- Python3
+- [Python3](https://www.python.org/downloads/windows/)
 
 Other programs that will be installed when you run ./setup.py
 - Chocolatey
@@ -95,7 +95,7 @@ Users can now hotswap between Apple and Windows based keyboards without having t
 <img src="https://user-images.githubusercontent.com/10969616/84471501-10a51380-ac4b-11ea-9e0e-c19a7ebfad6d.png" width="50%">
 
 
-## How to install
+## How to install (Linux)
 
 1. clone this repo
 ```
@@ -118,6 +118,21 @@ To Uninstall Kinto
 
 ```
 ./setup.py
+```
+
+## How to Install (Windows)
+
+Video Tutorial: [How to Install Kinto.sh on Windows 10](https://youtu.be/sRk8A8krz40)
+
+Install
+```
+python setup.py
+```
+
+To Uninstall Kinto
+
+```
+python setup.py
 ```
 
 ## Shortcut Creation (Xkeysnail)
