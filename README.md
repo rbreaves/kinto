@@ -142,12 +142,12 @@ git clone https://github.com/rbreaves/kinto.git
 cd kinto
 ```
 
-3. Install
+3. Install - Select keyboard type
 ```
 python setup.py
 ```
 
-To Uninstall Kinto
+To Uninstall Kinto - Select Uninstall
 
 ```
 python setup.py
