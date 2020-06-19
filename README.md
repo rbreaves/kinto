@@ -63,7 +63,7 @@ I'd say 90+% of the time no, but every OS has their default conventions that som
 
 ## What's different?
 
-Compared to most other remappers this is a complete system-wide remap of your base level modifier keys, this saves time. You're not going to die a death of thousand papercuts from trying to support every shortcut key under the sun.
+Compared to most other remappers ***this is a complete system-wide remap of your base level modifier keys*** , this saves time. You're not going to die a death of thousand papercuts from trying to support every shortcut key under the sun.
 
 It also retains some of the most commonly used system level shortcut keys, such as Cmd-C/V, Cmd-Tab, and Ctrl-Tab among others. You will keep seamless copy & paste between all apps, ability to switch Windows while still using the physical Cmd/Alt key position; switch tabs in your favorite terminals, code editors, or web browsers. Depending on your OS and/or Desktop Environment you may also be able to switch Virtual Desktop environments the same way as well and other basic system level shortcuts.
 
