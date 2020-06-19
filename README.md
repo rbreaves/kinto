@@ -134,7 +134,15 @@ To Uninstall Kinto
 
 Video Tutorial: [How to Install Kinto.sh on Windows 10](https://youtu.be/sRk8A8krz40)
 
-Install
+1. Open Powershell (Right click and Run as Administrator)
+
+2. clone this repo
+```
+git clone https://github.com/rbreaves/kinto.git
+cd kinto
+```
+
+3. Install
 ```
 python setup.py
 ```
