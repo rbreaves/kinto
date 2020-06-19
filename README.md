@@ -13,6 +13,8 @@ Seamless copy and paste with all apps and terminals. The zero effort solution.
 
 [What does this do exactly?](#What-does-this-do-exactly)
 
+[What's different from other remappers?](#Whats-different)
+
 [What does Kinto require?](#What-does-Kinto-require)
 
 [How to install](#How-to-install)
@@ -58,6 +60,14 @@ Kinto works for standard Windows, Apple and Chromebook keyboards. The following 
 Does Kinto have to have specific keymaps for individual apps?
 
 I'd say 90+% of the time no, but every OS has their default conventions that sometimes run afoul to macs. For this reason you can easily edit kinto.py or kinto.ahk to support the few shortcut keys Kinto may miss. If you do add additional support please consider forking this project and sharing your new keymaps with the rest of us!
+
+## What's different?
+
+Compared to most other remappers this is a complete system-wide remap of your base level modifier keys, this saves time. You're not going to die a death of thousand papercuts from trying to support every shortcut key under the sun.
+
+It also retains some of the most commonly used system level shortcut keys, such as Cmd-C/V, Cmd-Tab, and Ctrl-Tab among others. You will keep seamless copy & paste between all apps, ability to switch Windows while still using the physical Cmd/Alt key position; switch tabs in your favorite terminals, code editors, or web browsers. Depending on your OS and/or Desktop Environment you may also be able to switch Virtual Desktop environments the same way as well and other basic system level shortcuts.
+
+If your OS and macOS have similar functionality on the system level, but only differ by a slight difference of a shortcut command then Kinto likely supports it already. If Kinto doesn't have what you need then you can open up a support ticket and it will be added. You can also fork the project to add the fix and I will merge it via a PR you make.
 
 ## What does Kinto require?
 
