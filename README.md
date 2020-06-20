@@ -237,7 +237,7 @@ With this being Autohotkey you can easily pull knowledge from the Autohotkey for
 #If
 ```
 
-I don't have too many examples on this one have only ran into a single UWP app, and most developers seem to be shying away from it. Kinto currently support "Fluent Terminal" which is a UWP app, but it is also being grouped together with other Terminal apps for hotkey remapping. You may take a look at that, but you may also create a new Autohotkey file and use the Window Spy feature built into Autohotkey to help you discover the full name and class names of any application.
+I don't have too many examples on this one, most developers seem to be shying away from UWP. Kinto currently supports "Fluent Terminal" which is a UWP app, but it is also being grouped with other Terminal apps for hotkey remapping. You may take a look at that, but you may also want to try creating a new Autohotkey file and use the Window Spy feature built into Autohotkey to help you discover the full name and class names of any application.
 
 ## Shortcut Creation (XKB)
 The older xkb shortcut method info can be read about in ticket [#125](https://github.com/rbreaves/kinto/issues/125).
