@@ -17,7 +17,9 @@ Seamless copy and paste with all apps and terminals. The zero effort solution.
 
 [What does Kinto require?](#What-does-Kinto-require)
 
-[How to install](#How-to-install)
+[How to install (Linux)](#How-to-install-Linux)
+
+[How to install (Windows)](#How-to-install-Windows)
 
 [Shortcut Creation (Xkeysnail)](#Shortcut-Creation-Xkeysnail)
 
