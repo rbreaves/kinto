@@ -17,6 +17,9 @@ def windows_setup():
 	# Short DOS path notation
 	path= cmdline('echo %cd%')[:-1]
 	if default > 0 and default < 3:
+		print("Will now install chocolatey and autohotkey with elevated privileges...")
+		print("This install will fail if you are not running with elevated privileges")
+		os.system('powershell -executionpolicy bypass ".\\windows\\autohotkey.ps1"')
 		print("Copying autohotkey combinations for Terminals & Editors...")
 		os.system("copy /Y " + path + "\\windows\\kinto.ahk " + path + "\\windows\\kinto-new.ahk")
 	if default == 1:
@@ -39,10 +42,6 @@ def windows_setup():
 		print("Uninstall of Kinto is Complete.")
 	if default > 0 and default < 3:
 		stvscode = yn_choice(bcolors.CYELLOW2 + "Would you like to use Sublime Text 3 keymaps in VS Code?\n" + bcolors.ENDC)
-		print("Will now install chocolatey and autohotkey with elevated privileges...")
-		print("This install will fail if you are not running with elevated privileges")
-		os.system('powershell -executionpolicy bypass ".\\windows\\autohotkey.ps1"')
-		os.system('refreshenv')
 		print("\nWill now install Ubuntu Termimnal Theme as default...")
 		os.system("regedit " + path + "\\windows\\theme_ubuntu.reg")
 		os.system('robocopy '+ path + '\\assets "%userprofile%\\.kinto\\assets" /E')
