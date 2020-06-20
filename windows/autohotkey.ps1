@@ -1,6 +1,7 @@
 if(-not(Get-Command "choco" -errorAction SilentlyContinue)){
     Write-Output "Seems Chocolatey is not installed, installing now"
     Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+    refreshenv
 }
 else{
     Write-Output "Chocolatey is already installed"

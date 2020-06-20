@@ -23,21 +23,19 @@ def windows_setup():
 		print("Copying autohotkey combinations for Terminals & Editors...")
 		os.system("copy /Y " + path + "\\windows\\kinto.ahk " + path + "\\windows\\kinto-new.ahk")
 	if default == 1:
-		os.system('perl -pi -e "s/(; )(.*)(; MacModifiers)/$2$3/g" ./windows/kinto-new.ahk')
-		# os.system("regedit " + path + "\\windows\\macbook_winctrl_swap.reg")
-	elif default == 2:
-		os.system('perl -pi -e "s/(; )(.*)(; WinModifiers)/$2$3/g" ./windows/kinto-new.ahk')
-		# os.system("regedit " + path + "\\windows\\standard_ctrlalt_swap.reg")
+		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; MacModifiers)/$2$3/g" .\\windows\\kinto-new.ahk')
+	elif default == 2:	
+		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; WinModifiers)/$2$3/g" .\\windows\\kinto-new.ahk')
 	elif default == 3:
 		print("Removing any old registry keys from prior versions...")
 		p = subprocess.Popen(['powershell.exe', "Remove-ItemProperty -Path HKLM:'SYSTEM\CurrentControlSet\Control\Keyboard Layout' -Name 'Scancode Map' -ErrorAction SilentlyContinue"], stdout=sys.stdout)
 		print("Removing Kinto from Startup folder...")
-		os.system("(del \"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp\\kinto.ahk\") 2>$null")
-		os.system('(del "%userprofile%\\AppData\\Roaming\\Microsoft\\Windows\\STARTM~1\\Programs\\Startup\\kinto-start.vbs") 2>$null')
+		os.system("(del \"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp\\kinto.ahk\") 2> nul")
+		os.system('(del "%userprofile%\\AppData\\Roaming\\Microsoft\\Windows\\STARTM~1\\Programs\\Startup\\kinto-start.vbs") 2> nul')
 		print("Ending any running Kinto tasks...")
-		os.system("(taskkill /IM autohotkey.exe) 2>$null")
+		os.system("(taskkill /IM autohotkey.exe) 2> nul")
 		print("Removing Kinto from users profile directory...")
-		os.system('(rd /s /q %userprofile%\\.kinto) 2>$null')
+		os.system('(rd /s /q %userprofile%\\.kinto) 2> nul')
 		print("")
 		print("Uninstall of Kinto is Complete.")
 	if default > 0 and default < 3:
@@ -46,7 +44,7 @@ def windows_setup():
 		os.system("regedit " + path + "\\windows\\theme_ubuntu.reg")
 		os.system('robocopy '+ path + '\\assets "%userprofile%\\.kinto\\assets" /E')
 		if(stvscode):
-			os.system('perl -pi -e "s/(; )(.*)(; ST2CODE)/$2$3/g" ./windows/kinto-new.ahk')
+			os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; ST2CODE)/$2$3/g" .\\windows\\kinto-new.ahk')
 		os.system('copy /Y ' + path + '\\windows\\kinto-start.vbs "%userprofile%\\.kinto\\kinto-start.vbs')
 		os.system('copy /Y ' + path + '\\windows\\usb.vbs "%userprofile%\\.kinto\\usb.vbs"')
 		os.system('copy /Y ' + path + '\\windows\\detectUSB.ahk "%userprofile%\\.kinto\\detectUSB.ahk"')
@@ -55,13 +53,13 @@ def windows_setup():
 		os.system('copy /Y '+ path + '\\windows\\toggle_kb.bat "%userprofile%\\.kinto\\toggle_kb.bat"')
 		os.system('copy /Y '+ path + '\\windows\\kinto-new.ahk "%userprofile%\\.kinto\\kinto.ahk"')
 		os.system("del /f .\\windows\\kinto-new.ahk")
-		os.system("del \"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp\\kinto.ahk\"")
+		os.system("del \"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp\\kinto.ahk\" 2> nul")
 		os.system("%userprofile%\\AppData\\Roaming\\Microsoft\\Windows\\STARTM~1\\Programs\\Startup\\kinto-start.vbs")
 
 	# 	# print("\nPlease log off and back on for changes to take full effect.")
 		print("If using WSL then please remember to right click on title bar -> Properties -> Edit Options -> Use Ctrl+Shift+C/V as Copy/Paste and enable it.")
 	else:
-		os.system("(del \"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp\\kinto.ahk\") 2>$null")
+		os.system("(del \"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp\\kinto.ahk\") 2> nul")
 
 def cmdline(command):
     process = Popen(
