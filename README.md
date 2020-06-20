@@ -94,6 +94,7 @@ Wayland support is planned, but not ready yet.
 Other programs that will be installed when you run ./setup.py
 - Chocolatey
 - Autohotkey
+- Strawberry Perl
 
 Note: Sublime Text users should disable screen rotation hotkeys as they will interfere with multi-cursor and possibly other combos. See https://windowsloop.com/disable-screen-rotation-keyboard-shortcut/ for details.
 
@@ -141,8 +142,14 @@ Video Tutorial: [How to Install Kinto.sh on Windows 10](https://youtu.be/sRk8A8k
 git clone https://github.com/rbreaves/kinto.git
 cd kinto
 ```
+3. Install Python
+Note: Even if you installed Python already, as in the video, you will need to run the following command. Python will not link properly in Powershell unless it is installed via the Windows Store. A stub file of some kind gets in the way, even if you try setting the path.
+```
+python
+```
+Click on Install from within the Windows Store. You do not need to sign in to install the program and whichever version that is on the store will work fine.
 
-3. Install - Select keyboard type
+4. Install - Select keyboard type
 ```
 python setup.py
 ```
