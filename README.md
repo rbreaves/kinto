@@ -160,7 +160,7 @@ py setup.py
 ```
 ## Shortcut Creation
 
-Note: A new project, [Universal Keys](https://github.com/rbreaves/Universal-Keys), has been created that will be updated to contain all current remaps - plus many more. Once that is done Kinto will be updated to programmatically pull the latest keymaps from simple csv comma delimited files & will build app the remap from there. This will also allow for more types of remaps within an application category. Once it is ready future remaps will be imported from there - a single source and a single format.
+Note: A new project, [Universal Keys](https://github.com/rbreaves/Universal-Keys), has been created that will be updated to contain all current remaps - plus many more. Once that is done, Kinto will be updated to programmatically pull the latest keymaps from simple csv comma delimited files & will build out key remaps from there. This will also allow for more types of remaps within an application category, Sublime Text 3 to VS Code or VS Code to Sublime Text 3, Photoshop to Gimp, Gimp to Photoshop, etc & it will ensure that xkeysnail (linux) & autohotkey (windows) are pulling from the same data set.
 
 [Linux Shortcut Creation (Xkeysnail)](#Linux-Xkeysnail)
 
