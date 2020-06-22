@@ -21,9 +21,7 @@ Seamless copy and paste with all apps and terminals. The zero effort solution.
 
 [How to install (Windows)](#How-to-install-Windows)
 
-[Shortcut Creation (Xkeysnail)](#Shortcut-Creation-Xkeysnail)
-
-[Shortcut Creation (Autohotkey)](#Shortcut-Creation-Autohotkey)
+[Shortcut Creation](#Shortcut-Creation)
 
 [Other Notes Related to Install](#Other-Notes-Related-to-Install)
 
@@ -160,8 +158,16 @@ To Uninstall Kinto - Select Uninstall
 ```
 py setup.py
 ```
+## Shortcut Creation
 
-## Shortcut Creation (Xkeysnail)
+Note: A new project, [Universal Keys](https://github.com/rbreaves/Universal-Keys), has been created that will be updated to contain all current remaps - plus many more. Once that is done Kinto will be updated to programmatically pull the latest keymaps from simple csv comma delimited files & will build app the remap from there. This will also allow for more types of remaps within an application category. Once it is ready future remaps will be imported from there - a single source and a single format.
+
+[Linux Shortcut Creation (Xkeysnail)](#Linux-Xkeysnail)
+
+[Windows Shortcut Creation (Autohotkey)](#Windows-Autohotkey)
+
+
+## Linux (Xkeysnail)
 
 **GUI Keys**
 | Value| Description|Mac/Kinto Equivalent|
@@ -199,7 +205,7 @@ sudo systemctl restart xkeysnail
 
 More information can be seen on the readme page of [xkeysnail](https://github.com/mooz/xkeysnail).
 
-## Shortcut Creation (Autohotkey)
+## Windows (Autohotkey)
 
 This applies to the Windows version of Kinto and how to add additional support for Applications. The configuration file location is `~/.kinto/kinto.ahk` and after updating it you will want to right click on the tray icon and click on setting your keyboard type again and it will re-apply the latest changes.
 
