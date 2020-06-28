@@ -98,8 +98,6 @@ Other programs that will be installed when you run ./setup.py
 
 Note: Sublime Text users should disable screen rotation hotkeys as they will interfere with multi-cursor and possibly other combos. See https://windowsloop.com/disable-screen-rotation-keyboard-shortcut/ for details.
 
-Does not have complete parity with the Linux edition, but it is getting very close now. Only lacks some Sublime Text 3 remaps at this point.
-
 Users can now hotswap between Apple and Windows based keyboards without having to logoff and back on, and Windows is currently the only implementation with a system tray (but this feature is coming to Budgie, XFCE, Mate, Gnome, and lastly KDE).
 
 <img src="https://user-images.githubusercontent.com/10969616/84471498-100c7d00-ac4b-11ea-972d-60c1907831ec.png" width="50%">
