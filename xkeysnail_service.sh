@@ -151,9 +151,9 @@ function budgieUpdate {
 
 if [ $# -eq 0 ]; then
 	echo "Install Kinto - xkeysnail (udev)"
-	echo "  1) Windows & Mac (HID driver)"
-	echo "  2) Mac Only & VMs on Macbooks"
-	echo "  3) Chromebook"
+	echo "  1) Windows & Mac (HID driver) - Most Standard keyboards (& 1st party usb/bt Apple keyboards)"
+	echo "  2) Mac Only & VMs on Macbooks - 3rd & 1st party Apple keyboards"
+	echo "  3) Chromebook - Chromebook running Linux"
 	# echo "  5) Uninstall"
 
 	read n
