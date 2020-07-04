@@ -75,6 +75,7 @@ GroupAdd, terminals, ahk_exe ConEmu64.exe
 GroupAdd, terminals, ahk_exe powershell.exe
 GroupAdd, terminals, ahk_exe WindowsTerminal.exe
 GroupAdd, terminals, ahk_exe Hyper.exe
+GroupAdd, terminals, ahk_exe mintty.exe
 GroupAdd, terminals, ahk_exe Cmd.exe
 GroupAdd, terminals, ahk_exe Terminus.exe
 GroupAdd, terminals, Fluent Terminal ahk_class ApplicationFrameWindow
@@ -286,7 +287,10 @@ $^+Right::Send +{End}
 
     ; Paste
     ^v::
-    If WinActive("ahk_group posix"){
+    If WinActive("ahk_exe mintty.exe"){
+        Send {Shift down}{Insert}{Shift up}
+    }
+    else if WinActive("ahk_group posix"){
         Send {Blind}{Shift down}v{Shift up}
     }
     else{
