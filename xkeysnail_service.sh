@@ -168,7 +168,7 @@ vssublime=false
 
 if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1 == "chromebook" ]]; then
 	while true; do
-	read -rep $'\nDo you want multi-language support (the right Alt key will not remap)? (y/N)\n' yn
+	read -rep $'\nDo you want multi-language on Right Alt key? (y/N)\naka Left side remaps, right side doesn\'t\n' yn
 	case $yn in
 		[Yy]* ) rightalt=true; break;;
 		* ) break;;
