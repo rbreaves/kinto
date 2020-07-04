@@ -18,22 +18,22 @@ define_conditional_modmap(lambda wm_class: wm_class.casefold() not in terminals,
     # # Chromebook
     # Key.LEFT_ALT: Key.RIGHT_CTRL,   # Chromebook
     # Key.LEFT_CTRL: Key.LEFT_ALT,    # Chromebook
-    # Key.RIGHT_ALT: Key.RIGHT_CTRL,  # Chromebook
-    # Key.RIGHT_CTRL: Key.RIGHT_ALT,  # Chromebook
+    # Key.RIGHT_ALT: Key.RIGHT_CTRL,  # Chromebook - Multi-language (Remove)
+    # Key.RIGHT_CTRL: Key.RIGHT_ALT,  # Chromebook - Multi-language (Remove)
 
     # # Default Mac/Win
     # Key.LEFT_ALT: Key.RIGHT_CTRL,   # WinMac
     # Key.LEFT_META: Key.LEFT_ALT,    # WinMac
     # Key.LEFT_CTRL: Key.LEFT_META,   # WinMac
-    # Key.RIGHT_ALT: Key.RIGHT_CTRL,  # WinMac
-    # Key.RIGHT_META: Key.RIGHT_ALT,  # WinMac
-    # Key.RIGHT_CTRL: Key.RIGHT_META, # WinMac
+    # Key.RIGHT_ALT: Key.RIGHT_CTRL,  # WinMac - Multi-language (Remove)
+    # Key.RIGHT_META: Key.RIGHT_ALT,  # WinMac - Multi-language (Remove)
+    # Key.RIGHT_CTRL: Key.RIGHT_META, # WinMac - Multi-language (Remove)
 
     # # Mac Only
     # Key.LEFT_META: Key.RIGHT_CTRL,  # Mac
     # Key.LEFT_CTRL: Key.LEFT_META,   # Mac
-    # Key.RIGHT_META: Key.RIGHT_CTRL, # Mac
-    # Key.RIGHT_CTRL: Key.RIGHT_META, # Mac
+    # Key.RIGHT_META: Key.RIGHT_CTRL, # Mac - Multi-language (Remove)
+    # Key.RIGHT_CTRL: Key.RIGHT_META, # Mac - Multi-language (Remove)
 })
 
 # [Conditional modmap] Change modifier keys in certain applications
@@ -51,14 +51,14 @@ define_conditional_modmap(re.compile(termStr, re.IGNORECASE), {
     # Key.LEFT_META: Key.LEFT_ALT,    # WinMac
     # Key.LEFT_CTRL: Key.LEFT_CTRL,   # WinMac
     # Key.RIGHT_ALT: Key.RIGHT_CTRL,  # WinMac - Multi-language (Remove)
-    # Key.RIGHT_META: Key.RIGHT_ALT,  # WinMac
-    # Key.RIGHT_CTRL: Key.LEFT_CTRL,  # WinMac
+    # Key.RIGHT_META: Key.RIGHT_ALT,  # WinMac - Multi-language (Remove)
+    # Key.RIGHT_CTRL: Key.LEFT_CTRL,  # WinMac - Multi-language (Remove)
 
     # # Mac Only
     # Key.LEFT_META: Key.RIGHT_CTRL,  # Mac
     # # Left Ctrl Stays Left Ctrl
-    # Key.RIGHT_META: Key.RIGHT_CTRL, # Mac
-    # Key.RIGHT_CTRL: Key.LEFT_CTRL,  # Mac
+    # Key.RIGHT_META: Key.RIGHT_CTRL, # Mac - Multi-language (Remove)
+    # Key.RIGHT_CTRL: Key.LEFT_CTRL,  # Mac - Multi-language (Remove)
 })
 
 # Keybindings for Nautilus
