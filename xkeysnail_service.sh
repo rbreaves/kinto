@@ -75,13 +75,13 @@ function uninstall {
 function removeAppleKB {
 	# Undo Apple keyboard cmd & alt swap
 	if test -f "/sys/module/hid_apple/parameters/swap_opt_cmd" && [ `cat /sys/module/hid_apple/parameters/swap_opt_cmd` == "1" ]; then
-		echo '0' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd
-		echo 'options hid_apple swap_opt_cmd=0' | sudo tee -a /etc/modprobe.d/hid_apple.conf
+		echo '0' | sudo tee /sys/module/hid_apple/parameters/swap_opt_cmd
+		echo 'options hid_apple swap_opt_cmd=0' | sudo tee /etc/modprobe.d/hid_apple.conf
 		sudo update-initramfs -u -k all
 	fi
 	if test -f "/sys/module/applespi/parameters/swap_opt_cmd" && [ `cat /sys/module/applespi/parameters/swap_opt_cmd` == "1" ]; then
-		echo '0' | sudo tee -a /sys/module/applespi/parameters/swap_opt_cmd
-		echo 'options applespi swap_opt_cmd=0' | sudo tee -a /etc/modprobe.d/applespi.conf
+		echo '0' | sudo tee /sys/module/applespi/parameters/swap_opt_cmd
+		echo 'options applespi swap_opt_cmd=0' | sudo tee /etc/modprobe.d/applespi.conf
 		sudo update-initramfs -u -k all
 	fi
 }
@@ -270,10 +270,10 @@ fi
 
 if [[ $1 == "1" || $1 == "winmac" ]]; then
 	if ls /sys/module | grep hid_apple >/dev/null 2>&1 ; then
-		echo '1' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd;echo 'options hid_apple swap_opt_cmd=1' | sudo tee -a /etc/modprobe.d/hid_apple.conf;sudo update-initramfs -u -k all
+		echo '1' | sudo tee /sys/module/hid_apple/parameters/swap_opt_cmd;echo 'options hid_apple swap_opt_cmd=1' | sudo tee /etc/modprobe.d/hid_apple.conf;sudo update-initramfs -u -k all
 	fi
 	if ls /sys/module | grep applespi >/dev/null 2>&1 ; then
-		echo '1' | sudo tee -a /sys/module/applespi/parameters/swap_opt_cmd;echo 'options applespi swap_opt_cmd=1' | sudo tee -a /etc/modprobe.d/applespi.conf;sudo update-initramfs -u -k all
+		echo '1' | sudo tee /sys/module/applespi/parameters/swap_opt_cmd;echo 'options applespi swap_opt_cmd=1' | sudo tee /etc/modprobe.d/applespi.conf;sudo update-initramfs -u -k all
 	fi
 	if ! ls /sys/module | grep apple ; then
 		removeAppleKB
