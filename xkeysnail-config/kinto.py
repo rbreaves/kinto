@@ -10,6 +10,11 @@ terminals = ["gnome-terminal","konsole","io.elementary.terminal","terminator","s
 terminals = [term.casefold() for term in terminals]
 termStr = "|".join(str(x) for x in terminals)
 
+# Use for browser specific hotkeys
+browsers = ["Chromium","Chromium-browser","Google-chrome","Epiphany","Firefox","Discord"]
+browsers = [browser.casefold() for browser in browsers]
+browserStr = "|".join(str(x) for x in browsers)
+
 mscodes = ["code","vscodium"]
 codeStr = "|".join(str(x) for x in mscodes)
 
@@ -67,6 +72,11 @@ define_keymap(re.compile("org.gnome.nautilus", re.IGNORECASE),{
     K("RC-Down"): K("M-Down"),      # Go Down dir
     K("RC-Left"): K("M-Left"),      # Go Back
     K("RC-Right"): K("M-Right"),    # Go Forward
+})
+
+# Keybindings for Browsers
+define_keymap(re.compile(browserStr, re.IGNORECASE),{
+    K("RC-Q"): K("RC-Q"),          # Close all browsers Instances
 })
 
 define_keymap(None,{

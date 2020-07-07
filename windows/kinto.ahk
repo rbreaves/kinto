@@ -96,6 +96,12 @@ GroupAdd, editors, ahk_exe sublime_text.exe
 GroupAdd, editors, ahk_exe VSCodium.exe
 GroupAdd, editors, ahk_exe Code.exe
 
+GroupAdd, browsers, ahk_exe chrome.exe
+GroupAdd, browsers, ahk_exe opera.exe
+GroupAdd, browsers, ahk_exe firefox.exe
+; Disabled Edge for now - no ability to close all instances
+; GroupAdd, browsers, Microsoft Edge ahk_class ApplicationFrameWindow
+
 GroupAdd, vscode, ahk_exe VSCodium.exe
 GroupAdd, vscode, ahk_exe Code.exe
 
@@ -201,6 +207,11 @@ $^+Right::Send +{End}
 
 ; Cmd+Space Alternative
 ^Space::Send ^{Esc}
+
+; Close all browsers
+#IfWinActive ahk_group browsers
+   ^q::send {Alt Down}f{Alt Up}x   ; exit all windows
+#If
 
 ; Sublime Text Remaps for VS Code
 #IfWinActive ahk_group vscode
