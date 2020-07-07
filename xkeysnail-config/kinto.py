@@ -11,7 +11,7 @@ terminals = [term.casefold() for term in terminals]
 termStr = "|".join(str(x) for x in terminals)
 
 # Use for browser specific hotkeys
-browsers = ["Chromium","Chromium-browser","Google-chrome","Epiphany","Firefox"]
+browsers = ["Chromium","Chromium-browser","Google-chrome","Epiphany","Firefox","Discord"]
 browsers = [browser.casefold() for browser in browsers]
 browserStr = "|".join(str(x) for x in browsers)
 
