@@ -109,6 +109,7 @@ Users can now hotswap between Apple and Windows based keyboards without having t
 1. clone this repo
 ```
 git clone https://github.com/rbreaves/kinto.git
+cd kinto
 ```
 2. Install python3 (If needed)
 
