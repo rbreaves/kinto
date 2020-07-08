@@ -335,6 +335,21 @@ systemctl --user stop keyswap && setxkbmap -option;setxkbmap -option altwin:swap
 
 ## Troubleshooting
 
+### Installed successfully, but modifier keys are not properly remapped?
+
+Are you using a VM on macOS? If so you may need to disable automatic remapping of the Cmd key when using Vmware Fusion of Parallels.
+
+Disable Parallels Re-mapping:
+1) Open Parallels and go to Preferences.
+2) Click Keyboard and disable the Virtual machine shortcuts.
+3) Close Preferences.
+
+To disable keyboard mapping:
+1) From Fusion's menu bar, click VMware Fusion > Preferences...
+2) Click Keyboard & Mouse.
+3) Click the Key Mappings tab.
+4) Deselect Enable Key Mapping.
+
 ### Does not start when you log in or after you reboot?
 
 Kinto (xkb/x11) = keyswap
