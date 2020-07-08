@@ -5,6 +5,7 @@ from subprocess import PIPE, Popen
 from prekinto import *
 
 homedir = os.path.expanduser("~")
+kintotype = 0
 
 def windows_setup():
 	keymaps = ["Apple keyboard standard", "Windows keyboard standard","Uninstall"]
@@ -183,10 +184,11 @@ def setShortcuts():
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Control><Shift>Space','<Super>Space']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Super>Space','<Primary>Space']\"")
-			cmdline('perl -pi -e "s/(\/\/ )(.*)(\/\/ Elementary cmdtab)/\$2\$3/g" ~/.xkb/symbols/mac_term')
-			cmdline('perl -pi -e "s/(\w.*)(\/\/ Default cmdtab)/\/\/ \$1\$2/g" ~/.xkb/symbols/mac_term')
-			cmdline('perl -pi -e "s/(\/\/ )(.*)(\/\/ Elementary cmdtab)/\$2\$3/g" ~/.xkb/symbols/mac_gui')
-			cmdline('perl -pi -e "s/(\w.*)(\/\/ Default cmdtab)/\/\/ \$1\$2/g" ~/.xkb/symbols/mac_gui')
+			if(kintotype == 2):
+				cmdline('perl -pi -e "s/(\/\/ )(.*)(\/\/ Elementary cmdtab)/\$2\$3/g" ~/.xkb/symbols/mac_term')
+				cmdline('perl -pi -e "s/(\w.*)(\/\/ Default cmdtab)/\/\/ \$1\$2/g" ~/.xkb/symbols/mac_term')
+				cmdline('perl -pi -e "s/(\/\/ )(.*)(\/\/ Elementary cmdtab)/\$2\$3/g" ~/.xkb/symbols/mac_gui')
+				cmdline('perl -pi -e "s/(\w.*)(\/\/ Default cmdtab)/\/\/ \$1\$2/g" ~/.xkb/symbols/mac_gui')
 		# elif distro == "budgie" and dename == "gnome":
 		# 	print("Apply budgie shortcuts here")
 		elif (dename == "xfce"):
