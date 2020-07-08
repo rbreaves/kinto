@@ -234,6 +234,7 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	chmod +x ~/.kde/Autostart/kintohost.sh
 
 	# KDE startup - xhost fix
+	mkdir -p ~/.config/autostart
 	yes | cp -rf ./xkeysnail-config/xkeysnail.desktop ~/.config/autostart/xkeysnail.desktop
 
 	yes | cp -rf ./xkeysnail-config/xkeystart.sh ~/.config/kinto/xkeystart.sh
