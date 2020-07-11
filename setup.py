@@ -5,6 +5,7 @@ from subprocess import PIPE, Popen
 from prekinto import *
 
 homedir = os.path.expanduser("~")
+kintotype = 0
 
 def windows_setup():
 	keymaps = ["Apple keyboard standard", "Windows keyboard standard","Uninstall"]
@@ -183,10 +184,11 @@ def setShortcuts():
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Control><Shift>Space','<Super>Space']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Super>Space','<Primary>Space']\"")
-			cmdline('perl -pi -e "s/(\/\/ )(.*)(\/\/ Elementary cmdtab)/\$2\$3/g" ~/.xkb/symbols/mac_term')
-			cmdline('perl -pi -e "s/(\w.*)(\/\/ Default cmdtab)/\/\/ \$1\$2/g" ~/.xkb/symbols/mac_term')
-			cmdline('perl -pi -e "s/(\/\/ )(.*)(\/\/ Elementary cmdtab)/\$2\$3/g" ~/.xkb/symbols/mac_gui')
-			cmdline('perl -pi -e "s/(\w.*)(\/\/ Default cmdtab)/\/\/ \$1\$2/g" ~/.xkb/symbols/mac_gui')
+			if(kintotype == 2):
+				cmdline('perl -pi -e "s/(\/\/ )(.*)(\/\/ Elementary cmdtab)/\$2\$3/g" ~/.xkb/symbols/mac_term')
+				cmdline('perl -pi -e "s/(\w.*)(\/\/ Default cmdtab)/\/\/ \$1\$2/g" ~/.xkb/symbols/mac_term')
+				cmdline('perl -pi -e "s/(\/\/ )(.*)(\/\/ Elementary cmdtab)/\$2\$3/g" ~/.xkb/symbols/mac_gui')
+				cmdline('perl -pi -e "s/(\w.*)(\/\/ Default cmdtab)/\/\/ \$1\$2/g" ~/.xkb/symbols/mac_gui')
 		# elif distro == "budgie" and dename == "gnome":
 		# 	print("Apply budgie shortcuts here")
 		elif (dename == "xfce"):
@@ -327,14 +329,14 @@ def Uninstall():
 
 def kintoImpOne():
 
-	check_xbind = cmdline("which xbindkeys 2>/dev/null").strip()
-	check_xdotool = cmdline("which xdotool 2>/dev/null").strip()
-	check_ibus = cmdline("which ibus-setup 2>/dev/null").strip()
+	check_xbind = cmdline("\\which xbindkeys 2>/dev/null").strip()
+	check_xdotool = cmdline("\\which xdotool 2>/dev/null").strip()
+	check_ibus = cmdline("\\which ibus-setup 2>/dev/null").strip()
 
-	pkgm = cmdline("which apt-get 2>/dev/null").strip()
+	pkgm = cmdline("\\which apt-get 2>/dev/null").strip()
 
 	if len(pkgm) == 0:
-		pkgm = cmdline("which dnf 2>/dev/null").strip()
+		pkgm = cmdline("\\which dnf 2>/dev/null").strip()
 		if len(pkgm) > 0:
 			pkgm += " check-update;sudo dnf install -y "
 	else:
@@ -342,7 +344,7 @@ def kintoImpOne():
 		pkgm += " update; sudo apt-get install -y "
 
 	if len(pkgm) == 0:
-		pkgm = cmdline("which pacman 2>/dev/null").strip()
+		pkgm = cmdline("\\which pacman 2>/dev/null").strip()
 		if len(pkgm) > 0:
 			pkgm += " -Syy; sudo pacman -S "
 
