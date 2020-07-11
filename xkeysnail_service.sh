@@ -115,7 +115,7 @@ function budgieUpdate {
 			budgieVersion="$(/usr/bin/budgie-desktop --version | awk '{ print $2; }' | head -n1)"
 			if [ "$budgieVersion" == "10.5.1" ]; then
 				if ! [ -f ./system-config/budgie-daemon_10.5.1 ]; then
-					wget https://github.com/rbreaves/budgie-desktop/raw/f112e0e349c021c1bbfa7e45c16083eae0d92fac/binaries/budgie-daemon_10.5.1 -O ./system-config/budgie-daemon_10.5.1
+					wget github.com/rbreaves/budgie-desktop/blob/binaries/binaries/budgie-daemon_10.5.1?raw=true -O ./system-config/budgie-daemon_10.5.1
 				fi
 				bdmd5=$(md5sum /usr/bin/budgie-daemon | awk '{ print $1 }')
 				newbdmd5=$(md5sum ./system-config/budgie-daemon_10.5.1 | awk '{ print $1 }')
@@ -252,14 +252,14 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	fi
 	sed -i "s/{username}/`whoami`/g" ./xkeysnail-config/xkeysnail.service.new
 	sed -i "s#{homedir}#`echo "$HOME"`#g" ./xkeysnail-config/xkeysnail.service.new
-	sed -i "s#{xhost}#`which xhost`#g" ./xkeysnail-config/xkeysnail.service.new
+	sed -i "s#{xhost}#`\\which xhost`#g" ./xkeysnail-config/xkeysnail.service.new
 	sed -i "s/{username}/`whoami`/g" ./xkeysnail-config/limitedadmins.new
 	sed -i "s#{homedir}#`echo "$HOME"`#g" ./xkeysnail-config/limitedadmins.new
-	sed -i "s#{systemctl}#`which systemctl`#g" ./xkeysnail-config/limitedadmins.new
+	sed -i "s#{systemctl}#`\\which systemctl`#g" ./xkeysnail-config/limitedadmins.new
 	sudo chown root:root ./xkeysnail-config/limitedadmins.new
 	sudo mv ./xkeysnail-config/limitedadmins.new /etc/sudoers.d/limitedadmins
-	sed -i "s#{systemctl}#`which systemctl`#g" ~/.config/autostart/xkeysnail.desktop
-	sed -i "s#{xhost}#`which xhost`#g" ~/.config/autostart/xkeysnail.desktop
+	sed -i "s#{systemctl}#`\\which systemctl`#g" ~/.config/autostart/xkeysnail.desktop
+	sed -i "s#{xhost}#`\\which xhost`#g" ~/.config/autostart/xkeysnail.desktop
 	sed -i "s#{homedir}#`echo "$HOME"`#g" ~/.config/kinto/prexk.sh
 	sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ./xkeysnail-config/xkeysnail.service.new
 	sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ~/.config/kinto/prexk.sh

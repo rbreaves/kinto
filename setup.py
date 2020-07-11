@@ -329,14 +329,14 @@ def Uninstall():
 
 def kintoImpOne():
 
-	check_xbind = cmdline("which xbindkeys 2>/dev/null").strip()
-	check_xdotool = cmdline("which xdotool 2>/dev/null").strip()
-	check_ibus = cmdline("which ibus-setup 2>/dev/null").strip()
+	check_xbind = cmdline("\\which xbindkeys 2>/dev/null").strip()
+	check_xdotool = cmdline("\\which xdotool 2>/dev/null").strip()
+	check_ibus = cmdline("\\which ibus-setup 2>/dev/null").strip()
 
-	pkgm = cmdline("which apt-get 2>/dev/null").strip()
+	pkgm = cmdline("\\which apt-get 2>/dev/null").strip()
 
 	if len(pkgm) == 0:
-		pkgm = cmdline("which dnf 2>/dev/null").strip()
+		pkgm = cmdline("\\which dnf 2>/dev/null").strip()
 		if len(pkgm) > 0:
 			pkgm += " check-update;sudo dnf install -y "
 	else:
@@ -344,7 +344,7 @@ def kintoImpOne():
 		pkgm += " update; sudo apt-get install -y "
 
 	if len(pkgm) == 0:
-		pkgm = cmdline("which pacman 2>/dev/null").strip()
+		pkgm = cmdline("\\which pacman 2>/dev/null").strip()
 		if len(pkgm) > 0:
 			pkgm += " -Syy; sudo pacman -S "
 
