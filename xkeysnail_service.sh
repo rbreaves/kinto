@@ -115,7 +115,7 @@ function budgieUpdate {
 			budgieVersion="$(/usr/bin/budgie-desktop --version | awk '{ print $2; }' | head -n1)"
 			if [ "$budgieVersion" == "10.5.1" ]; then
 				if ! [ -f ./system-config/budgie-daemon_10.5.1 ]; then
-					wget github.com/rbreaves/budgie-desktop/blob/binaries/binaries/budgie-daemon_10.5.1?raw=true -O ./system-config/budgie-daemon_10.5.1
+					wget https://github.com/rbreaves/budgie-desktop/blob/binaries/binaries/budgie-daemon_10.5.1?raw=true -O ./system-config/budgie-daemon_10.5.1
 				fi
 				bdmd5=$(md5sum /usr/bin/budgie-daemon | awk '{ print $1 }')
 				newbdmd5=$(md5sum ./system-config/budgie-daemon_10.5.1 | awk '{ print $1 }')
