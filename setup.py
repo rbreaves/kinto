@@ -258,7 +258,7 @@ def setShortcuts():
 			print('distro: ' + distro + ' de: ' + dename)
 			print(bcolors.CRED2 + "A supported OS and DE was not found, you may not have full system level shortcuts installed." + bcolors.ENDC)
 			print(bcolors.CRED2 + "You may want to find your DE or Window Manager settings and manually set Alt-Tab & other OS related shortcuts." + bcolors.ENDC)
-		if dename == "gnome":
+		if dename == "gnome" or dename == "mate" or dename == "budgie":
 			# Apply dconf update to make updates survive reboots
 			cmdline('dconf dump /org/gnome/desktop/wm/keybindings/ > tempkb.conf')
 			cmdline('dconf dump /org/gnome/mutter/keybindings/ > tempmt.conf')
