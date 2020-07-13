@@ -10,6 +10,11 @@ terminals = ["gnome-terminal","konsole","io.elementary.terminal","terminator","s
 terminals = [term.casefold() for term in terminals]
 termStr = "|".join(str(x) for x in terminals)
 
+# Use for browser specific hotkeys
+browsers = ["Chromium","Chromium-browser","Google-chrome","Epiphany","Firefox","Discord"]
+browsers = [browser.casefold() for browser in browsers]
+browserStr = "|".join(str(x) for x in browsers)
+
 mscodes = ["code","vscodium"]
 codeStr = "|".join(str(x) for x in mscodes)
 
@@ -18,22 +23,22 @@ define_conditional_modmap(lambda wm_class: wm_class.casefold() not in terminals,
     # # Chromebook
     # Key.LEFT_ALT: Key.RIGHT_CTRL,   # Chromebook
     # Key.LEFT_CTRL: Key.LEFT_ALT,    # Chromebook
-    # Key.RIGHT_ALT: Key.RIGHT_CTRL,  # Chromebook
-    # Key.RIGHT_CTRL: Key.RIGHT_ALT,  # Chromebook
+    # Key.RIGHT_ALT: Key.RIGHT_CTRL,  # Chromebook - Multi-language (Remove)
+    # Key.RIGHT_CTRL: Key.RIGHT_ALT,  # Chromebook - Multi-language (Remove)
 
     # # Default Mac/Win
     # Key.LEFT_ALT: Key.RIGHT_CTRL,   # WinMac
     # Key.LEFT_META: Key.LEFT_ALT,    # WinMac
     # Key.LEFT_CTRL: Key.LEFT_META,   # WinMac
-    # Key.RIGHT_ALT: Key.RIGHT_CTRL,  # WinMac
-    # Key.RIGHT_META: Key.RIGHT_ALT,  # WinMac
-    # Key.RIGHT_CTRL: Key.RIGHT_META, # WinMac
+    # Key.RIGHT_ALT: Key.RIGHT_CTRL,  # WinMac - Multi-language (Remove)
+    # Key.RIGHT_META: Key.RIGHT_ALT,  # WinMac - Multi-language (Remove)
+    # Key.RIGHT_CTRL: Key.RIGHT_META, # WinMac - Multi-language (Remove)
 
     # # Mac Only
     # Key.LEFT_META: Key.RIGHT_CTRL,  # Mac
     # Key.LEFT_CTRL: Key.LEFT_META,   # Mac
-    # Key.RIGHT_META: Key.RIGHT_CTRL, # Mac
-    # Key.RIGHT_CTRL: Key.RIGHT_META, # Mac
+    # Key.RIGHT_META: Key.RIGHT_CTRL, # Mac - Multi-language (Remove)
+    # Key.RIGHT_CTRL: Key.RIGHT_META, # Mac - Multi-language (Remove)
 })
 
 # [Conditional modmap] Change modifier keys in certain applications
@@ -51,14 +56,104 @@ define_conditional_modmap(re.compile(termStr, re.IGNORECASE), {
     # Key.LEFT_META: Key.LEFT_ALT,    # WinMac
     # Key.LEFT_CTRL: Key.LEFT_CTRL,   # WinMac
     # Key.RIGHT_ALT: Key.RIGHT_CTRL,  # WinMac - Multi-language (Remove)
-    # Key.RIGHT_META: Key.RIGHT_ALT,  # WinMac
-    # Key.RIGHT_CTRL: Key.LEFT_CTRL,  # WinMac
+    # Key.RIGHT_META: Key.RIGHT_ALT,  # WinMac - Multi-language (Remove)
+    # Key.RIGHT_CTRL: Key.LEFT_CTRL,  # WinMac - Multi-language (Remove)
 
     # # Mac Only
     # Key.LEFT_META: Key.RIGHT_CTRL,  # Mac
     # # Left Ctrl Stays Left Ctrl
-    # Key.RIGHT_META: Key.RIGHT_CTRL, # Mac
-    # Key.RIGHT_CTRL: Key.LEFT_CTRL,  # Mac
+    # Key.RIGHT_META: Key.RIGHT_CTRL, # Mac - Multi-language (Remove)
+    # Key.RIGHT_CTRL: Key.LEFT_CTRL,  # Mac - Multi-language (Remove)
+})
+
+# Keybindings for IntelliJ
+define_keymap(re.compile("jetbrains-idea", re.IGNORECASE),{
+    # General
+    K("C-Key_0"): K("M-Key_0"),                 # Open corresponding tool window
+    K("C-Key_1"): K("M-Key_1"),                 # Open corresponding tool window
+    K("C-Key_2"): K("M-Key_2"),                 # Open corresponding tool window
+    K("C-Key_3"): K("M-Key_3"),                 # Open corresponding tool window
+    K("C-Key_4"): K("M-Key_4"),                 # Open corresponding tool window
+    K("C-Key_5"): K("M-Key_5"),                 # Open corresponding tool window
+    K("C-Key_6"): K("M-Key_6"),                 # Open corresponding tool window
+    K("C-Key_7"): K("M-Key_7"),                 # Open corresponding tool window
+    K("C-Key_8"): K("M-Key_8"),                 # Open corresponding tool window
+    K("C-Key_9"): K("M-Key_9"),                 # Open corresponding tool window
+    K("Super-Grave"): K("C-Grave"),             # Quick switch current scheme
+    K("C-Comma"): K("C-M-s"),                   # Open Settings dialog
+    K("C-Semicolon"): K("C-M-Shift-s"),         # Open Project Structure dialog
+    # Debugging
+    K("C-M-r"): K("F9"),                        # Resume program
+    # Search/Replace
+    K("C-g"): K("F3"),                          # Find next
+    K("C-Shift-F3"): K("Shift-F3"),             # Find previous
+    K("Super-g"): K("M-j"),                     # Select next occurrence
+    K("C-Super-g"): K("C-M-Shift-j"),           # Select all occurrences
+    K("Super-Shift-g"): K("M-Shift-j"),         # Unselect occurrence
+    # Editing
+    K("Super-Space"): K("C-Space"),             # Basic code completion
+    K("Super-Shift-Space"): K("C-Shift-Space"), # Smart code completion
+    K("Super-j"): K("C-q"),                     # Quick documentation lookup
+    K("C-n"): K("M-Insert"),                    # Generate code...
+    K("Super-o"): K("C-o"),                     # Override methods
+    K("Super-i"): K("C-i"),                     # Implement methods
+    K("M-Up"): K("C-w"),                        # Extend selection
+    K("M-Down"): K("C-Shift-w"),                # Shrink selection
+    K("Super-Shift-q"): K("M-q"),               # Context info
+    K("Super-M-o"): K("C-M-o"),                 # Optimize imports
+    K("Super-M-i"): K("C-M-i"),                 # Auto-indent line(s)
+    K("C-Backspace"): K("C-y"),                 # Delete line at caret
+    K("Super-Shift-j"): K("C-Shift-j"),         # Smart line join
+    K("M-Delete"): K("C-Delete"),               # Delete to word end
+    K("M-Backspace"): K("C-Backspace"),         # Delete to word start
+    K("C-Shift-Equal"): K("C-KPPLUS"),          # Expand code block
+    K("C-Minus"): K("C-KPMINUS"),               # Collapse code block
+    K("C-Shift-Equal"): K("C-Shift-KPPLUS"),    # Expand all
+    K("C-Shift-Minus"): K("C-Shift-KPMINUS"),   # Collapse all
+    K("C-w"): K("C-F4"),                        # Close active editor tab
+    # Refactoring
+    K("C-Delete"): K("M-Delete"),               # Safe Delete
+    K("C-T"): K("C-M-Shift-t"),                 # Refactor this
+    # Navigation
+    K("C-o"): K("C-n"),                         # Go to class
+    K("C-Shift-o"): K("C-Shift-n"),             # Go to file
+    K("C-M-o"): K("C-M-Shift-n"),               # Go to symbol
+    K("Super-Right"): K("M-Right"),             # Go to next editor tab
+    K("Super-Left"): K("M-Left"),               # Go to previous editor tab
+    K("Super-l"): K("C-g"),                     # Go to line
+    K("Super-e"): K("C-e"),                     # Recent files popup
+    K("M-Space"): K("C-Shift-i"),               # Open quick definition lookup
+    K("C-Y"): K("C-Shift-i"),                   # Open quick definition lookup
+    K("Super-Shift-b"): K("C-Shift-b"),         # Go to type declaration
+    K("Super-Up"): K("M-Up"),                   # Go to previous
+    K("Super-Down"): K("M-Down"),               # Go to next method
+    K("Super-h"): K("C-h"),                     # Type hierarchy
+    K("Super-M-h"): K("C-M-h"),                 # Call hierarchy
+    K("C-Down"): K("C-Enter"),                  # Edit source/View source
+    K("M-Home"): K("M-Home"),                   # Show navigation bar
+    K("F2"): K("F11"),                          # Toggle bookmark
+    K("Super-F3"): K("C-F11"),                  # Toggle bookmark with mnemonic
+    K("Super-Key_0"): K("C-Key_0"),             # Go to numbered bookmark
+    K("Super-Key_1"): K("C-Key_1"),             # Go to numbered bookmark
+    K("Super-Key_2"): K("C-Key_2"),             # Go to numbered bookmark
+    K("Super-Key_3"): K("C-Key_3"),             # Go to numbered bookmark
+    K("Super-Key_4"): K("C-Key_4"),             # Go to numbered bookmark
+    K("Super-Key_5"): K("C-Key_5"),             # Go to numbered bookmark
+    K("Super-Key_6"): K("C-Key_6"),             # Go to numbered bookmark
+    K("Super-Key_7"): K("C-Key_7"),             # Go to numbered bookmark
+    K("Super-Key_8"): K("C-Key_8"),             # Go to numbered bookmark
+    K("Super-Key_9"): K("C-Key_9"),             # Go to numbered bookmark
+    K("C-F3"): K("Shift-F11"),                  # Show bookmarks
+    # Compile and Run
+    K("Super-M-r"): K("M-Shift-F10"),           # Select configuration and run
+    K("Super-M-d"): K("M-Shift-F9"),            # Select configuration and debug
+    K("Super-r"): K("Shift-F10"),               # Run
+    K("Super-d"): K("Shift-F9"),                # Debug
+    K("Super-Shift-r"): K("C-Shift-F10"),       # Run context configuration from editor
+    K("Super-Shift-d"): K("C-Shift-F9"),        # Debug context configuration from editor
+    # VCS/Local History
+    K("Super-v"): K("M-Grave"),                 # VCS quick popup
+    K("Super-c"): K("LC-c"),                    # Sigints - interrupt
 })
 
 # Keybindings for Nautilus
@@ -67,6 +162,11 @@ define_keymap(re.compile("org.gnome.nautilus", re.IGNORECASE),{
     K("RC-Down"): K("M-Down"),      # Go Down dir
     K("RC-Left"): K("M-Left"),      # Go Back
     K("RC-Right"): K("M-Right"),    # Go Forward
+})
+
+# Keybindings for Browsers
+define_keymap(re.compile(browserStr, re.IGNORECASE),{
+    K("RC-Q"): K("RC-Q"),          # Close all browsers Instances
 })
 
 define_keymap(None,{
@@ -161,6 +261,7 @@ define_keymap(re.compile(codeStr, re.IGNORECASE),{
     K("C-g"): K("f3"),                          # find_next
     K("Shift-f3"): pass_through_key,            # cancel find_prev
     K("C-Shift-g"): K("Shift-f3"),              # find_prev
+    K("Super-c"): K("LC-c"),                    # Sigints - interrupt
     # K("Super-C-g"): K("C-f2"),                  # Default - Sublime - find_all_under
     # K("C-M-g"): K("C-f2"),                      # Chromebook - Sublime - find_all_under
     # K("Super-Shift-up"): K("M-Shift-up"),       # multi-cursor up - Sublime

@@ -98,8 +98,6 @@ Other programs that will be installed when you run ./setup.py
 
 Note: Sublime Text users should disable screen rotation hotkeys as they will interfere with multi-cursor and possibly other combos. See https://windowsloop.com/disable-screen-rotation-keyboard-shortcut/ for details.
 
-Does not have complete parity with the Linux edition, but it is getting very close now. Only lacks some Sublime Text 3 remaps at this point.
-
 Users can now hotswap between Apple and Windows based keyboards without having to logoff and back on, and Windows is currently the only implementation with a system tray (but this feature is coming to Budgie, XFCE, Mate, Gnome, and lastly KDE).
 
 <img src="https://user-images.githubusercontent.com/10969616/84471498-100c7d00-ac4b-11ea-972d-60c1907831ec.png" width="50%">
@@ -111,6 +109,7 @@ Users can now hotswap between Apple and Windows based keyboards without having t
 1. clone this repo
 ```
 git clone https://github.com/rbreaves/kinto.git
+cd kinto
 ```
 2. Install python3 (If needed)
 
@@ -335,6 +334,21 @@ systemctl --user stop keyswap && setxkbmap -option;setxkbmap -option altwin:swap
 ```
 
 ## Troubleshooting
+
+### Installed successfully, but modifier keys are not properly remapped?
+
+Are you using a VM on macOS? If so you may need to disable automatic remapping of the Cmd key when using Vmware Fusion of Parallels.
+
+Disable Parallels Re-mapping:
+1) Open Parallels and go to Preferences.
+2) Click Keyboard and disable the Virtual machine shortcuts.
+3) Close Preferences.
+
+To disable keyboard mapping:
+1) From Fusion's menu bar, click VMware Fusion > Preferences...
+2) Click Keyboard & Mouse.
+3) Click the Key Mappings tab.
+4) Deselect Enable Key Mapping.
 
 ### Does not start when you log in or after you reboot?
 

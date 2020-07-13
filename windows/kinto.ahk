@@ -75,6 +75,7 @@ GroupAdd, terminals, ahk_exe ConEmu64.exe
 GroupAdd, terminals, ahk_exe powershell.exe
 GroupAdd, terminals, ahk_exe WindowsTerminal.exe
 GroupAdd, terminals, ahk_exe Hyper.exe
+GroupAdd, terminals, ahk_exe mintty.exe
 GroupAdd, terminals, ahk_exe Cmd.exe
 GroupAdd, terminals, ahk_exe Terminus.exe
 GroupAdd, terminals, Fluent Terminal ahk_class ApplicationFrameWindow
@@ -94,6 +95,12 @@ GroupAdd, ConEmu, ahk_exe WindowsTerminal.exe
 GroupAdd, editors, ahk_exe sublime_text.exe
 GroupAdd, editors, ahk_exe VSCodium.exe
 GroupAdd, editors, ahk_exe Code.exe
+
+GroupAdd, browsers, ahk_exe chrome.exe
+GroupAdd, browsers, ahk_exe opera.exe
+GroupAdd, browsers, ahk_exe firefox.exe
+; Disabled Edge for now - no ability to close all instances
+; GroupAdd, browsers, Microsoft Edge ahk_class ApplicationFrameWindow
 
 GroupAdd, vscode, ahk_exe VSCodium.exe
 GroupAdd, vscode, ahk_exe Code.exe
@@ -290,6 +297,13 @@ $^+Right::Send +{End}
     #+d::Send ^+F9              ;Debug context configuration from editor
     ; VCS/Local History
     #v::Send !`                 ;VCS quick popup
+    ; Sigints - interrupt
+    $#c::Send {Ctrl down}c{Ctrl up}
+#If
+
+; Close all browsers
+#IfWinActive ahk_group browsers
+   ^q::send {Alt Down}f{Alt Up}x   ; exit all windows
 #If
 
 ; Sublime Text Remaps for VS Code
@@ -301,6 +315,8 @@ $^+Right::Send +{End}
     ; Remap Ctrl+Cmd+G to select all matches
 ;    #^g::send ^+{L}                                     ; ST2CODE
     !+g::send ^+{G}                                     ; View source control
+    ; Sigints - interrupt
+    $#c::Send {Ctrl down}c{Ctrl up}
 #If
 
 #IfWinActive ahk_exe sublime_text.exe
@@ -377,7 +393,10 @@ $^+Right::Send +{End}
 
     ; Paste
     ^v::
-    If WinActive("ahk_group posix"){
+    If WinActive("ahk_exe mintty.exe"){
+        Send {Shift down}{Insert}{Shift up}
+    }
+    else if WinActive("ahk_group posix"){
         Send {Blind}{Shift down}v{Shift up}
     }
     else{

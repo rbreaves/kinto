@@ -1,8 +1,8 @@
 #!/bin/bash
 # Undo Apple keyboard cmd & alt swap
 if test -f "/sys/module/hid_apple/parameters/swap_opt_cmd" && [ `cat /sys/module/hid_apple/parameters/swap_opt_cmd` == "1" ]; then
-	echo '0' | sudo tee -a /sys/module/hid_apple/parameters/swap_opt_cmd
-	echo 'options hid_apple swap_opt_cmd=0' | sudo tee -a /etc/modprobe.d/hid_apple.conf
+	echo '0' | sudo tee /sys/module/hid_apple/parameters/swap_opt_cmd
+	echo 'options hid_apple swap_opt_cmd=0' | sudo tee /etc/modprobe.d/hid_apple.conf
 	sudo update-initramfs -u -k all
 fi
 systemctl --user stop keyswap 2>/dev/null
