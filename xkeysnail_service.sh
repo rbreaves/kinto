@@ -181,21 +181,21 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 		* ) break;;
 	esac
 	done
-	branch=$(git rev-parse --abbrev-ref HEAD)
-	if [ "$branch" == "dev" ] || [ "$branch" == "alpha" ];then
-		while true; do
-		read -rep $'\nExperimental Support for Firefox/Chrome Back/Forward hotkeys (Cmd+Left/Right)?\n(Keys could get stuck, switch windows or press ctrl &/or super to release) (y/n)\n' yn
-		case $yn in
-			[Yy]* ) exp='/sbin/runuser -l {username} -c "export DISPLAY={displayid};{homedir}/.config/kinto/caret_status_xkey.sh\&";'; expsh='"{homedir}/.config/kinto/caret_status_xkey.sh"'; break;;
-			[Nn]* ) exp=" "; expsh=" " break;;
-			# * ) echo "Please answer yes or no.";;
-		esac
-		done
-	else
-		echo -e "\nSupport for Firefox/Chrome Back/Forward hotkeys (Cmd+Left/Right) disabled on $branch w/ xkeysnail \n"
-		exp=" "
-		expsh=" "
-	fi
+	# branch=$(git rev-parse --abbrev-ref HEAD)
+	# if [ "$branch" == "dev" ] || [ "$branch" == "alpha" ];then
+	# 	while true; do
+	# 	read -rep $'\nExperimental Support for Firefox/Chrome Back/Forward hotkeys (Cmd+Left/Right)?\n(Keys could get stuck, switch windows or press ctrl &/or super to release) (y/n)\n' yn
+	# 	case $yn in
+	# 		[Yy]* ) exp='/sbin/runuser -l {username} -c "export DISPLAY={displayid};{homedir}/.config/kinto/caret_status_xkey.sh\&";'; expsh='"{homedir}/.config/kinto/caret_status_xkey.sh"'; break;;
+	# 		[Nn]* ) exp=" "; expsh=" " break;;
+	# 		# * ) echo "Please answer yes or no.";;
+	# 	esac
+	# 	done
+	# else
+	# 	echo -e "\nSupport for Firefox/Chrome Back/Forward hotkeys (Cmd+Left/Right) disabled on $branch w/ xkeysnail \n"
+	exp=" "
+	expsh=" "
+	# fi
 	sudo systemctl enable xkeysnail >/dev/null 2>&1
 	if ! [ -x "$(command -v inotifywait)" ]; then
 		echo "Will need to install inotify-tools to restart key remapper live for config file changes..."
@@ -238,6 +238,7 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	yes | cp -rf ./xkeysnail-config/xkeysnail.desktop ~/.config/autostart/xkeysnail.desktop
 
 	yes | cp -rf ./xkeysnail-config/xkeystart.sh ~/.config/kinto/xkeystart.sh
+	yes | cp -rf ./xkeysnail-config/logoff.sh ~/.config/kinto/logoff.sh
 	yes | cp -rf ./xkeysnail-config/kinto.py ./xkeysnail-config/kinto.py.new
 	yes | cp -rf ./xkeysnail-config/limitedadmins ./xkeysnail-config/limitedadmins.new
 	yes | cp -rf ./xkeysnail-config/prexk.sh ~/.config/kinto/prexk.sh
@@ -260,6 +261,7 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	sudo mv ./xkeysnail-config/limitedadmins.new /etc/sudoers.d/limitedadmins
 	sed -i "s#{systemctl}#`\\which systemctl`#g" ~/.config/autostart/xkeysnail.desktop
 	sed -i "s#{xhost}#`\\which xhost`#g" ~/.config/autostart/xkeysnail.desktop
+	sed -i "s#{homedir}#`echo "$HOME"`#g" ~/.config/autostart/xkeysnail.desktop
 	sed -i "s#{homedir}#`echo "$HOME"`#g" ~/.config/kinto/prexk.sh
 	sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ./xkeysnail-config/xkeysnail.service.new
 	sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ~/.config/kinto/prexk.sh

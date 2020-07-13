@@ -2,7 +2,7 @@
 Name=Kinto_xkey
 GenericName=Kinto_xkey
 Comment=Make Linux Type Like it's a Mac
-Exec=/bin/bash -c "{xhost} +SI:localuser:root && sudo {systemctl} restart xkeysnail"
+Exec=/bin/bash -c "{xhost} +SI:localuser:root && sudo {systemctl} restart xkeysnail && {homedir}/.config/kinto/logoff.sh"
 Terminal=false
 Type=Application
 X-GNOME-Autostart-enabled=true
