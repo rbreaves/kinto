@@ -374,6 +374,17 @@ $^+Right::Send +{End}
 #If
 
 #IfWinActive ahk_group terminals
+
+    ; End of Line
+    #e::
+    Send {End}
+    return
+
+    ; Beginning of Line
+    #a::
+    Send {Home}
+    return
+
     ; Copy
     ^c::
     SetKeyDelay -1
@@ -420,28 +431,6 @@ $^+Right::Send +{End}
     else{
         Send ^w
     }
-    return
-
-    ; End of Line
-    ^e::
-    SetKeyDelay -1
-    Send {Blind}{e DownTemp}
-    return
-
-    ^e up::
-    SetKeyDelay -1
-    Send {Blind}{e Up}
-    return
-
-    ; Beginning of Line
-    ^a::
-    SetKeyDelay -1
-    Send {Blind}{a DownTemp}
-    return
-
-    ^a up::
-    SetKeyDelay -1
-    Send {Blind}{a Up}
     return
 
     ^l::Send clear{Enter}

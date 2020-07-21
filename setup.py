@@ -265,6 +265,8 @@ def setShortcuts():
 			cmdline('dconf load /org/gnome/desktop/wm/keybindings/ < tempkb.conf')
 			cmdline('dconf load /org/gnome/mutter/keybindings/ < tempmt.conf')
 			cmdline('sleep 1 && rm -f ./tempkb.conf;rm -f ./tempmt.conf')
+			if dename == "budgie":
+				print('** Make sure to open Keyboard settings & reset "switch applications" to cmd+tab **')
 			# cmdline('dconf update')
 
 def Uninstall():
