@@ -183,6 +183,37 @@ $LCtrl up::Send {Ctrl down}{LWin up}{Ctrl up}
 ; Minimize specific Window
 ^m::WinMinimize, A
 
+; Minimize all but Active Window
+!^m::
+WinMinimizeAll
+WinActivate, A
+return
+
+; hide all instances of active Program
+^h::
+WinGetClass, class, A
+WinGet, AllWindows, List
+loop %AllWindows% {
+    WinGetClass, WinClass, % "ahk_id " AllWindows%A_Index%
+    if(InStr(WinClass,class)){
+        WinMinimize, % "ahk_id " AllWindows%A_Index%
+    }
+}
+return
+
+; hide all but active program
+!^h::
+WinGetClass, class, A
+WinMinimizeAll
+WinGet, AllWindows, List
+loop %AllWindows% {
+    WinGetClass, WinClass, % "ahk_id " AllWindows%A_Index%
+    if(InStr(WinClass,class)){
+        WinRestore, % "ahk_id " AllWindows%A_Index%
+    }
+}
+return
+
 ; Show Desktop
 ^F3::Send #d
 
@@ -340,7 +371,7 @@ $^+Right::Send +{End}
     ^!O::send {Insert}                                      ; toggle_overwrite
     !c::Return                                              ; cancel toggle_case_sensitive
     ^!c::send !{c}                                          ; toggle_case_sensitive
-    ^h::Return                                              ; cancel replace
+    ; ^h::Return                                              ; cancel replace
     ^!f::send ^{h}                                          ; replace
     ^+h::Return                                             ; cancel replace_next
     ^!e::send ^+{h}                                         ; replace_next
