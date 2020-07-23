@@ -180,6 +180,12 @@ $LCtrl up::Send {Ctrl down}{LWin up}{Ctrl up}
 ; Close Apps 
 ^q::Send !{F4}
 
+; Minimize specific Window
+^m::WinMinimize, A
+
+; Show Desktop
+^F3::Send #d
+
 ; Emoji Panel
 #^Space::Send {LWin down};{LWin up}
 
@@ -210,92 +216,90 @@ $^+Right::Send +{End}
 
 #IfWinActive ahk_group intellij
     ; General
-    ^0::Send !{0}               ;Open corresponding tool window
-    ^1::Send !{1}               ;Open corresponding tool window
-    ^2::Send !{2}               ;Open corresponding tool window
-    ^3::Send !{3}               ;Open corresponding tool window
-    ^4::Send !{4}               ;Open corresponding tool window
-    ^5::Send !{5}               ;Open corresponding tool window
-    ^6::Send !{6}               ;Open corresponding tool window
-    ^7::Send !{7}               ;Open corresponding tool window
-    ^8::Send !{8}               ;Open corresponding tool window
-    ^9::Send !{9}               ;Open corresponding tool window
-    #`::Send ^`                 ;Quick switch current scheme
-    ^,::Send ^!s                ;Open Settings dialog
-    ^;::Send ^!+s               ;Open Project Structure dialog
+    ^0::Send !{0}                   ;Open corresponding tool window
+    ^1::Send !{1}                   ;Open corresponding tool window
+    ^2::Send !{2}                   ;Open corresponding tool window
+    ^3::Send !{3}                   ;Open corresponding tool window
+    ^4::Send !{4}                   ;Open corresponding tool window
+    ^5::Send !{5}                   ;Open corresponding tool window
+    ^6::Send !{6}                   ;Open corresponding tool window
+    ^7::Send !{7}                   ;Open corresponding tool window
+    ^8::Send !{8}                   ;Open corresponding tool window
+    ^9::Send !{9}                   ;Open corresponding tool window
+    #`::Send ^`                     ;Quick switch current scheme
+    ^,::Send ^!s                    ;Open Settings dialog
+    ^;::Send ^!+s                   ;Open Project Structure dialog
     ; Debugging
-    ^!r::Send F9                ;Resume program
+    ^!r::Send {F9}                  ;Resume program
     ; Search/Replace
-    ^g::Send F3                 ;Find next
-    ^+F3::Send Shift+F3         ;Find previous
-    #g::Send !j                 ;Select next occurrence
-    ^#g::Send ^!+j              ;Select all occurrences
-    #+g::Send !+j               ;Unselect occurrence
+    ^g::Send {F3}                   ;Find next
+    ^+F3::Send +{F3}                ;Find previous
+    #g::Send !j                     ;Select next occurrence
+    ^#g::Send ^!+j                  ;Select all occurrences
+    #+g::Send !+j                   ;Unselect occurrence
     ; Editing
-    #Space::Send ^Space         ;Basic code completion
-    #+Space::Send ^+Space       ;Smart code completion
-    #j::Send ^q                 ;Quick documentation lookup
-    ^n::Send !{Insert}          ;Generate code...
-    #o::Send ^o                 ;Override methods
-    #i::Send ^i                 ;Implement methods
-    !Up::Send ^w                ;Extend selection
-    !Down::Send ^+w             ;Shrink selection
-    #+q::Send !q                ;Context info
-    #!o::Send ^!o               ;Optimize imports
-    #!i::Send ^!i               ;Auto-indent line(s)
-    ^Backspace::Send ^y         ;Delete line at caret
-    #+j::Send ^+j               ;Smart line join
-    !Delete::Send ^Delete       ;Delete to word end
-    !Backspace::Send ^Backspace ;Delete to word start
-    ^+::Send ^{NumpadAdd}       ;Expand code block
-    ^-::Send ^{NumpadSub}       ;Collapse code block
-    ^++::Send ^+{NumpadAdd}     ;Expand all
-    ^+-::Send ^+{NumpadSub}     ;Collapse all
-    ^w::Send ^F4                ;Close active editor tab
+    #Space::Send ^{Space}           ;Basic code completion
+    #+Space::Send ^+{Space}         ;Smart code completion
+    #j::Send ^q                     ;Quick documentation lookup
+    ^n::Send !{Insert}              ;Generate code...
+    #o::Send ^o                     ;Override methods
+    #i::Send ^i                     ;Implement methods
+    !Up::Send ^w                    ;Extend selection
+    !Down::Send ^+w                 ;Shrink selection
+    #+q::Send !q                    ;Context info
+    #!o::Send ^!o                   ;Optimize imports
+    #!i::Send ^!i                   ;Auto-indent line(s)
+    ^Backspace::Send ^y             ;Delete line at caret
+    #+j::Send ^+j                   ;Smart line join
+    !Delete::Send ^{Delete}         ;Delete to word end
+    !Backspace::Send ^{Backspace}   ;Delete to word start
+    ^+::Send ^{NumpadAdd}           ;Expand code block
+    ^-::Send ^{NumpadSub}           ;Collapse code block
+    ^++::Send ^+{NumpadAdd}         ;Expand all
+    ^+-::Send ^+{NumpadSub}         ;Collapse all
+    ^w::Send ^{F4}                  ;Close active editor tab
     ; Refactoring
-    ^Delete::Send !Delete       ;Safe Delete
-    ^T::Send ^!+T               ;Refactor this
+    ^Delete::Send !{Delete}         ;Safe Delete
+    ^T::Send ^!+T                   ;Refactor this
     ; Navigation
-    ^o::Send ^n                 ;Go to class
-    ^+o::Send ^+n               ;Go to file
-    ^!o::Send ^!+n              ;Go to symbol
-    #Right::Send !Right         ;Go to next editor tab
-    #Left::Send !Left           ;Go to previous editor tab
-    #l::Send ^g                 ;Go to line
-    #e::Send ^e                 ;Recent files popup
-    !Space::Send ^+i            ;Open quick definition lookup
-    ^Y::Send ^+i                ;Open quick definition lookup
-    #+b::Send ^+b               ;Go to type declaration
-    #Up::Send !Up               ;Go to previous
-    #Down::Send !Down           ;Go to next method
-    #h::Send ^h                 ;Type hierarchy
-    #!h::Send ^!h               ;Call hierarchy
-    ^Down::Send ^Enter          ;Edit source/View source
-    !Home::Send !Home           ;Show navigation bar
-    F2::Send F11                ;Toggle bookmark
-    #F3::Send ^F11              ;Toggle bookmark with mnemonic
-    #0::Send ^{0}               ;Go to numbered bookmark
-    #1::Send ^{1}               ;Go to numbered bookmark
-    #2::Send ^{2}               ;Go to numbered bookmark
-    #3::Send ^{3}               ;Go to numbered bookmark
-    #4::Send ^{4}               ;Go to numbered bookmark
-    #5::Send ^{5}               ;Go to numbered bookmark
-    #6::Send ^{6}               ;Go to numbered bookmark
-    #7::Send ^{7}               ;Go to numbered bookmark
-    #8::Send ^{8}               ;Go to numbered bookmark
-    #9::Send ^{9}               ;Go to numbered bookmark
-    ^F3::Send +F11              ;Show bookmarks
+    ^o::Send ^n                     ;Go to class
+    ^+o::Send ^+n                   ;Go to file
+    ^!o::Send ^!+n                  ;Go to symbol
+    #Right::Send !{Right}           ;Go to next editor tab
+    #Left::Send !{Left}             ;Go to previous editor tab
+    #l::Send ^g                     ;Go to line
+    #e::Send ^e                     ;Recent files popup
+    !Space::Send ^+i                ;Open quick definition lookup
+    ^Y::Send ^+i                    ;Open quick definition lookup
+    #+b::Send ^+b                   ;Go to type declaration
+    #Up::Send !{Up}                 ;Go to previous
+    #Down::Send !{Down}             ;Go to next method
+    #h::Send ^h                     ;Type hierarchy
+    #!h::Send ^!h                   ;Call hierarchy
+    ^Down::Send ^{Enter}            ;Edit source/View source
+    !Home::Send !{Home}             ;Show navigation bar
+    F2::Send {F11}                  ;Toggle bookmark
+    #F3::Send ^{F11}                ;Toggle bookmark with mnemonic
+    #0::Send ^{0}                   ;Go to numbered bookmark
+    #1::Send ^{1}                   ;Go to numbered bookmark
+    #2::Send ^{2}                   ;Go to numbered bookmark
+    #3::Send ^{3}                   ;Go to numbered bookmark
+    #4::Send ^{4}                   ;Go to numbered bookmark
+    #5::Send ^{5}                   ;Go to numbered bookmark
+    #6::Send ^{6}                   ;Go to numbered bookmark
+    #7::Send ^{7}                   ;Go to numbered bookmark
+    #8::Send ^{8}                   ;Go to numbered bookmark
+    #9::Send ^{9}                   ;Go to numbered bookmark
+    ^F3::Send +{F11}                ;Show bookmarks
     ; Compile and Run
-    #!r::Send !+F10             ;Select configuration and run
-    #!d::Send !+F9              ;Select configuration and debug
-    #r::Send +F10               ;Run
-    #d::Send +F9                ;Debug
-    #+r::Send ^+F10             ;Run context configuration from editor
-    #+d::Send ^+F9              ;Debug context configuration from editor
+    #!r::Send !+{F10}               ;Select configuration and run
+    #!d::Send !+{F9}                ;Select configuration and debug
+    #r::Send +{F10}                 ;Run
+    #d::Send +{F9}                  ;Debug
+    #+r::Send ^+{F10}               ;Run context configuration from editor
+    #+d::Send ^+{F9}                ;Debug context configuration from editor
     ; VCS/Local History
-    #v::Send !`                 ;VCS quick popup
-    ; Sigints - interrupt
-    $#c::Send {Ctrl down}c{Ctrl up}
+    #v::Send !`                     ;VCS quick popup
 #If
 
 ; Close all browsers
