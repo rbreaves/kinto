@@ -185,8 +185,9 @@ $LCtrl up::Send {Ctrl down}{LWin up}{Ctrl up}
 
 ; Minimize all but Active Window
 !^m::
+WinGet, winid ,, A
 WinMinimizeAll
-WinActivate, A
+WinActivate ahk_id %winid%
 return
 
 ; hide all instances of active Program
