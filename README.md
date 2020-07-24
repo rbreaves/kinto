@@ -79,9 +79,11 @@ Additionally, if you are using a cross-platform app and if it happens to have a 
 - Fedora/RHEL (may not work w/ xkeysnail, but original xkb version does)
 - xkeysnail (Recommended, but optional)
 
+Note: Budgie DE's, so Ubuntu Budgie, appears to have a bug where keybinds may not save across reboots. Please reset the Cmd+Tab keymap before rebooting to ensure it remembers that setting. I will remove this once the issue is resolved.
+
 *IBus is needed to support wordwise during browser app usage as the keymap will need to change slightly depending if the cursor/caret is on screen waiting for input. Setup.py will set it but you can manually set it as well or check your current Input Method.
 
-On most distros you can confirm by navigating to "Language Support" and set "Keyboard input method system:" to IBus for full word-wise support with web browsers. 
+On most distros you can confirm Input Methods by navigating to "Language Support" and set "Keyboard input method system:" to IBus for full word-wise support with web browsers. 
 
 Wayland support is planned, but not ready yet.
 
