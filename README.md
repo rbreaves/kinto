@@ -81,7 +81,7 @@ Additionally, if you are using a cross-platform app and if it happens to have a 
 
 *IBus is needed to support wordwise during browser app usage as the keymap will need to change slightly depending if the cursor/caret is on screen waiting for input. Setup.py will set it but you can manually set it as well or check your current Input Method.
 
-On most distros you can confirm navigate to your "Language Support" and set "Keyboard input method system:" to IBus for full word-wise support with web browsers. 
+On most distros you can confirm by navigating to "Language Support" and set "Keyboard input method system:" to IBus for full word-wise support with web browsers. 
 
 Wayland support is planned, but not ready yet.
 
