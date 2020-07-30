@@ -3,3 +3,4 @@
 %{username} ALL=NOPASSWD: {systemctl} start xkeysnail
 %{username} ALL=NOPASSWD: {systemctl} stop xkeysnail
 %{username} ALL=NOPASSWD: {systemctl} status xkeysnail
+%{username} ALL=NOPASSWD: {systemctl} is-active --quiet xkeysnail
