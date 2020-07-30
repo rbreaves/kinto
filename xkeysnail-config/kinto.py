@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# autostart = true
 
 import re
 from xkeysnail.transform import *
