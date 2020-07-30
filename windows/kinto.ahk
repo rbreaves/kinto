@@ -107,6 +107,9 @@ GroupAdd, vscode, ahk_exe Code.exe
 
 GroupAdd, vstudio, ahk_exe devenv.exe
 
+GroupAdd, intellij, ahk_exe idea.exe
+GroupAdd, intellij, ahk_exe idea64.exe
+
 ; New AltTab and CtrlTab fix
 *tab:: 
 {
