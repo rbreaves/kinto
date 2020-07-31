@@ -238,7 +238,7 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	yes | cp -rf ./xkeysnail-config/xkeysnail.desktop ~/.config/autostart/xkeysnail.desktop
 
 	yes | cp -rf ./xkeysnail-config/xkeystart.sh ~/.config/kinto/xkeystart.sh
-	yes | cp -rf ./xkeysnail-config/logoff.sh ~/.config/kinto/logoff.sh
+	yes | cp -rf ./xkeysnail-config/gnome_logoff.sh ~/.config/kinto/gnome_logoff.sh
 	yes | cp -rf ./xkeysnail-config/kinto.py ./xkeysnail-config/kinto.py.new
 	yes | cp -rf ./xkeysnail-config/limitedadmins ./xkeysnail-config/limitedadmins.new
 	yes | cp -rf ./xkeysnail-config/prexk.sh ~/.config/kinto/prexk.sh
