@@ -101,7 +101,7 @@ function trayApp {
 			sudo ./install-applet.sh
 			cd ../../../
 			echo "Please logoff and back on for the Applet to be available for the top panel."
-			~/.config/kinto/gnome_logoff.sh&
+			sudo /usr/local/bin/logoff.sh $USER $DISPLAY&
 		fi
 	else
 		while true; do
@@ -271,7 +271,10 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	yes | cp -rf ./xkeysnail-config/xkeysnail.desktop ~/.config/autostart/xkeysnail.desktop
 
 	# yes | cp -rf ./xkeysnail-config/xkeystart.sh ~/.config/kinto/xkeystart.sh
-	yes | cp -rf ./xkeysnail-config/gnome_logoff.sh ~/.config/kinto/gnome_logoff.sh
+	yes | sudo cp -rf xkeysnail-config/root_logoff.sh /usr/local/bin/logoff.sh
+	sudo chown root:root /usr/local/bin/logoff.sh
+	sudo chmod u+rwx /usr/local/bin/logoff.sh
+	sudo chmod go-w+rx /usr/local/bin/logoff.sh
 	yes | cp -rf ./xkeysnail-config/kinto.py ./xkeysnail-config/kinto.py.new
 	yes | cp -rf ./xkeysnail-config/limitedadmins ./xkeysnail-config/limitedadmins.new
 	# yes | cp -rf ./xkeysnail-config/prexk.sh ~/.config/kinto/prexk.sh
@@ -289,6 +292,7 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	sed -i "s#{xhost}#`\\which xhost`#g" ./xkeysnail-config/xkeysnail.service.new
 	sed -i "s/{username}/`whoami`/g" ./xkeysnail-config/limitedadmins.new
 	sed -i "s#{systemctl}#`\\which systemctl`#g" ./xkeysnail-config/limitedadmins.new
+	sed -i "s#{pkill}#`\\which pkill`#g" ./xkeysnail-config/limitedadmins.new
 	sudo chown root:root ./xkeysnail-config/limitedadmins.new
 	sudo mv ./xkeysnail-config/limitedadmins.new /etc/sudoers.d/limitedadmins
 	sed -i "s#{systemctl}#`\\which systemctl`#g" ~/.config/autostart/xkeysnail.desktop
