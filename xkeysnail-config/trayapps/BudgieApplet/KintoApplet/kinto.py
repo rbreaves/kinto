@@ -52,10 +52,9 @@ class KintoApplet(Budgie.Applet):
 	img_arrow=Gtk.Image.new_from_icon_name('pan-down-symbolic',Gtk.IconSize.BUTTON)
 	revealed=False                               # Whether Gtk.Revealer is open or not.
 	checkbox_autostart = Gtk.CheckButton()
-	button_suspend = Gtk.Button()
+	checkbox_suspend = Gtk.CheckButton()
 	button_winmac = Gtk.Button()
 	button_setscale = Gtk.Button()
-	button_suspend.set_relief(Gtk.ReliefStyle.NONE)
 	button_winmac.set_relief(Gtk.ReliefStyle.NONE)
 	button_setscale.set_relief(Gtk.ReliefStyle.NONE)
 	suspend_id=0
@@ -87,7 +86,7 @@ class KintoApplet(Budgie.Applet):
 		self.checkbox_autostart.set_label("Autostart")
 		# self.checkbox_autostart.modify_fg(Gtk.STATE_NORMAL, Gtk.Gdk.color_parse('#366B7E'));
 		if self.autostart_bool:
-			# subprocess.Popen(['sudo', 'systemctl','restart','xkeysnail'])
+			subprocess.Popen(['sudo', 'systemctl','restart','xkeysnail'])
 			self.checkbox_autostart.set_active(True)
 			self.chkautostart_id = self.checkbox_autostart.connect("clicked",self.setAutostart,False)
 		else:
@@ -95,28 +94,27 @@ class KintoApplet(Budgie.Applet):
 			self.checkbox_autostart.set_active(False)
 			self.chkautostart_id = self.checkbox_autostart.connect("clicked",self.setAutostart,True)
 		# self.chkautostart_id = self.checkbox_autostart.connect("clicked",self.setAutostart,True)
-		self.hbox.pack_start(self.checkbox_autostart,True,False,5)
-		# self.hbox.pack_start(self.button_autostart,True,False,5)
+		self.vbox.pack_start(self.checkbox_autostart,True,False,5)
 		self.hbox.pack_end(seperator,True,False,0)
-		self.vbox.pack_start(self.hbox,True,False,5)
+		# self.vbox.pack_start(self.hbox,True,False,5)
 		# self.vbox.pack_start(seperator,True,False,0)
 
 		time.sleep(5)
 		res = subprocess.Popen(['sudo', 'systemctl','is-active','--quiet','xkeysnail'])
 		res.wait()
 		
+		self.checkbox_suspend.set_label("Kinto Enabled")
+
 		if res.returncode == 0:
-			# self.button_suspend = Gtk.Button("Suspend Kinto")
-			self.button_suspend.set_label("Suspend Kinto")
+			self.checkbox_suspend.set_active(True)
 			self.img.set_from_icon_name("kinto-invert", Gtk.IconSize.BUTTON)
-			self.suspend_id = self.button_suspend.connect("clicked",self.suspend,True)
+			self.suspend_id = self.checkbox_suspend.connect("clicked",self.suspend,True)
 		else:
-			# self.button_suspend = Gtk.Button("Enable Kinto")
-			self.button_suspend.set_label("Enable Kinto")
-			# self.img.set_from_icon_name("kinto", Gtk.IconSize.BUTTON)
+			self.checkbox_suspend.set_active(False)
 			self.img.set_from_icon_name("kinto-color", Gtk.IconSize.BUTTON)
-			self.suspend_id = self.button_suspend.connect("clicked",self.suspend,False)
-		self.vbox.pack_start(self.button_suspend,True,False,5)
+			self.suspend_id = self.checkbox_suspend.connect("clicked",self.suspend,False)
+		self.vbox.pack_start(self.checkbox_suspend,True,False,5)
+		self.hbox.pack_end(seperator,True,False,0)
 		# self.vbox.pack_start(seperator,True,False,0)
 
 		self.box.add(self.img)
@@ -204,18 +202,18 @@ class KintoApplet(Budgie.Applet):
 		try:
 			if suspendKinto:
 				subprocess.Popen(['sudo', 'systemctl','stop','xkeysnail'])
-				self.button_suspend.set_label("Enable Kinto")
+				self.checkbox_suspend.set_active(False)
 				self.img.set_from_icon_name("kinto-color", Gtk.IconSize.BUTTON)
-				self.button_suspend.disconnect(self.suspend_id)
-				self.suspend_id = self.button_suspend.connect("clicked",self.suspend,False)
+				self.checkbox_suspend.disconnect(self.suspend_id)
+				self.suspend_id = self.checkbox_suspend.connect("clicked",self.suspend,False)
 				self.box.add(self.img)
 
 			else:
 				subprocess.Popen(['sudo', 'systemctl','restart','xkeysnail'])
-				self.button_suspend.set_label("Suspend Kinto")
+				self.checkbox_suspend.set_active(True)
 				self.img.set_from_icon_name("kinto-invert", Gtk.IconSize.BUTTON)
-				self.button_suspend.disconnect(self.suspend_id)
-				self.suspend_id = self.button_suspend.connect("clicked",self.suspend,True)
+				self.checkbox_suspend.disconnect(self.suspend_id)
+				self.suspend_id = self.checkbox_suspend.connect("clicked",self.suspend,True)
 				self.box.add(self.img)
 
 		except subprocess.CalledProcessError:                                  # Notify user about error on running restart commands.
@@ -263,8 +261,21 @@ class KintoApplet(Budgie.Applet):
 		except subprocess.CalledProcessError:                                  # Notify user about error on running restart commands.
 			subprocess.Popen(['notify-send','Kinto: Error Reseting KB Type!','-i','budgie-desktop-symbolic'])
 
-	def setAutostart(self,button,kbtype):
-		print('test')
+	def setAutostart(self,button,autostart):
+		try:
+			if autostart == False:
+				subprocess.Popen(['perl','-pi','-e','s/autostart = true/autostart = false/g',self.homedir+'/.config/kinto/kinto.py'])
+				self.checkbox_autostart.set_active(False)
+				self.checkbox_autostart.disconnect(self.chkautostart_id)
+				self.chkautostart_id = self.checkbox_autostart.connect("clicked",self.setAutostart,True)
+			else:
+				subprocess.Popen(['perl','-pi','-e','s/autostart = false/autostart = true/g',self.homedir+'/.config/kinto/kinto.py'])
+				self.checkbox_autostart.set_active(True)
+				self.checkbox_autostart.disconnect(self.chkautostart_id)
+				self.chkautostart_id = self.checkbox_autostart.connect("clicked",self.setAutostart,False)
+
+		except subprocess.CalledProcessError:                                  # Notify user about error on running restart commands.
+			subprocess.Popen(['notify-send','Kinto: Error setting autostart!','-i','budgie-desktop-symbolic'])
 	
 	def setScale(self,button,scale):
 		print("scale")
