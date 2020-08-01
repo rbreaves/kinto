@@ -20,6 +20,7 @@
 import subprocess,time,os,gi.repository
 gi.require_version('Budgie','1.0')
 gi.require_version('Gtk','3.0')
+from shutil import which
 from gi.repository import Budgie, GObject, Gtk
 
 class Kinto(GObject.GObject, Budgie.Plugin):
@@ -53,8 +54,14 @@ class KintoApplet(Budgie.Applet):
 	revealed=False                               # Whether Gtk.Revealer is open or not.
 	checkbox_autostart = Gtk.CheckButton()
 	checkbox_suspend = Gtk.CheckButton()
+	button_region = Gtk.Button()
+	button_syskb = Gtk.Button()
+	button_config = Gtk.Button()
 	button_winmac = Gtk.Button()
 	button_setscale = Gtk.Button()
+	button_region.set_relief(Gtk.ReliefStyle.NONE)
+	button_syskb.set_relief(Gtk.ReliefStyle.NONE)
+	button_config.set_relief(Gtk.ReliefStyle.NONE)
 	button_winmac.set_relief(Gtk.ReliefStyle.NONE)
 	button_setscale.set_relief(Gtk.ReliefStyle.NONE)
 	suspend_id=0
@@ -115,7 +122,11 @@ class KintoApplet(Budgie.Applet):
 			self.suspend_id = self.checkbox_suspend.connect("clicked",self.suspend,False)
 		self.vbox.pack_start(self.checkbox_suspend,True,False,5)
 		self.hbox.pack_end(seperator,True,False,0)
-		# self.vbox.pack_start(seperator,True,False,0)
+
+		self.button_config.set_label("Edit Config")
+		self.button_config.connect("clicked",self.setConfig)
+		self.vbox.pack_start(self.button_config,True,False,5)
+		self.hbox.pack_end(seperator,True,False,0)
 
 		self.box.add(self.img)
 		self.box.connect("button-press-event", self.on_press)
@@ -126,13 +137,24 @@ class KintoApplet(Budgie.Applet):
 		res.wait()
 		res = res.communicate()[0]
 
-		if True:
+		if res:
 			self.button_winmac.set_label("Set Win/Mac KB Type")
 			self.winmac_id = self.button_winmac.connect("clicked",self.setKB,"winmac")
 		else:
 			self.button_winmac.set_label("Set Mac Only KB Type")
 			self.winmac_id = self.button_winmac.connect("clicked",self.setKB,"mac")
 		self.vbox.pack_start(self.button_winmac,True,False,5)
+		self.hbox.pack_end(seperator,True,False,0)
+
+		self.button_syskb.set_label("System Shortcuts")
+		self.button_syskb.connect("clicked",self.setSysKB)
+		self.vbox.pack_start(self.button_syskb,True,False,5)
+		self.hbox.pack_end(seperator,True,False,0)
+
+		self.button_region.set_label("Change Language")
+		self.button_region.connect("clicked",self.setRegion)
+		self.vbox.pack_start(self.button_region,True,False,5)
+
 		# self.vbox.pack_start(seperator,True,False,0)
 		# self.hbox.pack_end(self.button_arrow,False,False,5)
 
@@ -277,6 +299,22 @@ class KintoApplet(Budgie.Applet):
 		except subprocess.CalledProcessError:                                  # Notify user about error on running restart commands.
 			subprocess.Popen(['notify-send','Kinto: Error setting autostart!','-i','budgie-desktop-symbolic'])
 	
+	def setConfig(self,button):
+		try:
+			if os.path.exists('/opt/sublime_text/sublime_text'):
+				subprocess.Popen(['/opt/sublime_text/sublime_text',self.homedir+'/.config/kinto/kinto.py'])
+			elif which(gedit) is not None:
+				subprocess.Popen(['gedit',self.homedir+'/.config/kinto/kinto.py'])
+
+		except subprocess.CalledProcessError:                                  # Notify user about error on running restart commands.
+			subprocess.Popen(['notify-send','Kinto: Error could not open config file!','-i','budgie-desktop-symbolic'])
+
+	def setSysKB(self,button):
+		subprocess.Popen(['gnome-control-center','keyboard'])
+
+	def setRegion(self,button):
+		subprocess.Popen(['gnome-control-center','region'])
+
 	def setScale(self,button,scale):
 		print("scale")
 
