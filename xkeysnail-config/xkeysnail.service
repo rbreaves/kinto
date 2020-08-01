@@ -5,7 +5,6 @@ Description=xkeysnail
 Type=simple
 KillMode=process
 ExecStart=/usr/bin/sudo /bin/bash -c '/usr/bin/xhost +SI:localuser:root && /usr/local/bin/xkeysnail --quiet --watch {homedir}/.config/kinto/kinto.py'
-ExecStop=/usr/bin/pkill -f xkeysnail
 Restart=on-failure
 RestartSec=3
 Environment=DISPLAY={displayid}

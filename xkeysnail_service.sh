@@ -86,6 +86,39 @@ function removeAppleKB {
 	fi
 }
 
+function trayApp {
+	if [ -f /usr/bin/budgie-desktop ];then
+		while true; do
+			read -rep $'Would you like to install the Kinto Budgie Applet? (y/n)\n(You will need log off & back on and go to Budgie Desktop Settings & add Kinto to your top panel.)\n' yn
+			case $yn in
+				[Yy]* ) yn="y"; break;;
+				[Nn]* ) yn="n";break;;
+				* ) echo "Please answer yes or no.";;
+			esac
+		done
+		if [ "$yn" == "y" ]; then
+			cd ./xkeysnail-config/trayapps/BudgieApplet/
+			sudo ./install-applet.sh
+			cd ../../../
+			echo "Please logoff and back on for the Applet to be available for the top panel."
+			~/.config/kinto/gnome_logoff.sh&
+		fi
+	else
+		while true; do
+			read -rep $'Would you like to install the Kinto Gnome/XFCE System Tray? (y/n)\n' yn
+			case $yn in
+				[Yy]* ) yn="y"; break;;
+				[Nn]* ) yn="n";break;;
+				* ) echo "Please answer yes or no.";;
+			esac
+		done
+		if [ "$yn" == "y" ]; then
+			echo "Kinto Gnome/XFCE System Tray Installed."
+		fi
+	fi
+}
+
+
 function budgieUninstall {
 	if [ -f /usr/bin/budgie-desktop ];then
 		read -n 1 -s -r -p "Your system may log you off immediately during the restoration of budgie-daemon. Press any key to continue..."
@@ -104,7 +137,7 @@ function budgieUpdate {
 	# Check for budgie and install App Switching hack
 	if [ -f /usr/bin/budgie-desktop ];then
 		while true; do
-			read -rep $'Would you like to update Budgie to support proper App Switching? (y/n)\n(Your system will immediately log you out after this runs.)\n' yn
+			read -rep $'Would you like to update Budgie to support proper App Switching? (y/n)\n(Your system may immediately log you out after this runs.)\n' yn
 			case $yn in
 				[Yy]* ) yn="y"; break;;
 				[Nn]* ) yn="n";break;;
@@ -197,10 +230,10 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	expsh=" "
 	# fi
 	sudo systemctl enable xkeysnail >/dev/null 2>&1
-	if ! [ -x "$(command -v inotifywait)" ]; then
-		echo "Will need to install inotify-tools to restart key remapper live for config file changes..."
-		sudo ./system-config/unipkg.sh inotify-tools
-	fi
+	# if ! [ -x "$(command -v inotifywait)" ]; then
+	# 	echo "Will need to install inotify-tools to restart key remapper live for config file changes..."
+	# 	sudo ./system-config/unipkg.sh inotify-tools
+	# fi
 	if ! [ -x "$(command -v pip3)" ]; then
 		echo "Will need to install python3-pip..."
 		sudo ./system-config/unipkg.sh python3-pip
@@ -229,20 +262,20 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	mkdir -p ~/.config/kinto
 
 	# KDE xhost fix
-	mkdir -p ~/.kde/Autostart
-	echo -e '#!/bin/sh\rxhost +SI:localuser:root' > ~/.kde/Autostart/kintohost.sh
-	chmod +x ~/.kde/Autostart/kintohost.sh
+	# mkdir -p ~/.kde/Autostart
+	# echo -e '#!/bin/sh\rxhost +SI:localuser:root' > ~/.kde/Autostart/kintohost.sh
+	# chmod +x ~/.kde/Autostart/kintohost.sh
 
 	# KDE startup - xhost fix
 	mkdir -p ~/.config/autostart
 	yes | cp -rf ./xkeysnail-config/xkeysnail.desktop ~/.config/autostart/xkeysnail.desktop
 
-	yes | cp -rf ./xkeysnail-config/xkeystart.sh ~/.config/kinto/xkeystart.sh
+	# yes | cp -rf ./xkeysnail-config/xkeystart.sh ~/.config/kinto/xkeystart.sh
 	yes | cp -rf ./xkeysnail-config/gnome_logoff.sh ~/.config/kinto/gnome_logoff.sh
 	yes | cp -rf ./xkeysnail-config/kinto.py ./xkeysnail-config/kinto.py.new
 	yes | cp -rf ./xkeysnail-config/limitedadmins ./xkeysnail-config/limitedadmins.new
-	yes | cp -rf ./xkeysnail-config/prexk.sh ~/.config/kinto/prexk.sh
-	yes | cp -rf ./system-config/caret_status_xkey.sh ~/.config/kinto/caret_status_xkey.sh
+	# yes | cp -rf ./xkeysnail-config/prexk.sh ~/.config/kinto/prexk.sh
+	# yes | cp -rf ./system-config/caret_status_xkey.sh ~/.config/kinto/caret_status_xkey.sh
 	yes | cp -rf ./xkeysnail-config/xkeysnail.service ./xkeysnail-config/xkeysnail.service.new
 	# yes | cp -rf ./xkeysnail-config/xkeysnail.timer ~/.config/systemd/user/xkeysnail.timer
 	sed -i "s#{experimental-caret}#$exp#g" ./xkeysnail-config/xkeysnail.service.new
@@ -255,16 +288,15 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	sed -i "s#{homedir}#`echo "$HOME"`#g" ./xkeysnail-config/xkeysnail.service.new
 	sed -i "s#{xhost}#`\\which xhost`#g" ./xkeysnail-config/xkeysnail.service.new
 	sed -i "s/{username}/`whoami`/g" ./xkeysnail-config/limitedadmins.new
-	sed -i "s#{homedir}#`echo "$HOME"`#g" ./xkeysnail-config/limitedadmins.new
 	sed -i "s#{systemctl}#`\\which systemctl`#g" ./xkeysnail-config/limitedadmins.new
 	sudo chown root:root ./xkeysnail-config/limitedadmins.new
 	sudo mv ./xkeysnail-config/limitedadmins.new /etc/sudoers.d/limitedadmins
 	sed -i "s#{systemctl}#`\\which systemctl`#g" ~/.config/autostart/xkeysnail.desktop
 	sed -i "s#{xhost}#`\\which xhost`#g" ~/.config/autostart/xkeysnail.desktop
 	sed -i "s#{homedir}#`echo "$HOME"`#g" ~/.config/autostart/xkeysnail.desktop
-	sed -i "s#{homedir}#`echo "$HOME"`#g" ~/.config/kinto/prexk.sh
+	# sed -i "s#{homedir}#`echo "$HOME"`#g" ~/.config/kinto/prexk.sh
 	sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ./xkeysnail-config/xkeysnail.service.new
-	sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ~/.config/kinto/prexk.sh
+	# sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ~/.config/kinto/prexk.sh
 
 	if $vssublime ; then
 		perl -pi -e "s/(# )(.*)(- Sublime)/\$2\$3/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
@@ -333,12 +365,13 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	sudo pip3 install --upgrade .
 	cd ..
 	sudo systemctl daemon-reload
-	sudo systemctl --state=not-found --all | grep xkeysnail
-	if [ "$distro" == "fedora" ];then
-		systemctl enable xkeysnail.service
-	else
-		sudo systemctl enable xkeysnail.service
-	fi
+	sudo systemctl disable xkeysnail
+	# sudo systemctl --state=not-found --all | grep xkeysnail
+	# if [ "$distro" == "fedora" ];then
+	# 	systemctl enable xkeysnail.service
+	# else
+	# 	sudo systemctl enable xkeysnail.service
+	# fi
 	sudo systemctl restart xkeysnail
 
 	echo -e "Adding xhost fix...\n"
@@ -381,6 +414,9 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	if $rightalt ; then
 		echo -e "\e[1m\e[32mEnabled\e[0m mutli-language support."
 	fi
+
+	trayApp
+
 elif [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	echo "Uninstalling Kinto - xkeysnail (udev)"
 	uninstall
@@ -397,7 +433,7 @@ elif [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	sudo systemctl --state=not-found --all | grep xkeysnail
 	budgieUninstall
 	exit 0
-elif [[ $1 == "5" || $1 == "budgieUpdate" ]]; then
+elif [[ $1 == "budgieUpdate" ]]; then
 	budgieUpdate
 else
 	echo "Expected argument was not provided"

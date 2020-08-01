@@ -63,7 +63,7 @@ class KintoApplet(Budgie.Applet):
 	chkautostart_id=0
 	autostart_bool = False
 
-	subprocess.Popen(['sh',homedir+'/.config/kinto/logoff.sh'])
+	# subprocess.Popen(['sh',homedir+'/.config/kinto/logoff.sh'])
 
 	with open(kconfig) as configfile:
 		autostart_line = configfile.read().split('\n')[1]
@@ -87,11 +87,11 @@ class KintoApplet(Budgie.Applet):
 		self.checkbox_autostart.set_label("Autostart")
 		# self.checkbox_autostart.modify_fg(Gtk.STATE_NORMAL, Gtk.Gdk.color_parse('#366B7E'));
 		if self.autostart_bool:
-			subprocess.Popen(['sudo', 'systemctl','restart','xkeysnail'])
+			# subprocess.Popen(['sudo', 'systemctl','restart','xkeysnail'])
 			self.checkbox_autostart.set_active(True)
 			self.chkautostart_id = self.checkbox_autostart.connect("clicked",self.setAutostart,False)
 		else:
-			subprocess.Popen(['sudo', 'systemctl','stop','xkeysnail'])
+			# subprocess.Popen(['sudo', 'systemctl','stop','xkeysnail'])
 			self.checkbox_autostart.set_active(False)
 			self.chkautostart_id = self.checkbox_autostart.connect("clicked",self.setAutostart,True)
 		# self.chkautostart_id = self.checkbox_autostart.connect("clicked",self.setAutostart,True)
