@@ -277,7 +277,10 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	sudo chmod go-w+rx /usr/local/bin/logoff.sh
 	yes | cp -rf ./xkeysnail-config/kinto.py ./xkeysnail-config/kinto.py.new
 	yes | cp -rf ./xkeysnail-config/limitedadmins ./xkeysnail-config/limitedadmins.new
-	# yes | cp -rf ./xkeysnail-config/prexk.sh ~/.config/kinto/prexk.sh
+	yes | cp -rf ./xkeysnail-config/trayapps/appindicator/kintotray.py ~/.config/kinto/kintotray.py
+	yes | cp -rf ./xkeysnail-config/trayapps/BudgieApplet/icons/kinto-color-16.svg ~/.config/kinto/kinto-color.svg
+	yes | cp -rf ./xkeysnail-config/trayapps/BudgieApplet/icons/kinto-invert-16.svg ~/.config/kinto/kinto-invert.svg
+	yes | cp -rf ./xkeysnail-config/trayapps/BudgieApplet/icons/kinto-solid-16.svg ~/.config/kinto/kinto-solid.svg
 	# yes | cp -rf ./system-config/caret_status_xkey.sh ~/.config/kinto/caret_status_xkey.sh
 	yes | cp -rf ./xkeysnail-config/xkeysnail.service ./xkeysnail-config/xkeysnail.service.new
 	# yes | cp -rf ./xkeysnail-config/xkeysnail.timer ~/.config/systemd/user/xkeysnail.timer
@@ -296,6 +299,7 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	sudo chown root:root ./xkeysnail-config/limitedadmins.new
 	sudo mv ./xkeysnail-config/limitedadmins.new /etc/sudoers.d/limitedadmins
 	sed -i "s#{systemctl}#`\\which systemctl`#g" ~/.config/autostart/xkeysnail.desktop
+	sed -i "s#-c \"grep#-c \"python3 {homedir}/.config/kinto/kintotray.py;grep#g" ~/.config/autostart/xkeysnail.desktop
 	sed -i "s#{xhost}#`\\which xhost`#g" ~/.config/autostart/xkeysnail.desktop
 	sed -i "s#{homedir}#`echo "$HOME"`#g" ~/.config/autostart/xkeysnail.desktop
 	# sed -i "s#{homedir}#`echo "$HOME"`#g" ~/.config/kinto/prexk.sh
@@ -377,6 +381,7 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	# 	sudo systemctl enable xkeysnail.service
 	# fi
 	sudo systemctl restart xkeysnail
+	nohup python3 ~/.config/kinto/kintotray.py& >/dev/null 2>&1
 
 	echo -e "Adding xhost fix...\n"
 
@@ -419,12 +424,13 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 		echo -e "\e[1m\e[32mEnabled\e[0m mutli-language support."
 	fi
 
-	trayApp
+	# trayApp
 
 elif [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	echo "Uninstalling Kinto - xkeysnail (udev)"
 	uninstall
 	removeAppleKB
+	pkill -f kintotray
 	sudo systemctl stop xkeysnail
 	sudo systemctl disable xkeysnail
 	sudo rm /etc/sudoers.d/limitedadmins
