@@ -193,12 +193,28 @@ if [ $# -eq 0 ]; then
 	set "$n"
 fi
 
+# Kinto tray
+installtray=false
 # multi-language
 rightalt=false
 # VS code remap
 vssublime=false
 
 if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1 == "chromebook" ]]; then
+	if [[ $dename == "gnome" || $dename == "budgie" || $dename == "mate" ]];then
+		installtray=true
+		while true; do
+		read -rep $'\nWould you like to install the Kinto System Tray (AppInidcator)? (Y/n)\n' yn
+		case $yn in
+			[Nn]* ) installtray=false; break;;
+			* ) break;;
+		esac
+		done
+		if [[ $dename == "gnome" ]]; then
+			echo "Please install KStatusNotifierItem for AppIndicators to show up."
+		fi
+	fi
+
 	while true; do
 	read -rep $'\nDo you want multi-language on Right Alt key? (y/N)\naka Left side remaps, right side doesn\'t\n' yn
 	case $yn in
@@ -270,10 +286,17 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	yes | cp -rf ./xkeysnail-config/xkeysnail.desktop ~/.config/autostart/xkeysnail.desktop
 
 	# yes | cp -rf ./xkeysnail-config/xkeystart.sh ~/.config/kinto/xkeystart.sh
-	yes | sudo cp -rf xkeysnail-config/root_logoff.sh /usr/local/bin/logoff.sh
-	sudo chown root:root /usr/local/bin/logoff.sh
-	sudo chmod u+rwx /usr/local/bin/logoff.sh
-	sudo chmod go-w+rx /usr/local/bin/logoff.sh
+	
+	# *** More testing needing, universal way of killing kinto on user log out? ***
+	# yes | sudo cp -rf xkeysnail-config/root_logoff.sh /usr/local/bin/logoff.sh
+	# sudo chown root:root /usr/local/bin/logoff.sh
+	# sudo chmod u+rwx /usr/local/bin/logoff.sh
+	# sudo chmod go-w+rx /usr/local/bin/logoff.sh
+	# *** End universal killing of kinto
+	if $installtray ; then
+		yes | sudo cp -rf xkeysnail-config/gnome_logoff.sh ~/.config/kinto/logoff.sh
+	fi
+	
 	yes | cp -rf ./xkeysnail-config/kinto.py ./xkeysnail-config/kinto.py.new
 	yes | cp -rf ./xkeysnail-config/limitedadmins ./xkeysnail-config/limitedadmins.new
 	yes | cp -rf ./xkeysnail-config/trayapps/appindicator/kintotray.py ~/.config/kinto/kintotray.py
@@ -298,7 +321,10 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	sudo chown root:root ./xkeysnail-config/limitedadmins.new
 	sudo mv ./xkeysnail-config/limitedadmins.new /etc/sudoers.d/limitedadmins
 	sed -i "s#{systemctl}#`\\which systemctl`#g" ~/.config/autostart/xkeysnail.desktop
-	sed -i "s#-c \"grep#-c \"python3 {homedir}/.config/kinto/kintotray.py;grep#g" ~/.config/autostart/xkeysnail.desktop
+	if $installtray ; then
+		sed -i "s#-c \"grep#-c \"python3 {homedir}/.config/kinto/kintotray.py;grep#g" ~/.config/autostart/xkeysnail.desktop
+		sed -i "s#xkeysnail\"#xkeysnail;{homedir}/.config/kinto/logoff.sh\"#g" ~/.config/autostart/xkeysnail.desktop
+	fi
 	sed -i "s#{xhost}#`\\which xhost`#g" ~/.config/autostart/xkeysnail.desktop
 	sed -i "s#{homedir}#`echo "$HOME"`#g" ~/.config/autostart/xkeysnail.desktop
 	# sed -i "s#{homedir}#`echo "$HOME"`#g" ~/.config/kinto/prexk.sh
@@ -429,15 +455,18 @@ elif [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	echo "Uninstalling Kinto - xkeysnail (udev)"
 	uninstall
 	removeAppleKB
-	pkill -f kintotray
-	sudo systemctl stop xkeysnail
-	sudo systemctl disable xkeysnail
+	pkill -f kintotray >/dev/null 2>&1
+	sudo systemctl stop xkeysnail >/dev/null 2>&1
+	sudo systemctl disable xkeysnail >/dev/null 2>&1
 	sudo rm /etc/sudoers.d/limitedadmins
 	rm ~/.config/autostart/xkeysnail.desktop
 	rm -rf ~/.config/kinto
-	sudo rm /etc/systemd/system/xkeysnail.service
-	sudo rm /etc/systemd/system/graphical.target.wants/xkeysnail.service
-	sudo rm /usr/lib/systemd/system/xkeysnail.service
+	sudo rm /etc/systemd/system/xkeysnail.service >/dev/null 2>&1
+	sudo rm /etc/systemd/system/graphical.target.wants/xkeysnail.service >/dev/null 2>&1
+	sudo rm /usr/lib/systemd/system/xkeysnail.service >/dev/null 2>&1
+	if [ -f /usr/local/bin/logoff.sh ];then
+		sudo rm /usr/local/bin/logoff.sh
+	fi
 	sudo systemctl daemon-reload
 	sudo systemctl --state=not-found --all | grep xkeysnail
 	budgieUninstall
