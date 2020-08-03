@@ -5,6 +5,25 @@
 DetectHiddenWindows, On
 Run, %A_ScriptDir%\detectUSB.ahk
 
+; Enable Left clicks on Kinto Icon
+; https://www.autohotkey.com/boards/viewtopic.php?t=9501
+OnMessage(0x404, "AHK_NOTIFYICON")
+
+AHK_NOTIFYICON(wParam, lParam) 
+{
+    if (lParam = 0x202) { ; user left-clicked tray icon
+        ;ADD ANY SUBROUTINE OR FUNCTION HERE
+        Menu, Tray, Show
+        return
+    }
+    else if (lParam = 0x203) { ; user double left-clicked tray icon
+        ;ADD ANY SUBROUTINE OR FUNCTION HERE
+        Menu, Tray, Show
+        return
+    }
+}
+; End Enable Left clicks
+
 ; I_Icon = %A_ScriptDir%\assets\kinto-white.ico           ; MacModifiers
 ; IfExist, %I_Icon%                                       ; MacModifiers
 ; Menu, Tray, Icon, %I_Icon%,, 1                          ; MacModifiers

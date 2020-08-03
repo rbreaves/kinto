@@ -118,7 +118,6 @@ function trayApp {
 	fi
 }
 
-
 function budgieUninstall {
 	if [ -f /usr/bin/budgie-desktop ];then
 		read -n 1 -s -r -p "Your system may log you off immediately during the restoration of budgie-daemon. Press any key to continue..."
