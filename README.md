@@ -9,6 +9,11 @@
 
 Seamless copy and paste with all apps and terminals. The zero effort solution.
 
+System tray supports the following, but Kinto can run without it on Linux.
+|<sub>Ubuntu, Gnome3, Ubuntu Budgie, and Mate</sub>|<sub>Windows 10</sub>|
+|---|---|
+|<img src="https://user-images.githubusercontent.com/10969616/89241619-15d86c00-d5c5-11ea-8ffe-18ee6ca0f895.png" width="50%">|<img src="https://user-images.githubusercontent.com/10969616/84471501-10a51380-ac4b-11ea-9e0e-c19a7ebfad6d.png" width="50%">|
+
 ## Table of Contents
 
 [What does this do exactly?](#What-does-this-do-exactly)
