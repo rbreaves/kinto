@@ -4,7 +4,7 @@ Description=xkeysnail
 [Service]
 Type=simple
 KillMode=process
-ExecStart=/usr/bin/sudo /bin/bash -c '/usr/bin/xhost +SI:localuser:root && /usr/local/bin/xkeysnail --quiet --watch {homedir}/.config/kinto/kinto.py'
+ExecStart=/usr/bin/sudo /bin/bash -c '/usr/bin/xhost +SI:localuser:root && {homedir}/.config/kinto/killdups.sh && /usr/local/bin/xkeysnail --quiet --watch {homedir}/.config/kinto/kinto.py'
 Restart=on-failure
 RestartSec=3
 Environment=DISPLAY={displayid}
