@@ -201,7 +201,7 @@ rightalt=false
 vssublime=false
 
 if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1 == "chromebook" ]]; then
-	if [[ $dename == "gnome" || $dename == "budgie" || $dename == "mate" ]];then
+	if [[ $dename == "gnome" || $dename == "budgie" || $dename == "mate" || $dename == "xfce" ]];then
 		installtray=true
 		while true; do
 		read -rep $'\nWould you like to install the Kinto System Tray (AppInidcator)? (Y/n)\n' yn
