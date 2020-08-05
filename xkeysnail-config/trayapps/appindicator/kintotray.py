@@ -18,6 +18,7 @@ class Indicator():
 
     homedir = os.path.expanduser("~")
     kconfig = homedir+"/.config/kinto/kinto.py"
+    ostype = os.environ.get('XDG_CURRENT_DESKTOP')
 
     enable_id = 0
     winmac_id = 0
@@ -183,10 +184,16 @@ class Indicator():
             subprocess.Popen(['notify-send','Kinto: Error Resetting KB Type!','-i','budgie-desktop-symbolic'])
 
     def setSysKB(self,button):
-        subprocess.Popen(['gnome-control-center','keyboard'])
+        if self.ostype == "XFCE":
+            subprocess.Popen(['xfce4-keyboard-settings'])
+        else:
+            subprocess.Popen(['gnome-control-center','keyboard'])
 
     def setRegion(self,button):
-        subprocess.Popen(['gnome-control-center','region'])
+        if self.ostype == "XFCE":
+            subprocess.Popen(['xfce4-keyboard-settings'])
+        else:
+            subprocess.Popen(['gnome-language-selector'])
 
     def quit(source):
         Gtk.main_quit()
