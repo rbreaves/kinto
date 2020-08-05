@@ -191,9 +191,9 @@ class Indicator():
 
     def setRegion(self,button):
         if self.ostype == "XFCE":
-            subprocess.Popen(['xfce4-keyboard-settings'])
-        else:
             subprocess.Popen(['gnome-language-selector'])
+        else:
+            subprocess.Popen(['gnome-control-center','region'])
 
     def quit(source):
         Gtk.main_quit()
