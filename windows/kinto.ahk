@@ -258,7 +258,7 @@ $^+Right::Send +{End}
 ^+Up::Send ^+{Home}
 ^Down::Send ^{End}
 ^+Down::Send ^+{End}
-^Backspace::Send +{Home}{Delete}
+$^Backspace::Send +{Home}{Delete}
 !Backspace::Send ^{Backspace}
 !Left::Send ^{Left}
 !+Left::Send ^+{Left}
@@ -303,7 +303,7 @@ $^+Right::Send +{End}
     #+q::Send !q                    ;Context info
     #!o::Send ^!o                   ;Optimize imports
     #!i::Send ^!i                   ;Auto-indent line(s)
-    ^Backspace::Send ^y             ;Delete line at caret
+    $^Backspace::Send ^y             ;Delete line at caret
     #+j::Send ^+j                   ;Smart line join
     !Delete::Send ^{Delete}         ;Delete to word end
     !Backspace::Send ^{Backspace}   ;Delete to word start
