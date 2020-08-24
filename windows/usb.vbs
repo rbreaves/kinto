@@ -1,5 +1,5 @@
 Option Explicit
-Dim oWMISrv, collDvcs, iUSBDvc , iDvc, sDvcID, sPID, sVID
+Dim oWMISrv, collDvcs, iUSBDvc , iDvc, sDvcID, sPID, sVID, deviceID
 
 ' add item to array
 Function AddItem(arr, val)
@@ -49,21 +49,23 @@ Dim nonApple: nonApple = 0
 Dim i
 
 If vcount = 1 Then
+	deviceID = deviceVID(0)
 	If StrComp(deviceVID(0), "05AC") = 0 Then
-		Wscript.Echo "Apple"
+		Wscript.Echo "Apple " & deviceID
 	Else
-		Wscript.Echo "Windows"
+		Wscript.Echo "Windows " & deviceID
 	End If
 Else
 	For i = 0 To counter-1
+		deviceID = deviceVID(i)
     	If StrComp(deviceVID(i), "05AC") = -1 Then
     		nonApple = 1
     	End If
 	Next
 	If nonApple = 1 Then
-		Wscript.Echo "Windows"
+		Wscript.Echo "Windows " & deviceID
 	Else
-		Wscript.Echo "Apple"
+		Wscript.Echo "Apple " & deviceID
 	End If
 End If
 
