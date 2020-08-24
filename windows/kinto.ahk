@@ -266,7 +266,7 @@ $^Backspace::Send +{Home}{Delete}
 !+Right::Send ^+{Right}
 
 ; Cmd+Space Alternative
-^Space::Send ^{Esc}
+$^Space::Send ^{Esc}
 
 #IfWinActive ahk_group intellij
     ; General
