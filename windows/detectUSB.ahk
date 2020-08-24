@@ -11,13 +11,12 @@ WinHide % "ahk_id " DllCall("GetConsoleWindow", "ptr")
 notify_change(wParam, lParam, msg, hwnd) 
 {
 	global lastkb
-	; kbtype = % ComObjCreate("WScript.Shell").Exec("cscript /nologo usb.vbs").StdOut.ReadAll()
 	DetectHiddenWindows On
 	Run %ComSpec%,, Hide, pid
 	WinWait ahk_pid %pid%
 	DllCall("AttachConsole", "UInt", pid)
 	WshShell := ComObjCreate("Wscript.Shell")
-	exec := WshShell.Exec("cscript /nologo usb.vbs")
+	exec := WshShell.Exec("cscript /nologo ""%userprofile%\.kinto\usb.vbs""")
 	kbtype := exec.StdOut.ReadAll()
 	DllCall("FreeConsole")
 	Process Close, %pid%
