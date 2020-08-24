@@ -213,6 +213,7 @@ define_keymap(None,{
 })
 
 define_keymap(lambda wm_class: wm_class.casefold() not in mscodes,{
+    K("Super-Space"): K("C-Space"),         # Basic code completion
     # Wordwise remaining - for Everything but VS Code
     K("M-Left"): K("C-Left"),               # Left of Word
     K("M-Shift-Left"): K("C-Shift-Left"),   # Select Left of Word
@@ -272,6 +273,7 @@ define_keymap(re.compile(codeStr, re.IGNORECASE),{
 
 # Keybindings for Sublime Text
 define_keymap(re.compile("Sublime_text", re.IGNORECASE),{
+    K("Super-Space"): K("C-Space"),             # Basic code completion
     K("C-Super-up"): K("M-o"),                  # Switch file
     K("Super-RC-f"): K("f11"),                  # toggle_full_screen
     K("C-M-v"): [K("C-k"), K("C-v")],           # paste_from_history
