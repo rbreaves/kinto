@@ -27,11 +27,11 @@ notify_change(wParam, lParam, msg, hwnd)
 		if InStr(kbtype, "Apple")
 		{
 			; MsgBox, Apple
-			Run, %A_ScriptDir%\NoShell.vbs %A_ScriptDir%\toggle_kb.bat mac, %A_ScriptDir%
+			Run, "%A_ScriptDir%\NoShell.vbs" "%A_ScriptDir%\toggle_kb.bat" mac, "%A_ScriptDir%"
 		}
 		else{
 			; MsgBox, Windows
-			Run, %A_ScriptDir%\NoShell.vbs %A_ScriptDir%\toggle_kb.bat win, %A_ScriptDir%
+			Run, "%A_ScriptDir%\NoShell.vbs" "%A_ScriptDir%\toggle_kb.bat" win, "%A_ScriptDir%"
 		}
 		; MsgBox % kbtype
 	}

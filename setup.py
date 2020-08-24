@@ -16,13 +16,13 @@ def windows_setup():
 		default = int(input("\nPlease enter your desired keymap (1 - " + str(len(keymaps)) + ") : "))
 	print("")
 	# Short DOS path notation
-	path= cmdline('echo %cd%')[:-1]
+	path= cmdline('echo ''%cd%''')[:-1]
 	if default > 0 and default < 3:
 		print("Will now install chocolatey and autohotkey with elevated privileges...")
 		print("This install will fail if you are not running with elevated privileges")
 		os.system('powershell -executionpolicy bypass ".\\windows\\autohotkey.ps1"')
 		print("Copying autohotkey combinations for Terminals & Editors...")
-		os.system("copy /Y " + path + "\\windows\\kinto.ahk " + path + "\\windows\\kinto-new.ahk")
+		os.system('copy /Y "' + path + '\\windows\\kinto.ahk" "' + path + '\\windows\\kinto-new.ahk"')
 	if default == 1:
 		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; MacModifiers)/$2$3/g" .\\windows\\kinto-new.ahk')
 	elif default == 2:	
@@ -36,27 +36,28 @@ def windows_setup():
 		print("Ending any running Kinto tasks...")
 		os.system("(taskkill /IM autohotkey.exe) 2> nul")
 		print("Removing Kinto from users profile directory...")
-		os.system('(rd /s /q %userprofile%\\.kinto) 2> nul')
+		os.system('(rd /s /q "%userprofile%\\.kinto") 2> nul')
 		print("")
 		print("Uninstall of Kinto is Complete.")
 	if default > 0 and default < 3:
 		stvscode = yn_choice(bcolors.CYELLOW2 + "Would you like to use Sublime Text 3 keymaps in VS Code?\n" + bcolors.ENDC)
 		print("\nWill now install Ubuntu Termimnal Theme as default...")
-		os.system("regedit " + path + "\\windows\\theme_ubuntu.reg")
-		os.system('robocopy '+ path + '\\assets "%userprofile%\\.kinto\\assets" /E')
+		os.system('regedit "' + path + '\\windows\\theme_ubuntu.reg"')
+		os.system('robocopy "'+ path + '\\assets" "%userprofile%\\.kinto\\assets" /E')
 		if(stvscode):
 			os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; ST2CODE)/$2$3/g" .\\windows\\kinto-new.ahk')
-		os.system('copy /Y ' + path + '\\windows\\kinto-start.vbs "%userprofile%\\.kinto\\kinto-start.vbs')
-		os.system('copy /Y ' + path + '\\windows\\usb.vbs "%userprofile%\\.kinto\\usb.vbs"')
-		os.system('copy /Y ' + path + '\\windows\\detectUSB.ahk "%userprofile%\\.kinto\\detectUSB.ahk"')
+		os.system('copy /Y "' + path + '\\windows\\kinto-start.vbs" "%userprofile%\\.kinto\\kinto-start.vbs"')
+		os.system('copy /Y "' + path + '\\windows\\usb.vbs" "%userprofile%\\.kinto\\usb.vbs"')
+		os.system('copy /Y "' + path + '\\windows\\detectUSB.ahk" "%userprofile%\\.kinto\\detectUSB.ahk"')
 		os.system('mklink "%userprofile%\\Start Menu\\Programs\\Startup\\kinto-start.vbs" "%userprofile%\\.kinto\\kinto-start.vbs"')
-		os.system('copy /Y '+ path + '\\windows\\NoShell.vbs "%userprofile%\\.kinto\\NoShell.vbs"')
-		os.system('copy /Y '+ path + '\\windows\\toggle_kb.bat "%userprofile%\\.kinto\\toggle_kb.bat"')
-		os.system('copy /Y '+ path + '\\windows\\kinto-new.ahk "%userprofile%\\.kinto\\kinto.ahk"')
+		os.system('copy /Y "'+ path + '\\windows\\NoShell.vbs" "%userprofile%\\.kinto\\NoShell.vbs"')
+		os.system('copy /Y "'+ path + '\\windows\\toggle_kb.bat" "%userprofile%\\.kinto\\toggle_kb.bat"')
+		os.system('copy /Y "'+ path + '\\windows\\kinto-new.ahk" "%userprofile%\\.kinto\\kinto.ahk"')
 		os.system("del /f .\\windows\\kinto-new.ahk")
 		os.system("del \"C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp\\kinto.ahk\" 2> nul")
-		os.system("%userprofile%\\AppData\\Roaming\\Microsoft\\Windows\\STARTM~1\\Programs\\Startup\\kinto-start.vbs")
-
+		userpath = cmdline('cmd /c for %A in ("%userprofile%") do @echo %~sA')[:-1]
+		print('Starting... "' + userpath + '\\AppData\\Roaming\\Microsoft\\Windows\\STARTM~1\\Programs\\Startup\\kinto-start.vbs"')
+		os.system('"' + userpath + '\\AppData\\Roaming\\Microsoft\\Windows\\STARTM~1\\Programs\\Startup\\kinto-start.vbs"')
 	# 	# print("\nPlease log off and back on for changes to take full effect.")
 		print("If using WSL then please remember to right click on title bar -> Properties -> Edit Options -> Use Ctrl+Shift+C/V as Copy/Paste and enable it.")
 	else:

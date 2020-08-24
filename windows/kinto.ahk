@@ -46,11 +46,11 @@ Menu, Tray, Add, Close, Exit
 Menu, Tray, Click, 1
 
 winkb(){
-    Run, %A_ScriptDir%\NoShell.vbs %A_ScriptDir%\toggle_kb.bat win, %A_ScriptDir%
+    Run, "%A_ScriptDir%\NoShell.vbs" "%A_ScriptDir%\toggle_kb.bat" win, "%A_ScriptDir%"
 }
 
 mackb(){
-    Run, %A_ScriptDir%\NoShell.vbs %A_ScriptDir%\toggle_kb.bat mac, %A_ScriptDir%
+    Run, "%A_ScriptDir%\NoShell.vbs" "%A_ScriptDir%\toggle_kb.bat" mac, "%A_ScriptDir%"
 }
 
 min(){
@@ -266,7 +266,7 @@ $^Backspace::Send +{Home}{Delete}
 !+Right::Send ^+{Right}
 
 ; Cmd+Space Alternative
-^Space::Send ^{Esc}
+$^Space::Send ^{Esc}
 
 #IfWinActive ahk_group intellij
     ; General
