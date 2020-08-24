@@ -363,6 +363,7 @@ $^Backspace::Send +{Home}{Delete}
 
 ; Sublime Text Remaps for VS Code
 #IfWinActive ahk_group vscode
+    #Space::Send ^{Space}                                ; Basic code completion
     ; Remap Ctrl+Shift to behave like macOS Sublimetext
     ; Will extend cursor to multiple lines
 ;    #+Up::send ^!{Up}                                   ; ST2CODE
@@ -375,6 +376,7 @@ $^Backspace::Send +{Home}{Delete}
 #If
 
 #IfWinActive ahk_exe sublime_text.exe
+    #Space::Send ^{Space}                                   ; Basic code completion
     #^Up::send !{O}                                         ; Switch file
     #^f::send {F11}                                         ; toggle_full_screen
     ^!v::send {Ctrl Down}k{Ctrl Up}{Ctrl Down}v{Ctrl Up}    ; paste_from_history
