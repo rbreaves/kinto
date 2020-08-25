@@ -29,10 +29,10 @@ AHK_NOTIFYICON(wParam, lParam)
 ; Menu, Tray, Icon, %I_Icon%,, 1                          ; MacModifiers
 ; Menu, Tray, Tip, Mac - Kinto                            ; MacModifiers
 
-; I_Icon = %A_ScriptDir%\assets\kinto-white-invert.ico    ; WinModifiers
-; IfExist, %I_Icon%                                       ; WinModifiers
-; Menu, Tray, Icon, %I_Icon%,, 1                          ; WinModifiers
-; Menu, Tray, Tip, Windows - Kinto                        ; WinModifiers
+; I_Icon = %A_ScriptDir%\assets\kinto-white-invert.ico    ; WinModifiers/CB/IBM
+; IfExist, %I_Icon%                                       ; WinModifiers/CB/IBM
+; Menu, Tray, Icon, %I_Icon%,, 1                          ; WinModifiers/CB/IBM
+; Menu, Tray, Tip, Windows - Kinto                        ; WinModifiers/CB/IBM
 
 ; Set Tray menu
 ; Menu, Tray, Standard
@@ -46,11 +46,11 @@ Menu, Tray, Add, Close, Exit
 Menu, Tray, Click, 1
 
 winkb(){
-    Run, %A_ScriptDir%\NoShell.vbs %A_ScriptDir%\toggle_kb.bat win, %A_ScriptDir%
+    Run, "%A_ScriptDir%\NoShell.vbs" "%A_ScriptDir%\toggle_kb.bat" win, "%A_ScriptDir%"
 }
 
 mackb(){
-    Run, %A_ScriptDir%\NoShell.vbs %A_ScriptDir%\toggle_kb.bat mac, %A_ScriptDir%
+    Run, "%A_ScriptDir%\NoShell.vbs" "%A_ScriptDir%\toggle_kb.bat" mac, "%A_ScriptDir%"
 }
 
 min(){
@@ -71,7 +71,7 @@ tray_suspend(){
     else{
         menu, tray, unCheck, Suspend Kinto
 ;         I_Icon = %A_ScriptDir%\assets\kinto-white.ico           ; MacModifiers
-;         I_Icon = %A_ScriptDir%\assets\kinto-white-invert.ico    ; WinModifiers
+;         I_Icon = %A_ScriptDir%\assets\kinto-white-invert.ico    ; WinModifiers/CB/IBM
         Menu, Tray, Icon, %I_Icon%,,1
         Run, %A_ScriptDir%\detectUSB.ahk
     }
@@ -134,6 +134,8 @@ GroupAdd, vstudio, ahk_exe devenv.exe
 GroupAdd, intellij, ahk_exe idea.exe
 GroupAdd, intellij, ahk_exe idea64.exe
 
+; SetCapsLockState, AlwaysOff ; CB/IBM
+
 #IfWinNotActive ahk_group virtm
 
     ; New AltTab and CtrlTab fix
@@ -145,31 +147,35 @@ GroupAdd, intellij, ahk_exe idea64.exe
             ; Send {LCtrl down}{Secondary up}{tab}
     ;        Send {LCtrl down}{LWin up}{tab}               ; WinModifiers
     ;        Send {LCtrl down}{LAlt up}{tab}               ; MacModifiers
+    ;        Send {LCtrl down}{CapsLock up}{tab}           ; CB/IBM
             KeyWait, tab
         ; Tertiary
         } else if (GetKeyState("LCtrl", "P") AND GetKeyState("LShift", "P")) {
             ; Secondary
             ; Send {LCtrl down}{Secondary up}{LShift down}{tab}
-    ;        Send {LCtrl down}{LWin up}{LShift down}{tab}  ; WinModifiers
-    ;        Send {LCtrl down}{LAlt up}{LShift down}{tab}  ; MacModifiers
+    ;        Send {LCtrl down}{LWin up}{LShift down}{tab}     ; WinModifiers
+    ;        Send {LCtrl down}{LAlt up}{LShift down}{tab}     ; MacModifiers
+    ;        Send {LCtrl down}{CapsLock up}{LShift down}{tab} ; CB/IBM
             KeyWait, tab
         ; Primary
-    ;    } else if (GetKeyState("LAlt", "P") AND GetKeyState("LShift", "P") = false) {   ; WinModifiers
+    ;    } else if (GetKeyState("LAlt", "P") AND GetKeyState("LShift", "P") = false) {   ; WinModifiers/CB/IBM
     ;    } else if (GetKeyState("LWin", "P") AND GetKeyState("LShift", "P") = false) {   ; MacModifiers
             Send {LAlt down}{tab}
             KeyWait, tab
         ; Primary
-    ;    } else if (GetKeyState("LAlt", "P") AND GetKeyState("LShift", "P")) { ; WinModifiers
+    ;    } else if (GetKeyState("LAlt", "P") AND GetKeyState("LShift", "P")) { ; WinModifiers/CB/IBM
     ;    } else if (GetKeyState("LWin", "P") AND GetKeyState("LShift", "P")) { ; MacModifiers
             Send {LAlt down}{LShift down}{tab}
             KeyWait, tab
         ; Secondary 
-    ;    } else if (GetKeyState("LWin", "P") AND GetKeyState("LShift", "P")) = false {   ; WinModifiers
-    ;    } else if (GetKeyState("LAlt", "P") AND GetKeyState("LShift", "P") = false) {   ; MacModifiers
+    ;    } else if (GetKeyState("LWin", "P") AND GetKeyState("LShift", "P")) = false {     ; WinModifiers
+    ;    } else if (GetKeyState("LAlt", "P") AND GetKeyState("LShift", "P") = false) {     ; MacModifiers
+    ;    } else if (GetKeyState("CapsLock", "P") AND GetKeyState("LShift", "P")) = false { ; CB/IBM
             return
         ; Secondary
-    ;     } else if (GetKeyState("LWin", "P") AND GetKeyState("LShift", "P")) {   ; WinModifiers
-    ;     } else if (GetKeyState("LAlt", "P") AND GetKeyState("LShift", "P")) {   ; MacModifiers
+    ;     } else if (GetKeyState("LWin", "P") AND GetKeyState("LShift", "P")) {     ; WinModifiers
+    ;     } else if (GetKeyState("LAlt", "P") AND GetKeyState("LShift", "P")) {     ; MacModifiers
+    ;     } else if (GetKeyState("CapsLock", "P") AND GetKeyState("LShift", "P")) { ; CB/IBM
             return
         } else {
             send {Blind}{tab}
@@ -186,6 +192,11 @@ GroupAdd, intellij, ahk_exe idea64.exe
     ; Primary::LCtrl
     ; Secondary::LAlt
     ; Tertiary::LWin
+
+    ; $LAlt::LCtrl     ; CB/IBM
+    ; $RAlt::RCtrl     ; CB/IBM
+    ; $CapsLock::LWin  ; CB/IBM
+    ; $LCtrl::LAlt     ; CB/IBM
 
     ; $LAlt::LCtrl   ; WinModifiers
     ; $RAlt::RCtrl   ; WinModifiers
@@ -372,13 +383,19 @@ GroupAdd, intellij, ahk_exe idea64.exe
     #IfWinActive ahk_group vscode
         ; Remap Ctrl+Shift to behave like macOS Sublimetext
         ; Will extend cursor to multiple lines
-    ;    #+Up::send ^!{Up}                                   ; ST2CODE
-    ;    #+Down::send ^!{Down}                               ; ST2CODE
+    ;    #+Up::send ^!{Up}                                   ; Default - ST2CODE
+    ;    !+Up::send ^!{Up}                                   ; CB/IBM - ST2CODE
+    ;    #+Down::send ^!{Down}                               ; Default - ST2CODE
+    ;    !+Down::send ^!{Down}                               ; CB/IBM - ST2CODE
         ; Remap Ctrl+Cmd+G to select all matches
-    ;    #^g::send ^+{L}                                     ; ST2CODE
-        !+g::send ^+{G}                                     ; View source control
-        ; Sigints - interrupt
-        $#c::Send {Ctrl down}c{Ctrl up}
+    ;    #^g::send ^+{L}                                     ; Default - ST2CODE
+    ;    !^g::send ^+{L}                                     ; CB/IBM - ST2CODE
+        !+g::send ^+{G}                                      ; View source control
+    ;    $#c::Send {Ctrl down}c{Ctrl up}                     ; Default - Sigints interrupt
+    ;    $!c::Send {Ctrl down}c{Ctrl up}                     ; CB/IBM
+
+    ;   #Space::Send ^{Space}                                ; Default - Basic code completion
+    ;   !Space::Send ^{Space}                                ; CB/IBM - Basic code completion
     #If
 
     #IfWinActive ahk_exe sublime_text.exe
@@ -389,8 +406,10 @@ GroupAdd, intellij, ahk_exe idea64.exe
         ^!Up::send ^{Up}                                        ; scroll_lines up
         ^Down::Return                                           ; cancel scroll_lines down
         ^!Down::send ^{Down}                                    ; scroll_lines down
-        #+Up::send {shift up}^!{Up}                             ; multi-cursor up
-        #+Down::send {shift up}^!{Down}                         ; multi-cursor down
+        ; #+Up::send {shift up}^!{Up}                             ; Default - multi-cursor up
+        ; #+Down::send {shift up}^!{Down}                         ; Default - multi-cursor down
+        ; #+Up::send {shift up}^!{Up}                             ; CB/IBM - multi-cursor up
+        ; #+Down::send {shift up}^!{Down}                         ; CB/IBM - multi-cursor down
         ^PgDn::Return                                           ; cancel next_view
         ^PgUp::Return                                           ; cancel prev_view
         ^+{::send ^{PgDn}                                       ; next_view
@@ -411,7 +430,8 @@ GroupAdd, intellij, ahk_exe idea64.exe
         ^+g::send +{F3}                                         ; find_prev
         #!g::send ^{F3}                                         ; find_under
         #!+g::send ^+{F3}                                       ; find_under_prev
-        #^g::send !{F3}                                         ; find_all_under
+        ; #^g::send !{F3}                                         ; Default - find_all_under
+        ; !^g::send !{F3}                                         ; CB/IBM - find_all_under
         ^+Up::Return                                            ; cancel swap_line_up
         #!Up::send ^+{Up}                                       ; swap_line_up
         ^+Down::Return                                          ; cancel swap_line_down
