@@ -23,14 +23,12 @@ def windows_setup():
 		os.system('powershell -executionpolicy bypass ".\\windows\\autohotkey.ps1"')
 		print("Copying autohotkey combinations for Terminals & Editors...")
 		os.system('copy /Y "' + path + '\\windows\\kinto.ahk" "' + path + '\\windows\\kinto-new.ahk"')
+	if default < 3:
+		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; Default)(?!( - ST2CODE))(.*)/$2$3$5/g" .\\windows\\kinto-new.ahk')
 	if default == 1:
 		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; MacModifiers)/$2$3/g" .\\windows\\kinto-new.ahk')
 	elif default == 2:	
 		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; WinModifiers)/$2$3/g" .\\windows\\kinto-new.ahk')
-	elif default == 3:	
-		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; Chromebook)/$2$3/g" .\\windows\\kinto-new.ahk')
-	elif default == 4:	
-		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; IBM)/$2$3/g" .\\windows\\kinto-new.ahk')
 	elif default == 5:
 		print("Removing any old registry keys from prior versions...")
 		p = subprocess.Popen(['powershell.exe', "Remove-ItemProperty -Path HKLM:'SYSTEM\CurrentControlSet\Control\Keyboard Layout' -Name 'Scancode Map' -ErrorAction SilentlyContinue"], stdout=sys.stdout)
@@ -43,13 +41,23 @@ def windows_setup():
 		os.system('(rd /s /q "%userprofile%\\.kinto") 2> nul')
 		print("")
 		print("Uninstall of Kinto is Complete.")
+	if default == 3:
+		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; Chromebook)/$2$3/g" .\\windows\\kinto-new.ahk')
+		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; WinModifiers/CB)/$2$3/g" .\\windows\\kinto-new.ahk')
+	if default == 3 || default == 4:	
+		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; CB/IBM)/$2$3/g" .\\windows\\kinto-new.ahk')
+	if default == 4:	
+		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; IBM)/$2$3/g" .\\windows\\kinto-new.ahk')
+		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; WinModifiers/CB/IBM)/$2$3/g" .\\windows\\kinto-new.ahk')
 	if default > 0 and default < 5:
 		stvscode = yn_choice(bcolors.CYELLOW2 + "Would you like to use Sublime Text 3 keymaps in VS Code?\n" + bcolors.ENDC)
 		print("\nWill now install Ubuntu Termimnal Theme as default...")
 		os.system('regedit "' + path + '\\windows\\theme_ubuntu.reg"')
 		os.system('robocopy "'+ path + '\\assets" "%userprofile%\\.kinto\\assets" /E')
-		if(stvscode):
-			os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; ST2CODE)/$2$3/g" .\\windows\\kinto-new.ahk')
+		if (stvscode and (default > 0 || default < 3)):
+			os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; Default - ST2CODE)/$2$3/g" .\\windows\\kinto-new.ahk')
+		elif (stvscode and (default == 3 || default == 4 )):
+			os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; CB/IBM - ST2CODE)/$2$3/g" .\\windows\\kinto-new.ahk')
 		os.system('copy /Y "' + path + '\\windows\\kinto-start.vbs" "%userprofile%\\.kinto\\kinto-start.vbs"')
 		os.system('copy /Y "' + path + '\\windows\\usb.vbs" "%userprofile%\\.kinto\\usb.vbs"')
 		os.system('copy /Y "' + path + '\\windows\\detectUSB.ahk" "%userprofile%\\.kinto\\detectUSB.ahk"')

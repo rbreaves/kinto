@@ -153,9 +153,9 @@ GroupAdd, intellij, ahk_exe idea64.exe
         } else if (GetKeyState("LCtrl", "P") AND GetKeyState("LShift", "P")) {
             ; Secondary
             ; Send {LCtrl down}{Secondary up}{LShift down}{tab}
-    ;        Send {LCtrl down}{LWin up}{LShift down}{tab}     ; WinModifiers
+    ;        Send {LCtrl down}{LWin up}{LShift down}{tab}     ; WinModifiers/CB
     ;        Send {LCtrl down}{LAlt up}{LShift down}{tab}     ; MacModifiers
-    ;        Send {LCtrl down}{CapsLock up}{LShift down}{tab} ; CB/IBM
+    ;        Send {LCtrl down}{CapsLock up}{LShift down}{tab} ; IBM
             KeyWait, tab
         ; Primary
     ;    } else if (GetKeyState("LAlt", "P") AND GetKeyState("LShift", "P") = false) {   ; WinModifiers/CB/IBM
@@ -168,14 +168,14 @@ GroupAdd, intellij, ahk_exe idea64.exe
             Send {LAlt down}{LShift down}{tab}
             KeyWait, tab
         ; Secondary 
-    ;    } else if (GetKeyState("LWin", "P") AND GetKeyState("LShift", "P")) = false {     ; WinModifiers
+    ;    } else if (GetKeyState("LWin", "P") AND GetKeyState("LShift", "P")) = false {     ; WinModifiers/CB
     ;    } else if (GetKeyState("LAlt", "P") AND GetKeyState("LShift", "P") = false) {     ; MacModifiers
-    ;    } else if (GetKeyState("CapsLock", "P") AND GetKeyState("LShift", "P")) = false { ; CB/IBM
+    ;    } else if (GetKeyState("CapsLock", "P") AND GetKeyState("LShift", "P")) = false { ; IBM
             return
         ; Secondary
-    ;     } else if (GetKeyState("LWin", "P") AND GetKeyState("LShift", "P")) {     ; WinModifiers
+    ;     } else if (GetKeyState("LWin", "P") AND GetKeyState("LShift", "P")) {     ; WinModifiers/CB
     ;     } else if (GetKeyState("LAlt", "P") AND GetKeyState("LShift", "P")) {     ; MacModifiers
-    ;     } else if (GetKeyState("CapsLock", "P") AND GetKeyState("LShift", "P")) { ; CB/IBM
+    ;     } else if (GetKeyState("CapsLock", "P") AND GetKeyState("LShift", "P")) { ; IBM
             return
         } else {
             send {Blind}{tab}
@@ -195,7 +195,7 @@ GroupAdd, intellij, ahk_exe idea64.exe
 
     ; $LAlt::LCtrl     ; CB/IBM
     ; $RAlt::RCtrl     ; CB/IBM
-    ; $CapsLock::LWin  ; CB/IBM
+    ; $CapsLock::LWin  ; IBM
     ; $LCtrl::LAlt     ; CB/IBM
 
     ; $LAlt::LCtrl   ; WinModifiers
@@ -216,6 +216,7 @@ GroupAdd, intellij, ahk_exe idea64.exe
     ; Primary
     ; $LAlt up::Send {LWin up}{LAlt up}{LCtrl up} ; WinModifiers
     ; $LWin up::Send {LWin up}{LAlt up}{LCtrl up} ; MacModifiers
+    ; $LAlt up::Send {LWin up}{CapsLock up}{LAlt up}{LCtrl up} ; CB/IBM
 
     ; Close Apps 
     ^q::Send !{F4}
