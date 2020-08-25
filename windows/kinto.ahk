@@ -46,11 +46,11 @@ Menu, Tray, Add, Close, Exit
 Menu, Tray, Click, 1
 
 winkb(){
-    Run, %A_ScriptDir%\NoShell.vbs %A_ScriptDir%\toggle_kb.bat win, %A_ScriptDir%
+    Run, "%A_ScriptDir%\NoShell.vbs" "%A_ScriptDir%\toggle_kb.bat" win, "%A_ScriptDir%"
 }
 
 mackb(){
-    Run, %A_ScriptDir%\NoShell.vbs %A_ScriptDir%\toggle_kb.bat mac, %A_ScriptDir%
+    Run, "%A_ScriptDir%\NoShell.vbs" "%A_ScriptDir%\toggle_kb.bat" mac, "%A_ScriptDir%"
 }
 
 min(){
@@ -133,6 +133,8 @@ GroupAdd, vstudio, ahk_exe devenv.exe
 
 GroupAdd, intellij, ahk_exe idea.exe
 GroupAdd, intellij, ahk_exe idea64.exe
+
+; SetCapsLockState, AlwaysOff ; CB/IBM
 
 #IfWinNotActive ahk_group virtm
 
@@ -265,7 +267,7 @@ GroupAdd, intellij, ahk_exe idea64.exe
     ^+Up::Send ^+{Home}
     ^Down::Send ^{End}
     ^+Down::Send ^+{End}
-    ^Backspace::Send +{Home}{Delete}
+    $^Backspace::Send +{Home}{Delete}
     !Backspace::Send ^{Backspace}
     !Left::Send ^{Left}
     !+Left::Send ^+{Left}
@@ -273,7 +275,7 @@ GroupAdd, intellij, ahk_exe idea64.exe
     !+Right::Send ^+{Right}
 
     ; Cmd+Space Alternative
-    ^Space::Send ^{Esc}
+    $^Space::Send ^{Esc}
 
     #IfWinActive ahk_group intellij
         ; General
@@ -310,7 +312,7 @@ GroupAdd, intellij, ahk_exe idea64.exe
         #+q::Send !q                    ;Context info
         #!o::Send ^!o                   ;Optimize imports
         #!i::Send ^!i                   ;Auto-indent line(s)
-        ^Backspace::Send ^y             ;Delete line at caret
+        $^Backspace::Send ^y             ;Delete line at caret
         #+j::Send ^+j                   ;Smart line join
         !Delete::Send ^{Delete}         ;Delete to word end
         !Backspace::Send ^{Backspace}   ;Delete to word start
@@ -370,6 +372,9 @@ GroupAdd, intellij, ahk_exe idea64.exe
 
     ; Sublime Text Remaps for VS Code
     #IfWinActive ahk_group vscode
+        #p::send {Up}                                        ; Allow for traversing quick list
+        #n::send {Down}                                      ; Allow for traversing quick list
+        #Space::Send ^{Space}                                ; Basic code completion
         ; Remap Ctrl+Shift to behave like macOS Sublimetext
         ; Will extend cursor to multiple lines
     ;    #+Up::send ^!{Up}                                   ; ST2CODE
@@ -382,6 +387,7 @@ GroupAdd, intellij, ahk_exe idea64.exe
     #If
 
     #IfWinActive ahk_exe sublime_text.exe
+        #Space::Send ^{Space}                                   ; Basic code completion
         #^Up::send !{O}                                         ; Switch file
         #^f::send {F11}                                         ; toggle_full_screen
         ^!v::send {Ctrl Down}k{Ctrl Up}{Ctrl Down}v{Ctrl Up}    ; paste_from_history
