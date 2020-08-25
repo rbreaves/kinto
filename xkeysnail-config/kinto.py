@@ -21,6 +21,13 @@ codeStr = "|".join(str(x) for x in mscodes)
 
 # [Global modemap] Change modifier keys as in xmodmap
 define_conditional_modmap(lambda wm_class: wm_class.casefold() not in terminals,{
+    # # IBM
+    # Key.LEFT_ALT: Key.RIGHT_CTRL,   # IBM
+    # Key.LEFT_CTRL: Key.LEFT_ALT,    # IBM
+    # Key.CAPSLOCK: Key.LEFT_META,    # IBM
+    # Key.RIGHT_ALT: Key.RIGHT_CTRL,  # IBM - Multi-language (Remove)
+    # Key.RIGHT_CTRL: Key.RIGHT_ALT,  # IBM - Multi-language (Remove)
+
     # # Chromebook
     # Key.LEFT_ALT: Key.RIGHT_CTRL,   # Chromebook
     # Key.LEFT_CTRL: Key.LEFT_ALT,    # Chromebook
@@ -44,6 +51,17 @@ define_conditional_modmap(lambda wm_class: wm_class.casefold() not in terminals,
 
 # [Conditional modmap] Change modifier keys in certain applications
 define_conditional_modmap(re.compile(termStr, re.IGNORECASE), {
+    # # IBM
+    # Key.LEFT_ALT: Key.RIGHT_CTRL,     # IBM
+    # # Left Ctrl Stays Left Ctrl
+    # Key.CAPSLOCK: Key.LEFT_ALT,       # IBM
+    # Key.RIGHT_ALT: Key.RIGHT_CTRL,    # IBM - Multi-language (Remove)
+    # Key.RIGHT_CTRL: Key.RIGHT_ALT,    # IBM
+    # # Right Meta does not exist on chromebooks
+    
+    # Key.RIGHT_ALT: Key.RIGHT_CTRL,  # IBM - Multi-language (Remove)
+    # Key.RIGHT_CTRL: Key.RIGHT_ALT,  # IBM - Multi-language (Remove)
+
     # # Chromebook
     # Key.LEFT_ALT: Key.RIGHT_CTRL,     # Chromebook
     # # Left Ctrl Stays Left Ctrl
@@ -183,9 +201,9 @@ define_keymap(None,{
     # K("RC-Shift-Tab"): K("RC-Shift-backslash"),   # xfce4
     # K("RC-Grave"): K("RC-Shift-backslash"),       # xfce4
     # In-App Tab switching
-    # K("M-Tab"): K("C-Tab"),                       # Chromebook - In-App Tab switching
-    # K("M-Shift-Tab"): K("C-Shift-Tab"),           # Chromebook - In-App Tab switching
-    # K("M-Grave") : K("C-Shift-Tab"),              # Chromebook - In-App Tab switching
+    # K("M-Tab"): K("C-Tab"),                       # Chromebook/IBM - In-App Tab switching
+    # K("M-Shift-Tab"): K("C-Shift-Tab"),           # Chromebook/IBM - In-App Tab switching
+    # K("M-Grave") : K("C-Shift-Tab"),              # Chromebook/IBM - In-App Tab switching
     K("Super-Tab"): K("LC-Tab"),                  # Default not-chromebook
     K("Super-Shift-Tab"): K("LC-Shift-Tab"),      # Default not-chromebook
 
@@ -204,7 +222,7 @@ define_keymap(None,{
     K("RC-Shift-Up"): K("C-Shift-Home"),          # Select all to Beginning of File
     K("RC-Down"): K("C-End"),                     # End of File
     K("RC-Shift-Down"): K("C-Shift-End"),         # Select all to End of File
-    # K("M-Backspace"): K("Delete"),                # Chromebook - Delete
+    # K("M-Backspace"): K("Delete"),                # Chromebook/IBM - Delete
     K("Super-Backspace"): K("C-Backspace"),       # Default not-chromebook - Delete Left Word of Cursor
     K("Super-Delete"): K("C-Delete"),             # Default not-chromebook - Delete Right Word of Cursor
     K("Alt-Backspace"): K("C-Backspace"),       # Default not-chromebook - Delete Left Word of Cursor
@@ -264,7 +282,7 @@ define_keymap(re.compile(codeStr, re.IGNORECASE),{
     K("C-Shift-g"): K("Shift-f3"),              # find_prev
     K("Super-c"): K("LC-c"),                    # Sigints - interrupt
     # K("Super-C-g"): K("C-f2"),                  # Default - Sublime - find_all_under
-    # K("C-M-g"): K("C-f2"),                      # Chromebook - Sublime - find_all_under
+    # K("C-M-g"): K("C-f2"),                      # Chromebook/IBM - Sublime - find_all_under
     # K("Super-Shift-up"): K("M-Shift-up"),       # multi-cursor up - Sublime
     # K("Super-Shift-down"): K("M-Shift-down"),   # multi-cursor down - Sublime
     # K(""): pass_through_key,                    # cancel
@@ -305,8 +323,8 @@ define_keymap(re.compile("Sublime_text", re.IGNORECASE),{
     K("C-Shift-f3"): pass_through_key,          # cancel find_under_prev
     K("Super-M-Shift-g"): K("C-Shift-f3"),      # find_under_prev
     K("M-f3"): pass_through_key,                # Default - cancel find_all_under
-    # K("M-Refresh"): pass_through_key,           # Chromebook - cancel find_all_under
-    # K("M-C-g"): K("M-Refresh"),                 # Chromebook - find_all_under
+    # K("M-Refresh"): pass_through_key,           # Chromebook/IBM - cancel find_all_under
+    # K("M-C-g"): K("M-Refresh"),                 # Chromebook/IBM - find_all_under
     K("Super-C-g"): K("M-f3"),                  # Default - find_all_under
     K("C-Shift-up"): pass_through_key,          # cancel swap_line_up
     K("Super-M-up"): K("C-Shift-up"),           # swap_line_up

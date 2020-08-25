@@ -8,7 +8,7 @@ homedir = os.path.expanduser("~")
 kintotype = 0
 
 def windows_setup():
-	keymaps = ["Apple keyboard standard", "Windows keyboard standard","Uninstall"]
+	keymaps = ["Apple keyboard standard", "Windows keyboard standard","Chromebook","IBM - No Super/Win","Uninstall"]
 	for index, item in enumerate(keymaps):
 		print("    %i. %s" % (index+1, item.capitalize()))
 	default = 0
@@ -17,7 +17,7 @@ def windows_setup():
 	print("")
 	# Short DOS path notation
 	path= cmdline('echo %cd%')[:-1]
-	if default > 0 and default < 3:
+	if default > 0 and default < 5:
 		print("Will now install chocolatey and autohotkey with elevated privileges...")
 		print("This install will fail if you are not running with elevated privileges")
 		os.system('powershell -executionpolicy bypass ".\\windows\\autohotkey.ps1"')
@@ -27,7 +27,11 @@ def windows_setup():
 		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; MacModifiers)/$2$3/g" .\\windows\\kinto-new.ahk')
 	elif default == 2:	
 		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; WinModifiers)/$2$3/g" .\\windows\\kinto-new.ahk')
-	elif default == 3:
+	elif default == 3:	
+		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; Chromebook)/$2$3/g" .\\windows\\kinto-new.ahk')
+	elif default == 4:	
+		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; IBM)/$2$3/g" .\\windows\\kinto-new.ahk')
+	elif default == 5:
 		print("Removing any old registry keys from prior versions...")
 		p = subprocess.Popen(['powershell.exe', "Remove-ItemProperty -Path HKLM:'SYSTEM\CurrentControlSet\Control\Keyboard Layout' -Name 'Scancode Map' -ErrorAction SilentlyContinue"], stdout=sys.stdout)
 		print("Removing Kinto from Startup folder...")
@@ -39,7 +43,7 @@ def windows_setup():
 		os.system('(rd /s /q %userprofile%\\.kinto) 2> nul')
 		print("")
 		print("Uninstall of Kinto is Complete.")
-	if default > 0 and default < 3:
+	if default > 0 and default < 5:
 		stvscode = yn_choice(bcolors.CYELLOW2 + "Would you like to use Sublime Text 3 keymaps in VS Code?\n" + bcolors.ENDC)
 		print("\nWill now install Ubuntu Termimnal Theme as default...")
 		os.system("regedit " + path + "\\windows\\theme_ubuntu.reg")
