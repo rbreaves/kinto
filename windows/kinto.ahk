@@ -363,6 +363,8 @@ $^Space::Send ^{Esc}
 
 ; Sublime Text Remaps for VS Code
 #IfWinActive ahk_group vscode
+    #p::send {Up}                                        ; Allow for traversing quick list
+    #n::send {Down}                                      ; Allow for traversing quick list
     #Space::Send ^{Space}                                ; Basic code completion
     ; Remap Ctrl+Shift to behave like macOS Sublimetext
     ; Will extend cursor to multiple lines
