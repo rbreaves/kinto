@@ -10,7 +10,7 @@ kintotype = 0
 def windows_setup():
 	keymaps = ["Apple keyboard standard", "Windows keyboard standard","Chromebook","IBM - No Super/Win","Uninstall"]
 	for index, item in enumerate(keymaps):
-		print("    %i. %s" % (index+1, item.capitalize()))
+		print("    %i. %s" % (index+1, item))
 	default = 0
 	while not int(default) in range(1,len(keymaps)+1):
 		default = int(input("\nPlease enter your desired keymap (1 - " + str(len(keymaps)) + ") : "))
@@ -26,8 +26,10 @@ def windows_setup():
 	if default < 3:
 		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; Default)(?!( - ST2CODE))(.*)/$2$3$5/g" .\\windows\\kinto-new.ahk')
 	if default == 1:
+		kbtype = "mac"
 		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; MacModifiers)/$2$3/g" .\\windows\\kinto-new.ahk')
-	elif default == 2:	
+	elif default == 2:
+		kbtype = "win"
 		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; WinModifiers)/$2$3/g" .\\windows\\kinto-new.ahk')
 	elif default == 5:
 		print("Removing any old registry keys from prior versions...")
@@ -42,11 +44,13 @@ def windows_setup():
 		print("")
 		print("Uninstall of Kinto is Complete.")
 	if default == 3:
+		kbtype = "chrome"
 		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; Chromebook)/$2$3/g" .\\windows\\kinto-new.ahk')
 		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; WinModifiers/CB)/$2$3/g" .\\windows\\kinto-new.ahk')
-	if default == 3 || default == 4:	
+	if default == 3 or default == 4:
 		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; CB/IBM)/$2$3/g" .\\windows\\kinto-new.ahk')
-	if default == 4:	
+	if default == 4:
+		kbtype = "ibm"
 		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; IBM)/$2$3/g" .\\windows\\kinto-new.ahk')
 		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; WinModifiers/CB/IBM)/$2$3/g" .\\windows\\kinto-new.ahk')
 	if default > 0 and default < 5:
@@ -54,11 +58,12 @@ def windows_setup():
 		print("\nWill now install Ubuntu Termimnal Theme as default...")
 		os.system('regedit "' + path + '\\windows\\theme_ubuntu.reg"')
 		os.system('robocopy "'+ path + '\\assets" "%userprofile%\\.kinto\\assets" /E')
-		if (stvscode and (default > 0 || default < 3)):
+		if (stvscode and (default > 0 or default < 3)):
 			os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; Default - ST2CODE)/$2$3/g" .\\windows\\kinto-new.ahk')
-		elif (stvscode and (default == 3 || default == 4 )):
+		elif (stvscode and (default == 3 or default == 4 )):
 			os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; CB/IBM - ST2CODE)/$2$3/g" .\\windows\\kinto-new.ahk')
 		os.system('copy /Y "' + path + '\\windows\\kinto-start.vbs" "%userprofile%\\.kinto\\kinto-start.vbs"')
+		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/{kbtype}/' + kbtype + '/g" "%userprofile%\\.kinto\\kinto-start.vbs"')
 		os.system('copy /Y "' + path + '\\windows\\usb.vbs" "%userprofile%\\.kinto\\usb.vbs"')
 		os.system('copy /Y "' + path + '\\windows\\detectUSB.ahk" "%userprofile%\\.kinto\\detectUSB.ahk"')
 		os.system('mklink "%userprofile%\\Start Menu\\Programs\\Startup\\kinto-start.vbs" "%userprofile%\\.kinto\\kinto-start.vbs"')

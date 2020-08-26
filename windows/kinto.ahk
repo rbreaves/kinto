@@ -2,8 +2,8 @@
 #NoEnv
 #Persistent
 
-DetectHiddenWindows, On
-Run, %A_ScriptDir%\detectUSB.ahk
+; DetectHiddenWindows, On           ; Autodetect
+; Run, %A_ScriptDir%\detectUSB.ahk  ; Autodetect
 
 ; Enable Left clicks on Kinto Icon
 ; https://www.autohotkey.com/boards/viewtopic.php?t=9501
@@ -32,15 +32,37 @@ AHK_NOTIFYICON(wParam, lParam)
 ; I_Icon = %A_ScriptDir%\assets\kinto-white-invert.ico    ; WinModifiers/CB/IBM
 ; IfExist, %I_Icon%                                       ; WinModifiers/CB/IBM
 ; Menu, Tray, Icon, %I_Icon%,, 1                          ; WinModifiers/CB/IBM
-; Menu, Tray, Tip, Windows - Kinto                        ; WinModifiers/CB/IBM
+; Menu, Tray, Tip, Windows - Kinto                        ; WinModifiers
+; Menu, Tray, Tip, Chromebook - Kinto                     ; Chromebook
+; Menu, Tray, Tip, IBM - Kinto                            ; IBM
+
+Menu, Keyboards, Add, Windows, winkb
+Menu, Keyboards, Add, Apple, mackb
+Menu, Keyboards, Add, Chromebook, chromekb
+Menu, Keyboards, Add, IBM (No Super/Win key), ibmkb
+
+paramkb=%1%
+
+if paramkb = mac
+    checkKB = Apple
+if paramkb = win
+    checkKB = Windows
+if paramkb = chrome
+    checkKB = Chromebook
+if paramkb = ibm
+    checkKB = IBM (No Super/Win key)
+
+menu, Keyboards, check, %checkKB%
 
 ; Set Tray menu
 ; Menu, Tray, Standard
 Menu, Tray, NoStandard ; to remove default menu
-Menu, Tray, Add, Set Windows Keyboard, winkb
-Menu, Tray, Add, Set Apple Keyboard, mackb
+Menu, Tray, Add, Keyboard Types, :Keyboards
+Menu, Tray, Add, Autodetect Keyboards, autodetect
+; Menu, Tray, check, Autodetect Keyboards ; Autodetect
+; Menu, Tray, disable, Autodetect Keyboards ; CB/IBM
 Menu, Tray, Add, Suspend Kinto, tray_suspend
-Menu, Tray, Add, Returns to Desktop, min
+; Menu, Tray, Add, Returns to Desktop, min
 Menu, Tray, Add
 Menu, Tray, Add, Close, Exit
 Menu, Tray, Click, 1
@@ -51,6 +73,18 @@ winkb(){
 
 mackb(){
     Run, "%A_ScriptDir%\NoShell.vbs" "%A_ScriptDir%\toggle_kb.bat" mac, "%A_ScriptDir%"
+}
+
+chromekb(){
+    Run, "%A_ScriptDir%\NoShell.vbs" "%A_ScriptDir%\toggle_kb.bat" chrome, "%A_ScriptDir%"
+}
+
+ibmkb(){
+    Run, "%A_ScriptDir%\NoShell.vbs" "%A_ScriptDir%\toggle_kb.bat" ibm, "%A_ScriptDir%"
+}
+
+autodetect(){
+    Run, "%A_ScriptDir%\NoShell.vbs" "%A_ScriptDir%\toggle_kb.bat" auto, "%A_ScriptDir%"
 }
 
 min(){
@@ -311,7 +345,8 @@ GroupAdd, intellij, ahk_exe idea64.exe
         ^#g::Send ^!+j                  ;Select all occurrences
         #+g::Send !+j                   ;Unselect occurrence
         ; Editing
-        #Space::Send ^{Space}           ;Basic code completion
+        ; #Space::Send ^{Space}           ; Default - Basic code completion
+        ; !Space::Send ^{Space}           ; CB/IBM - Basic code completion
         #+Space::Send ^+{Space}         ;Smart code completion
         #j::Send ^q                     ;Quick documentation lookup
         ^n::Send !{Insert}              ;Generate code...
@@ -342,7 +377,8 @@ GroupAdd, intellij, ahk_exe idea64.exe
         #Left::Send !{Left}             ;Go to previous editor tab
         #l::Send ^g                     ;Go to line
         #e::Send ^e                     ;Recent files popup
-        !Space::Send ^+i                ;Open quick definition lookup
+        ; !Space::Send ^+i                ; Default - Open quick definition lookup
+        ; #Space::Send ^+i                ; CB/IBM - Open quick definition lookup
         ^Y::Send ^+i                    ;Open quick definition lookup
         #+b::Send ^+b                   ;Go to type declaration
         #Up::Send !{Up}                 ;Go to previous
@@ -384,7 +420,6 @@ GroupAdd, intellij, ahk_exe idea64.exe
     #IfWinActive ahk_group vscode
         #p::send {Up}                                        ; Allow for traversing quick list
         #n::send {Down}                                      ; Allow for traversing quick list
-        #Space::Send ^{Space}                                ; Basic code completion
         ; Remap Ctrl+Shift to behave like macOS Sublimetext
         ; Will extend cursor to multiple lines
     ;    #+Up::send ^!{Up}                                   ; Default - ST2CODE
@@ -403,7 +438,8 @@ GroupAdd, intellij, ahk_exe idea64.exe
     #If
 
     #IfWinActive ahk_exe sublime_text.exe
-        #Space::Send ^{Space}                                   ; Basic code completion
+        ; #Space::Send ^{Space}                                   ; Default - Basic code completion
+        ; !Space::Send ^{Space}                                   ; CB/IBM - Basic code completion
         #^Up::send !{O}                                         ; Switch file
         #^f::send {F11}                                         ; toggle_full_screen
         ^!v::send {Ctrl Down}k{Ctrl Up}{Ctrl Down}v{Ctrl Up}    ; paste_from_history
@@ -466,12 +502,14 @@ GroupAdd, intellij, ahk_exe idea64.exe
     #IfWinActive ahk_group terminals
 
         ; End of Line
-        #e::
+        #e:: ; Default
+        !e:: ; CB/IBM
         Send {End}
         return
 
         ; Beginning of Line
-        #a::
+        ; #a:: ; Default
+        ; !a:: ; CB/IBM
         Send {Home}
         return
 
@@ -487,7 +525,8 @@ GroupAdd, intellij, ahk_exe idea64.exe
         return
 
         ; Sigints - interrupt
-        $#c::Send {Ctrl down}c{Ctrl up}
+        ; $#c::Send {Ctrl down}c{Ctrl up} ; Default
+        ; $!c::Send {Ctrl down}c{Ctrl up} ; CB/IBM
 
         ; Paste
         ^v::
@@ -528,19 +567,33 @@ GroupAdd, intellij, ahk_exe idea64.exe
         ; Clear Terminal and Scroll Buffer
         ^k::Send clear && printf '\e[3J'{Enter}
         ; Nano editor shortcuts
-        #g::Send {LCtrl down}g{LCtrl Up}
-        #k::Send {LCtrl down}k{LCtrl Up}
-        #x::Send {LCtrl down}x{LCtrl Up}
-        #o::Send {LCtrl down}o{LCtrl Up}
-        #r::Send {LCtrl down}r{LCtrl Up}
-        #w::Send {LCtrl down}w{LCtrl Up}
-        #\::Send {LCtrl down}\{LCtrl Up}
-        #u::Send {LCtrl down}u{LCtrl Up}
-        #j::Send {LCtrl down}j{LCtrl Up}
-        #t::Send {LCtrl down}t{LCtrl Up}
-        #_::Send {LCtrl down}_{LCtrl Up}
-        #z::Send {LCtrl down}z{LCtrl Up}
-        #y::Send {LCtrl down}y{LCtrl Up}
-        #v::Send {LCtrl down}v{LCtrl Up}
+        #g::Send {LCtrl down}g{LCtrl Up} ; Default
+        #k::Send {LCtrl down}k{LCtrl Up} ; Default
+        #x::Send {LCtrl down}x{LCtrl Up} ; Default
+        #o::Send {LCtrl down}o{LCtrl Up} ; Default
+        #r::Send {LCtrl down}r{LCtrl Up} ; Default
+        #w::Send {LCtrl down}w{LCtrl Up} ; Default
+        #\::Send {LCtrl down}\{LCtrl Up} ; Default
+        #u::Send {LCtrl down}u{LCtrl Up} ; Default
+        #j::Send {LCtrl down}j{LCtrl Up} ; Default
+        #t::Send {LCtrl down}t{LCtrl Up} ; Default
+        #_::Send {LCtrl down}_{LCtrl Up} ; Default
+        #z::Send {LCtrl down}z{LCtrl Up} ; Default
+        #y::Send {LCtrl down}y{LCtrl Up} ; Default
+        #v::Send {LCtrl down}v{LCtrl Up} ; Default
+        !g::Send {LCtrl down}g{LCtrl Up} ; CB/IBM
+        !k::Send {LCtrl down}k{LCtrl Up} ; CB/IBM
+        !x::Send {LCtrl down}x{LCtrl Up} ; CB/IBM
+        !o::Send {LCtrl down}o{LCtrl Up} ; CB/IBM
+        !r::Send {LCtrl down}r{LCtrl Up} ; CB/IBM
+        !w::Send {LCtrl down}w{LCtrl Up} ; CB/IBM
+        !\::Send {LCtrl down}\{LCtrl Up} ; CB/IBM
+        !u::Send {LCtrl down}u{LCtrl Up} ; CB/IBM
+        !j::Send {LCtrl down}j{LCtrl Up} ; CB/IBM
+        !t::Send {LCtrl down}t{LCtrl Up} ; CB/IBM
+        !_::Send {LCtrl down}_{LCtrl Up} ; CB/IBM
+        !z::Send {LCtrl down}z{LCtrl Up} ; CB/IBM
+        !y::Send {LCtrl down}y{LCtrl Up} ; CB/IBM
+        !v::Send {LCtrl down}v{LCtrl Up} ; CB/IBM
     #If
 #If
