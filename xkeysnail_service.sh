@@ -364,7 +364,6 @@ elif [[ $1 == "3" || $1 == "chromebook" ]]; then
 	perl -pi -e "s/(# )(.*)(# Chromebook)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
 	perl -pi -e "s/(# )(.*)(# xfce4)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
 	perl -pi -e "s/(\w.*)(# Default)/# \$1\$2/g" ./xkeysnail-config/kinto.py.new
-fi
 elif [[ $1 == "4" || $1 == "ibm" ]]; then
 	perl -pi -e "s/(# )(.*)(# IBM)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
 	perl -pi -e "s=(# )(.*)(# Chromebook/IBM)=\$2\$3=g" ./xkeysnail-config/kinto.py.new
@@ -414,6 +413,7 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	# 	sudo systemctl enable xkeysnail.service
 	# fi
 	sudo systemctl restart xkeysnail
+	sudo pkill -f kintotray >/dev/null 2>&1
 	nohup python3 ~/.config/kinto/kintotray.py& >/dev/null 2>&1
 
 	echo -e "Adding xhost fix...\n"
