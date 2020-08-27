@@ -186,6 +186,7 @@ if [ $# -eq 0 ]; then
 	echo "  1) Windows & Mac (HID driver) - Most Standard keyboards (& 1st party usb/bt Apple keyboards)"
 	echo "  2) Mac Only & VMs on Macbooks - 3rd & 1st party Apple keyboards"
 	echo "  3) Chromebook - Chromebook running Linux"
+	echo "  4) IBM M - Keyboards w/o Super/Win keys"
 	# echo "  5) Uninstall"
 
 	read n
@@ -200,7 +201,7 @@ rightalt=false
 # VS code remap
 vssublime=false
 
-if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1 == "chromebook" ]]; then
+if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "4" || $1 == "winmac" || $1 == "mac" || $1 == "chromebook" || $1 == "ibm" ]]; then
 	if [[ $dename == "gnome" || $dename == "budgie" || $dename == "mate" || $dename == "xfce" ]];then
 		installtray=true
 		while true; do
@@ -363,6 +364,11 @@ elif [[ $1 == "3" || $1 == "chromebook" ]]; then
 	perl -pi -e "s/(# )(.*)(# Chromebook)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
 	perl -pi -e "s/(# )(.*)(# xfce4)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
 	perl -pi -e "s/(\w.*)(# Default)/# \$1\$2/g" ./xkeysnail-config/kinto.py.new
+elif [[ $1 == "4" || $1 == "ibm" ]]; then
+	perl -pi -e "s/(# )(.*)(# IBM)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
+	perl -pi -e "s=(# )(.*)(# Chromebook/IBM)=\$2\$3=g" ./xkeysnail-config/kinto.py.new
+	# perl -pi -e "s/(# )(.*)(# xfce4)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
+	perl -pi -e "s/(\w.*)(# Default)/# \$1\$2/g" ./xkeysnail-config/kinto.py.new
 fi
 
 if $rightalt ; then
@@ -407,6 +413,7 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	# 	sudo systemctl enable xkeysnail.service
 	# fi
 	sudo systemctl restart xkeysnail
+	sudo pkill -f kintotray >/dev/null 2>&1
 	nohup python3 ~/.config/kinto/kintotray.py& >/dev/null 2>&1
 
 	echo -e "Adding xhost fix...\n"
