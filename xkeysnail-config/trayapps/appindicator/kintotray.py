@@ -25,12 +25,21 @@ class Indicator():
     chkautostart_id = 0
     autostart_bool = False
     menu = Gtk.Menu()
+    menukb = Gtk.Menu()
     checkbox_autostart = Gtk.CheckMenuItem('Autostart')
     checkbox_enable = Gtk.CheckMenuItem('Kinto Enabled')
+    keyboards = Gtk.MenuItem('Keyboard Types')
+    keyboards.set_submenu(menukb)
+    winkb = Gtk.CheckMenuItem('Windows')
+    mackb = Gtk.CheckMenuItem('Apple')
+    chromekb = Gtk.CheckMenuItem('Chromebook')
+    ibmkb = Gtk.CheckMenuItem('IBM (No Super/Win key)')
+    winmackb = Gtk.CheckMenuItem('Windows & Apple*')
     button_config = Gtk.MenuItem('Edit Config')
     # Keyboard type set below
     button_syskb = Gtk.MenuItem('System Shortcuts')
     button_region = Gtk.MenuItem('Change Language')
+    button_support = Gtk.MenuItem('Support')
 
     def __init__(self):
         self.indicator = appindicator.Indicator.new(APPINDICATOR_ID, self.homedir+'/.config/kinto/kinto-invert.svg', appindicator.IndicatorCategory.SYSTEM_SERVICES)
@@ -57,7 +66,7 @@ class Indicator():
         self.menu.append(self.checkbox_autostart)
 
         # Kinto Enable
-        time.sleep(5)
+        # time.sleep(5)
         # sudo systemctl is-active --quiet xkeysnail
         res = subprocess.Popen(['sudo', 'systemctl','is-active','--quiet','xkeysnail'])
         res.wait()
@@ -74,23 +83,71 @@ class Indicator():
             self.enable_id = self.checkbox_enable.connect('activate',self.setEnable,True)
         self.menu.append(self.checkbox_enable)
 
+        # Keyboard Types
+        # self.keyboards.connect('activate',self.setConfig)
+        ismac = "perl -ne 'print if /^(\s{4})((?!#).*)(# Mac\n)/' ~/.config/kinto/kinto.py | wc -l"
+        iswin = "perl -ne 'print if /^(\s{4})((?!#).*)(# Win\n)/' ~/.config/kinto/kinto.py | wc -l"
+        ischrome = "perl -ne 'print if /^(\s{4})((?!#).*)(# Chromebook\n)/' ~/.config/kinto/kinto.py | wc -l"
+        iswinmac = "perl -ne 'print if /^(\s{4})((?!#).*)(# WinMac\n)/' ~/.config/kinto/kinto.py | wc -l"
+        isibm = "perl -ne 'print if /^(\s{4})((?!#).*)(# IBM\n)/' ~/.config/kinto/kinto.py | wc -l"
+        mac_result = int(self.queryConfig(ismac))
+        win_result = int(self.queryConfig(iswin))
+        chrome_result = int(self.queryConfig(ischrome))
+        ibm_result = int(self.queryConfig(isibm))
+        winmac_result = int(self.queryConfig(iswinmac))
+
+        countkb = 0
+
+        if mac_result:
+            self.mackb.set_active(True)
+            countkb += 1
+        if win_result:
+            self.winkb.set_active(True)
+            countkb += 1
+        if chrome_result:
+            self.chromekb.set_active(True)
+            countkb += 1
+        if winmac_result:
+            self.winmackb.set_active(True)
+            countkb += 1
+        if ibm_result:
+            self.ibmkb.set_active(True)
+            countkb += 1
+
+        if countkb > 1:
+            subprocess.Popen(['notify-send','Kinto: Remove ' + str(countkb-1) + ' kb type(s)','-i','budgie-desktop-symbolic'])
+
+        self.mackb.signal_id = self.mackb.connect('activate',self.setKB,"mac")
+        self.winkb.signal_id = self.winkb.connect('activate',self.setKB,"win")
+        self.chromekb.signal_id = self.chromekb.connect('activate',self.setKB,"chrome")
+        self.ibmkb.signal_id = self.ibmkb.connect('activate',self.setKB,"ibm")
+        self.winmackb.signal_id = self.winmackb.connect('activate',self.setKB,"winmac")
+
+        self.menukb.append(self.winkb)
+        self.menukb.append(self.mackb)
+        self.menukb.append(self.chromekb)
+        self.menukb.append(self.ibmkb)
+        self.menukb.append(self.winmackb)
+
+        self.menu.append(self.keyboards)
+
         # Edit Config
         self.button_config.connect('activate',self.setConfig)
         self.menu.append(self.button_config)
 
         # Set Keyboard Type
-        command = "perl -ne 'print if /(#.*)(# Mac)\n/' ~/.config/kinto/kinto.py | wc -l"
-        res = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=None, shell=True)
-        res.wait()
-        res = res.communicate()[0]
+        # command = "perl -ne 'print if /(#.*)(# Mac)\n/' ~/.config/kinto/kinto.py | wc -l"
+        # res = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=None, shell=True)
+        # res.wait()
+        # res = res.communicate()[0]
 
-        if res:
-            self.button_winmac = Gtk.MenuItem('Set Win/Mac KB Type')
-            self.winmac_id = self.button_winmac.connect('activate',self.setKB,"winmac")
-        else:
-            self.button_winmac = Gtk.MenuItem('Set Mac Only KB Type')
-            self.winmac_id = button_winmac.connect('activate',self.setKB,"mac")
-        self.menu.append(self.button_winmac)
+        # if res:
+        #     self.button_winmac = Gtk.MenuItem('Set Win/Mac KB Type')
+        #     self.winmac_id = self.button_winmac.connect('activate',self.setKB,"winmac")
+        # else:
+        #     self.button_winmac = Gtk.MenuItem('Set Mac Only KB Type')
+        #     self.winmac_id = button_winmac.connect('activate',self.setKB,"mac")
+        # self.menu.append(self.button_winmac)
 
         # Set System Keyboard Shortcuts
         self.button_syskb.connect('activate',self.setSysKB)
@@ -100,12 +157,17 @@ class Indicator():
         self.button_region.connect('activate',self.setRegion)
         self.menu.append(self.button_region)
 
-        # item_quit = Gtk.MenuItem('Quit')
-        # item_quit.connect('activate', quit)
-        # menu.append(item_quit)
+        item_quit = Gtk.MenuItem('Close')
+        item_quit.connect('activate', quit)
+        self.menu.append(item_quit)
         self.menu.show_all()
 
         return self.menu
+
+    def queryConfig(self,query):
+        res = subprocess.Popen(query, stdout=subprocess.PIPE, stderr=None, shell=True)
+        res.wait()
+        return res.communicate()[0].strip().decode('UTF-8')
 
     def setEnable(self,button,enableKinto):
         try:
@@ -154,31 +216,84 @@ class Indicator():
 
     def setKB(self,button,kbtype):
         try:
-            if kbtype == "winmac":
-                label = "Set Mac KB Type"
-                connect = "mac"
+            set_mackb = False
+            set_winkb = False
+            set_chromekb = False
+            set_ibmkb = False
+            set_winmackb = False
 
-                setwinmac = ['s/^(\s{3})(\s{1}#)(.*# WinMac\n|.*# WinMac -)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Mac\n|Mac -)/   $3$7$6$7$8/g']
+            if kbtype == "win":
+                if not self.winkb.get_active():
+                    if not self.winmackb.get_active():
+                        print("run query to undo win/winmac")
+                    return
 
-            else:
-                label = "Set Win/Mac KB Type"
-                connect = "winmac"
+                set_winkb = True
 
-                setwinmac = ['s/^(\s{3})(\s{1}#)(.*# Mac\n|.*# Mac -)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(WinMac)/   $3$7$6$7$8/g']
+                setkb = ['s/^(\s{3})(\s{1}#)(.*# WinMac\n|.*# WinMac -)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Mac\n|Mac -)/   $3$7$6$7$8/g']
+            elif kbtype == "winmac":
+                if not self.winmackb.get_active():
+                    return
 
-            restart = ['sudo', 'systemctl','restart','xkeysnail']
-            cmds = ['perl','-pi','-e']+setwinmac+[self.kconfig]
+                set_winmackb = True
 
-            subprocess.Popen(cmds)
+                setkb = ['s/^(\s{3})(\s{1}#)(.*# WinMac\n|.*# WinMac -)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Mac\n|Mac -)/   $3$7$6$7$8/g']
+                if os.path.isfile('/sys/module/e1000/version'):
+                    print("found file")
+                if os.path.isfile('/sys/module/hid_apple/parameters/swap_opt_cmd'):
+                    print("found file 1")
+                if os.path.isfile('/sys/module/applespi/parameters/swap_opt_cmd'):
+                    print("found file 2")
+            elif kbtype == "mac":
+                if not self.mackb.get_active():
+                    return
 
-            cmdsTerm = subprocess.Popen(cmds)
-            cmdsTerm.wait()
+                set_mackb = True
 
-            subprocess.Popen(restart)
+                setkb = ['s/^(\s{3})(\s{1}#)(.*# Mac\n|.*# Mac -)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(WinMac)/   $3$7$6$7$8/g']
+            elif kbtype == "chrome":
+                if not self.chromekb.get_active():
+                    return
 
-            self.button_winmac.set_label(label)
-            self.button_winmac.disconnect(self.winmac_id)
-            self.winmac_id = self.button_winmac.connect('activate',self.setKB,connect)
+                set_chromekb = True
+            elif kbtype == "ibm":
+                if not self.ibmkb.get_active():
+                    return
+
+                set_ibmkb = True
+
+            self.mackb.disconnect(self.mackb.signal_id)
+            self.winkb.disconnect(self.winkb.signal_id)
+            self.chromekb.disconnect(self.chromekb.signal_id)
+            self.ibmkb.disconnect(self.ibmkb.signal_id)
+            self.winmackb.disconnect(self.winmackb.signal_id)
+
+            self.winkb.set_active(set_winkb)
+            self.mackb.set_active(set_mackb)
+            self.chromekb.set_active(set_chromekb)
+            self.ibmkb.set_active(set_ibmkb)
+            self.winmackb.set_active(set_winmackb)
+
+            self.mackb.signal_id = self.mackb.connect('activate',self.setKB,"mac")
+            self.winkb.signal_id = self.winkb.connect('activate',self.setKB,"win")
+            self.chromekb.signal_id = self.chromekb.connect('activate',self.setKB,"chrome")
+            self.ibmkb.signal_id = self.ibmkb.connect('activate',self.setKB,"ibm")
+            self.winmackb.signal_id = self.winkb.connect('activate',self.setKB,"winmac")
+
+            # setkb =
+            # restart = ['sudo', 'systemctl','restart','xkeysnail']
+            # cmds = ['perl','-pi','-e']+setkb+[self.kconfig]
+
+            # subprocess.Popen(cmds)
+
+            # cmdsTerm = subprocess.Popen(cmds)
+            # cmdsTerm.wait()
+
+            # subprocess.Popen(restart)
+
+            # self.button_winmac.set_label(label)
+            # self.button_winmac.disconnect(self.winmac_id)
+            # self.winmac_id = self.button_winmac.connect('activate',self.setKB,connect)
 
         except subprocess.CalledProcessError:
             subprocess.Popen(['notify-send','Kinto: Error Resetting KB Type!','-i','budgie-desktop-symbolic'])

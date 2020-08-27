@@ -301,6 +301,7 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "4" || $1 == "winmac" || $1 =
 	yes | cp -rf ./xkeysnail-config/kinto.py ./xkeysnail-config/kinto.py.new
 	yes | cp -rf ./xkeysnail-config/limitedadmins ./xkeysnail-config/limitedadmins.new
 	yes | cp -rf ./xkeysnail-config/killdups.sh ~/.config/kinto/killdups.sh
+	yes | cp -rf ./xkeysnail-config/appleKB.sh ~/.config/kinto/appleKB.sh
 	yes | cp -rf ./xkeysnail-config/trayapps/appindicator/kintotray.py ~/.config/kinto/kintotray.py
 	yes | cp -rf ./xkeysnail-config/trayapps/BudgieApplet/icons/kinto-color-16.svg ~/.config/kinto/kinto-color.svg
 	yes | cp -rf ./xkeysnail-config/trayapps/BudgieApplet/icons/kinto-invert-16.svg ~/.config/kinto/kinto-invert.svg
