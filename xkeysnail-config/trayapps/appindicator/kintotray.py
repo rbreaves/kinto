@@ -237,30 +237,67 @@ class Indicator():
         return
 
     def setCaps2Esc(self,button):
+
+        # If IBM and enabling
+        # Turn on Caps2Esc, turn off IBM caps remap
+        # (\s{4})(# )({\w.*)(# Caps2Esc\n)|(\s{5})(.*)(# )(IBM - Caps2.*)
+        # $1$3$4$5$7$6$7$8
+
+        # If IBM and disabling
+        # Turn off Caps2Esc and turn on IBM caps remap
+        # (\s{4})({\w.*)(# )(Caps2Esc\n)|(\s{5})(# )(.*)(# IBM - Caps2.*)
+        # $1$3$2$3$4$5$7$8
+
+        # If Chromebook and enabling
+        # Turn on Caps2Esc, turn off Chromebook caps remap
+        # (\s{4})(# )({\w.*)(# Caps2Esc - Chromebook)|(\s{5})(Key\.LEFT_META.*)(# )(Chromebook)
+        # $1$3$4$5$7$6$7$8
+
+
+        # If Chromebook and disabling
+        # Turn off Caps2Esc and turn on Chromebook caps remap
+        # (\s{4})({\w.*)(# )(Caps2Esc - Chromebook)|(\s{5})(# )(Key\.LEFT_META.*)(# )(Chromebook)
+        # $1$3$2$3$4$5$5$7$8$9
+
+
+        # else
+        # Apply toggle - Generic toggle
+        # (\s{4})(# )({\w.*)(# )(Caps2Esc\n)|(\s{4})({\w.*)(# )(Caps2Esc\n)
+        # $1$3$2$3$4$5$6$8$7$8$9
+
+        # Restart service if Kinto is enabled
+
+
         return
 
     def setCaps2Cmd(self,button):
 
         # If IBM and enabling
         # Turn on Caps2Cmd, turn off IBM caps remap
-        # (\s{4})(# )(\w.*)(# Caps2Cmd)|(\s{4})(\w.*)(# )(Caps2Cmd)|(\s{5})(.*)(# )(IBM - Caps2.*)
+        # (\s{4})(# )(\w.*)(# Caps2Cmd\n)|(\s{4})(\w.*)(# )(Caps2Cmd)|(\s{5})(.*)(# )(IBM - Caps2.*)
         # $1$3$4$5$7$6$7$8$9$11$10$11$12
 
         # If IBM and disabling
         # Turn off Caps2Cmd and turn on IBM caps remap
-        # (\s{4})(# )(\w.*)(# Caps2Cmd)|(\s{4})(\w.*)(# )(Caps2Cmd)|(\s{5})(# )(.*)(# )(IBM - Caps2.*)
+        # (\s{4})(# )(\w.*)(# Caps2Cmd\n)|(\s{4})(\w.*)(# )(Caps2Cmd)|(\s{5})(# )(.*)(# )(IBM - Caps2.*)
         # $1$3$4$5$7$6$7$8$9$11$12$13
 
         # If Chromebook and enabling
         # Turn on Caps2Cmd, turn off Chromebook caps remap
+        # (\s{4})(# )(\w.*)(# Caps2Cmd - Chromebook)|(\s{5})(Key\.LEFT_META.*)(# )(Chromebook)
+        # $1$3$4$5$7$6$7$8
 
         # If Chromebook and disabling
         # Turn off Caps2Cmd and turn on Chromebook caps remap
+        # (\s{4})(\w.*)(# )(Caps2Cmd - Chromebook)|(\s{5})(# )(Key\.LEFT_META.*)(# )(Chromebook)
+        # $1$3$2$3$4$5$7$8$9
 
         # else
         # Apply toggle - Generic toggle
-        # (\s{4})(# )(\w.*)(# Caps2Cmd)|(\s{4})(\w.*)(# )(Caps2Cmd)
+        # (\s{4})(# )(\w.*)(# Caps2Cmd\n)|(\s{4})(\w.*)(# )(Caps2Cmd)
         # $1$3$4$5$7$6$7$8
+
+        # Restart service if Kinto is enabled
 
         return
 

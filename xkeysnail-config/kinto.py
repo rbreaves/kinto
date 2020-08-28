@@ -22,12 +22,15 @@ codeStr = "|".join(str(x) for x in mscodes)
 define_multipurpose_modmap(
     # {Key.ENTER: [Key.ENTER, Key.RIGHT_CTRL]}  # Enter2Cmd
     # {Key.CAPSLOCK: [Key.ESC, Key.RIGHT_CTRL]  # Caps2Esc
+    # {Key.LEFT_META: [Key.ESC, Key.RIGHT_CTRL] # Caps2Esc - Chromebook
+    {}                                          # Placeholder
 )
 
 # [Global modemap] Change modifier keys as in xmodmap
 define_conditional_modmap(lambda wm_class: wm_class.casefold() not in terminals,{
 
     # Key.CAPSLOCK: Key.RIGHT_CTRL,   # Caps2Cmd
+    # Key.LEFT_META: Key.RIGHT_CTRL,  # Caps2Cmd - Chromebook
 
     # # IBM
     # Key.LEFT_ALT: Key.RIGHT_CTRL,   # IBM
