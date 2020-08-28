@@ -26,6 +26,7 @@ class Indicator():
     autostart_bool = False
     menu = Gtk.Menu()
     menukb = Gtk.Menu()
+    tweaks = Gtk.MenuItem('Tweaks')
     checkbox_autostart = Gtk.CheckMenuItem('Autostart')
     checkbox_enable = Gtk.CheckMenuItem('Kinto Enabled')
     keyboards = Gtk.MenuItem('Keyboard Types')
@@ -131,6 +132,14 @@ class Indicator():
 
         self.menu.append(self.keyboards)
 
+        # Keyboard tweaks
+        # self.menu_tweaks.append(self.rightmod)
+        # self.menu_tweaks.append(self.vsc2st3)
+
+        self.tweaks.connect('activate',self.setTweaks)
+
+        self.menu.append(self.tweaks)
+
         # Edit Config
         self.button_config.connect('activate',self.setConfig)
         self.menu.append(self.button_config)
@@ -163,6 +172,45 @@ class Indicator():
         self.menu.show_all()
 
         return self.menu
+
+    def setTweaks(self,button):
+        win = Gtk.Window()
+        win.set_title("Kinto Tweaks")
+        win.set_default_size(350, 200)
+        win.set_position(Gtk.WindowPosition.CENTER)
+
+        vbox = Gtk.VBox()
+
+        self.lbl = Gtk.Label()
+        self.rightmod =  Gtk.CheckButton('AltGr on Right Cmd')
+        self.vsc2st3 = Gtk.CheckButton('ST3 hotkeys for VS Code')
+        self.caps2esc = Gtk.CheckButton('Capslock is Escape when tapped, Cmd when held')
+        self.caps2cmd = Gtk.CheckButton('Capslock is Cmd')
+        self.rightmod.connect('toggled',self.setRightMod)
+        self.vsc2st3.connect('toggled',self.setVSC2ST3)
+        self.caps2esc.connect('toggled',self.setCaps2Esc)
+        self.caps2cmd.connect('toggled',self.setCaps2Cmd)
+        vbox.add(self.rightmod)
+        vbox.add(self.vsc2st3)
+        vbox.add(self.caps2esc)
+        vbox.add(self.caps2cmd)
+        vbox.add(self.lbl)
+        win.add(vbox)
+
+        win.show_all()
+        return
+
+    def setRightMod(self,button):
+        return
+
+    def setVSC2ST3(self,button):
+        return
+
+    def setCaps2Esc(self,button):
+        return
+
+    def setCaps2Cmd(self,button):
+        return
 
     def queryConfig(self,query):
         res = subprocess.Popen(query, stdout=subprocess.PIPE, stderr=None, shell=True)
