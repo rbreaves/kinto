@@ -179,6 +179,23 @@ class Indicator():
         win.set_default_size(350, 200)
         win.set_position(Gtk.WindowPosition.CENTER)
 
+        # Check options
+
+        # Check AltGr - commented out is enabled
+        # (\s{5})(#.*)(Multi-language)
+
+        # Sublime enabled for vscode
+        # (\s{4}\w.*)(- Sublime)
+
+        # Caps2Esc enabled
+        # (\s{4}{\w.*)(# Caps2Esc)
+
+        # Caps2Cmd enabled
+        # (\s{4}\w.*)(# Caps2Cmd)
+
+        # Enter2Cmd enabled
+        # (\s{4}{\w.*)(# Enter2Cmd)
+
         vbox = Gtk.VBox()
 
         self.lbl = Gtk.Label()
@@ -201,15 +218,50 @@ class Indicator():
         return
 
     def setRightMod(self,button):
+        # Check keyboard type that is set
+
+        # Apply toggle for the multi-language of type set
+        # (\s{5})(# )(.*)(# Mac)( - Multi-language.*)|(\s{5})(K)(.*)(# )(Mac)( - Multi-language.*)
+        # $1$3$4$5$6$9$7$8$9$10$11
+
+        # Restart service if Kinto is enabled
         return
 
     def setVSC2ST3(self,button):
+
+        # Apply toggle
+        # ^(\s{4})(\w.*)(# )(.*- Sublime)|^(\s{4})(# )(\w.*)(# .*- Sublime)
+        # $5$7$8$1$3$2$3$4
+
+        # Restart service if Kinto is enabled
         return
 
     def setCaps2Esc(self,button):
         return
 
     def setCaps2Cmd(self,button):
+
+        # If IBM and enabling
+        # Turn on Caps2Cmd, turn off IBM caps remap
+        # (\s{4})(# )(\w.*)(# Caps2Cmd)|(\s{4})(\w.*)(# )(Caps2Cmd)|(\s{5})(.*)(# )(IBM - Caps2.*)
+        # $1$3$4$5$7$6$7$8$9$11$10$11$12
+
+        # If IBM and disabling
+        # Turn off Caps2Cmd and turn on IBM caps remap
+        # (\s{4})(# )(\w.*)(# Caps2Cmd)|(\s{4})(\w.*)(# )(Caps2Cmd)|(\s{5})(# )(.*)(# )(IBM - Caps2.*)
+        # $1$3$4$5$7$6$7$8$9$11$12$13
+
+        # If Chromebook and enabling
+        # Turn on Caps2Cmd, turn off Chromebook caps remap
+
+        # If Chromebook and disabling
+        # Turn off Caps2Cmd and turn on Chromebook caps remap
+
+        # else
+        # Apply toggle - Generic toggle
+        # (\s{4})(# )(\w.*)(# Caps2Cmd)|(\s{4})(\w.*)(# )(Caps2Cmd)
+        # $1$3$4$5$7$6$7$8
+
         return
 
     def queryConfig(self,query):
