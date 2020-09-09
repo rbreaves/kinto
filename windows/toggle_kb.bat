@@ -18,6 +18,7 @@ goto commonexit
 C:\Strawberry\perl\bin\perl.exe -pi -e "s/(; )(.*)(; WinModifiers)/$2$3/g" "%userprofile%\.kinto\kinto.ahk"
 C:\Strawberry\perl\bin\perl.exe -pi -e "s/^(?!;)(.*)(; MacModifiers)/; $1$2/gm" "%userprofile%\.kinto\kinto.ahk"
 C:\Strawberry\perl\bin\perl.exe -pi -e "s/^(?!;)(.*)(; CB\/IBM)/; $1$2/gm" "%userprofile%\.kinto\kinto.ahk"
+C:\Strawberry\perl\bin\perl.exe -pi -e "s/^(?!;)(.*)(; Chromebook)/; $1$2/gm" "%userprofile%\.kinto\kinto.ahk"
 C:\Strawberry\perl\bin\perl.exe -pi -e "s/^(?!;)(.*)(; IBM)/; $1$2/gm" "%userprofile%\.kinto\kinto.ahk"
 C:\Strawberry\perl\bin\perl.exe -pi -e "s/(ahk\"\" )(\w*)/$1win/gm" "%userprofile%\.kinto\kinto-start.vbs"
 "C:\Program Files\AutoHotkey\AutoHotkey.exe" "%userprofile%\.kinto\kinto.ahk" win
@@ -27,6 +28,7 @@ goto commonexit
 C:\Strawberry\perl\bin\perl.exe -pi -e "s/(; )(.*)(; MacModifiers)/$2$3/g" "%userprofile%\.kinto\kinto.ahk"
 C:\Strawberry\perl\bin\perl.exe -pi -e "s/^(?!;)(.*)(; WinModifiers)/; $1$2/gm" "%userprofile%\.kinto\kinto.ahk"
 C:\Strawberry\perl\bin\perl.exe -pi -e "s/^(?!;)(.*)(; CB\/IBM)/; $1$2/gm" "%userprofile%\.kinto\kinto.ahk"
+C:\Strawberry\perl\bin\perl.exe -pi -e "s/^(?!;)(.*)(; Chromebook)/; $1$2/gm" "%userprofile%\.kinto\kinto.ahk"
 C:\Strawberry\perl\bin\perl.exe -pi -e "s/^(?!;)(.*)(; IBM)/; $1$2/gm" "%userprofile%\.kinto\kinto.ahk"
 C:\Strawberry\perl\bin\perl.exe -pi -e "s/(ahk\"\" )(\w*)/$1mac/gm" "%userprofile%\.kinto\kinto-start.vbs"
 "C:\Program Files\AutoHotkey\AutoHotkey.exe" "%userprofile%\.kinto\kinto.ahk" mac
@@ -47,6 +49,7 @@ goto commonexit
 :ibm
 C:\Strawberry\perl\bin\perl.exe -pi -e "s/^(?!; )(.*)(; Autodetect)/; $1$2/gm" "%userprofile%\.kinto\kinto.ahk"
 C:\Strawberry\perl\bin\perl.exe -pi -e "s/^(?!;)(.*)(; WinModifiers)/; $1$2/gm" "%userprofile%\.kinto\kinto.ahk"
+C:\Strawberry\perl\bin\perl.exe -pi -e "s/^(?!;)(.*)(; Chromebook)/; $1$2/gm" "%userprofile%\.kinto\kinto.ahk"
 C:\Strawberry\perl\bin\perl.exe -pi -e "s/^(?!;)(.*)(; MacModifiers)/; $1$2/gm" "%userprofile%\.kinto\kinto.ahk"
 C:\Strawberry\perl\bin\perl.exe -pi -e "s/^(?!;)(.*)(; Default)/; $1$2/gm" "%userprofile%\.kinto\kinto.ahk"
 C:\Strawberry\perl\bin\perl.exe -pi -e "s/(; )(.*)(; IBM)/$2$3/g" "%userprofile%\.kinto\kinto.ahk"

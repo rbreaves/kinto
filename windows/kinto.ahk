@@ -156,6 +156,7 @@ GroupAdd, browsers, ahk_exe firefox.exe
 ; Disable Key Remapping for Virtual Machines
 ; Disable for Remote desktop solutions too
 GroupAdd, virtm, ahk_exe VirtualBoxVM.exe
+GroupAdd, virtm, ahk_exe mstsc.exe
 
 ; Disabled Edge for now - no ability to close all instances
 ; GroupAdd, browsers, Microsoft Edge ahk_class ApplicationFrameWindow
