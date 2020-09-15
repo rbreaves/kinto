@@ -84,6 +84,8 @@ ibmkb(){
 }
 
 autodetect(){
+    IfWinExist, detectUSB.ahk
+        WinClose
     Run, "%A_ScriptDir%\NoShell.vbs" "%A_ScriptDir%\toggle_kb.bat" auto, "%A_ScriptDir%"
 }
 
