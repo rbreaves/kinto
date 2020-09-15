@@ -16,6 +16,7 @@ goto commonexit
 
 :win
 C:\Strawberry\perl\bin\perl.exe -pi -e "s/(; )(.*)(; WinModifiers)/$2$3/g" "%userprofile%\.kinto\kinto.ahk"
+C:\Strawberry\perl\bin\perl.exe -pi -e "s/(; )(.*)(; Default)/$2$3/g" "%userprofile%\.kinto\kinto.ahk"
 C:\Strawberry\perl\bin\perl.exe -pi -e "s/^(?!;)(.*)(; MacModifiers)/; $1$2/gm" "%userprofile%\.kinto\kinto.ahk"
 C:\Strawberry\perl\bin\perl.exe -pi -e "s/^(?!;)(.*)(; CB\/IBM)/; $1$2/gm" "%userprofile%\.kinto\kinto.ahk"
 C:\Strawberry\perl\bin\perl.exe -pi -e "s/^(?!;)(.*)(; Chromebook)/; $1$2/gm" "%userprofile%\.kinto\kinto.ahk"
@@ -26,6 +27,7 @@ goto commonexit
 
 :mac
 C:\Strawberry\perl\bin\perl.exe -pi -e "s/(; )(.*)(; MacModifiers)/$2$3/g" "%userprofile%\.kinto\kinto.ahk"
+C:\Strawberry\perl\bin\perl.exe -pi -e "s/(; )(.*)(; Default)/$2$3/g" "%userprofile%\.kinto\kinto.ahk"
 C:\Strawberry\perl\bin\perl.exe -pi -e "s/^(?!;)(.*)(; WinModifiers)/; $1$2/gm" "%userprofile%\.kinto\kinto.ahk"
 C:\Strawberry\perl\bin\perl.exe -pi -e "s/^(?!;)(.*)(; CB\/IBM)/; $1$2/gm" "%userprofile%\.kinto\kinto.ahk"
 C:\Strawberry\perl\bin\perl.exe -pi -e "s/^(?!;)(.*)(; Chromebook)/; $1$2/gm" "%userprofile%\.kinto\kinto.ahk"
