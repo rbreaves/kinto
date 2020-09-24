@@ -12,8 +12,13 @@ def windows_setup():
 	for index, item in enumerate(keymaps):
 		print("    %i. %s" % (index+1, item.capitalize()))
 	default = 0
-	while not int(default) in range(1,len(keymaps)+1):
-		default = int(input("\nPlease enter your desired keymap (1 - " + str(len(keymaps)) + ") : "))
+	while True:
+		try:
+			default = int(input("\nPlease enter your desired keymap (1 - " + str(len(keymaps)) + ") : "))
+			if default in range(1, len(keymaps) + 1):
+				break
+		except ValueError:
+			pass
 	print("")
 	# Short DOS path notation
 	path= cmdline('echo ''%cd%''')[:-1]
