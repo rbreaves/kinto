@@ -147,6 +147,9 @@ GroupAdd, ConEmu, ahk_exe ConEmu.exe
 GroupAdd, ConEmu, ahk_exe ConEmu64.exe
 GroupAdd, ConEmu, ahk_exe WindowsTerminal.exe
 
+GroupAdd, ExcPaste, ahk_exe Cmd.exe
+GroupAdd, ExcPaste, ahk_exe mintty.exe
+
 GroupAdd, editors, ahk_exe sublime_text.exe
 GroupAdd, editors, ahk_exe VSCodium.exe
 GroupAdd, editors, ahk_exe Code.exe
@@ -505,8 +508,8 @@ GroupAdd, intellij, ahk_exe idea64.exe
     #IfWinActive ahk_group terminals
 
         ; End of Line
-        #e:: ; Default
-        !e:: ; CB/IBM
+        ; #e:: ; Default
+        ; !e:: ; CB/IBM
         Send {End}
         return
 
@@ -518,13 +521,24 @@ GroupAdd, intellij, ahk_exe idea64.exe
 
         ; Copy
         ^c::
-        SetKeyDelay -1
-        Send {Blind}{LShift down}{c DownTemp}
+        If WinActive("ahk_exe cmd.exe"){
+            Send {Enter}
+        }
+        else if WinActive("ahk_exe mintty.exe"){
+            SetKeyDelay -1
+            Send {Blind}{Insert}
+        }
+        else{
+            SetKeyDelay -1
+            Send {Blind}{LShift down}{c DownTemp}
+        }
         return
 
         ^c up::
-        SetKeyDelay -1
-        Send {Blind}{c Up}{LShift Up}
+        If not WinActive("ahk_group cmd.exe"){
+            SetKeyDelay -1
+            Send {Blind}{c Up}{LShift Up}
+        }
         return
 
         ; Sigints - interrupt
@@ -532,7 +546,7 @@ GroupAdd, intellij, ahk_exe idea64.exe
         ; $!c::Send {Ctrl down}c{Ctrl up} ; CB/IBM
 
         ; Paste
-        ^v::
+        $^v::
         If WinActive("ahk_exe mintty.exe"){
             Send {Shift down}{Insert}{Shift up}
         }
