@@ -1,4 +1,4 @@
-# Kinto
+# Kinto (An Amazing Project)
 
 ![kinto-color-132](https://user-images.githubusercontent.com/10969616/84361571-7d5bd780-ab91-11ea-81bc-4d3a2ca51c4e.png)
 
@@ -108,7 +108,7 @@ Users can now hotswap between Apple and Windows based keyboards without having t
 
 ## How to install (Linux)
 
-1. clone this repo
+1. clone this Repo
 ```
 git clone https://github.com/rbreaves/kinto.git
 cd kinto
