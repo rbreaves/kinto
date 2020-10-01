@@ -35,10 +35,10 @@ def countdown(secs):
         time.sleep(1)
 
 def on_press(key):
-    print('{0} pressed'.format(key))
+    print(f'{key} pressed')
 
 def on_release(key):
-    # print('{0} release'.format(key))
+    # print(f'{key} pressed')
     if key == Key.esc:
         # Stop listener
         return False
@@ -177,7 +177,7 @@ while True:
     #         try:
     #             listener.join()
     #         except MyException as e:
-    #             print('{0} was pressed'.format(e.args[0]))
+    #             print(f'{e.args[0]} was pressed')
 
     modifier_keys["primary"] = cmdline("xbindkeys -k | awk 'END {print $NF}'").strip()
     print(modifier_keys["primary"] + " will be remapped to Ctrl, the Cmd ⌘  key position.")
@@ -211,7 +211,7 @@ while True:
     #         try:
     #             listener.join()
     #         except MyException as e:
-    #             print('{0} was pressed'.format(e.args[0]))
+    #             print(f'{e.args[0]} was pressed')
     modifier_keys["secondary"] = cmdline("xbindkeys -k | awk 'END {print $NF}'").strip()
     print(modifier_keys["secondary"] + " will be remapped to Alt, the Option ⌥  key position.")
 
@@ -241,7 +241,7 @@ while True:
     #         try:
     #             listener.join()
     #         except MyException as e:
-    #             print('{0} was pressed'.format(e.args[0]))
+    #             print('{e.args[0]} was pressed')
     modifier_keys["rprimary"] = cmdline("xbindkeys -k | awk 'END {print $NF}'").strip()
     print(modifier_keys["rprimary"] + " will be remapped to Ctrl, the Cmd ⌘  key position.")
 
@@ -271,7 +271,7 @@ while True:
     #         try:
     #             listener.join()
     #         except MyException as e:
-    #             print('{0} was pressed'.format(e.args[0]))
+    #             print('{e.args[0]} was pressed')
     modifier_keys["rsecondary"] = cmdline("xbindkeys -k | awk 'END {print $NF}'").strip()
     print(modifier_keys["rsecondary"] + " will be remapped to Alt, the Option ⌥  key position.")
 
