@@ -129,7 +129,8 @@ sudo apt install python3
 To Uninstall Kinto
 
 ```
-./setup.py
+python3 setup.py install --record files.txt (record install files)
+xargs rm -rf < files.txt (uninstall Kinto)
 ```
 
 ## How to Install (Windows)
