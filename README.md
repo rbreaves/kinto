@@ -9,6 +9,8 @@
 
 Seamless copy and paste with all apps and terminals. The zero effort solution.
 
+Note: This project does a lot more than just copy & paste for terminals. I really do mean type like a mac and additions can easily be added to a single file, kinto.py/ahk.
+
 ## Table of Contents
 
 [What does this do exactly?](#What-does-this-do-exactly)
