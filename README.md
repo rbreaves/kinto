@@ -290,7 +290,7 @@ git pull origin master
 
 Under systemd this is how you control Kinto.
 
-Recommended Installed - Kinto (udev/xkeysnail/x11) = xkeysnail
+Recommended Install - Kinto (udev/xkeysnail/x11) = xkeysnail
 
 Older Install - Kinto (xkb/x11) = keyswap
 
