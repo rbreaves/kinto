@@ -290,44 +290,44 @@ git pull origin master
 
 Under systemd this is how you control Kinto.
 
-Kinto (xkb/x11) = keyswap
+Recommended Installed - Kinto (udev/xkeysnail/x11) = xkeysnail
 
-Kinto (udev/xkeysnail/x11) = xkeysnail
+Older Install - Kinto (xkb/x11) = keyswap
 
 Status
 ```
-systemctl --user status keyswap
 sudo systemctl status xkeysnail
+systemctl --user status keyswap # older - you probably should not run this one
 ```
 
 Stop (your keymap will return to normal)
 ```
-systemctl --user stop keyswap
 sudo systemctl stop xkeysnail
+systemctl --user stop keyswap # older - you probably should not run this one
 ```
 
 Start
 ```
-systemctl --user start keyswap
 sudo systemctl start xkeysnail
+systemctl --user start keyswap # older - you probably should not run this one
 ```
 
 Restart
 ```
-systemctl --user restart keyswap
 sudo systemctl restart xkeysnail
+systemctl --user restart keyswap # older - you probably should not run this one
 ```
 
 Enable
 ```
-systemctl --user enable keyswap
 sudo systemctl enable xkeysnail
+systemctl --user enable keyswap # older - you probably should not run this one
 ```
 
 Disable
 ```
-systemctl --user disable keyswap
 sudo systemctl disable xkeysnail
+systemctl --user disable keyswap # older - you probably should not run this one
 ```
 
 ## Learning macOS style hotkeys on Linux
