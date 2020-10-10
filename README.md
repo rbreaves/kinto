@@ -61,6 +61,8 @@ Kinto works for standard Windows, Apple and Chromebook keyboards. The following 
 |---|---|---|---|---|
 |**Virtual**|  LCtrl | Alt  |  RCtrl |Spacebar|
 
+Note: RCtrl for terminals is also adding in Shift most of the time, however it depends on the specific terminal in use and will change itself to the expected keymaps of that terminal application.
+
 ## What's different?
 
 Compared to most other remappers ***this is a complete system-wide remap of your base level modifier keys***, this saves time. You're not going to die a death of a thousand papercuts from trying to support every shortcut key under the sun.
