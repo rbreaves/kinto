@@ -270,7 +270,11 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 fi
 
 if [[ $dename == "gnome" || dename == "budgie" ]]; then
-	perl -pi -e "s/(# )(.*)(# gnome)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
+	perl -pi -e "s/(# )(.*)(# gnome)/\$2\$3/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
+fi
+if [[ $dename == "kde" ]]; then
+	echo "Applying Cmd-Space to open App Launcher for KDE..."
+	perl -pi -e "s/(# )(.*)(#.*kde)/\$2\$3/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
 fi
 
 if [[ $1 == "1" || $1 == "winmac" ]]; then
@@ -302,7 +306,7 @@ elif [[ $1 == "3" || $1 == "chromebook" ]]; then
 fi
 if [[ $dename == "xfce" ]] && ls /etc/apt/sources.list.d/enso* 1> /dev/null 2>&1; then
     echo "enso OS detected, applying Cmd-Space for Launchy..."
-    perl -pi -e "s/(K\(\"RC-Space)(.*)(# )(xfce4)/\$3\$1\$2\$3\$4/g" ./xkeysnail-config/kinto.py.new
+    perl -pi -e "s/(K\(\"RC-Space)(.*)(# )(xfce4)/\$3\$1\$2\$3\$4/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
     xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Primary>space" --create --type string --set "launchy"
 fi
 

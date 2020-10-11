@@ -171,9 +171,8 @@ define_keymap(re.compile(browserStr, re.IGNORECASE),{
 
 define_keymap(None,{
     # Launch Application Menu
-    # K("RC-Space"): K("Alt-F1"),                   # gnome
+    # K("RC-Space"): K("Alt-F1"),                   # gnome/kde
     # K("RC-Space"): K("LC-Esc"),                   # xfce4
-    # # K("RC-Space"): K(""),                       # kde
     # Basic App hotkey functions
     K("RC-Q"): K("Alt-F4"),
     K("RC-H"): K("Alt-F9"),
