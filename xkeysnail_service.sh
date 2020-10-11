@@ -60,13 +60,13 @@ function uninstall {
 			fi
 		elif [ "$dename" == "kde" ]; then
 			echo "Restoring DE hotkeys..."
-			kwinkeys = $(ls | grep -m1 "kwinrc")
-			kdekeys = $(ls | grep -m1 "kglobalshortcutsrc")
+			kwinkeys=$(ls | grep -m1 "kwinrc")
+			kdekeys=$(ls | grep -m1 "kglobalshortcutsrc")
 			cp ./"$kdekeys" ~/.config/kglobalshortcutsrc
 			cp ./"$kwinkeys" ~/.config/kwinrc
 		elif [ "$dename" == "xfce" ]; then
 			echo "Restoring DE hotkeys..."
-			xfcekeys = $(ls | grep -m1 "xfce4-keyboard")
+			xfcekeys=$(ls | grep -m1 "xfce4-keyboard")
 			cp ./"$xfcekeys" ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
 		fi
 	fi
