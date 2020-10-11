@@ -269,6 +269,10 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	fi
 fi
 
+if [[ $dename == "gnome" || dename == "budgie" ]]; then
+	perl -pi -e "s/(# )(.*)(# gnome)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
+fi
+
 if [[ $1 == "1" || $1 == "winmac" ]]; then
 	if ls /sys/module | grep hid_apple >/dev/null 2>&1 ; then
 		echo '1' | sudo tee /sys/module/hid_apple/parameters/swap_opt_cmd;echo 'options hid_apple swap_opt_cmd=1' | sudo tee /etc/modprobe.d/hid_apple.conf;sudo update-initramfs -u -k all
