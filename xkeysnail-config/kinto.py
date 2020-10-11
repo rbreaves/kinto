@@ -216,13 +216,12 @@ define_keymap(None,{
 })
 
 define_keymap(lambda wm_class: wm_class.casefold() not in mscodes,{
-    K("Super-Space"): K("LC-Space"),                    # Basic code completion
     # Wordwise remaining - for Everything but VS Code
-    K("M-Left"): K("C-Left"),                           # Left of Word
-    K("M-Shift-Left"): K("C-Shift-Left"),               # Select Left of Word
-    K("M-Right"): K("C-Right"),                         # Right of Word
-    K("M-Shift-Right"): K("C-Shift-Right"),             # Select Right of Word
-    K("M-Shift-g"): K("C-Shift-g"),                     # View source control
+    K("M-Left"): K("C-Left"),               # Left of Word
+    K("M-Shift-Left"): K("C-Shift-Left"),   # Select Left of Word
+    K("M-Right"): K("C-Right"),             # Right of Word
+    K("M-Shift-Right"): K("C-Shift-Right"), # Select Right of Word
+    K("M-Shift-g"): K("C-Shift-g"),         # View source control
     # ** VS Code fix **
     #   Electron issue precludes normal keybinding fix.
     #   Alt menu auto-focus/toggle gets in the way.
@@ -241,6 +240,7 @@ define_keymap(lambda wm_class: wm_class.casefold() not in mscodes,{
 
 # Keybindings for VS Code
 define_keymap(re.compile(codeStr, re.IGNORECASE),{
+    K("Super-Space"): K("LC-Space"),                        # Basic code completion
     # Wordwise remaining - for VS Code
     # Alt-F19 hack fixes Alt menu activation
     K("M-Left"): [K("M-F19"),K("C-Left")],                  # Left of Word
