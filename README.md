@@ -1,6 +1,6 @@
-# Kinto
+# Kinto.sh
 
-![kinto-color-132](https://user-images.githubusercontent.com/10969616/84361571-7d5bd780-ab91-11ea-81bc-4d3a2ca51c4e.png)
+![kinto-color-132](https://user-images.githubusercontent.com/10969616/94909977-9d2d4900-0469-11eb-8710-986289fe7240.gif)
 
 
 [![GitHub release](https://img.shields.io/github/release/rbreaves/kinto.svg)](https://github.com/rbreaves/kinto/releases/latest)
@@ -13,6 +13,8 @@ System tray supports the following, but Kinto can run without it on Linux.
 |<sub>Ubuntu, Gnome3, Ubuntu Budgie, and Mate</sub>|<sub>Windows 10</sub>|
 |---|---|
 |<img src="https://user-images.githubusercontent.com/10969616/89241619-15d86c00-d5c5-11ea-8ffe-18ee6ca0f895.png" width="50%">|<img src="https://user-images.githubusercontent.com/10969616/84471501-10a51380-ac4b-11ea-9e0e-c19a7ebfad6d.png" width="50%">|
+
+Note: This project does a lot more than just copy & paste for terminals. I really do mean type like a mac and additions can easily be added to a single file, kinto.py/ahk.
 
 ## Table of Contents
 
@@ -63,6 +65,8 @@ Kinto works for standard Windows, Apple and Chromebook keyboards. The following 
 |**Physical**| Ctrl  |  Win/Alt |  Alt/Cmd | Spacebar|
 |---|---|---|---|---|
 |**Virtual**|  LCtrl | Alt  |  RCtrl |Spacebar|
+
+Note: RCtrl for terminals is also adding in Shift most of the time, however it depends on the specific terminal in use and will change itself to the expected keymaps of that terminal application.
 
 ## What's different?
 
@@ -291,44 +295,44 @@ git pull origin master
 
 Under systemd this is how you control Kinto.
 
-Kinto (xkb/x11) = keyswap
+Recommended Install - Kinto (udev/xkeysnail/x11) = xkeysnail
 
-Kinto (udev/xkeysnail/x11) = xkeysnail
+Older Install - Kinto (xkb/x11) = keyswap
 
 Status
 ```
-systemctl --user status keyswap
 sudo systemctl status xkeysnail
+systemctl --user status keyswap # older - you probably should not run this one
 ```
 
 Stop (your keymap will return to normal)
 ```
-systemctl --user stop keyswap
 sudo systemctl stop xkeysnail
+systemctl --user stop keyswap # older - you probably should not run this one
 ```
 
 Start
 ```
-systemctl --user start keyswap
 sudo systemctl start xkeysnail
+systemctl --user start keyswap # older - you probably should not run this one
 ```
 
 Restart
 ```
-systemctl --user restart keyswap
 sudo systemctl restart xkeysnail
+systemctl --user restart keyswap # older - you probably should not run this one
 ```
 
 Enable
 ```
-systemctl --user enable keyswap
 sudo systemctl enable xkeysnail
+systemctl --user enable keyswap # older - you probably should not run this one
 ```
 
 Disable
 ```
-systemctl --user disable keyswap
 sudo systemctl disable xkeysnail
+systemctl --user disable keyswap # older - you probably should not run this one
 ```
 
 ## Learning macOS style hotkeys on Linux

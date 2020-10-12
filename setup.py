@@ -167,7 +167,8 @@ def setShortcuts():
 			# Too slow on appearing, compared to the app menu
 			#
 			# if dename != "budgie":
-			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Primary><Shift>Space','<Primary>Space']\"")
+			cmdline("gsettings reset org.gnome.desktop.wm.keybindings panel-main-menu")
+			# cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Primary><Shift>Space','<Primary>Space']\"")
 			# else:
 			# 	cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Alt>F1']\"")
 			# 	cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-run-dialog \"['<Primary><Shift>Space','<Primary>Space']\"")
@@ -180,12 +181,14 @@ def setShortcuts():
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left ['']")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right ['']")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\"")
-			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Primary><Shift>Space','<Primary>Space']\"")
+			cmdline("gsettings reset org.gnome.desktop.wm.keybindings panel-main-menu")
+			# cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Primary><Shift>Space','<Primary>Space']\"")
 		elif distro == "pop!_os" and dename == "gnome":
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings close \"['<Alt>F4','<Super>w']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings toggle-maximized \"['<Alt>F10','<Primary><Super>Up']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\"")
-			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Primary><Shift>Space','<Primary>Space']\"")
+			cmdline("gsettings reset org.gnome.desktop.wm.keybindings panel-main-menu")
+			# cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Primary><Shift>Space','<Primary>Space']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-up \"['<Super>Up','<Super>Left']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-down \"['<Super>Down','<Super>Right']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left ['']")
@@ -199,7 +202,8 @@ def setShortcuts():
 				cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-applications-backward \"['<Primary>F14','<Primary><Shift>F14','<Alt><Shift>Tab']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings show-desktop \"['<Super>d','<Super>Down']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings toggle-maximized \"['<Alt>F10','<Super>Up']\"")
-			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Control><Shift>Space','<Super>Space']\"")
+			cmdline("gsettings reset org.gnome.desktop.wm.keybindings panel-main-menu")
+			# cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Control><Shift>Space','<Super>Space']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\"")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Super>Space','<Primary>Space']\"")
 			if(kintotype == 2):
@@ -222,8 +226,11 @@ def setShortcuts():
 			cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Primary><Shift>backslash" --create --type string --set "cycle_reverse_windows_key"')
 			# cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Super>h" --create --type string --set "hide_window_key"')
 			# Don't need to undo other maps for menu
-			cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Primary>space" --create --type string --set "xfce4-popup-whiskermenu"')
-			cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Primary><Shift>space" --create --type string --set "xfce4-popup-whiskermenu"')
+			# cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Primary>space" --create --type string --set "xfce4-popup-whiskermenu"')
+			# cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Primary><Shift>space" --create --type string --set "xfce4-popup-whiskermenu"')
+			cmdline('xfconf-query --reset --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Primary>space"')
+			cmdline('xfconf-query --reset --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Primary><Shift>space"')
+			cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/default/<Primary>Escape" --create --type string --set "xfce4-popup-whiskermenu"')
 			# Reset move to desktop shortcuts
 			cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Primary><Alt>Home" --reset')
 			cmdline('xfconf-query --channel xfce4-keyboard-shortcuts --property "/xfwm4/custom/<Primary><Alt>End" --reset')
@@ -246,7 +253,8 @@ def setShortcuts():
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-left ['']")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings switch-to-workspace-right ['']")
 			cmdline("gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\"")
-			cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Primary><Shift>Space','<Primary>Space']\"")
+			# cmdline("gsettings set org.gnome.desktop.wm.keybindings panel-main-menu \"['<Primary><Shift>Space','<Primary>Space']\"")
+			cmdline("gsettings reset org.gnome.desktop.wm.keybindings panel-main-menu")
 			cmdline("gsettings set org.gnome.mutter.keybindings toggle-tiled-right \"['<Super><Alt>Right']\"")
 			cmdline("gsettings set org.gnome.mutter.keybindings toggle-tiled-left \"['<Super><Alt>Left']\"")
 			# org.gnome.mutter.keybindings toggle-tiled-right ['<Super>Right']
