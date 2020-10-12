@@ -88,9 +88,9 @@ class Indicator():
         # Keyboard Types
         # self.keyboards.connect('activate',self.setConfig)
         ismac = "perl -ne 'print if /^(\s{4})((?!#).*)(# Mac\n)/' ~/.config/kinto/kinto.py | wc -l"
-        iswin = "perl -ne 'print if /^(\s{4})((?!#).*)(# Win\n)/' ~/.config/kinto/kinto.py | wc -l"
+        iswin = "perl -ne 'print if /^(\s{4})(# -- Default Win)/' ~/.config/kinto/kinto.py | wc -l"
         ischrome = "perl -ne 'print if /^(\s{4})((?!#).*)(# Chromebook\n)/' ~/.config/kinto/kinto.py | wc -l"
-        iswinmac = "perl -ne 'print if /^(\s{4})((?!#).*)(# WinMac\n)/' ~/.config/kinto/kinto.py | wc -l"
+        iswinmac = "perl -ne 'print if /^(\s{4})(# -- Default Mac)/' ~/.config/kinto/kinto.py | wc -l"
         isibm = "perl -ne 'print if /^(\s{4})((?!#).*)(# IBM\n)/' ~/.config/kinto/kinto.py | wc -l"
         mac_result = int(self.queryConfig(ismac))
         win_result = int(self.queryConfig(iswin))
@@ -183,7 +183,8 @@ class Indicator():
         # Check options
 
         # Check AltGr - commented out is enabled
-        is_rightmod = "perl -ne 'print if /^(\s{4})(#.*)(Multi-language)/' ~/.config/kinto/kinto.py | wc -l"
+
+        is_rightmod = "perl -ne 'print if /^(\s{4})(Key.*)(Multi-language)/' ~/.config/kinto/kinto.py | wc -l"
         rightmod_result = int(self.queryConfig(is_rightmod))
 
         # Sublime enabled for vscode
@@ -215,7 +216,7 @@ class Indicator():
         self.caps2esc.connect('toggled',self.setCaps2Esc)
         self.caps2cmd.connect('toggled',self.setCaps2Cmd)
         
-        if rightmod_result == 16:
+        if rightmod_result == 0:
             self.rightmod.set_active(True)
 
         if vsc2st3_result > 0:
@@ -384,72 +385,40 @@ class Indicator():
 
     def setKB(self,button,kbtype):
         try:
-            set_mackb = False
-            set_winkb = False
-            set_chromekb = False
-            set_ibmkb = False
-            set_winmackb = False
-
             if kbtype == "win":
-                # if not self.winkb.get_active():
-                #     if not self.winmackb.get_active():
-                #         print("run query to undo win/winmac")
-                #     return
-
-                set_winkb = True
-
-                setkb = 's/^(\s{3})(\s{1}#)(.*# WinMac\n|.*# WinMac -)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Mac\n|Mac -)/   $3$7$6$7$8/g'
+                setkb = 's/^(\s{3})(\s{1}#)(.*# WinMac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Mac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(IBM.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Chromebook.*)|^(\s{3})(\s{1}# )(-)( Default Win)|^(\s{3})(\s{1}# )(-)(- Default Mac*)/   $3$7$6$7$8$12$11$12$13$17$16$17$18$20$21$21$22$24$26/g'
             elif kbtype == "winmac":
-                if not self.winmackb.get_active():
-                    return
-
-                set_winmackb = True
-
-                setkb = 's/^(\s{3})(\s{1}#)(.*# WinMac\n|.*# WinMac -)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(IBM.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Mac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Chromebook.*)/   $3$7$6$7$8$12$11$12$13$17$16$17$18/g'
+                setkb = 's/^(\s{3})(\s{1}#)(.*# WinMac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Mac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(IBM.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Chromebook.*)|^(\s{3})(\s{1}# )(-)( Default Mac.*)|^(\s{3})(\s{1}# )(-)(- Default Win)/   $3$7$6$7$8$12$11$12$13$17$16$17$18$20$21$21$22$24$26/g'
                 if os.path.isfile('/sys/module/hid_apple/parameters/swap_opt_cmd'):
                     with open('/sys/module/applespi/parameters/swap_opt_cmd', 'r') as ocval:
                         optcmd = ocval.read().replace('\n', '')
                     if optcmd == '0':
-                        print("found hid_apple")
+                        # print("found hid_apple")
                         self.queryConfig("echo '1' | sudo tee /sys/module/hid_apple/parameters/swap_opt_cmd;echo 'options hid_apple swap_opt_cmd=1' | sudo tee /etc/modprobe.d/hid_apple.conf;sudo update-initramfs -u -k all")
                 if os.path.isfile('/sys/module/applespi/parameters/swap_opt_cmd'):
                     with open('/sys/module/applespi/parameters/swap_opt_cmd', 'r') as ocval:
                         optcmd = ocval.read().replace('\n', '')
                     if optcmd == '0':
-                        print("found applespi")
+                        # print("found applespi")
                         self.queryConfig("echo '1' | sudo tee /sys/module/applespi/parameters/swap_opt_cmd;echo 'options applespi swap_opt_cmd=1' | sudo tee /etc/modprobe.d/applespi.conf;sudo update-initramfs -u -k all")
             elif kbtype == "mac":
-                if not self.mackb.get_active():
-                    return
                 if os.path.isfile('/sys/module/hid_apple/parameters/swap_opt_cmd'):
                     with open('/sys/module/hid_apple/parameters/swap_opt_cmd', 'r') as ocval:
                         optcmd = ocval.read().replace('\n', '')
                     if optcmd == '1':
-                        print("found hid_apple - remove")
+                        # print("found hid_apple - remove")
                         self.queryConfig("echo '0' | sudo tee /sys/module/hid_apple/parameters/swap_opt_cmd;echo 'options hid_apple swap_opt_cmd=0' | sudo tee /etc/modprobe.d/hid_apple.conf;sudo update-initramfs -u -k all")
                 if os.path.isfile('/sys/module/applespi/parameters/swap_opt_cmd'):
                     with open('/sys/module/applespi/parameters/swap_opt_cmd', 'r') as ocval:
                         optcmd = ocval.read().replace('\n', '')
                     if optcmd == '1':
-                        print("found applespi - remove")
+                        # print("found applespi - remove")
                         self.queryConfig("echo '0' | sudo tee /sys/module/applespi/parameters/swap_opt_cmd;echo 'options applespi swap_opt_cmd=0' | sudo tee /etc/modprobe.d/applespi.conf;sudo update-initramfs -u -k all")
-                
-                set_mackb = True
-
-                setkb = 's/^(\s{3})(\s{1}#)(.*# Mac\n|.*# Mac -)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(WinMac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(IBM.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Chromebook.*)/   $3$7$6$7$8$12$11$12$13$17$16$17$18/g'
+                setkb = 's/^(\s{3})(\s{1}#)(.*# Mac\n|.*# Mac -)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(WinMac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(IBM.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Chromebook.*)|^(\s{3})(\s{1}# )(-)(- Default (Win|Mac.*))/   $3$7$6$7$8$12$11$12$13$17$16$17$18$20$22/g'
             elif kbtype == "chrome":
-                # if not self.chromekb.get_active():
-                #     return
-
-                set_chromekb = True
-                setkb = 's/^(\s{3})(\s{1}#)(.*# Chromebook.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(WinMac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Mac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(IBM.*)/   $3$7$6$7$8$12$11$12$13$17$16$17$18/g'
+                setkb = 's/^(\s{3})(\s{1}#)(.*# Chromebook.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(WinMac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Mac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(IBM.*)|^(\s{3})(\s{1}# )(-)(- Default (Win|Mac.*))/   $3$7$6$7$8$12$11$12$13$17$16$17$18$20$22/g'
             elif kbtype == "ibm":
-                if not self.ibmkb.get_active():
-                    return
-
-                set_ibmkb = True
-
-                setkb ='s/^(\s{3})(\s{1}#)(.*# IBM.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(WinMac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Mac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Chromebook.*)/   $3$7$6$7$8$12$11$12$13$17$16$17$18/g'
+                setkb ='s/^(\s{3})(\s{1}#)(.*# IBM.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(WinMac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Mac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Chromebook.*)|^(\s{3})(\s{1}# )(-)(- Default (Win|Mac.*))/   $3$7$6$7$8$12$11$12$13$17$16$17$18$20$22/g'
 
             restart = ['sudo', 'systemctl','restart','xkeysnail']
             cmds = ['perl','-pi','-e',setkb,self.kconfig]
