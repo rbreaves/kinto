@@ -31,11 +31,11 @@ class Indicator():
     checkbox_enable = Gtk.CheckMenuItem('Kinto Enabled')
     keyboards = Gtk.MenuItem('Keyboard Types')
     keyboards.set_submenu(menukb)
-    winkb = Gtk.CheckMenuItem('Windows')
-    mackb = Gtk.CheckMenuItem('Apple')
-    chromekb = Gtk.CheckMenuItem('Chromebook')
-    ibmkb = Gtk.CheckMenuItem('IBM (No Super/Win key)')
-    winmackb = Gtk.CheckMenuItem('Windows & Apple*')
+    winkb = Gtk.RadioMenuItem(label='Windows')
+    mackb = Gtk.RadioMenuItem(label='Apple',group=winkb)
+    chromekb = Gtk.RadioMenuItem(label='Chromebook',group=winkb)
+    ibmkb = Gtk.RadioMenuItem(label='IBM (No Super/Win key)',group=winkb)
+    winmackb = Gtk.RadioMenuItem(label='Windows & Apple*',group=winkb)
     button_config = Gtk.MenuItem('Edit Config')
     # Keyboard type set below
     button_syskb = Gtk.MenuItem('System Shortcuts')
@@ -71,6 +71,7 @@ class Indicator():
         # sudo systemctl is-active --quiet xkeysnail
         res = subprocess.Popen(['sudo', 'systemctl','is-active','--quiet','xkeysnail'])
         res.wait()
+        time.sleep(2)
         
         self.checkbox_enable.set_label("Kinto Enabled")
 
@@ -182,15 +183,21 @@ class Indicator():
         # Check options
 
         # Check AltGr - commented out is enabled
-        # (\s{5})(#.*)(Multi-language)
+        is_rightmod = "perl -ne 'print if /^(\s{4})(#.*)(Multi-language)/' ~/.config/kinto/kinto.py | wc -l"
+        rightmod_result = int(self.queryConfig(is_rightmod))
 
         # Sublime enabled for vscode
-        # (\s{4}\w.*)(- Sublime)
+        is_vsc2st3 = "perl -ne 'print if /^(\s{4}\w.*)(- Sublime)/' ~/.config/kinto/kinto.py | wc -l"
+        vsc2st3_result = int(self.queryConfig(is_vsc2st3))
 
         # Caps2Esc enabled
+        is_caps2esc = "perl -ne 'print if /^(\s{4}{\w.*)(# Caps2Esc)/' ~/.config/kinto/kinto.py | wc -l"
+        caps2esc_result = int(self.queryConfig(is_caps2esc))
         # (\s{4}{\w.*)(# Caps2Esc)
 
         # Caps2Cmd enabled
+        is_caps2cmd = "perl -ne 'print if /^(\s{4}\w.*)(# Caps2Cmd)/' ~/.config/kinto/kinto.py | wc -l"
+        caps2cmd_result = int(self.queryConfig(is_caps2cmd))
         # (\s{4}\w.*)(# Caps2Cmd)
 
         # Enter2Cmd enabled
@@ -207,6 +214,19 @@ class Indicator():
         self.vsc2st3.connect('toggled',self.setVSC2ST3)
         self.caps2esc.connect('toggled',self.setCaps2Esc)
         self.caps2cmd.connect('toggled',self.setCaps2Cmd)
+        
+        if rightmod_result == 16:
+            self.rightmod.set_active(True)
+
+        if vsc2st3_result > 0:
+            self.vsc2st3.set_active(True)
+
+        if caps2esc_result > 0:
+            self.caps2esc.set_active(True)
+
+        if caps2cmd_result > 0:
+            self.caps2cmd.set_active(True)
+
         vbox.add(self.rightmod)
         vbox.add(self.vsc2st3)
         vbox.add(self.caps2esc)
@@ -218,6 +238,17 @@ class Indicator():
         return
 
     def setRightMod(self,button):
+        if self.winkb.get_active():
+            print('winkb true')
+        if self.mackb.get_active():
+            print('mackb true')
+        if self.chromekb.get_active():
+            print('chromekb true')
+        if self.ibmkb.get_active():
+            print('ibmkb true')
+        if self.winmackb.get_active():
+            print('winmackb true')
+
         # Check keyboard type that is set
 
         # Apply toggle for the multi-language of type set
@@ -360,77 +391,73 @@ class Indicator():
             set_winmackb = False
 
             if kbtype == "win":
-                if not self.winkb.get_active():
-                    if not self.winmackb.get_active():
-                        print("run query to undo win/winmac")
-                    return
+                # if not self.winkb.get_active():
+                #     if not self.winmackb.get_active():
+                #         print("run query to undo win/winmac")
+                #     return
 
                 set_winkb = True
 
-                setkb = ['s/^(\s{3})(\s{1}#)(.*# WinMac\n|.*# WinMac -)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Mac\n|Mac -)/   $3$7$6$7$8/g']
+                setkb = 's/^(\s{3})(\s{1}#)(.*# WinMac\n|.*# WinMac -)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Mac\n|Mac -)/   $3$7$6$7$8/g'
             elif kbtype == "winmac":
                 if not self.winmackb.get_active():
                     return
 
                 set_winmackb = True
 
-                setkb = ['s/^(\s{3})(\s{1}#)(.*# WinMac\n|.*# WinMac -)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Mac\n|Mac -)/   $3$7$6$7$8/g']
-                if os.path.isfile('/sys/module/e1000/version'):
-                    print("found file")
+                setkb = 's/^(\s{3})(\s{1}#)(.*# WinMac\n|.*# WinMac -)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(IBM.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Mac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Chromebook.*)/   $3$7$6$7$8$12$11$12$13$17$16$17$18/g'
                 if os.path.isfile('/sys/module/hid_apple/parameters/swap_opt_cmd'):
-                    print("found file 1")
+                    with open('/sys/module/applespi/parameters/swap_opt_cmd', 'r') as ocval:
+                        optcmd = ocval.read().replace('\n', '')
+                    if optcmd == '0':
+                        print("found hid_apple")
+                        self.queryConfig("echo '1' | sudo tee /sys/module/hid_apple/parameters/swap_opt_cmd;echo 'options hid_apple swap_opt_cmd=1' | sudo tee /etc/modprobe.d/hid_apple.conf;sudo update-initramfs -u -k all")
                 if os.path.isfile('/sys/module/applespi/parameters/swap_opt_cmd'):
-                    print("found file 2")
+                    with open('/sys/module/applespi/parameters/swap_opt_cmd', 'r') as ocval:
+                        optcmd = ocval.read().replace('\n', '')
+                    if optcmd == '0':
+                        print("found applespi")
+                        self.queryConfig("echo '1' | sudo tee /sys/module/applespi/parameters/swap_opt_cmd;echo 'options applespi swap_opt_cmd=1' | sudo tee /etc/modprobe.d/applespi.conf;sudo update-initramfs -u -k all")
             elif kbtype == "mac":
                 if not self.mackb.get_active():
                     return
-
+                if os.path.isfile('/sys/module/hid_apple/parameters/swap_opt_cmd'):
+                    with open('/sys/module/hid_apple/parameters/swap_opt_cmd', 'r') as ocval:
+                        optcmd = ocval.read().replace('\n', '')
+                    if optcmd == '1':
+                        print("found hid_apple - remove")
+                        self.queryConfig("echo '0' | sudo tee /sys/module/hid_apple/parameters/swap_opt_cmd;echo 'options hid_apple swap_opt_cmd=0' | sudo tee /etc/modprobe.d/hid_apple.conf;sudo update-initramfs -u -k all")
+                if os.path.isfile('/sys/module/applespi/parameters/swap_opt_cmd'):
+                    with open('/sys/module/applespi/parameters/swap_opt_cmd', 'r') as ocval:
+                        optcmd = ocval.read().replace('\n', '')
+                    if optcmd == '1':
+                        print("found applespi - remove")
+                        self.queryConfig("echo '0' | sudo tee /sys/module/applespi/parameters/swap_opt_cmd;echo 'options applespi swap_opt_cmd=0' | sudo tee /etc/modprobe.d/applespi.conf;sudo update-initramfs -u -k all")
+                
                 set_mackb = True
 
-                setkb = ['s/^(\s{3})(\s{1}#)(.*# Mac\n|.*# Mac -)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(WinMac)/   $3$7$6$7$8/g']
+                setkb = 's/^(\s{3})(\s{1}#)(.*# Mac\n|.*# Mac -)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(WinMac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(IBM.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Chromebook.*)/   $3$7$6$7$8$12$11$12$13$17$16$17$18/g'
             elif kbtype == "chrome":
-                if not self.chromekb.get_active():
-                    return
+                # if not self.chromekb.get_active():
+                #     return
 
                 set_chromekb = True
+                setkb = 's/^(\s{3})(\s{1}#)(.*# Chromebook.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(WinMac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Mac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(IBM.*)/   $3$7$6$7$8$12$11$12$13$17$16$17$18/g'
             elif kbtype == "ibm":
                 if not self.ibmkb.get_active():
                     return
 
                 set_ibmkb = True
 
-            self.mackb.disconnect(self.mackb.signal_id)
-            self.winkb.disconnect(self.winkb.signal_id)
-            self.chromekb.disconnect(self.chromekb.signal_id)
-            self.ibmkb.disconnect(self.ibmkb.signal_id)
-            self.winmackb.disconnect(self.winmackb.signal_id)
+                setkb ='s/^(\s{3})(\s{1}#)(.*# IBM.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(WinMac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Mac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Chromebook.*)/   $3$7$6$7$8$12$11$12$13$17$16$17$18/g'
 
-            self.winkb.set_active(set_winkb)
-            self.mackb.set_active(set_mackb)
-            self.chromekb.set_active(set_chromekb)
-            self.ibmkb.set_active(set_ibmkb)
-            self.winmackb.set_active(set_winmackb)
+            restart = ['sudo', 'systemctl','restart','xkeysnail']
+            cmds = ['perl','-pi','-e',setkb,self.kconfig]
 
-            self.mackb.signal_id = self.mackb.connect('activate',self.setKB,"mac")
-            self.winkb.signal_id = self.winkb.connect('activate',self.setKB,"win")
-            self.chromekb.signal_id = self.chromekb.connect('activate',self.setKB,"chrome")
-            self.ibmkb.signal_id = self.ibmkb.connect('activate',self.setKB,"ibm")
-            self.winmackb.signal_id = self.winkb.connect('activate',self.setKB,"winmac")
+            cmdsTerm = subprocess.Popen(cmds)
+            cmdsTerm.wait()
 
-            # setkb =
-            # restart = ['sudo', 'systemctl','restart','xkeysnail']
-            # cmds = ['perl','-pi','-e']+setkb+[self.kconfig]
-
-            # subprocess.Popen(cmds)
-
-            # cmdsTerm = subprocess.Popen(cmds)
-            # cmdsTerm.wait()
-
-            # subprocess.Popen(restart)
-
-            # self.button_winmac.set_label(label)
-            # self.button_winmac.disconnect(self.winmac_id)
-            # self.winmac_id = self.button_winmac.connect('activate',self.setKB,connect)
+            subprocess.Popen(restart)
 
         except subprocess.CalledProcessError:
             subprocess.Popen(['notify-send','Kinto: Error Resetting KB Type!','-i','budgie-desktop-symbolic'])

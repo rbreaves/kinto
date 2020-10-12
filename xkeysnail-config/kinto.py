@@ -32,20 +32,21 @@ define_conditional_modmap(lambda wm_class: wm_class.casefold() not in terminals,
     # Key.CAPSLOCK: Key.RIGHT_CTRL,   # Caps2Cmd
     # Key.LEFT_META: Key.RIGHT_CTRL,  # Caps2Cmd - Chromebook
 
-    # # IBM
+    # - IBM
     # Key.LEFT_ALT: Key.RIGHT_CTRL,   # IBM
     # Key.LEFT_CTRL: Key.LEFT_ALT,    # IBM
     # Key.CAPSLOCK: Key.LEFT_META,    # IBM
     # Key.RIGHT_ALT: Key.RIGHT_CTRL,  # IBM - Multi-language (Remove)
     # Key.RIGHT_CTRL: Key.RIGHT_ALT,  # IBM - Multi-language (Remove)
 
-    # # Chromebook
+    # - Chromebook
     # Key.LEFT_ALT: Key.RIGHT_CTRL,   # Chromebook
     # Key.LEFT_CTRL: Key.LEFT_ALT,    # Chromebook
     # Key.RIGHT_ALT: Key.RIGHT_CTRL,  # Chromebook - Multi-language (Remove)
     # Key.RIGHT_CTRL: Key.RIGHT_ALT,  # Chromebook - Multi-language (Remove)
 
-    # # Default Mac/Win
+    # - Default Mac/Win
+    # - Default Win
     # Key.LEFT_ALT: Key.RIGHT_CTRL,   # WinMac
     # Key.LEFT_META: Key.LEFT_ALT,    # WinMac
     # Key.LEFT_CTRL: Key.LEFT_META,   # WinMac
@@ -53,7 +54,7 @@ define_conditional_modmap(lambda wm_class: wm_class.casefold() not in terminals,
     # Key.RIGHT_META: Key.RIGHT_ALT,  # WinMac - Multi-language (Remove)
     # Key.RIGHT_CTRL: Key.RIGHT_META, # WinMac - Multi-language (Remove)
 
-    # # Mac Only
+    # - Mac Only
     # Key.LEFT_META: Key.RIGHT_CTRL,  # Mac
     # Key.LEFT_CTRL: Key.LEFT_META,   # Mac
     # Key.RIGHT_META: Key.RIGHT_CTRL, # Mac - Multi-language (Remove)
@@ -62,7 +63,7 @@ define_conditional_modmap(lambda wm_class: wm_class.casefold() not in terminals,
 
 # [Conditional modmap] Change modifier keys in certain applications
 define_conditional_modmap(re.compile(termStr, re.IGNORECASE), {
-    # # IBM
+    # - IBM
     # Key.LEFT_ALT: Key.RIGHT_CTRL,     # IBM
     # # Left Ctrl Stays Left Ctrl
     # Key.CAPSLOCK: Key.LEFT_ALT,       # IBM
@@ -73,7 +74,7 @@ define_conditional_modmap(re.compile(termStr, re.IGNORECASE), {
     # Key.RIGHT_ALT: Key.RIGHT_CTRL,  # IBM - Multi-language (Remove)
     # Key.RIGHT_CTRL: Key.RIGHT_ALT,  # IBM - Multi-language (Remove)
 
-    # # Chromebook
+    # - Chromebook
     # Key.LEFT_ALT: Key.RIGHT_CTRL,     # Chromebook
     # # Left Ctrl Stays Left Ctrl
     # Key.LEFT_META: Key.LEFT_ALT,      # Chromebook
@@ -81,7 +82,8 @@ define_conditional_modmap(re.compile(termStr, re.IGNORECASE), {
     # Key.RIGHT_CTRL: Key.RIGHT_ALT,    # Chromebook
     # # Right Meta does not exist on chromebooks
 
-    # # Default Mac/Win
+    # - Default Mac/Win
+    # - Default Win
     # Key.LEFT_ALT: Key.RIGHT_CTRL,   # WinMac
     # Key.LEFT_META: Key.LEFT_ALT,    # WinMac
     # Key.LEFT_CTRL: Key.LEFT_CTRL,   # WinMac
@@ -89,7 +91,7 @@ define_conditional_modmap(re.compile(termStr, re.IGNORECASE), {
     # Key.RIGHT_META: Key.RIGHT_ALT,  # WinMac - Multi-language (Remove)
     # Key.RIGHT_CTRL: Key.LEFT_CTRL,  # WinMac - Multi-language (Remove)
 
-    # # Mac Only
+    # - Mac Only
     # Key.LEFT_META: Key.RIGHT_CTRL,  # Mac
     # # Left Ctrl Stays Left Ctrl
     # Key.RIGHT_META: Key.RIGHT_CTRL, # Mac - Multi-language (Remove)
