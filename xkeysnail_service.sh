@@ -60,13 +60,13 @@ function uninstall {
 			fi
 		elif [ "$dename" == "kde" ]; then
 			echo "Restoring DE hotkeys..."
-			kwinkeys = $(ls | grep -m1 "kwinrc")
-			kdekeys = $(ls | grep -m1 "kglobalshortcutsrc")
+			kwinkeys=$(ls | grep -m1 "kwinrc")
+			kdekeys=$(ls | grep -m1 "kglobalshortcutsrc")
 			cp ./"$kdekeys" ~/.config/kglobalshortcutsrc
 			cp ./"$kwinkeys" ~/.config/kwinrc
 		elif [ "$dename" == "xfce" ]; then
 			echo "Restoring DE hotkeys..."
-			xfcekeys = $(ls | grep -m1 "xfce4-keyboard")
+			xfcekeys=$(ls | grep -m1 "xfce4-keyboard")
 			cp ./"$xfcekeys" ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
 		fi
 	fi
@@ -337,6 +337,14 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1
 	fi
 fi
 
+if [[ $dename == "gnome" || dename == "budgie" ]]; then
+	perl -pi -e "s/(# )(.*)(# gnome)/\$2\$3/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
+fi
+if [[ $dename == "kde" ]]; then
+	echo "Applying Cmd-Space to open App Launcher for KDE..."
+	perl -pi -e "s/(# )(.*)(#.*kde)/\$2\$3/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
+fi
+
 if [[ $1 == "1" || $1 == "winmac" ]]; then
 	if ls /sys/module | grep hid_apple >/dev/null 2>&1 ; then
 		echo '1' | sudo tee /sys/module/hid_apple/parameters/swap_opt_cmd;echo 'options hid_apple swap_opt_cmd=1' | sudo tee /etc/modprobe.d/hid_apple.conf;sudo update-initramfs -u -k all
@@ -363,6 +371,11 @@ elif [[ $1 == "3" || $1 == "chromebook" ]]; then
 	perl -pi -e "s/(# )(.*)(# Chromebook)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
 	perl -pi -e "s/(# )(.*)(# xfce4)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
 	perl -pi -e "s/(\w.*)(# Default)/# \$1\$2/g" ./xkeysnail-config/kinto.py.new
+fi
+if [[ $dename == "xfce" ]] && ls /etc/apt/sources.list.d/enso* 1> /dev/null 2>&1; then
+    echo "enso OS detected, applying Cmd-Space for Launchy..."
+    perl -pi -e "s/(K\(\"RC-Space)(.*)(# )(xfce4)/\$3\$1\$2\$3\$4/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
+    xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Primary>space" --create --type string --set "launchy"
 fi
 
 if $rightalt ; then

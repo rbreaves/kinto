@@ -92,8 +92,8 @@ define_keymap(re.compile("jetbrains-idea", re.IGNORECASE),{
     K("C-Super-g"): K("C-M-Shift-j"),           # Select all occurrences
     K("Super-Shift-g"): K("M-Shift-j"),         # Unselect occurrence
     # Editing
-    K("Super-Space"): K("C-Space"),             # Basic code completion
-    K("Super-Shift-Space"): K("C-Shift-Space"), # Smart code completion
+    K("Super-Space"): K("LC-Space"),            # Basic code completion
+    K("Super-Shift-Space"): K("LC-Shift-Space"),# Smart code completion
     K("Super-j"): K("C-q"),                     # Quick documentation lookup
     K("C-n"): K("M-Insert"),                    # Generate code...
     K("Super-o"): K("C-o"),                     # Override methods
@@ -171,6 +171,9 @@ define_keymap(re.compile(browserStr, re.IGNORECASE),{
 })
 
 define_keymap(None,{
+    # Launch Application Menu
+    # K("RC-Space"): K("Alt-F1"),                   # gnome/kde
+    # K("RC-Space"): K("LC-Esc"),                   # xfce4
     # Basic App hotkey functions
     K("RC-Q"): K("Alt-F4"),
     K("RC-H"): K("Alt-F9"),
@@ -214,7 +217,6 @@ define_keymap(None,{
 })
 
 define_keymap(lambda wm_class: wm_class.casefold() not in mscodes,{
-    K("Super-Space"): K("C-Space"),         # Basic code completion
     # Wordwise remaining - for Everything but VS Code
     K("M-Left"): K("C-Left"),               # Left of Word
     K("M-Shift-Left"): K("C-Shift-Left"),   # Select Left of Word
@@ -239,6 +241,7 @@ define_keymap(lambda wm_class: wm_class.casefold() not in mscodes,{
 
 # Keybindings for VS Code
 define_keymap(re.compile(codeStr, re.IGNORECASE),{
+    K("Super-Space"): K("LC-Space"),                        # Basic code completion
     # Wordwise remaining - for VS Code
     # Alt-F19 hack fixes Alt menu activation
     K("M-Left"): [K("M-F19"),K("C-Left")],                  # Left of Word
