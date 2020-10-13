@@ -375,8 +375,8 @@ sudo journalctl --unit=xkeysnail.service -b
 
 Note: You can also watch your log live
 ```
-journalctl -l --user-unit=keyswap.service -b
-sudo journalctl -l --unit=xkeysnail.service -b
+journalctl -f --user-unit=keyswap.service -b
+sudo journalctl -f --unit=xkeysnail.service -b
 ```
 
 You may need to manually set your DISPLAY in the systemd service file. Normally it pulls in the proper DISPLAY value but if it doesn't you can try this.
