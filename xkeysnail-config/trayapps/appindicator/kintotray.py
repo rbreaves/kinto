@@ -6,15 +6,31 @@ gi.require_version('Gtk', '3.0')
 gi.require_version('AppIndicator3', '0.1')
 gi.require_version('Notify', '0.7')
 
-import signal,subprocess,time,os
+import signal,time,os,fcntl,datetime,re
+from subprocess import Popen, PIPE, CalledProcessError
 from shutil import which
-from gi.repository import Gtk
+from gi.repository import Gtk,GLib,GdkPixbuf
 from gi.repository import AppIndicator3 as appindicator
 from gi.repository import Notify as notify
+
+import signal
+
+def kill_child():
+    if child_pid is None:
+        pass
+    else:
+        os.kill(child_pid, signal.SIGTERM)
+
+import atexit
+atexit.register(kill_child)
 
 APPINDICATOR_ID = 'Kinto'
 
 class Indicator():
+
+    global child_pid
+    kinto_status = Popen("while :; do clear; systemctl is-active xkeysnail; sleep 2s; done", stdout=PIPE, shell=True)
+    child_pid = kinto_status.pid
 
     homedir = os.path.expanduser("~")
     kconfig = homedir+"/.config/kinto/kinto.py"
@@ -26,9 +42,9 @@ class Indicator():
     autostart_bool = False
     menu = Gtk.Menu()
     menukb = Gtk.Menu()
-    tweaks = Gtk.MenuItem('Tweaks')
     checkbox_autostart = Gtk.CheckMenuItem('Autostart')
     checkbox_enable = Gtk.CheckMenuItem('Kinto Enabled')
+    restart = Gtk.MenuItem('Restart')
     keyboards = Gtk.MenuItem('Keyboard Types')
     keyboards.set_submenu(menukb)
     winkb = Gtk.RadioMenuItem(label='Windows')
@@ -36,24 +52,48 @@ class Indicator():
     chromekb = Gtk.RadioMenuItem(label='Chromebook',group=winkb)
     ibmkb = Gtk.RadioMenuItem(label='IBM (No Super/Win key)',group=winkb)
     winmackb = Gtk.RadioMenuItem(label='Windows & Apple*',group=winkb)
+    edit = Gtk.MenuItem('Customize')
+    edit_submenu = Gtk.Menu()
+    edit.set_submenu(edit_submenu)
+    tweaks = Gtk.MenuItem('Tweaks')
     rightmod =  Gtk.CheckButton('AltGr on Right Cmd')
     vsc2st3 = Gtk.CheckButton('ST3 hotkeys for VS Code')
     caps2esc = Gtk.CheckButton('Capslock is Escape when tapped, Cmd when held')
     caps2cmd = Gtk.CheckButton('Capslock is Cmd')
-    button_config = Gtk.MenuItem('Edit Config')
+    button_config = Gtk.MenuItem('Kinto Config (shortcuts)')
+    service = Gtk.MenuItem('Kinto Service')
     # Keyboard type set below
     button_syskb = Gtk.MenuItem('System Shortcuts')
     button_region = Gtk.MenuItem('Change Language')
-    button_support = Gtk.MenuItem('Support')
+    helpm = Gtk.MenuItem('Help')
+    help_submenu = Gtk.Menu()
+    helpm.set_submenu(help_submenu)
+    debug = Gtk.MenuItem('Debug')
+    support = Gtk.MenuItem("Support")
+    about = Gtk.MenuItem('About')
     global restartsvc
+    restartsvc = False
+    unixts = int(time.time())
+    last_status = ""
 
     def __init__(self):
-        self.indicator = appindicator.Indicator.new(APPINDICATOR_ID, self.homedir+'/.config/kinto/kinto-invert.svg', appindicator.IndicatorCategory.SYSTEM_SERVICES)
+        res = Popen(['sudo', 'systemctl','is-active','--quiet','xkeysnail'])
+        res.wait()
+
+        if res.returncode == 0:
+            self.last_status = 'active'
+            self.indicator = appindicator.Indicator.new(APPINDICATOR_ID, os.environ['HOME']+'/.config/kinto/kinto-invert.svg', appindicator.IndicatorCategory.SYSTEM_SERVICES)
+        else:
+            self.last_status = 'inactive'
+            self.indicator = appindicator.Indicator.new(APPINDICATOR_ID, os.environ['HOME']+'/.config/kinto/kinto.svg', appindicator.IndicatorCategory.SYSTEM_SERVICES)
+
         self.indicator.set_status(appindicator.IndicatorStatus.ACTIVE)
-        self.indicator.set_menu(self.build_menu())
+        self.indicator.set_menu(self.build_menu(res))
         notify.init(APPINDICATOR_ID)
 
-    def build_menu(self):
+        GLib.timeout_add(2000, self.update_terminal)
+
+    def build_menu(self,res):
 
         with open(self.kconfig) as configfile:
             autostart_line = configfile.read().split('\n')[1]
@@ -63,7 +103,7 @@ class Indicator():
             autostart_bool = True
 
         if autostart_bool:
-            subprocess.Popen(['sudo', 'systemctl','restart','xkeysnail'])
+            # Popen(['sudo', 'systemctl','restart','xkeysnail'])
             self.checkbox_autostart.set_active(True)
             self.chkautostart_id = self.checkbox_autostart.connect('activate',self.setAutostart,False)
         else:
@@ -73,22 +113,104 @@ class Indicator():
 
         # Kinto Enable
 
-        res = subprocess.Popen(['sudo', 'systemctl','is-active','--quiet','xkeysnail'])
-        res.wait()
-        time.sleep(5)
+        # res = Popen(['sudo', 'systemctl','is-active','--quiet','xkeysnail'])
+        # res.wait()
+        # time.sleep(5)
         
-        self.checkbox_enable.set_label("Kinto Enabled")
+        # self.checkbox_enable.set_label("Kinto Enabled")
+        # self.checkbox_enable.set_active(True)
+        # self.enable_id = self.checkbox_enable.connect('activate',self.setEnable,False)
 
         if res.returncode == 0:
             self.checkbox_enable.set_active(True)
-            self.indicator.set_icon(self.homedir+'/.config/kinto/kinto-invert.svg')
+            # self.indicator.set_icon(os.environ['HOME']+'/.config/kinto/kinto-invert.svg')
             self.enable_id = self.checkbox_enable.connect('activate',self.setEnable,False)
         else:
             self.checkbox_enable.set_active(False)
-            self.indicator.set_icon(self.homedir+'/.config/kinto/kinto-color.svg')
+            # self.indicator.set_icon(os.environ['HOME']+'/.config/kinto/kinto-color.svg')
             self.enable_id = self.checkbox_enable.connect('activate',self.setEnable,True)
         self.menu.append(self.checkbox_enable)
 
+        self.restart.connect('activate',self.runRestart)
+        self.menu.append(self.restart)
+
+        self.refreshKB()
+
+        self.mackb.signal_id = self.mackb.connect('activate',self.setKB,"mac")
+        self.winkb.signal_id = self.winkb.connect('activate',self.setKB,"win")
+        self.chromekb.signal_id = self.chromekb.connect('activate',self.setKB,"chrome")
+        self.ibmkb.signal_id = self.ibmkb.connect('activate',self.setKB,"ibm")
+        self.winmackb.signal_id = self.winmackb.connect('activate',self.setKB,"winmac")
+
+        self.menukb.append(self.winkb)
+        self.menukb.append(self.mackb)
+        self.menukb.append(self.chromekb)
+        self.menukb.append(self.ibmkb)
+        self.menukb.append(self.winmackb)
+        self.menu.append(self.keyboards)
+
+        self.tweaks.connect('activate',self.setTweaks)
+        self.edit_submenu.append(self.tweaks)
+        self.button_config.connect('activate',self.setConfig)
+        self.edit_submenu.append(self.button_config)
+        self.service.connect('activate',self.setService)
+        self.edit_submenu.append(self.service)
+        # Set System Keyboard Shortcuts
+        self.button_syskb.connect('activate',self.setSysKB)
+        self.edit_submenu.append(self.button_syskb)
+        # Set Language
+        self.button_region.connect('activate',self.setRegion)
+        self.edit_submenu.append(self.button_region)
+        self.menu.append(self.edit)
+
+        self.debug.connect('activate',self.runDebug)
+        self.help_submenu.append(self.debug)
+        self.support.connect('activate',self.openSupport)
+        self.help_submenu.append(self.support)
+        self.about.connect('activate',self.runAbout)
+        self.help_submenu.append(self.about)
+        self.menu.append(self.helpm)
+
+        self.keyboards.connect('activate',self.refresh)
+
+        # self.debug.connect('activate',self.runDebug)
+        # self.menu.append(self.debug)
+
+        # self.tweaks.connect('activate',self.setTweaks)
+        # self.menu.append(self.tweaks)
+
+        # Edit Config
+        # self.button_config.connect('activate',self.setConfig)
+        # self.menu.append(self.button_config)
+
+        # # Set System Keyboard Shortcuts
+        # self.button_syskb.connect('activate',self.setSysKB)
+        # self.menu.append(self.button_syskb)
+
+        # # Set Language
+        # self.button_region.connect('activate',self.setRegion)
+        # self.menu.append(self.button_region)
+
+        item_quit = Gtk.MenuItem('Close')
+        item_quit.connect('activate', quit)
+        self.menu.append(item_quit)
+        self.menu.show_all()
+
+        return self.menu
+
+    # def refresh(self, widget, event):
+    #     print('refresh!!!')
+    #     if event.button != 1:
+    #         return False  #only intercept left mouse button
+    #     md = gtk.MessageDialog(self, gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO, gtk.BUTTONS_CLOSE, "herp derp, I only needed one click")
+    #     md.run()
+    #     md.destroy()
+    #     return True
+
+    def refresh(self,button):
+        self.refreshKB()
+
+    def refreshKB(self):
         # Keyboard Types
         ismac = "perl -ne 'print if /^(\s{4})((?!#).*)(# Mac\n)/' ~/.config/kinto/kinto.py | wc -l"
         iswin = "perl -ne 'print if /^(\s{4})(# -- Default Win)/' ~/.config/kinto/kinto.py | wc -l"
@@ -116,50 +238,145 @@ class Indicator():
             self.winmackb.set_active(True)
             countkb += 1
         if ibm_result:
-            self.ibmkb.set_active(True)
+            ibmkb.set_active(True)
             countkb += 1
 
         if countkb > 1:
-            subprocess.Popen(['notify-send','Kinto: Remove ' + str(countkb-1) + ' kb type(s)','-i','budgie-desktop-symbolic'])
+            Popen(['notify-send','Kinto: Remove ' + str(countkb-1) + ' kb type(s)','-i','budgie-desktop-symbolic'])
 
-        self.mackb.signal_id = self.mackb.connect('activate',self.setKB,"mac")
-        self.winkb.signal_id = self.winkb.connect('activate',self.setKB,"win")
-        self.chromekb.signal_id = self.chromekb.connect('activate',self.setKB,"chrome")
-        self.ibmkb.signal_id = self.ibmkb.connect('activate',self.setKB,"ibm")
-        self.winmackb.signal_id = self.winmackb.connect('activate',self.setKB,"winmac")
+        return
 
-        self.menukb.append(self.winkb)
-        self.menukb.append(self.mackb)
-        self.menukb.append(self.chromekb)
-        self.menukb.append(self.ibmkb)
-        self.menukb.append(self.winmackb)
-        self.menu.append(self.keyboards)
+    def non_block_read(self):
+        ''' even in a thread, a normal read with block until the buffer is full '''
+        output = self.kinto_status.stdout
+        # with open('goodlines.txt') as f:
+        #     mylist = list(f)
+        # output = '\n'.join(self.kinto_status.stdout.splitlines()[-1:])
+        # '\n'.join(stderr.splitlines()[-N:])
+        # .splitlines()[-1:]
+        fd = output.fileno()
+        fl = fcntl.fcntl(fd, fcntl.F_GETFL)
+        fcntl.fcntl(fd, fcntl.F_SETFL, fl | os.O_NONBLOCK)
+        op = output.read()
+        if op == None:
+            return ''
+        status = op.decode('utf-8').rstrip()
+        if "inactive" in status or "failed" in status or "deactivating" in status or "activating" in status:
+            stats = "inactive"
+        else:
+            stats = "active"
+        return stats
 
-        self.tweaks.connect('activate',self.setTweaks)
+    def update_terminal(self):
+        status = self.non_block_read().strip()
+        nowts = int(time.time())
+        if (nowts - self.unixts) > 5 and (status=='active' and self.indicator.get_icon() != os.environ['HOME']+'/.config/kinto/kinto-invert.svg'):
+            self.checkbox_enable.disconnect(self.enable_id)
+            self.checkbox_enable.set_active(True)
+            self.enable_id = self.checkbox_enable.connect('activate',self.setEnable,False)
+            self.indicator.set_icon(os.environ['HOME']+'/.config/kinto/kinto-invert.svg')
+        elif (nowts - self.unixts) > 5 and (status == 'inactive' and self.indicator.get_icon() != os.environ['HOME']+'/.config/kinto/kinto.svg'):
+            self.checkbox_enable.disconnect(self.enable_id)
+            self.checkbox_enable.set_active(False)
+            self.enable_id = self.checkbox_enable.connect('activate',self.setEnable,True)
+            self.indicator.set_icon(os.environ['HOME']+'/.config/kinto/kinto.svg')
 
-        self.menu.append(self.tweaks)
+        # print('stats: ' + status + ' last: ' + self.last_status)
+        # if status != self.last_status and status == 'active':
+        #     # print('inside')
+        #     self.refreshKB()
 
-        # Edit Config
-        self.button_config.connect('activate',self.setConfig)
-        self.menu.append(self.button_config)
+        self.last_status = status
 
-        # Set System Keyboard Shortcuts
-        self.button_syskb.connect('activate',self.setSysKB)
-        self.menu.append(self.button_syskb)
+        return self.kinto_status.poll() is None
 
-        # Set Language
-        self.button_region.connect('activate',self.setRegion)
-        self.menu.append(self.button_region)
+    def openSupport(self,button):
+        Gtk.show_uri_on_window(None, "https://github.com/rbreaves/kinto#table-of-contents", Gtk.get_current_event_time())
+        return
 
-        item_quit = Gtk.MenuItem('Close')
-        item_quit.connect('activate', quit)
-        self.menu.append(item_quit)
-        self.menu.show_all()
+    def runAbout(self,button):
+        win = Gtk.Window()
 
-        return self.menu
+        path = os.environ['HOME']+'/.config/kinto/kinto-color.svg'
+        width = -1
+        height = 128
+        preserve_aspect_ratio = True
+
+        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(path, width, height, preserve_aspect_ratio)
+        win.set_default_icon_list([pixbuf])
+
+        win.set_title("About")
+        win.set_default_size(350, 200)
+        win.set_position(Gtk.WindowPosition.CENTER)
+
+        context = win.get_style_context()
+        default_background = str(context.get_background_color(Gtk.StateType.NORMAL))
+
+        tokenValue = re.search('red=(\d.\d+), green=(\d.\d+), blue=(\d.\d+), alpha=(\d.\d+)', default_background)
+        red = float(tokenValue.group(1))
+        green = float(tokenValue.group(2))
+        blue = float(tokenValue.group(3))
+        alpha = float(tokenValue.group(4))
+
+        bgAvg = (red + green + blue)/3
+
+        if(bgAvg > 0.5):
+            theme = "light"
+        else:
+            theme = "dark"
+
+        vbox = Gtk.VBox()
+        # innervbox = Gtk.VBox()
+
+        if theme == "dark":
+            path = os.environ['HOME']+'/.config/kinto/kinto-invert.svg'
+        else:
+            path = os.environ['HOME']+'/.config/kinto/kinto-color.svg'
+        width = -1
+        height = 128
+        preserve_aspect_ratio = True
+
+        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(path, width, height, preserve_aspect_ratio)
+        image = Gtk.Image()
+        image.set_from_pixbuf(pixbuf)
+
+        with open('version', 'r') as file:
+            verdata = file.read().replace('\n', '')
+
+        version = Gtk.Label('Kinto v' + verdata)
+
+        credits = Gtk.Label("Author: Ben Reaves")
+        spacer = Gtk.Label(" ")
+        copy = Gtk.Label("Copyrighted 2019, 2020 - GPLv2")
+        url = Gtk.LinkButton("http://kinto.sh", label="http://kinto.sh")
+        url2 = Gtk.Label("http://kinto.sh")
+
+        vbox.add(image)
+        vbox.add(version)
+        vbox.add(spacer)
+        vbox.add(credits)
+        vbox.add(copy)
+        vbox.add(url)
+        win.add(vbox)
+
+        win.show_all()
+
+        version.set_selectable(True)      
+        win.connect('delete-event', self.on_delete_event)
+
+        return
 
     def setTweaks(self,button):
         win = Gtk.Window()
+
+        path = os.environ['HOME']+'/.config/kinto/kinto-color.svg'
+        width = -1
+        height = 128
+        preserve_aspect_ratio = True
+
+        pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(path, width, height, preserve_aspect_ratio)
+        win.set_default_icon_list([pixbuf])
+
         win.set_title("Kinto Tweaks")
         win.set_default_size(350, 200)
         win.set_position(Gtk.WindowPosition.CENTER)
@@ -234,11 +451,11 @@ class Indicator():
         if restartsvc == True:
             try:
                 restartcmd = ['sudo', 'systemctl','restart','xkeysnail']
-                subprocess.Popen(restartcmd)
+                Popen(restartcmd)
                 restartsvc = False
 
-            except subprocess.CalledProcessError:
-                subprocess.Popen(['notify-send','Kinto: Error restarting Kinto after setting tweaks!','-i','budgie-desktop-symbolic'])
+            except CalledProcessError:
+                Popen(['notify-send','Kinto: Error restarting Kinto after setting tweaks!','-i','budgie-desktop-symbolic'])
 
         self.hide()
         self.destroy()
@@ -262,12 +479,12 @@ class Indicator():
 
             cmds = ['perl','-pi','-e',setkb,self.kconfig]
 
-            cmdsTerm = subprocess.Popen(cmds)
+            cmdsTerm = Popen(cmds)
 
             restartsvc = True
 
-        except subprocess.CalledProcessError:
-            subprocess.Popen(['notify-send','Kinto: Error Resetting AltGr!','-i','budgie-desktop-symbolic'])
+        except CalledProcessError:
+            Popen(['notify-send','Kinto: Error Resetting AltGr!','-i','budgie-desktop-symbolic'])
 
         return
 
@@ -282,12 +499,12 @@ class Indicator():
 
             cmds = ['perl','-pi','-e',setkb,self.kconfig]
 
-            cmdsTerm = subprocess.Popen(cmds)
+            cmdsTerm = Popen(cmds)
 
             restartsvc = True
 
-        except subprocess.CalledProcessError:
-            subprocess.Popen(['notify-send','Kinto: Error Resetting SublimeText remaps for VSCode!','-i','budgie-desktop-symbolic'])
+        except CalledProcessError:
+            Popen(['notify-send','Kinto: Error Resetting SublimeText remaps for VSCode!','-i','budgie-desktop-symbolic'])
         return
 
     def setCaps2Esc(self,button):
@@ -306,12 +523,12 @@ class Indicator():
             else:
                 self.caps2cmd.set_sensitive(True)
 
-            cmdsTerm = subprocess.Popen(cmds)
+            cmdsTerm = Popen(cmds)
 
             restartsvc = True
 
-        except subprocess.CalledProcessError:
-            subprocess.Popen(['notify-send','Kinto: Error resetting caps2esc!','-i','budgie-desktop-symbolic'])
+        except CalledProcessError:
+            Popen(['notify-send','Kinto: Error resetting caps2esc!','-i','budgie-desktop-symbolic'])
 
         return
 
@@ -332,66 +549,120 @@ class Indicator():
             else:
                 self.caps2esc.set_sensitive(True)
 
-            cmdsTerm = subprocess.Popen(cmds)
+            cmdsTerm = Popen(cmds)
 
             restartsvc = True
 
-        except subprocess.CalledProcessError:
-            subprocess.Popen(['notify-send','Kinto: Error resetting caps2cmd!','-i','budgie-desktop-symbolic'])
+        except CalledProcessError:
+            Popen(['notify-send','Kinto: Error resetting caps2cmd!','-i','budgie-desktop-symbolic'])
 
         return
 
+    def runRestart(self,button):
+        try:
+            stop = Popen(['sudo', 'systemctl','stop','xkeysnail'])
+            stop.wait()
+            time.sleep(1)
+            res = Popen(['pgrep','xkeysnail'])
+            res.wait()
+
+            if res.returncode == 0:
+                # Popen(['notify-send','Kinto: Ending Debug','-i','budgie-desktop-symbolic'])
+                pkillxkey = Popen(['sudo', 'pkill','-f','bin/xkeysnail'])
+                pkillxkey.wait()
+            
+            Popen(['sudo', 'systemctl','start','xkeysnail'])
+        except:
+            Popen(['notify-send','Kinto: Error restarting Kinto!','-i','budgie-desktop-symbolic'])
+            # self.checkbox_enable.set_active(False)
+            # self.checkbox_enable.disconnect(self.enable_id)
+            # self.enable_id = self.checkbox_enable.connect('activate',self.setEnable,True)
+            # self.indicator.set_icon(os.environ['HOME']+'/.config/kinto/kinto-color.svg')
+
+    def runDebug(self,button):
+        try:
+            Popen([os.environ['HOME']+'/Documents/git-projects/kinto/xkeysnail-config/gui/kinto-gui.py','-d'])
+        except:
+            Popen(['notify-send','Kinto: Error restarting Kinto!','-i','budgie-desktop-symbolic'])
+            self.checkbox_enable.set_active(False)
+            self.checkbox_enable.disconnect(self.enable_id)
+            self.enable_id = self.checkbox_enable.connect('activate',self.setEnable,True)
+            # self.indicator.set_icon(os.environ['HOME']+'/.config/kinto/kinto-color.svg')
+
     def queryConfig(self,query):
-        res = subprocess.Popen(query, stdout=subprocess.PIPE, stderr=None, shell=True)
+        res = Popen(query, stdout=PIPE, stderr=None, shell=True)
         res.wait()
         return res.communicate()[0].strip().decode('UTF-8')
 
     def setEnable(self,button,enableKinto):
         try:
             if enableKinto:
-                subprocess.Popen(['sudo', 'systemctl','restart','xkeysnail'])
-                self.checkbox_enable.set_active(True)
+                res = Popen(['pgrep','xkeysnail'])
+                res.wait()
+                print(res.returncode)
+
+                if res.returncode == 0:
+                    # Popen(['notify-send','Kinto: Err in debug mode?','-i','budgie-desktop-symbolic'])
+                    pkillxkey = Popen(['sudo', 'pkill','-f','bin/xkeysnail'])
+                    pkillxkey.wait()
+
+                Popen(['sudo', 'systemctl','restart','xkeysnail'])
                 self.checkbox_enable.disconnect(self.enable_id)
+                self.checkbox_enable.set_active(True)
                 self.enable_id = self.checkbox_enable.connect('activate',self.setEnable,False)
-                self.indicator.set_icon(self.homedir+'/.config/kinto/kinto-invert.svg')
+                self.indicator.set_icon(os.environ['HOME']+'/.config/kinto/kinto-invert.svg')
 
             else:
-                subprocess.Popen(['sudo', 'systemctl','stop','xkeysnail'])
-                self.checkbox_enable.set_active(False)
+                Popen(['sudo', 'systemctl','stop','xkeysnail'])
                 self.checkbox_enable.disconnect(self.enable_id)
+                self.checkbox_enable.set_active(False)
                 self.enable_id = self.checkbox_enable.connect('activate',self.setEnable,True)
-                self.indicator.set_icon(self.homedir+'/.config/kinto/kinto-color.svg')
+                self.indicator.set_icon(os.environ['HOME']+'/.config/kinto/kinto.svg')
 
-        except subprocess.CalledProcessError:
-            subprocess.Popen(['notify-send','Kinto: Error enabling!','-i','budgie-desktop-symbolic'])
+            self.unixts = int(time.time())
+
+        except CalledProcessError:
+            Popen(['notify-send','Kinto: Error enabling!','-i','budgie-desktop-symbolic'])
 
     def setAutostart(self,button,autostart):
         try:
             if autostart == False:
-                subprocess.Popen(['perl','-pi','-e','s/autostart = true/autostart = false/g',self.homedir+'/.config/kinto/kinto.py'])
+                Popen(['perl','-pi','-e','s/autostart = true/autostart = false/g',os.environ['HOME']+'/.config/kinto/kinto.py'])
                 self.checkbox_autostart.set_active(False)
                 self.checkbox_autostart.disconnect(self.chkautostart_id)
                 self.chkautostart_id = self.checkbox_autostart.connect('activate',self.setAutostart,True)
             else:
-                subprocess.Popen(['perl','-pi','-e','s/autostart = false/autostart = true/g',self.homedir+'/.config/kinto/kinto.py'])
+                Popen(['perl','-pi','-e','s/autostart = false/autostart = true/g',os.environ['HOME']+'/.config/kinto/kinto.py'])
                 self.checkbox_autostart.set_active(True)
                 self.checkbox_autostart.disconnect(self.chkautostart_id)
                 self.chkautostart_id = self.checkbox_autostart.connect('activate',self.setAutostart,False)
 
-        except subprocess.CalledProcessError:
-            subprocess.Popen(['notify-send','Kinto: Error setting autostart!','-i','budgie-desktop-symbolic'])
+        except CalledProcessError:
+            Popen(['notify-send','Kinto: Error setting autostart!','-i','budgie-desktop-symbolic'])
 
     def setConfig(self,button):
         try:
             if os.path.exists('/opt/sublime_text/sublime_text'):
-                subprocess.Popen(['/opt/sublime_text/sublime_text',self.homedir+'/.config/kinto/kinto.py'])
+                Popen(['/opt/sublime_text/sublime_text',os.environ['HOME']+'/.config/kinto/kinto.py'])
             elif which(gedit) is not None:
-                subprocess.Popen(['gedit',self.homedir+'/.config/kinto/kinto.py'])
+                Popen(['gedit',os.environ['HOME']+'/.config/kinto/kinto.py'])
             elif which(mousepad) is not None:
-                subprocess.Popen(['mousepad',self.homedir+'/.config/kinto/kinto.py'])
+                Popen(['mousepad',os.environ['HOME']+'/.config/kinto/kinto.py'])
 
-        except subprocess.CalledProcessError:                                  # Notify user about error on running restart commands.
-            subprocess.Popen(['notify-send','Kinto: Error could not open config file!','-i','budgie-desktop-symbolic'])
+        except CalledProcessError:                                  # Notify user about error on running restart commands.
+            Popen(['notify-send','Kinto: Error could not open config file!','-i','budgie-desktop-symbolic'])
+
+    def setService(self,button):
+        try:
+            if os.path.exists('/opt/sublime_text/sublime_text'):
+                Popen(['/opt/sublime_text/sublime_text','/lib/systemd/system/xkeysnail.service'])
+            elif which(gedit) is not None:
+                Popen(['gedit','/lib/systemd/system/xkeysnail.service'])
+            elif which(mousepad) is not None:
+                Popen(['mousepad','/lib/systemd/system/xkeysnail.service'])
+
+        except CalledProcessError:                                  # Notify user about error on running restart commands.
+            Popen(['notify-send','Kinto: Error could not open config file!','-i','budgie-desktop-symbolic'])
 
     def setKB(self,button,kbtype):
         try:
@@ -433,25 +704,25 @@ class Indicator():
             restart = ['sudo', 'systemctl','restart','xkeysnail']
             cmds = ['perl','-pi','-e',setkb,self.kconfig]
 
-            cmdsTerm = subprocess.Popen(cmds)
+            cmdsTerm = Popen(cmds)
             cmdsTerm.wait()
 
-            subprocess.Popen(restart)
+            Popen(restart)
 
-        except subprocess.CalledProcessError:
-            subprocess.Popen(['notify-send','Kinto: Error Resetting KB Type!','-i','budgie-desktop-symbolic'])
+        except CalledProcessError:
+            Popen(['notify-send','Kinto: Error Resetting KB Type!','-i','budgie-desktop-symbolic'])
 
     def setSysKB(self,button):
         if self.ostype == "XFCE":
-            subprocess.Popen(['xfce4-keyboard-settings'])
+            Popen(['xfce4-keyboard-settings'])
         else:
-            subprocess.Popen(['gnome-control-center','keyboard'])
+            Popen(['gnome-control-center','keyboard'])
 
     def setRegion(self,button):
         if self.ostype == "XFCE":
-            subprocess.Popen(['gnome-language-selector'])
+            Popen(['gnome-language-selector'])
         else:
-            subprocess.Popen(['gnome-control-center','region'])
+            Popen(['gnome-control-center','region'])
 
     def quit(source):
         Gtk.main_quit()

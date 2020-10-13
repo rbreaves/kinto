@@ -324,6 +324,7 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "4" || $1 == "winmac" || $1 =
 	sed -i "s/{username}/`whoami`/g" ./xkeysnail-config/limitedadmins.new
 	sed -i "s#{systemctl}#`\\which systemctl`#g" ./xkeysnail-config/limitedadmins.new
 	sed -i "s#{pkill}#`\\which pkill`#g" ./xkeysnail-config/limitedadmins.new
+	sed -i "s#{xkeysnail}#/usr/local/bin/xkeysnail#g" ./xkeysnail-config/limitedadmins.new
 	sudo chown root:root ./xkeysnail-config/limitedadmins.new
 	sudo mv ./xkeysnail-config/limitedadmins.new /etc/sudoers.d/limitedadmins
 	sed -i "s#{systemctl}#`\\which systemctl`#g" ~/.config/autostart/xkeysnail.desktop
@@ -394,6 +395,7 @@ fi
 
 if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "winmac" || $1 == "mac" || $1 == "chromebook" ]]; then
 	mv ./xkeysnail-config/kinto.py.new ~/.config/kinto/kinto.py
+	git describe --tags | perl -ne "print \"\$1 build `git rev-parse --short HEAD`\n\" for m/\b(.*)-\w+-\w{8}/" > ~/.config/kinto/version
 	# if [ "$distro" == "fedora" ];then
 	sudo rm /etc/systemd/system/xkeysnail.service
 	if [ -d /usr/lib/systemd/system ];then
