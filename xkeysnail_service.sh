@@ -213,6 +213,9 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "4" || $1 == "winmac" || $1 =
 		done
 		if [[ $dename == "gnome" ]]; then
 			echo "Please install KStatusNotifierItem for AppIndicators to show up."
+			echo "https://extensions.gnome.org/extension/615/appindicator-support/"
+			echo "Note: This may still fail. If so use the Kinto gui app instead."
+			read -p "Press enter to continue"
 		fi
 	fi
 
