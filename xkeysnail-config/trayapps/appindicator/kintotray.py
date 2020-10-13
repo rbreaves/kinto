@@ -36,11 +36,16 @@ class Indicator():
     chromekb = Gtk.RadioMenuItem(label='Chromebook',group=winkb)
     ibmkb = Gtk.RadioMenuItem(label='IBM (No Super/Win key)',group=winkb)
     winmackb = Gtk.RadioMenuItem(label='Windows & Apple*',group=winkb)
+    rightmod =  Gtk.CheckButton('AltGr on Right Cmd')
+    vsc2st3 = Gtk.CheckButton('ST3 hotkeys for VS Code')
+    caps2esc = Gtk.CheckButton('Capslock is Escape when tapped, Cmd when held')
+    caps2cmd = Gtk.CheckButton('Capslock is Cmd')
     button_config = Gtk.MenuItem('Edit Config')
     # Keyboard type set below
     button_syskb = Gtk.MenuItem('System Shortcuts')
     button_region = Gtk.MenuItem('Change Language')
     button_support = Gtk.MenuItem('Support')
+    global restartsvc
 
     def __init__(self):
         self.indicator = appindicator.Indicator.new(APPINDICATOR_ID, self.homedir+'/.config/kinto/kinto-invert.svg', appindicator.IndicatorCategory.SYSTEM_SERVICES)
@@ -67,11 +72,10 @@ class Indicator():
         self.menu.append(self.checkbox_autostart)
 
         # Kinto Enable
-        # time.sleep(5)
-        # sudo systemctl is-active --quiet xkeysnail
+
         res = subprocess.Popen(['sudo', 'systemctl','is-active','--quiet','xkeysnail'])
         res.wait()
-        time.sleep(2)
+        time.sleep(5)
         
         self.checkbox_enable.set_label("Kinto Enabled")
 
@@ -86,7 +90,6 @@ class Indicator():
         self.menu.append(self.checkbox_enable)
 
         # Keyboard Types
-        # self.keyboards.connect('activate',self.setConfig)
         ismac = "perl -ne 'print if /^(\s{4})((?!#).*)(# Mac\n)/' ~/.config/kinto/kinto.py | wc -l"
         iswin = "perl -ne 'print if /^(\s{4})(# -- Default Win)/' ~/.config/kinto/kinto.py | wc -l"
         ischrome = "perl -ne 'print if /^(\s{4})((?!#).*)(# Chromebook\n)/' ~/.config/kinto/kinto.py | wc -l"
@@ -130,12 +133,7 @@ class Indicator():
         self.menukb.append(self.chromekb)
         self.menukb.append(self.ibmkb)
         self.menukb.append(self.winmackb)
-
         self.menu.append(self.keyboards)
-
-        # Keyboard tweaks
-        # self.menu_tweaks.append(self.rightmod)
-        # self.menu_tweaks.append(self.vsc2st3)
 
         self.tweaks.connect('activate',self.setTweaks)
 
@@ -144,20 +142,6 @@ class Indicator():
         # Edit Config
         self.button_config.connect('activate',self.setConfig)
         self.menu.append(self.button_config)
-
-        # Set Keyboard Type
-        # command = "perl -ne 'print if /(#.*)(# Mac)\n/' ~/.config/kinto/kinto.py | wc -l"
-        # res = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=None, shell=True)
-        # res.wait()
-        # res = res.communicate()[0]
-
-        # if res:
-        #     self.button_winmac = Gtk.MenuItem('Set Win/Mac KB Type')
-        #     self.winmac_id = self.button_winmac.connect('activate',self.setKB,"winmac")
-        # else:
-        #     self.button_winmac = Gtk.MenuItem('Set Mac Only KB Type')
-        #     self.winmac_id = button_winmac.connect('activate',self.setKB,"mac")
-        # self.menu.append(self.button_winmac)
 
         # Set System Keyboard Shortcuts
         self.button_syskb.connect('activate',self.setSysKB)
@@ -180,10 +164,7 @@ class Indicator():
         win.set_default_size(350, 200)
         win.set_position(Gtk.WindowPosition.CENTER)
 
-        # Check options
-
         # Check AltGr - commented out is enabled
-
         is_rightmod = "perl -ne 'print if /^(\s{4})(Key.*)(Multi-language)/' ~/.config/kinto/kinto.py | wc -l"
         rightmod_result = int(self.queryConfig(is_rightmod))
 
@@ -194,12 +175,10 @@ class Indicator():
         # Caps2Esc enabled
         is_caps2esc = "perl -ne 'print if /^(\s{4}{\w.*)(# Caps2Esc)/' ~/.config/kinto/kinto.py | wc -l"
         caps2esc_result = int(self.queryConfig(is_caps2esc))
-        # (\s{4}{\w.*)(# Caps2Esc)
 
         # Caps2Cmd enabled
         is_caps2cmd = "perl -ne 'print if /^(\s{4}\w.*)(# Caps2Cmd)/' ~/.config/kinto/kinto.py | wc -l"
         caps2cmd_result = int(self.queryConfig(is_caps2cmd))
-        # (\s{4}\w.*)(# Caps2Cmd)
 
         # Enter2Cmd enabled
         # (\s{4}{\w.*)(# Enter2Cmd)
@@ -207,14 +186,12 @@ class Indicator():
         vbox = Gtk.VBox()
 
         self.lbl = Gtk.Label()
+        global restartsvc 
+        restartsvc = False
         self.rightmod =  Gtk.CheckButton('AltGr on Right Cmd')
         self.vsc2st3 = Gtk.CheckButton('ST3 hotkeys for VS Code')
         self.caps2esc = Gtk.CheckButton('Capslock is Escape when tapped, Cmd when held')
         self.caps2cmd = Gtk.CheckButton('Capslock is Cmd')
-        self.rightmod.connect('toggled',self.setRightMod)
-        self.vsc2st3.connect('toggled',self.setVSC2ST3)
-        self.caps2esc.connect('toggled',self.setCaps2Esc)
-        self.caps2cmd.connect('toggled',self.setCaps2Cmd)
         
         if rightmod_result == 0:
             self.rightmod.set_active(True)
@@ -224,9 +201,16 @@ class Indicator():
 
         if caps2esc_result > 0:
             self.caps2esc.set_active(True)
+            self.caps2cmd.set_sensitive(False)
 
         if caps2cmd_result > 0:
             self.caps2cmd.set_active(True)
+            self.caps2esc.set_sensitive(False)
+
+        self.rightmod.signal_id = self.rightmod.connect('toggled',self.setRightMod)
+        self.vsc2st3.signal_id = self.vsc2st3.connect('toggled',self.setVSC2ST3)
+        self.caps2esc.signal_id = self.caps2esc.connect('toggled',self.setCaps2Esc)
+        self.caps2cmd.signal_id = self.caps2cmd.connect('toggled',self.setCaps2Cmd)
 
         vbox.add(self.rightmod)
         vbox.add(self.vsc2st3)
@@ -236,100 +220,124 @@ class Indicator():
         win.add(vbox)
 
         win.show_all()
+
+        win.connect('delete-event', self.on_delete_event)
+
         return
 
+    __gsignals__ = {
+        "delete-event" : "override"
+    }
+
+    def on_delete_event(event, self, widget):
+        global restartsvc 
+        if restartsvc == True:
+            try:
+                restartcmd = ['sudo', 'systemctl','restart','xkeysnail']
+                subprocess.Popen(restartcmd)
+                restartsvc = False
+
+            except subprocess.CalledProcessError:
+                subprocess.Popen(['notify-send','Kinto: Error restarting Kinto after setting tweaks!','-i','budgie-desktop-symbolic'])
+
+        self.hide()
+        self.destroy()
+        return True
+
     def setRightMod(self,button):
-        if self.winkb.get_active():
-            print('winkb true')
-        if self.mackb.get_active():
-            print('mackb true')
-        if self.chromekb.get_active():
-            print('chromekb true')
-        if self.ibmkb.get_active():
-            print('ibmkb true')
-        if self.winmackb.get_active():
-            print('winmackb true')
+        global restartsvc 
+        try:
+            if self.winkb.get_active() or self.winmackb.get_active():
+                # print('winkb true')
+                setkb = 's/^(\s{4})((# )(.*)(# )(WinMac - Multi-language.*)|(K)(.*)(# )(WinMac - Multi-language.*))/    $4$5$6$9$7$8$9$10/g'
+            if self.mackb.get_active():
+                # print('mackb true')
+                setkb = 's/^(\s{4})((# )(.*)(# )(Mac - Multi-language.*)|(K)(.*)(# )(Mac - Multi-language.*))/    $4$5$6$9$7$8$9$10/g'
+            if self.chromekb.get_active():
+                # print('chromekb true')
+                setkb = 's/^(\s{4})((# )(.*)(# )(Chromebook - Multi-language.*)|(K)(.*)(# )(Chromebook - Multi-language.*))/    $4$5$6$9$7$8$9$10/g'
+            if self.ibmkb.get_active():
+                # print('ibmkb true')
+                setkb = 's/^(\s{4})((# )(.*)(# )(IBM - Multi-language.*)|(K)(.*)(# )(IBM - Multi-language.*))/    $4$5$6$9$7$8$9$10/g'
 
-        # Check keyboard type that is set
+            cmds = ['perl','-pi','-e',setkb,self.kconfig]
 
-        # Apply toggle for the multi-language of type set
-        # (\s{5})(# )(.*)(# Mac)( - Multi-language.*)|(\s{5})(K)(.*)(# )(Mac)( - Multi-language.*)
-        # $1$3$4$5$6$9$7$8$9$10$11
+            cmdsTerm = subprocess.Popen(cmds)
 
-        # Restart service if Kinto is enabled
+            restartsvc = True
+
+        except subprocess.CalledProcessError:
+            subprocess.Popen(['notify-send','Kinto: Error Resetting AltGr!','-i','budgie-desktop-symbolic'])
+
         return
 
     def setVSC2ST3(self,button):
+        global restartsvc 
 
-        # Apply toggle
-        # ^(\s{4})(\w.*)(# )(.*- Sublime)|^(\s{4})(# )(\w.*)(# .*- Sublime)
-        # $5$7$8$1$3$2$3$4
+        try:
+            if self.chromekb.get_active() or self.ibmkb.get_active():
+                setkb = 's/^(\s{4})(\w.*)(# )(Chromebook/IBM - Sublime)|^(\s{4})(# )(\w.*)(# Chromebook/IBM - Sublime)/$5$7$8$1$3$2$3$4/g'
+            else:
+                setkb = 's/^(\s{4})(\w.*)(# )(Default - Sublime)|^(\s{4})(# )(\w.*)(# Default - Sublime)/$5$7$8$1$3$2$3$4/g'
 
-        # Restart service if Kinto is enabled
+            cmds = ['perl','-pi','-e',setkb,self.kconfig]
+
+            cmdsTerm = subprocess.Popen(cmds)
+
+            restartsvc = True
+
+        except subprocess.CalledProcessError:
+            subprocess.Popen(['notify-send','Kinto: Error Resetting SublimeText remaps for VSCode!','-i','budgie-desktop-symbolic'])
         return
 
     def setCaps2Esc(self,button):
 
-        # If IBM and enabling
-        # Turn on Caps2Esc, turn off IBM caps remap
-        # (\s{4})(# )({\w.*)(# Caps2Esc\n)|(\s{5})(.*)(# )(IBM - Caps2.*)
-        # $1$3$4$5$7$6$7$8
+        global restartsvc
+        try:
+            if self.winkb.get_active() or self.winmackb.get_active() or self.ibmkb.get_active() or self.mackb.get_active():
+                setkb = 's/^(\s{4})((# )(\{\w.*)(# Caps2Esc\n)|(\{\w.*)(# )(Caps2Esc - Chrome.*)|(\{.*)(# )(Caps2Esc\n|Placeholder)|(\w.*)(# )(Caps2Cmd.*)|(# )(\{.*)(# )(Placeholder))/    $4$5$7$6$7$8$10$9$10$11$13$12$13$14$16$17$18/g'
+            if self.chromekb.get_active():
+                setkb = 's/^(\s{4})((# )(\{\w.*)(# Caps2Esc - Chrome.*)|(\{\w.*)(# )(Caps2Esc\n)|(\{.*)(# )(Caps2Esc - Chrome.*|Placeholder)|(\w.*)(# )(Caps2Cmd.*)|(# )(\{.*)(# )(Placeholder))/    $4$5$7$6$7$8$10$9$10$11$13$12$13$14$16$17$18/g'
 
-        # If IBM and disabling
-        # Turn off Caps2Esc and turn on IBM caps remap
-        # (\s{4})({\w.*)(# )(Caps2Esc\n)|(\s{5})(# )(.*)(# IBM - Caps2.*)
-        # $1$3$2$3$4$5$7$8
+            cmds = ['perl','-pi','-e',setkb,self.kconfig]
 
-        # If Chromebook and enabling
-        # Turn on Caps2Esc, turn off Chromebook caps remap
-        # (\s{4})(# )({\w.*)(# Caps2Esc - Chromebook)|(\s{5})(Key\.LEFT_META.*)(# )(Chromebook)
-        # $1$3$4$5$7$6$7$8
+            if self.caps2esc.get_active():
+                self.caps2cmd.set_sensitive(False)
+            else:
+                self.caps2cmd.set_sensitive(True)
 
+            cmdsTerm = subprocess.Popen(cmds)
 
-        # If Chromebook and disabling
-        # Turn off Caps2Esc and turn on Chromebook caps remap
-        # (\s{4})({\w.*)(# )(Caps2Esc - Chromebook)|(\s{5})(# )(Key\.LEFT_META.*)(# )(Chromebook)
-        # $1$3$2$3$4$5$5$7$8$9
+            restartsvc = True
 
-
-        # else
-        # Apply toggle - Generic toggle
-        # (\s{4})(# )({\w.*)(# )(Caps2Esc\n)|(\s{4})({\w.*)(# )(Caps2Esc\n)
-        # $1$3$2$3$4$5$6$8$7$8$9
-
-        # Restart service if Kinto is enabled
-
+        except subprocess.CalledProcessError:
+            subprocess.Popen(['notify-send','Kinto: Error resetting caps2esc!','-i','budgie-desktop-symbolic'])
 
         return
 
     def setCaps2Cmd(self,button):
 
-        # If IBM and enabling
-        # Turn on Caps2Cmd, turn off IBM caps remap
-        # (\s{4})(# )(\w.*)(# Caps2Cmd\n)|(\s{4})(\w.*)(# )(Caps2Cmd)|(\s{5})(.*)(# )(IBM - Caps2.*)
-        # $1$3$4$5$7$6$7$8$9$11$10$11$12
+        global restartsvc
 
-        # If IBM and disabling
-        # Turn off Caps2Cmd and turn on IBM caps remap
-        # (\s{4})(# )(\w.*)(# Caps2Cmd\n)|(\s{4})(\w.*)(# )(Caps2Cmd)|(\s{5})(# )(.*)(# )(IBM - Caps2.*)
-        # $1$3$4$5$7$6$7$8$9$11$12$13
+        try:
+            if self.winkb.get_active() or self.winmackb.get_active() or self.ibmkb.get_active() or self.mackb.get_active():
+                setkb = 's/^(\s{4})((\w.*)(# )(Caps2Cmd\n)|(\w.*)(# )(Caps2Cmd - Chrome.*)|(# )(\w.*)(# )(Caps2Cmd\n)|(\{\w.*)(# )(Caps2Esc.*)|(# )(\{.*)(# )(Placeholder))/    $4$3$4$5$7$6$7$8$10$11$12$14$13$14$15$17$18$19/g'
+            if self.chromekb.get_active():
+                setkb = 's/^(\s{4})((\w.*)(# )(Caps2Cmd - Chrome.*)|(\w.*)(# )(Caps2Cmd\n)|(# )(\w.*)(# )(Caps2Cmd - Chrome.*)|(\{\w.*)(# )(Caps2Esc.*)|(# )(\{.*)(# )(Placeholder))/    $4$3$4$5$7$6$7$8$10$11$12$14$13$14$15$17$18$19/g'
 
-        # If Chromebook and enabling
-        # Turn on Caps2Cmd, turn off Chromebook caps remap
-        # (\s{4})(# )(\w.*)(# Caps2Cmd - Chromebook)|(\s{5})(Key\.LEFT_META.*)(# )(Chromebook)
-        # $1$3$4$5$7$6$7$8
+            cmds = ['perl','-pi','-e',setkb,self.kconfig]
 
-        # If Chromebook and disabling
-        # Turn off Caps2Cmd and turn on Chromebook caps remap
-        # (\s{4})(\w.*)(# )(Caps2Cmd - Chromebook)|(\s{5})(# )(Key\.LEFT_META.*)(# )(Chromebook)
-        # $1$3$2$3$4$5$7$8$9
+            if self.caps2cmd.get_active():
+                self.caps2esc.set_sensitive(False)
+            else:
+                self.caps2esc.set_sensitive(True)
 
-        # else
-        # Apply toggle - Generic toggle
-        # (\s{4})(# )(\w.*)(# Caps2Cmd\n)|(\s{4})(\w.*)(# )(Caps2Cmd)
-        # $1$3$4$5$7$6$7$8
+            cmdsTerm = subprocess.Popen(cmds)
 
-        # Restart service if Kinto is enabled
+            restartsvc = True
+
+        except subprocess.CalledProcessError:
+            subprocess.Popen(['notify-send','Kinto: Error resetting caps2cmd!','-i','budgie-desktop-symbolic'])
 
         return
 
