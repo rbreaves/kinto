@@ -387,6 +387,8 @@ class Indicator():
                 subprocess.Popen(['/opt/sublime_text/sublime_text',self.homedir+'/.config/kinto/kinto.py'])
             elif which(gedit) is not None:
                 subprocess.Popen(['gedit',self.homedir+'/.config/kinto/kinto.py'])
+            elif which(mousepad) is not None:
+                subprocess.Popen(['mousepad',self.homedir+'/.config/kinto/kinto.py'])
 
         except subprocess.CalledProcessError:                                  # Notify user about error on running restart commands.
             subprocess.Popen(['notify-send','Kinto: Error could not open config file!','-i','budgie-desktop-symbolic'])
