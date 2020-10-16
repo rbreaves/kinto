@@ -65,6 +65,7 @@ class Indicator():
     # Keyboard type set below
     button_syskb = Gtk.MenuItem('System Shortcuts')
     button_region = Gtk.MenuItem('Change Language')
+    systray = Gtk.CheckMenuItem('Tray Enabled')
     helpm = Gtk.MenuItem('Help')
     help_submenu = Gtk.Menu()
     helpm.set_submenu(help_submenu)
@@ -109,7 +110,6 @@ class Indicator():
         else:
             self.checkbox_autostart.set_active(False)
             self.chkautostart_id = self.checkbox_autostart.connect('activate',self.setAutostart,True)
-        self.menu.append(self.checkbox_autostart)
 
         # Kinto Enable
 
@@ -161,6 +161,13 @@ class Indicator():
         # Set Language
         self.button_region.connect('activate',self.setRegion)
         self.edit_submenu.append(self.button_region)
+        self.edit_submenu.append(self.checkbox_autostart)
+        if os.path.exists(os.environ['HOME']+'/.config/autostart/kintotray.desktop'):
+            self.systray.set_active(True)
+            self.systray.signal_id = self.systray.connect('activate',self.checkTray,False)
+        else:
+            self.systray.signal_id = self.systray.connect('activate',self.checkTray,True)
+        self.edit_submenu.append(self.systray)
         self.menu.append(self.edit)
 
         self.debug.connect('activate',self.runDebug)
@@ -206,6 +213,21 @@ class Indicator():
     #     md.run()
     #     md.destroy()
     #     return True
+
+    def checkTray(self,button,tray_bool):
+        # path.exists('.config/autostart/kintotray.py')
+        if tray_bool:
+            Popen(['cp',os.environ['HOME']+'/.config/kinto/kintotray.desktop',os.environ['HOME']+'/.config/autostart/kintotray.desktop'])
+            self.systray.disconnect(self.systray.signal_id)
+            self.systray.set_active(True)
+            self.systray.signal_id = self.systray.connect('activate',self.checkTray,False)
+        else:
+            Popen(['rm',os.environ['HOME']+'/.config/autostart/kintotray.desktop'])
+            Gtk.main_quit()
+            self.systray.disconnect(self.systray.signal_id)
+            self.systray.set_active(False)
+            self.systray.signal_id = self.systray.connect('activate',self.checkTray,True)
+        return
 
     def refresh(self,button):
         self.refreshKB()
@@ -340,7 +362,7 @@ class Indicator():
         image = Gtk.Image()
         image.set_from_pixbuf(pixbuf)
 
-        with open('version', 'r') as file:
+        with open(os.environ['HOME']+'/.config/kinto/version', 'r') as file:
             verdata = file.read().replace('\n', '')
 
         version = Gtk.Label('Kinto v' + verdata)

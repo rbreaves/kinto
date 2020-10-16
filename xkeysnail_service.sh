@@ -306,6 +306,7 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "4" || $1 == "winmac" || $1 =
 	yes | cp -rf ./xkeysnail-config/killdups.sh ~/.config/kinto/killdups.sh
 	yes | cp -rf ./xkeysnail-config/appleKB.sh ~/.config/kinto/appleKB.sh
 	yes | cp -rf ./xkeysnail-config/trayapps/appindicator/kintotray.py ~/.config/kinto/kintotray.py
+	yes | cp -rf ./xkeysnail-config/trayapps/appindicator/kintotray.desktop ~/.config/kinto/kintotray.desktop
 	yes | cp -rf ./xkeysnail-config/trayapps/BudgieApplet/icons/kinto-color-16.svg ~/.config/kinto/kinto-color.svg
 	yes | cp -rf ./xkeysnail-config/trayapps/BudgieApplet/icons/kinto-invert-16.svg ~/.config/kinto/kinto-invert.svg
 	yes | cp -rf ./xkeysnail-config/trayapps/BudgieApplet/icons/kinto-solid-16.svg ~/.config/kinto/kinto-solid.svg
@@ -320,6 +321,7 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "4" || $1 == "winmac" || $1 =
 	fi
 	sed -i "s/{username}/`whoami`/g" ./xkeysnail-config/xkeysnail.service.new
 	sed -i "s#{homedir}#`echo "$HOME"`#g" ./xkeysnail-config/xkeysnail.service.new
+	sed -i "s#{homedir}#`echo "$HOME"`#g" ~/.config/kinto/kintotray.desktop
 	sed -i "s#{xhost}#`\\which xhost`#g" ./xkeysnail-config/xkeysnail.service.new
 	sed -i "s/{username}/`whoami`/g" ./xkeysnail-config/limitedadmins.new
 	sed -i "s#{systemctl}#`\\which systemctl`#g" ./xkeysnail-config/limitedadmins.new
@@ -328,6 +330,7 @@ if [[ $1 == "1" || $1 == "2" || $1 == "3" || $1 == "4" || $1 == "winmac" || $1 =
 	sudo chown root:root ./xkeysnail-config/limitedadmins.new
 	sudo mv ./xkeysnail-config/limitedadmins.new /etc/sudoers.d/limitedadmins
 	sed -i "s#{systemctl}#`\\which systemctl`#g" ~/.config/autostart/xkeysnail.desktop
+	yes | cp -rf ~/.config/kinto/kintotray.desktop ~/.config/autostart/kintotray.desktop
 	if $installtray ; then
 		sed -i "s#-c \"grep#-c \"python3 {homedir}/.config/kinto/kintotray.py;grep#g" ~/.config/autostart/xkeysnail.desktop
 		sed -i "s#xkeysnail\"#xkeysnail;{homedir}/.config/kinto/logoff.sh\"#g" ~/.config/autostart/xkeysnail.desktop

@@ -6,13 +6,26 @@ from gi.repository import Gtk,Gdk,GdkPixbuf
 from gi.repository import Vte,GLib
 from subprocess import Popen,PIPE,CalledProcessError
 
+import signal
+
+def kill_child():
+    if child_pid is None:
+        pass
+    else:
+        os.kill(child_pid, signal.SIGTERM)
+
+import atexit
+atexit.register(kill_child)
+
 class MyWindow(Gtk.Window):
 
     label = Gtk.Label()
     label.set_alignment(1, 0)
     ostype = os.environ.get('XDG_CURRENT_DESKTOP')
 
+    global child_pid
     kinto_status = Popen("while :; do clear; systemctl is-active xkeysnail; sleep 2; done", stdout=PIPE, shell=True)
+    child_pid = kinto_status.pid
 
     winkb = Gtk.RadioMenuItem(label='Windows')
     mackb = Gtk.RadioMenuItem(label='Apple',group=winkb)
@@ -26,10 +39,12 @@ class MyWindow(Gtk.Window):
     ibmkb.signal_id = 0
     winmackb.signal_id = 0
 
+    menuitem_enable = Gtk.CheckMenuItem(label="Enabled")
+    menuitem_enable.signal_id = 0
     menuitem_auto = Gtk.CheckMenuItem(label="Autostart")
     menuitem_auto.signal_id = 0
-    menuitem_enable = Gtk.CheckMenuItem(label="Enable")
-    menuitem_enable.signal_id = 0
+    menuitem_systray = Gtk.CheckMenuItem(label="Tray Enabled")
+    menuitem_systray.signal_id = 0
 
     def __init__(self):
 
@@ -173,8 +188,17 @@ class MyWindow(Gtk.Window):
         menubar.append(menuitem_file)
         submenu_file = Gtk.Menu()
         menuitem_file.set_submenu(submenu_file)
-        submenu_file.append(self.menuitem_auto)
         submenu_file.append(self.menuitem_enable)
+        submenu_file.append(self.menuitem_auto)
+        kintotray = int(self.queryConfig('ps -aux | grep [k]intotray >/dev/null 2>&1 && echo "1" || echo "0"'))
+        if kintotray and os.path.exists(os.environ['HOME']+'/.config/autostart/kintotray.desktop'):
+            self.menuitem_systray.set_active(True)
+            self.menuitem_systray.signal_id = self.menuitem_systray.connect('activate',self.checkTray,False)
+        else:
+            self.menuitem_systray.set_active(False)
+            self.menuitem_systray.signal_id = self.menuitem_systray.connect('activate',self.checkTray,True)
+        menuitem_file.connect('activate',self.refreshFile)
+        submenu_file.append(self.menuitem_systray)
         # self.menuitem_enable.connect('activate', self.setEnable)
         menuitem_restart = Gtk.MenuItem(label="Restart")
         menuitem_restart.connect('activate',self.runRestart)
@@ -264,6 +288,22 @@ class MyWindow(Gtk.Window):
         # radiomenuitem2 = Gtk.RadioMenuItem(label="Apple", group=radiomenuitem1)
         # menu.append(radiomenuitem2)
     
+    def refreshFile(self,button):
+        kintotray = int(self.queryConfig('ps -aux | grep [k]intotray >/dev/null 2>&1 && echo "1" || echo "0"'))
+        if os.path.exists(os.environ['HOME']+'/.config/autostart/kintotray.desktop') and kintotray and self.menuitem_systray.get_active() == False:
+            self.menuitem_systray.disconnect(self.menuitem_systray.signal_id)
+            self.menuitem_systray.set_active(True)
+            self.menuitem_systray.signal_id = self.menuitem_systray.connect('activate',self.checkTray,False)
+        elif os.path.exists(os.environ['HOME']+'/.config/autostart/kintotray.desktop') and not kintotray and self.menuitem_systray.get_active() == True:
+            self.menuitem_systray.disconnect(self.menuitem_systray.signal_id)
+            self.menuitem_systray.set_active(False)
+            self.menuitem_systray.signal_id = self.menuitem_systray.connect('activate',self.checkTray,True)
+        elif not os.path.exists(os.environ['HOME']+'/.config/autostart/kintotray.desktop') and self.menuitem_systray.get_active() == True:
+            self.menuitem_systray.disconnect(self.menuitem_systray.signal_id)
+            self.menuitem_systray.set_active(False)
+            self.menuitem_systray.signal_id = self.menuitem_systray.connect('activate',self.checkTray,True)
+        # return
+
     def refresh(self,button):
         self.refreshKB()
 
@@ -384,6 +424,31 @@ class MyWindow(Gtk.Window):
         version.set_selectable(True)      
         win.connect('delete-event', self.on_delete_event)
 
+        return
+
+    def checkTray(self,button,tray_bool):
+        kintotray = int(self.queryConfig('ps -aux | grep [k]intotray >/dev/null 2>&1 && echo "1" || echo "0"'))
+        # path.exists('.config/autostart/kintotray.py')
+        if tray_bool:
+            Popen(['cp',os.environ['HOME']+'/.config/kinto/kintotray.desktop',os.environ['HOME']+'/.config/autostart/kintotray.desktop'])
+            if not kintotray:
+                Popen([os.environ['HOME']+'/.config/kinto/kintotray.py'])
+            self.menuitem_systray.disconnect(self.menuitem_systray.signal_id)
+            self.menuitem_systray.set_active(True)
+            self.menuitem_systray.signal_id = self.menuitem_systray.connect('activate',self.checkTray,False)
+        else:
+            Popen(['rm',os.environ['HOME']+'/.config/autostart/kintotray.desktop'])
+            Popen(['pkill','-f','kintotray.py'])
+            killspawn = "for pid in `ps -ef | grep 'active xkeysnail' | awk '{print $2}'` ; do kill -2 $pid ; done"
+            self.queryConfig(killspawn)
+            time.sleep(1)
+            global child_pid
+            self.kinto_status = Popen("while :; do clear; systemctl is-active xkeysnail; sleep 2; done", stdout=PIPE, shell=True)
+            child_pid = self.kinto_status.pid
+            # Popen(['pkill','-f','kintotray.py'])
+            self.menuitem_systray.disconnect(self.menuitem_systray.signal_id)
+            self.menuitem_systray.set_active(False)
+            self.menuitem_systray.signal_id = self.menuitem_systray.connect('activate',self.checkTray,True)
         return
 
     def setKB(self,button,kbtype):
@@ -643,11 +708,11 @@ class MyWindow(Gtk.Window):
                 pkillxkey = Popen(['sudo', 'pkill','-f','bin/xkeysnail'])
                 pkillxkey.wait()
             Popen(['sudo', 'systemctl','start','xkeysnail'])
-            command = "send \003 journalctl -f --unit=xkeysnail.service -b\n"
-            cmdbytes = str.encode(command)
-            self.InputToTerm(cmdbytes)
+            self.command = "send \003 journalctl -f --unit=xkeysnail.service -b\n"
+            self.cmdbytes = str.encode(self.command)
+            self.InputToTerm(self.cmdbytes)
         except:
-            Popen(['notify-send','Kinto: Error restarting Kinto!','-i','budgie-desktop-symbolic'])
+            Popen(['notify-send','Kinto: Errror restarting Kinto!','-i','budgie-desktop-symbolic'])
 
     def setEnable(self,button,enableKinto):
         try:
@@ -665,11 +730,13 @@ class MyWindow(Gtk.Window):
                 self.menuitem_enable.disconnect(self.menuitem_enable.signal_id)
                 self.menuitem_enable.set_active(True)
                 self.menuitem_enable.signal_id = self.menuitem_enable.connect('activate',self.setEnable,False)
-                command = "send \003 journalctl -f --unit=xkeysnail.service -b\n"
-                cmdbytes = str.encode(command)
+                self.command = "send \003 journalctl -f --unit=xkeysnail.service -b\n"
+                self.cmdbytes = str.encode(self.command)
                 self.InputToTerm(cmdbytes)
             else:
                 Popen(['sudo', 'systemctl','stop','xkeysnail'])
+                self.command = "send \003 journalctl -f --unit=xkeysnail.service -b\n"
+                self.cmdbytes = str.encode(self.command)
                 self.menuitem_enable.disconnect(self.menuitem_enable.signal_id)
                 self.menuitem_enable.set_active(False)
                 self.menuitem_enable.signal_id = self.menuitem_enable.connect('activate',self.setEnable,True)
