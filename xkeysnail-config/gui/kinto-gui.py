@@ -5,6 +5,7 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk,Gdk,GdkPixbuf
 from gi.repository import Vte,GLib
 from subprocess import Popen,PIPE,CalledProcessError
+from distutils.util import strtobool
 
 import signal
 
@@ -19,9 +20,33 @@ atexit.register(kill_child)
 
 class MyWindow(Gtk.Window):
 
+    options = {
+        "kbtype"    : "ask",
+        "rightmod"  : True,
+        "vsc2st3"   : False,
+        "capslock"  : "default",
+        "systray"   : True,
+        "autostart" : True
+    }
+
+    setupwin = Gtk.Window()
+    container = Gtk.Box()
+    overlay = Gtk.Overlay()
+    background = Gtk.Image()
+    bgcaps = Gtk.Image()
+    bgspace = Gtk.Image()
+    bgsuccess1 = Gtk.Image()
+    bgsuccess2 = Gtk.Image()
+    bgsuccess3 = Gtk.Image()
+    bgsuccess4 = Gtk.Image()
+    bgerror = Gtk.Image()
+    bguninstall = Gtk.Image()
+
     label = Gtk.Label()
     label.set_alignment(1, 0)
     ostype = os.environ.get('XDG_CURRENT_DESKTOP')
+    global openWin 
+    openWin = False
 
     global child_pid
     kinto_status = Popen("while :; do clear; systemctl is-active xkeysnail; sleep 2; done", stdout=PIPE, shell=True)
@@ -53,6 +78,8 @@ class MyWindow(Gtk.Window):
         # self.set_gravity(Gdk.Gravity.NORTH_WEST)
         self.set_size_request(600, 360)
 
+        self.initSetup()
+
         global restartsvc 
         restartsvc = False
 
@@ -60,7 +87,7 @@ class MyWindow(Gtk.Window):
         self.kconfig = homedir+"/.config/kinto/kinto.py"
 
         path = os.environ['HOME']+'/.config/kinto/kinto-color.svg'
-        width = 256
+        width = -1
         height = 256
         preserve_aspect_ratio = True
 
@@ -287,7 +314,219 @@ class MyWindow(Gtk.Window):
         # menu.append(radiomenuitem1)
         # radiomenuitem2 = Gtk.RadioMenuItem(label="Apple", group=radiomenuitem1)
         # menu.append(radiomenuitem2)
+
+    def setKinto(self):
+        if self.options["kbtype"] == "mac":
+            print("setup mac")
+        elif self.options["kbtype"] == "win":
+            print("setup win")
+        elif self.options["kbtype"] == "ibm":
+            print("setup ibm")
+        elif self.options["kbtype"] == "cbk":
+            print("setup chromebook")
+        elif self.options["kbtype"] == "wmk":
+            print("setup winmac")
+
+        ## These can only be set if the kbtype is known
+
+        if self.options["rightmod"]:
+            print("Right mod true - don't do a thing")
+        else:
+            print("Right mod false - do stuff")
+
+        if self.options["vsc2st3"]:
+            print('Setup ST3 maps on VSCode')
+
+        if self.options["capslock"] == "esc_cmd":
+            print("remap capslock to esc_cmd")
+        elif self.options["capslock"] == "cmd":
+            print("remap capslock to cmd only")
+
+        if self.options["systray"]:
+
+            # Run Check to make sure the OS is not using Gnome3 or KDE
+
+            print("Enable system tray, copy autostart file and execute")
+
+        if self.options["autostart"]:
+            print("Enable autostart, copy autostart file")
+
     
+    def initSetup(self):
+        global win,openWin
+
+        checkkb = "perl -ne 'print if /^\s+K.*# (Mac2|WinMac|Chromebook|IBM)/' ~/.config/kinto/kinto.py | wc -l"
+        checkkb_result = int(self.queryConfig(checkkb))
+
+        if checkkb_result == 0:
+            print('keyboard is not set')
+            if os.path.exists(os.environ['HOME']+'/.config/kinto/initkb'):
+                print('initkb')
+            else:
+                Popen(['cp','/opt/kinto/initkb',os.environ['HOME']+'/.config/kinto/initkb'])
+
+            with open(os.environ['HOME']+'/.config/kinto/initkb', 'r') as file:
+                initkb_file = file.read()
+
+            tokenValue = re.findall(r'(e|d|3|k|y|t)\s=\s(\w+)', initkb_file,re.MULTILINE)
+
+            try:
+                self.options["kbtype"]    = tokenValue[0][1]
+                self.options["rightmod"]  = bool(strtobool(tokenValue[1][1]))
+                self.options["vsc2st3"]   = bool(strtobool(tokenValue[2][1]))
+                self.options["capslock"]  = tokenValue[3][1]
+                self.options["systray"]   = bool(strtobool(tokenValue[4][1]))
+                self.options["autostart"] = bool(strtobool(tokenValue[5][1]))
+            except IndexError:
+                pass
+
+        else:
+            print('keyboard is set - nothing to do')
+
+            # **** EXIT ****
+            return
+
+        # Set kbtype automatically
+        if self.options["kbtype"] != "ask":
+            self.setKinto()
+            win.show_all()
+        else:
+            openWin = True
+            self.setupwin.set_keep_above(True);
+
+            path = os.environ['HOME']+'/.config/kinto/kinto-color.svg'
+            width = -1
+            height = 128
+            preserve_aspect_ratio = True
+
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(path, width, height, preserve_aspect_ratio)
+            self.setupwin.set_default_icon_list([pixbuf])
+
+            self.setupwin.set_title("Keyboard Assistant")
+            self.setupwin.set_size_request(600, 360)
+            self.setupwin.set_resizable(False)
+            self.setupwin.set_position(Gtk.WindowPosition.CENTER)
+
+
+            # vbox = Gtk.VBox()
+
+            # # self.lbl = Gtk.Label()
+
+            # container = Gtk.Box()
+            # container.override_background_color(Gtk.StateType.NORMAL, Gdk.RGBA(.5,.5,.5,.5))
+            self.setupwin.add(self.overlay)
+            # background = Gtk.Image.new_from_file(os.environ['HOME']+'/Documents/git-projects/kinto/xkeysnail-config/gui/tuxonblack.png')
+            
+            # try:
+            #     from PIL import Image
+            # except ImportError:
+            #     import Image
+            from PIL import Image
+
+            img1 = Image.open(os.environ['HOME']+'/Documents/git-projects/kinto/xkeysnail-config/gui/tuxbg.png')
+            img2 = Image.open(os.environ['HOME']+'/Documents/git-projects/kinto/xkeysnail-config/gui/capslock_1200x720.png')
+            img3 = Image.open(os.environ['HOME']+'/Documents/git-projects/kinto/xkeysnail-config/gui/keys_1200x720.png')
+
+            pixbuf2 = self.image2pixbuf(Image.alpha_composite(img1, img2))
+            pixbuf2 = pixbuf2.scale_simple(600, 360, GdkPixbuf.InterpType.BILINEAR)
+            
+            pixbuf3 = self.image2pixbuf(Image.alpha_composite(img1, img3))
+            pixbuf3 = pixbuf3.scale_simple(600, 360, GdkPixbuf.InterpType.BILINEAR)
+
+            # pixbuf = GdkPixbuf.Pixbuf.new_from_file(os.environ['HOME']+'/Documents/git-projects/kinto/xkeysnail-config/gui/tuxcry1.png')
+            # pixbuf = pixbuf.scale_simple(600, 360, GdkPixbuf.InterpType.BILINEAR)
+            # self.bgsuccess1 = self.background.new_from_pixbuf(pixbuf)
+            # self.bgsuccess1.set_alignment(0, 1)
+
+            # pixbuf = GdkPixbuf.Pixbuf.new_from_file(os.environ['HOME']+'/Documents/git-projects/kinto/xkeysnail-config/gui/tuxcry2.png')
+            # pixbuf = pixbuf.scale_simple(600, 360, GdkPixbuf.InterpType.BILINEAR)
+            # self.bgsuccess2 = self.background.new_from_pixbuf(pixbuf)
+            # self.bgsuccess2.set_alignment(0, 1)
+
+            # pixbuf = GdkPixbuf.Pixbuf.new_from_file(os.environ['HOME']+'/Documents/git-projects/kinto/xkeysnail-config/gui/tuxcry3.png')
+            # pixbuf = pixbuf.scale_simple(600, 360, GdkPixbuf.InterpType.BILINEAR)
+            # self.bgsuccess3 = self.background.new_from_pixbuf(pixbuf)
+            # self.bgsuccess3.set_alignment(0, 1)
+
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file(os.environ['HOME']+'/Documents/git-projects/kinto/xkeysnail-config/gui/tuxcry4.png')
+            pixbuf = pixbuf.scale_simple(600, 360, GdkPixbuf.InterpType.BILINEAR)
+            self.bgsuccess4 = self.bgsuccess4.new_from_pixbuf(pixbuf)
+            self.bgsuccess4.set_alignment(0, 1)
+
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file(os.environ['HOME']+'/Documents/git-projects/kinto/xkeysnail-config/gui/tuxuninstall.png')
+            pixbuf = pixbuf.scale_simple(600, 360, GdkPixbuf.InterpType.BILINEAR)
+            self.bguninstall = self.bguninstall.new_from_pixbuf(pixbuf)
+            self.bguninstall.set_alignment(0, 1)
+
+            # pixbuf = GdkPixbuf.Pixbuf.new_from_file(os.environ['HOME']+'/Documents/git-projects/kinto/xkeysnail-config/gui/tuxerror.png')
+            # pixbuf = pixbuf.scale_simple(600, 360, GdkPixbuf.InterpType.BILINEAR)
+            # self.bgerror = self.background.new_from_pixbuf(pixbuf)
+            # self.bgerror.set_alignment(0, 1)
+
+            # screen = self.get_screen()
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file(os.environ['HOME']+'/Documents/git-projects/kinto/xkeysnail-config/gui/tuxbg.png')
+            pixbuf = pixbuf.scale_simple(600, 360, GdkPixbuf.InterpType.BILINEAR)
+            self.background = self.background.new_from_pixbuf(pixbuf)
+            self.background.set_alignment(0, 1)
+            self.bgcaps = self.bgcaps.new_from_pixbuf(pixbuf2)
+            self.bgcaps.set_alignment(0, 1)
+            self.bgspace = self.bgspace.new_from_pixbuf(pixbuf3)
+            self.bgspace.set_alignment(0, 1)
+            # background.set_padding(60,40)
+            self.overlay.add(self.background)
+            # self.overlay.add(self.bgcaps)
+            # self.overlay.add(self.bgspace)
+            self.overlay.add_overlay(self.container)
+            self.setupwin.add(self.container)
+            # self.container.show()
+
+            # for grandkid in overlay.get_children():
+            #     overlay.remove(grandkid)
+            # overlay.add(bgcaps)
+            # overlay.add_overlay(container)
+
+            self.main = Main(self)
+            self.container.add(self.main)
+
+            self.uninstall_page = UninstallPage(self)
+
+            self.first_page = FirstPage(self)
+            self.container.add(self.first_page)
+
+            self.second_page = SecondPage(self)
+
+            self.caps_page = CapsPage(self)
+
+            self.success_page = SuccessPage(self)
+
+            # # vbox.add(self.rightmod)
+            # self.setupwin.add(vbox)
+            # self.setupwin.add(container)
+            self.setupwin.show_all()
+
+            # for grandkid in self.overlay.get_children():
+            #     self.overlay.remove(grandkid)
+            # self.overlay.add(self.bgcaps)
+            # self.overlay.add_overlay(self.container)
+            # self.setupwin.hide()
+            # self.overlay.add(self.bgcaps)
+            # self.setupwin.show_all()
+
+            # self.first_page = FirstPage(self)
+            # container.add(self.first_page)
+
+            self.setupwin.connect('delete-event', self.on_delete_event)
+
+            return
+
+    def image2pixbuf(self,im):
+        data = im.tobytes()
+        w, h = im.size
+        print(im.size)
+        data = GLib.Bytes.new(data)
+        pix = GdkPixbuf.Pixbuf.new_from_bytes(data, GdkPixbuf.Colorspace.RGB,True, 8, w, h, w * 4)
+        return pix
+
     def refreshFile(self,button):
         kintotray = int(self.queryConfig('ps -aux | grep [k]intotray >/dev/null 2>&1 && echo "1" || echo "0"'))
         if os.path.exists(os.environ['HOME']+'/.config/autostart/kintotray.desktop') and kintotray and self.menuitem_systray.get_active() == False:
@@ -580,7 +819,8 @@ class MyWindow(Gtk.Window):
     }
 
     def on_delete_event(event, self, widget):
-        global restartsvc 
+        global restartsvc, openWin
+        
         if restartsvc == True:
             try:
                 restartcmd = ['sudo', 'systemctl','restart','xkeysnail']
@@ -589,9 +829,15 @@ class MyWindow(Gtk.Window):
 
             except CalledProcessError:
                 Popen(['notify-send','Kinto: Error restarting Kinto after setting tweaks!','-i','budgie-desktop-symbolic'])
+        
+        if openWin:
+            # win.show_all()
+            # openWin = False
+            Gtk.main_quit()
 
         self.hide()
         self.destroy()
+
         return True
 
     def queryConfig(self,query):
@@ -863,6 +1109,56 @@ class MyWindow(Gtk.Window):
     #     self.label.set_text(self.label.get_text() + self.non_block_read())
     #     return self.sub_proc.poll() is None
 
+    def key_press_event(self, widget, event, page):
+        # print("key detected")
+        trigger = "None"
+        keyname = Gdk.keyval_name(event.keyval)
+        current = self.second_page
+        bg = self.bgsuccess4
+        onward = self.success_page
+
+        if page == 1 and "Control" in keyname:
+            print("IBM or Chromebook")
+            print("Continue to page 2")
+            bg = self.bgcaps
+            onward = self.caps_page
+            trigger = "Half"
+        elif page == 2 and "Caps_Lock" in keyname and event.state & Gdk.ModifierType.LOCK_MASK:
+            print("Set IBM Keyboard")
+            current = self.caps_page
+            self.options["kbtype"] = "ibm"
+            trigger = "Done"
+        elif page == 2 and "Super" in keyname:
+            print("Set Chromebook Keyboard")
+            current = self.caps_page
+            self.options["kbtype"] = "cbk"
+            trigger = "Done"
+        elif page == 1 and "Alt" in keyname:
+            print("Set Mac Keyboard")
+            self.options["kbtype"] = "mac"
+            trigger = "Done"
+        elif page == 1 and "Super" in keyname:
+            print("Set Win Keyboard")
+            self.options["kbtype"] = "win"
+            trigger = "Done"
+
+        if trigger == "Half" or trigger == "Done":
+            for grandkid in self.overlay.get_children():
+                self.overlay.remove(grandkid)
+            self.overlay.add(bg)
+            self.overlay.add_overlay(self.container)
+            self.container.add(onward)
+            self.container.remove(current)
+            self.setupwin.disconnect(self.setupwin.signal_id)
+        if trigger == "Half":
+            self.setupwin.signal_id = self.setupwin.connect("key_press_event", self.key_press_event,2)
+            self.setupwin.show_all()
+            # self.hide()
+        elif trigger == "Done":
+            self.setKinto()
+            self.setupwin.show_all()
+            # self.hide()
+
     def InputToTerm(self,cmd):
         terminal.feed_child_binary(cmd)
         print(Vte.get_minor_version())
@@ -876,9 +1172,269 @@ class MyWindow(Gtk.Window):
     def on_menu_quit(self, widget):
         Gtk.main_quit()
 
+class Main(Gtk.Box):
+    def __init__(self, parent_window):
+        super().__init__(spacing=10)
+        self.__parent_window = parent_window
 
+        f = Gtk.Frame()
+        # b = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
+        # f.add(b)
+
+        label_start = Gtk.Label("                                    ")
+        self.pack_start(label_start, True, True, 0)
+
+        # self.start_new_game()
+
+        # new_game_button = Gtk.Button("NEW GAME")
+        # new_game_button.connect("clicked", self.start_new_game)
+        # new_game_button.set_border_width(20)
+        # new_game_button.set_valign(Gtk.Align.CENTER)
+        # self.pack_start(new_game_button, True, True, 0)
+
+    # def start_new_game(self, *args):
+    #     # self.__parent_window.first_page.show_all()
+    #     # self.hide()
+    #     for grandkid in self.__parent_window.overlay.get_children():
+    #         self.__parent_window.overlay.remove(grandkid)
+    #     self.__parent_window.overlay.add(self.__parent_window.background)
+    #     self.__parent_window.overlay.add_overlay(self.__parent_window.container)
+    #     self.__parent_window.container.add(self.__parent_window.first_page)
+    #     # self.setupwin.remove(self.FirstPage)
+    #     self.__parent_window.setupwin.show_all()
+    #     # self.set_visible(False)
+    #     # self.hide()
+
+class UninstallPage(Gtk.Box):
+    def __init__(self, parent_window):
+        super().__init__(spacing=10)
+        self.__parent_window = parent_window
+
+        b = Gtk.Grid()
+        label_start = Gtk.Label()
+
+        label_start.set_markup('<b>Uninstall Kinto</b>\n\nWould you like to uninstall kinto?\n\n If you need support please visit <a href="http://kinto.sh">kinto.sh</a>.')
+        label_start.set_padding(0,70)
+        label_start.set_margin_right(30)
+        label_start.set_margin_bottom(73)
+        b.add(label_start)
+
+        hbox = Gtk.HBox()
+        previous = Gtk.Button("Uninstall")
+        previous.connect("clicked", self.goback)
+        previous.set_margin_right(280)
+        hbox.add(previous)
+
+        onward = Gtk.Button("Install")
+        onward.connect("clicked", self.forward)
+
+        hbox.add(onward)
+        hbox.set_hexpand(False)
+        hbox.set_vexpand(False)
+
+        b.attach_next_to(hbox, label_start, Gtk.PositionType.BOTTOM, 2, 1)
+
+        self.pack_start(b,True,True,0)
+
+    def goback(self, *args):
+        # for grandkid in self.__parent_window.overlay.get_children():
+        #     self.__parent_window.overlay.remove(grandkid)
+        # self.__parent_window.overlay.add(self.__parent_window.bgspace)
+        # self.__parent_window.overlay.add_overlay(self.__parent_window.container)
+        # self.__parent_window.container.add(self.__parent_window.second_page)
+        # self.__parent_window.container.remove(self.__parent_window.caps_page)
+        # self.__parent_window.setupwin.show_all()
+        self.hide()
+
+    def forward(self, *args):
+        for grandkid in self.__parent_window.overlay.get_children():
+            self.__parent_window.overlay.remove(grandkid)
+        self.__parent_window.overlay.add(self.__parent_window.background)
+        self.__parent_window.overlay.add_overlay(self.__parent_window.container)
+        self.__parent_window.container.add(self.__parent_window.first_page)
+        self.__parent_window.container.remove(self.__parent_window.uninstall_page)
+        self.__parent_window.setupwin.show_all()
+        self.hide()
+
+class FirstPage(Gtk.Box):
+    def __init__(self, parent_window):
+        super().__init__(spacing=10)
+        self.__parent_window = parent_window
+
+        self.grid = Gtk.Grid()
+
+        label_start = Gtk.Label("Before we continue please make sure you do not have any other remappers running. Kinto works best when it is the only application remapping your keys.")
+        label_start2 = Gtk.Label()
+        label_start2.set_markup("By continuing you also agree that Kinto is not held liable for any harm, damage(s) or unexpected behaviors.\nThis software is free, open-source, and provided as-is.\n\n<sup><b>© 2019, 2020 by Ben Reaves ~ Kinto is licensed on GPLv2.</b></sup>")
+        label_start.set_padding(20,70)
+        label_start.set_margin_right(17)
+        label_start.set_line_wrap(True)
+        self.grid.add(label_start)
+        label_start2.set_padding(13,0)
+        label_start2.set_margin_right(17)
+        label_start2.set_margin_bottom(11)
+        label_start2.set_line_wrap(True)
+        self.grid.attach_next_to(label_start2, label_start, Gtk.PositionType.BOTTOM, 2, 1)
+
+        hbox = Gtk.HBox()
+        previous = Gtk.Button("Decline")
+        previous.connect("clicked", self.goback)
+        previous.set_margin_right(282)
+        hbox.add(previous)
+
+        onward = Gtk.Button("Agree")
+        onward.connect("clicked", self.forward)
+        onward.set_margin_right(24)
+
+        hbox.add(onward)
+        hbox.set_hexpand(False)
+        hbox.set_vexpand(False)
+
+        self.grid.attach_next_to(hbox, label_start2, Gtk.PositionType.BOTTOM, 3, 1)
+        
+        self.pack_start(self.grid,True,True,0)
+
+    def goback(self, *args):
+        for grandkid in self.__parent_window.overlay.get_children():
+            self.__parent_window.overlay.remove(grandkid)
+        self.__parent_window.overlay.add(self.__parent_window.bguninstall)
+        self.__parent_window.overlay.add_overlay(self.__parent_window.container)
+        self.__parent_window.container.add(self.__parent_window.uninstall_page)
+        self.__parent_window.container.remove(self.__parent_window.first_page)
+        self.__parent_window.setupwin.show_all()
+        self.hide()
+
+    def forward(self, button):
+        for grandkid in self.__parent_window.overlay.get_children():
+            self.__parent_window.overlay.remove(grandkid)
+        self.__parent_window.overlay.add(self.__parent_window.bgspace)
+        self.__parent_window.overlay.add_overlay(self.__parent_window.container)
+        self.__parent_window.container.add(self.__parent_window.second_page)
+        self.__parent_window.setupwin.signal_id = self.__parent_window.setupwin.connect("key_press_event", self.__parent_window.key_press_event,1)
+        self.__parent_window.container.remove(self.__parent_window.first_page)
+        self.__parent_window.setupwin.show_all()
+        self.hide()
+
+class SecondPage(Gtk.Box):
+    def __init__(self, parent_window):
+        super().__init__(spacing=10)
+        self.__parent_window = parent_window
+
+        b = Gtk.Grid()
+        label_start = Gtk.Label()
+        label_start.set_markup('<b>Identifying your Keyboard...</b>\n\nPress the <b>2nd</b> key <b>Left</b> of the spacebar.')
+        label_start.set_padding(0,70)
+        label_start.set_margin_right(30)
+        label_start.set_margin_bottom(114)
+        b.add(label_start)
+
+        hbox = Gtk.HBox()
+        previous = Gtk.Button("Go Back")
+        previous.connect("clicked", self.goback)
+        previous.set_margin_right(265)
+        previous.set_visible(False)
+        hbox.add(previous)
+
+        # onward = Gtk.Button("Continue")
+        # onward.connect("clicked", self.capsforward)
+        # hbox.add(onward)
+
+        b.attach_next_to(hbox, label_start, Gtk.PositionType.BOTTOM, 2, 1)
+
+        self.pack_start(b,True,True,0)
+
+    def goback(self, *args):
+        for grandkid in self.__parent_window.overlay.get_children():
+            self.__parent_window.overlay.remove(grandkid)
+        self.__parent_window.overlay.add(self.__parent_window.background)
+        self.__parent_window.overlay.add_overlay(self.__parent_window.container)
+        self.__parent_window.container.add(self.__parent_window.first_page)
+        self.__parent_window.container.remove(self.__parent_window.second_page)
+        self.__parent_window.setupwin.disconnect(self.__parent_window.setupwin.signal_id)
+        self.__parent_window.setupwin.show_all()
+        self.hide()
+
+    def capsforward(self, *args):
+        for grandkid in self.__parent_window.overlay.get_children():
+            self.__parent_window.overlay.remove(grandkid)
+        self.__parent_window.overlay.add(self.__parent_window.bgcaps)
+        self.__parent_window.overlay.add_overlay(self.__parent_window.container)
+        self.__parent_window.container.add(self.__parent_window.caps_page)
+        self.__parent_window.container.remove(self.__parent_window.second_page)
+        self.__parent_window.setupwin.signal_id = self.__parent_window.setupwin.connect("key_press_event", self.__parent_window.key_press_event,2)
+        self.__parent_window.setupwin.show_all()
+        self.hide()
+
+    def forward(self, *args):
+        for grandkid in self.__parent_window.overlay.get_children():
+            self.__parent_window.overlay.remove(grandkid)
+        self.__parent_window.overlay.add(self.__parent_window.success)
+        self.__parent_window.overlay.add_overlay(self.__parent_window.container)
+        self.__parent_window.container.add(self.__parent_window.success_page)
+        self.__parent_window.container.remove(self.__parent_window.second_page)
+        self.__parent_window.setupwin.disconnect(self.__parent_window.setupwin.signal_id)
+        self.__parent_window.setupwin.show_all()
+        self.hide()
+
+class CapsPage(Gtk.Box):
+    def __init__(self, parent_window):
+        super().__init__(spacing=10)
+        self.__parent_window = parent_window
+
+        b = Gtk.Grid()
+        label_start = Gtk.Label()
+        pad = '                 '
+        label_start.set_markup('<b>Identifying your Keyboard...</b>\n\nPress the <b>capslock</b> key twice.'+pad)
+        label_start.set_padding(0,70)
+        label_start.set_margin_right(30)
+        label_start.set_margin_bottom(114)
+        b.add(label_start)
+
+        hbox = Gtk.HBox()
+        previous = Gtk.Button("Go Back")
+        previous.connect("clicked", self.goback)
+        previous.set_margin_right(265)
+        hbox.add(previous)
+
+        # onward = Gtk.Button("Continue")
+        # onward.connect("clicked", self.forward)
+        # hbox.add(onward)
+
+        b.attach_next_to(hbox, label_start, Gtk.PositionType.BOTTOM, 2, 1)
+
+        self.pack_start(b,True,True,0)
+
+    def goback(self, *args):
+        for grandkid in self.__parent_window.overlay.get_children():
+            self.__parent_window.overlay.remove(grandkid)
+        self.__parent_window.overlay.add(self.__parent_window.bgspace)
+        self.__parent_window.overlay.add_overlay(self.__parent_window.container)
+        self.__parent_window.container.add(self.__parent_window.second_page)
+        self.__parent_window.setupwin.disconnect(self.__parent_window.setupwin.signal_id)
+        self.__parent_window.setupwin.signal_id = self.__parent_window.setupwin.connect("key_press_event", self.__parent_window.key_press_event,1)
+        self.__parent_window.container.remove(self.__parent_window.caps_page)
+        self.__parent_window.setupwin.show_all()
+        self.hide()
+
+    def forward(self, *args):
+        for grandkid in self.__parent_window.overlay.get_children():
+            self.__parent_window.overlay.remove(grandkid)
+        self.__parent_window.overlay.add(self.__parent_window.bgsuccess4)
+        self.__parent_window.overlay.add_overlay(self.__parent_window.container)
+        self.__parent_window.container.add(self.__parent_window.success_page)
+        self.__parent_window.container.remove(self.__parent_window.caps_page)
+        self.__parent_window.setupwin.disconnect(self.__parent_window.setupwin.signal_id)
+        self.__parent_window.setupwin.show_all()
+        self.hide()
+
+class SuccessPage(Gtk.Box):
+    def __init__(self, parent_window):
+        super().__init__(spacing=10)
+        self.__parent_window = parent_window
+
+global win
 win = MyWindow()
 win.connect("delete-event", Gtk.main_quit)
-win.show_all()
+# win.show_all()
 
 Gtk.main()
