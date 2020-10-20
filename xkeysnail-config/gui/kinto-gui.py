@@ -42,6 +42,7 @@ class MyWindow(Gtk.Window):
     bgsuccess4 = Gtk.Image()
     bgerror = Gtk.Image()
     bguninstall = Gtk.Image()
+    last_onward = Gtk.Button()
 
     label = Gtk.Label()
     label.set_alignment(1, 0)
@@ -75,11 +76,7 @@ class MyWindow(Gtk.Window):
     def __init__(self):
 
         Gtk.Window.__init__(self, title="Kinto.sh")
-        # self.set_icon_from_file(os.environ['HOME']+'/.config/kinto/kinto-color.svg')
-        # self.set_gravity(Gdk.Gravity.NORTH_WEST)
         self.set_size_request(600, 360)
-
-        self.initSetup()
 
         homedir = os.path.expanduser("~")
         self.kconfig = homedir+"/.config/kinto/kinto.py"
@@ -90,29 +87,18 @@ class MyWindow(Gtk.Window):
         preserve_aspect_ratio = True
 
         pixbuf = GdkPixbuf.Pixbuf.new_from_file_at_scale(path, width, height, preserve_aspect_ratio)
-        # image = Gtk.Image()
-        # image.set_from_pixbuf(pixbuf)
         self.set_default_icon_list([pixbuf])
-
-        # self.button = Gtk.Button("Do The Command")
-        # self.button2 = Gtk.Button("End Command")
-        # self.InputToTerm(self.cmdbytes)
-        # self.command2 = "send \003; echo 'hello'\n"
-        # # expect -c "send \003;"
-        # self.cmdbytes2 = str.encode(self.command2)
-        # self.button.connect("clicked", self.InputToTerm, self.cmdbytes)
-        # self.button2.connect("clicked", self.InputToTerm, self.cmdbytes2)
 
         parser = argparse.ArgumentParser()
 
-        # parser.add_argument('-b', type=int, required=False, help="")
-        # parser.add_argument('-e', type=int, default=2, help="")
         parser.add_argument('-d', dest='debug', action='store_true', help="runs kinto in debug mode")
         parser.add_argument('--debug', dest='debug', action='store_true', help="runs kinto in debug mode")
         parser.add_argument('-s', dest='setup', action='store_true', help="first time setup")
         parser.add_argument('--setup', dest='setup', action='store_true', help="first time setup")
 
-        args = parser.parse_args()
+        self.args = parser.parse_args()
+
+        self.initSetup()
 
         global terminal
         terminal = Vte.Terminal()
@@ -125,8 +111,8 @@ class MyWindow(Gtk.Window):
             None,
             None,
         )
-        if args.debug:
-            self.command = "sudo systemctl stop xkeysnail && sudo xkeysnail ~/.config/kinto/kinto.py\n"
+        if self.args.debug:
+            self.command = 'sudo systemctl stop xkeysnail && sudo pkill -f bin/xkeysnail && sudo xkeysnail ~/.config/kinto/kinto.py\n'
         else:
             self.command = "journalctl -f --unit=xkeysnail.service -b\n"
         
@@ -137,61 +123,14 @@ class MyWindow(Gtk.Window):
         self.add(grid)
 
         menubar = Gtk.MenuBar()
-        # menubar.set_hexpand(True)
         grid.attach(menubar, 0, 0, 1, 1)
-        # grid.add(menubar)
-
-        # grid.add(self.button)
-        # grid.add(self.button2)
-        # grid.add(self.status)
-        # grid.attach(self.button, 0, 1, 1, 1)
-        # grid.attach(self.button2, 1, 1, 1, 1)
 
         scroller = Gtk.ScrolledWindow()
-        # scroller.set_size_request(200,100)
         scroller.set_hexpand(True)
         scroller.set_vexpand(True)
         scroller.add(terminal)
         grid.attach(scroller, 0, 1, 1, 1)
-        # grid.add(scroller)
-        # grid.attach(scroller, 0, 0, 2, 2)
         grid.attach_next_to(self.label, scroller, Gtk.PositionType.BOTTOM, 2, 1)
-        # grid.attach_next_to(self.label2, self.label, Gtk.PositionType.RIGHT, 2, 1)
-
-        # three labels
-        label_top_left = Gtk.Label(label="Top left")
-        another = Gtk.Label(label="another")
-        # label_top_right = Gtk.Label(label="This is Top Right")
-        # label_bottom = Gtk.Label(label="This is Bottom")
-
-        # some space between the columns of the grid
-        # grid.set_column_spacing(20)
-
-        # in the grid:
-        # attach the first label in the top left corner
-        # grid.add(label_top_left)
-        # grid.attach(label_top_left, 0, 0, 1, 1)
-        # attach the second label
-        # grid.attach(label_top_right, 1, 0, 1, 1)
-        # attach the third label below the first label
-        # grid.attach_next_to(label_bottom, label_top_left, Gtk.PositionType.BOTTOM, 2, 1)
-        # grid.attach_next_to(menubar, label_top_left, Gtk.PositionType.BOTTOM, 2, 1)
-
-        # sw = Gtk.ScrolledWindow()
-        # self.label.set_alignment(0, 0)
-        # self.label.set_selectable(True)
-        # self.label.set_line_wrap(True)
-        # self.label.set_max_width_chars(150)
-        # # sw.set_size_request(400,300)
-        # sw.set_hexpand(True)
-        # sw.set_vexpand(True)
-        # sw.add_with_viewport(self.label)
-        # # self.add(sw)
-        # # grid.add(sw)
-        # # grid.add(self.status)
-        # grid.attach(sw, 0, 0, 2, 2)
-        # # sub_proc = Popen("journalctl -f --unit=xkeysnail.service -b", stdout=PIPE, shell=True)
-        # # sub_outp = ""
 
         with open(self.kconfig) as configfile:
             autostart_line = configfile.read().split('\n')[1]
@@ -201,7 +140,6 @@ class MyWindow(Gtk.Window):
             autostart_bool = True
 
         if autostart_bool:
-            # Popen(['sudo', 'systemctl','restart','xkeysnail'])
             self.menuitem_auto.set_active(True)
             self.menuitem_auto.signal_id = self.menuitem_auto.connect('activate',self.setAutostart,False)
         else:
@@ -223,7 +161,6 @@ class MyWindow(Gtk.Window):
             self.menuitem_systray.signal_id = self.menuitem_systray.connect('activate',self.checkTray,True)
         menuitem_file.connect('activate',self.refreshFile)
         submenu_file.append(self.menuitem_systray)
-        # self.menuitem_enable.connect('activate', self.setEnable)
         menuitem_restart = Gtk.MenuItem(label="Restart")
         menuitem_restart.connect('activate',self.runRestart)
         submenu_file.append(menuitem_restart)
@@ -256,19 +193,6 @@ class MyWindow(Gtk.Window):
         keyboards.connect('activate',self.refresh)
         menubar.append(keyboards)
 
-        # tweaks = Gtk.MenuItem(label="Tweaks")
-        # menubar.append(tweaks)
-        # submenu_tweaks = Gtk.Menu()
-        # tweaks.set_submenu(submenu_tweaks)
-        # tweakitem_rightmod = Gtk.CheckMenuItem("AltGr on Right Cmd")
-        # submenu_tweaks.append(tweakitem_rightmod)
-        # tweakitem_vsc2st3 = Gtk.CheckMenuItem("ST3 hotkeys for VS Code")
-        # submenu_tweaks.append(tweakitem_vsc2st3)
-        # tweakitem_caps2esc = Gtk.CheckMenuItem("Capslock is Escape when tapped, Cmd when held")
-        # submenu_tweaks.append(tweakitem_caps2esc)
-        # tweakitem_caps2cmd = Gtk.CheckMenuItem("Capslock is Cmd")
-        # submenu_tweaks.append(tweakitem_caps2cmd)
-
         menuitem_help = Gtk.MenuItem(label="Help")
         menubar.append(menuitem_help)
         submenu_help = Gtk.Menu()
@@ -300,79 +224,135 @@ class MyWindow(Gtk.Window):
         menu.append(self.ibmkb)
         menu.append(self.winmackb)
 
-        # grid.add(another)
-
         GLib.timeout_add(2000, self.update_terminal)
 
-        # self.show_all()
-
-        # radiomenuitem1 = Gtk.RadioMenuItem(label="Windows")
-        # radiomenuitem1.set_active(True)
-        # menu.append(radiomenuitem1)
-        # radiomenuitem2 = Gtk.RadioMenuItem(label="Apple", group=radiomenuitem1)
-        # menu.append(radiomenuitem2)
-
     def setKinto(self):
+
+
+
         global restartsvc
         if self.options["kbtype"] == "mac":
             print("setup mac")
+            if os.path.isfile('/sys/module/hid_apple/parameters/swap_opt_cmd'):
+                with open('/sys/module/hid_apple/parameters/swap_opt_cmd', 'r') as ocval:
+                    optcmd = ocval.read().replace('\n', '')
+                if optcmd == '1':
+                    # print("found hid_apple - remove")
+                    self.queryConfig("echo '0' | sudo tee /sys/module/hid_apple/parameters/swap_opt_cmd;echo 'options hid_apple swap_opt_cmd=0' | sudo tee /etc/modprobe.d/hid_apple.conf;sudo update-initramfs -u -k all")
+            if os.path.isfile('/sys/module/applespi/parameters/swap_opt_cmd'):
+                with open('/sys/module/applespi/parameters/swap_opt_cmd', 'r') as ocval:
+                    optcmd = ocval.read().replace('\n', '')
+                if optcmd == '1':
+                    # print("found applespi - remove")
+                    self.queryConfig("echo '0' | sudo tee /sys/module/applespi/parameters/swap_opt_cmd;echo 'options applespi swap_opt_cmd=0' | sudo tee /etc/modprobe.d/applespi.conf;sudo update-initramfs -u -k all")
+            setkb = 's/^(\s{3})(\s{1}#)(.*# Mac\n|.*# Mac -)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(WinMac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(IBM.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Chromebook.*)|^(\s{3})(\s{1}# )(-)(- Default (Win|Mac.*))/   $3$7$6$7$8$12$11$12$13$17$16$17$18$20$22/g'
+            self.mackb.disconnect(self.mackb.signal_id)
+            self.mackb.set_active(True)
+            self.mackb.signal_id = self.mackb.connect('activate',self.setKB,"mac")
         elif self.options["kbtype"] == "win":
             print("setup win")
+            setkb = 's/^(\s{3})(\s{1}#)(.*# WinMac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Mac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(IBM.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Chromebook.*)|^(\s{3})(\s{1}# )(-)( Default Win)|^(\s{3})(\s{1}# )(-)(- Default Mac*)/   $3$7$6$7$8$12$11$12$13$17$16$17$18$20$21$21$22$24$26/g'
+            self.winkb.disconnect(self.winkb.signal_id)
+            self.winkb.set_active(True)
+            self.winkb.signal_id = self.winkb.connect('activate',self.setKB,"win")
         elif self.options["kbtype"] == "ibm":
             print("setup ibm")
+            setkb ='s/^(\s{3})(\s{1}#)(.*# IBM.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(WinMac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Mac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Chromebook.*)|^(\s{3})(\s{1}# )(-)(- Default (Win|Mac.*))/   $3$7$6$7$8$12$11$12$13$17$16$17$18$20$22/g'
+            self.ibmkb.disconnect(self.ibmkb.signal_id)
+            self.ibmkb.set_active(True)
+            self.ibmkb.signal_id = self.ibmkb.connect('activate',self.setKB,"ibm")
         elif self.options["kbtype"] == "cbk":
             print("setup chromebook")
+            setkb = 's/^(\s{3})(\s{1}#)(.*# Chromebook.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(WinMac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Mac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(IBM.*)|^(\s{3})(\s{1}# )(-)(- Default (Win|Mac.*))/   $3$7$6$7$8$12$11$12$13$17$16$17$18$20$22/g'
+            # Really an xfce4 check needs to occur before setting this 
+            self.queryConfig('perl -pi -e "s/(# )(.*)(# xfce4)/\$2\$3/g" ~/.config/kinto/kinto.py')
+            self.queryConfig('perl -pi -e "s/(\w.*)(# Default)/# \$1\$2/g" ~/.config/kinto/kinto.py')
+            self.chromekb.disconnect(self.chromekb.signal_id)
+            self.chromekb.set_active(True)
+            self.chromekb.signal_id = self.chromekb.connect('activate',self.setKB,"chrome")
         elif self.options["kbtype"] == "wmk":
             print("setup winmac")
+            setkb = 's/^(\s{3})(\s{1}#)(.*# WinMac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Mac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(IBM.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Chromebook.*)|^(\s{3})(\s{1}# )(-)( Default Mac.*)|^(\s{3})(\s{1}# )(-)(- Default Win)/   $3$7$6$7$8$12$11$12$13$17$16$17$18$20$21$21$22$24$26/g'
+            if os.path.isfile('/sys/module/hid_apple/parameters/swap_opt_cmd'):
+                with open('/sys/module/applespi/parameters/swap_opt_cmd', 'r') as ocval:
+                    optcmd = ocval.read().replace('\n', '')
+                if optcmd == '0':
+                    # print("found hid_apple")
+                    self.queryConfig("echo '1' | sudo tee /sys/module/hid_apple/parameters/swap_opt_cmd;echo 'options hid_apple swap_opt_cmd=1' | sudo tee /etc/modprobe.d/hid_apple.conf;sudo update-initramfs -u -k all")
+            if os.path.isfile('/sys/module/applespi/parameters/swap_opt_cmd'):
+                with open('/sys/module/applespi/parameters/swap_opt_cmd', 'r') as ocval:
+                    optcmd = ocval.read().replace('\n', '')
+                if optcmd == '0':
+                    # print("found applespi")
+                    self.queryConfig("echo '1' | sudo tee /sys/module/applespi/parameters/swap_opt_cmd;echo 'options applespi swap_opt_cmd=1' | sudo tee /etc/modprobe.d/applespi.conf;sudo update-initramfs -u -k all")
+            self.winmackb.disconnect(self.winmackb.signal_id)
+            self.winmackb.set_active(True)
+            self.winmackb.signal_id = self.winmackb.connect('activate',self.setKB,"winmac")
 
-        ## These can only be set if the kbtype is known
+        cmds = ['perl','-pi','-e',setkb,os.environ['HOME']+'/.config/kinto/kinto.py']
+        cmdsTerm = Popen(cmds)
+        cmdsTerm.wait()
 
-        if self.options["rightmod"]:
-            print("Right mod true - don't do a thing")
+        if not self.options["rightmod"]:
+            if self.options["kbtype"] == "win" or self.options["kbtype"] == "wmk":
+                setmod = 's/^(\s{4})((# )(.*)(# )(WinMac - Multi-language.*)|(K)(.*)(# )(WinMac - Multi-language.*))/    $4$5$6$9$7$8$9$10/g'
+            if self.options["kbtype"] == "mac":
+                setmod = 's/^(\s{4})((# )(.*)(# )(Mac - Multi-language.*)|(K)(.*)(# )(Mac - Multi-language.*))/    $4$5$6$9$7$8$9$10/g'
+            if self.options["kbtype"] == "cbk":
+                setmod = 's/^(\s{4})((# )(.*)(# )(Chromebook - Multi-language.*)|(K)(.*)(# )(Chromebook - Multi-language.*))/    $4$5$6$9$7$8$9$10/g'
+            if self.options["kbtype"] == "ibm":
+                setmod = 's/^(\s{4})((# )(.*)(# )(IBM - Multi-language.*)|(K)(.*)(# )(IBM - Multi-language.*))/    $4$5$6$9$7$8$9$10/g'
+            cmdmod = ['perl','-pi','-e',setmod,os.environ['HOME']+'/.config/kinto/kinto.py']
+            cmdsTerm = Popen(cmdmod)
+            cmdsTerm.wait()
         else:
-            print("Right mod false - do stuff")
+            print("Right mod true - don't do a thing")
 
         if self.options["vsc2st3"]:
             print('Setup ST3 maps on VSCode')
-
+            setvsc = 's/^(\s{4})(\w.*)(# )(Default - Sublime)|^(\s{4})(# )(\w.*)(# Default - Sublime)/$5$7$8$1$3$2$3$4/g'
+            cmdvsc = ['perl','-pi','-e',setvsc,os.environ['HOME']+'/.config/kinto/kinto.py']
+            cmdsTerm = Popen(cmdvsc)
+            cmdsTerm.wait()
         if self.options["capslock"] == "esc_cmd":
             print("remap capslock to esc_cmd")
+            setcaps = 's/^(\s{4})((# )(\{\w.*)(# Caps2Esc - Chrome.*)|(\{\w.*)(# )(Caps2Esc\n)|(\{.*)(# )(Caps2Esc - Chrome.*|Placeholder)|(\w.*)(# )(Caps2Cmd.*)|(# )(\{.*)(# )(Placeholder))/    $4$5$7$6$7$8$10$9$10$11$13$12$13$14$16$17$18/g'
         elif self.options["capslock"] == "cmd":
             print("remap capslock to cmd only")
-
-        if self.options["systray"]:
-
-            # Run Check to make sure the OS is not using Gnome3 or KDE
-
-            print("Enable system tray, copy autostart file and execute")
+            setcaps = 's/^(\s{4})((\w.*)(# )(Caps2Cmd - Chrome.*)|(\w.*)(# )(Caps2Cmd\n)|(# )(\w.*)(# )(Caps2Cmd - Chrome.*)|(\{\w.*)(# )(Caps2Esc.*)|(# )(\{.*)(# )(Placeholder))/    $4$3$4$5$7$6$7$8$10$11$12$14$13$14$15$17$18$19/g'
+        if self.options["capslock"] == "esc_cmd" or self.options["capslock"] == "cmd":
+            cmdcaps = ['perl','-pi','-e',setcaps,os.environ['HOME']+'/.config/kinto/kinto.py']
+            cmdsTerm = Popen(cmdcaps)
+            cmdsTerm.wait()
 
         if self.options["autostart"]:
-            print("Enable autostart, copy autostart file")
+            self.queryConfig('cp '+os.environ['HOME']+'/.config/kinto/xkeysnail.desktop '+os.environ['HOME']+'/.config/autostart/xkeysnail.desktop')
+        if self.options["systray"]:
+            self.queryConfig('cp '+os.environ['HOME']+'/.config/kinto/kintotray.desktop '+os.environ['HOME']+'/.config/autostart/kintotray.desktop')
+            self.queryConfig("nohup python3 ~/.config/kinto/kintotray.py >/dev/null 2>&1 &")
+            self.menuitem_systray.disconnect(self.menuitem_systray.signal_id)
+            self.menuitem_systray.set_active(True)
+            self.menuitem_systray.signal_id = self.menuitem_systray.connect('activate',self.checkTray,False)
 
         restartsvc = True
 
     
     def initSetup(self):
         global win,openWin,restartsvc
-
-        parser = argparse.ArgumentParser()
-        parser.add_argument('-s', dest='setup', action='store_true', help="first time setup")
-        parser.add_argument('--setup', dest='setup', action='store_true', help="first time setup")
-        args = parser.parse_args()
         
-        checkkb = "perl -ne 'print if /^\s+K.*# (Mac|WinMac|Chromebook|IBM)/' ~/.config/kinto/kinto.py | wc -l"
+        checkkb = "perl -ne 'print if /^\s+K.*# (Mac|WinMac|(Chromebook |Chromebook\n)|IBM)/' ~/.config/kinto/kinto.py | wc -l"
         checkkb_result = int(self.queryConfig(checkkb))
 
         if checkkb_result == 0:
             print('keyboard is not set')
-            if os.path.exists(os.environ['HOME']+'/.config/kinto/initkb'):
-                print('initkb')
-            else:
+            if not os.path.exists(os.environ['HOME']+'/.config/kinto/initkb'):
                 Popen(['cp','/opt/kinto/initkb',os.environ['HOME']+'/.config/kinto/initkb'])
 
             with open(os.environ['HOME']+'/.config/kinto/initkb', 'r') as file:
                 initkb_file = file.read()
 
+            # Don't be clever - the single characters simply match the word options
+            # below, makes the line shorter, but less understandable.
             tokenValue = re.findall(r'(e|d|3|k|y|t)\s=\s(\w+)', initkb_file,re.MULTILINE)
 
             try:
@@ -384,9 +364,10 @@ class MyWindow(Gtk.Window):
                 self.options["autostart"] = bool(strtobool(tokenValue[5][1]))
             except IndexError:
                 pass
-
         else:
-            if not args.setup:
+            # If keyboard is already set and a setup argument is not being passed
+            # Then load up the normal window.
+            if not self.args.setup:
                 openWin = True
                 return
 
@@ -413,25 +394,13 @@ class MyWindow(Gtk.Window):
             self.setupwin.set_resizable(False)
             self.setupwin.set_position(Gtk.WindowPosition.CENTER)
 
-
-            # vbox = Gtk.VBox()
-
-            # # self.lbl = Gtk.Label()
-
-            # container = Gtk.Box()
-            # container.override_background_color(Gtk.StateType.NORMAL, Gdk.RGBA(.5,.5,.5,.5))
             self.setupwin.add(self.overlay)
-            # background = Gtk.Image.new_from_file(os.environ['HOME']+'/Documents/git-projects/kinto/xkeysnail-config/gui/tuxonblack.png')
             
-            # try:
-            #     from PIL import Image
-            # except ImportError:
-            #     import Image
             from PIL import Image
 
-            img1 = Image.open(os.environ['HOME']+'/Documents/git-projects/kinto/xkeysnail-config/gui/tuxbg.png')
-            img2 = Image.open(os.environ['HOME']+'/Documents/git-projects/kinto/xkeysnail-config/gui/capslock_1200x720.png')
-            img3 = Image.open(os.environ['HOME']+'/Documents/git-projects/kinto/xkeysnail-config/gui/keys_1200x720.png')
+            img1 = Image.open(os.environ['HOME']+'/.config/kinto/gui/tuxbg.png')
+            img2 = Image.open(os.environ['HOME']+'/.config/kinto/gui/capslock_1200x720.png')
+            img3 = Image.open(os.environ['HOME']+'/.config/kinto/gui/keys_1200x720.png')
 
             pixbuf2 = self.image2pixbuf(Image.alpha_composite(img1, img2))
             pixbuf2 = pixbuf2.scale_simple(600, 360, GdkPixbuf.InterpType.BILINEAR)
@@ -439,38 +408,17 @@ class MyWindow(Gtk.Window):
             pixbuf3 = self.image2pixbuf(Image.alpha_composite(img1, img3))
             pixbuf3 = pixbuf3.scale_simple(600, 360, GdkPixbuf.InterpType.BILINEAR)
 
-            # pixbuf = GdkPixbuf.Pixbuf.new_from_file(os.environ['HOME']+'/Documents/git-projects/kinto/xkeysnail-config/gui/tuxcry1.png')
-            # pixbuf = pixbuf.scale_simple(600, 360, GdkPixbuf.InterpType.BILINEAR)
-            # self.bgsuccess1 = self.background.new_from_pixbuf(pixbuf)
-            # self.bgsuccess1.set_alignment(0, 1)
-
-            # pixbuf = GdkPixbuf.Pixbuf.new_from_file(os.environ['HOME']+'/Documents/git-projects/kinto/xkeysnail-config/gui/tuxcry2.png')
-            # pixbuf = pixbuf.scale_simple(600, 360, GdkPixbuf.InterpType.BILINEAR)
-            # self.bgsuccess2 = self.background.new_from_pixbuf(pixbuf)
-            # self.bgsuccess2.set_alignment(0, 1)
-
-            # pixbuf = GdkPixbuf.Pixbuf.new_from_file(os.environ['HOME']+'/Documents/git-projects/kinto/xkeysnail-config/gui/tuxcry3.png')
-            # pixbuf = pixbuf.scale_simple(600, 360, GdkPixbuf.InterpType.BILINEAR)
-            # self.bgsuccess3 = self.background.new_from_pixbuf(pixbuf)
-            # self.bgsuccess3.set_alignment(0, 1)
-
-            pixbuf = GdkPixbuf.Pixbuf.new_from_file(os.environ['HOME']+'/Documents/git-projects/kinto/xkeysnail-config/gui/tuxcry4.png')
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file(os.environ['HOME']+'/.config/kinto/gui/tuxcry4.png')
             pixbuf = pixbuf.scale_simple(600, 360, GdkPixbuf.InterpType.BILINEAR)
             self.bgsuccess4 = self.bgsuccess4.new_from_pixbuf(pixbuf)
             self.bgsuccess4.set_alignment(0, 1)
 
-            pixbuf = GdkPixbuf.Pixbuf.new_from_file(os.environ['HOME']+'/Documents/git-projects/kinto/xkeysnail-config/gui/tuxuninstall.png')
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file(os.environ['HOME']+'/.config/kinto/gui/tuxuninstall.png')
             pixbuf = pixbuf.scale_simple(600, 360, GdkPixbuf.InterpType.BILINEAR)
             self.bguninstall = self.bguninstall.new_from_pixbuf(pixbuf)
             self.bguninstall.set_alignment(0, 1)
 
-            # pixbuf = GdkPixbuf.Pixbuf.new_from_file(os.environ['HOME']+'/Documents/git-projects/kinto/xkeysnail-config/gui/tuxerror.png')
-            # pixbuf = pixbuf.scale_simple(600, 360, GdkPixbuf.InterpType.BILINEAR)
-            # self.bgerror = self.background.new_from_pixbuf(pixbuf)
-            # self.bgerror.set_alignment(0, 1)
-
-            # screen = self.get_screen()
-            pixbuf = GdkPixbuf.Pixbuf.new_from_file(os.environ['HOME']+'/Documents/git-projects/kinto/xkeysnail-config/gui/tuxbg.png')
+            pixbuf = GdkPixbuf.Pixbuf.new_from_file(os.environ['HOME']+'/.config/kinto/gui/tuxbg.png')
             pixbuf = pixbuf.scale_simple(600, 360, GdkPixbuf.InterpType.BILINEAR)
             self.background = self.background.new_from_pixbuf(pixbuf)
             self.background.set_alignment(0, 1)
@@ -478,49 +426,20 @@ class MyWindow(Gtk.Window):
             self.bgcaps.set_alignment(0, 1)
             self.bgspace = self.bgspace.new_from_pixbuf(pixbuf3)
             self.bgspace.set_alignment(0, 1)
-            # background.set_padding(60,40)
             self.overlay.add(self.background)
-            # self.overlay.add(self.bgcaps)
-            # self.overlay.add(self.bgspace)
             self.overlay.add_overlay(self.container)
             self.setupwin.add(self.container)
-            # self.container.show()
-
-            # for grandkid in overlay.get_children():
-            #     overlay.remove(grandkid)
-            # overlay.add(bgcaps)
-            # overlay.add_overlay(container)
 
             self.main = Main(self)
             self.container.add(self.main)
-
             self.uninstall_page = UninstallPage(self)
-
             self.first_page = FirstPage(self)
             self.container.add(self.first_page)
-
             self.second_page = SecondPage(self)
-
             self.caps_page = CapsPage(self)
-
             self.success_page = SuccessPage(self)
 
-            # # vbox.add(self.rightmod)
-            # self.setupwin.add(vbox)
-            # self.setupwin.add(container)
             self.setupwin.show_all()
-
-            # for grandkid in self.overlay.get_children():
-            #     self.overlay.remove(grandkid)
-            # self.overlay.add(self.bgcaps)
-            # self.overlay.add_overlay(self.container)
-            # self.setupwin.hide()
-            # self.overlay.add(self.bgcaps)
-            # self.setupwin.show_all()
-
-            # self.first_page = FirstPage(self)
-            # container.add(self.first_page)
-
             self.setupwin.connect('delete-event', self.on_delete_event)
 
             return
@@ -580,7 +499,7 @@ class MyWindow(Gtk.Window):
             self.winmackb.set_active(True)
             countkb += 1
         if ibm_result:
-            ibmkb.set_active(True)
+            self.ibmkb.set_active(True)
             countkb += 1
 
         if countkb > 1:
@@ -589,9 +508,7 @@ class MyWindow(Gtk.Window):
         return
 
     def runDebug(self,button):
-        # self.InputToTerm(self.cmdbytes)
-        # self.command2 = "send \003; echo 'hello'\n"
-        command = "send \003 sudo systemctl stop xkeysnail && sudo xkeysnail ~/.config/kinto/kinto.py\n"
+        command = 'send \003 sudo systemctl stop xkeysnail && sudo pkill -f bin/xkeysnail && sudo xkeysnail ~/.config/kinto/kinto.py\n'
         self.InputToTerm(command)
 
     def openSupport(self,button):
@@ -616,6 +533,7 @@ class MyWindow(Gtk.Window):
         context = win.get_style_context()
         default_background = str(context.get_background_color(Gtk.StateType.NORMAL))
 
+        # Checking if the user is using a light or dark theme
         tokenValue = re.search('red=(\d.\d+), green=(\d.\d+), blue=(\d.\d+), alpha=(\d.\d+)', default_background)
         red = float(tokenValue.group(1))
         green = float(tokenValue.group(2))
@@ -628,9 +546,7 @@ class MyWindow(Gtk.Window):
             theme = "light"
         else:
             theme = "dark"
-
         vbox = Gtk.VBox()
-        # innervbox = Gtk.VBox()
 
         if theme == "dark":
             path = os.environ['HOME']+'/.config/kinto/kinto-invert.svg'
@@ -651,9 +567,8 @@ class MyWindow(Gtk.Window):
 
         credits = Gtk.Label("Author: Ben Reaves")
         spacer = Gtk.Label(" ")
-        copy = Gtk.Label("Copyrighted 2019, 2020 - GPLv2")
-        url = Gtk.LinkButton("http://kinto.sh", label="http://kinto.sh")
-        url2 = Gtk.Label("http://kinto.sh")
+        copy = Gtk.Label("© 2019, 2020 - GPLv2")
+        url = Gtk.LinkButton("http://kinto.sh", label="kinto.sh")
 
         vbox.add(image)
         vbox.add(version)
@@ -672,7 +587,6 @@ class MyWindow(Gtk.Window):
 
     def checkTray(self,button,tray_bool):
         kintotray = int(self.queryConfig('ps -aux | grep [k]intotray >/dev/null 2>&1 && echo "1" || echo "0"'))
-        # path.exists('.config/autostart/kintotray.py')
         if tray_bool:
             Popen(['cp',os.environ['HOME']+'/.config/kinto/kintotray.desktop',os.environ['HOME']+'/.config/autostart/kintotray.desktop'])
             if not kintotray:
@@ -689,7 +603,6 @@ class MyWindow(Gtk.Window):
             global child_pid
             self.kinto_status = Popen("while :; do clear; systemctl is-active xkeysnail; sleep 2; done", stdout=PIPE, shell=True)
             child_pid = self.kinto_status.pid
-            # Popen(['pkill','-f','kintotray.py'])
             self.menuitem_systray.disconnect(self.menuitem_systray.signal_id)
             self.menuitem_systray.set_active(False)
             self.menuitem_systray.signal_id = self.menuitem_systray.connect('activate',self.checkTray,True)
@@ -838,7 +751,6 @@ class MyWindow(Gtk.Window):
             openWin = False
             win.show_all()
         else:
-            # openWin = False
             Gtk.main_quit()
 
         self.hide()
@@ -973,7 +885,6 @@ class MyWindow(Gtk.Window):
                 print(res.returncode)
 
                 if res.returncode == 0:
-                    # Popen(['notify-send','Kinto: Err in debug mode?','-i','budgie-desktop-symbolic'])
                     pkillxkey = Popen(['sudo', 'pkill','-f','bin/xkeysnail'])
                     pkillxkey.wait()
 
@@ -1050,11 +961,6 @@ class MyWindow(Gtk.Window):
     def non_block_read(self):
         ''' even in a thread, a normal read with block until the buffer is full '''
         output = self.kinto_status.stdout
-        # with open('goodlines.txt') as f:
-        #     mylist = list(f)
-        # output = '\n'.join(self.kinto_status.stdout.splitlines()[-1:])
-        # '\n'.join(stderr.splitlines()[-N:])
-        # .splitlines()[-1:]
         fd = output.fileno()
         fl = fcntl.fcntl(fd, fcntl.F_GETFL)
         fcntl.fcntl(fd, fcntl.F_SETFL, fl | os.O_NONBLOCK)
@@ -1062,24 +968,21 @@ class MyWindow(Gtk.Window):
         if op == None:
             return ''
 
-        # print(output.read())
-
-        # the_encoding = chardet.detect(output)['encoding']
-        # print(str(the_encoding) + " hello")
-        # full = self.status.get_text() + op.decode('utf-8')
-        # newstr = re.sub('[^A-Za-z0-9]+', '', op.decode('utf-8'))
-        # print(newstr)
         status = op.decode('utf-8').rstrip()
-        if "inactive" in status or "failed" in status or "deactivating" in status:
+        if "inactive" in status:
             if "journalctl" in self.command:
                 stats = "<span color='red'><b>inactive</b></span>"
             else:
                 stats = "<span color='yellow'><b>Debug Mode</b></span>"
-        # elif "failed" in op.decode('utf-8').rstrip():
-                # stats = "<span color='red'><b>failed</b></span>"
-        else:
+        elif "active" in status:
             stats = "<span color='#66ff00'><b>active</b></span>"
-            # op.decode('utf-8').rstrip()
+        else:
+            # "failed" in status or "deactivating" in status or "activating" in status
+            if "journalctl" in self.command:
+                stats = "<span color='red'><b>inactive</b></span>"
+            else:
+                stats = "<span color='yellow'><b>Debug Mode</b></span>"
+
         return stats
 
     def remove_tags(self,raw_html):
@@ -1088,11 +991,7 @@ class MyWindow(Gtk.Window):
         return cleantext
 
     def update_terminal(self):
-        # subproc = self.sub_proc
-        # print(self.another.get_text())
-        # self.label.set_text(self.non_block_read())
         status = self.non_block_read()
-        # print (self.label.get_text().strip() + ' ' + self.remove_tags(status))
         if self.label.get_text().strip() != self.remove_tags(status):
             self.label.set_markup("  " + status + "  ")
             if self.remove_tags(status) == 'active':
@@ -1106,14 +1005,7 @@ class MyWindow(Gtk.Window):
 
         return self.kinto_status.poll() is None
 
-    # def update_terminal(self):
-    #     # subproc = self.sub_proc
-    #     # print(self.another.get_text())
-    #     self.label.set_text(self.label.get_text() + self.non_block_read())
-    #     return self.sub_proc.poll() is None
-
     def key_press_event(self, widget, event, page):
-        # print("key detected")
         global openWin
         trigger = "None"
         keyname = Gdk.keyval_name(event.keyval)
@@ -1157,17 +1049,15 @@ class MyWindow(Gtk.Window):
         if trigger == "Half":
             self.setupwin.signal_id = self.setupwin.connect("key_press_event", self.key_press_event,2)
             self.setupwin.show_all()
-            # self.hide()
         elif trigger == "Done":
             self.setKinto()
             self.setupwin.show_all()
             openWin = True
-
-            # self.hide()
+            self.last_onward.grab_focus()
 
     def InputToTerm(self,cmd):
         # Not clearly known which VTE versions
-        # require which fix
+        # requires which fix
         try:
             query = str.encode(cmd)
             terminal.feed_child_binary(query)
@@ -1193,39 +1083,6 @@ class Main(Gtk.Box):
     def __init__(self, parent_window):
         super().__init__(spacing=10)
         self.__parent_window = parent_window
-
-        # f = Gtk.Frame()
-        # b = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=6)
-        # f.add(b)
-
-        # label_start = Gtk.Label("                                    ")
-        # label_start = Gtk.Label("                               ")
-        # image=Gtk.Image.new_from_icon_name("image-missing",Gtk.IconSize.DIALOG)
-        # image.set_size_request(96,96)
-        # # self.add(image)
-        # # spacing = Gtk.
-        # self.pack_start(image, True, True, 0)
-
-        # self.start_new_game()
-
-        # new_game_button = Gtk.Button("NEW GAME")
-        # new_game_button.connect("clicked", self.start_new_game)
-        # new_game_button.set_border_width(20)
-        # new_game_button.set_valign(Gtk.Align.CENTER)
-        # self.pack_start(new_game_button, True, True, 0)
-
-    # def start_new_game(self, *args):
-    #     # self.__parent_window.first_page.show_all()
-    #     # self.hide()
-    #     for grandkid in self.__parent_window.overlay.get_children():
-    #         self.__parent_window.overlay.remove(grandkid)
-    #     self.__parent_window.overlay.add(self.__parent_window.background)
-    #     self.__parent_window.overlay.add_overlay(self.__parent_window.container)
-    #     self.__parent_window.container.add(self.__parent_window.first_page)
-    #     # self.setupwin.remove(self.FirstPage)
-    #     self.__parent_window.setupwin.show_all()
-    #     # self.set_visible(False)
-    #     # self.hide()
 
 class UninstallPage(Gtk.Box):
     def __init__(self, parent_window):
@@ -1274,13 +1131,6 @@ class UninstallPage(Gtk.Box):
         self.add(self.grid)
 
     def goback(self, *args):
-        # for grandkid in self.__parent_window.overlay.get_children():
-        #     self.__parent_window.overlay.remove(grandkid)
-        # self.__parent_window.overlay.add(self.__parent_window.bgspace)
-        # self.__parent_window.overlay.add_overlay(self.__parent_window.container)
-        # self.__parent_window.container.add(self.__parent_window.second_page)
-        # self.__parent_window.container.remove(self.__parent_window.caps_page)
-        # self.__parent_window.setupwin.show_all()
         self.hide()
 
     def forward(self, *args):
@@ -1303,8 +1153,6 @@ class FirstPage(Gtk.Box):
         vbox_container = Gtk.VBox()
         scroller = Gtk.ScrolledWindow()
         scroller.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.ALWAYS)
-        # self.grid.modify_bg(Gtk.StateFlags.NORMAL, Gdk.color_parse("#2d303b"))
-        # scroller.modify_bg(Gtk.StateFlags.NORMAL, Gdk.color_parse("#aaaaaa"))
 
         label_start = Gtk.Label()
         label_start.set_markup("Before we continue please make sure you do not have any other remappers running. Kinto works best when it is the only application remapping your keys.\n\nBy continuing you also agree that Kinto is not held liable for any harm, damage(s) or unexpected behaviors.\nThis software is free, open-source, and provided as-is.\n\n<sup><b>© 2019, 2020 by Ben Reaves ~ Kinto is licensed on GPLv2.</b></sup>")
@@ -1340,15 +1188,10 @@ class FirstPage(Gtk.Box):
         self.grid.add(vbox_container)
         self.grid.attach_next_to(hbox, vbox_container, Gtk.PositionType.BOTTOM, 2, 1)
         self.add(self.grid)
+        onward.grab_focus()
 
     def goback(self, *args):
-        for grandkid in self.__parent_window.overlay.get_children():
-            self.__parent_window.overlay.remove(grandkid)
-        self.__parent_window.overlay.add(self.__parent_window.bguninstall)
-        self.__parent_window.overlay.add_overlay(self.__parent_window.container)
-        self.__parent_window.container.add(self.__parent_window.uninstall_page)
-        self.__parent_window.container.remove(self.__parent_window.first_page)
-        self.__parent_window.setupwin.show_all()
+        Gtk.main_quit()
         self.hide()
 
     def forward(self, button):
@@ -1433,7 +1276,7 @@ class SecondPage(Gtk.Box):
     def forward(self, *args):
         for grandkid in self.__parent_window.overlay.get_children():
             self.__parent_window.overlay.remove(grandkid)
-        self.__parent_window.overlay.add(self.__parent_window.success)
+        self.__parent_window.overlay.add(self.__parent_window.bgsuccess4)
         self.__parent_window.overlay.add_overlay(self.__parent_window.container)
         self.__parent_window.container.add(self.__parent_window.success_page)
         self.__parent_window.container.remove(self.__parent_window.second_page)
@@ -1514,6 +1357,18 @@ class SuccessPage(Gtk.Box):
     def __init__(self, parent_window):
         super().__init__(spacing=10)
         self.__parent_window = parent_window
+
+        vbox_container = Gtk.VBox()
+        self.__parent_window.last_onward.props.relief = Gtk.ReliefStyle.NONE
+        self.__parent_window.last_onward.connect("clicked", self.forward)
+        vbox_container.set_margin_top(600)
+        vbox_container.add(self.__parent_window.last_onward)
+        self.add(vbox_container)
+
+    def forward(self, *args):
+        self.hide()
+        self.__parent_window.setupwin.close()
+
 
 global win,openWin
 win = MyWindow()

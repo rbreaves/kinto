@@ -1,9 +1,0 @@
-[Plugin]
-Loader=python3
-Module=kinto
-Name=Kinto
-Description=Kinto Applet
-Authors=Ben Reaves
-Copyright=Copyright © 2020 Ben Reaves
-Website=github.com/rbreaves
-Icon=kinto-solid

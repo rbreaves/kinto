@@ -70,6 +70,7 @@ class Indicator():
     help_submenu = Gtk.Menu()
     helpm.set_submenu(help_submenu)
     debug = Gtk.MenuItem('Debug')
+    opengui = Gtk.MenuItem('Open Kinto')
     support = Gtk.MenuItem("Support")
     about = Gtk.MenuItem('About')
     global restartsvc
@@ -170,8 +171,10 @@ class Indicator():
         self.edit_submenu.append(self.systray)
         self.menu.append(self.edit)
 
-        self.debug.connect('activate',self.runDebug)
+        self.debug.connect('activate',self.runDebug,1)
         self.help_submenu.append(self.debug)
+        self.opengui.connect('activate',self.runDebug,0)
+        self.help_submenu.append(self.opengui)
         self.support.connect('activate',self.openSupport)
         self.help_submenu.append(self.support)
         self.about.connect('activate',self.runAbout)
@@ -285,8 +288,10 @@ class Indicator():
         status = op.decode('utf-8').rstrip()
         if "inactive" in status or "failed" in status or "deactivating" in status or "activating" in status:
             stats = "inactive"
-        else:
+        elif "active" in status:
             stats = "active"
+        else:
+            stats = "inactive"
         return stats
 
     def update_terminal(self):
@@ -369,9 +374,8 @@ class Indicator():
 
         credits = Gtk.Label("Author: Ben Reaves")
         spacer = Gtk.Label(" ")
-        copy = Gtk.Label("Copyrighted 2019, 2020 - GPLv2")
-        url = Gtk.LinkButton("http://kinto.sh", label="http://kinto.sh")
-        url2 = Gtk.Label("http://kinto.sh")
+        copy = Gtk.Label("© 2019, 2020 - GPLv2")
+        url = Gtk.LinkButton("http://kinto.sh", label="kinto.sh")
 
         vbox.add(image)
         vbox.add(version)
@@ -601,15 +605,14 @@ class Indicator():
             # self.enable_id = self.checkbox_enable.connect('activate',self.setEnable,True)
             # self.indicator.set_icon(os.environ['HOME']+'/.config/kinto/kinto-color.svg')
 
-    def runDebug(self,button):
+    def runDebug(self,button,opendebug):
         try:
-            Popen([os.environ['HOME']+'/Documents/git-projects/kinto/xkeysnail-config/gui/kinto-gui.py','-d'])
+            if opendebug:
+                Popen([os.environ['HOME']+'/.config/kinto/gui/kinto-gui.py','-d'])
+            else:
+                Popen([os.environ['HOME']+'/.config/kinto/gui/kinto-gui.py'])
         except:
-            Popen(['notify-send','Kinto: Error restarting Kinto!','-i','budgie-desktop-symbolic'])
-            self.checkbox_enable.set_active(False)
-            self.checkbox_enable.disconnect(self.enable_id)
-            self.enable_id = self.checkbox_enable.connect('activate',self.setEnable,True)
-            # self.indicator.set_icon(os.environ['HOME']+'/.config/kinto/kinto-color.svg')
+            Popen(['notify-send','Kinto: Error opening Kinto!','-i','budgie-desktop-symbolic'])
 
     def queryConfig(self,query):
         res = Popen(query, stdout=PIPE, stderr=None, shell=True)
@@ -723,12 +726,11 @@ class Indicator():
             elif kbtype == "ibm":
                 setkb ='s/^(\s{3})(\s{1}#)(.*# IBM.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(WinMac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Mac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Chromebook.*)|^(\s{3})(\s{1}# )(-)(- Default (Win|Mac.*))/   $3$7$6$7$8$12$11$12$13$17$16$17$18$20$22/g'
 
-            restart = ['sudo', 'systemctl','restart','xkeysnail']
             cmds = ['perl','-pi','-e',setkb,self.kconfig]
-
             cmdsTerm = Popen(cmds)
             cmdsTerm.wait()
 
+            restart = ['sudo', 'systemctl','restart','xkeysnail']
             Popen(restart)
 
         except CalledProcessError:
