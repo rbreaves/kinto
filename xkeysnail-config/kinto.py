@@ -202,12 +202,28 @@ define_keymap(re.compile(browserStr, re.IGNORECASE),{
 })
 
 define_keymap(None,{
-    # Launch Application Menu
-    # K("RC-Space"): K("Alt-F1"),                   # gnome/kde
-    # K("RC-Space"): K("LC-Esc"),                   # xfce4
+    # K("RC-Space"): K("Alt-F1"),                   # gnome/kde - Launch Application Menu
+    # K("RC-Space"): K("LC-Esc"),                   # xfce4     - Launch Application Menu
+    # K("RC-F3"):K("Super-d"),                      # gnome/kde - Show Desktop
+    # K("RC-F3"):K("C-M-d"),                        # xfce4     - Show Desktop
+    # K("RC-F3"):K("Super-d"),                      # eos       - Show Desktop
+    # K("RC-LC-f"):K("M-F10"),                      # gnome/kde - Maximize app
+    # K("RC-LC-f"):K("LC-Super-Up"),                # popos     - Maximize app
+    # K("RC-LC-f"):K("Super-Up"),                   # eos       - Maximize app
+    # K("RC-LC-f"):K("Super-PAGE_UP"),              # manjaro   - Maximize app
+    # K("LC-Left"):K("C-M-End")                     # xfce4     - Change workspace
+    # K("LC-Left"):K("C-M-Left")                    # ub/fd     - Change workspace
+    # K("LC-Left"):K("Super-Left")                  # popos/eos - Change workspace
+    # K("LC-Right"):K("C-M-Home")                   # xfce4     - Change workspace
+    # K("LC-Right"):K("C-M-Right")                  # ub/fd     - Change workspace
+    # K("LC-Right"):K("Super-Right")                # popos/eos - Change workspace                          
     # Basic App hotkey functions
-    K("RC-Q"): K("Alt-F4"),
-    K("RC-H"): K("Alt-F9"),
+    K("RC-Q"): K("M-F4"),                         # Default not-popos
+    # K("RC-Q"):K("Super-w"),                     # popos     - Close Apps
+    K("RC-H"): K("M-F9"),                         # Default - Minimize app
+    # K("RC-H"):K("M-F9"),                          # xfce4     - Minimize app
+    # K("RC-H"):K("Super-h"),                       # gnome     - Minimize app
+    # K("RC-LC-f"):K("Super-PAGE_DOWN"),            # manjaro   - Minimize app
     # Cmd Tab - App Switching Default
     K("M-Tab"): pass_through_key,                 # Default not-xfce4
     K("RC-Tab"): K("M-Tab"),                      # Default not-xfce4
