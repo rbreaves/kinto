@@ -17,11 +17,11 @@ v1.2 Release - Kinto now includes a system tray and simple wizard to setup the i
 
 [What's different from other remappers?](#Whats-different)
 
-[What does Kinto require?](#What-does-Kinto-require)
-
 [How to install (Linux)](#How-to-install-Linux)
 
 [How to install (Windows)](#How-to-install-Windows)
+
+[What does Kinto require?](#What-does-Kinto-require)
 
 [Shortcut Creation](#Shortcut-Creation)
 
@@ -70,34 +70,6 @@ It also retains some of the most commonly used system level shortcut keys, such 
 If your OS and macOS have similar functionality on the system level, but only differ by a slight difference of a shortcut command then Kinto likely supports it already. If Kinto doesn't have what you need then you can open up a support ticket and it will be added. You can also fork the project to add the fix and I will merge it via a PR you make.
 
 Additionally, if you are using a cross-platform app and if it happens to have a few shortcut keys that differ then that can very easily be added to either the kinto.py or kinto.ahk configuration files which on Windows is located here `~/.kinto/kinto.ahk` and on Linux it can be found here `~/.config/kinto/kinto.py`. More info can be found here [Shortcut Creation (Xkeysnail)](#Shortcut-Creation-Xkeysnail) for Linux.
-
-## What does Kinto require?
-
-- Python
-- systemd
-- x11
-- xkeysnail
-
-On most distros you can confirm Input Methods by navigating to "Language Support" and set "Keyboard input method system:" to IBus for full word-wise support with web browsers. 
-
-### Kinto for Windows 10 Requirements
-
-- [Git for Windows](https://git-scm.com/download/win)
-- Powershell - run as Administrator
-- [Python3](https://www.python.org/downloads/windows/)
-
-Other programs that will be installed when you run ./setup.py
-- Chocolatey
-- Autohotkey
-- Strawberry Perl
-
-Note: Sublime Text users should disable screen rotation hotkeys as they will interfere with multi-cursor and possibly other combos. See https://windowsloop.com/disable-screen-rotation-keyboard-shortcut/ for details.
-
-Users can now hotswap between Apple and Windows based keyboards without having to logoff and back on, and Windows is currently the only implementation with a system tray (but this feature is coming to Budgie, XFCE, Mate, Gnome, and lastly KDE).
-
-<img src="https://user-images.githubusercontent.com/10969616/84471498-100c7d00-ac4b-11ea-972d-60c1907831ec.png" width="50%">
-<img src="https://user-images.githubusercontent.com/10969616/84471501-10a51380-ac4b-11ea-9e0e-c19a7ebfad6d.png" width="50%">
-
 
 ## How to install (Linux)
 
@@ -154,6 +126,34 @@ To Uninstall Kinto - Select Uninstall
 ```
 py setup.py
 ```
+
+## What does Kinto require?
+
+- Python
+- systemd
+- x11
+- xkeysnail
+
+On most distros you can confirm Input Methods by navigating to "Language Support" and set "Keyboard input method system:" to IBus for full word-wise support with web browsers. 
+
+### Kinto for Windows 10 Requirements
+
+- [Git for Windows](https://git-scm.com/download/win)
+- Powershell - run as Administrator
+- [Python3](https://www.python.org/downloads/windows/)
+
+Other programs that will be installed when you run ./setup.py
+- Chocolatey
+- Autohotkey
+- Strawberry Perl
+
+Note: Sublime Text users should disable screen rotation hotkeys as they will interfere with multi-cursor and possibly other combos. See https://windowsloop.com/disable-screen-rotation-keyboard-shortcut/ for details.
+
+Users can now hotswap between Apple and Windows based keyboards without having to logoff and back on, and Windows is currently the only implementation with a system tray (but this feature is coming to Budgie, XFCE, Mate, Gnome, and lastly KDE).
+
+<img src="https://user-images.githubusercontent.com/10969616/84471498-100c7d00-ac4b-11ea-972d-60c1907831ec.png" width="50%">
+<img src="https://user-images.githubusercontent.com/10969616/84471501-10a51380-ac4b-11ea-9e0e-c19a7ebfad6d.png" width="50%">
+
 ## Shortcut Creation
 
 Note: A new project, [Universal Keys](https://github.com/rbreaves/Universal-Keys), has been created that will be updated to contain all current remaps - plus many more. Once that is done, Kinto will be updated to programmatically pull the latest keymaps from simple csv comma delimited files & will build out key remaps from there. This will also allow for more types of remaps within an application category, Sublime Text 3 to VS Code or VS Code to Sublime Text 3, Photoshop to Gimp, Gimp to Photoshop, etc & it will ensure that xkeysnail (linux) & autohotkey (windows) are pulling from the same data set.
