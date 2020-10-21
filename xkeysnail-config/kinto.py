@@ -7,7 +7,7 @@ from xkeysnail.transform import *
 # Use the following for testing terminal keymaps
 # terminals = [ "", ... ]
 # xbindkeys -mk
-terminals = ["gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm","kitty","alacritty","mate-terminal","tilix","xfce4-terminal"]
+terminals = ["kinto-gui.py","gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm","kitty","alacritty","mate-terminal","tilix","xfce4-terminal"]
 terminals = [term.casefold() for term in terminals]
 termStr = "|".join(str(x) for x in terminals)
 
@@ -209,8 +209,9 @@ define_keymap(None,{
     K("RC-Q"): K("Alt-F4"),
     K("RC-H"): K("Alt-F9"),
     # Cmd Tab - App Switching Default
-    K("RC-Tab"): K("RC-F13"),                     # Default not-xfce4
-    K("RC-Shift-Tab"): K("RC-Shift-F13"),         # Default not-xfce4
+    K("M-Tab"): pass_through_key,                 # Default not-xfce4
+    K("RC-Tab"): K("M-Tab"),                      # Default not-xfce4
+    K("RC-Shift-Tab"): K("M-Shift-Tab"),          # Default not-xfce4
     K("RC-Grave"): K("M-F6"),                     # Default not-xfce4
     K("RC-Shift-Grave"): K("M-Shift-F6"),         # Default not-xfce4
     # K("RC-Tab"): K("RC-backslash"),               # xfce4

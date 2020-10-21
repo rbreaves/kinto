@@ -3,6 +3,8 @@ Name=Kinto_xkey
 GenericName=Kinto_xkey
 Comment=Make Linux Type Like it's a Mac
 Exec=/bin/bash -c "grep -q 'autostart = true' {homedir}/.config/kinto/kinto.py && {xhost} +SI:localuser:root && sudo {systemctl} restart xkeysnail"
+# Budgie logoff fix to avoid key input loss
+# ;{homedir}/.config/kinto/logoff.sh
 # ;sudo /usr/local/bin/logoff.sh $USER $DISPLAY
 Terminal=false
 Type=Application
