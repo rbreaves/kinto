@@ -236,7 +236,6 @@ yes | cp -rf ./xkeysnail-config/limitedadmins ./xkeysnail-config/limitedadmins.n
 yes | cp -rf ./xkeysnail-config/gui/ ~/.config/kinto/
 yes | cp -nrf ./xkeysnail-config/initkb ~/.config/kinto/initkb
 yes | cp -rf ./xkeysnail-config/killdups.sh ~/.config/kinto/killdups.sh
-yes | cp -rf ./xkeysnail-config/appleKB.sh ~/.config/kinto/appleKB.sh
 yes | cp -rf ./xkeysnail-config/trayapps/appindicator/kintotray.py ~/.config/kinto/kintotray.py
 yes | cp -rf ./xkeysnail-config/trayapps/appindicator/kintotray.desktop ~/.config/kinto/kintotray.desktop
 yes | cp -rf ./xkeysnail-config/gui/kinto.desktop ./xkeysnail-config/gui/kinto.desktop.new

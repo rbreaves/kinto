@@ -66,8 +66,6 @@ class MyWindow(Gtk.Window):
     ibmkb.signal_id = 0
     winmackb.signal_id = 0
 
-    menuitem_enable = Gtk.CheckMenuItem(label="Enabled")
-    menuitem_enable.signal_id = 0
     menuitem_auto = Gtk.CheckMenuItem(label="Autostart")
     menuitem_auto.signal_id = 0
     menuitem_systray = Gtk.CheckMenuItem(label="Tray Enabled")
@@ -150,7 +148,6 @@ class MyWindow(Gtk.Window):
         menubar.append(menuitem_file)
         submenu_file = Gtk.Menu()
         menuitem_file.set_submenu(submenu_file)
-        submenu_file.append(self.menuitem_enable)
         submenu_file.append(self.menuitem_auto)
         kintotray = int(self.queryConfig('ps -aux | grep [k]intotray >/dev/null 2>&1 && echo "1" || echo "0"'))
         if kintotray and os.path.exists(os.environ['HOME']+'/.config/autostart/kintotray.desktop'):
@@ -895,32 +892,6 @@ class MyWindow(Gtk.Window):
         except:
             Popen(['notify-send','Kinto: Error stopping Kinto!','-i','budgie-desktop-symbolic'])
 
-    def setEnable(self,button,enableKinto):
-        try:
-            if enableKinto:
-                res = Popen(['pgrep','xkeysnail'])
-                res.wait()
-                print(res.returncode)
-
-                if res.returncode == 0:
-                    pkillxkey = Popen(['sudo', 'pkill','-f','bin/xkeysnail'])
-                    pkillxkey.wait()
-
-                Popen(['sudo', 'systemctl','restart','xkeysnail'])
-                self.menuitem_enable.disconnect(self.menuitem_enable.signal_id)
-                self.menuitem_enable.set_active(True)
-                self.menuitem_enable.signal_id = self.menuitem_enable.connect('activate',self.setEnable,False)
-                self.command = "send \003 journalctl -f --unit=xkeysnail.service -b\n"
-                self.InputToTerm(self.command)
-            else:
-                Popen(['sudo', 'systemctl','stop','xkeysnail'])
-                self.command = "send \003 journalctl -f --unit=xkeysnail.service -b\n"
-                self.menuitem_enable.disconnect(self.menuitem_enable.signal_id)
-                self.menuitem_enable.set_active(False)
-                self.menuitem_enable.signal_id = self.menuitem_enable.connect('activate',self.setEnable,True)
-        except CalledProcessError:
-            Popen(['notify-send','Kinto: Error enabling!','-i','budgie-desktop-symbolic'])
-
     def setAutostart(self,button,autostart):
         try:
             if autostart == False:
@@ -1012,15 +983,6 @@ class MyWindow(Gtk.Window):
         status = self.non_block_read()
         if self.label.get_text().strip() != self.remove_tags(status):
             self.label.set_markup("  " + status + "  ")
-            if self.remove_tags(status) == 'active':
-                self.menuitem_enable.disconnect(self.menuitem_enable.signal_id)
-                self.menuitem_enable.set_active(True)
-                self.menuitem_enable.signal_id = self.menuitem_enable.connect('activate',self.setEnable,False)
-            else:
-                self.menuitem_enable.disconnect(self.menuitem_enable.signal_id)
-                self.menuitem_enable.set_active(False)
-                self.menuitem_enable.signal_id = self.menuitem_enable.connect('activate',self.setEnable,True)
-
         return self.kinto_status.poll() is None
 
     def key_press_event(self, widget, event, page):

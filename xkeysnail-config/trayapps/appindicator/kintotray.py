@@ -43,7 +43,6 @@ class Indicator():
     menu = Gtk.Menu()
     menukb = Gtk.Menu()
     checkbox_autostart = Gtk.CheckMenuItem('Autostart')
-    checkbox_enable = Gtk.CheckMenuItem('Kinto Enabled')
     restart = Gtk.MenuItem('Restart')
     stop = Gtk.MenuItem('Stop')
     keyboards = Gtk.MenuItem('Keyboard Types')
@@ -112,26 +111,6 @@ class Indicator():
         else:
             self.checkbox_autostart.set_active(False)
             self.chkautostart_id = self.checkbox_autostart.connect('activate',self.setAutostart,True)
-
-        # Kinto Enable
-
-        # res = Popen(['sudo', 'systemctl','is-active','--quiet','xkeysnail'])
-        # res.wait()
-        # time.sleep(5)
-        
-        # self.checkbox_enable.set_label("Kinto Enabled")
-        # self.checkbox_enable.set_active(True)
-        # self.enable_id = self.checkbox_enable.connect('activate',self.setEnable,False)
-
-        if res.returncode == 0:
-            self.checkbox_enable.set_active(True)
-            # self.indicator.set_icon(os.environ['HOME']+'/.config/kinto/kinto-invert.svg')
-            self.enable_id = self.checkbox_enable.connect('activate',self.setEnable,False)
-        else:
-            self.checkbox_enable.set_active(False)
-            # self.indicator.set_icon(os.environ['HOME']+'/.config/kinto/kinto-color.svg')
-            self.enable_id = self.checkbox_enable.connect('activate',self.setEnable,True)
-        self.menu.append(self.checkbox_enable)
 
         self.restart.connect('activate',self.runRestart)
         self.menu.append(self.restart)
@@ -301,21 +280,9 @@ class Indicator():
         status = self.non_block_read().strip()
         nowts = int(time.time())
         if (nowts - self.unixts) > 5 and (status=='active' and self.indicator.get_icon() != os.environ['HOME']+'/.config/kinto/kinto-invert.svg'):
-            self.checkbox_enable.disconnect(self.enable_id)
-            self.checkbox_enable.set_active(True)
-            self.enable_id = self.checkbox_enable.connect('activate',self.setEnable,False)
             self.indicator.set_icon(os.environ['HOME']+'/.config/kinto/kinto-invert.svg')
         elif (nowts - self.unixts) > 5 and (status == 'inactive' and self.indicator.get_icon() != os.environ['HOME']+'/.config/kinto/kinto.svg'):
-            self.checkbox_enable.disconnect(self.enable_id)
-            self.checkbox_enable.set_active(False)
-            self.enable_id = self.checkbox_enable.connect('activate',self.setEnable,True)
             self.indicator.set_icon(os.environ['HOME']+'/.config/kinto/kinto.svg')
-
-        # print('stats: ' + status + ' last: ' + self.last_status)
-        # if status != self.last_status and status == 'active':
-        #     # print('inside')
-        #     self.refreshKB()
-
         self.last_status = status
 
         return self.kinto_status.poll() is None
@@ -632,36 +599,6 @@ class Indicator():
         res = Popen(query, stdout=PIPE, stderr=None, shell=True)
         res.wait()
         return res.communicate()[0].strip().decode('UTF-8')
-
-    def setEnable(self,button,enableKinto):
-        try:
-            if enableKinto:
-                res = Popen(['pgrep','xkeysnail'])
-                res.wait()
-                print(res.returncode)
-
-                if res.returncode == 0:
-                    # Popen(['notify-send','Kinto: Err in debug mode?','-i','budgie-desktop-symbolic'])
-                    pkillxkey = Popen(['sudo', 'pkill','-f','bin/xkeysnail'])
-                    pkillxkey.wait()
-
-                Popen(['sudo', 'systemctl','restart','xkeysnail'])
-                self.checkbox_enable.disconnect(self.enable_id)
-                self.checkbox_enable.set_active(True)
-                self.enable_id = self.checkbox_enable.connect('activate',self.setEnable,False)
-                self.indicator.set_icon(os.environ['HOME']+'/.config/kinto/kinto-invert.svg')
-
-            else:
-                Popen(['sudo', 'systemctl','stop','xkeysnail'])
-                self.checkbox_enable.disconnect(self.enable_id)
-                self.checkbox_enable.set_active(False)
-                self.enable_id = self.checkbox_enable.connect('activate',self.setEnable,True)
-                self.indicator.set_icon(os.environ['HOME']+'/.config/kinto/kinto.svg')
-
-            self.unixts = int(time.time())
-
-        except CalledProcessError:
-            Popen(['notify-send','Kinto: Error enabling!','-i','budgie-desktop-symbolic'])
 
     def setAutostart(self,button,autostart):
         try:

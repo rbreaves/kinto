@@ -211,12 +211,12 @@ define_keymap(None,{
     # K("RC-LC-f"):K("LC-Super-Up"),                # popos     - Maximize app
     # K("RC-LC-f"):K("Super-Up"),                   # eos       - Maximize app
     # K("RC-LC-f"):K("Super-PAGE_UP"),              # manjaro   - Maximize app
-    # K("LC-Left"):K("C-M-End")                     # xfce4     - Change workspace
-    # K("LC-Left"):K("C-M-Left")                    # ub/fd     - Change workspace
-    # K("LC-Left"):K("Super-Left")                  # popos/eos - Change workspace
-    # K("LC-Right"):K("C-M-Home")                   # xfce4     - Change workspace
-    # K("LC-Right"):K("C-M-Right")                  # ub/fd     - Change workspace
-    # K("LC-Right"):K("Super-Right")                # popos/eos - Change workspace                          
+    # K("LC-Left"):K("C-M-End"),                    # xfce4     - Change workspace
+    # K("LC-Left"):K("C-M-Left"),                   # ub/fd     - Change workspace
+    # K("LC-Left"):K("Super-Left"),                 # popos/eos - Change workspace
+    # K("LC-Right"):K("C-M-Home"),                  # xfce4     - Change workspace
+    # K("LC-Right"):K("C-M-Right"),                 # ub/fd     - Change workspace
+    # K("LC-Right"):K("Super-Right"),               # popos/eos - Change workspace                          
     # Basic App hotkey functions
     K("RC-Q"): K("M-F4"),                         # Default not-popos
     # K("RC-Q"):K("Super-w"),                     # popos     - Close Apps
