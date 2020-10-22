@@ -164,6 +164,9 @@ class MyWindow(Gtk.Window):
         menuitem_restart = Gtk.MenuItem(label="Restart")
         menuitem_restart.connect('activate',self.runRestart)
         submenu_file.append(menuitem_restart)
+        menuitem_stop = Gtk.MenuItem(label="Stop")
+        menuitem_stop.connect('activate',self.runStop)
+        submenu_file.append(menuitem_stop)
 
         menuitem_quit = Gtk.MenuItem(label="Quit")
         submenu_file.append(menuitem_quit)
@@ -876,6 +879,21 @@ class MyWindow(Gtk.Window):
             self.InputToTerm(self.command)
         except:
             Popen(['notify-send','Kinto: Errror restarting Kinto!','-i','budgie-desktop-symbolic'])
+
+    def runStop(self,button):
+        try:
+            stop = Popen(['sudo', 'systemctl','stop','xkeysnail'])
+            stop.wait()
+            time.sleep(1)
+            res = Popen(['pgrep','xkeysnail'])
+            res.wait()
+
+            if res.returncode == 0:
+                # Popen(['notify-send','Kinto: Ending Debug','-i','budgie-desktop-symbolic'])
+                pkillxkey = Popen(['sudo', 'pkill','-f','bin/xkeysnail'])
+                pkillxkey.wait()
+        except:
+            Popen(['notify-send','Kinto: Error stopping Kinto!','-i','budgie-desktop-symbolic'])
 
     def setEnable(self,button,enableKinto):
         try:

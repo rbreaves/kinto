@@ -45,6 +45,7 @@ class Indicator():
     checkbox_autostart = Gtk.CheckMenuItem('Autostart')
     checkbox_enable = Gtk.CheckMenuItem('Kinto Enabled')
     restart = Gtk.MenuItem('Restart')
+    stop = Gtk.MenuItem('Stop')
     keyboards = Gtk.MenuItem('Keyboard Types')
     keyboards.set_submenu(menukb)
     winkb = Gtk.RadioMenuItem(label='Windows')
@@ -134,6 +135,8 @@ class Indicator():
 
         self.restart.connect('activate',self.runRestart)
         self.menu.append(self.restart)
+        self.stop.connect('activate',self.runStop)
+        self.menu.append(self.stop)
 
         self.refreshKB()
 
@@ -600,10 +603,21 @@ class Indicator():
             Popen(['sudo', 'systemctl','start','xkeysnail'])
         except:
             Popen(['notify-send','Kinto: Error restarting Kinto!','-i','budgie-desktop-symbolic'])
-            # self.checkbox_enable.set_active(False)
-            # self.checkbox_enable.disconnect(self.enable_id)
-            # self.enable_id = self.checkbox_enable.connect('activate',self.setEnable,True)
-            # self.indicator.set_icon(os.environ['HOME']+'/.config/kinto/kinto-color.svg')
+
+    def runStop(self,button):
+        try:
+            stop = Popen(['sudo', 'systemctl','stop','xkeysnail'])
+            stop.wait()
+            time.sleep(1)
+            res = Popen(['pgrep','xkeysnail'])
+            res.wait()
+
+            if res.returncode == 0:
+                # Popen(['notify-send','Kinto: Ending Debug','-i','budgie-desktop-symbolic'])
+                pkillxkey = Popen(['sudo', 'pkill','-f','bin/xkeysnail'])
+                pkillxkey.wait()
+        except:
+            Popen(['notify-send','Kinto: Error stopping Kinto!','-i','budgie-desktop-symbolic'])
 
     def runDebug(self,button,opendebug):
         try:
