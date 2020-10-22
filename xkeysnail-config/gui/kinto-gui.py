@@ -503,7 +503,7 @@ class MyWindow(Gtk.Window):
             countkb += 1
 
         if countkb > 1:
-            Popen(['notify-send','Kinto: Remove ' + str(countkb-1) + ' kb type(s)','-i','budgie-desktop-symbolic'])
+            Popen(['notify-send','Kinto: Remove ' + str(countkb-1) + ' kb type(s)'])
 
         return
 
@@ -654,7 +654,7 @@ class MyWindow(Gtk.Window):
             Popen(restart)
 
         except CalledProcessError:
-            Popen(['notify-send','Kinto: Error Resetting KB Type!','-i','budgie-desktop-symbolic'])
+            Popen(['notify-send','Kinto: Error Resetting KB Type!'])
 
     def setTweaks(self,button):
         win = Gtk.Window()
@@ -746,7 +746,7 @@ class MyWindow(Gtk.Window):
                 restartsvc = False
 
             except CalledProcessError:
-                Popen(['notify-send','Kinto: Error restarting Kinto after setting tweaks!','-i','budgie-desktop-symbolic'])
+                Popen(['notify-send','Kinto: Error restarting Kinto after setting tweaks!'])
         if openWin and self.get_title() == "Keyboard Assistant":
             openWin = False
             win.show_all()
@@ -786,7 +786,7 @@ class MyWindow(Gtk.Window):
             restartsvc = True
 
         except CalledProcessError:
-            Popen(['notify-send','Kinto: Error Resetting AltGr!','-i','budgie-desktop-symbolic'])
+            Popen(['notify-send','Kinto: Error Resetting AltGr!'])
 
         return
 
@@ -806,7 +806,7 @@ class MyWindow(Gtk.Window):
             restartsvc = True
 
         except CalledProcessError:
-            Popen(['notify-send','Kinto: Error Resetting SublimeText remaps for VSCode!','-i','budgie-desktop-symbolic'])
+            Popen(['notify-send','Kinto: Error Resetting SublimeText remaps for VSCode!'])
         return
 
     def setCaps2Esc(self,button):
@@ -830,7 +830,7 @@ class MyWindow(Gtk.Window):
             restartsvc = True
 
         except CalledProcessError:
-            Popen(['notify-send','Kinto: Error resetting caps2esc!','-i','budgie-desktop-symbolic'])
+            Popen(['notify-send','Kinto: Error resetting caps2esc!'])
 
         return
 
@@ -856,7 +856,7 @@ class MyWindow(Gtk.Window):
             restartsvc = True
 
         except CalledProcessError:
-            Popen(['notify-send','Kinto: Error resetting caps2cmd!','-i','budgie-desktop-symbolic'])
+            Popen(['notify-send','Kinto: Error resetting caps2cmd!'])
 
         return
 
@@ -875,7 +875,7 @@ class MyWindow(Gtk.Window):
             self.command = "send \003 journalctl -f --unit=xkeysnail.service -b\n"
             self.InputToTerm(self.command)
         except:
-            Popen(['notify-send','Kinto: Errror restarting Kinto!','-i','budgie-desktop-symbolic'])
+            Popen(['notify-send','Kinto: Errror restarting Kinto!'])
 
     def runStop(self,button):
         try:
@@ -886,11 +886,11 @@ class MyWindow(Gtk.Window):
             res.wait()
 
             if res.returncode == 0:
-                # Popen(['notify-send','Kinto: Ending Debug','-i','budgie-desktop-symbolic'])
+                # Popen(['notify-send','Kinto: Ending Debug'])
                 pkillxkey = Popen(['sudo', 'pkill','-f','bin/xkeysnail'])
                 pkillxkey.wait()
         except:
-            Popen(['notify-send','Kinto: Error stopping Kinto!','-i','budgie-desktop-symbolic'])
+            Popen(['notify-send','Kinto: Error stopping Kinto!'])
 
     def setAutostart(self,button,autostart):
         try:
@@ -906,7 +906,7 @@ class MyWindow(Gtk.Window):
                 self.menuitem_auto.signal_id = self.menuitem_auto.connect('activate',self.setAutostart,False)
 
         except CalledProcessError:
-            Popen(['notify-send','Kinto: Error setting autostart!','-i','budgie-desktop-symbolic'])
+            Popen(['notify-send','Kinto: Error setting autostart!'])
 
     def setConfig(self,button):
         try:
@@ -918,7 +918,7 @@ class MyWindow(Gtk.Window):
                 Popen(['mousepad',os.environ['HOME']+'/.config/kinto/kinto.py'])
 
         except CalledProcessError:                                  # Notify user about error on running restart commands.
-            Popen(['notify-send','Kinto: Error could not open config file!','-i','budgie-desktop-symbolic'])
+            Popen(['notify-send','Kinto: Error could not open config file!'])
 
     def setService(self,button):
         try:
@@ -930,7 +930,7 @@ class MyWindow(Gtk.Window):
                 Popen(['mousepad','/lib/systemd/system/xkeysnail.service'])
 
         except CalledProcessError:                                  # Notify user about error on running restart commands.
-            Popen(['notify-send','Kinto: Error could not open config file!','-i','budgie-desktop-symbolic'])
+            Popen(['notify-send','Kinto: Error could not open config file!'])
 
     def setSysKB(self,button):
         if self.ostype == "XFCE":
