@@ -205,8 +205,8 @@ define_keymap(None,{
     K("RC-Space"): K("Alt-F1"),                   # Default SL - Launch Application Menu (gnome/kde)
     K("RC-F3"):K("Super-d"),                      # Default SL - Show Desktop (gnome/kde,eos)
     K("RC-LC-f"):K("M-F10"),                      # Default SL - Maximize app (gnome/kde)
-    K("Super-Right"):K("C-M-Right"),              # Default SL - Change workspace (fedora/budgie)
-    K("Super-Left"):K("C-M-Left"),                # Default SL - Change workspace (fedora/budgie)
+    # K("Super-Right"):K("C-M-Right"),              # Default SL - Change workspace (fedora/budgie)
+    # K("Super-Left"):K("C-M-Left"),                # Default SL - Change workspace (fedora/budgie)
     K("RC-Q"): K("M-F4"),                         # Default SL - not-popos
     K("RC-H"):K("Super-h"),                       # Default SL - Minimize app (gnome/budgie)
     K("M-Tab"): pass_through_key,                 # Default not-xfce4 - Cmd Tab - App Switching Default
@@ -216,18 +216,19 @@ define_keymap(None,{
     K("RC-Shift-Grave"): K("M-Grave"),            # Default not-xfce4 - Cmd ` - Same App Switching
     # K("Super-Right"):K("Super-Page_Up"),          # SL - Change workspace (ubuntu)
     # K("Super-Left"):K("Super-Page_Down"),         # SL - Change workspace (ubuntu)
+    # K("Super-Right"):K("Super-C-Up"),             # SL - Change workspace (popos)
+    # K("Super-Left"):K("Super-C-Down"),            # SL - Change workspace (popos)
+    # K("RC-Q"):K("Super-q"),                       # SL - Close Apps (popos)
+    # K("RC-H"): K("Super-h"),                      # SL - Minimize app (popos)
     # K("RC-Space"): K("LC-Esc"),                   # xfce4     - Launch Application Menu
     # K("RC-F3"):K("C-M-d"),                        # xfce4     - Show Desktop
-    # K("RC-LC-f"):K("LC-Super-Up"),                # popos     - Maximize app
     # K("RC-LC-f"):K("Super-Up"),                   # eos       - Maximize app
     # K("RC-LC-f"):K("Super-PAGE_UP"),              # manjaro   - Maximize app
     # K("LC-Left"):K("C-M-End"),                    # xfce4     - Change workspace
-    # K("LC-Left"):K("Super-Left"),                 # popos/eos - Change workspace
+    # K("LC-Left"):K("Super-Left"),                 # eos - Change workspace
     # K("LC-Right"):K("C-M-Home"),                  # xfce4     - Change workspace
-    # K("LC-Right"):K("Super-Right"),               # popos/eos - Change workspace                          
+    # K("LC-Right"):K("Super-Right"),               # eos - Change workspace                          
     # Basic App hotkey functions
-    # K("RC-Q"):K("Super-w"),                     # popos     - Close Apps
-    # K("RC-H"): K("M-F9"),                         # Default - Minimize app
     # K("RC-H"):K("M-F9"),                          # xfce4     - Minimize app
     # K("RC-LC-f"):K("Super-PAGE_DOWN"),            # manjaro   - Minimize app
     # Cmd Tab - App Switching Default

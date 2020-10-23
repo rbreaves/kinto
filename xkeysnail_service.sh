@@ -149,6 +149,15 @@ function budgieUpdate {
 	fi
 }
 
+if ls /etc/apt/sources.list.d/system76* 1> /dev/null 2>&1; then
+	pip3 install pillow
+	# Addition, does not overwrite existing
+	gsettings set org.gnome.desktop.wm.keybindings minimize "['<Super>h','<Alt>F9']"
+	# work around to make sure settings survive reboot
+	dconf dump /org/gnome/desktop/wm/keybindings/ > tempkb.conf
+	dconf load /org/gnome/desktop/wm/keybindings/ < tempkb.conf
+fi
+
 # if [ $# -eq 0 ]; then
 # 	echo "Install Kinto - xkeysnail (udev)"
 # 	echo "  1) Windows & Mac (HID driver) - Most Standard keyboards (& 1st party usb/bt Apple keyboards)"
