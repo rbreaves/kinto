@@ -21,7 +21,7 @@ function uninstall {
 
 	if [ "$yn" == "f" ];then
 		echo "Reset to factory shortcuts"
-		if [ "$dename" == "gnome" ];then
+		if [[ $dename == "gnome" || $dename == "budgie" ]];then
 			echo "Resetting DE hotkeys..."
 			echo "gsettings reset-recursively org.gnome.desktop.wm.keybindings"
 			gsettings reset-recursively org.gnome.desktop.wm.keybindings
@@ -41,7 +41,7 @@ function uninstall {
 		fi
 	elif [ "$yn" == "r" ]; then
 		echo "Restore original user shortcuts"
-		if [ "$dename" == "gnome" ]; then
+		if [[ $dename == "gnome" || $dename == "budgie" ]]; then
 			echo "Restoring DE hotkeys..."
 			wmkeys=$(ls | grep -m1 "keybinding")
 			mutterkeys=$(ls | grep -m1 "mutter_")
@@ -273,7 +273,7 @@ sed -i "s#{homedir}#`echo "$HOME"`#g" ~/.config/kinto/xkeysnail.desktop
 sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ./xkeysnail-config/xkeysnail.service.new
 # sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ~/.config/kinto/prexk.sh
 
-if [[ $dename == "gnome" || dename == "budgie" ]]; then
+if [[ $dename == "gnome" || $dename == "budgie" ]]; then
 	perl -pi -e "s/(# )(.*)(# gnome)/\$2\$3/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
 fi
 if [[ $dename == "kde" ]]; then

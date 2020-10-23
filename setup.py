@@ -131,18 +131,4 @@ if args.uninstall:
 
 subprocess.check_call(shlex.split("./xkeysnail_service.sh"))
 
-# kintotype = int(input(color_arr[2] +
-# 	"1) Kinto \n" + color_arr[0] +
-# 	"2) Uninstall Kinto \n"
-# 	+ bcolors.ENDC))
-# print("")
-# if(kintotype == 1):
-# 	subprocess.check_call(shlex.split("./xkeysnail_service.sh"))
-# 	# if os.path.isdir(homedir + "/.config/kinto") == True:
-# 	# 	subprocess.check_call(shlex.split("./xkeysnail_service.sh budgieUpdate"))
-# 	# exit()
-
-# if(kintotype == 2):
-# 	subprocess.check_call(shlex.split("./xkeysnail_service.sh uninstall"))
-# 	exit()
 
