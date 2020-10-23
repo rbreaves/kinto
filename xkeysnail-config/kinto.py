@@ -205,22 +205,21 @@ define_keymap(None,{
     K("RC-Space"): K("Alt-F1"),                   # Default SL - Launch Application Menu (gnome/kde)
     K("RC-F3"):K("Super-d"),                      # Default SL - Show Desktop (gnome/kde,eos)
     K("RC-LC-f"):K("M-F10"),                      # Default SL - Maximize app (gnome/kde)
-    # K("Super-Right"):K("C-M-Right"),              # Default SL - Change workspace (fedora/budgie) not-kde_neon
-    # K("Super-Left"):K("C-M-Left"),                # Default SL - Change workspace (fedora/budgie) not-kde_neon
+    # K("Super-Right"):K("C-M-Right"),              # Default SL - Change workspace (budgie) not-kde_neon
+    # K("Super-Left"):K("C-M-Left"),                # Default SL - Change workspace (budgie) not-kde_neon
     K("RC-Q"): K("M-F4"),                         # Default SL - not-popos
-    K("RC-H"):K("Super-h"),                       # Default SL - Minimize app (gnome/budgie)
+    K("RC-H"):K("Super-h"),                       # Default SL - Minimize app (gnome/budgie/popos/fedora)
     K("M-Tab"): pass_through_key,                 # Default not-xfce4 - Cmd Tab - App Switching Default
     K("RC-Tab"): K("M-Tab"),                      # Default not-xfce4 - Cmd Tab - App Switching Default
     K("RC-Shift-Tab"): K("M-Shift-Tab"),          # Default not-xfce4 - Cmd Tab - App Switching Default
     K("RC-Grave"): K("M-Grave"),                  # Default not-xfce4 - Cmd ` - Same App Switching
     K("RC-Shift-Grave"): K("M-Grave"),            # Default not-xfce4 - Cmd ` - Same App Switching
-    # K("Super-Right"):K("Super-Page_Up"),          # SL - Change workspace (ubuntu)
-    # K("Super-Left"):K("Super-Page_Down"),         # SL - Change workspace (ubuntu)
+    # K("Super-Right"):K("Super-Page_Up"),          # SL - Change workspace (ubuntu/fedora)
+    # K("Super-Left"):K("Super-Page_Down"),         # SL - Change workspace (ubuntu/fedora)
     # K("Super-Right"):K("Super-C-Up"),             # SL - Change workspace (popos)
     # K("Super-Left"):K("Super-C-Down"),            # SL - Change workspace (popos)
     # K("RC-Q"):K("Super-q"),                       # SL - Close Apps (popos)
-    # K("RC-H"): K("Super-h"),                      # SL - Minimize app (popos)
-    K("RC-H"): K("Super-Page_Down"),              # SL - Minimize app (kde_neon)
+    # K("RC-H"): K("Super-Page_Down"),              # SL - Minimize app (kde_neon)
                                                   # SL - Default SL - Change workspace (kde_neon)
     # K("RC-Space"): K("LC-Esc"),                   # xfce4     - Launch Application Menu
     # K("RC-F3"):K("C-M-d"),                        # xfce4     - Show Desktop

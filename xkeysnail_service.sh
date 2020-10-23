@@ -52,6 +52,15 @@ if [[ $distro == 'fedora' ]]; then
 	else
 		echo "SELinux state should be ok for Kinto to install"
 	fi
+	if [[ $(gsettings get org.gnome.desktop.wm.keybindings show-desktop | grep "\[\]" | wc -l) == 1 ]];then
+		gsettings set org.gnome.desktop.wm.keybindings show-desktop "['<Super>d']"
+	else
+		if [[ $(gsettings get org.gnome.desktop.wm.keybindings show-desktop | grep "<Super>d" | wc -l) == 0 ]]; then
+			echo 'Kinto will not set your "Show Desktop" hotkey due to it already being set.\nPlease set Show Desktop to Super-D, or Edit Kinto'"'"'s config.'
+			echo "Did not run the following."
+			echo "gsettings set org.gnome.desktop.wm.keybindings show-desktop \"['<Super>d']\""	
+		fi
+	fi
 fi
 
 
