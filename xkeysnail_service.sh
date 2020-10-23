@@ -9,6 +9,8 @@ typeset -l dename
 dename=$(./system-config/dename.sh | cut -d " " -f1)
 
 
+# Add additional shortcuts if needed, does not modify existing ones
+
  if [[ $distro == '"elementary os"' ]];then
  	if [[ $(gsettings get org.gnome.mutter overlay-key | grep "Super" | wc -l) != 1 ]];then
  		echo "Overlay key, Super, detected. Will be removing so Super-Space can remap to Cmd-Space for app launching.."
@@ -20,10 +22,17 @@ fi
 if ls /etc/apt/sources.list.d/system76* 1> /dev/null 2>&1; then
 	pip3 install pillow
 	# Addition, does not overwrite existing
-	gsettings set org.gnome.desktop.wm.keybindings minimize "['<Super>h','<Alt>F9']"
-	# work around to make sure settings survive reboot
-	dconf dump /org/gnome/desktop/wm/keybindings/ > tempkb.conf
-	dconf load /org/gnome/desktop/wm/keybindings/ < tempkb.conf
+	if [[ $(gsettings get org.gnome.desktop.wm.keybindings minimize | grep "\[\]" | wc -l) != 1 ]];then
+		echo "Adding Super-h (Cmd+h) to hide/minimize Window."
+		gsettings set org.gnome.desktop.wm.keybindings minimize "['<Super>h','<Alt>F9']"
+		# work around to make sure settings survive reboot
+		dconf dump /org/gnome/desktop/wm/keybindings/ > tempkb.conf
+		dconf load /org/gnome/desktop/wm/keybindings/ < tempkb.conf
+	else
+		bound=$(gsettings get org.gnome.desktop.wm.keybindings minimize)
+		echo "Hide/minimize Window is already bound to " $bound " , please remap it to Super-H for kinto."
+		echo "gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\""
+	fi
 fi
 
 if [[ $dename == "kde" ]]; then
@@ -338,9 +347,14 @@ sed -i "s#{homedir}#`echo "$HOME"`#g" ~/.config/kinto/xkeysnail.desktop
 sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ./xkeysnail-config/xkeysnail.service.new
 # sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ~/.config/kinto/prexk.sh
 
-if [[ $dename == "gnome" || $dename == "budgie" ]]; then
-	perl -pi -e "s/(# )(.*)(# gnome)/\$2\$3/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
+if [[ $dename == "budgie" ]]; then
+	perl -pi -e "s/\s{4}(# )(K.*)(# Default SL - Change workspace.*budgie.*)/\$2\$3/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
 fi
+
+if [[ $dename == "gnome" ]]; then
+	perl -pi -e "\s{4}(# )(K.*)(# SL - .*ubuntu.*)/\$2\$3/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
+fi
+
 if [[ $dename == "kde" ]]; then
 	echo "Applying Cmd-Space to open App Launcher for KDE..."
 	perl -pi -e "s/(# )(.*)(#.*kde)/\$2\$3/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
