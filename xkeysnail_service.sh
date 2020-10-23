@@ -162,12 +162,34 @@ if [[ $dename == "kde" ]]; then
 	sudo apt update
 	sudo apt install libvte-2.91-dev
 fi
-if [[ $distro == '"KDE neon"' ]]; then
+if [[ $distro == '"kde neon"' ]]; then
 	kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Show Desktop" "Meta+D,none,Show Desktop"
 	kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Close" "Alt+F4,none,Close Window"
 	kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Minimize" "Meta+PgDown,none,Minimize Window"
 	kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Maximize" "Meta+PgUp,none,Maximize Window"
 	kquitapp5 kglobalaccel && sleep 2s && kglobalaccel5 &
+fi
+
+if [[ $distro == 'fedora' ]]; then
+	echo "Checking SELinux status..."
+	if [[ $(perl -ne 'print if /^SELINUX=enforcing/' /etc/selinux/config | wc -l) != 0 ]]; then
+		while true; do
+		read -rep $'\nWould you like to update your SELinux state from enforcing to permissive? (y/n)\n' yn
+		case $yn in
+			[Yy]* ) setSE='yes'; break;;
+			[Nn]* ) exp='no'; expsh=" " break;;
+			# * ) echo "Please answer yes or no.";;
+		esac
+		done	
+
+		if [[ $yn == "yes" ]]; then
+			sed -i "s/SELINUX=enforcing/SELINUX=permissive/g" /etc/selinux/config
+			echo "/etc/selinux/config has been updated. Please reboot your computer before continuing."
+			exit 0
+		fi
+	else
+		echo "SELinux state should be ok for Kinto to install"
+	fi
 fi
 
 # if [ $# -eq 0 ]; then
