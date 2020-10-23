@@ -158,6 +158,18 @@ if ls /etc/apt/sources.list.d/system76* 1> /dev/null 2>&1; then
 	dconf load /org/gnome/desktop/wm/keybindings/ < tempkb.conf
 fi
 
+if [[ $dename == "kde" ]]; then
+	sudo apt update
+	sudo apt install libvte-2.91-dev
+fi
+if [[ $distro == '"KDE neon"' ]]; then
+	kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Show Desktop" "Meta+D,none,Show Desktop"
+	kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Close" "Alt+F4,none,Close Window"
+	kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Minimize" "Meta+PgDown,none,Minimize Window"
+	kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Maximize" "Meta+PgUp,none,Maximize Window"
+	kquitapp5 kglobalaccel && sleep 2s && kglobalaccel5 &
+fi
+
 # if [ $# -eq 0 ]; then
 # 	echo "Install Kinto - xkeysnail (udev)"
 # 	echo "  1) Windows & Mac (HID driver) - Most Standard keyboards (& 1st party usb/bt Apple keyboards)"
