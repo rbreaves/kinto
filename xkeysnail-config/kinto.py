@@ -205,8 +205,8 @@ define_keymap(None,{
     K("RC-Space"): K("Alt-F1"),                   # Default SL - Launch Application Menu (gnome/kde)
     K("RC-F3"):K("Super-d"),                      # Default SL - Show Desktop (gnome/kde,eos)
     K("RC-LC-f"):K("M-F10"),                      # Default SL - Maximize app (gnome/kde)
-    K("Super-Right"):K("C-M-Right"),              # Default SL - Change workspace (ubuntu/fedora/budgie)
-    K("Super-Left"):K("C-M-Left"),                # Default SL - Change workspace (ubuntu/fedora/budgie)
+    K("Super-Right"):K("C-M-Right"),              # Default SL - Change workspace (fedora/budgie)
+    K("Super-Left"):K("C-M-Left"),                # Default SL - Change workspace (fedora/budgie)
     K("RC-Q"): K("M-F4"),                         # Default SL - not-popos
     K("RC-H"):K("Super-h"),                       # Default SL - Minimize app (gnome/budgie)
     K("M-Tab"): pass_through_key,                 # Default not-xfce4 - Cmd Tab - App Switching Default
@@ -214,6 +214,8 @@ define_keymap(None,{
     K("RC-Shift-Tab"): K("M-Shift-Tab"),          # Default not-xfce4 - Cmd Tab - App Switching Default
     K("RC-Grave"): K("M-Grave"),                  # Default not-xfce4 - Cmd ` - Same App Switching
     K("RC-Shift-Grave"): K("M-Grave"),            # Default not-xfce4 - Cmd ` - Same App Switching
+    # K("Super-Right"):K("Super-Page_Up"),          # SL - Change workspace (ubuntu)
+    # K("Super-Left"):K("Super-Page_Down"),         # SL - Change workspace (ubuntu)
     # K("RC-Space"): K("LC-Esc"),                   # xfce4     - Launch Application Menu
     # K("RC-F3"):K("C-M-d"),                        # xfce4     - Show Desktop
     # K("RC-LC-f"):K("LC-Super-Up"),                # popos     - Maximize app

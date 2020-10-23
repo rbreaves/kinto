@@ -117,7 +117,6 @@ class MyWindow(Gtk.Window):
         self.InputToTerm(self.command)
 
         grid = Gtk.Grid()
-        grid.modify_bg(Gtk.StateFlags.NORMAL, Gdk.color_parse("#2d303b"))
         self.add(grid)
 
         menubar = Gtk.MenuBar()
@@ -128,7 +127,10 @@ class MyWindow(Gtk.Window):
         scroller.set_vexpand(True)
         scroller.add(terminal)
         grid.attach(scroller, 0, 1, 1, 1)
-        grid.attach_next_to(self.label, scroller, Gtk.PositionType.BOTTOM, 2, 1)
+        status_hbox = Gtk.HBox()
+        status_hbox.add(self.label)
+        status_hbox.modify_bg(Gtk.StateFlags.NORMAL, Gdk.color_parse("#2d303b"))
+        grid.attach_next_to(status_hbox, scroller, Gtk.PositionType.BOTTOM, 2, 1)
 
         with open(self.kconfig) as configfile:
             autostart_line = configfile.read().split('\n')[1]
