@@ -8,6 +8,53 @@ distro=$(awk -F= '$1=="NAME" { print $2 ;}' /etc/os-release)
 typeset -l dename
 dename=$(./system-config/dename.sh | cut -d " " -f1)
 
+if ls /etc/apt/sources.list.d/system76* 1> /dev/null 2>&1; then
+	pip3 install pillow
+	# Addition, does not overwrite existing
+	gsettings set org.gnome.desktop.wm.keybindings minimize "['<Super>h','<Alt>F9']"
+	# work around to make sure settings survive reboot
+	dconf dump /org/gnome/desktop/wm/keybindings/ > tempkb.conf
+	dconf load /org/gnome/desktop/wm/keybindings/ < tempkb.conf
+fi
+
+if [[ $dename == "kde" ]]; then
+	if [[ $distroy == "manjaro linux" ]]; then
+		sudo ./system-config/unipkg.sh vte3
+	else
+		sudo ./system-config/unipkg.sh libvte-2.91-dev
+	fi
+fi
+if [[ $distro == '"kde neon"' ]]; then
+	kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Show Desktop" "Meta+D,none,Show Desktop"
+	kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Close" "Alt+F4,none,Close Window"
+	kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Minimize" "Meta+PgDown,none,Minimize Window"
+	kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Maximize" "Meta+PgUp,none,Maximize Window"
+	kquitapp5 kglobalaccel && sleep 2s && kglobalaccel5 &
+fi
+
+if [[ $distro == 'fedora' ]]; then
+	echo "Checking SELinux status..."
+	if [[ $(perl -ne 'print if /^SELINUX=enforcing/' /etc/selinux/config | wc -l) != 0 ]]; then
+		while true; do
+		read -rep $'\nWould you like to update your SELinux state from enforcing to permissive? (y/n)\n' yn
+		case $yn in
+			[Yy]* ) setSE='yes'; break;;
+			[Nn]* ) exp='no'; expsh=" " break;;
+			# * ) echo "Please answer yes or no.";;
+		esac
+		done	
+
+		if [[ $yn == "yes" ]]; then
+			sed -i "s/SELINUX=enforcing/SELINUX=permissive/g" /etc/selinux/config
+			echo "/etc/selinux/config has been updated. Please reboot your computer before continuing."
+			exit 0
+		fi
+	else
+		echo "SELinux state should be ok for Kinto to install"
+	fi
+fi
+
+
 function uninstall {
 
 	while true; do
@@ -148,49 +195,6 @@ function budgieUpdate {
 		fi
 	fi
 }
-
-if ls /etc/apt/sources.list.d/system76* 1> /dev/null 2>&1; then
-	pip3 install pillow
-	# Addition, does not overwrite existing
-	gsettings set org.gnome.desktop.wm.keybindings minimize "['<Super>h','<Alt>F9']"
-	# work around to make sure settings survive reboot
-	dconf dump /org/gnome/desktop/wm/keybindings/ > tempkb.conf
-	dconf load /org/gnome/desktop/wm/keybindings/ < tempkb.conf
-fi
-
-if [[ $dename == "kde" ]]; then
-	sudo apt update
-	sudo apt install libvte-2.91-dev
-fi
-if [[ $distro == '"kde neon"' ]]; then
-	kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Show Desktop" "Meta+D,none,Show Desktop"
-	kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Close" "Alt+F4,none,Close Window"
-	kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Minimize" "Meta+PgDown,none,Minimize Window"
-	kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Maximize" "Meta+PgUp,none,Maximize Window"
-	kquitapp5 kglobalaccel && sleep 2s && kglobalaccel5 &
-fi
-
-if [[ $distro == 'fedora' ]]; then
-	echo "Checking SELinux status..."
-	if [[ $(perl -ne 'print if /^SELINUX=enforcing/' /etc/selinux/config | wc -l) != 0 ]]; then
-		while true; do
-		read -rep $'\nWould you like to update your SELinux state from enforcing to permissive? (y/n)\n' yn
-		case $yn in
-			[Yy]* ) setSE='yes'; break;;
-			[Nn]* ) exp='no'; expsh=" " break;;
-			# * ) echo "Please answer yes or no.";;
-		esac
-		done	
-
-		if [[ $yn == "yes" ]]; then
-			sed -i "s/SELINUX=enforcing/SELINUX=permissive/g" /etc/selinux/config
-			echo "/etc/selinux/config has been updated. Please reboot your computer before continuing."
-			exit 0
-		fi
-	else
-		echo "SELinux state should be ok for Kinto to install"
-	fi
-fi
 
 # if [ $# -eq 0 ]; then
 # 	echo "Install Kinto - xkeysnail (udev)"
