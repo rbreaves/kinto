@@ -8,6 +8,15 @@ distro=$(awk -F= '$1=="NAME" { print $2 ;}' /etc/os-release)
 typeset -l dename
 dename=$(./system-config/dename.sh | cut -d " " -f1)
 
+
+ if [[ $distro == '"elementary os"' ]];then
+ 	if [[ $(gsettings get org.gnome.mutter overlay-key | grep "Super" | wc -l) != 1 ]];then
+ 		echo "Overlay key, Super, detected. Will be removing so Super-Space can remap to Cmd-Space for app launching.."
+ 		gsettings set org.gnome.mutter overlay-key " "
+ 		# echo "Has been set. Please logoff and back on after install for changes to take effect."
+ 	fi
+fi
+
 if ls /etc/apt/sources.list.d/system76* 1> /dev/null 2>&1; then
 	pip3 install pillow
 	# Addition, does not overwrite existing
@@ -363,8 +372,9 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	sudo ln -s "$xkeypath"xkeysnail.service /etc/systemd/system/xkeysnail.service && echo "Created soft symlink..." || echo "Failed to create soft symlink..."
 	sudo ln -s "$xkeypath"xkeysnail.service /etc/systemd/system/graphical.target.wants/xkeysnail.service && echo "Created soft symlink for graphical target..." || echo "Failed to create soft symlink for graphical target..."
 	xhost +SI:localuser:root
-	git clone --depth 10 https://github.com/rbreaves/xkeysnail.git || git pull --depth 10
+	git clone --depth 10 https://github.com/rbreaves/xkeysnail.git
 	cd xkeysnail
+	git pull --depth 10
 	git checkout 51c369084e0045a8410d227bab52411bf84fb65b
 	giturl=$(git ls-remote --get-url)
 	if [ "$giturl" != "https://github.com/rbreaves/xkeysnail.git" ];then

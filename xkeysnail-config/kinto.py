@@ -219,6 +219,7 @@ define_keymap(None,{
     # K("Super-Right"):K("Super-C-Up"),             # SL - Change workspace (popos)
     # K("Super-Left"):K("Super-C-Down"),            # SL - Change workspace (popos)
     # K("RC-Q"):K("Super-q"),                       # SL - Close Apps (popos)
+    # K("RC-Space"): K("Super-Space"),              # SL - Launch Application Menu (eos)
     # K("RC-H"): K("Super-Page_Down"),              # SL - Minimize app (kde_neon)
                                                   # SL - Default SL - Change workspace (kde_neon)
     # K("RC-Space"): K("LC-Esc"),                   # xfce4     - Launch Application Menu
