@@ -4,14 +4,14 @@
 # to false for wordwise to work in Firefox
 
 typeset -l distro
-distro=$(awk -F= '$1=="NAME" { print $2 ;}' /etc/os-release)
+distro=$(awk -F= '$1=="NAME" { gsub("[\",!,_, ]","",$2);print $2 ;}' /etc/os-release)
 typeset -l dename
 dename=$(./system-config/dename.sh | cut -d " " -f1)
 
 
 # Add additional shortcuts if needed, does not modify existing ones
 
- if [[ $distro == '"elementary os"' ]];then
+ if [[ $distro == 'elementaryos' ]];then
  	if [[ $(gsettings get org.gnome.mutter overlay-key | grep "Super" | wc -l) != 1 ]];then
  		echo "Overlay key, Super, detected. Will be removing so Super-Space can remap to Cmd-Space for app launching.."
  		gsettings set org.gnome.mutter overlay-key " "
@@ -36,13 +36,13 @@ if ls /etc/apt/sources.list.d/system76* 1> /dev/null 2>&1; then
 fi
 
 if [[ $dename == "kde" ]]; then
-	if [[ $distroy == "manjaro linux" ]]; then
+	if [[ $distroy == "manjarolinux" ]]; then
 		sudo ./system-config/unipkg.sh vte3
 	else
 		sudo ./system-config/unipkg.sh libvte-2.91-dev
 	fi
 fi
-if [[ $distro == '"kde neon"' ]]; then
+if [[ $distro == 'kdeneon' ]]; then
 	kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Show Desktop" "Meta+D,none,Show Desktop"
 	kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Close" "Alt+F4,none,Close Window"
 	kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Minimize" "Meta+PgDown,none,Minimize Window"
@@ -261,12 +261,12 @@ if ! [ -x "$(command -v pip3)" ]; then
 	sudo ./system-config/unipkg.sh python3-pip
 fi
 if ! [ -x "$(command -v python3-config)" ]; then
-	if [ "$distro" == "ubuntu" ] || [ "$distro" == "debian" ] || [ "$distro" == '"linux mint"' ]; then
+	if [ "$distro" == "ubuntu" ] || [ "$distro" == "debian" ] || [ "$distro" == 'linuxmint' ]; then
 		pydev="python3-dev"
 	elif [ "$distro" == "fedora" ]; then
 		pydev="python3-devel"
 	fi
-	if [ "$distro" == "gnome" ] || [ "$distro" == "fedora" ] || [ "$distro" == "debian" ] || [ "$distro" == '"linux mint"' ]; then
+	if [ "$distro" == "gnome" ] || [ "$distro" == "fedora" ] || [ "$distro" == "debian" ] || [ "$distro" == 'linuxmint' ]; then
 		echo "Will need to install $pydev..."
 		sudo ./system-config/unipkg.sh "$pydev"
 	fi
@@ -276,7 +276,7 @@ if ! [ -x "$(command -v xhost)" ] || ! [ -x "$(command -v gcc)" ]; then
 		sudo ./system-config/unipkg.sh "xorg-xhost gcc"
 	fi
 fi
-if [ "$distro" == '"linux mint"' ]; then
+if [ "$distro" == 'linuxmint' ]; then
 	pip3 install setuptools
 fi
 
