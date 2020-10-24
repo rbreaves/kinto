@@ -306,7 +306,8 @@ You may need to manually set your DISPLAY in the systemd service file. Normally 
 
 Another possibility is the SELinux could be enabled and needs to be set to permissive. (aka /etc/selinux/config)
 
-To fix the display port issue however you can try the following.
+
+You may need to manually set your DISPLAY in the systemd service file. Normally it pulls in the proper DISPLAY value but if it doesn't you can try this.
 
 ```
 echo $DISPLAY
