@@ -483,10 +483,7 @@ elif [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	fi
 	sudo systemctl daemon-reload
 	# sudo systemctl --state=not-found --all | grep xkeysnail
-	budgieUninstall
 	exit 0
-elif [[ $1 == "budgieUpdate" ]]; then
-	budgieUpdate
 else
 	echo "Expected argument was not provided"
 fi
