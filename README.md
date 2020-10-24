@@ -302,27 +302,26 @@ To disable keyboard mapping:
 
 Kinto
 
-1. Check the status
-```
-sudo systemctl status xkeysnail
-```
-2. Check the service journal
-```
-journalctl --unit=xkeysnail.service -b
-```
-
-Note: You can also watch your log live
-```
-journalctl -l --user-unit=keyswap.service -b
-```
-
 You may need to manually set your DISPLAY in the systemd service file. Normally it pulls in the proper DISPLAY value but if it doesn't you can try this.
+
+Another possibility is the SELinux could be enabled and needs to be set to permissive. (aka /etc/selinux/config)
+
+To fix the display port issue however you can try the following.
 
 ```
 echo $DISPLAY
 
 # :0.0
 ```
+
+You can use the Kinto.sh app or system tray to edit your service file.
+
+kinto.sh gui
+1. Edit -> Edit Service
+kinto tray
+1. Customize -> Edit Service
+
+or you can use your terminal.
 
 sudo nano /etc/systemd/system/xkeysnail.service
 ```
