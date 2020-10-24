@@ -11,15 +11,17 @@ dename=$(./system-config/dename.sh | cut -d " " -f1)
 
 # Add additional shortcuts if needed, does not modify existing ones
 
- if [[ $distro == 'elementaryos' ]];then
- 	if [[ $(gsettings get org.gnome.mutter overlay-key | grep "Super" | wc -l) != 1 ]];then
- 		echo "Overlay key, Super, detected. Will be removing so Super-Space can remap to Cmd-Space for app launching.."
- 		gsettings set org.gnome.mutter overlay-key " "
- 		# echo "Has been set. Please logoff and back on after install for changes to take effect."
- 	fi
+if [[ $dename == 'gnome' || $dename == 'budgie' ]];then
+	if [[ $(gsettings get org.gnome.mutter overlay-key | grep "''\|' '" | wc -l) != 1 ]];then
+		bound=$(gsettings get org.gnome.mutter overlay-key)
+		echo "Overlay key, " $bound ", detected. Will be removing so Super-Space can remap to Cmd-Space for app launching.."
+		echo "Overlay key, Super, detected. Will be removing so Super-Space can remap to Cmd-Space for app launching.."
+		gsettings set org.gnome.mutter overlay-key ''
+	fi
 fi
 
-if ls /etc/apt/sources.list.d/system76* 1> /dev/null 2>&1; then
+# if ls /etc/apt/sources.list.d/system76* 1> /dev/null 2>&1; then
+if [[ $distro == 'popos' ]]; then
 	pip3 install pillow
 	# Addition, does not overwrite existing
 	if [[ $(gsettings get org.gnome.desktop.wm.keybindings minimize | grep "\[\]" | wc -l) != 1 ]];then
@@ -162,7 +164,8 @@ function removeAppleKB {
 
 function budgieUninstall {
 	if [ -f /usr/bin/budgie-desktop ];then
-		read -n 1 -s -r -p "Your system may log you off immediately during the restoration of budgie-daemon. Press any key to continue..."
+		echo -e "\nYour system may log you off immediately during the restoration of budgie-daemon.\n"
+		read -n 1 -s -r -p "Press any key to continue..."
 		bdmd5="$(md5sum /usr/bin/budgie-daemon | awk '{ print $1 }')"
 		oldbdmd5=$(md5sum ./budgie-daemon_10.5.1.bak | awk '{ print $1 }')
 		if [ "$bdmd5" != "$oldbdmd5" ]; then
@@ -348,11 +351,27 @@ sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ./xkeysnail-config/xkeysnail.service.
 # sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ~/.config/kinto/prexk.sh
 
 if [[ $dename == "budgie" ]]; then
-	perl -pi -e "s/\s{4}(# )(K.*)(# Default SL - Change workspace.*budgie.*)/\$2\$3/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
+	perl -pi -e "s/\s{4}(# )(K.*)(# Default SL - Change workspace.*budgie.*)/    \$2\$3/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
+fi
+
+if [[ $distro == "popos" ]]; then
+	perl -pi -e "\s{4}(# )(K.*)(# SL - .*popos.*)/    \$2\$3/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
+fi
+
+if [[ $distro == "fedora" ]]; then
+	perl -pi -e "\s{4}(# )(K.*)(# SL - .*fedora.*)/    \$2\$3/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
+fi
+
+if [[ $distro == "elementaryos" ]]; then
+	perl -pi -e "\s{4}(# )(K.*)(# SL - .*eos.*)/    \$2\$3/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
+fi
+
+if [[ "$distro" == "manjaro"* ]]; then
+	perl -pi -e "\s{4}(# )(K.*)(# SL - .*manjaro.*)/    \$2\$3/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
 fi
 
 if [[ $dename == "gnome" ]]; then
-	perl -pi -e "\s{4}(# )(K.*)(# SL - .*ubuntu.*)/\$2\$3/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
+	perl -pi -e "\s{4}(# )(K.*)(# SL - .*ubuntu.*)/    \$2\$3/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
 fi
 
 if [[ $dename == "kde" ]]; then
@@ -361,6 +380,7 @@ if [[ $dename == "kde" ]]; then
 fi
 
 if [[ $dename == "xfce" ]]; then
+	perl -pi -e "\s{4}(# )(K.*)(# SL - .*xfce.*)/    \$2\$3/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
 	perl -pi -e "s/(# )(.*)(# xfce4)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
 	perl -pi -e "s/(\w.*)(# Default not-xfce4)/# \$1\$2/g" ./xkeysnail-config/kinto.py.new
 fi
@@ -462,7 +482,7 @@ elif [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 		sudo rm /usr/local/bin/logoff.sh
 	fi
 	sudo systemctl daemon-reload
-	sudo systemctl --state=not-found --all | grep xkeysnail
+	# sudo systemctl --state=not-found --all | grep xkeysnail
 	budgieUninstall
 	exit 0
 elif [[ $1 == "budgieUpdate" ]]; then

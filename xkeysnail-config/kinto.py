@@ -205,8 +205,8 @@ define_keymap(None,{
     K("RC-Space"): K("Alt-F1"),                   # Default SL - Launch Application Menu (gnome/kde)
     K("RC-F3"):K("Super-d"),                      # Default SL - Show Desktop (gnome/kde,eos)
     K("RC-LC-f"):K("M-F10"),                      # Default SL - Maximize app (gnome/kde)
-    # K("Super-Right"):K("C-M-Right"),              # Default SL - Change workspace (budgie) not-kde_neon
-    # K("Super-Left"):K("C-M-Left"),                # Default SL - Change workspace (budgie) not-kde_neon
+    # K("Super-Right"):K("C-M-Right"),              # Default SL - Change workspace (budgie)
+    # K("Super-Left"):K("C-M-Left"),                # Default SL - Change workspace (budgie)
     K("RC-Q"): K("M-F4"),                         # Default SL - not-popos
     K("RC-H"):K("Super-h"),                       # Default SL - Minimize app (gnome/budgie/popos/fedora)
     K("M-Tab"): pass_through_key,                 # Default not-xfce4 - Cmd Tab - App Switching Default
@@ -222,17 +222,13 @@ define_keymap(None,{
     # K("RC-Space"): K("Super-Space"),              # SL - Launch Application Menu (eos)
     # K("RC-H"): K("Super-Page_Down"),              # SL - Minimize app (kde_neon)
                                                   # SL - Default SL - Change workspace (kde_neon)
-    # K("RC-Space"): K("LC-Esc"),                   # xfce4     - Launch Application Menu
-    # K("RC-F3"):K("C-M-d"),                        # xfce4     - Show Desktop
-    # K("RC-LC-f"):K("Super-Up"),                   # eos       - Maximize app
-    # K("RC-LC-f"):K("Super-PAGE_UP"),              # manjaro   - Maximize app
-    # K("LC-Left"):K("C-M-End"),                    # xfce4     - Change workspace
-    # K("LC-Left"):K("Super-Left"),                 # eos - Change workspace
-    # K("LC-Right"):K("C-M-Home"),                  # xfce4     - Change workspace
-    # K("LC-Right"):K("Super-Right"),               # eos - Change workspace                          
+    # K("RC-Space"): K("LC-Esc"),                   # SL- Launch Application Menu xfce4
+    # K("RC-F3"):K("C-M-d"),                        # SL- Show Desktop xfce4
+    # K("RC-LC-f"):K("Super-Up"),                   # SL- Maximize app eos
+    # K("RC-LC-f"):K("Super-PAGE_UP"),              # SL- Maximize app manjaro
     # Basic App hotkey functions
-    # K("RC-H"):K("M-F9"),                          # xfce4     - Minimize app
-    # K("RC-LC-f"):K("Super-PAGE_DOWN"),            # manjaro   - Minimize app
+    # K("RC-H"):K("M-F9"),                          # SL - Minimize app xfce4
+    # K("RC-LC-f"):K("Super-PAGE_DOWN"),            # SL - Minimize app manjaro
     # Cmd Tab - App Switching Default
     # K("RC-Tab"): K("RC-backslash"),               # xfce4
     # K("RC-Shift-Tab"): K("RC-Shift-backslash"),   # xfce4
@@ -410,6 +406,16 @@ define_keymap(re.compile("Io.elementary.terminal|kitty", re.IGNORECASE),{
 }, "Elementary Terminal tab switching")
 
 define_keymap(re.compile(termStr, re.IGNORECASE),{
+    # K("LC-Right"):K("C-M-Right"),                 # Default SL - Change workspace (budgie)
+    # K("LC-Left"):K("C-M-Left"),                   # Default SL - Change workspace (budgie)
+    # K("LC-Left"):K("C-M-End"),                    # SL - Change workspace xfce4     
+    # K("LC-Left"):K("Super-Left"),                 # SL - Change workspace eos 
+    # K("LC-Right"):K("C-M-Home"),                  # SL - Change workspace xfce4     
+    # K("LC-Right"):K("Super-Right"),               # SL - Change workspace eos
+    # K("LC-Right"):K("Super-Page_Up"),             # SL - Change workspace (ubuntu/fedora)
+    # K("LC-Left"):K("Super-Page_Down"),            # SL - Change workspace (ubuntu/fedora)
+    # K("LC-Right"):K("Super-C-Up"),                # SL - Change workspace (popos)
+    # K("LC-Left"):K("Super-C-Down"),               # SL - Change workspace (popos)
     # Ctrl Tab - In App Tab Switching
     K("LC-Tab") : K("LC-PAGE_DOWN"),
     K("LC-Shift-Tab") : K("LC-PAGE_UP"),
