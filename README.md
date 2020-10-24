@@ -248,7 +248,7 @@ The older xkb shortcut method info can be read about in ticket [#125](https://gi
 
 ## How to Upgrade Kinto
 
-Simply bring down the latest in either the master branch or dev, but dev is sometimes in flux as new features are being developed. Then you can re-run the setup.py installer, it will stop the service and re-install Kinto.
+Simply bring down the latest then you can re-run the setup.py installer, it will stop the service and re-install Kinto.
 
 Note: If you have made any custom changes to ~/.config/kinto then you will need to backup or rename those directories before running an update.
 
@@ -300,14 +300,11 @@ To disable keyboard mapping:
 
 ### Does not start when you log in or after you reboot?
 
-Kinto
-
 You may need to manually set your DISPLAY in the systemd service file. Normally it pulls in the proper DISPLAY value but if it doesn't you can try this.
 
 Another possibility is the SELinux could be enabled and needs to be set to permissive. (aka /etc/selinux/config)
 
-
-You may need to manually set your DISPLAY in the systemd service file. Normally it pulls in the proper DISPLAY value but if it doesn't you can try this.
+To reset the display variable
 
 ```
 echo $DISPLAY
