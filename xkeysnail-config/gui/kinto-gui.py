@@ -752,8 +752,8 @@ class MyWindow(Gtk.Window):
         if openWin and self.get_title() == "Keyboard Assistant":
             openWin = False
             win.show_all()
-        else:
-            Gtk.main_quit()
+        elif self.get_title() == "Keyboard Assistant":
+             Gtk.main_quit()
 
         self.hide()
         self.destroy()
@@ -1357,5 +1357,6 @@ win = MyWindow()
 win.connect("delete-event", Gtk.main_quit)
 if openWin:
     win.show_all()
+    openWin = False
 
 Gtk.main()
