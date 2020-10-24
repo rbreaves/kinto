@@ -9,7 +9,7 @@
 
 Seamless copy and paste with all apps and terminals. The zero effort solution.
 
-Note: This project does a lot more than just copy & paste for terminals. I really do mean type like a mac and additions can easily be added to a single file, kinto.py/ahk.
+v1.2 Release - Kinto now includes a system tray and simple wizard to setup the install with minimal effort.
 
 ## Table of Contents
 
@@ -17,15 +17,13 @@ Note: This project does a lot more than just copy & paste for terminals. I reall
 
 [What's different from other remappers?](#Whats-different)
 
-[What does Kinto require?](#What-does-Kinto-require)
-
 [How to install (Linux)](#How-to-install-Linux)
 
 [How to install (Windows)](#How-to-install-Windows)
 
-[Shortcut Creation](#Shortcut-Creation)
+[What does Kinto require?](#What-does-Kinto-require)
 
-[Other Notes Related to Install](#Other-Notes-Related-to-Install)
+[Shortcut Creation](#Shortcut-Creation)
 
 [How to Upgrade/Control Kinto](#How-to-Upgrade-Kinto)
 
@@ -73,44 +71,9 @@ If your OS and macOS have similar functionality on the system level, but only di
 
 Additionally, if you are using a cross-platform app and if it happens to have a few shortcut keys that differ then that can very easily be added to either the kinto.py or kinto.ahk configuration files which on Windows is located here `~/.kinto/kinto.ahk` and on Linux it can be found here `~/.config/kinto/kinto.py`. More info can be found here [Shortcut Creation (Xkeysnail)](#Shortcut-Creation-Xkeysnail) for Linux.
 
-## What does Kinto require?
-
-- Python
-- systemd
-- x11
-- IBus*
-- Manjaro/Arch/Debian/Ubuntu based distro 16.04+
-- Fedora/RHEL (may not work w/ xkeysnail, but original xkb version does)
-- xkeysnail (Recommended, but optional)
-
-Note: Budgie DE's, so Ubuntu Budgie, appears to have a bug where keybinds may not save across reboots. Please reset the Cmd+Tab keymap before rebooting to ensure it remembers that setting. I will remove this once the issue is resolved.
-
-*IBus is needed to support wordwise during browser app usage as the keymap will need to change slightly depending if the cursor/caret is on screen waiting for input. Setup.py will set it but you can manually set it as well or check your current Input Method.
-
-On most distros you can confirm Input Methods by navigating to "Language Support" and set "Keyboard input method system:" to IBus for full word-wise support with web browsers. 
-
-Wayland support is planned, but not ready yet.
-
-### Kinto for Windows 10 Requirements
-
-- [Git for Windows](https://git-scm.com/download/win)
-- Powershell - run as Administrator
-- [Python3](https://www.python.org/downloads/windows/)
-
-Other programs that will be installed when you run ./setup.py
-- Chocolatey
-- Autohotkey
-- Strawberry Perl
-
-Note: Sublime Text users should disable screen rotation hotkeys as they will interfere with multi-cursor and possibly other combos. See https://windowsloop.com/disable-screen-rotation-keyboard-shortcut/ for details.
-
-Users can now hotswap between Apple and Windows based keyboards without having to logoff and back on, and Windows is currently the only implementation with a system tray (but this feature is coming to Budgie, XFCE, Mate, Gnome, and lastly KDE).
-
-<img src="https://user-images.githubusercontent.com/10969616/84471498-100c7d00-ac4b-11ea-972d-60c1907831ec.png" width="50%">
-<img src="https://user-images.githubusercontent.com/10969616/84471501-10a51380-ac4b-11ea-9e0e-c19a7ebfad6d.png" width="50%">
-
-
 ## How to install (Linux)
+
+<img src="https://user-images.githubusercontent.com/10969616/96675561-c20e3100-1330-11eb-8472-813de1edec90.png" width="50%">
 
 1. clone this repo
 ```
@@ -125,15 +88,17 @@ sudo apt update
 sudo apt install python3
 ```
 
-3. Follow the prompts and the script will guide you through the rest of the setup.
+3. Run the script, press 1 or 2 keys and you are done.
 ```
 ./setup.py
 ```
+
+Note: You can actually press Enter to agree to the wizard setup, and to finish it. No mouse is required to complete the setup, every element is properly focused.
 
 To Uninstall Kinto
 
 ```
-./setup.py
+./setup.py -r
 ```
 
 ## How to Install (Windows)
@@ -163,6 +128,34 @@ To Uninstall Kinto - Select Uninstall
 ```
 py setup.py
 ```
+
+## What does Kinto require?
+
+- Python
+- systemd
+- x11
+- xkeysnail
+
+On most distros you can confirm Input Methods by navigating to "Language Support" and set "Keyboard input method system:" to IBus for full word-wise support with web browsers. 
+
+### Kinto for Windows 10 Requirements
+
+- [Git for Windows](https://git-scm.com/download/win)
+- Powershell - run as Administrator
+- [Python3](https://www.python.org/downloads/windows/)
+
+Other programs that will be installed when you run ./setup.py
+- Chocolatey
+- Autohotkey
+- Strawberry Perl
+
+Note: Sublime Text users should disable screen rotation hotkeys as they will interfere with multi-cursor and possibly other combos. See https://windowsloop.com/disable-screen-rotation-keyboard-shortcut/ for details.
+
+Users can now hotswap between Apple and Windows based keyboards without having to logoff and back on, and Windows is currently the only implementation with a system tray (but this feature is coming to Budgie, XFCE, Mate, Gnome, and lastly KDE).
+
+<img src="https://user-images.githubusercontent.com/10969616/84471498-100c7d00-ac4b-11ea-972d-60c1907831ec.png" width="50%">
+<img src="https://user-images.githubusercontent.com/10969616/84471501-10a51380-ac4b-11ea-9e0e-c19a7ebfad6d.png" width="50%">
+
 ## Shortcut Creation
 
 Note: A new project, [Universal Keys](https://github.com/rbreaves/Universal-Keys), has been created that will be updated to contain all current remaps - plus many more. Once that is done, Kinto will be updated to programmatically pull the latest keymaps from simple csv comma delimited files & will build out key remaps from there. This will also allow for more types of remaps within an application category, Sublime Text 3 to VS Code or VS Code to Sublime Text 3, Photoshop to Gimp, Gimp to Photoshop, etc & it will ensure that xkeysnail (linux) & autohotkey (windows) are pulling from the same data set.
@@ -253,33 +246,11 @@ I don't have too many examples on this one, most developers seem to be shying aw
 ## Shortcut Creation (XKB)
 The older xkb shortcut method info can be read about in ticket [#125](https://github.com/rbreaves/kinto/issues/125).
 
-## Other Notes Related to Install
-
-**Manjaro with Gnome there are issues with caret/input checking.**
-
-Only impacts back/forward hotkeys for web browsers.
-
-Please see this ticket for more information.
-
-https://github.com/rbreaves/kinto/issues/59
-
-https://wiki.archlinux.org/index.php/IBus
-
-**For other Arch based distros.**
-
-Append the following and logoff and back on, but only after running setup.py to install all packages and the kinto service. Please report if there are any difficulties.
-nano ~/.bashrc
-```
-export GTK_IM_MODULE=xim
-export XMODIFIERS=@im=ibus
-export QT_IM_MODULE=xim
-```
-
 ## How to Upgrade Kinto
 
 Simply bring down the latest in either the master branch or dev, but dev is sometimes in flux as new features are being developed. Then you can re-run the setup.py installer, it will stop the service and re-install Kinto.
 
-Note: If you have made any custom changes to ~/.xkb or ~/.config/kinto then you will need to backup or rename those directories before running an update.
+Note: If you have made any custom changes to ~/.config/kinto then you will need to backup or rename those directories before running an update.
 
 ```
 git pull origin master
@@ -288,55 +259,26 @@ git pull origin master
 
 ## How to Control Kinto
 
-Under systemd this is how you control Kinto.
-
-Recommended Install - Kinto (udev/xkeysnail/x11) = xkeysnail
-
-Older Install - Kinto (xkb/x11) = keyswap
+This info is now superceded by the fact that linux has a full fledge GUI and system tray app that is very easy to use, but I will keep the command line options for those that want to know what they are.
 
 Status
 ```
 sudo systemctl status xkeysnail
-systemctl --user status keyswap # older - you probably should not run this one
 ```
 
 Stop (your keymap will return to normal)
 ```
 sudo systemctl stop xkeysnail
-systemctl --user stop keyswap # older - you probably should not run this one
 ```
 
 Start
 ```
 sudo systemctl start xkeysnail
-systemctl --user start keyswap # older - you probably should not run this one
 ```
 
 Restart
 ```
 sudo systemctl restart xkeysnail
-systemctl --user restart keyswap # older - you probably should not run this one
-```
-
-Enable
-```
-sudo systemctl enable xkeysnail
-systemctl --user enable keyswap # older - you probably should not run this one
-```
-
-Disable
-```
-sudo systemctl disable xkeysnail
-systemctl --user disable keyswap # older - you probably should not run this one
-```
-
-## Learning macOS style hotkeys on Linux
-
-You can use websites like https://www.shortcutfoo.com in Google Chrome while using the terminal style keymap, but Firefox is not compatible due to detecting "cmd" as keycode 224. Chrome detects Win/Super/Cmd as keycode 91 on all OS's.
-
-To make sure you are in the terminal style keymap you can just simply open the terminal and turn off the kinto service, and then switch back to Chrome.
-```
-systemctl --user stop keyswap && setxkbmap -option;setxkbmap -option altwin:swap_alt_win
 ```
 
 ## Troubleshooting
@@ -358,26 +300,12 @@ To disable keyboard mapping:
 
 ### Does not start when you log in or after you reboot?
 
-Kinto (xkb/x11) = keyswap
+Kinto
 
-Kinto (udev/xkeysnail/x11) = xkeysnail
+You may need to manually set your DISPLAY in the systemd service file. Normally it pulls in the proper DISPLAY value but if it doesn't you can try this.
 
-1. Check the status
-```
-systemctl --user status keyswap
-sudo systemctl status xkeysnail
-```
-2. Check the service journal
-```
-journalctl --user-unit=keyswap.service -b
-sudo journalctl --unit=xkeysnail.service -b
-```
+Another possibility is the SELinux could be enabled and needs to be set to permissive. (aka /etc/selinux/config)
 
-Note: You can also watch your log live
-```
-journalctl -f --user-unit=keyswap.service -b
-sudo journalctl -f --unit=xkeysnail.service -b
-```
 
 You may need to manually set your DISPLAY in the systemd service file. Normally it pulls in the proper DISPLAY value but if it doesn't you can try this.
 
@@ -387,7 +315,14 @@ echo $DISPLAY
 # :0.0
 ```
 
-nano ~/.config/systemd/user/keyswap.service
+You can use the Kinto.sh app or system tray to edit your service file.
+
+kinto.sh gui
+1. Edit -> Edit Service
+kinto tray
+1. Customize -> Edit Service
+
+or you can use your terminal.
 
 sudo nano /etc/systemd/system/xkeysnail.service
 ```
@@ -400,73 +335,6 @@ Environment=DISPLAY=:0.0
 ```
 
 If you continue to have issues then open a ticket and send me the info.
-
-### Keyswap is not occurring, but it was working.
-
-Kinto (xkb/x11) = keyswap
-
-Kinto (udev/xkeysnail/x11) = xkeysnail
-
-Now that Kinto (xkb/x11) is using a custom written C program I am not aware of any specific bugs or issues, but you can start here if you having difficulties and please report it if it is reproducible.
-
-1. Get status
-```
-systemctl --user status keyswap
-sudo systemctl status xkeysnail
-```
-2. Restart Kinto
-```
-systemctl --user restart keyswap
-sudo systemctl restart xkeysnail
-```
-3. Check the Status again and open a ticket if you need to.
-```
-systemctl --user status keyswap
-sudo systemctl status xkeysnail
-```
-
-You can also do the following to see if it is an actual issue with kintox11 not running or your service file.
-```
-cd ~/.config/kinto
-./kintox11
-```
-
-## Debug (Linux - xkb method only)
-
-If all else fails you can now run Kinto in debug mode as of 1.0.6-2. The output will become more verbose and I'd recommend running this directly after stopping the service.
-
-Kinto (xkb/x11)
-```
-systemctl --user stop keyswap
-cd ~/.config/kinto
-./kintox11 --debug
-```
-
-Kinto (udev/xkeysnail)
-
-Stop
-```
-sudo systemctl stop xkeysnail
-```
-nano ~/.config/kinto/xkeystart.sh
-
-Remove the 2 instances of --quiet and resave
-```
-#!/bin/bash
-
-/usr/local/bin/xkeysnail --quiet --watch "$1" &
-
-inotifywait -m -e close_write,moved_to,create -q "$1" |
-while read -r path; do
-        /usr/bin/killall xkeysnail
-        /usr/local/bin/xkeysnail --quiet --watch "$1" &
-done
-```
-Start
-```
-sudo systemctl start xkeysnail
-sudo systemctl status xkeysnail
-```
 
 ## Language Support
 I'd appreciate any help from people with non-US based keyboards, to help ensure that these keymaps and keyswap methods work in all or most languages.

@@ -4,9 +4,8 @@ Description=xkeysnail
 [Service]
 Type=simple
 KillMode=process
-ExecStartPre=/bin/bash -c "{xhost} +SI:localuser:root && /sbin/runuser -l {username} -c {homedir}/.config/kinto/prexk.sh"
-ExecStart=/usr/bin/sudo /bin/bash -c '{experimental-caret}{homedir}/.config/kinto/xkeystart.sh /tmp/kinto/xkeysnail/kinto.py'
-ExecStop=/bin/bash -c 'me=$$;ps -ef | grep \'[t]mp/kinto\' | awk -v me=$me \'$2 != me {print $2}\' | xargs kill;/usr/bin/killall dbus-monitor;/usr/bin/killall xkeysnail;{kill-caret}'
+ExecStart=/usr/bin/sudo /bin/bash -c '/usr/bin/xhost +SI:localuser:root && {homedir}/.config/kinto/killdups.sh && /usr/local/bin/xkeysnail --quiet --watch {homedir}/.config/kinto/kinto.py'
+ExecStop=/usr/bin/sudo /bin/bash -c '/usr/bin/sudo pkill -f bin/xkeysnail && exit 0'
 Restart=on-failure
 RestartSec=3
 Environment=DISPLAY={displayid}

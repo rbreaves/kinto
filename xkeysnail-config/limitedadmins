@@ -3,3 +3,8 @@
 %{username} ALL=NOPASSWD: {systemctl} start xkeysnail
 %{username} ALL=NOPASSWD: {systemctl} stop xkeysnail
 %{username} ALL=NOPASSWD: {systemctl} status xkeysnail
+%{username} ALL=(root) NOPASSWD: /usr/local/bin/logoff.sh
+%{username} ALL=NOPASSWD: {pkill} -f logoff
+%{username} ALL=NOPASSWD: {pkill} -f bin/xkeysnail
+%{username} ALL=NOPASSWD: {xkeysnail} /home/{username}/.config/kinto/kinto.py
+%{username} ALL=NOPASSWD: {systemctl} is-active --quiet xkeysnail

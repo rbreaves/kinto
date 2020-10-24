@@ -1,0 +1,40 @@
+kbtype = ask
+rightmod = true
+vsc2st3 = false
+capslock = default
+systray = true
+autostart = true
+
+#
+# kbtype   - ask|win|mac|ibm|cbk|wmk
+#
+#    What physical keyboard type does the user have?
+#        ask - Prompt the user
+#        win - Standard layout     Ctrl,  Win, Alt, Spacebar
+#        mac - Mac layout          Ctrl,  Alt, Cmd, Spacebar
+#        ibm - Model M layout            Ctrl, Alt, Spacebar (Capslock is Capslock)
+#        cbk - Chromebook layout         Ctrl, Alt, Spacebar (Capslock is Search (Win))
+#        wmk - WinMac layout 
+#                  wmk - Uses Apple driver to swap Cmd & Alt so 
+#                  swapping between Win & Mac keyboards is seamless.
+#
+# rightmod - Remap modifiers on right
+#    true (default)
+#
+#    ^ Note: Useful to set to false for multi-language users (aka AltGr)
+#
+# vsc2st3  - Remap VS Code to use Sublime Text keymap
+#    false (default)
+#
+# capslock - esc_cmd|cmd|default
+#    esc_cmd - escape if tapped, cmd if held
+#    cmd     - remaps to cmd
+#    default - no remap
+#
+# systray - Sets whether the system tray will show
+#    true - default
+#    false - only defaults on gnome3 and kde
+#
+# autostart - Sets whether or not kinto will automatically start
+#    true - deefault
+#
