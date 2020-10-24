@@ -73,7 +73,7 @@ Additionally, if you are using a cross-platform app and if it happens to have a 
 
 ## How to install (Linux)
 
-<img src="https://user-images.githubusercontent.com/10969616/96675561-c20e3100-1330-11eb-8472-813de1edec90.png" width="50%">
+<img src="https://user-images.githubusercontent.com/10969616/97070698-179c4500-15a0-11eb-8064-c03aa7f4d4a5.png" width="75%">
 
 1. clone this repo
 ```
