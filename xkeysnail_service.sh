@@ -307,7 +307,7 @@ yes | cp -rf ./xkeysnail-config/xkeysnail.desktop ~/.config/kinto/xkeysnail.desk
 # logoff fix - not solid for every os. Prevents missed 1 character input on login
 # yes | sudo cp -rf xkeysnail-config/gnome_logoff.sh ~/.config/kinto/logoff.sh
 
-git describe --tags --always origin master | perl -ne "print \"\$1 build `git rev-parse --short HEAD`\n\" for m/\b(.*)-\w+-\w{8}/" | head -n 1 > ~/.config/kinto/version
+echo "$(git describe --tags --always origin master | head -n 1)" "build" "$(git rev-parse --short HEAD)" > ~/.config/kinto/version
 yes | cp -rf ./xkeysnail-config/kinto.py ./xkeysnail-config/kinto.py.new
 yes | cp -rf ./xkeysnail-config/limitedadmins ./xkeysnail-config/limitedadmins.new
 yes | cp -rf ./xkeysnail-config/gui/ ~/.config/kinto/
