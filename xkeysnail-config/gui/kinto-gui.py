@@ -44,6 +44,7 @@ class MyWindow(Gtk.Window):
     bguninstall = Gtk.Image()
     last_onward = Gtk.Button()
     first_onward = Gtk.ToggleButton()
+    page = 1
 
     label = Gtk.Label()
     label.set_alignment(1, 0)
@@ -988,35 +989,37 @@ class MyWindow(Gtk.Window):
             self.label.set_markup("  " + status + "  ")
         return self.kinto_status.poll() is None
 
-    def key_press_event(self, widget, event, page):
+    def key_press_event(self, widget, event):
         global openWin
         trigger = "None"
         keyname = Gdk.keyval_name(event.keyval)
         current = self.second_page
         bg = self.bgsuccess4
         onward = self.success_page
+        print("page value: "+str(self.page))
 
-        if page == 1 and "Control" in keyname:
+        if self.page == 1 and "Control" in keyname:
             print("IBM or Chromebook")
             print("Continue to page 2")
             bg = self.bgcaps
             onward = self.caps_page
             trigger = "Half"
-        elif page == 2 and "Caps_Lock" in keyname and event.state & Gdk.ModifierType.LOCK_MASK:
+            self.page += 1
+        elif self.page == 2 and "Caps_Lock" in keyname and event.state & Gdk.ModifierType.LOCK_MASK:
             print("Set IBM Keyboard")
             current = self.caps_page
             self.options["kbtype"] = "ibm"
             trigger = "Done"
-        elif page == 2 and "Super" in keyname:
+        elif self.page == 2 and "Super" in keyname:
             print("Set Chromebook Keyboard")
             current = self.caps_page
             self.options["kbtype"] = "cbk"
             trigger = "Done"
-        elif page == 1 and "Alt" in keyname:
+        elif self.page == 1 and "Alt" in keyname:
             print("Set Mac Keyboard")
             self.options["kbtype"] = "mac"
             trigger = "Done"
-        elif page == 1 and "Super" in keyname:
+        elif self.page == 1 and "Super" in keyname:
             print("Set Win Keyboard")
             self.options["kbtype"] = "win"
             trigger = "Done"
@@ -1028,11 +1031,13 @@ class MyWindow(Gtk.Window):
             self.overlay.add_overlay(self.container)
             self.container.add(onward)
             self.container.remove(current)
-            self.setupwin.disconnect(self.setupwin.signal_id)
+            # self.setupwin.disconnect(self.setupwin.signal_id)
         if trigger == "Half":
-            self.setupwin.signal_id = self.setupwin.connect("key_press_event", self.key_press_event,2)
+            # print("reset key_press_event")
+            # self.setupwin.signal_id = self.setupwin.connect("key_press_event", self.key_press_event)
             self.setupwin.show_all()
-        elif trigger == "Done":
+        elif trigger == "Done" and openWin == False:
+            print("in Done")
             self.setKinto()
             self.setupwin.show_all()
             openWin = True
@@ -1185,7 +1190,7 @@ class FirstPage(Gtk.Box):
         self.__parent_window.overlay.add(self.__parent_window.bgspace)
         self.__parent_window.overlay.add_overlay(self.__parent_window.container)
         self.__parent_window.container.add(self.__parent_window.second_page)
-        self.__parent_window.setupwin.signal_id = self.__parent_window.setupwin.connect("key_press_event", self.__parent_window.key_press_event,1)
+        self.__parent_window.setupwin.signal_id = self.__parent_window.setupwin.connect("key_press_event", self.__parent_window.key_press_event)
         self.__parent_window.container.remove(self.__parent_window.first_page)
         self.__parent_window.setupwin.show_all()
         self.hide()
@@ -1248,27 +1253,28 @@ class SecondPage(Gtk.Box):
         self.__parent_window.first_onward.grab_focus()
         self.hide()
 
-    def capsforward(self, *args):
-        for grandkid in self.__parent_window.overlay.get_children():
-            self.__parent_window.overlay.remove(grandkid)
-        self.__parent_window.overlay.add(self.__parent_window.bgcaps)
-        self.__parent_window.overlay.add_overlay(self.__parent_window.container)
-        self.__parent_window.container.add(self.__parent_window.caps_page)
-        self.__parent_window.container.remove(self.__parent_window.second_page)
-        self.__parent_window.setupwin.signal_id = self.__parent_window.setupwin.connect("key_press_event", self.__parent_window.key_press_event,2)
-        self.__parent_window.setupwin.show_all()
-        self.hide()
+    # def capsforward(self, *args):
+    #     for grandkid in self.__parent_window.overlay.get_children():
+    #         self.__parent_window.overlay.remove(grandkid)
+    #     self.__parent_window.overlay.add(self.__parent_window.bgcaps)
+    #     self.__parent_window.overlay.add_overlay(self.__parent_window.container)
+    #     self.__parent_window.container.add(self.__parent_window.caps_page)
+    #     self.__parent_window.container.remove(self.__parent_window.second_page)
+    #     self.__parent_window.setupwin.disconnect(self.__parent_window.setupwin.signal_id)
+    #     self.__parent_window.setupwin.signal_id = self.__parent_window.setupwin.connect("key_press_event", self.__parent_window.key_press_event,2)
+    #     self.__parent_window.setupwin.show_all()
+    #     self.hide()
 
-    def forward(self, *args):
-        for grandkid in self.__parent_window.overlay.get_children():
-            self.__parent_window.overlay.remove(grandkid)
-        self.__parent_window.overlay.add(self.__parent_window.bgsuccess4)
-        self.__parent_window.overlay.add_overlay(self.__parent_window.container)
-        self.__parent_window.container.add(self.__parent_window.success_page)
-        self.__parent_window.container.remove(self.__parent_window.second_page)
-        self.__parent_window.setupwin.disconnect(self.__parent_window.setupwin.signal_id)
-        self.__parent_window.setupwin.show_all()
-        self.hide()
+    # def forward(self, *args):
+    #     for grandkid in self.__parent_window.overlay.get_children():
+    #         self.__parent_window.overlay.remove(grandkid)
+    #     self.__parent_window.overlay.add(self.__parent_window.bgsuccess4)
+    #     self.__parent_window.overlay.add_overlay(self.__parent_window.container)
+    #     self.__parent_window.container.add(self.__parent_window.success_page)
+    #     self.__parent_window.container.remove(self.__parent_window.second_page)
+    #     self.__parent_window.setupwin.disconnect(self.__parent_window.setupwin.signal_id)
+    #     self.__parent_window.setupwin.show_all()
+    #     self.hide()
 
 class CapsPage(Gtk.Box):
     def __init__(self, parent_window):
@@ -1322,22 +1328,23 @@ class CapsPage(Gtk.Box):
         self.__parent_window.overlay.add(self.__parent_window.bgspace)
         self.__parent_window.overlay.add_overlay(self.__parent_window.container)
         self.__parent_window.container.add(self.__parent_window.second_page)
-        self.__parent_window.setupwin.disconnect(self.__parent_window.setupwin.signal_id)
-        self.__parent_window.setupwin.signal_id = self.__parent_window.setupwin.connect("key_press_event", self.__parent_window.key_press_event,1)
+        self.__parent_window.page = 1
+        # self.__parent_window.setupwin.disconnect(self.__parent_window.setupwin.signal_id)
+        # self.__parent_window.setupwin.signal_id = self.__parent_window.setupwin.connect("key_press_event", self.__parent_window.key_press_event)
         self.__parent_window.container.remove(self.__parent_window.caps_page)
         self.__parent_window.setupwin.show_all()
         self.hide()
 
-    def forward(self, *args):
-        for grandkid in self.__parent_window.overlay.get_children():
-            self.__parent_window.overlay.remove(grandkid)
-        self.__parent_window.overlay.add(self.__parent_window.bgsuccess4)
-        self.__parent_window.overlay.add_overlay(self.__parent_window.container)
-        self.__parent_window.container.add(self.__parent_window.success_page)
-        self.__parent_window.container.remove(self.__parent_window.caps_page)
-        self.__parent_window.setupwin.disconnect(self.__parent_window.setupwin.signal_id)
-        self.__parent_window.setupwin.show_all()
-        self.hide()
+    # def forward(self, *args):
+    #     for grandkid in self.__parent_window.overlay.get_children():
+    #         self.__parent_window.overlay.remove(grandkid)
+    #     self.__parent_window.overlay.add(self.__parent_window.bgsuccess4)
+    #     self.__parent_window.overlay.add_overlay(self.__parent_window.container)
+    #     self.__parent_window.container.add(self.__parent_window.success_page)
+    #     self.__parent_window.container.remove(self.__parent_window.caps_page)
+    #     self.__parent_window.setupwin.disconnect(self.__parent_window.setupwin.signal_id)
+    #     self.__parent_window.setupwin.show_all()
+    #     self.hide()
 
 class SuccessPage(Gtk.Box):
     def __init__(self, parent_window):
