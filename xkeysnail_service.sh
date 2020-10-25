@@ -15,7 +15,6 @@ if [[ $dename == 'gnome' || $dename == 'budgie' ]];then
 	if [[ $(gsettings get org.gnome.mutter overlay-key | grep "''\|' '" | wc -l) != 1 ]];then
 		bound=$(gsettings get org.gnome.mutter overlay-key)
 		echo "Overlay key, " $bound ", detected. Will be removing so Super-Space can remap to Cmd-Space for app launching.."
-		echo "Overlay key, Super, detected. Will be removing so Super-Space can remap to Cmd-Space for app launching.."
 		gsettings set org.gnome.mutter overlay-key ''
 	fi
 fi
