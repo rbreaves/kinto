@@ -201,6 +201,11 @@ if [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	exit 0
 fi
 
+sudo systemctl stop xkeysnail >/dev/null 2>&1
+sudo systemctl disable xkeysnail >/dev/null 2>&1
+sudo pkill -f bin/xkeysnail >/dev/null 2>&1
+sudo pkill -f "is-active xkeysnail" >/dev/null 2>&1
+
 # Add additional shortcuts if needed, does not modify existing ones
 
 if [[ $dename == 'gnome' || $dename == 'budgie' ]];then
