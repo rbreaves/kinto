@@ -8,89 +8,17 @@ distro=$(awk -F= '$1=="NAME" { gsub("[\",!,_, ]","",$2);print $2 ;}' /etc/os-rel
 typeset -l dename
 dename=$(./system-config/dename.sh | cut -d " " -f1)
 
-
-# Add additional shortcuts if needed, does not modify existing ones
-
-if [[ $dename == 'gnome' || $dename == 'budgie' ]];then
-	if [[ $(gsettings get org.gnome.mutter overlay-key | grep "''\|' '" | wc -l) != 1 ]];then
-		bound=$(gsettings get org.gnome.mutter overlay-key)
-		echo "Overlay key, " $bound ", detected. Will be removing so Super-Space can remap to Cmd-Space for app launching.."
-		gsettings set org.gnome.mutter overlay-key ''
-	fi
-fi
-
-# if ls /etc/apt/sources.list.d/system76* 1> /dev/null 2>&1; then
-if [[ $distro == 'popos' ]]; then
-	pip3 install pillow
-	# Addition, does not overwrite existing
-	if [[ $(gsettings get org.gnome.desktop.wm.keybindings minimize | grep "\[\]" | wc -l) != 1 ]];then
-		echo "Adding Super-h (Cmd+h) to hide/minimize Window."
-		gsettings set org.gnome.desktop.wm.keybindings minimize "['<Super>h','<Alt>F9']"
-		# work around to make sure settings survive reboot
-		dconf dump /org/gnome/desktop/wm/keybindings/ > tempkb.conf
-		dconf load /org/gnome/desktop/wm/keybindings/ < tempkb.conf
-	else
-		bound=$(gsettings get org.gnome.desktop.wm.keybindings minimize)
-		echo "Hide/minimize Window is already bound to " $bound " , please remap it to Super-H for kinto."
-		echo "gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\""
-	fi
-fi
-
-if [[ $dename == "kde" ]]; then
-	if [[ $distroy == "manjarolinux" ]]; then
-		sudo ./system-config/unipkg.sh vte3
-	else
-		sudo ./system-config/unipkg.sh libvte-2.91-dev
-	fi
-fi
-if [[ $distro == 'kdeneon' ]]; then
-	kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Show Desktop" "Meta+D,none,Show Desktop"
-	kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Close" "Alt+F4,none,Close Window"
-	kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Minimize" "Meta+PgDown,none,Minimize Window"
-	kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Maximize" "Meta+PgUp,none,Maximize Window"
-	kquitapp5 kglobalaccel && sleep 2s && kglobalaccel5 &
-fi
-
-if [[ $distro == 'fedora' ]]; then
-	echo "Checking SELinux status..."
-	if [[ $(perl -ne 'print if /^SELINUX=enforcing/' /etc/selinux/config | wc -l) != 0 ]]; then
-		while true; do
-		read -rep $'\nWould you like to update your SELinux state from enforcing to permissive? (y/n)\n' yn
-		case $yn in
-			[Yy]* ) setSE='yes'; break;;
-			[Nn]* ) exp='no'; expsh=" " break;;
-			# * ) echo "Please answer yes or no.";;
-		esac
-		done	
-
-		if [[ $yn == "yes" ]]; then
-			sed -i "s/SELINUX=enforcing/SELINUX=permissive/g" /etc/selinux/config
-			echo "/etc/selinux/config has been updated. Please reboot your computer before continuing."
-			exit 0
-		fi
-	else
-		echo "SELinux state should be ok for Kinto to install"
-	fi
-	if [[ $(gsettings get org.gnome.desktop.wm.keybindings show-desktop | grep "\[\]" | wc -l) == 1 ]];then
-		gsettings set org.gnome.desktop.wm.keybindings show-desktop "['<Super>d']"
-	else
-		if [[ $(gsettings get org.gnome.desktop.wm.keybindings show-desktop | grep "<Super>d" | wc -l) == 0 ]]; then
-			echo 'Kinto will not set your "Show Desktop" hotkey due to it already being set.\nPlease set Show Desktop to Super-D, or Edit Kinto'"'"'s config.'
-			echo "Did not run the following."
-			echo "gsettings set org.gnome.desktop.wm.keybindings show-desktop \"['<Super>d']\""	
-		fi
-	fi
-fi
-
-
 function uninstall {
 
+	echo -e "\nNote: Restoring keys is only relevant if you had installed a version prior to 1.2 of Kinto. You should skip this step if 1.2+ is all you have installed."
+
 	while true; do
-	read -rep $'\nPress R to restore your original shortcuts.\nPress F to reset to factory shortcuts. (f/r)\n' yn
+	read -rep $'\nPress R to restore your original shortcuts.\nPress F to reset to factory shortcuts.\nPress N to skip. (f/r/N)\n' yn
 		case $yn in
 			[Ff]* ) yn="f"; break;;
 			[Rr]* ) yn="r";break;;
-			* ) echo "Please answer yes or no.";;
+			[Nn]* ) yn="n";break;;
+			* ) yn="n";break;;
 		esac
 	done
 
@@ -102,8 +30,6 @@ function uninstall {
 			gsettings reset-recursively org.gnome.desktop.wm.keybindings
 			echo "gsettings reset-recursively org.gnome.mutter.keybindings"
 			gsettings reset-recursively org.gnome.mutter.keybindings
-			echo "gsettings set org.gnome.mutter overlay-key 'super'"
-			gsettings set org.gnome.mutter overlay-key 'super'
 			dconf dump /org/gnome/mutter/ > mutter.conf
 			dconf load /org/gnome/mutter/ < mutter.conf
 		elif [ "$dename" == "kde" ];then
@@ -144,6 +70,13 @@ function uninstall {
 			xfcekeys=$(ls | grep -m1 "xfce4-keyboard")
 			cp ./"$xfcekeys" ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
 		fi
+	elif [ "$yn" == "n" ]; then
+		echo "Skipping..."
+	fi
+	if [[ $dename == "gnome" || $dename == "budgie" ]]; then
+		echo -e "\nWill still be restoring the overlay key"
+		echo -e "gsettings set org.gnome.mutter overlay-key 'super'\n"
+		gsettings set org.gnome.mutter overlay-key 'super'
 	fi
 }
 
@@ -224,6 +157,122 @@ function budgieUpdate {
 		fi
 	fi
 }
+
+if [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
+	echo "Uninstalling Kinto - xkeysnail (udev)"
+	uninstall
+	echo "Removing any Apple driver settings Kinto may have have set..."
+	removeAppleKB
+	echo "Killing the Kinto tray..."
+	pkill -f kintotray >/dev/null 2>&1
+	echo "Stopping the Kinto service..."
+	sudo systemctl stop xkeysnail >/dev/null 2>&1
+	echo "Disabling the Kinto service..."
+	sudo systemctl disable xkeysnail >/dev/null 2>&1
+	echo "Killing any remaining xkeysnail processes..."
+	sudo pkill -f bin/xkeysnail >/dev/null 2>&1
+	echo "Killing any Kinto related threads from Kinto tray or the gui..."
+	sudo pkill -f "is-active xkeysnail" >/dev/null 2>&1
+	echo -e "\nRemoving Kinto..."
+	echo "rm /etc/sudoers.d/limitedadmins"
+	echo "rm ~/.config/autostart/xkeysnail.desktop"
+	echo "rm ~/.config/autostart/kintotray.desktop"
+	echo "rm -rf ~/.config/kinto"
+	echo "rm /usr/share/applications/kinto.desktop"
+	sudo rm /etc/sudoers.d/limitedadmins >/dev/null 2>&1
+	rm ~/.config/autostart/xkeysnail.desktop >/dev/null 2>&1
+	rm ~/.config/autostart/kintotray.desktop  >/dev/null 2>&1
+	rm -rf ~/.config/kinto >/dev/null 2>&1
+	sudo rm /usr/share/applications/kinto.desktop  >/dev/null 2>&1
+	echo -e "\nRemoving Kinto's systemd service files..."
+	echo "rm /etc/systemd/system/xkeysnail.service"
+	echo "rm /etc/systemd/system/graphical.target.wants/xkeysnail.service"
+	echo "rm /usr/lib/systemd/system/xkeysnail.service"
+	echo "rm /lib/systemd/system/xkeysnail.service"
+	sudo rm /etc/systemd/system/xkeysnail.service >/dev/null 2>&1
+	sudo rm /etc/systemd/system/graphical.target.wants/xkeysnail.service >/dev/null 2>&1
+	sudo rm /usr/lib/systemd/system/xkeysnail.service >/dev/null 2>&1
+	sudo rm /lib/systemd/system/xkeysnail.service >/dev/null 2>&1
+	if [ -f /usr/local/bin/logoff.sh ];then
+		sudo rm /usr/local/bin/logoff.sh
+	fi
+	sudo systemctl daemon-reload
+	# sudo systemctl --state=not-found --all | grep xkeysnail
+	exit 0
+fi
+
+# Add additional shortcuts if needed, does not modify existing ones
+
+if [[ $dename == 'gnome' || $dename == 'budgie' ]];then
+	if [[ $(gsettings get org.gnome.mutter overlay-key | grep "''\|' '" | wc -l) != 1 ]];then
+		bound=$(gsettings get org.gnome.mutter overlay-key)
+		echo "Overlay key, " $bound ", detected. Will be removing so Super-Space can remap to Cmd-Space for app launching.."
+		gsettings set org.gnome.mutter overlay-key ''
+	fi
+fi
+
+# if ls /etc/apt/sources.list.d/system76* 1> /dev/null 2>&1; then
+if [[ $distro == 'popos' ]]; then
+	pip3 install pillow
+	# Addition, does not overwrite existing
+	if [[ $(gsettings get org.gnome.desktop.wm.keybindings minimize | grep "\[\]" | wc -l) != 1 ]];then
+		echo "Adding Super-h (Cmd+h) to hide/minimize Window."
+		gsettings set org.gnome.desktop.wm.keybindings minimize "['<Super>h','<Alt>F9']"
+		# work around to make sure settings survive reboot
+		dconf dump /org/gnome/desktop/wm/keybindings/ > tempkb.conf
+		dconf load /org/gnome/desktop/wm/keybindings/ < tempkb.conf
+	else
+		bound=$(gsettings get org.gnome.desktop.wm.keybindings minimize)
+		echo "Hide/minimize Window is already bound to " $bound " , please remap it to Super-H for kinto."
+		echo "gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\""
+	fi
+fi
+
+if [[ $dename == "kde" ]]; then
+	if [[ $distroy == "manjarolinux" ]]; then
+		sudo ./system-config/unipkg.sh vte3
+	else
+		sudo ./system-config/unipkg.sh libvte-2.91-dev
+	fi
+fi
+if [[ $distro == 'kdeneon' ]]; then
+	kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Show Desktop" "Meta+D,none,Show Desktop"
+	kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Close" "Alt+F4,none,Close Window"
+	kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Minimize" "Meta+PgDown,none,Minimize Window"
+	kwriteconfig5 --file "$HOME/.config/kglobalshortcutsrc" --group "kwin" --key "Window Maximize" "Meta+PgUp,none,Maximize Window"
+	kquitapp5 kglobalaccel && sleep 2s && kglobalaccel5 &
+fi
+
+if [[ $distro == 'fedora' ]]; then
+	echo "Checking SELinux status..."
+	if [[ $(perl -ne 'print if /^SELINUX=enforcing/' /etc/selinux/config | wc -l) != 0 ]]; then
+		while true; do
+		read -rep $'\nWould you like to update your SELinux state from enforcing to permissive? (y/n)\n' yn
+		case $yn in
+			[Yy]* ) setSE='yes'; break;;
+			[Nn]* ) exp='no'; expsh=" " break;;
+			# * ) echo "Please answer yes or no.";;
+		esac
+		done	
+
+		if [[ $yn == "yes" ]]; then
+			sed -i "s/SELINUX=enforcing/SELINUX=permissive/g" /etc/selinux/config
+			echo "/etc/selinux/config has been updated. Please reboot your computer before continuing."
+			exit 0
+		fi
+	else
+		echo "SELinux state should be ok for Kinto to install"
+	fi
+	if [[ $(gsettings get org.gnome.desktop.wm.keybindings show-desktop | grep "\[\]" | wc -l) == 1 ]];then
+		gsettings set org.gnome.desktop.wm.keybindings show-desktop "['<Super>d']"
+	else
+		if [[ $(gsettings get org.gnome.desktop.wm.keybindings show-desktop | grep "<Super>d" | wc -l) == 0 ]]; then
+			echo 'Kinto will not set your "Show Desktop" hotkey due to it already being set.\nPlease set Show Desktop to Super-D, or Edit Kinto'"'"'s config.'
+			echo "Did not run the following."
+			echo "gsettings set org.gnome.desktop.wm.keybindings show-desktop \"['<Super>d']\""	
+		fi
+	fi
+fi
 
 # if [ $# -eq 0 ]; then
 # 	echo "Install Kinto - xkeysnail (udev)"
@@ -459,30 +508,4 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 
 	echo -e "Kinto install is \e[1m\e[32mcomplete\e[0m.\n"
 
-elif [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
-	echo "Uninstalling Kinto - xkeysnail (udev)"
-	uninstall
-	removeAppleKB
-	pkill -f kintotray >/dev/null 2>&1
-	sudo systemctl stop xkeysnail >/dev/null 2>&1
-	sudo systemctl disable xkeysnail >/dev/null 2>&1
-	sudo pkill -f bin/xkeysnail >/dev/null 2>&1
-	sudo pkill -f "is-active xkeysnail" >/dev/null 2>&1
-	sudo rm /etc/sudoers.d/limitedadmins >/dev/null 2>&1
-	rm ~/.config/autostart/xkeysnail.desktop >/dev/null 2>&1
-	rm ~/.config/autostart/kintotray.desktop  >/dev/null 2>&1
-	rm -rf ~/.config/kinto >/dev/null 2>&1
-	sudo rm /etc/systemd/system/xkeysnail.service >/dev/null 2>&1
-	sudo rm /usr/share/applications/kinto.desktop  >/dev/null 2>&1
-	sudo rm /etc/systemd/system/graphical.target.wants/xkeysnail.service >/dev/null 2>&1
-	sudo rm /usr/lib/systemd/system/xkeysnail.service >/dev/null 2>&1
-	sudo rm /lib/systemd/system/xkeysnail.service >/dev/null 2>&1
-	if [ -f /usr/local/bin/logoff.sh ];then
-		sudo rm /usr/local/bin/logoff.sh
-	fi
-	sudo systemctl daemon-reload
-	# sudo systemctl --state=not-found --all | grep xkeysnail
-	exit 0
-else
-	echo "Expected argument was not provided"
 fi
