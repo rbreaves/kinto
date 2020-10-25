@@ -43,6 +43,7 @@ class MyWindow(Gtk.Window):
     bgerror = Gtk.Image()
     bguninstall = Gtk.Image()
     last_onward = Gtk.Button()
+    first_onward = Gtk.ToggleButton()
 
     label = Gtk.Label()
     label.set_alignment(1, 0)
@@ -1149,10 +1150,11 @@ class FirstPage(Gtk.Box):
         previous.set_margin_right(245)
         hbox.add(previous)
 
-        onward = Gtk.Button("Agree")
-        onward.connect("clicked", self.forward)
+        self.__parent_window.first_onward.set_label("Agree")
+        self.__parent_window.first_onward.set_active(True)
+        self.__parent_window.first_onward.connect("clicked", self.forward)
 
-        hbox.add(onward)
+        hbox.add(self.__parent_window.first_onward)
         hbox.set_hexpand(False)
         hbox.set_vexpand(False)
         hbox.set_margin_bottom(6)
@@ -1170,13 +1172,14 @@ class FirstPage(Gtk.Box):
         self.grid.add(vbox_container)
         self.grid.attach_next_to(hbox, vbox_container, Gtk.PositionType.BOTTOM, 2, 1)
         self.add(self.grid)
-        onward.grab_focus()
+        self.__parent_window.first_onward.grab_focus()
 
     def goback(self, *args):
         Gtk.main_quit()
         self.hide()
 
     def forward(self, button):
+        self.__parent_window.first_onward.set_active(True)
         for grandkid in self.__parent_window.overlay.get_children():
             self.__parent_window.overlay.remove(grandkid)
         self.__parent_window.overlay.add(self.__parent_window.bgspace)
@@ -1242,6 +1245,7 @@ class SecondPage(Gtk.Box):
         self.__parent_window.container.remove(self.__parent_window.second_page)
         self.__parent_window.setupwin.disconnect(self.__parent_window.setupwin.signal_id)
         self.__parent_window.setupwin.show_all()
+        self.__parent_window.first_onward.grab_focus()
         self.hide()
 
     def capsforward(self, *args):

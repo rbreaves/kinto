@@ -93,8 +93,6 @@ sudo apt install python3
 ./setup.py
 ```
 
-Note: You can actually press Enter to agree to the wizard setup, and to finish it. No mouse is required to complete the setup, every element is properly focused.
-
 To Uninstall Kinto
 
 ```
