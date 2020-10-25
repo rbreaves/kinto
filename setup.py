@@ -123,7 +123,9 @@ if os.path.isdir(homedir + "/.config/kinto") == False:
 
 color_arr = [bcolors.CBEIGE,bcolors.CRED2,bcolors.CGREEN,bcolors.CYELLOW ]
 
-print("\nKinto - Type in Linux like it's a Mac.\n")
+kintover = cmdline('echo "$(git describe --tag --abbrev=0 | head -n 1)" "build" "$(git rev-parse --short HEAD)"')
+
+print("\nKinto " + kintover + "Type in Linux like it's a Mac.\n")
 
 if args.uninstall:
 	subprocess.check_call(shlex.split("./xkeysnail_service.sh uninstall"))

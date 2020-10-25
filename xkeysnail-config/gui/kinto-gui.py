@@ -399,6 +399,7 @@ class MyWindow(Gtk.Window):
             self.setupwin.set_position(Gtk.WindowPosition.CENTER)
 
             self.setupwin.add(self.overlay)
+            self.setupwin.signal_id = 0
             
             from PIL import Image
 
@@ -998,7 +999,7 @@ class MyWindow(Gtk.Window):
         onward = self.success_page
         print("page value: "+str(self.page))
 
-        if self.page == 1 and "Control" in keyname:
+        if self.page == 1 and "Control" in keyname and openWin == False:
             print("IBM or Chromebook")
             print("Continue to page 2")
             bg = self.bgcaps
@@ -1024,7 +1025,7 @@ class MyWindow(Gtk.Window):
             self.options["kbtype"] = "win"
             trigger = "Done"
 
-        if trigger == "Half" or trigger == "Done":
+        if trigger == "Half" or trigger == "Done" and openWin == False:
             for grandkid in self.overlay.get_children():
                 self.overlay.remove(grandkid)
             self.overlay.add(bg)
@@ -1032,7 +1033,7 @@ class MyWindow(Gtk.Window):
             self.container.add(onward)
             self.container.remove(current)
             # self.setupwin.disconnect(self.setupwin.signal_id)
-        if trigger == "Half":
+        if trigger == "Half" and openWin == False:
             # print("reset key_press_event")
             # self.setupwin.signal_id = self.setupwin.connect("key_press_event", self.key_press_event)
             self.setupwin.show_all()
@@ -1042,6 +1043,10 @@ class MyWindow(Gtk.Window):
             self.setupwin.show_all()
             openWin = True
             self.last_onward.grab_focus()
+            # print(self.setupwin.signal_id)
+            self.setupwin.disconnect(self.setupwin.signal_id)
+            # print(self.setupwin.signal_id)
+        print("key press event is on")
 
     def InputToTerm(self,cmd):
         # Not clearly known which VTE versions
@@ -1150,12 +1155,18 @@ class FirstPage(Gtk.Box):
         scroller.add(vbox)
 
         hbox = Gtk.HBox()
-        previous = Gtk.Button("Decline")
+        previous = Gtk.Button("")
+        for child in previous.get_children():
+            child.set_label("<b>Decline</b>")
+            child.set_use_markup(True)
         previous.connect("clicked", self.goback)
         previous.set_margin_right(245)
         hbox.add(previous)
 
-        self.__parent_window.first_onward.set_label("Agree")
+        self.__parent_window.first_onward.set_label("")
+        for child in self.__parent_window.first_onward.get_children():
+            child.set_label("<b>Agree</b>")
+            child.set_use_markup(True)
         self.__parent_window.first_onward.set_active(True)
         self.__parent_window.first_onward.connect("clicked", self.forward)
 
@@ -1190,7 +1201,9 @@ class FirstPage(Gtk.Box):
         self.__parent_window.overlay.add(self.__parent_window.bgspace)
         self.__parent_window.overlay.add_overlay(self.__parent_window.container)
         self.__parent_window.container.add(self.__parent_window.second_page)
+        # print(self.__parent_window.setupwin.signal_id)
         self.__parent_window.setupwin.signal_id = self.__parent_window.setupwin.connect("key_press_event", self.__parent_window.key_press_event)
+        # print(self.__parent_window.setupwin.signal_id)
         self.__parent_window.container.remove(self.__parent_window.first_page)
         self.__parent_window.setupwin.show_all()
         self.hide()
@@ -1214,7 +1227,10 @@ class SecondPage(Gtk.Box):
         scroller.add(vbox)
 
         hbox = Gtk.HBox()
-        previous = Gtk.Button("Go Back")
+        previous = Gtk.Button("")
+        for child in previous.get_children():
+            child.set_label("<b>Go Back</b>")
+            child.set_use_markup(True)
         previous.connect("clicked", self.goback)
         previous.set_margin_right(315)
         hbox.add(previous)
@@ -1295,7 +1311,10 @@ class CapsPage(Gtk.Box):
         scroller.add(vbox)
 
         hbox = Gtk.HBox()
-        previous = Gtk.Button("Go Back")
+        previous = Gtk.Button("")
+        for child in previous.get_children():
+            child.set_label("<b>Go Back</b>")
+            child.set_use_markup(True)
         previous.connect("clicked", self.goback)
         previous.set_margin_right(315)
         hbox.add(previous)
@@ -1360,6 +1379,7 @@ class SuccessPage(Gtk.Box):
 
     def forward(self, *args):
         self.hide()
+        # self.__parent_window.setupwin.disconnect(self.__parent_window.setupwin.signal_id)/
         self.__parent_window.setupwin.close()
 
 
