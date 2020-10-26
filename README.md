@@ -97,7 +97,7 @@ sudo apt install python3
 
 Troubleshoot
 
-If the wizard does not appear then run this command and let me what the output is.
+If the wizard does not appear then either type in "kinto.sh" in your application overview search bar or run this following command.
 ```
 ~/.config/kinto/gui/kinto-gui.py
 ```
