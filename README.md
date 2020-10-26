@@ -73,6 +73,8 @@ Additionally, if you are using a cross-platform app and if it happens to have a 
 
 ## How to install (Linux)
 
+Video Tutorial: [Install Kinto.sh for Linux in less than a minute](https://www.youtube.com/watch?v=kd4al45XD1g)
+
 <img src="https://user-images.githubusercontent.com/10969616/97070698-179c4500-15a0-11eb-8064-c03aa7f4d4a5.png" width="75%">
 
 1. clone this repo
