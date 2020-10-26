@@ -95,6 +95,13 @@ sudo apt install python3
 ./setup.py
 ```
 
+Troubleshoot
+
+If the wizard does not appear then run this command and let me what the output is.
+```
+~/.config/kinto/gui/kinto-gui.py
+```
+
 To Uninstall Kinto
 
 ```
