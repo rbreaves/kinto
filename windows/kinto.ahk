@@ -235,11 +235,13 @@ GroupAdd, intellij, ahk_exe idea64.exe
 
     ; $LAlt::LCtrl     ; CB/IBM
     ; $RAlt::RCtrl     ; CB/IBM
+    ; $RCtrl::RAlt     ; CB/IBM
     ; $CapsLock::LWin  ; IBM
     ; $LCtrl::LAlt     ; CB/IBM
 
     ; $LAlt::LCtrl   ; WinModifiers
     ; $RAlt::RCtrl   ; WinModifiers
+    ; $RCtrl::RAlt   ; WinModifiers
     ; $LWin::LAlt    ; WinModifiers
     ; $LCtrl::LWin   ; WinModifiers
 
