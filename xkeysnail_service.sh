@@ -206,6 +206,8 @@ sudo systemctl disable xkeysnail >/dev/null 2>&1
 sudo pkill -f bin/xkeysnail >/dev/null 2>&1
 sudo pkill -f "is-active xkeysnail" >/dev/null 2>&1
 
+pip3 install pillow
+
 # Add additional shortcuts if needed, does not modify existing ones
 
 if [[ $dename == 'gnome' || $dename == 'budgie' ]];then
@@ -218,7 +220,6 @@ fi
 
 # if ls /etc/apt/sources.list.d/system76* 1> /dev/null 2>&1; then
 if [[ $distro == 'popos' ]]; then
-	pip3 install pillow
 	# Addition, does not overwrite existing
 	if [[ $(gsettings get org.gnome.desktop.wm.keybindings minimize | grep "\[\]" | wc -l) != 1 ]];then
 		echo "Adding Super-h (Cmd+h) to hide/minimize Window."
@@ -233,8 +234,14 @@ if [[ $distro == 'popos' ]]; then
 	fi
 fi
 
+if ! [ -x "$(command -v xhost)" ] || ! [ -x "$(command -v gcc)" ]; then
+	if [ "$distro" == "manjarolinux" ]; then
+		sudo ./system-config/unipkg.sh "xorg-xhost gcc"
+	fi
+fi
+
 if [[ $dename == "kde" ]]; then
-	if [[ $distroy == "manjarolinux" ]]; then
+	if [[ $distro == "manjarolinux" ]]; then
 		sudo ./system-config/unipkg.sh vte3
 	else
 		sudo ./system-config/unipkg.sh libvte-2.91-dev
@@ -390,10 +397,11 @@ sed -i "s#{homedir}#`echo "$HOME"`#g" ~/.config/kinto/gui/kinto-gui.py
 sed -i "s#{homedir}#`echo "$HOME"`#g" ./xkeysnail-config/gui/kinto.desktop.new
 sudo mv ./xkeysnail-config/gui/kinto.desktop.new /usr/share/applications/kinto.desktop
 sed -i "s#{xhost}#`\\which xhost`#g" ./xkeysnail-config/xkeysnail.service.new
+sed -i "s#{xkeysnail}#`which xkeysnail`#g" ./xkeysnail-config/xkeysnail.service.new
 sed -i "s/{username}/`whoami`/g" ./xkeysnail-config/limitedadmins.new
 sed -i "s#{systemctl}#`\\which systemctl`#g" ./xkeysnail-config/limitedadmins.new
 sed -i "s#{pkill}#`\\which pkill`#g" ./xkeysnail-config/limitedadmins.new
-sed -i "s#{xkeysnail}#/usr/local/bin/xkeysnail#g" ./xkeysnail-config/limitedadmins.new
+sed -i "s#{xkeysnail}#`which xkeysnail`#g" ./xkeysnail-config/limitedadmins.new
 sudo chown root:root ./xkeysnail-config/limitedadmins.new
 sudo mv ./xkeysnail-config/limitedadmins.new /etc/sudoers.d/limitedadmins
 sed -i "s#{systemctl}#`\\which systemctl`#g" ~/.config/kinto/xkeysnail.desktop
@@ -512,5 +520,14 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	fi
 
 	echo -e "Kinto install is \e[1m\e[32mcomplete\e[0m.\n"
+
+	echo "If the setup wizard fails to appear then please run this command."
+	echo -e "~/.config/kinto/gui/kinto-gui.py\n"
+	echo -e "You can then either \e[1m\e[36mG\033[0;91mo\033[0;93mo\e[1m\e[36mg\e[1m\e[32ml\033[0;91me\e[0m what dependencies you may be missing or \e]8;;https://github.com/rbreaves/kinto/issues/new\?assignees=rbreaves&labels=bug&template=bug_report.md&title=\aopen an issue ticket.\e]8;;\a\n"
+
+	if [ "$distro" == "manjarolinux" ]; then
+		echo "If you are using Manjaro and see an error about 'GLIBC_2.xx not found' appears then please update your system."
+		echo "sudo pacman -Syu"
+	fi	
 
 fi
