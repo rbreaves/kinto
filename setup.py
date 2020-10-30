@@ -121,6 +121,9 @@ if os.path.isdir(homedir + "/.config/kinto") == False:
 	os.mkdir(homedir + "/.config/kinto")
 	time.sleep(0.5)
 
+
+cmdline("git fetch")
+
 color_arr = [bcolors.CBEIGE,bcolors.CRED2,bcolors.CGREEN,bcolors.CYELLOW ]
 
 kintover = cmdline('echo "$(git describe --tag --abbrev=0 | head -n 1)" "build" "$(git rev-parse --short HEAD)"')
