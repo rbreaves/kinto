@@ -334,6 +334,9 @@ if ! [ -x "$(command -v python3-config)" ]; then
 		sudo ./system-config/unipkg.sh "$pydev"
 	fi
 fi
+# if [ "$distro" == "ubuntu" ] && [ "$dename" == "gnome" ];then
+# 	sudo ./system-config/unipkg.sh gnome-tweaks gnome-shell-extension-appindicator gir1.2-appindicator3-0.1
+# fi
 if ! [ -x "$(command -v xhost)" ] || ! [ -x "$(command -v gcc)" ]; then
 	if [ "$distro" == "\"manjaro linux\"" ]; then
 		sudo ./system-config/unipkg.sh "xorg-xhost gcc"
@@ -492,9 +495,8 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	# 	sudo systemctl enable xkeysnail.service
 	# fi
 	# sudo systemctl restart xkeysnail
-	if ! [[ $dename == "gnome" || $dename == "kde" ]];then
-		sudo pkill -f kintotray >/dev/null 2>&1
-	else
+	sudo pkill -f kintotray >/dev/null 2>&1
+	if [[ $dename == "gnome" || $dename == "kde" ]];then
 		sed -i "s/systray = true/systray = false/g" ~/.config/kinto/initkb
 	fi
 	nohup python3 ~/.config/kinto/gui/kinto-gui.py >/dev/null 2>&1 &
@@ -523,11 +525,19 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 
 	echo "If the setup wizard fails to appear then please run this command."
 	echo -e "~/.config/kinto/gui/kinto-gui.py\n"
-	echo -e "You can then either \e[1m\e[36mG\033[0;91mo\033[0;93mo\e[1m\e[36mg\e[1m\e[32ml\033[0;91me\e[0m what dependencies you may be missing or \e]8;;https://github.com/rbreaves/kinto/issues/new\?assignees=rbreaves&labels=bug&template=bug_report.md&title=\aopen an issue ticket.\e]8;;\a\n"
+	echo -e "You can then either \e]8;;https://google.com\a\e[1m\e[36mG\033[0;91mo\033[0;93mo\e[1m\e[36mg\e[1m\e[32ml\033[0;91me\e[0m\e]8;;\a what dependencies you may be missing\nor \e]8;;https://github.com/rbreaves/kinto/issues/new\?assignees=rbreaves&labels=bug&template=bug_report.md&title=\aopen an issue ticket.\e]8;;\a\n"
 
 	if [ "$distro" == "manjarolinux" ]; then
 		echo "If you are using Manjaro and see an error about 'GLIBC_2.xx not found' appears then please update your system."
 		echo "sudo pacman -Syu"
-	fi	
+	fi
+
+	if [ "$dename" == "gnome" ];then
+		echo "Gnome may not support appindicators well, so by default you may need to install packages before enabling the System Tray."
+		echo "You may try one of the following extensions."
+		echo -e "    1) \e]8;;https://extensions.gnome.org/extension/615/appindicator-support/\aAppIndicator and KStatusNotifierItem Support\e]8;;\a"
+		echo -e "    2) \e]8;;https://extensions.gnome.org/extension/1031/topicons/\aTopIcons Plus\e]8;;\a"
+		echo -e "\nNote: you may want these supporting packages\n'sudo apt install gnome-tweaks gnome-shell-extension-appindicator gir1.2-appindicator3-0.1'"
+	fi
 
 fi
