@@ -80,6 +80,7 @@ class MyWindow(Gtk.Window):
 
         homedir = os.path.expanduser("~")
         self.kconfig = homedir+"/.config/kinto/kinto.py"
+        autostart_bool = False
 
         path = os.environ['HOME']+'/.config/kinto/kinto-color.svg'
         width = -1
