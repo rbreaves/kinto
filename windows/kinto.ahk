@@ -132,6 +132,7 @@ GroupAdd, terminals, ahk_exe WindowsTerminal.exe
 GroupAdd, terminals, ahk_exe Hyper.exe
 GroupAdd, terminals, ahk_exe mintty.exe
 GroupAdd, terminals, ahk_exe Cmd.exe
+GroupAdd, terminals, ahk_exe box.exe
 GroupAdd, terminals, ahk_exe Terminus.exe
 GroupAdd, terminals, Fluent Terminal ahk_class ApplicationFrameWindow
 
@@ -523,7 +524,7 @@ GroupAdd, intellij, ahk_exe idea64.exe
 
         ; Copy
         ^c::
-        If WinActive("ahk_exe cmd.exe"){
+        If WinActive("ahk_exe cmd.exe") OR WinActive("ahk_exe box.exe"){
             Send {Enter}
         }
         else if WinActive("ahk_exe mintty.exe"){
@@ -537,7 +538,7 @@ GroupAdd, intellij, ahk_exe idea64.exe
         return
 
         ^c up::
-        If not WinActive("ahk_group cmd.exe"){
+        If not WinActive("ahk_group cmd.exe") OR WinActive("ahk_exe box.exe"){
             SetKeyDelay -1
             Send {Blind}{c Up}{LShift Up}
         }
@@ -554,6 +555,9 @@ GroupAdd, intellij, ahk_exe idea64.exe
         }
         else if WinActive("ahk_group posix"){
             Send {Blind}{Shift down}v{Shift up}
+        }
+        else if WinActive("ahk_exe box.exe"){
+            SendEvent {RButton}
         }
         else{
             Send {Blind}v
