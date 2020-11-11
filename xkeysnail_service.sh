@@ -400,11 +400,9 @@ sed -i "s#{homedir}#`echo "$HOME"`#g" ~/.config/kinto/gui/kinto-gui.py
 sed -i "s#{homedir}#`echo "$HOME"`#g" ./xkeysnail-config/gui/kinto.desktop.new
 sudo mv ./xkeysnail-config/gui/kinto.desktop.new /usr/share/applications/kinto.desktop
 sed -i "s#{xhost}#`\\which xhost`#g" ./xkeysnail-config/xkeysnail.service.new
-sed -i "s#{xkeysnail}#`which xkeysnail`#g" ./xkeysnail-config/xkeysnail.service.new
 sed -i "s/{username}/`whoami`/g" ./xkeysnail-config/limitedadmins.new
 sed -i "s#{systemctl}#`\\which systemctl`#g" ./xkeysnail-config/limitedadmins.new
 sed -i "s#{pkill}#`\\which pkill`#g" ./xkeysnail-config/limitedadmins.new
-sed -i "s#{xkeysnail}#`which xkeysnail`#g" ./xkeysnail-config/limitedadmins.new
 sudo chown root:root ./xkeysnail-config/limitedadmins.new
 sudo mv ./xkeysnail-config/limitedadmins.new /etc/sudoers.d/limitedadmins
 sed -i "s#{systemctl}#`\\which systemctl`#g" ~/.config/kinto/xkeysnail.desktop
@@ -464,11 +462,6 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	elif [ -d /lib/systemd/system ];then
 		xkeypath="/lib/systemd/system/"
 	fi
-	sudo mv ./xkeysnail-config/xkeysnail.service.new "$xkeypath"xkeysnail.service && echo "Service file added to "$xkeypath"xkeysnail.service"
-	sudo chown -R root:root "$xkeypath"xkeysnail.service && echo "Ownership set for root..." || echo "Failed to set ownership..."
-	sudo chmod 644 "$xkeypath"xkeysnail.service && echo "Permissions set to 644..." || echo "Failed to set permissions..."
-	sudo ln -s "$xkeypath"xkeysnail.service /etc/systemd/system/xkeysnail.service && echo "Created soft symlink..." || echo "Failed to create soft symlink..."
-	sudo ln -s "$xkeypath"xkeysnail.service /etc/systemd/system/graphical.target.wants/xkeysnail.service && echo "Created soft symlink for graphical target..." || echo "Failed to create soft symlink for graphical target..."
 	xhost +SI:localuser:root
 	git clone --depth 10 https://github.com/rbreaves/xkeysnail.git
 	cd xkeysnail
@@ -485,6 +478,13 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	fi
 	sudo pip3 install --upgrade .
 	cd ..
+	sed -i "s#{xkeysnail}#`which xkeysnail`#g" ./xkeysnail-config/xkeysnail.service.new
+	sed -i "s#{xkeysnail}#`which xkeysnail`#g" ./xkeysnail-config/limitedadmins.new
+	sudo mv ./xkeysnail-config/xkeysnail.service.new "$xkeypath"xkeysnail.service && echo "Service file added to "$xkeypath"xkeysnail.service"
+	sudo chown -R root:root "$xkeypath"xkeysnail.service && echo "Ownership set for root..." || echo "Failed to set ownership..."
+	sudo chmod 644 "$xkeypath"xkeysnail.service && echo "Permissions set to 644..." || echo "Failed to set permissions..."
+	sudo ln -s "$xkeypath"xkeysnail.service /etc/systemd/system/xkeysnail.service && echo "Created soft symlink..." || echo "Failed to create soft symlink..."
+	sudo ln -s "$xkeypath"xkeysnail.service /etc/systemd/system/graphical.target.wants/xkeysnail.service && echo "Created soft symlink for graphical target..." || echo "Failed to create soft symlink for graphical target..."
 	sudo systemctl daemon-reload
 	sudo systemctl disable xkeysnail
 	sudo systemctl stop xkeysnail
