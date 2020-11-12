@@ -73,7 +73,7 @@ function uninstall {
 	elif [ "$yn" == "n" ]; then
 		echo "Skipping..."
 	fi
-	if [[ $dename == "gnome" || $dename == "budgie" ]]; then
+	if [[ $dename == "gnome" || $dename == "budgie" || $dename == "mate" ]]; then
 		echo -e "\nWill still be restoring the overlay key"
 		echo -e "gsettings set org.gnome.mutter overlay-key 'super'\n"
 		gsettings set org.gnome.mutter overlay-key 'super'
