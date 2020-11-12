@@ -1221,7 +1221,8 @@ class SecondPage(Gtk.Box):
         scroller.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.ALWAYS)
 
         label_start = Gtk.Label()
-        label_start.set_markup('<b>Identifying your Keyboard...</b>\n\nPress the <b>2nd</b> key <b>Left</b> of the spacebar.')
+        
+        label_start.set_markup('<b>Identifying your Keyboard...</b>\n\nPress the <b>2nd</b> key <b>Left</b> of the spacebar.\n\n<sub>If stuck here then unset Overlay (Super) key on your DE.</sub>')
         label_start.set_alignment(0,0)
         label_start.set_line_wrap(True)
         vbox.add(label_start)
