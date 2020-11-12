@@ -5,6 +5,7 @@ gi.require_version('Gtk', '3.0')
 gi.require_version('Vte', '2.91')
 from gi.repository import Gtk,Gdk,GdkPixbuf
 from gi.repository import Vte,GLib
+from shutil import which
 from subprocess import Popen,PIPE,CalledProcessError
 from distutils.util import strtobool
 
@@ -918,13 +919,13 @@ class MyWindow(Gtk.Window):
         try:
             if os.path.exists('/opt/sublime_text/sublime_text'):
                 Popen(['/opt/sublime_text/sublime_text',os.environ['HOME']+'/.config/kinto/kinto.py'])
-            elif which(gedit) is not None:
+            elif which('gedit') is not None:
                 Popen(['gedit',os.environ['HOME']+'/.config/kinto/kinto.py'])
-            elif which(mousepad) is not None:
+            elif which('mousepad') is not None:
                 Popen(['mousepad',os.environ['HOME']+'/.config/kinto/kinto.py'])
-            elif which(kate) is not None:
+            elif which('kate') is not None:
                 Popen(['kate',os.environ['HOME']+'/.config/kinto/kinto.py'])
-            elif which(kwrite) is not None:
+            elif which('kwrite') is not None:
                 Popen(['kwrite',os.environ['HOME']+'/.config/kinto/kinto.py'])
 
         except CalledProcessError:                                  # Notify user about error on running restart commands.
@@ -934,13 +935,13 @@ class MyWindow(Gtk.Window):
         try:
             if os.path.exists('/opt/sublime_text/sublime_text'):
                 Popen(['/opt/sublime_text/sublime_text','/lib/systemd/system/xkeysnail.service'])
-            elif which(gedit) is not None:
+            elif which('gedit') is not None:
                 Popen(['gedit','/lib/systemd/system/xkeysnail.service'])
-            elif which(mousepad) is not None:
+            elif which('mousepad') is not None:
                 Popen(['mousepad','/lib/systemd/system/xkeysnail.service'])
-            elif which(kate) is not None:
+            elif which('kate') is not None:
                 Popen(['kate','/lib/systemd/system/xkeysnail.service'])
-            elif which(kwrite) is not None:
+            elif which('kwrite') is not None:
                 Popen(['kwrite','/lib/systemd/system/xkeysnail.service'])
 
         except CalledProcessError:                                  # Notify user about error on running restart commands.
@@ -949,12 +950,16 @@ class MyWindow(Gtk.Window):
     def setSysKB(self,button):
         if self.ostype == "XFCE":
             Popen(['xfce4-keyboard-settings'])
+        elif self.ostype == "KDE":
+            self.queryConfig('systemsettings >/dev/null 2>&1 || systemsettings5 >/dev/null 2>&1')
         else:
             Popen(['gnome-control-center','keyboard'])
 
     def setRegion(self,button):
         if self.ostype == "XFCE":
             Popen(['gnome-language-selector'])
+        elif self.ostype == "KDE":
+            self.queryConfig('kcmshell4 kcm_translations >/dev/null 2>&1 || kcmshell5 kcm_translations >/dev/null 2>&1')
         else:
             Popen(['gnome-control-center','region'])
 
