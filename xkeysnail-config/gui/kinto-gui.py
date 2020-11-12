@@ -1384,13 +1384,43 @@ class SuccessPage(Gtk.Box):
     def __init__(self, parent_window):
         super().__init__(spacing=10)
         self.__parent_window = parent_window
+        self.grid = Gtk.Grid()
 
-        vbox_container = Gtk.VBox()
-        self.__parent_window.last_onward.props.relief = Gtk.ReliefStyle.NONE
+        hbox = Gtk.HBox()
+        previous = Gtk.Button("       ")
+        previous.props.relief = Gtk.ReliefStyle.NONE
+        previous.set_margin_right(245)
+        hbox.add(previous)
+
+        self.__parent_window.last_onward.set_label("")
+        for child in self.__parent_window.last_onward.get_children():
+            child.set_label("<b>Done</b>")
+            child.set_use_markup(True)
         self.__parent_window.last_onward.connect("clicked", self.forward)
-        vbox_container.set_margin_top(600)
-        vbox_container.add(self.__parent_window.last_onward)
-        self.add(vbox_container)
+
+        hbox.add(self.__parent_window.last_onward)
+        hbox.set_hexpand(False)
+        hbox.set_vexpand(False)
+        hbox.set_margin_bottom(6)
+        hbox.set_margin_right(25)
+
+        scroller = Gtk.ScrolledWindow()
+        scroller.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.NEVER)
+        scroller.set_hexpand(True)
+        scroller.set_vexpand(True)
+        vbox = Gtk.VBox()
+        vbox_container = Gtk.VBox()
+        vbox_container.set_margin_top(55)
+        vbox_container.set_margin_right(28)
+        vbox_container.add(scroller)
+        self.grid.set_margin_left(157)
+        vbox_container.set_margin_bottom(18)
+        vbox.set_margin_right(10)
+        vbox.set_margin_bottom(18)
+        self.grid.add(vbox_container)
+        self.grid.attach_next_to(hbox, vbox_container, Gtk.PositionType.BOTTOM, 2, 1)
+        self.add(self.grid)
+        self.__parent_window.last_onward.grab_focus()
 
     def forward(self, *args):
         self.hide()
