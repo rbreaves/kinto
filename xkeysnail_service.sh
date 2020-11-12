@@ -476,6 +476,13 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	fi
 	sudo pip3 install --upgrade .
 	cd ..
+	which xkeysnail
+	if [ $? -eq 1 ]; then
+		echo -e "\nKinto install has \e[1m\033[0;91mfailed\e[0m.\n"
+		echo -e "cd into ./xkeysnail"
+		echo -e "Run 'sudo pip3 install --upgrade .' to debug issue"
+		exit 0
+	fi
 	sed -i "s#{xkeysnail}#`which xkeysnail`#g" ./xkeysnail-config/xkeysnail.service.new
 	sed -i "s#{xkeysnail}#`which xkeysnail`#g" ./xkeysnail-config/limitedadmins.new
 	sudo mv ./xkeysnail-config/xkeysnail.service.new "$xkeypath"xkeysnail.service && echo "Service file added to "$xkeypath"xkeysnail.service"
