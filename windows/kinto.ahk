@@ -24,7 +24,7 @@ AHK_NOTIFYICON(wParam, lParam)
 }
 ; End Enable Left clicks
 
-; I_Icon = %A_ScriptDir%\assets\kinto-white.ico           ; MacModifiers
+; I_Icon = %A_ScriptDir%\assets\kinto-white-invert.ico    ; MacModifiers
 ; IfExist, %I_Icon%                                       ; MacModifiers
 ; Menu, Tray, Icon, %I_Icon%,, 1                          ; MacModifiers
 ; Menu, Tray, Tip, Mac - Kinto                            ; MacModifiers
@@ -97,8 +97,9 @@ Send {LAlt down}{tab}{LAlt up}
 tray_suspend(){
     suspend toggle
     if (a_isSuspended = 1){
+        Gosub ReleaseModifiers
         menu, tray, check  , Suspend Kinto
-        I_Icon = %A_ScriptDir%\assets\kinto-color-invert.ico
+        I_Icon = %A_ScriptDir%\assets\kinto-white.ico
         Menu, Tray, Icon, %I_Icon%,, 1
         Menu, Tray, Tip, Suspended - Kinto
         IfWinExist, detectUSB.ahk
@@ -106,7 +107,7 @@ tray_suspend(){
     }
     else{
         menu, tray, unCheck, Suspend Kinto
-;         I_Icon = %A_ScriptDir%\assets\kinto-white.ico           ; MacModifiers
+;         I_Icon = %A_ScriptDir%\assets\kinto-white-invert.ico    ; MacModifiers
 ;         I_Icon = %A_ScriptDir%\assets\kinto-white-invert.ico    ; WinModifiers/CB/IBM
         Menu, Tray, Icon, %I_Icon%,,1
         Run, %A_ScriptDir%\detectUSB.ahk
@@ -116,6 +117,7 @@ tray_suspend(){
 }
 
 Exit() {
+    Gosub ReleaseModifiers
     IfWinExist, detectUSB.ahk
         WinClose
 
@@ -620,3 +622,14 @@ GroupAdd, intellij, ahk_exe idea64.exe
         !v::Send {LCtrl down}v{LCtrl Up} ; CB/IBM
     #If
 #If
+
+ReleaseModifiers:
+Send {RCtrl up}
+Send {LCtrl up}
+Send {RAlt up}
+Send {LAlt up}
+Send {RWin up}
+Send {LWin up}
+Send {RShift up}
+Send {LShift up}
+return
