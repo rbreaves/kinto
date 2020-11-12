@@ -922,6 +922,10 @@ class MyWindow(Gtk.Window):
                 Popen(['gedit',os.environ['HOME']+'/.config/kinto/kinto.py'])
             elif which(mousepad) is not None:
                 Popen(['mousepad',os.environ['HOME']+'/.config/kinto/kinto.py'])
+            elif which(kate) is not None:
+                Popen(['kate',os.environ['HOME']+'/.config/kinto/kinto.py'])
+            elif which(kwrite) is not None:
+                Popen(['kwrite',os.environ['HOME']+'/.config/kinto/kinto.py'])
 
         except CalledProcessError:                                  # Notify user about error on running restart commands.
             Popen(['notify-send','Kinto: Error could not open config file!'])
@@ -934,6 +938,10 @@ class MyWindow(Gtk.Window):
                 Popen(['gedit','/lib/systemd/system/xkeysnail.service'])
             elif which(mousepad) is not None:
                 Popen(['mousepad','/lib/systemd/system/xkeysnail.service'])
+            elif which(kate) is not None:
+                Popen(['kate','/lib/systemd/system/xkeysnail.service'])
+            elif which(kwrite) is not None:
+                Popen(['kwrite','/lib/systemd/system/xkeysnail.service'])
 
         except CalledProcessError:                                  # Notify user about error on running restart commands.
             Popen(['notify-send','Kinto: Error could not open config file!'])
