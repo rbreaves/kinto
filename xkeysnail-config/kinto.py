@@ -70,7 +70,7 @@ define_conditional_modmap(re.compile(termStr, re.IGNORECASE), {
     # Key.RIGHT_ALT: Key.RIGHT_CTRL,    # IBM - Multi-language (Remove)
     # Key.RIGHT_CTRL: Key.RIGHT_ALT,    # IBM
     # # Right Meta does not exist on chromebooks
-    
+
     # Key.RIGHT_ALT: Key.RIGHT_CTRL,  # IBM - Multi-language (Remove)
     # Key.RIGHT_CTRL: Key.RIGHT_ALT,  # IBM - Multi-language (Remove)
 
@@ -296,7 +296,7 @@ define_keymap(re.compile(codeStr, re.IGNORECASE),{
     K("M-Right"): [K("M-F19"),K("C-Right")],                # Right of Word
     K("M-Shift-Left"): [K("M-F19"),K("C-Shift-Left")],      # Select Left of Word
     K("M-Shift-Right"): [K("M-F19"),K("C-Shift-Right")],    # Select Right of Word
-    
+
     # K("C-PAGE_DOWN"): pass_through_key,         # cancel next_view
     # K("C-PAGE_UP"): pass_through_key,           # cancel prev_view
     K("C-M-Left"): K("C-PAGE_UP"),              # next_view
@@ -408,9 +408,9 @@ define_keymap(re.compile("Io.elementary.terminal|kitty", re.IGNORECASE),{
 define_keymap(re.compile(termStr, re.IGNORECASE),{
     # K("LC-Right"):K("C-M-Right"),                 # Default SL - Change workspace (budgie)
     # K("LC-Left"):K("C-M-Left"),                   # Default SL - Change workspace (budgie)
-    # K("LC-Left"):K("C-M-End"),                    # SL - Change workspace xfce4     
-    # K("LC-Left"):K("Super-Left"),                 # SL - Change workspace eos 
-    # K("LC-Right"):K("C-M-Home"),                  # SL - Change workspace xfce4     
+    # K("LC-Left"):K("C-M-End"),                    # SL - Change workspace xfce4
+    # K("LC-Left"):K("Super-Left"),                 # SL - Change workspace eos
+    # K("LC-Right"):K("C-M-Home"),                  # SL - Change workspace xfce4
     # K("LC-Right"):K("Super-Right"),               # SL - Change workspace eos
     # K("LC-Right"):K("Super-Page_Up"),             # SL - Change workspace (ubuntu/fedora)
     # K("LC-Left"):K("Super-Page_Down"),            # SL - Change workspace (ubuntu/fedora)
@@ -462,4 +462,16 @@ define_keymap(re.compile(termStr, re.IGNORECASE),{
     K("RC-DOT"): K("C-Shift-DOT"),
     K("RC-SLASH"): K("C-Shift-SLASH"),
     K("RC-KPASTERISK"): K("C-Shift-KPASTERISK"),
+    K("BRIGHTNESSDOWN"): K("F1"),
+    K("BRIGHTNESSUP"): K("F2"),
+    K("SCALE"): K("F3"),
+    K("DASHBOARD"): K("F4"),
+    K("KBDILLUMDOWN"): K("F5"),
+    K("KBDILLUMUP"): K("F6"),
+    K("PREVIOUSSONG"): K("F7"),
+    K("PLAYPAUSE"): K("F8"),
+    K("NEXTSONG"): K("F9"),
+    K("MUTE"): K("F10"),
+    K("VOLUMEDOWN"): K("F11"),
+    K("VOLUMEUP	"): K("F12"),
 }, "terminals")
