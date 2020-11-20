@@ -157,12 +157,6 @@ Other programs that will be installed when you run ./setup.py
 - Strawberry Perl
 
 Note: Sublime Text users should disable screen rotation hotkeys as they will interfere with multi-cursor and possibly other combos. See https://windowsloop.com/disable-screen-rotation-keyboard-shortcut/ for details.
-
-Users can now hotswap between Apple and Windows based keyboards without having to logoff and back on, and Windows is currently the only implementation with a system tray (but this feature is coming to Budgie, XFCE, Mate, Gnome, and lastly KDE).
-
-<img src="https://user-images.githubusercontent.com/10969616/84471498-100c7d00-ac4b-11ea-972d-60c1907831ec.png" width="50%">
-<img src="https://user-images.githubusercontent.com/10969616/84471501-10a51380-ac4b-11ea-9e0e-c19a7ebfad6d.png" width="50%">
-
 ## Shortcut Creation
 
 Note: A new project, [Universal Keys](https://github.com/rbreaves/Universal-Keys), has been created that will be updated to contain all current remaps - plus many more. Once that is done, Kinto will be updated to programmatically pull the latest keymaps from simple csv comma delimited files & will build out key remaps from there. This will also allow for more types of remaps within an application category, Sublime Text 3 to VS Code or VS Code to Sublime Text 3, Photoshop to Gimp, Gimp to Photoshop, etc & it will ensure that xkeysnail (linux) & autohotkey (windows) are pulling from the same data set.
