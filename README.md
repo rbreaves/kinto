@@ -143,8 +143,6 @@ py setup.py
 - x11
 - xkeysnail
 
-On most distros you can confirm Input Methods by navigating to "Language Support" and set "Keyboard input method system:" to IBus for full word-wise support with web browsers. 
-
 ### Kinto for Windows 10 Requirements
 
 - [Git for Windows](https://git-scm.com/download/win)
