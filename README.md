@@ -333,9 +333,6 @@ If you continue to have issues then open a ticket and send me the info.
 ## Language Support
 I'd appreciate any help from people with non-US based keyboards, to help ensure that these keymaps and keyswap methods work in all or most languages.
 
-If you would like to attempt adding additional custom keymaps for other languages then I strongly recommend reading Glen Whitney's post here.
-https://superuser.com/questions/385748/binding-superc-superv-to-copy-and-paste
-
 ## Related or Useful Resources
 
 [Xkeysnail](https://github.com/mooz/xkeysnail) by mooz
