@@ -329,6 +329,16 @@ GroupAdd, intellij, ahk_exe idea64.exe
     !Right::Send ^{Right}
     !+Right::Send ^+{Right}
 
+    ; emacs style
+    #n::Send {Down}
+    #p::Send {Up}
+    #f::Send {Right}
+    #b::Send {Left}
+    #a::Send {Home}
+    #e::Send {End}
+    #d::Send {Delete}
+    #k::Send +{End}{Backspace}
+
     ; Cmd+Space Alternative
     $^Space::Send ^{Esc}
 
