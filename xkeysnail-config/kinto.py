@@ -239,13 +239,21 @@ define_keymap(None,{
     # K("M-Grave") : K("C-Shift-Tab"),              # Chromebook/IBM - In-App Tab switching
     K("Super-Tab"): K("LC-Tab"),                  # Default not-chromebook
     K("Super-Shift-Tab"): K("LC-Shift-Tab"),      # Default not-chromebook
+    
+    # emacs style
+    K("Super-a"): K("Home"),                      # Beginning of Line
+    K("Super-e"): K("End"),                       # End of Line
+    K("Super-b"): K("Left"),
+    K("Super-f"): K("Right"),
+    K("Super-n"): K("Down"),
+    K("Super-p"): K("Up"),
+    K("Super-k"): [K("Shift-End"), K("Backspace")],
+    K("Super-d"): K("Delete"),
 
     # Wordwise
     K("RC-Left"): K("Home"),                      # Beginning of Line
-    K("Super-a"): K("Home"),                      # Beginning of Line
     K("RC-Shift-Left"): K("Shift-Home"),          # Select all to Beginning of Line
     K("RC-Right"): K("End"),                      # End of Line
-    K("Super-e"): K("End"),                       # End of Line
     K("RC-Shift-Right"): K("Shift-End"),          # Select all to End of Line
     # K("RC-Left"): K("C-LEFT_BRACE"),              # Firefox-nw - Back
     # K("RC-Right"): K("C-RIGHT_BRACE"),            # Firefox-nw - Forward
