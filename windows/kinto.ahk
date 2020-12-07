@@ -630,7 +630,6 @@ GroupAdd, intellij, ahk_exe idea64.exe
         #7::Send {LCtrl down}7{Ctrl up}  ; Default
         #8::Send {LCtrl down}8{Ctrl up}  ; Default
         #9::Send {LCtrl down}9{Ctrl up}  ; Default
-        #0::Send {LCtrl down}0{Ctrl up}  ; Default
         #-::Send {LCtrl down}-{Ctrl up}  ; Default
         #=::Send {LCtrl down}={Ctrl up}  ; Default
         #`::Send {LCtrl down}`{Ctrl up}  ; Default
@@ -660,46 +659,45 @@ GroupAdd, intellij, ahk_exe idea64.exe
         #x::Send {LCtrl down}x{Ctrl up}  ; Default
         #y::Send {LCtrl down}y{Ctrl up}  ; Default
         #z::Send {LCtrl down}z{Ctrl up}  ; Default
-        !0::Send {LCtrl down}0{Ctrl up}  ; CB/IBM
-        !1::Send {LCtrl down}1{Ctrl up}  ; CB/IBM
-        !2::Send {LCtrl down}2{Ctrl up}  ; CB/IBM
-        !3::Send {LCtrl down}3{Ctrl up}  ; CB/IBM
-        !4::Send {LCtrl down}4{Ctrl up}  ; CB/IBM
-        !5::Send {LCtrl down}5{Ctrl up}  ; CB/IBM
-        !6::Send {LCtrl down}6{Ctrl up}  ; CB/IBM
-        !7::Send {LCtrl down}7{Ctrl up}  ; CB/IBM
-        !8::Send {LCtrl down}8{Ctrl up}  ; CB/IBM
-        !9::Send {LCtrl down}9{Ctrl up}  ; CB/IBM
-        !0::Send {LCtrl down}0{Ctrl up}  ; CB/IBM
-        !-::Send {LCtrl down}-{Ctrl up}  ; CB/IBM
-        !=::Send {LCtrl down}={Ctrl up}  ; CB/IBM
-        !`::Send {LCtrl down}`{Ctrl up}  ; CB/IBM
-        !a::Send {LCtrl down}a{Ctrl up}  ; CB/IBM
-        !b::Send {LCtrl down}b{Ctrl up}  ; CB/IBM
-        !c::Send {LCtrl down}c{Ctrl up}  ; CB/IBM
-        !d::Send {LCtrl down}d{Ctrl up}  ; CB/IBM
-        !e::Send {LCtrl down}e{Ctrl up}  ; CB/IBM
-        !f::Send {LCtrl down}f{Ctrl up}  ; CB/IBM
-        !g::Send {LCtrl down}g{Ctrl up}  ; CB/IBM
-        !h::Send {LCtrl down}h{Ctrl up}  ; CB/IBM
-        !i::Send {LCtrl down}i{Ctrl up}  ; CB/IBM
-        !j::Send {LCtrl down}j{Ctrl up}  ; CB/IBM
-        !k::Send {LCtrl down}k{Ctrl up}  ; CB/IBM
-        !l::Send {LCtrl down}l{Ctrl up}  ; CB/IBM
-        !m::Send {LCtrl down}m{Ctrl up}  ; CB/IBM
-        !n::Send {LCtrl down}n{Ctrl up}  ; CB/IBM
-        !o::Send {LCtrl down}o{Ctrl up}  ; CB/IBM
-        !p::Send {LCtrl down}p{Ctrl up}  ; CB/IBM
-        !q::Send {LCtrl down}q{Ctrl up}  ; CB/IBM
-        !r::Send {LCtrl down}r{Ctrl up}  ; CB/IBM
-        !s::Send {LCtrl down}s{Ctrl up}  ; CB/IBM
-        !t::Send {LCtrl down}t{Ctrl up}  ; CB/IBM
-        !u::Send {LCtrl down}u{Ctrl up}  ; CB/IBM
-        !v::Send {LCtrl down}v{Ctrl up}  ; CB/IBM
-        !w::Send {LCtrl down}w{Ctrl up}  ; CB/IBM
-        !x::Send {LCtrl down}x{Ctrl up}  ; CB/IBM
-        !y::Send {LCtrl down}y{Ctrl up}  ; CB/IBM
-        !z::Send {LCtrl down}z{Ctrl up}  ; CB/IBM
+        ; !0::Send {LCtrl down}0{Ctrl up}  ; CB/IBM
+        ; !1::Send {LCtrl down}1{Ctrl up}  ; CB/IBM
+        ; !2::Send {LCtrl down}2{Ctrl up}  ; CB/IBM
+        ; !3::Send {LCtrl down}3{Ctrl up}  ; CB/IBM
+        ; !4::Send {LCtrl down}4{Ctrl up}  ; CB/IBM
+        ; !5::Send {LCtrl down}5{Ctrl up}  ; CB/IBM
+        ; !6::Send {LCtrl down}6{Ctrl up}  ; CB/IBM
+        ; !7::Send {LCtrl down}7{Ctrl up}  ; CB/IBM
+        ; !8::Send {LCtrl down}8{Ctrl up}  ; CB/IBM
+        ; !9::Send {LCtrl down}9{Ctrl up}  ; CB/IBM
+        ; !-::Send {LCtrl down}-{Ctrl up}  ; CB/IBM
+        ; !=::Send {LCtrl down}={Ctrl up}  ; CB/IBM
+        ; !`::Send {LCtrl down}`{Ctrl up}  ; CB/IBM
+        ; !a::Send {LCtrl down}a{Ctrl up}  ; CB/IBM
+        ; !b::Send {LCtrl down}b{Ctrl up}  ; CB/IBM
+        ; !c::Send {LCtrl down}c{Ctrl up}  ; CB/IBM
+        ; !d::Send {LCtrl down}d{Ctrl up}  ; CB/IBM
+        ; !e::Send {LCtrl down}e{Ctrl up}  ; CB/IBM
+        ; !f::Send {LCtrl down}f{Ctrl up}  ; CB/IBM
+        ; !g::Send {LCtrl down}g{Ctrl up}  ; CB/IBM
+        ; !h::Send {LCtrl down}h{Ctrl up}  ; CB/IBM
+        ; !i::Send {LCtrl down}i{Ctrl up}  ; CB/IBM
+        ; !j::Send {LCtrl down}j{Ctrl up}  ; CB/IBM
+        ; !k::Send {LCtrl down}k{Ctrl up}  ; CB/IBM
+        ; !l::Send {LCtrl down}l{Ctrl up}  ; CB/IBM
+        ; !m::Send {LCtrl down}m{Ctrl up}  ; CB/IBM
+        ; !n::Send {LCtrl down}n{Ctrl up}  ; CB/IBM
+        ; !o::Send {LCtrl down}o{Ctrl up}  ; CB/IBM
+        ; !p::Send {LCtrl down}p{Ctrl up}  ; CB/IBM
+        ; !q::Send {LCtrl down}q{Ctrl up}  ; CB/IBM
+        ; !r::Send {LCtrl down}r{Ctrl up}  ; CB/IBM
+        ; !s::Send {LCtrl down}s{Ctrl up}  ; CB/IBM
+        ; !t::Send {LCtrl down}t{Ctrl up}  ; CB/IBM
+        ; !u::Send {LCtrl down}u{Ctrl up}  ; CB/IBM
+        ; !v::Send {LCtrl down}v{Ctrl up}  ; CB/IBM
+        ; !w::Send {LCtrl down}w{Ctrl up}  ; CB/IBM
+        ; !x::Send {LCtrl down}x{Ctrl up}  ; CB/IBM
+        ; !y::Send {LCtrl down}y{Ctrl up}  ; CB/IBM
+        ; !z::Send {LCtrl down}z{Ctrl up}  ; CB/IBM
     #If
 #If
 
