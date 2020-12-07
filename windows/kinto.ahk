@@ -137,6 +137,7 @@ GroupAdd, terminals, ahk_exe Cmd.exe
 GroupAdd, terminals, ahk_exe box.exe
 GroupAdd, terminals, ahk_exe Terminus.exe
 GroupAdd, terminals, Fluent Terminal ahk_class ApplicationFrameWindow
+GroupAdd, terminals, ahk_class Console_2_Main
 
 GroupAdd, posix, ahk_exe ubuntu.exe
 GroupAdd, posix, ahk_exe ConEmu.exe
@@ -145,10 +146,11 @@ GroupAdd, posix, ahk_exe Hyper.exe
 GroupAdd, posix, ahk_exe mintty.exe
 GroupAdd, posix, ahk_exe Terminus.exe
 GroupAdd, posix, Fluent Terminal ahk_class ApplicationFrameWindow
+GroupAdd, posix, ahk_class Console_2_Main
+GroupAdd, posix, ahk_exe WindowsTerminal.exe
 
 GroupAdd, ConEmu, ahk_exe ConEmu.exe
 GroupAdd, ConEmu, ahk_exe ConEmu64.exe
-GroupAdd, ConEmu, ahk_exe WindowsTerminal.exe
 
 GroupAdd, ExcPaste, ahk_exe Cmd.exe
 GroupAdd, ExcPaste, ahk_exe mintty.exe
@@ -543,6 +545,10 @@ GroupAdd, intellij, ahk_exe idea64.exe
             SetKeyDelay -1
             Send {Blind}{Insert}
         }
+        ; else if WinActive("ahk_exe WindowsTerminal.exe"){ ; WinTerm
+        ;     SetKeyDelay -1                                ; WinTerm
+        ;     Send {Blind}{F13}                             ; WinTerm
+        ; }                                                 ; WinTerm
         else{
             SetKeyDelay -1
             Send {Blind}{LShift down}{c DownTemp}
@@ -559,6 +565,12 @@ GroupAdd, intellij, ahk_exe idea64.exe
         ; Sigints - interrupt
         ; $#c::Send {Ctrl down}c{Ctrl up} ; Default
         ; $!c::Send {Ctrl down}c{Ctrl up} ; CB/IBM
+
+        ; Windows Terminal
+        ; Ctrl+Shift+C should do nothing
+        If WinActive("ahk_exe WindowsTerminal.exe"){
+            $#+c::return
+        }
 
         ; Paste
         $^v::
@@ -580,17 +592,21 @@ GroupAdd, intellij, ahk_exe idea64.exe
     #IfWinActive ahk_group posix
         ; Open/Close Tab for those that support it
         $^t::
-        If not WinActive("ahk_group ConEmu"){
-            Send {LCtrl down}{LShift down}t{LCtrl Up}{LShift Up}
+        If not WinActive("ahk_group ConEmu") AND not WinActive("ahk_class Console_2_Main"){
+            Send {Blind}{LShift down}t{LShift Up}
+        }
+        else if WinActive("ahk_class Console_2_Main"){
+            Send {Blind}{F1}{LShift Up}
         }
         else{
-            Send ^t
+            Send {Blind}t
         }
         return
 
+
         $^w::
         If not WinActive("ahk_group ConEmu"){
-            Send {LCtrl down}{LShift down}w{LCtrl Up}{LShift Up}
+            Send {Blind}{LShift down}w{LShift Up}
         }
         else{
             Send ^w
