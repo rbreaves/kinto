@@ -12,7 +12,7 @@ terminals = [term.casefold() for term in terminals]
 termStr = "|".join(str(x) for x in terminals)
 
 # Use for browser specific hotkeys
-browsers = ["Chromium","Chromium-browser","Google-chrome","Epiphany","Firefox","Discord"]
+browsers = ["Chromium","Chromium-browser","Google-chrome","microsoft-edge-dev","microsoft-edge","Epiphany","Firefox","Discord"]
 browsers = [browser.casefold() for browser in browsers]
 browserStr = "|".join(str(x) for x in browsers)
 
@@ -198,7 +198,9 @@ define_keymap(re.compile("org.gnome.nautilus", re.IGNORECASE),{
 
 # Keybindings for Browsers
 define_keymap(re.compile(browserStr, re.IGNORECASE),{
-    K("RC-Q"): K("RC-Q"),          # Close all browsers Instances
+    K("RC-Q"): K("RC-Q"),               # Close all browsers Instances
+    K("Super-RC-I"): K("RC-Shift-I"),   # Dev tools
+    K("Super-RC-J"): K("RC-Shift-J"),   # Dev tools
 })
 
 define_keymap(None,{
