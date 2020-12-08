@@ -109,6 +109,10 @@ tray_suspend(){
         menu, tray, unCheck, Suspend Kinto
 ;         I_Icon = %A_ScriptDir%\assets\kinto-white-invert.ico    ; MacModifiers
 ;         I_Icon = %A_ScriptDir%\assets\kinto-white-invert.ico    ; WinModifiers/CB/IBM
+;         Menu, Tray, Tip, Mac - Kinto                            ; MacModifiers
+;         Menu, Tray, Tip, Windows - Kinto                        ; WinModifiers
+;         Menu, Tray, Tip, Chromebook - Kinto                     ; Chromebook
+;         Menu, Tray, Tip, IBM - Kinto                            ; IBM
         Menu, Tray, Icon, %I_Icon%,,1
         Run, %A_ScriptDir%\detectUSB.ahk
     }
