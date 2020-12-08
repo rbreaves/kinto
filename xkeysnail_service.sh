@@ -196,6 +196,9 @@ if [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	if [ -f /usr/local/bin/logoff.sh ];then
 		sudo rm /usr/local/bin/logoff.sh
 	fi
+	if [[ $distro == "elementaryos" ]]; then
+		gsettings set io.elementary.terminal.settings natural-copy-paste true
+	fi
 	sudo systemctl daemon-reload
 	# sudo systemctl --state=not-found --all | grep xkeysnail
 	exit 0
@@ -232,6 +235,10 @@ if [[ $distro == 'popos' ]]; then
 		echo "Hide/minimize Window is already bound to " $bound " , please remap it to Super-H for kinto."
 		echo "gsettings set org.gnome.desktop.wm.keybindings minimize \"['<Super>h','<Alt>F9']\""
 	fi
+fi
+
+if [[ $distro == "elementaryos" ]]; then
+	gsettings set io.elementary.terminal.settings natural-copy-paste false
 fi
 
 if ! [ -x "$(command -v xhost)" ] || ! [ -x "$(command -v gcc)" ]; then
