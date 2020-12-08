@@ -447,6 +447,19 @@ GroupAdd, intellij, ahk_exe idea64.exe
         ; Dev Tools
         #^i::send {Ctrl Down}{Shift Down}i{Shift Up}{Ctrl Up}
         #^j::send {Ctrl Down}{Shift Down}j{Shift Up}{Ctrl Up}
+        ; Open preferences
+        #IfWinActive ahk_exe firefox.exe
+            ^,::send {Alt Down}{Shift Down}t{Shift Up}{Alt Up}o{Enter}
+        #If
+        #IfWinActive ahk_exe chrome.exe
+            ^,::send {Alt Down}e{Alt Up}s{Enter}
+        #If
+        #IfWinActive ahk_exe msedge.exe
+            ^,::send {Alt Down}e{Alt Up}s{Enter}
+        #If
+        #IfWinActive ahk_exe opera.exe
+            ^,::send {Ctrl Down}{F12}{Ctrl Up}
+        #If
     #If
 
     ; Sublime Text Remaps for VS Code
