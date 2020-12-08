@@ -162,6 +162,7 @@ GroupAdd, editors, ahk_exe Code.exe
 GroupAdd, browsers, ahk_exe chrome.exe
 GroupAdd, browsers, ahk_exe opera.exe
 GroupAdd, browsers, ahk_exe firefox.exe
+GroupAdd, browsers, ahk_exe msedge.exe
 
 ; Disable Key Remapping for Virtual Machines
 ; Disable for Remote desktop solutions too
@@ -438,7 +439,10 @@ GroupAdd, intellij, ahk_exe idea64.exe
 
     ; Close all browsers
     #IfWinActive ahk_group browsers
-       ^q::send {Alt Down}f{Alt Up}x   ; exit all windows
+        ^q::send {Alt Down}f{Alt Up}x   ; exit all windows
+        ; Dev Tools
+        #^i::send {Ctrl Down}{Shift Down}i{Shift Up}{Ctrl Up}
+        #^j::send {Ctrl Down}{Shift Down}j{Shift Up}{Ctrl Up}
     #If
 
     ; Sublime Text Remaps for VS Code
