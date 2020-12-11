@@ -16,6 +16,14 @@ browsers = ["Chromium","Chromium-browser","Google-chrome","microsoft-edge-dev","
 browsers = [browser.casefold() for browser in browsers]
 browserStr = "|".join(str(x) for x in browsers)
 
+chromes = ["Chromium","Chromium-browser","Google-chrome","microsoft-edge-dev","microsoft-edge"]
+chromes = [chrome.casefold() for chrome in chromes]
+chromeStr = "|".join(str(x) for x in chromes)
+
+# edges = ["microsoft-edge-dev","microsoft-edge"]
+# edges = [edge.casefold() for edge in edges]
+# edgeStr = "|".join(str(x) for x in edges)
+
 mscodes = ["code","vscodium"]
 codeStr = "|".join(str(x) for x in mscodes)
 
@@ -198,10 +206,19 @@ define_keymap(re.compile("org.gnome.nautilus", re.IGNORECASE),{
 
 # Keybindings for Browsers
 define_keymap(re.compile(browserStr, re.IGNORECASE),{
-    K("RC-Q"): K("RC-Q"),               # Close all browsers Instances
-    K("Super-RC-I"): K("RC-Shift-I"),   # Dev tools
-    K("Super-RC-J"): K("RC-Shift-J"),   # Dev tools
+    K("RC-Q"): K("RC-Q"),           # Close all browsers Instances
+    K("M-RC-I"): K("RC-Shift-I"),   # Dev tools
+    K("M-RC-J"): K("RC-Shift-J"),   # Dev tools
 })
+
+# Open preferences in browsers
+define_keymap(re.compile("Firefox", re.IGNORECASE),{
+    K("C-comma"): [K("C-T"),K("a"),K("b"),K("o"),K("u"),K("t"),K("Shift-SEMICOLON"),K("p"),K("r"),K("e"),K("f"),K("e"),K("r"),K("e"),K("n"),K("c"),K("e"),K("s"),K("Enter")],
+})
+define_keymap(re.compile(chromeStr, re.IGNORECASE),{
+    K("C-comma"): [K("M-e"), K("s"),K("Enter")],
+})
+# Opera C-F12
 
 define_keymap(None,{
     K("RC-Space"): K("Alt-F1"),                   # Default SL - Launch Application Menu (gnome/kde)
