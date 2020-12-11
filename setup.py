@@ -104,9 +104,12 @@ if platform.system() == 'Windows':
 check_x11 = cmdline("(env | grep -i x11 || loginctl show-session \"$XDG_SESSION_ID\" -p Type) | awk -F= '{print $2}'").strip()
 
 if len(check_x11) == 0:
-	if os.name != 'nt':
+	if os.name != 'nt' and os.name != 'posix':
+		print(os.name)
 		print("You are not using x11, please logout and back in using x11/Xorg")
 		sys.exit()
+	elif os.name == 'posix':
+		print("You may be trying to run Kinto under WSL2 w/ Linux. We will continue...")
 	else:
 		print("\nYou are detected as running Windows.")
 		windows_setup()
