@@ -206,9 +206,9 @@ define_keymap(re.compile("org.gnome.nautilus", re.IGNORECASE),{
 
 # Keybindings for Browsers
 define_keymap(re.compile(browserStr, re.IGNORECASE),{
-    K("RC-Q"): K("RC-Q"),               # Close all browsers Instances
-    K("Super-RC-I"): K("RC-Shift-I"),   # Dev tools
-    K("Super-RC-J"): K("RC-Shift-J"),   # Dev tools
+    K("RC-Q"): K("RC-Q"),           # Close all browsers Instances
+    K("M-RC-I"): K("RC-Shift-I"),   # Dev tools
+    K("M-RC-J"): K("RC-Shift-J"),   # Dev tools
 })
 
 # Open preferences in browsers

@@ -445,8 +445,8 @@ GroupAdd, intellij, ahk_exe idea64.exe
     #IfWinActive ahk_group browsers
         ^q::send {Alt Down}f{Alt Up}x   ; exit all windows
         ; Dev Tools
-        #^i::send {Ctrl Down}{Shift Down}i{Shift Up}{Ctrl Up}
-        #^j::send {Ctrl Down}{Shift Down}j{Shift Up}{Ctrl Up}
+        !^i::send {Ctrl Down}{Shift Down}i{Shift Up}{Ctrl Up}
+        !^j::send {Ctrl Down}{Shift Down}j{Shift Up}{Ctrl Up}
         ; Open preferences
         #IfWinActive ahk_exe firefox.exe
             ^,::send {Alt Down}{Shift Down}t{Shift Up}{Alt Up}o{Enter}
