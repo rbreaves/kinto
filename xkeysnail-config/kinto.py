@@ -213,7 +213,7 @@ define_keymap(re.compile(browserStr, re.IGNORECASE),{
 
 # Open preferences in browsers
 define_keymap(re.compile("Firefox", re.IGNORECASE),{
-    K("C-comma"): [K("C-T"),K("a"),K("b"),K("o"),K("u"),K("t"),K(":"),K("p"),K("r"),K("e"),K("f"),K("e"),K("r"),K("e"),K("n"),K("c"),K("e"),K("s"),K("Enter")],
+    K("C-comma"): [K("C-T"),K("a"),K("b"),K("o"),K("u"),K("t"),K("Shift-SEMICOLON"),K("p"),K("r"),K("e"),K("f"),K("e"),K("r"),K("e"),K("n"),K("c"),K("e"),K("s"),K("Enter")],
 })
 define_keymap(re.compile(chromeStr, re.IGNORECASE),{
     K("C-comma"): [K("M-e"), K("s"),K("Enter")],
