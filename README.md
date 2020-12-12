@@ -13,13 +13,13 @@ v1.2 Release - Kinto now includes a system tray and simple wizard to setup the i
 
 ## Table of Contents
 
-[What does this do exactly?](#What-does-this-do-exactly)
-
-[What's different from other remappers?](#Whats-different)
-
 [How to install (Linux)](#How-to-install-Linux)
 
 [How to install (Windows)](#How-to-install-Windows)
+
+[What does this do exactly?](#What-does-this-do-exactly)
+
+[What's different from other remappers?](#Whats-different)
 
 [What does Kinto require?](#What-does-Kinto-require)
 
@@ -41,39 +41,11 @@ v1.2 Release - Kinto now includes a system tray and simple wizard to setup the i
 
 [Credits and Contributions](#Credits-and-Contributions)
 
-## What does this do exactly?
-
-Kinto works for standard Windows, Apple and Chromebook keyboards. The following however describes the dynamic rebinding based on a standard Windows/Mac keyboard.
-
-- Cursor/word-wise shortcut keys have been added to align with macOS keyboard shortcuts.
-
-**GUI**
-|**Physical**| Ctrl  |  Win/Alt |  Alt/Cmd | Spacebar|
-|---|---|---|---|---|
-|**Virtual**|  Win/Super* | Alt  |  RCtrl |Spacebar|
-
-*Win/Super will properly remap to LCtrl when needed to fully support expected keymaps.
-
-**Terminal**
-|**Physical**| Ctrl  |  Win/Alt |  Alt/Cmd | Spacebar|
-|---|---|---|---|---|
-|**Virtual**|  LCtrl | Alt  |  RCtrl |Spacebar|
-
-Note: RCtrl for terminals is also adding in Shift most of the time, however it depends on the specific terminal in use and will change itself to the expected keymaps of that terminal application.
-
-## What's different?
-
-Compared to most other remappers ***this is a complete system-wide remap of your base level modifier keys***, this saves time. You're not going to die a death of a thousand papercuts from trying to support every shortcut key under the sun.
-
-It also retains some of the most commonly used system level shortcut keys, such as Cmd-C/V, Cmd-Tab, and Ctrl-Tab among others. You will keep seamless copy & paste between all apps, ability to switch Windows while still using the physical Cmd/Alt key position; switch tabs in your favorite terminals, code editors, or web browsers. Depending on your OS and/or Desktop Environment you may also be able to switch Virtual Desktop environments the same way as well and other basic system level shortcuts.
-
-If your OS and macOS have similar functionality on the system level, but only differ by a slight difference of a shortcut command then Kinto likely supports it already. If Kinto doesn't have what you need then you can open up a support ticket and it will be added. You can also fork the project to add the fix and I will merge it via a PR you make.
-
-Additionally, if you are using a cross-platform app and if it happens to have a few shortcut keys that differ then that can very easily be added to either the kinto.py or kinto.ahk configuration files which on Windows is located here `~/.kinto/kinto.ahk` and on Linux it can be found here `~/.config/kinto/kinto.py`. More info can be found here [Shortcut Creation](#Shortcut-Creation)
-
 ## How to install (Linux)
 
 Video Tutorial: [Install Kinto.sh for Linux in less than a minute](https://www.youtube.com/watch?v=kd4al45XD1g)
+
+[Linux Requirements](#What-does-Kinto-require)
 
 <img src="https://user-images.githubusercontent.com/10969616/97070698-179c4500-15a0-11eb-8064-c03aa7f4d4a5.png" width="75%">
 
@@ -112,6 +84,8 @@ To Uninstall Kinto
 
 Video Tutorial: [How to Install Kinto.sh on Windows 10](https://youtu.be/sRk8A8krz40)
 
+[Windows 10 Requirements](#Kinto-for-Windows-10-Requirements)
+
 1. Open Powershell (Right click and Run as Administrator)
 
 2. clone this repo
@@ -135,6 +109,36 @@ To Uninstall Kinto - Select Uninstall
 ```
 py setup.py
 ```
+
+## What does this do exactly?
+
+Kinto works for standard Windows, Apple and Chromebook keyboards. The following however describes the dynamic rebinding based on a standard Windows/Mac keyboard.
+
+- Cursor/word-wise shortcut keys have been added to align with macOS keyboard shortcuts.
+
+**GUI**
+|**Physical**| Ctrl  |  Win/Alt |  Alt/Cmd | Spacebar|
+|---|---|---|---|---|
+|**Virtual**|  Win/Super* | Alt  |  RCtrl |Spacebar|
+
+*Win/Super will properly remap to LCtrl when needed to fully support expected keymaps.
+
+**Terminal**
+|**Physical**| Ctrl  |  Win/Alt |  Alt/Cmd | Spacebar|
+|---|---|---|---|---|
+|**Virtual**|  LCtrl | Alt  |  RCtrl |Spacebar|
+
+Note: RCtrl for terminals is also adding in Shift most of the time, however it depends on the specific terminal in use and will change itself to the expected keymaps of that terminal application.
+
+## What's different?
+
+Compared to most other remappers ***this is a complete system-wide remap of your base level modifier keys***, this saves time. You're not going to die a death of a thousand papercuts from trying to support every shortcut key under the sun.
+
+It also retains some of the most commonly used system level shortcut keys, such as Cmd-C/V, Cmd-Tab, and Ctrl-Tab among others. You will keep seamless copy & paste between all apps, ability to switch Windows while still using the physical Cmd/Alt key position; switch tabs in your favorite terminals, code editors, or web browsers. Depending on your OS and/or Desktop Environment you may also be able to switch Virtual Desktop environments the same way as well and other basic system level shortcuts.
+
+If your OS and macOS have similar functionality on the system level, but only differ by a slight difference of a shortcut command then Kinto likely supports it already. If Kinto doesn't have what you need then you can open up a support ticket and it will be added. You can also fork the project to add the fix and I will merge it via a PR you make.
+
+Additionally, if you are using a cross-platform app and if it happens to have a few shortcut keys that differ then that can very easily be added to either the kinto.py or kinto.ahk configuration files which on Windows is located here `~/.kinto/kinto.ahk` and on Linux it can be found here `~/.config/kinto/kinto.py`. More info can be found here [Shortcut Creation](#Shortcut-Creation)
 
 ## What does Kinto require?
 
