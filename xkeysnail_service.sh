@@ -6,7 +6,7 @@
 typeset -l distro
 distro=$(awk -F= '$1=="NAME" { gsub("[\",!,_, ]","",$2);print $2 ;}' /etc/os-release)
 typeset -l dename
-dename=$(./system-config/dename.sh | cut -d " " -f1)
+dename=$(./linux/system-config/dename.sh | cut -d " " -f1)
 
 function uninstall {
 
@@ -123,14 +123,14 @@ function budgieUpdate {
 		if [ "$yn" == "y" ]; then
 			budgieVersion="$(/usr/bin/budgie-desktop --version | awk '{ print $2; }' | head -n1)"
 			if [ "$budgieVersion" == "10.5.1" ]; then
-				if ! [ -f ./system-config/budgie-daemon_10.5.1 ]; then
-					wget https://github.com/rbreaves/budgie-desktop/blob/binaries/binaries/budgie-daemon_10.5.1?raw=true -O ./system-config/budgie-daemon_10.5.1
+				if ! [ -f ./linux/system-config/budgie-daemon_10.5.1 ]; then
+					wget https://github.com/rbreaves/budgie-desktop/blob/binaries/binaries/budgie-daemon_10.5.1?raw=true -O ./linux/system-config/budgie-daemon_10.5.1
 				fi
 				bdmd5=$(md5sum /usr/bin/budgie-daemon | awk '{ print $1 }')
-				newbdmd5=$(md5sum ./system-config/budgie-daemon_10.5.1 | awk '{ print $1 }')
+				newbdmd5=$(md5sum ./linux/system-config/budgie-daemon_10.5.1 | awk '{ print $1 }')
 				if [ "$bdmd5" != "$newbdmd5" ]; then
 					cp /usr/bin/budgie-daemon ./budgie-daemon_"$budgieVersion".bak
-					sudo pkill budgie-daemon && sudo cp ./system-config/budgie-daemon_10.5.1 /usr/bin/budgie-daemon
+					sudo pkill budgie-daemon && sudo cp ./linux/system-config/budgie-daemon_10.5.1 /usr/bin/budgie-daemon
 					echo "Updated Budgie to use App Switching Patch"
 				else
 					echo "Budgie-daemon already patched, skipping replacement."
@@ -146,11 +146,11 @@ function budgieUpdate {
 					esac
 				done
 				if [ "$yn" == "y" ]; then
-					if ! [ -f ./system-config/budgie-daemon_10.5.1 ]; then
-						wget https://github.com/rbreaves/budgie-desktop/raw/43d3b44243b0bcaee3262a79818024a651475b58/binaries/budgie-daemon_10.5.1 -O ./system-config/budgie-daemon_10.5.1
+					if ! [ -f ./linux/system-config/budgie-daemon_10.5.1 ]; then
+						wget https://github.com/rbreaves/budgie-desktop/raw/43d3b44243b0bcaee3262a79818024a651475b58/binaries/budgie-daemon_10.5.1 -O ./linux/system-config/budgie-daemon_10.5.1
 					fi
 					cp /usr/bin/budgie-daemon ./budgie-daemon_"$budgieVersion".bak
-					sudo pkill budgie-daemon && sudo cp ./system-config/budgie-daemon_10.5.1 /usr/bin/budgie-daemon
+					sudo pkill budgie-daemon && sudo cp ./linux/system-config/budgie-daemon_10.5.1 /usr/bin/budgie-daemon
 					echo "Updated Budgie to use App Switching Patch"
 				fi
 			fi
@@ -243,15 +243,15 @@ fi
 
 if ! [ -x "$(command -v xhost)" ] || ! [ -x "$(command -v gcc)" ]; then
 	if [ "$distro" == "manjarolinux" ]; then
-		sudo ./system-config/unipkg.sh "xorg-xhost gcc"
+		sudo ./linux/system-config/unipkg.sh "xorg-xhost gcc"
 	fi
 fi
 
 if [[ $dename == "kde" ]]; then
 	if [[ $distro == "manjarolinux" ]]; then
-		sudo ./system-config/unipkg.sh vte3
+		sudo ./linux/system-config/unipkg.sh vte3
 	else
-		sudo ./system-config/unipkg.sh libvte-2.91-dev
+		sudo ./linux/system-config/unipkg.sh libvte-2.91-dev
 	fi
 fi
 if [[ $distro == 'kdeneon' ]]; then
@@ -324,11 +324,11 @@ expsh=" "
 # sudo systemctl enable xkeysnail >/dev/null 2>&1
 # if ! [ -x "$(command -v inotifywait)" ]; then
 # 	echo "Will need to install inotify-tools to restart key remapper live for config file changes..."
-# 	sudo ./system-config/unipkg.sh inotify-tools
+# 	sudo ./linux/system-config/unipkg.sh inotify-tools
 # fi
 if ! [ -x "$(command -v pip3)" ]; then
 	echo "Will need to install python3-pip..."
-	sudo ./system-config/unipkg.sh python3-pip
+	sudo ./linux/system-config/unipkg.sh python3-pip
 fi
 if ! [ -x "$(command -v python3-config)" ]; then
 	if [ "$distro" == "ubuntu" ] || [ "$distro" == "debian" ] || [ "$distro" == 'linuxmint' ]; then
@@ -338,15 +338,15 @@ if ! [ -x "$(command -v python3-config)" ]; then
 	fi
 	if [ "$distro" == "gnome" ] || [ "$distro" == "fedora" ] || [ "$distro" == "debian" ] || [ "$distro" == 'linuxmint' ]; then
 		echo "Will need to install $pydev..."
-		sudo ./system-config/unipkg.sh "$pydev"
+		sudo ./linux/system-config/unipkg.sh "$pydev"
 	fi
 fi
 # if [ "$distro" == "ubuntu" ] && [ "$dename" == "gnome" ];then
-# 	sudo ./system-config/unipkg.sh gnome-tweaks gnome-shell-extension-appindicator gir1.2-appindicator3-0.1
+# 	sudo ./linux/system-config/unipkg.sh gnome-tweaks gnome-shell-extension-appindicator gir1.2-appindicator3-0.1
 # fi
 if ! [ -x "$(command -v xhost)" ] || ! [ -x "$(command -v gcc)" ]; then
 	if [ "$distro" == "\"manjaro linux\"" ]; then
-		sudo ./system-config/unipkg.sh "xorg-xhost gcc"
+		sudo ./linux/system-config/unipkg.sh "xorg-xhost gcc"
 	fi
 fi
 if [ "$distro" == 'linuxmint' ]; then
@@ -363,103 +363,103 @@ mkdir -p ~/.config/kinto
 
 # KDE startup - xhost fix
 mkdir -p ~/.config/autostart
-yes | cp -rf ./xkeysnail-config/xkeysnail.desktop ~/.config/kinto/xkeysnail.desktop
+yes | cp -rf ./linux/xkeysnail.desktop ~/.config/kinto/xkeysnail.desktop
 
-# yes | cp -rf ./xkeysnail-config/xkeystart.sh ~/.config/kinto/xkeystart.sh
+# yes | cp -rf ./linux/xkeystart.sh ~/.config/kinto/xkeystart.sh
 
 # *** More testing needing, universal way of killing kinto on user log out? ***
-# yes | sudo cp -rf xkeysnail-config/root_logoff.sh /usr/local/bin/logoff.sh
+# yes | sudo cp -rf linux/root_logoff.sh /usr/local/bin/logoff.sh
 # sudo chown root:root /usr/local/bin/logoff.sh
 # sudo chmod u+rwx /usr/local/bin/logoff.sh
 # sudo chmod go-w+rx /usr/local/bin/logoff.sh
 # *** End universal killing of kinto
 
 # logoff fix - not solid for every os. Prevents missed 1 character input on login
-# yes | sudo cp -rf xkeysnail-config/gnome_logoff.sh ~/.config/kinto/logoff.sh
+# yes | sudo cp -rf linux/gnome_logoff.sh ~/.config/kinto/logoff.sh
 
 echo "$(git describe --tag --abbrev=0 | head -n 1)" "build" "$(git rev-parse --short HEAD)" > ~/.config/kinto/version
-yes | cp -rf ./xkeysnail-config/kinto.py ./xkeysnail-config/kinto.py.new
-yes | cp -rf ./xkeysnail-config/limitedadmins ./xkeysnail-config/limitedadmins.new
-yes | cp -rf ./xkeysnail-config/gui/ ~/.config/kinto/
-yes | cp -nrf ./xkeysnail-config/initkb ~/.config/kinto/initkb
-yes | cp -rf ./xkeysnail-config/killdups.sh ~/.config/kinto/killdups.sh
-yes | cp -rf ./xkeysnail-config/trayapps/appindicator/kintotray.py ~/.config/kinto/kintotray.py
-yes | cp -rf ./xkeysnail-config/trayapps/appindicator/kintotray.desktop ~/.config/kinto/kintotray.desktop
-yes | cp -rf ./xkeysnail-config/gui/kinto.desktop ./xkeysnail-config/gui/kinto.desktop.new
-yes | cp -rf ./xkeysnail-config/trayapps/appindicator/icons/kinto-color-16.svg ~/.config/kinto/kinto-color.svg
-yes | cp -rf ./xkeysnail-config/trayapps/appindicator/icons/kinto-color-16.svg ~/.config/kinto/kinto-color-48.svg
-yes | cp -rf ./xkeysnail-config/trayapps/appindicator/icons/kinto-invert-16.svg ~/.config/kinto/kinto-invert.svg
-yes | cp -rf ./xkeysnail-config/trayapps/appindicator/icons/kinto-solid-16.svg ~/.config/kinto/kinto-solid.svg
-yes | cp -rf ./xkeysnail-config/trayapps/appindicator/icons/kinto.svg ~/.config/kinto/kinto.svg
-# yes | cp -rf ./system-config/caret_status_xkey.sh ~/.config/kinto/caret_status_xkey.sh
-yes | cp -rf ./xkeysnail-config/xkeysnail.service ./xkeysnail-config/xkeysnail.service.new
-# yes | cp -rf ./xkeysnail-config/xkeysnail.timer ~/.config/systemd/user/xkeysnail.timer
-sed -i "s#{experimental-caret}#$exp#g" ./xkeysnail-config/xkeysnail.service.new
+yes | cp -rf ./linux/kinto.py ./linux/kinto.py.new
+yes | cp -rf ./linux/limitedadmins ./linux/limitedadmins.new
+yes | cp -rf ./linux/gui/ ~/.config/kinto/
+yes | cp -nrf ./linux/initkb ~/.config/kinto/initkb
+yes | cp -rf ./linux/killdups.sh ~/.config/kinto/killdups.sh
+yes | cp -rf ./linux/trayapps/appindicator/kintotray.py ~/.config/kinto/kintotray.py
+yes | cp -rf ./linux/trayapps/appindicator/kintotray.desktop ~/.config/kinto/kintotray.desktop
+yes | cp -rf ./linux/gui/kinto.desktop ./linux/gui/kinto.desktop.new
+yes | cp -rf ./linux/trayapps/appindicator/icons/kinto-color-16.svg ~/.config/kinto/kinto-color.svg
+yes | cp -rf ./linux/trayapps/appindicator/icons/kinto-color-16.svg ~/.config/kinto/kinto-color-48.svg
+yes | cp -rf ./linux/trayapps/appindicator/icons/kinto-invert-16.svg ~/.config/kinto/kinto-invert.svg
+yes | cp -rf ./linux/trayapps/appindicator/icons/kinto-solid-16.svg ~/.config/kinto/kinto-solid.svg
+yes | cp -rf ./linux/trayapps/appindicator/icons/kinto.svg ~/.config/kinto/kinto.svg
+# yes | cp -rf ./linux/system-config/caret_status_xkey.sh ~/.config/kinto/caret_status_xkey.sh
+yes | cp -rf ./linux/xkeysnail.service ./linux/xkeysnail.service.new
+# yes | cp -rf ./linux/xkeysnail.timer ~/.config/systemd/user/xkeysnail.timer
+sed -i "s#{experimental-caret}#$exp#g" ./linux/xkeysnail.service.new
 if [ "$expsh" != " " ];then
-	sed -i "s#{kill-caret}#/usr/bin/pkill -f $expsh#g" ./xkeysnail-config/xkeysnail.service.new
+	sed -i "s#{kill-caret}#/usr/bin/pkill -f $expsh#g" ./linux/xkeysnail.service.new
 else
-	sed -i "s#{kill-caret}#$expsh#g" ./xkeysnail-config/xkeysnail.service.new
+	sed -i "s#{kill-caret}#$expsh#g" ./linux/xkeysnail.service.new
 fi
-sed -i "s/{username}/`whoami`/g" ./xkeysnail-config/xkeysnail.service.new
-sed -i "s#{homedir}#`echo "$HOME"`#g" ./xkeysnail-config/xkeysnail.service.new
+sed -i "s/{username}/`whoami`/g" ./linux/xkeysnail.service.new
+sed -i "s#{homedir}#`echo "$HOME"`#g" ./linux/xkeysnail.service.new
 sed -i "s#{homedir}#`echo "$HOME"`#g" ~/.config/kinto/kintotray.desktop
 sed -i "s#{homedir}#`echo "$HOME"`#g" ~/.config/kinto/gui/kinto-gui.py
-sed -i "s#{homedir}#`echo "$HOME"`#g" ./xkeysnail-config/gui/kinto.desktop.new
-sudo mv ./xkeysnail-config/gui/kinto.desktop.new /usr/share/applications/kinto.desktop
-sed -i "s#{xhost}#`\\which xhost`#g" ./xkeysnail-config/xkeysnail.service.new
-sed -i "s/{username}/`whoami`/g" ./xkeysnail-config/limitedadmins.new
-sed -i "s#{systemctl}#`\\which systemctl`#g" ./xkeysnail-config/limitedadmins.new
-sed -i "s#{pkill}#`\\which pkill`#g" ./xkeysnail-config/limitedadmins.new
+sed -i "s#{homedir}#`echo "$HOME"`#g" ./linux/gui/kinto.desktop.new
+sudo mv ./linux/gui/kinto.desktop.new /usr/share/applications/kinto.desktop
+sed -i "s#{xhost}#`\\which xhost`#g" ./linux/xkeysnail.service.new
+sed -i "s/{username}/`whoami`/g" ./linux/limitedadmins.new
+sed -i "s#{systemctl}#`\\which systemctl`#g" ./linux/limitedadmins.new
+sed -i "s#{pkill}#`\\which pkill`#g" ./linux/limitedadmins.new
 sed -i "s#{systemctl}#`\\which systemctl`#g" ~/.config/kinto/xkeysnail.desktop
 sed -i "s#{xhost}#`\\which xhost`#g" ~/.config/kinto/xkeysnail.desktop
 sed -i "s#{homedir}#`echo "$HOME"`#g" ~/.config/kinto/xkeysnail.desktop
 # sed -i "s#{homedir}#`echo "$HOME"`#g" ~/.config/kinto/prexk.sh
-sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ./xkeysnail-config/xkeysnail.service.new
+sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ./linux/xkeysnail.service.new
 # sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ~/.config/kinto/prexk.sh
 
 if [[ $dename == "budgie" ]]; then
-	perl -pi -e "s/\s{4}(# )(K.*)(# Default SL - Change workspace.*budgie.*)/    \$2\$3/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
+	perl -pi -e "s/\s{4}(# )(K.*)(# Default SL - Change workspace.*budgie.*)/    \$2\$3/g" ./linux/kinto.py.new >/dev/null 2>&1
 fi
 
 if [[ $distro == "popos" ]]; then
-	perl -pi -e "\s{4}(# )(K.*)(# SL - .*popos.*)/    \$2\$3/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
+	perl -pi -e "\s{4}(# )(K.*)(# SL - .*popos.*)/    \$2\$3/g" ./linux/kinto.py.new >/dev/null 2>&1
 fi
 
 if [[ $distro == "fedora" ]]; then
-	perl -pi -e "\s{4}(# )(K.*)(# SL - .*fedora.*)/    \$2\$3/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
+	perl -pi -e "\s{4}(# )(K.*)(# SL - .*fedora.*)/    \$2\$3/g" ./linux/kinto.py.new >/dev/null 2>&1
 fi
 
 if [[ $distro == "elementaryos" ]]; then
-	perl -pi -e "\s{4}(# )(K.*)(# SL - .*eos.*)/    \$2\$3/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
+	perl -pi -e "\s{4}(# )(K.*)(# SL - .*eos.*)/    \$2\$3/g" ./linux/kinto.py.new >/dev/null 2>&1
 fi
 
 if [[ "$distro" == "manjaro"* ]]; then
-	perl -pi -e "\s{4}(# )(K.*)(# SL - .*manjaro.*)/    \$2\$3/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
+	perl -pi -e "\s{4}(# )(K.*)(# SL - .*manjaro.*)/    \$2\$3/g" ./linux/kinto.py.new >/dev/null 2>&1
 fi
 
 if [[ $dename == "gnome" ]]; then
-	perl -pi -e "\s{4}(# )(K.*)(# SL - .*ubuntu.*)/    \$2\$3/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
+	perl -pi -e "\s{4}(# )(K.*)(# SL - .*ubuntu.*)/    \$2\$3/g" ./linux/kinto.py.new >/dev/null 2>&1
 fi
 
 if [[ $dename == "kde" ]]; then
 	echo "Applying Cmd-Space to open App Launcher for KDE..."
-	perl -pi -e "s/(# )(.*)(#.*kde)/\$2\$3/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
+	perl -pi -e "s/(# )(.*)(#.*kde)/\$2\$3/g" ./linux/kinto.py.new >/dev/null 2>&1
 fi
 
 if [[ $dename == "xfce" ]]; then
-	perl -pi -e "\s{4}(# )(K.*)(# SL - .*xfce.*)/    \$2\$3/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
-	perl -pi -e "s/(# )(.*)(# xfce4)/\$2\$3/g" ./xkeysnail-config/kinto.py.new
-	perl -pi -e "s/(\w.*)(# Default not-xfce4)/# \$1\$2/g" ./xkeysnail-config/kinto.py.new
+	perl -pi -e "\s{4}(# )(K.*)(# SL - .*xfce.*)/    \$2\$3/g" ./linux/kinto.py.new >/dev/null 2>&1
+	perl -pi -e "s/(# )(.*)(# xfce4)/\$2\$3/g" ./linux/kinto.py.new
+	perl -pi -e "s/(\w.*)(# Default not-xfce4)/# \$1\$2/g" ./linux/kinto.py.new
 fi
 
 if [[ $dename == "xfce" ]] && ls /etc/apt/sources.list.d/enso* 1> /dev/null 2>&1; then
     echo "enso OS detected, applying Cmd-Space for Launchy..."
-    perl -pi -e "s/(K\(\"RC-Space)(.*)(# )(xfce4)/\$3\$1\$2\$3\$4/g" ./xkeysnail-config/kinto.py.new >/dev/null 2>&1
+    perl -pi -e "s/(K\(\"RC-Space)(.*)(# )(xfce4)/\$3\$1\$2\$3\$4/g" ./linux/kinto.py.new >/dev/null 2>&1
     xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Primary>space" --create --type string --set "launchy"
 fi
 
 if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
-	mv ./xkeysnail-config/kinto.py.new ~/.config/kinto/kinto.py
+	mv ./linux/kinto.py.new ~/.config/kinto/kinto.py
 	# if [ "$distro" == "fedora" ];then
 	sudo rm /etc/systemd/system/xkeysnail.service >/dev/null 2>&1
 	if [ -d /usr/lib/systemd/system ];then
@@ -490,12 +490,12 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 		echo -e "Run 'sudo pip3 install --upgrade .' to debug issue"
 		exit 0
 	fi
-	sed -i "s#{xkeysnail}#`which xkeysnail`#g" ./xkeysnail-config/xkeysnail.service.new
-	sed -i "s#{xkeysnail}#`which xkeysnail`#g" ./xkeysnail-config/limitedadmins.new
-	sudo mv ./xkeysnail-config/xkeysnail.service.new "$xkeypath"xkeysnail.service && echo "Service file added to "$xkeypath"xkeysnail.service"
-	sudo chown root:root ./xkeysnail-config/limitedadmins.new
+	sed -i "s#{xkeysnail}#`which xkeysnail`#g" ./linux/xkeysnail.service.new
+	sed -i "s#{xkeysnail}#`which xkeysnail`#g" ./linux/limitedadmins.new
+	sudo mv ./linux/xkeysnail.service.new "$xkeypath"xkeysnail.service && echo "Service file added to "$xkeypath"xkeysnail.service"
+	sudo chown root:root ./linux/limitedadmins.new
 	# Add a check here for xkeysnail path resolving
-	sudo mv ./xkeysnail-config/limitedadmins.new /etc/sudoers.d/limitedadmins
+	sudo mv ./linux/limitedadmins.new /etc/sudoers.d/limitedadmins
 	sudo chown -R root:root "$xkeypath"xkeysnail.service && echo "Ownership set for root..." || echo "Failed to set ownership..."
 	sudo chmod 644 "$xkeypath"xkeysnail.service && echo "Permissions set to 644..." || echo "Failed to set permissions..."
 	sudo ln -s "$xkeypath"xkeysnail.service /etc/systemd/system/xkeysnail.service && echo "Created soft symlink..." || echo "Failed to create soft symlink..."
