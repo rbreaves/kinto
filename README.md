@@ -11,7 +11,7 @@ Seamless copy and paste with all apps and terminals. The zero effort solution.
 
 v1.2 Release - Kinto now includes a system tray and simple wizard to setup the install with minimal effort.
 
-### [Table of Contents](#Table-of-Contents)
+### [Table of Contents ](#Table-of-Contents)
 
 ## How to install (Linux)
 
