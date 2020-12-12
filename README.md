@@ -11,35 +11,7 @@ Seamless copy and paste with all apps and terminals. The zero effort solution.
 
 v1.2 Release - Kinto now includes a system tray and simple wizard to setup the install with minimal effort.
 
-## Table of Contents
-
-[How to install (Linux)](#How-to-install-Linux)
-
-[How to install (Windows)](#How-to-install-Windows)
-
-[What does this do exactly?](#What-does-this-do-exactly)
-
-[What's different from other remappers?](#Whats-different)
-
-[What does Kinto require?](#What-does-Kinto-require)
-
-[Shortcut Creation](#Shortcut-Creation)
-
-[How to Upgrade/Control Kinto](#How-to-Upgrade-Kinto)
-
-[Troubleshooting](#Troubleshooting)
-
-[Language Support](#Language-Support)
-
-[Related or Useful Resources](#Related-or-Useful-Resources)
-
-[Contributing](#Contributing)
-
-[More information about Kinto](#More-information-about-Kinto)
-
-[License](#License)
-
-[Credits and Contributions](#Credits-and-Contributions)
+### [Table of Contents](#Table-of-Contents)
 
 ## How to install (Linux)
 
@@ -109,6 +81,36 @@ To Uninstall Kinto - Select Uninstall
 ```
 py setup.py
 ```
+
+## Table of Contents
+
+[How to install (Linux)](#How-to-install-Linux)
+
+[How to install (Windows)](#How-to-install-Windows)
+
+[What does this do exactly?](#What-does-this-do-exactly)
+
+[What's different from other remappers?](#Whats-different)
+
+[What does Kinto require?](#What-does-Kinto-require)
+
+[Shortcut Creation](#Shortcut-Creation)
+
+[How to Upgrade/Control Kinto](#How-to-Upgrade-Kinto)
+
+[Troubleshooting](#Troubleshooting)
+
+[Language Support](#Language-Support)
+
+[Related or Useful Resources](#Related-or-Useful-Resources)
+
+[Contributing](#Contributing)
+
+[More information about Kinto](#More-information-about-Kinto)
+
+[License](#License)
+
+[Credits and Contributions](#Credits-and-Contributions)
 
 ## What does this do exactly?
 
