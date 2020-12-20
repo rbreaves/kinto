@@ -52,6 +52,15 @@ To Uninstall Kinto
 ./setup.py -r
 ```
 
+Other tips
+
+If you want a global menu app similar to what mac users have then I strongly recommend Ubuntu Budgie as it has the Vala Appmenu built in and ready for activation. Short of that Vala-AppMenu can be installed in various distros, mileage will vary. If you try to activate it in the latest 20.xx releases with XFCE then you may need to run the following commands.
+
+```
+sudo apt install xfce4-appmenu-plugin vala-panel-appmenu-common
+xfconf-query -c xsettings -p /Gtk/Modules -n -t string -s "appmenu-gtk-module"
+```
+
 ## How to Install (Windows)
 
 Video Tutorial: [How to Install Kinto.sh on Windows 10](https://youtu.be/sRk8A8krz40)
