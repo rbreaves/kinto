@@ -270,6 +270,10 @@ GroupAdd, intellij, ahk_exe idea64.exe
     ; $LWin up::Send {LWin up}{LAlt up}{LCtrl up} ; MacModifiers
     ; $LAlt up::Send {LWin up}{CapsLock up}{LAlt up}{LCtrl up} ; CB/IBM
 
+    ; Go up or down a page
+    $!Down::Send {PgDn};
+    $!Up::Send {PgUp};
+
     ; Close Apps 
     ^q::Send !{F4}
 
