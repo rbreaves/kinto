@@ -91,6 +91,20 @@ To Uninstall Kinto - Select Uninstall
 py setup.py
 ```
 
+## How to use in Remote Desktop Solutions
+
+Currently this may be limited to Windows RDP Clients and Servers on both ends, but in theory any remote desktop solution that properly handles the Windows key should work is what I am finding. The latest version of Kinto may need to be disabled on the computer running the Client software of the Remote Desktop solution you are using - or you can add it to the "virtm" group of the Kinto.ahk script for windows. On the linux side a 3rd, but similar "define_conditional_modmap" terminals like group may need to be added to align with virtm.
+
+Note: virtm is just a shortname for virtual machine and remote desktop exceptions - so that remapping can happen within their OS & not on your host machine - if it can be avoided.
+
+Scenarios that don't appear to work?
+Microsoft RDP Client on a Mac -> Windows Computer
+FreeRDP based client on a Mac -> Windows Computer
+Android/iOS RDP Client -> Windows Computer
+
+Scenarios confirmed working?
+Windows RDP Client -> Windows Computer
+
 ## Table of Contents
 
 [How to install (Linux)](#How-to-install-Linux)
