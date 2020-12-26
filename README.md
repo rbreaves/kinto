@@ -17,6 +17,14 @@ v1.2 Release - Kinto now includes a system tray and simple wizard to setup the i
 
 If you like or appreciate this project then please consider donating to my [Amazon wishlist](https://smile.amazon.com/hz/wishlist/ls/3EVXR21VFKD9Z?ref_=wl_share). There are gift cards and various foreign language keyboards I would use to extend & ensure compatibility with Kinto.
 
+Other wishlists and options.
+
+[Adafruit Wishlist](https://www.adafruit.com/wishlists/515932)
+
+[eBay Wishlist](https://www.ebay.com/mye/myebay/WatchList?custom_list_id=636668138019)
+
+If you would like to send me a keyboard directly then please reach out to be over [twitter](https://twitter.com/gbit86) and send me a DM. I will accept shipments (of keyboards in particular) directly as well.
+
 ## How to install (Linux)
 
 Video Tutorial: [Install Kinto.sh for Linux in less than a minute](https://www.youtube.com/watch?v=kd4al45XD1g)
