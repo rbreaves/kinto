@@ -23,7 +23,7 @@ Other wishlists and options.
 
 [eBay Wishlist](https://www.ebay.com/mye/myebay/WatchList?custom_list_id=636668138019)
 
-If you would like to send me a keyboard directly then please reach out to be over [twitter](https://twitter.com/gbit86) and send me a DM. I will accept shipments (of keyboards in particular) directly as well.
+If you would like to send me a keyboard directly then please reach out to me over [twitter](https://twitter.com/gbit86) and send me a DM. I will accept shipments (of keyboards in particular) as well.
 
 ## How to install (Linux)
 
