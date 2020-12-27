@@ -15,9 +15,9 @@ v1.2 Release - Kinto now includes a system tray and simple wizard to setup the i
 
 ## Donations
 
-If you like or appreciate this project then please consider donating to my [Amazon wishlist](https://smile.amazon.com/hz/wishlist/ls/3EVXR21VFKD9Z?ref_=wl_share). There are gift cards and various foreign language keyboards I would use to extend & ensure compatibility with Kinto.
+If you like or appreciate this project then please consider donating.
 
-Other wishlists and options.
+[Amazon wishlist](https://smile.amazon.com/hz/wishlist/ls/3EVXR21VFKD9Z?ref_=wl_share)
 
 [Adafruit Wishlist](https://www.adafruit.com/wishlists/515932)
 
