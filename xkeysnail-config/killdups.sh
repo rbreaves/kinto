@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 xkeycount=$(pgrep 'xkeysnail' | wc -l)
 

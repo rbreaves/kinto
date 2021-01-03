@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # >/dev/null 2>&1
 
 if [ -f /usr/local/bin/xkeysnail ];then

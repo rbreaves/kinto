@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 if [ -f {homedir}/.config/systemd/user/keyswap.timer ]; then
 	systemctl --user stop keyswap.timer >/dev/null 2>&1
 	systemctl --user disable keyswap.timer >/dev/null 2>&1

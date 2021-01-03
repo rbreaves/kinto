@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if pkgmgr="$( which apt-get )" 2> /dev/null; then
    echo "Debian"

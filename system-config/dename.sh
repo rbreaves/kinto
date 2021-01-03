@@ -1,4 +1,36 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
+unamestr=$(uname)
+if [ "$unamestr" = 'FreeBSD' ]; then
+
+	DESKTOP="unknown"
+
+	ps -aux | grep -E '[s]tart-hello'
+	if [ $? -ne 1 ];then
+		echo "hellosystem"
+		exit 0
+	fi
+
+	ps -aux | grep -E '[o]penbox'
+	if [ $? -ne 1 ];then
+		echo "openbox"
+		exit 0
+	fi
+
+	ps -aux | grep -E '[m]ate-panel'
+	if [ $? -ne 1 ];then
+		echo "mate"
+		exit 0
+	fi
+
+	ps -aux | grep -E '[x]fce4-session'
+	if [ $? -ne 1 ];then
+		echo "xfce"
+		exit 0
+	fi
+
+fi
+
 
 function detect_budgie()
 {
