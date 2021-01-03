@@ -384,7 +384,7 @@ yes | cp -rf ./xkeysnail-config/xkeysnail.desktop ~/.config/kinto/xkeysnail.desk
 echo "$(git describe --tag --abbrev=0 | head -n 1)" "build" "$(git rev-parse --short HEAD)" > ~/.config/kinto/version
 yes | cp -rf ./xkeysnail-config/kinto.py ./xkeysnail-config/kinto.py.new
 yes | cp -rf ./xkeysnail-config/limitedadmins ./xkeysnail-config/limitedadmins.new
-yes | cp -rf ./xkeysnail-config/gui/ ~/.config/kinto/
+yes | cp -rf ./xkeysnail-config/gui/ ~/.config/kinto/gui
 yes | cp -nrf ./xkeysnail-config/initkb ~/.config/kinto/initkb
 yes | cp -rf ./xkeysnail-config/killdups.sh ~/.config/kinto/killdups.sh
 yes | cp -rf ./xkeysnail-config/trayapps/appindicator/kintotray.py ~/.config/kinto/kintotray.py
