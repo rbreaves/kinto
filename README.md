@@ -11,6 +11,8 @@ Seamless copy and paste with all apps and terminals. The zero effort solution.
 
 v1.2 Release - Kinto now includes a system tray and simple wizard to setup the install with minimal effort.
 
+Kinto is powered by [xkeysnail](https://github.com/mooz/xkeysnail) for Linux & by [Autohotkey](https://github.com/Lexikos/AutoHotkey_L) for Windows 10.
+
 ### [Table of Contents ](#Table-of-Contents)
 
 ## Donations
