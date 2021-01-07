@@ -113,7 +113,7 @@ if len(check_x11) == 0:
 		sys.exit()
 
 distro = cmdline("awk -F= '$1==\"NAME\" { print $2 ;}' /etc/os-release").replace('"','').strip().split(" ")[0]
-dename = cmdline("./system-config/dename.sh").replace('"','').strip().split(" ")[0].lower()
+dename = cmdline("./linux/system-config/dename.sh").replace('"','').strip().split(" ")[0].lower()
 
 run_pkg = ""
 
