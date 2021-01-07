@@ -11,7 +11,18 @@ Seamless copy and paste with all apps and terminals. The zero effort solution.
 
 v1.2 Release - Kinto now includes a system tray and simple wizard to setup the install with minimal effort.
 
+Kinto is powered by [xkeysnail](https://github.com/mooz/xkeysnail) for Linux & by [Autohotkey](https://github.com/Lexikos/AutoHotkey_L) for Windows 10.
+
 ### [Table of Contents ](#Table-of-Contents)
+
+## Donations
+
+If you like or appreciate this project then please consider donating.
+
+|**Wishlists**|[Amazon](https://smile.amazon.com/hz/wishlist/ls/3EVXR21VFKD9Z?ref_=wl_share)|[Adafruit](https://www.adafruit.com/wishlists/515932)|[eBay](https://www.ebay.com/mye/myebay/WatchList?custom_list_id=636668138019)|
+|---|---|---|---|
+
+If you would like to send me a keyboard directly then please reach out to me over [twitter](https://twitter.com/gbit86) and send me a DM. I will accept shipments (of keyboards in particular) as well.
 
 ## How to install (Linux)
 
@@ -52,6 +63,15 @@ To Uninstall Kinto
 ./setup.py -r
 ```
 
+Other tips
+
+If you want a global menu app similar to what mac users have then I strongly recommend Ubuntu Budgie as it has the Vala Appmenu built in and ready for activation. Short of that Vala-AppMenu can be installed in various distros, mileage will vary. If you try to activate it in the latest 20.xx releases with XFCE then you may need to run the following commands.
+
+```
+sudo apt install xfce4-appmenu-plugin vala-panel-appmenu-common
+xfconf-query -c xsettings -p /Gtk/Modules -n -t string -s "appmenu-gtk-module"
+```
+
 ## How to Install (Windows)
 
 Video Tutorial: [How to Install Kinto.sh on Windows 10](https://youtu.be/sRk8A8krz40)
@@ -81,6 +101,20 @@ To Uninstall Kinto - Select Uninstall
 ```
 py setup.py
 ```
+
+## How to use in Remote Desktop Solutions
+
+Currently this may be limited to Windows RDP Clients and Servers on both ends, but in theory any remote desktop solution that properly handles the Windows key should work is what I am finding. The latest version of Kinto may need to be suspended via the system tray on the computer running the Client software of the Remote Desktop solution you are using - or you can add it to the "virtm" group of the Kinto.ahk script for Windows 10. On the linux side a 3rd, but similar "define_conditional_modmap" terminals like group may need to be added to align with virtm.
+
+Note: virtm is just a shortname for virtual machine and remote desktop exceptions - so that remapping can happen within their OS & not on your host machine - if it can be avoided.
+
+Scenarios confirmed working?
+Windows RDP Client -> Windows Computer
+
+Scenarios that don't appear to work?
+Microsoft RDP Client on a Mac -> Windows Computer
+FreeRDP based client on a Mac -> Windows Computer
+Android/iOS RDP Client -> Windows Computer
 
 ## Table of Contents
 
