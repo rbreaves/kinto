@@ -270,6 +270,9 @@ GroupAdd, intellij, ahk_exe idea64.exe
     ; $LWin up::Send {LWin up}{LAlt up}{LCtrl up} ; MacModifiers
     ; $LAlt up::Send {LWin up}{CapsLock up}{LAlt up}{LCtrl up} ; CB/IBM
 
+    ; Remap Alt+Esc to Break/Pause
+    !Esc::SendInput, {Pause}
+
     ; Go up or down a page
     $!Down::Send {PgDn};
     $!Up::Send {PgUp};
@@ -482,12 +485,19 @@ GroupAdd, intellij, ahk_exe idea64.exe
         !+g::send ^+{G}                                      ; View source control
     ;    $#c::Send {Ctrl down}c{Ctrl up}                     ; Default - Sigints interrupt
     ;    $!c::Send {Ctrl down}c{Ctrl up}                     ; CB/IBM
+    ;    $#x::Send {Ctrl down}x{Ctrl up}                     ; Default - Sigints interrupt
+    ;    $!x::Send {Ctrl down}x{Ctrl up}                     ; CB/IBM
 
     ;   #Space::Send ^{Space}                                ; Default - Basic code completion
     ;   !Space::Send ^{Space}                                ; CB/IBM - Basic code completion
     #If
 
     #IfWinActive ahk_exe sublime_text.exe
+        ; #x::Send ^{x}                                           ; Default - Terminal - Ctrl-x
+        ; #c::Send ^{c}                                           ; Default - Terminal - Ctrl-c sigint
+        ; !x::Send ^{x}                                           ; CB/IBM
+        ; !c::Send ^{c}                                           ; CB/IBM
+        ; #c::send ^{Pause}                                       ; cancel_build
         ; #Space::Send ^{Space}                                   ; Default - Basic code completion
         ; !Space::Send ^{Space}                                   ; CB/IBM - Basic code completion
         #^Up::send !{O}                                         ; Switch file
@@ -528,7 +538,6 @@ GroupAdd, intellij, ahk_exe idea64.exe
         ^+Down::Return                                          ; cancel swap_line_down
         #!Down::send ^+{Down}                                   ; swap_line_down
         ^Pause::Return                                          ; cancel cancel_build
-        #c::send ^{Pause}                                       ; cancel_build
         F9::Return                                              ; cancel sort_lines case_s false
         F5::send {F9}                                           ; sort_lines case_s false
         #F9::Return                                             ; cancel sort_lines case_s true

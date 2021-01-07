@@ -341,7 +341,10 @@ define_keymap(re.compile(codeStr, re.IGNORECASE),{
     K("C-g"): K("f3"),                          # find_next
     K("Shift-f3"): pass_through_key,            # cancel find_prev
     K("C-Shift-g"): K("Shift-f3"),              # find_prev
-    K("Super-c"): K("LC-c"),                    # Sigints - interrupt
+    # K("Super-c"): K("LC-c"),                    #  Default - Terminal - Sigint
+    # K("Super-x"): K("LC-x"),                    #  Default - Terminal - Exit nano
+    # K("M-c"): K("LC-c"),                        #  Chromebook/IBM - Terminal - Sigint
+    # K("M-x"): K("LC-x"),                        #  Chromebook/IBM - Terminal - Exit nano
     # K("Super-C-g"): K("C-f2"),                  # Default - Sublime - find_all_under
     # K("C-M-g"): K("C-f2"),                      # Chromebook/IBM - Sublime - find_all_under
     # K("Super-Shift-up"): K("M-Shift-up"),       # multi-cursor up - Sublime
@@ -352,6 +355,10 @@ define_keymap(re.compile(codeStr, re.IGNORECASE),{
 
 # Keybindings for Sublime Text
 define_keymap(re.compile("Sublime_text", re.IGNORECASE),{
+    # K("Super-c"): K("LC-c"),                    #  Default - Terminal - Sigint
+    # K("Super-x"): K("LC-x"),                    #  Default - Terminal - Exit nano
+    # K("M-c"): K("LC-c"),                        #  Chromebook/IBM - Terminal - Sigint
+    # K("M-x"): K("LC-x"),                        #  Chromebook/IBM - Terminal - Exit nano
     K("Super-Space"): K("C-Space"),             # Basic code completion
     K("C-Super-up"): K("M-o"),                  # Switch file
     K("Super-RC-f"): K("f11"),                  # toggle_full_screen
