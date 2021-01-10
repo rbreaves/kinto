@@ -107,7 +107,7 @@ define_conditional_modmap(re.compile(termStr, re.IGNORECASE), {
 })
 
 # Keybindings for IntelliJ
-define_keymap(re.compile("jetbrains-idea", re.IGNORECASE),{
+define_keymap(re.compile("^jetbrains-(?!.*toolbox).*$", re.IGNORECASE),{
     # General
     K("C-Key_0"): K("M-Key_0"),                 # Open corresponding tool window
     K("C-Key_1"): K("M-Key_1"),                 # Open corresponding tool window
