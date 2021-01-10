@@ -59,9 +59,9 @@ If the wizard does not appear then either type in "kinto.sh" in your application
 
 **Issues with Numpad?**
 
-Try toggling it on & off (clear key on official mac keyboards). If it still does not work then restart the Kinto service and try toggling the numlock/clear key again, it will likely work after that. #369
+Try toggling numlock on & off (clear key on official mac keyboards). If it still does not work then restart the Kinto service and try toggling the numlock/clear key again, it will likely work after that. #369
 
-**To Uninstall Kinto**
+**Uninstall Kinto**
 
 ```
 ./setup.py -r
