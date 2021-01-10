@@ -22,7 +22,7 @@ If you like or appreciate this project then please consider donating.
 |**Wishlists**|[Amazon](https://smile.amazon.com/hz/wishlist/ls/3EVXR21VFKD9Z?ref_=wl_share)|[Adafruit](https://www.adafruit.com/wishlists/515932)|[eBay](https://www.ebay.com/mye/myebay/WatchList?custom_list_id=636668138019)|
 |---|---|---|---|
 
-If you would like to send me a keyboard directly then please reach out to me over [twitter](https://twitter.com/gbit86) and send me a DM. I will accept shipments (of keyboards in particular) as well.
+If you would like to send me a keyboard directly then please reach out to me over [twitter](https://twitter.com/gbit86) and send me a DM.
 
 ## How to install (Linux)
 
