@@ -50,24 +50,24 @@ sudo apt install python3
 ./setup.py
 ```
 
-Troubleshoot
+**Troubleshoot**
 
 If the wizard does not appear then either type in "kinto.sh" in your application overview search bar or run this following command.
 ```
 ~/.config/kinto/gui/kinto-gui.py
 ```
 
-Issues with Numpad?
+**Issues with Numpad?**
 
 Try toggling it on & off (clear key on official mac keyboards). If it still does not work then restart the Kinto service and try toggling the numlock/clear key again, it will likely work after that. #369
 
-To Uninstall Kinto
+**To Uninstall Kinto**
 
 ```
 ./setup.py -r
 ```
 
-Other tips
+**Other tips**
 
 If you want a global menu app similar to what mac users have then I strongly recommend Ubuntu Budgie as it has the Vala Appmenu built in and ready for activation. Short of that Vala-AppMenu can be installed in various distros, mileage will vary. If you try to activate it in the latest 20.xx releases with XFCE then you may need to run the following commands.
 
@@ -100,11 +100,13 @@ py setup.py
 <img src="https://user-images.githubusercontent.com/10969616/85195079-30fd4f80-b295-11ea-8bcd-257990b77dcb.png" width="50%" height="50%">
 <img src="https://user-images.githubusercontent.com/10969616/85195082-322e7c80-b295-11ea-8c81-320dab424c3c.png" width="50%" height="50%">
 
-To Uninstall Kinto - Select Uninstall
+**Uninstall Kinto**
 
 ```
 py setup.py
 ```
+
+Select Uninstall
 
 ## How to use in Remote Desktop Solutions
 
