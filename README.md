@@ -450,7 +450,7 @@ Dark & Light Theme w/ OSX controls for Elementary OS
 
 Auto-detect the connected display hardware and load the appropriate X11 setup using xrandr
 
-[Barrier](https://github.com/debauchee/barrier) by debauchee
+[Barrier](https://github.com/debauchee/barrier) by debauchee (Note: Does not appear to work with Kinto v1.2+, may work w/ Kinto v1.1?)
 
 Open-source KVM software
 
