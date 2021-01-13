@@ -5,7 +5,7 @@
 
 [![GitHub release](https://img.shields.io/github/release/rbreaves/kinto.svg)](https://github.com/rbreaves/kinto/releases/latest)
 
-\- Type in Linux & Windows like it's a Mac. \-
+\- Give Linux & Windows desktops Mac-style shortcuts. \-
 
 Seamless copy and paste with all apps and terminals. The zero effort solution.
 
