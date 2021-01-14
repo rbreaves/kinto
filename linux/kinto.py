@@ -258,6 +258,9 @@ define_keymap(None,{
     # K("M-Grave") : K("C-Shift-Tab"),              # Chromebook/IBM - In-App Tab switching
     K("Super-Tab"): K("LC-Tab"),                  # Default not-chromebook
     K("Super-Shift-Tab"): K("LC-Shift-Tab"),      # Default not-chromebook
+
+    # Fn to Alt style remaps
+    K("RM-Enter"): K("insert"),                   # Insert
     
     # emacs style
     K("Super-a"): K("Home"),                      # Beginning of Line
@@ -454,9 +457,14 @@ define_keymap(re.compile(termStr, re.IGNORECASE),{
     K("LC-Tab") : K("LC-PAGE_DOWN"),
     K("LC-Shift-Tab") : K("LC-PAGE_UP"),
     K("LC-Grave") : K("LC-PAGE_UP"),
+    # K("M-Tab"): pass_through_key,                 # Default not-xfce4 - Cmd Tab - App Switching Default
+    # K("RC-Tab"): K("M-Tab"),                      # Default not-xfce4 - Cmd Tab - App Switching Default
+    # K("RC-Shift-Tab"): K("M-Shift-Tab"),          # Default not-xfce4 - Cmd Tab - App Switching Default
+    # Cmd Tab - App Switching Default
+    # K("RC-Tab"): K("RC-backslash"),               # xfce4
+    # K("RC-Shift-Tab"): K("RC-Shift-backslash"),   # xfce4
+    # K("RC-Grave"): K("RC-Shift-backslash"),       # xfce4
     # Converts Cmd to use Ctrl-Shift
-    K("RC-Tab"): K("RC-F13"),
-    K("RC-Shift-Tab"): K("RC-Shift-F13"),
     K("RC-V"): K("C-Shift-V"),
     K("RC-MINUS"): K("C-Shift-MINUS"),
     K("RC-EQUAL"): K("C-Shift-EQUAL"),
