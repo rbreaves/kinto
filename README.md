@@ -114,13 +114,13 @@ Currently this may be limited to Windows RDP Clients and Servers on both ends, b
 
 Note: virtm is just a shortname for virtual machine and remote desktop exceptions - so that remapping can happen within their OS & not on your host machine - if it can be avoided.
 
-Scenarios confirmed working?
-Windows RDP Client -> Windows Computer
-
-Scenarios that don't appear to work?
-Microsoft RDP Client on a Mac -> Windows Computer
-FreeRDP based client on a Mac -> Windows Computer
-Android/iOS RDP Client -> Windows Computer
+|Program|Host OS|Client OS|Works? |Notes|
+|---|---|---|---|---|
+|mstsc.exe (rdp)| Windows  | Windows  | Yes|   |
+|Official MS RDP| macOS  | Windows  | No|Use Windows in VM & RDP from it|
+|FreeRDP| macOS  | Windows  | No|Use Windows in VM & RDP from it|
+|FreeRDP| Linux  | Windows  | No|Use Windows in VM & RDP from it|
+|Official MS RDP| iOS/Android  | Windows  | No|No workaround atm|
 
 ## Table of Contents
 
