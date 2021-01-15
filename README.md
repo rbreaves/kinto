@@ -385,6 +385,15 @@ I'd appreciate any help from people with non-US based keyboards, to help ensure 
 
 Yet another keyboard remapping tool for X environment
 
+[Interception](https://gitlab.com/interception/linux/tools)
+
+Another low level key remapper, not as easily configurable as Xkeysnail, but does not rely on X11.
+
+[Wincent](https://github.com/wincent/wincent) by Greg Hurrell
+
+Dot files and configurations that may help those that want mac-style shortcut keys that work under Wayland, or w/o x11.
+[Vim #102: macOS keyboard bindings on Linux](https://www.youtube.com/watch?v=TBqTHesnzkI)
+
 [mac-precision-touchpad](https://github.com/imbushuo/mac-precision-touchpad) by imbushuo
 
 Windows 10 touchpad to precision touchpad driver
