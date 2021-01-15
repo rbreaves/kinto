@@ -263,6 +263,10 @@ GroupAdd, intellij, ahk_exe idea64.exe
     ; Static
     $LCtrl up::Send {Ctrl down}{LWin up}{Ctrl up}
 
+    ; Disable Win-Up/Down - interferes with Sublime text 3 multi-cursors
+    #Down::return
+    #Up::return
+
     ; temporary hack to ensure keys don't get stuck
     ; impacts Alt-Tab fix
     ; Primary
