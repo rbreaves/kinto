@@ -410,10 +410,11 @@ Multitouch gestures with libinput driver on Linux
 
 Linux driver for Facetime HD on macbooks
 
-[Fluent Terminal - Windows only](https://github.com/felixse/FluentTerminal) by felixse
+[Windows Terminal Preview](https://aka.ms/terminal-preview) by Microsoft
 
+The best Terminal app built for Windows hands down. I have tried countless, but this one actually seems to get everything right, despite the lack of a GUI to configure all aspects of the program. Custom configurations have to be done via a json file - but given the performance and feature set I feel like it is the a decent trade off.
 
-A Terminal Emulator based on UWP and web technologies.
+I will update Kinto to have custom configurations for this specific Terminal in the future. Will make seamless copy & paste, which already works, work even better (Cmd-C can still trigger sigint - but there is a fix for that that involves updating the json config).
 
 [PowerToys - Windows only](https://github.com/microsoft/PowerToys) by microsoft
 
