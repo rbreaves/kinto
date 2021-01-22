@@ -398,6 +398,10 @@ Dot files and configurations that may help those that want mac-style shortcut ke
 
 Windows 10 touchpad to precision touchpad driver
 
+[macOS-cursors-for-Windows](https://github.com/antiden/macOS-cursors-for-Windows) by antiden
+
+macOS cursors for Windows
+
 [fusuma](https://github.com/iberianpig/fusuma) by iberianpig
 
 Multitouch gestures with libinput driver on Linux
