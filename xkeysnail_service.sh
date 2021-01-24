@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # set about:config?filter=ui.key.menuAccessKeyFocuses
 # to false for wordwise to work in Firefox
@@ -327,8 +327,13 @@ expsh=" "
 # 	sudo ./linux/system-config/unipkg.sh inotify-tools
 # fi
 if ! [ -x "$(command -v pip3)" ]; then
-	echo "Will need to install python3-pip..."
-	sudo ./linux/system-config/unipkg.sh python3-pip
+	if [ "$distro" == "manjarolinux" ]; then
+		echo "Will need to install python-pip..."
+		sudo ./linux/system-config/unipkg.sh python-pip
+	else
+		echo "Will need to install python3-pip..."
+		sudo ./linux/system-config/unipkg.sh python3-pip
+	fi
 fi
 if ! [ -x "$(command -v python3-config)" ]; then
 	if [ "$distro" == "ubuntu" ] || [ "$distro" == "debian" ] || [ "$distro" == 'linuxmint' ]; then
