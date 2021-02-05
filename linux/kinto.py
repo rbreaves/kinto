@@ -232,7 +232,7 @@ define_keymap(None,{
     K("RC-Tab"): K("M-Tab"),                      # Default not-xfce4 - Cmd Tab - App Switching Default
     K("RC-Shift-Tab"): K("M-Shift-Tab"),          # Default not-xfce4 - Cmd Tab - App Switching Default
     K("RC-Grave"): K("M-Grave"),                  # Default not-xfce4 - Cmd ` - Same App Switching
-    K("RC-Shift-Grave"): K("M-Grave"),            # Default not-xfce4 - Cmd ` - Same App Switching
+    K("RC-Shift-Grave"): K("M-Shift-Grave"),      # Default not-xfce4 - Cmd ` - Same App Switching
     # K("Super-Right"):K("Super-Page_Up"),          # SL - Change workspace (ubuntu/fedora)
     # K("Super-Left"):K("Super-Page_Down"),         # SL - Change workspace (ubuntu/fedora)
     # K("Super-Right"):K("Super-C-Up"),             # SL - Change workspace (popos)
