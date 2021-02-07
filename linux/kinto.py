@@ -209,6 +209,15 @@ define_keymap(re.compile(browserStr, re.IGNORECASE),{
     K("RC-Q"): K("RC-Q"),           # Close all browsers Instances
     K("M-RC-I"): K("RC-Shift-I"),   # Dev tools
     K("M-RC-J"): K("RC-Shift-J"),   # Dev tools
+    K("RC-Key_1"): K("M-Key_1"),    # Jump to Tab #1-#8
+    K("RC-Key_2"): K("M-Key_2"),
+    K("RC-Key_3"): K("M-Key_3"),
+    K("RC-Key_4"): K("M-Key_4"),
+    K("RC-Key_5"): K("M-Key_5"),
+    K("RC-Key_6"): K("M-Key_6"),
+    K("RC-Key_7"): K("M-Key_7"),
+    K("RC-Key_8"): K("M-Key_8"),
+    K("RC-Key_9"): K("M-Key_9"),    # Jump to last tab
 })
 
 # Open preferences in browsers
