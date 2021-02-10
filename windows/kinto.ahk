@@ -343,9 +343,19 @@ GroupAdd, intellij, ahk_exe idea64.exe
     ^+4::Send #+{S}
 
     ; wordwise support
-    $^Left::Send {Home}
+    #if !winactive("ahk_group browsers")
+        $^Left::Send {Home}
+        $^Right::Send {End}
+    #if
+    #if winactive("ahk_group browsers")
+        $^Left::
+        Gosub GetSelectedTextLeft
+        Return
+        $^Right::
+        Gosub GetSelectedTextRight
+        Return
+    #if
     $^+Left::Send +{Home}
-    $^Right::Send {End}
     $^+Right::Send +{End}
     ^Up::Send ^{Home}
     ^+Up::Send ^+{Home}
@@ -759,4 +769,42 @@ Send {RWin up}
 Send {LWin up}
 Send {RShift up}
 Send {LShift up}
+return
+
+GetSelectedTextLeft:
+ClipSaved := ClipboardAll
+clipboard := ""
+Send, {Left}{Left}{Right}
+Send, +{Right}
+Send, ^c
+Send, {Left}
+ClipWait, 0.2
+if(clipboard == "" ){
+    Send, !{Left}
+}
+else{
+    Send, {Home}
+}
+Sleep, 100
+clipboard := ClipSaved
+ClipSaved := ""
+return
+
+GetSelectedTextRight:
+ClipSaved := ClipboardAll
+clipboard := ""
+Send, {Left}{Left}{Right}
+Send, +{Right}
+Send, ^c
+Send, {Left}
+ClipWait, 0.2
+if(clipboard == "" ){
+    Send, !{Right}
+}
+else{
+    Send, {End}
+}
+Sleep, 100
+clipboard := ClipSaved
+ClipSaved := ""
 return
