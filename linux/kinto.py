@@ -209,6 +209,9 @@ define_keymap(re.compile(browserStr, re.IGNORECASE),{
     K("RC-Q"): K("RC-Q"),           # Close all browsers Instances
     K("M-RC-I"): K("RC-Shift-I"),   # Dev tools
     K("M-RC-J"): K("RC-Shift-J"),   # Dev tools
+    K("RC-Left"): K("M-F14"),       # Back
+    K("RC-Right"): K("M-F15"),      # Forward
+    K("RC-Z"): K("M-F16"),          # Undo Text/Closed Tab
 })
 
 # Open preferences in browsers
