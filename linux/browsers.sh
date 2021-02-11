@@ -23,7 +23,7 @@ elif [ "$action" == "Right" ];then
 fi
 
 if [ "$newClipboard" == "" ] && [ "$action" == "Undo" ];then
-	xdotool getactivewindow key ctrl+Shift+t
+	xdotool getactivewindow key --clearmodifiers ctrl+Shift+t
 elif [ "$action" == "Undo" ];then
 	xdotool getactivewindow key --clearmodifiers ctrl+z
 fi
