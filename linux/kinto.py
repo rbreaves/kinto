@@ -107,7 +107,7 @@ define_conditional_modmap(re.compile(termStr, re.IGNORECASE), {
 })
 
 # Keybindings for IntelliJ
-define_keymap(re.compile("jetbrains-idea", re.IGNORECASE),{
+define_keymap(re.compile("^jetbrains-(?!.*toolbox).*$", re.IGNORECASE),{
     # General
     K("C-Key_0"): K("M-Key_0"),                 # Open corresponding tool window
     K("C-Key_1"): K("M-Key_1"),                 # Open corresponding tool window
@@ -212,6 +212,15 @@ define_keymap(re.compile(browserStr, re.IGNORECASE),{
     K("RC-Left"): K("M-F14"),       # Back
     K("RC-Right"): K("M-F15"),      # Forward
     K("RC-Z"): K("M-F16"),          # Undo Text/Closed Tab
+    K("RC-Key_1"): K("M-Key_1"),    # Jump to Tab #1-#8
+    K("RC-Key_2"): K("M-Key_2"),
+    K("RC-Key_3"): K("M-Key_3"),
+    K("RC-Key_4"): K("M-Key_4"),
+    K("RC-Key_5"): K("M-Key_5"),
+    K("RC-Key_6"): K("M-Key_6"),
+    K("RC-Key_7"): K("M-Key_7"),
+    K("RC-Key_8"): K("M-Key_8"),
+    K("RC-Key_9"): K("M-Key_9"),    # Jump to last tab
 })
 
 # Open preferences in browsers
@@ -235,7 +244,7 @@ define_keymap(None,{
     K("RC-Tab"): K("M-Tab"),                      # Default not-xfce4 - Cmd Tab - App Switching Default
     K("RC-Shift-Tab"): K("M-Shift-Tab"),          # Default not-xfce4 - Cmd Tab - App Switching Default
     K("RC-Grave"): K("M-Grave"),                  # Default not-xfce4 - Cmd ` - Same App Switching
-    K("RC-Shift-Grave"): K("M-Grave"),            # Default not-xfce4 - Cmd ` - Same App Switching
+    K("RC-Shift-Grave"): K("M-Shift-Grave"),      # Default not-xfce4 - Cmd ` - Same App Switching
     # K("Super-Right"):K("Super-Page_Up"),          # SL - Change workspace (ubuntu/fedora)
     # K("Super-Left"):K("Super-Page_Down"),         # SL - Change workspace (ubuntu/fedora)
     # K("Super-Right"):K("Super-C-Up"),             # SL - Change workspace (popos)

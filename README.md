@@ -5,7 +5,7 @@
 
 [![GitHub release](https://img.shields.io/github/release/rbreaves/kinto.svg)](https://github.com/rbreaves/kinto/releases/latest)
 
-\- Type in Linux & Windows like it's a Mac. \-
+\- Linux & Windows with Mac-style shortcut keys. \-
 
 Seamless copy and paste with all apps and terminals. The zero effort solution.
 
@@ -22,7 +22,7 @@ If you like or appreciate this project then please consider donating.
 |**Wishlists**|[Amazon](https://smile.amazon.com/hz/wishlist/ls/3EVXR21VFKD9Z?ref_=wl_share)|[Adafruit](https://www.adafruit.com/wishlists/515932)|[eBay](https://www.ebay.com/mye/myebay/WatchList?custom_list_id=636668138019)|
 |---|---|---|---|
 
-If you would like to send me a keyboard directly then please reach out to me over [twitter](https://twitter.com/gbit86) and send me a DM. I will accept shipments (of keyboards in particular) as well.
+If you would like to send me a keyboard directly then please reach out to me over [twitter](https://twitter.com/gbit86) and send me a DM.
 
 ## How to install (Linux)
 
@@ -50,20 +50,24 @@ sudo apt install python3
 ./setup.py
 ```
 
-Troubleshoot
+**Troubleshoot**
 
 If the wizard does not appear then either type in "kinto.sh" in your application overview search bar or run this following command.
 ```
 ~/.config/kinto/gui/kinto-gui.py
 ```
 
-To Uninstall Kinto
+**Issues with Numpad?**
+
+Try toggling numlock on & off (clear key on official mac keyboards). If it still does not work then restart the Kinto service and try toggling the numlock/clear key again, it will likely work after that. #369
+
+**Uninstall Kinto**
 
 ```
 ./setup.py -r
 ```
 
-Other tips
+**Other tips**
 
 If you want a global menu app similar to what mac users have then I strongly recommend Ubuntu Budgie as it has the Vala Appmenu built in and ready for activation. Short of that Vala-AppMenu can be installed in various distros, mileage will vary. If you try to activate it in the latest 20.xx releases with XFCE then you may need to run the following commands.
 
@@ -96,11 +100,13 @@ py setup.py
 <img src="https://user-images.githubusercontent.com/10969616/85195079-30fd4f80-b295-11ea-8bcd-257990b77dcb.png" width="50%" height="50%">
 <img src="https://user-images.githubusercontent.com/10969616/85195082-322e7c80-b295-11ea-8c81-320dab424c3c.png" width="50%" height="50%">
 
-To Uninstall Kinto - Select Uninstall
+**Uninstall Kinto**
 
 ```
 py setup.py
 ```
+
+Select Uninstall
 
 ## How to use in Remote Desktop Solutions
 
@@ -108,13 +114,13 @@ Currently this may be limited to Windows RDP Clients and Servers on both ends, b
 
 Note: virtm is just a shortname for virtual machine and remote desktop exceptions - so that remapping can happen within their OS & not on your host machine - if it can be avoided.
 
-Scenarios confirmed working?
-Windows RDP Client -> Windows Computer
-
-Scenarios that don't appear to work?
-Microsoft RDP Client on a Mac -> Windows Computer
-FreeRDP based client on a Mac -> Windows Computer
-Android/iOS RDP Client -> Windows Computer
+|Program|Host OS|Client OS|Works? |Notes|
+|---|---|---|---|---|
+|mstsc.exe (rdp)| Windows  | Windows  | Yes|   |
+|Official MS RDP| macOS  | Windows  | No|Use Windows in VM & RDP from it|
+|FreeRDP| macOS  | Windows  | No|Use Windows in VM & RDP from it|
+|FreeRDP| Linux  | Windows  | No|Use Windows in VM & RDP from it|
+|Official MS RDP| iOS/Android  | Windows  | No|No workaround atm|
 
 ## Table of Contents
 
@@ -379,9 +385,22 @@ I'd appreciate any help from people with non-US based keyboards, to help ensure 
 
 Yet another keyboard remapping tool for X environment
 
+[Interception](https://gitlab.com/interception/linux/tools)
+
+Another low level key remapper, not as easily configurable as Xkeysnail, but does not rely on X11.
+
+[Wincent](https://github.com/wincent/wincent) by Greg Hurrell
+
+Dot files and configurations that may help those that want mac-style shortcut keys that work under Wayland, or w/o x11.
+[Vim #102: macOS keyboard bindings on Linux](https://www.youtube.com/watch?v=TBqTHesnzkI)
+
 [mac-precision-touchpad](https://github.com/imbushuo/mac-precision-touchpad) by imbushuo
 
 Windows 10 touchpad to precision touchpad driver
+
+[macOS-cursors-for-Windows](https://github.com/antiden/macOS-cursors-for-Windows) by antiden
+
+macOS cursors for Windows
 
 [fusuma](https://github.com/iberianpig/fusuma) by iberianpig
 
@@ -391,10 +410,11 @@ Multitouch gestures with libinput driver on Linux
 
 Linux driver for Facetime HD on macbooks
 
-[Fluent Terminal - Windows only](https://github.com/felixse/FluentTerminal) by felixse
+[Windows Terminal Preview](https://aka.ms/terminal-preview) by Microsoft
 
+The best Terminal app built for Windows hands down. I have tried countless, but this one actually seems to get everything right, despite the lack of a GUI to configure all aspects of the program. Custom configurations have to be done via a json file - but given the performance and feature set I feel like it is the a decent trade off.
 
-A Terminal Emulator based on UWP and web technologies.
+I will update Kinto to have custom configurations for this specific Terminal in the future. Will make seamless copy & paste, which already works, work even better (Cmd-C can still trigger sigint - but there is a fix for that that involves updating the json config).
 
 [PowerToys - Windows only](https://github.com/microsoft/PowerToys) by microsoft
 
@@ -444,7 +464,7 @@ Dark & Light Theme w/ OSX controls for Elementary OS
 
 Auto-detect the connected display hardware and load the appropriate X11 setup using xrandr
 
-[Barrier](https://github.com/debauchee/barrier) by debauchee
+[Barrier](https://github.com/debauchee/barrier) by debauchee (Note: Does not appear to work with Kinto v1.2+, may work w/ Kinto v1.1?)
 
 Open-source KVM software
 
