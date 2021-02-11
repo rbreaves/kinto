@@ -349,10 +349,20 @@ GroupAdd, intellij, ahk_exe idea64.exe
     #if
     #if winactive("ahk_group browsers")
         $^Left::
-        Gosub GetSelectedTextLeft
+        if(blinking()){
+            Send, {Home}
+        }
+        else{
+            Send, !{Left}
+        }
         Return
         $^Right::
-        Gosub GetSelectedTextRight
+        if(blinking()){
+            Send, {End}
+        }
+        else{
+            Send, !{Right}
+        }
         Return
     #if
     $^+Left::Send +{Home}
@@ -479,6 +489,14 @@ GroupAdd, intellij, ahk_exe idea64.exe
         ; Dev Tools
         !^i::send {Ctrl Down}{Shift Down}i{Shift Up}{Ctrl Up}
         !^j::send {Ctrl Down}{Shift Down}j{Shift Up}{Ctrl Up}
+        ; Reopen closed tab or Undo text field
+        $^z::
+        if(blinking()){
+            Send, ^z
+        }
+        else{
+            Send, ^+t
+        }
         ; Open preferences
         #IfWinActive ahk_exe firefox.exe
             ^,::send, {Ctrl Down}t{Ctrl Up}about:preferences{Enter}
@@ -771,40 +789,20 @@ Send {RShift up}
 Send {LShift up}
 return
 
-GetSelectedTextLeft:
-ClipSaved := ClipboardAll
-clipboard := ""
-Send, {Left}{Left}{Right}
-Send, +{Right}
-Send, ^c
-Send, {Left}
-ClipWait, 0.2
-if(clipboard == "" ){
-    Send, !{Left}
+blinking(){
+    ClipSaved := ClipboardAll
+    clipboard := ""
+    status := False
+    Send, {Left}{Left}{Right}
+    Send, +{Right}
+    Send, ^c
+    Send, {Left}
+    ClipWait, 0.2
+    if(clipboard != "" ){
+        status := True
+    }
+    Sleep, 100
+    clipboard := ClipSaved
+    ClipSaved := ""
+    return status
 }
-else{
-    Send, {Home}
-}
-Sleep, 100
-clipboard := ClipSaved
-ClipSaved := ""
-return
-
-GetSelectedTextRight:
-ClipSaved := ClipboardAll
-clipboard := ""
-Send, {Left}{Left}{Right}
-Send, +{Right}
-Send, ^c
-Send, {Left}
-ClipWait, 0.2
-if(clipboard == "" ){
-    Send, !{Right}
-}
-else{
-    Send, {End}
-}
-Sleep, 100
-clipboard := ClipSaved
-ClipSaved := ""
-return
