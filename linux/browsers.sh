@@ -4,23 +4,46 @@ action=$1
 
 saveClipboard=$(xclip -selection clipboard -o)
 echo "" | xclip -i -selection clipboard
-if [ "$action" == "Left" ];then
-	xdotool getactivewindow key --delay 40 --clearmodifiers End Shift+Left ctrl+c
+
+if [ "$action" == "Left" ] || [ "$action" == "Undo" ];then
+	xdotool getactivewindow key --delay 40 --clearmodifiers Shift+Home ctrl+c Home
 	firstClipboard=$(xclip -selection clipboard -o)
-	if [ "${#firstClipboard}" > 1 ];then
-		firstClipboard=${firstClipboard: -1}
+	if [ "$firstClipboard" == "" ];then
+		xdotool getactivewindow key --delay 40 --clearmodifiers Shift+Right ctrl+c Home
+		firstClipboard=$(xclip -selection clipboard -o)
+		if [ "$firstClipboard" == "" ];then
+			xdotool getactivewindow key --delay 24 --clearmodifiers bar Shift+Left ctrl+x
+			firstClipboard=$(xclip -selection clipboard -o)
+		fi
 	fi
 	echo "" | xclip -i -selection clipboard
-	xdotool getactivewindow key --delay 24 --clearmodifiers Left Shift+Right ctrl+c Right
+	xdotool getactivewindow key --clearmodifiers Shift+Right ctrl+c Home
+	if [ "${firstClipboard:0:1}" == "$(xclip -selection clipboard -o)" ];then
+		echo "" | xclip -i -selection clipboard
+	fi
+
 fi
-if [ "$action" == "Right" ] || [ "$action" == "Undo" ];then
-	xdotool getactivewindow key --delay 40 --clearmodifiers Home Shift+Right ctrl+c
-	firstClipboard=$(xclip -selection clipboard -o)
-	if [ "${#firstClipboard}" > 1 ];then
-		firstClipboard=${firstClipboard:0:1}
+
+if [ "$action" == "Right" ];then
+	xdotool getactivewindow key --delay 40 --clearmodifiers Shift+End ctrl+c
+	firstClipboard=$(xclip -selection clipboard -o | tr -d /)
+	if [ "$firstClipboard" == "" ];then
+		xdotool getactivewindow key --delay 40 --clearmodifiers Left Shift+Right ctrl+c
+		firstClipboard=$(xclip -selection clipboard -o | tr -d /)
+		if [ "$firstClipboard" == "" ];then
+			xdotool getactivewindow key --delay 24 --clearmodifiers bar Shift+Left ctrl+x
+			firstClipboard=$(xclip -selection clipboard -o | tr -d /)
+		fi
+	fi
+	if [ "$firstClipboard" != "" ];then
+		xdotool getactivewindow key --clearmodifiers Right
 	fi
 	echo "" | xclip -i -selection clipboard
-	xdotool getactivewindow key --delay 24 --clearmodifiers Right Shift+Left ctrl+c Left
+	xdotool getactivewindow key --clearmodifiers Shift+Left ctrl+c
+	if [ "${firstClipboard: -1}" == "$(xclip -selection clipboard -o)" ];then
+		echo "" | xclip -i -selection clipboard
+		xdotool getactivewindow key --clearmodifiers Right
+	fi
 fi
 
 newClipboard=$(xclip -selection clipboard -o)
@@ -32,30 +55,18 @@ newClipboard=$(xclip -selection clipboard -o)
 # echo "$newClipboard""-"
 # echo "hello"
 
-if [ "$action" == "Undo" ] && [ "$newClipboard" == "" ] && [ "$firstClipboard" == "" ];then
-	xdotool getactivewindow key --delay 24 --clearmodifiers bar Shift+Left ctrl+c Left
-	firstClipboard=$(xclip -selection clipboard -o)
-	echo "" | xclip -i -selection clipboard
-	xdotool getactivewindow key --delay 24 --clearmodifiers Shift+Right ctrl+x
-	newClipboard=$(xclip -selection clipboard -o)
-	if [ "$newClipboard" != "" ] && [ "$firstClipboard" != "" ];then
-		xdotool getactivewindow key --delay 24 --clearmodifiers ctrl+z ctrl+z
-	fi
-fi
 
-if [ "$action" == "Left" ] && [ "$newClipboard" != "" ] && [ "$newClipboard" == "$firstClipboard" ];then
-	xdotool getactivewindow key --clearmodifiers Home
-elif [ "$action" == "Left" ];then
+if [ "$action" == "Left" ] && ([ "$firstClipboard" == "" ] || [ "$newClipboard" != "" ]);then
 	xdotool getactivewindow key --clearmodifiers alt+Left
 fi
 
-if [ "$action" == "Right" ] && [ "$newClipboard" != "" ] && [ "$newClipboard" == "$firstClipboard" ];then
-	xdotool getactivewindow key --clearmodifiers End
-elif [ "$action" == "Right" ];then
+if [ "$action" == "Right" ] && ([ "$firstClipboard" == "" ] || [ "$newClipboard" != "" ]);then
 	xdotool getactivewindow key --clearmodifiers alt+Right
+elif [ "$action" == "Right" ];then
+	xdotool getactivewindow key --clearmodifiers End
 fi
 
-if [ "$action" == "Undo" ] && [ "$newClipboard" != "" ] && [ "$newClipboard" == "$firstClipboard" ];then
+if [ "$action" == "Undo" ] && ([ "$firstClipboard" != "" ] && [ "$newClipboard" == "" ]);then
 	xdotool getactivewindow key --delay 24 --clearmodifiers ctrl+z
 elif [ "$action" == "Undo" ];then
 	xdotool getactivewindow key ctrl+Shift+t
