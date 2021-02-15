@@ -110,16 +110,15 @@ Select Uninstall
 
 ## How to use in Remote Desktop Solutions
 
-Currently this may be limited to Windows RDP Clients and Servers on both ends, but in theory any remote desktop solution that properly handles the Windows key should work is what I am finding. The latest version of Kinto may need to be suspended via the system tray on the computer running the Client software of the Remote Desktop solution you are using - or you can add it to the "virtm" group of the Kinto.ahk script for Windows 10. On the linux side a 3rd, but similar "define_conditional_modmap" terminals like group may need to be added to align with virtm.
-
-Note: virtm is just a shortname for virtual machine and remote desktop exceptions - so that remapping can happen within their OS & not on your host machine - if it can be avoided.
+RDP fully works as long as the entire keyboard input is being captured. RDP had been working for ahwile with Windows but as of 2/14/2021 Linux is now supported and potentially macOS as well.
 
 |Program|Host OS|Client OS|Works? |Notes|
 |---|---|---|---|---|
 |mstsc.exe (rdp)| Windows  | Windows  | Yes|   |
 |Official MS RDP| macOS  | Windows  | No|Use Windows in VM & RDP from it|
-|FreeRDP| macOS  | Windows  | No|Use Windows in VM & RDP from it|
-|FreeRDP| Linux  | Windows  | No|Use Windows in VM & RDP from it|
+|Remmina| Linux  | Windows  | Yes|Use hover menu to enable "Grab all keyboard events"|
+|FreeRDP| Linux  | Windows  | Maybe|Needs to grab keyboard events fully (Add client to remotes)|
+|FreeRDP| macOS  | Windows  | Maybe|Needs to grab keyboard events fully|
 |Official MS RDP| iOS/Android  | Windows  | No|No workaround atm|
 
 ## Table of Contents

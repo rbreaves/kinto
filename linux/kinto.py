@@ -11,6 +11,19 @@ terminals = ["kinto-gui.py","gnome-terminal","konsole","io.elementary.terminal",
 terminals = [term.casefold() for term in terminals]
 termStr = "|".join(str(x) for x in terminals)
 
+mscodes = ["code","vscodium"]
+codeStr = "|".join(str(x) for x in mscodes)
+
+# Add remote desktop clients & VM software here
+# Ideally we'd only exclude the client window,
+# but that may not be easily done.
+remotes = ["org.remmina.Remmina"]
+remotes = [client.casefold() for client in remotes]
+
+# Add remote desktop clients & VMs for no remapping
+terminals.extend(remotes)
+mscodes.extend(remotes)
+
 # Use for browser specific hotkeys
 browsers = ["Chromium","Chromium-browser","Google-chrome","microsoft-edge-dev","microsoft-edge","Epiphany","Firefox","Discord"]
 browsers = [browser.casefold() for browser in browsers]
@@ -23,9 +36,6 @@ chromeStr = "|".join(str(x) for x in chromes)
 # edges = ["microsoft-edge-dev","microsoft-edge"]
 # edges = [edge.casefold() for edge in edges]
 # edgeStr = "|".join(str(x) for x in edges)
-
-mscodes = ["code","vscodium"]
-codeStr = "|".join(str(x) for x in mscodes)
 
 define_multipurpose_modmap(
     # {Key.ENTER: [Key.ENTER, Key.RIGHT_CTRL]   # Enter2Cmd
@@ -229,7 +239,10 @@ define_keymap(re.compile(chromeStr, re.IGNORECASE),{
 })
 # Opera C-F12
 
-define_keymap(None,{
+# None referenced here originally
+# - but remote clients and VM software ought to be set here
+# These are the typical remaps for ALL GUI based apps
+define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
     K("RC-Space"): K("Alt-F1"),                   # Default SL - Launch Application Menu (gnome/kde)
     K("RC-F3"):K("Super-d"),                      # Default SL - Show Desktop (gnome/kde,eos)
     K("RC-LC-f"):K("M-F10"),                      # Default SL - Maximize app (gnome/kde)
