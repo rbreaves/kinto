@@ -260,8 +260,8 @@ GroupAdd, intellij, ahk_exe idea64.exe
     ; $LCtrl::LWin   ; MacModifiers
 
     ; Hack to disable start menu on winkey
-    ; Static
-    $LCtrl up::Send {Ctrl down}{LWin up}{Ctrl up}
+    ; Static - Does not apply to IBM or Chromebooks
+    ; $LCtrl up::Send {Ctrl down}{LWin up}{Ctrl up} ; Default
 
     ; Disable Win-Up/Down - interferes with Sublime text 3 multi-cursors
     #Down::return
@@ -524,8 +524,8 @@ GroupAdd, intellij, ahk_exe idea64.exe
         ^!Down::send ^{Down}                                    ; scroll_lines down
         ; #+Up::send {shift up}^!{Up}                             ; Default - multi-cursor up
         ; #+Down::send {shift up}^!{Down}                         ; Default - multi-cursor down
-        ; #+Up::send {shift up}^!{Up}                             ; CB/IBM - multi-cursor up
-        ; #+Down::send {shift up}^!{Down}                         ; CB/IBM - multi-cursor down
+        ; !+Up::send {shift up}^!{Up}                             ; CB/IBM - multi-cursor up
+        ; !+Down::send {shift up}^!{Down}                         ; CB/IBM - multi-cursor down
         ^PgDn::Return                                           ; cancel next_view
         ^PgUp::Return                                           ; cancel prev_view
         ^+{::send ^{PgDn}                                       ; next_view
