@@ -119,7 +119,13 @@ RDP fully works as long as the entire keyboard input is being captured. RDP had 
 |Remmina| Linux  | Windows  | Yes|Use hover menu to enable "Grab all keyboard events"|
 |FreeRDP| Linux  | Windows  | Maybe|Needs to grab keyboard events fully (Add client to remotes)|
 |FreeRDP| macOS  | Windows  | Maybe|Needs to grab keyboard events fully|
+|Official MS RDP Clients| macOS  | Windows  | No|Initial Cmd key press not being passed|
+|Remote Desktop Manager Free| macOS  | Windows  | No|Initial Cmd key press not being passed|
+|Remote Desktop Manager Free| macOS  | Windows  | No|Initial Cmd key press not being passed|
+|Royal TSX Client| macOS  | Windows  | No|Initial Cmd key press not being passed|
+|Jump Desktop (RDP)| macOS  | Windows  | No|Works. Preferences -> Keyboard -> Disable "Key Conversions", Enabled "Send macOS Shortcuts" under Keyboard shortcuts|
 |Official MS RDP| iOS/Android  | Windows  | No|No workaround atm|
+
 
 ## Table of Contents
 
