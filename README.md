@@ -112,7 +112,7 @@ Select Uninstall
 
 RDP fully works as long as the entire keyboard input is being captured. RDP had been working for awhile with Windows but as of 2/14/2021 Linux is now supported and potentially macOS as well. VNC & other protocols may work, but is likely most dependent on how the keyboard input is captured on the computer running the client.
 
-|Program|Host OS|Client OS|Works? |Notes|
+|Program|Src/Remote Client ⇒|Dst/Remote Server|Works? |Notes|
 |---|---|---|---|---|
 |Official MS RDP (mstsc.exe)| Windows  | Windows  | Yes|   |
 |Remmina| Linux  | Windows  | Yes|Use hover menu to enable "Grab all keyboard events"|
