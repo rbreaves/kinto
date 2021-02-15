@@ -97,8 +97,8 @@ py setup.py
 4. How to make Kinto stay visible in system tray (optional)
 
 <img src="https://user-images.githubusercontent.com/10969616/85195077-2f338c00-b295-11ea-8aa3-e6aa06a9a279.png" width="25%" height="25%">
-<img src="https://user-images.githubusercontent.com/10969616/85195079-30fd4f80-b295-11ea-8bcd-257990b77dcb.png" width="50%" height="50%">
 <img src="https://user-images.githubusercontent.com/10969616/85195082-322e7c80-b295-11ea-8c81-320dab424c3c.png" width="50%" height="50%">
+<img src="https://user-images.githubusercontent.com/10969616/85195079-30fd4f80-b295-11ea-8bcd-257990b77dcb.png" width="50%" height="50%">
 
 **Uninstall Kinto**
 
