@@ -114,15 +114,15 @@ RDP fully works as long as the entire keyboard input is being captured. RDP had 
 
 |Program|Src/Remote Client ⇒|Dst/Remote Server|Works? |Notes|
 |---|---|---|---|---|
-|Official MS RDP (mstsc.exe)| Windows  | Windows  | ✅ Yes|   |
-|Remmina| Linux  | Windows  | ✅ Yes|Use hover menu to enable "Grab all keyboard events"|
-|Jump Desktop (RDP)| macOS  | Windows  | ✅ Yes|Preferences -> Keyboard -> Disable "Key Conversions", Enabled "Send macOS Shortcuts" under Keyboard shortcuts|
-|FreeRDP| Linux  | Windows  | ? Maybe|Needs to grab keyboard events fully (Add client to remotes)|
-|FreeRDP| macOS  | Windows  | ? Maybe|Needs to grab keyboard events fully|
-|Official MS RDP| macOS  | Windows  | ❌ No|Initial Cmd key press not being passed|
-|Remote Desktop Manager Free| macOS  | Windows  | ❌ No|Initial Cmd key press not being passed|
-|Royal TSX Client| macOS  | Windows  | ❌ No|Initial Cmd key press not being passed|
-|Official MS RDP| iOS/Android  | Windows  | ❌ No|No workaround atm|
+|Official MS RDP (mstsc.exe)| ❖ Windows  | ❖ Windows  | ✅ Yes|   |
+|Remmina| 🐧 Linux  | ❖ Windows  | ✅ Yes|Use hover menu to enable "Grab all keyboard events"|
+|Jump Desktop (RDP)| 🍎 macOS  | ❖ Windows  | ✅ Yes|Preferences -> Keyboard -> Disable "Key Conversions", Enabled "Send macOS Shortcuts" under Keyboard shortcuts|
+|FreeRDP| 🐧 Linux  | ❖ Windows  | ? Maybe|Needs to grab keyboard events fully (Add client to remotes)|
+|FreeRDP| 🍎 macOS  | ❖ Windows  | ? Maybe|Needs to grab keyboard events fully|
+|Official MS RDP| 🍎 macOS  | ❖ Windows  | ❌ No|Initial Cmd key press not being passed|
+|Remote Desktop Manager Free| 🍎 macOS  | ❖ Windows  | ❌ No|Initial Cmd key press not being passed|
+|Royal TSX Client| 🍎 macOS  | ❖ Windows  | ❌ No|Initial Cmd key press not being passed|
+|Official MS RDP| 🍎🤖 iOS/Android  | ❖ Windows  | ❌ No|No workaround atm|
 
 Screenshots of how to configure Jump Desktop for macOS users accessing a Windows PC with Kinto installed. I apologize that it is not a free RDP client - BUT it does work, and at $15 it is reasonable if you plan to use it frequently.
 
