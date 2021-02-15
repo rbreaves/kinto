@@ -96,9 +96,9 @@ py setup.py
 
 4. How to make Kinto stay visible in system tray (optional)
 
-<img src="https://user-images.githubusercontent.com/10969616/85195077-2f338c00-b295-11ea-8aa3-e6aa06a9a279.png" width="25%" height="25%">
-<img src="https://user-images.githubusercontent.com/10969616/85195082-322e7c80-b295-11ea-8c81-320dab424c3c.png" width="50%" height="50%">
+<img src="https://user-images.githubusercontent.com/10969616/85195077-2f338c00-b295-11ea-8aa3-e6aa06a9a279.png" width="50%" height="50%">
 <img src="https://user-images.githubusercontent.com/10969616/85195079-30fd4f80-b295-11ea-8bcd-257990b77dcb.png" width="50%" height="50%">
+<img src="https://user-images.githubusercontent.com/10969616/85195082-322e7c80-b295-11ea-8c81-320dab424c3c.png" width="50%" height="50%">
 
 **Uninstall Kinto**
 
@@ -126,9 +126,9 @@ RDP fully works as long as the entire keyboard input is being captured. RDP had 
 
 Screenshots of how to configure Jump Desktop for macOS users accessing a Windows PC with Kinto installed. I apologize that it is not a free RDP client - BUT it does work, and at $15 it is reasonable if you plan to use it frequently.
 
-<img src="https://user-images.githubusercontent.com/10969616/107990246-a2fb7500-6f99-11eb-8c19-0a9b538b996f.png" width="50%">
-<img src="https://user-images.githubusercontent.com/10969616/107990256-a68efc00-6f99-11eb-9f31-575ed6016944.png" width="50%">
+<img src="https://user-images.githubusercontent.com/10969616/107990246-a2fb7500-6f99-11eb-8c19-0a9b538b996f.png" width="25%">
 <img src="https://user-images.githubusercontent.com/10969616/107990265-a8f15600-6f99-11eb-9922-bbcfa0b92031.png" width="50%">
+<img src="https://user-images.githubusercontent.com/10969616/107990256-a68efc00-6f99-11eb-9f31-575ed6016944.png" width="50%">
 
 
 ## Table of Contents
