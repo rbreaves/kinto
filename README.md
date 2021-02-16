@@ -394,6 +394,9 @@ I'd appreciate any help from people with non-US based keyboards, to help ensure 
 
 Yet another keyboard remapping tool for X environment
 
+[libinput-gestures](https://github.com/bulletmark/libinput-gestures)
+Three finger gesture or other type of gestures for desktop switching or other features within a Linux distro. More info here for quickly setting it up. Make sure you logoff after setting your user to access input. https://www.reddit.com/r/GalliumOS/comments/5lgrxe/psa_multitouch_gestures_on_galliumos/
+
 [Interception](https://gitlab.com/interception/linux/tools)
 
 Another low level key remapper, not as easily configurable as Xkeysnail, but does not rely on X11.
