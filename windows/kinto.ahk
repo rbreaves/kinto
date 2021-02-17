@@ -9,7 +9,7 @@
 ; https://www.autohotkey.com/boards/viewtopic.php?t=9501
 OnMessage(0x404, "AHK_NOTIFYICON")
 
-AHK_NOTIFYICON(wParam, lParam) 
+AHK_NOTIFYICON(wParam, lParam)
 {
     if (lParam = 0x202) { ; user left-clicked tray icon
         ;ADD ANY SUBROUTINE OR FUNCTION HERE
@@ -396,6 +396,8 @@ GroupAdd, intellij, ahk_exe idea64.exe
     $^Space::Send ^{Esc}
 
     #IfWinActive ahk_group intellij
+        ; $#c::Send ^{c}                  ; Default - Sigints interrupt
+        ; $!c::Send ^{c}                  ; CB/IBM
         ; General
         ^0::Send !{0}                   ;Open corresponding tool window
         ^1::Send !{1}                   ;Open corresponding tool window
@@ -549,7 +551,9 @@ GroupAdd, intellij, ahk_exe idea64.exe
         ^!Left::send ^{PgUp}                                    ; prev_view
         Insert::Return                                          ; cancel toggle_overwrite
         ^!O::send {Insert}                                      ; toggle_overwrite
-        !c::Return                                              ; cancel toggle_case_sensitive
+        ; $#c::Send {Ctrl down}c{Ctrl up}                         ; Default - Sigints interrupt
+        ; !c::Return                                              ; Default - cancel toggle_case_sensitive
+        ; $!c::send ^{c}                                          ; CB/IBM - Sigint
         ^!c::send !{c}                                          ; toggle_case_sensitive
         ; ^h::Return                                              ; cancel replace
         ^!f::send ^{h}                                          ; replace
