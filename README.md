@@ -127,17 +127,26 @@ RDP fully works as long as the entire keyboard input is being captured. RDP had 
 ## FreeRDP for macOS
 
 1. Install [brew.sh](https://brew.sh).
+
 ```/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"```
+
 2. Install XQuartz (x11/xorg)
+
 ```brew install --cask xquartz```
+
 3. log off and back on.
 4. Install FreeRDP
+
 ```brew install freerdp```
+
 5. Disable [NLA](https://kb.parallels.com/en/123661), if it is enabled on the destination.
 6. Run command to access machine
 Note: 192.168.x.x = Your IP.
+
 ```xfreerdp /u:your_username /v:192.168.x.x /cert-ignore /auto-reconnect-max-retries:0 /f +clipboard -decorations```
+
 7. Click on XQuartz -> Preferences and set these checkmarks so that fullscreen can work, may need to quit it and re-run the xfreerdp command from step 6.
+
 <img src="https://user-images.githubusercontent.com/10969616/108144025-68bfcf80-708e-11eb-96cc-2930b7b1694a.png" width="50%">
 
 More info here
