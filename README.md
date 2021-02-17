@@ -116,13 +116,34 @@ RDP fully works as long as the entire keyboard input is being captured. RDP had 
 |---|---|---|---|---|
 |Official MS RDP (mstsc.exe)| ❖Windows ⇒| ❖Windows  | ✅ Yes|   |
 |Remmina| 🐧Linux⇒| ❖Windows  | ✅ Yes|Use hover menu to enable "Grab all keyboard events"|
+|FreeRDP| 🐧Linux⇒| ❖Windows  | ✅ Yes | |
+|FreeRDP| 🍎macOS⇒| ❖Windows  | ✅ Yes| [FreeRDP for macOS](#FreeRDP-for-macOS)|
 |Jump Desktop (RDP)| 🍎macOS ⇒| ❖Windows  | ✅ Yes|Preferences -> Keyboard -> Disable "Key Conversions", Enabled "Send macOS Shortcuts" under Keyboard shortcuts|
-|FreeRDP| 🐧Linux⇒| ❖Windows  | ? Maybe|Needs to grab keyboard events fully (Add client to remotes)|
-|FreeRDP| 🍎macOS⇒| ❖Windows  | ? Maybe|Needs to grab keyboard events fully|
 |Official MS RDP| 🍎macOS⇒| ❖Windows  | ❌ No|Initial Cmd key press not being passed|
 |Remote Desktop Manager Free| 🍎macOS⇒| ❖Windows  | ❌ No|Initial Cmd key press not being passed|
 |Royal TSX Client| 🍎macOS⇒| ❖Windows  | ❌ No|Initial Cmd key press not being passed|
 |Official MS RDP| 🍎🤖iOS/Android⇒| ❖Windows  | ❌ No|No workaround atm|
+
+## FreeRDP for macOS
+
+1. Install [brew.sh](https://brew.sh).
+```/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"```
+2. Install XQuartz (x11/xorg)
+```brew install --cask xquartz```
+3. log off and back on.
+4. Install FreeRDP
+```brew install freerdp```
+5. Disable [NLA](https://kb.parallels.com/en/123661), if it is enabled on the destination.
+6. Run command to access machine
+Note: 192.168.x.x = Your IP.
+```xfreerdp /u:your_username /v:192.168.x.x /cert-ignore /auto-reconnect-max-retries:0 /f +clipboard -decorations```
+7. Click on XQuartz -> Preferences and set these checkmarks so that fullscreen can work, may need to quit it and re-run the xfreerdp command from step 6.
+<img src="https://user-images.githubusercontent.com/10969616/108144025-68bfcf80-708e-11eb-96cc-2930b7b1694a.png" width="50%">
+
+More info here
+https://medium.com/idomongodb/macos-rdp-to-a-windows-machine-1e0f52f777b
+
+## Jump Desktop for macOS
 
 Screenshots of how to configure Jump Desktop for macOS users accessing a Windows PC with Kinto installed. I apologize that it is not a free RDP client - BUT it does work, and at $15 it is reasonable if you plan to use it frequently.
 
