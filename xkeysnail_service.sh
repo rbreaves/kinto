@@ -470,16 +470,7 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	xhost +SI:localuser:root
 	git clone --depth 10 https://github.com/rbreaves/xkeysnail.git
 	cd xkeysnail
-	git checkout kinto
-	giturl=$(git ls-remote --get-url)
-	if [ "$giturl" != "https://github.com/rbreaves/xkeysnail.git" ];then
-		echo -e "\nreplacing xkeysnail with fork...\n"
-		cd ..
-		rm -rf ./xkeysnail
-		git clone --depth 10 https://github.com/rbreaves/xkeysnail.git
-		cd xkeysnail
-		git checkout kinto
-	fi
+	git checkout debug
 	sudo pip3 install --upgrade .
 	cd ..
 	which xkeysnail

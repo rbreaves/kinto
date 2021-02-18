@@ -204,7 +204,7 @@ define_keymap(re.compile("^jetbrains-(?!.*toolbox).*$", re.IGNORECASE),{
     # VCS/Local History
     K("Super-v"): K("M-Grave"),                 # VCS quick popup
     K("Super-c"): K("LC-c"),                    # Sigints - interrupt
-})
+},"JetBrains Products")
 
 # Keybindings for Nautilus
 define_keymap(re.compile("org.gnome.nautilus", re.IGNORECASE),{
@@ -212,7 +212,7 @@ define_keymap(re.compile("org.gnome.nautilus", re.IGNORECASE),{
     K("RC-Down"): K("M-Down"),      # Go Down dir
     K("RC-Left"): K("M-Left"),      # Go Back
     K("RC-Right"): K("M-Right"),    # Go Forward
-})
+},"Nautilus")
 
 # Keybindings for Browsers
 define_keymap(re.compile(browserStr, re.IGNORECASE),{
@@ -228,15 +228,15 @@ define_keymap(re.compile(browserStr, re.IGNORECASE),{
     K("RC-Key_7"): K("M-Key_7"),
     K("RC-Key_8"): K("M-Key_8"),
     K("RC-Key_9"): K("M-Key_9"),    # Jump to last tab
-})
+},"General Web Browsers")
 
 # Open preferences in browsers
 define_keymap(re.compile("Firefox", re.IGNORECASE),{
     K("C-comma"): [K("C-T"),K("a"),K("b"),K("o"),K("u"),K("t"),K("Shift-SEMICOLON"),K("p"),K("r"),K("e"),K("f"),K("e"),K("r"),K("e"),K("n"),K("c"),K("e"),K("s"),K("Enter")],
-})
+},"Firefox")
 define_keymap(re.compile(chromeStr, re.IGNORECASE),{
     K("C-comma"): [K("M-e"), K("s"),K("Enter")],
-})
+},"Chrome Based Web Browsers")
 # Opera C-F12
 
 # None referenced here originally
@@ -314,7 +314,7 @@ define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
     K("Alt-Delete"): K("C-Delete"),               # Default not-chromebook - Delete Right Word of Cursor
     # K(""): pass_through_key,                      # cancel
     # K(""): K(""),                                 #
-})
+},"General GUI Apps")
 
 define_keymap(lambda wm_class: wm_class.casefold() not in mscodes,{
     # Wordwise remaining - for Everything but VS Code
@@ -337,7 +337,7 @@ define_keymap(lambda wm_class: wm_class.casefold() not in mscodes,{
     #   https://superuser.com/questions/770301/pentadactyl-how-to-disable-menu-bar-toggle-by-alt
     # **
     #
-})
+}, "wordwise for GUI apps")
 
 # Keybindings for VS Code
 define_keymap(re.compile(codeStr, re.IGNORECASE),{
