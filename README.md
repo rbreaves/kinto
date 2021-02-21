@@ -241,6 +241,9 @@ Other programs that will be installed when you run ./setup.py
 - Strawberry Perl
 
 Note: Sublime Text users should disable screen rotation hotkeys as they will interfere with multi-cursor and possibly other combos. See https://windowsloop.com/disable-screen-rotation-keyboard-shortcut/ for details.
+
+You may also want to disable the Xbox Game Bar so that Win+G or other shortcuts will not interfer with any of your remaps. Start menu -> Game bar shortcuts -> toggle Off.
+
 ## Shortcut Creation
 
 [Linux Shortcut Creation (Xkeysnail)](#Linux-Xkeysnail)
