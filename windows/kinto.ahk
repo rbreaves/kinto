@@ -605,6 +605,7 @@ GroupAdd, intellij, ahk_exe idea64.exe
         ^+Down::Return                                          ; cancel swap_line_down
         #!Down::send ^+{Down}                                   ; swap_line_down
         ^Pause::Return                                          ; cancel cancel_build
+        ; #c::send ^{Pause}                                       ; cancel_build
         F9::Return                                              ; cancel sort_lines case_s false
         F5::send {F9}                                           ; sort_lines case_s false
         #F9::Return                                             ; cancel sort_lines case_s true
