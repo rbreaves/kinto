@@ -55,11 +55,11 @@ def windows_setup():
 		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; Chromebook)/$2$3/g" .\\windows\\kinto-new.ahk')
 		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; WinModifiers/CB)/$2$3/g" .\\windows\\kinto-new.ahk')
 	if default == 3 or default == 4:
-		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; CB/IBM)/$2$3/g" .\\windows\\kinto-new.ahk')
+		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; CB\/IBM)/$2$3/g" .\\windows\\kinto-new.ahk')
+		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; WinModifiers\/CB\/IBM)/$2$3/g" .\\windows\\kinto-new.ahk')
 	if default == 4:
 		kbtype = "ibm"
 		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; IBM)/$2$3/g" .\\windows\\kinto-new.ahk')
-		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; WinModifiers/CB/IBM)/$2$3/g" .\\windows\\kinto-new.ahk')
 	if default > 0 and default < 5:
 		stvscode = yn_choice(bcolors.CYELLOW2 + "Would you like to use Sublime Text 3 keymaps in VS Code?\n" + bcolors.ENDC)
 		print("\nWill now install Ubuntu Termimnal Theme as default...")
