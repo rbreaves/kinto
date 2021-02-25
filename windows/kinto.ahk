@@ -9,7 +9,7 @@
 ; https://www.autohotkey.com/boards/viewtopic.php?t=9501
 OnMessage(0x404, "AHK_NOTIFYICON")
 
-AHK_NOTIFYICON(wParam, lParam) 
+AHK_NOTIFYICON(wParam, lParam)
 {
     if (lParam = 0x202) { ; user left-clicked tray icon
         ;ADD ANY SUBROUTINE OR FUNCTION HERE
@@ -244,7 +244,7 @@ GroupAdd, intellij, ahk_exe idea64.exe
     ; Tertiary::LWin
 
     ; $LAlt::LCtrl     ; CB/IBM
-    ; $RAlt::RCtrl     ; CB/IBM
+    ; $RAlt::RCtrl     ; IBM
     ; $RCtrl::RAlt     ; CB/IBM
     ; $CapsLock::LWin  ; IBM
     ; $LCtrl::LAlt     ; CB/IBM
@@ -261,7 +261,10 @@ GroupAdd, intellij, ahk_exe idea64.exe
 
     ; Hack to disable start menu on winkey
     ; Static - Does not apply to IBM or Chromebooks
-    ; $LCtrl up::Send {Ctrl down}{LWin up}{Ctrl up} ; Default
+    ; $LCtrl up::Send {Ctrl down}{LWin up}{Ctrl up}            ; Default
+    ; LWin::return                                             ; Chromebook
+    ; RWin::return                                             ; Chromebook
+    ; RAlt::return                                             ; Chromebook
 
     ; Disable Win-Up/Down - interferes with Sublime text 3 multi-cursors
     #Down::return
@@ -334,7 +337,8 @@ GroupAdd, intellij, ahk_exe idea64.exe
     ^F3::Send #d
 
     ; Emoji Panel
-    #^Space::Send {LWin down};{LWin up}
+    ; #^Space::Send {LWin down};{LWin up} ; Default
+    ; !^Space::Send {LWin down};{LWin up} ; CB/IBM
 
     ; Full Screenshot
     ^+3::Send {PrintScreen}
@@ -343,10 +347,6 @@ GroupAdd, intellij, ahk_exe idea64.exe
     ^+4::Send #+{S}
 
     ; wordwise support
-    $^Left::Send {Home}
-    $^+Left::Send +{Home}
-    $^Right::Send {End}
-    $^+Right::Send +{End}
     ^Up::Send ^{Home}
     ^+Up::Send ^+{Home}
     ^Down::Send ^{End}
@@ -357,6 +357,54 @@ GroupAdd, intellij, ahk_exe idea64.exe
     !+Left::Send ^+{Left}
     !Right::Send ^{Right}
     !+Right::Send ^+{Right}
+    $^Left::Send {Home}
+    $^+Left::Send +{Home}
+    $^Right::Send {End}
+    $^+Right::Send +{End}
+
+    ; #if GetKeyState("LWin", "P") || GetKeyState("RAlt", "P") ; Chromebook
+    ;     Space::Send ^{Esc}                                   ; Chromebook
+    ;     0::Send #0                                           ; Chromebook
+    ;     1::Send #1                                           ; Chromebook
+    ;     2::Send #2                                           ; Chromebook
+    ;     3::Send #3                                           ; Chromebook
+    ;     4::Send #4                                           ; Chromebook
+    ;     5::Send #5                                           ; Chromebook
+    ;     6::Send #6                                           ; Chromebook
+    ;     7::Send #7                                           ; Chromebook
+    ;     8::Send #8                                           ; Chromebook
+    ;     9::Send #9                                           ; Chromebook
+    ;     -::Send #-                                           ; Chromebook
+    ;     =::Send #=                                           ; Chromebook
+    ;     `::Send #`                                           ; Chromebook
+    ;     `;::Send #;                                          ; Chromebook
+    ;     a::Send #a                                           ; Chromebook
+    ;     b::Send #b                                           ; Chromebook
+    ;     c::Send #c                                           ; Chromebook
+    ;     d::Send #d                                           ; Chromebook
+    ;     e::Send #e                                           ; Chromebook
+    ;     f::Send #f                                           ; Chromebook
+    ;     g::Send #g                                           ; Chromebook
+    ;     h::Send #h                                           ; Chromebook
+    ;     i::Send #i                                           ; Chromebook
+    ;     j::Send #j                                           ; Chromebook
+    ;     k::Send #k                                           ; Chromebook
+    ;     l::Send #l                                           ; Chromebook
+    ;     m::Send #m                                           ; Chromebook
+    ;     n::Send #n                                           ; Chromebook
+    ;     o::Send #o                                           ; Chromebook
+    ;     p::Send #p                                           ; Chromebook
+    ;     q::Send #q                                           ; Chromebook
+    ;     r::Send #r                                           ; Chromebook
+    ;     s::Send #s                                           ; Chromebook
+    ;     t::Send #t                                           ; Chromebook
+    ;     u::Send #u                                           ; Chromebook
+    ;     v::Send #v                                           ; Chromebook
+    ;     w::Send #w                                           ; Chromebook
+    ;     x::Send #x                                           ; Chromebook
+    ;     y::Send #y                                           ; Chromebook
+    ;     z::Send #z                                           ; Chromebook
+    ; #If                                                      ; Chromebook
 
     #IfWinNotActive ahk_group terminals
         ; emacs style
@@ -374,6 +422,8 @@ GroupAdd, intellij, ahk_exe idea64.exe
     $^Space::Send ^{Esc}
 
     #IfWinActive ahk_group intellij
+        ; $#c::Send ^{c}                  ; Default - Sigints interrupt
+        ; $!c::Send ^{c}                  ; CB/IBM
         ; General
         ^0::Send !{0}                   ;Open corresponding tool window
         ^1::Send !{1}                   ;Open corresponding tool window
@@ -534,7 +584,9 @@ GroupAdd, intellij, ahk_exe idea64.exe
         ^!Left::send ^{PgUp}                                    ; prev_view
         Insert::Return                                          ; cancel toggle_overwrite
         ^!O::send {Insert}                                      ; toggle_overwrite
-        !c::Return                                              ; cancel toggle_case_sensitive
+        ; $#c::Send {Ctrl down}c{Ctrl up}                         ; Default - Sigints interrupt
+        ; !c::Return                                              ; Default - cancel toggle_case_sensitive
+        ; $!c::send ^{c}                                          ; CB/IBM - Sigint
         ^!c::send !{c}                                          ; toggle_case_sensitive
         ; ^h::Return                                              ; cancel replace
         ^!f::send ^{h}                                          ; replace
