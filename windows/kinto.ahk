@@ -588,7 +588,6 @@ GroupAdd, intellij, ahk_exe idea64.exe
         ^!Left::send ^{PgUp}                                    ; prev_view
         Insert::Return                                          ; cancel toggle_overwrite
         ^!O::send {Insert}                                      ; toggle_overwrite
-        ; $#c::Send {Ctrl down}c{Ctrl up}                         ; Default - Sigints interrupt
         ; !c::Return                                              ; Default - cancel toggle_case_sensitive
         ; $!c::send ^{c}                                          ; CB/IBM - Sigint
         ^!c::send !{c}                                          ; toggle_case_sensitive
