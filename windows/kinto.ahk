@@ -346,6 +346,10 @@ GroupAdd, intellij, ahk_exe idea64.exe
     ; Region Screenshot
     ^+4::Send #+{S}
 
+    ; Open File Browser
+    ; !^space::Send #e ; Default
+    ; #^space::Send #e ; CB/IBM
+
     ; wordwise support
     ^Up::Send ^{Home}
     ^+Up::Send ^+{Home}

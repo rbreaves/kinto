@@ -294,6 +294,8 @@ define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
     K("Super-k"): [K("Shift-End"), K("Backspace")],
     K("Super-d"): K("Delete"),
 
+    # K("M-RC-Space"): K(""),                   # Open Finder - Placeholder
+
     # Wordwise
     K("RC-Left"): K("Home"),                      # Beginning of Line
     K("RC-Shift-Left"): K("Shift-Home"),          # Select all to Beginning of Line
