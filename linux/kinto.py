@@ -44,6 +44,12 @@ define_multipurpose_modmap(
     {                                         # Placeholder
 })
 
+# Fix for avoiding modmapping when using Synergy keyboard/mouse sharing.
+# Synergy doesn't set a wm_class, so this may cause issues with other
+# applications that also don't set the wm_class.
+# Enable only if you use Synergy.
+# define_conditional_modmap(lambda wm_class: wm_class == '', {})
+
 # [Global modemap] Change modifier keys as in xmodmap
 define_conditional_modmap(lambda wm_class: wm_class.casefold() not in terminals,{
 
