@@ -153,6 +153,14 @@ class MyWindow(Gtk.Window):
         menuitem_file = Gtk.MenuItem(label="File")
         menubar.append(menuitem_file)
         submenu_file = Gtk.Menu()
+
+        menuitem_restart = Gtk.MenuItem(label="Restart")
+        menuitem_restart.connect('activate',self.runRestart)
+        submenu_file.append(menuitem_restart)
+        menuitem_stop = Gtk.MenuItem(label="Stop")
+        menuitem_stop.connect('activate',self.runStop)
+        submenu_file.append(menuitem_stop)
+
         menuitem_file.set_submenu(submenu_file)
         submenu_file.append(self.menuitem_auto)
         kintotray = int(self.queryConfig('ps -aux | grep [k]intotray >/dev/null 2>&1 && echo "1" || echo "0"'))
@@ -164,12 +172,6 @@ class MyWindow(Gtk.Window):
             self.menuitem_systray.signal_id = self.menuitem_systray.connect('activate',self.checkTray,True)
         menuitem_file.connect('activate',self.refreshFile)
         submenu_file.append(self.menuitem_systray)
-        menuitem_restart = Gtk.MenuItem(label="Restart")
-        menuitem_restart.connect('activate',self.runRestart)
-        submenu_file.append(menuitem_restart)
-        menuitem_stop = Gtk.MenuItem(label="Stop")
-        menuitem_stop.connect('activate',self.runStop)
-        submenu_file.append(menuitem_stop)
 
         menuitem_quit = Gtk.MenuItem(label="Quit")
         submenu_file.append(menuitem_quit)
