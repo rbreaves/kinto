@@ -17,7 +17,7 @@ codeStr = "|".join(str(x) for x in mscodes)
 # Add remote desktop clients & VM software here
 # Ideally we'd only exclude the client window,
 # but that may not be easily done.
-remotes = ["org.remmina.Remmina"]
+remotes = ["org.remmina.Remmina","xfreerdp"]
 remotes = [client.casefold() for client in remotes]
 
 # Add remote desktop clients & VMs for no remapping
