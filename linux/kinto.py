@@ -17,7 +17,7 @@ codeStr = "|".join(str(x) for x in mscodes)
 # Add remote desktop clients & VM software here
 # Ideally we'd only exclude the client window,
 # but that may not be easily done.
-remotes = ["org.remmina.Remmina"]
+remotes = ["org.remmina.Remmina","xfreerdp"]
 remotes = [client.casefold() for client in remotes]
 
 # Add remote desktop clients & VMs for no remapping
@@ -374,8 +374,8 @@ define_keymap(re.compile(codeStr, re.IGNORECASE),{
     K("C-g"): K("f3"),                          # find_next
     K("Shift-f3"): pass_through_key,            # cancel find_prev
     K("C-Shift-g"): K("Shift-f3"),              # find_prev
-    # K("Super-c"): K("LC-c"),                    #  Default - Terminal - Sigint
-    # K("Super-x"): K("LC-x"),                    #  Default - Terminal - Exit nano
+    # K("Super-c"): K("LC-c"),                    # Default - Terminal - Sigint
+    # K("Super-x"): K("LC-x"),                    # Default - Terminal - Exit nano
     # K("M-c"): K("LC-c"),                        #  Chromebook/IBM - Terminal - Sigint
     # K("M-x"): K("LC-x"),                        #  Chromebook/IBM - Terminal - Exit nano
     # K("Super-C-g"): K("C-f2"),                  # Default - Sublime - find_all_under
@@ -388,8 +388,8 @@ define_keymap(re.compile(codeStr, re.IGNORECASE),{
 
 # Keybindings for Sublime Text
 define_keymap(re.compile("Sublime_text", re.IGNORECASE),{
-    # K("Super-c"): K("LC-c"),                    #  Default - Terminal - Sigint
-    # K("Super-x"): K("LC-x"),                    #  Default - Terminal - Exit nano
+    # K("Super-c"): K("LC-c"),                    # Default - Terminal - Sigint
+    # K("Super-x"): K("LC-x"),                    # Default - Terminal - Exit nano
     # K("M-c"): K("LC-c"),                        #  Chromebook/IBM - Terminal - Sigint
     # K("M-x"): K("LC-x"),                        #  Chromebook/IBM - Terminal - Exit nano
     K("Super-Space"): K("C-Space"),             # Basic code completion
