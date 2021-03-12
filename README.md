@@ -539,7 +539,7 @@ Vala rewrite of SimplePanel - GitHub mirror (Global Menu for XFCE)
 
 I welcome any and all contributors who want to add something to this project.
 
-You can read the configuration files and the open issue tickets such as #44, #115, and #348 to best understand what's currently happening and how best to contribute.
+You can read the configuration files and the open issue tickets such as [#44 Shortcut Translation Tables](https://github.com/rbreaves/kinto/issues/44), [#115 Shortcut Creation (xkeysnail)](https://github.com/rbreaves/kinto/issues/115), and [#348 Missing Shortcuts: Post them here](https://github.com/rbreaves/kinto/issues/348) to best understand what's currently happening and how best to contribute.
 
 ## More information about Kinto
 
