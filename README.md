@@ -537,11 +537,9 @@ Vala rewrite of SimplePanel - GitHub mirror (Global Menu for XFCE)
 
 ## Contributing
 
-I welcome any and all contributors who want to contribute something to this project.
+I welcome any and all contributors who want to add something to this project.
 
-If you are specifically wanting to contribute additional custom keymaps to help with aligning Kinto's behavior to that of a mac keyboard then I would strongly recommend that you read Glen Whitney's comment on Superuser (the link is below). You may also look at the .xkb directory, mac_wordwise.sh and xactive.sh files to better understand how Kinto operates so that you can test your own keymaps without having to use the systemd service or running the xactive.sh script.
-
-https://superuser.com/questions/385748/binding-superc-superv-to-copy-and-paste
+You can read the configuration files and the open issue tickets such as #44, #115, and #348 to best understand what's currently happening and how best to contribute.
 
 ## More information about Kinto
 
