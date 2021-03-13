@@ -319,6 +319,7 @@ define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
     K("Super-Backspace"): K("C-Backspace"),       # Default not-chromebook - Delete Left Word of Cursor
     K("Super-Delete"): K("C-Delete"),             # Default not-chromebook - Delete Right Word of Cursor
     K("Alt-Backspace"): K("C-Backspace"),         # Default not-chromebook - Delete Left Word of Cursor
+    K("RC-Backspace"): K("C-Shift-Backspace"),    # Default not-chromebook - Delete Entire Line Left of Cursor
     K("Alt-Delete"): K("C-Delete"),               # Default not-chromebook - Delete Right Word of Cursor
     # K(""): pass_through_key,                      # cancel
     # K(""): K(""),                                 #
