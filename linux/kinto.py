@@ -212,13 +212,95 @@ define_keymap(re.compile("^jetbrains-(?!.*toolbox).*$", re.IGNORECASE),{
     K("Super-c"): K("LC-c"),                    # Sigints - interrupt
 })
 
-# Keybindings for Nautilus
-define_keymap(re.compile("org.gnome.nautilus", re.IGNORECASE),{
-    K("RC-Up"): K("M-Up"),          # Go Up dir
-    K("RC-Down"): K("M-Down"),      # Go Down dir
-    K("RC-Left"): K("M-Left"),      # Go Back
-    K("RC-Right"): K("M-Right"),    # Go Forward
+##########################################
+# START OF FILE MANAGER GROUP OF KEYMAPS #
+##########################################
+
+# Keybindings overrides for Caja 
+# (overrides some bindings from general file browser code block below)
+define_keymap(re.compile("caja", re.IGNORECASE),{
+    K("RC-Shift-T"): K("RC-Shift-Enter"),   # Open folder/file in new tab 
+    K("RC-Shift-o"): K("RC-Shift-W"),       # Open folder/file in new window
 })
+
+# Keybindings overrides for Dolphin 
+# (overrides some bindings from general file browser code block below)
+define_keymap(re.compile("dolphin", re.IGNORECASE),{
+    K("RC-Shift-o"): K("RC-Shift-Enter"), # Open folder/file in new window 
+    # "Open in new window" requires manually setting custom shortcut of Ctrl+Shift+Enter 
+    # in Dolphin's keyboard shortcuts. There is no default shortcut set for this function.)
+    ### 
+    # "Open in new tab" requires manually setting custom shortcut of Ctrl+Shift+T in 
+    # Dolphin's keyboard shortcuts. This conflicts with and replaces "Undo close tab".
+    ### 
+    K("RC-Shift-N"): K("F10"),                  # Create new folder
+    K("RC-comma"): K("RC-Shift-comma"),         # Open preferences dialog
+})
+
+# Keybindings overrides for Nautilus 
+# (overrides some bindings from general file browser code block below)
+define_keymap(re.compile("org.gnome.Nautilus", re.IGNORECASE),{
+    K("RC-Shift-o"): K("Shift-Enter"),           # Open folder/file in new window
+    K("RC-Shift-T"): K("RC-Enter"),                 # Open folder/file in new tab
+    K("RC-comma"): K("RC-comma"),                   # Overrides "Open preferences dialog" shortcut below
+})
+
+# Keybindings overrides for PCManFM 
+# (overrides some bindings from general file browser code block below)
+define_keymap(re.compile("pcmanfm", re.IGNORECASE),{
+    K("RC-Backspace"): [K("Delete"),K("Enter")],    # Move to Trash (delete, bypass dialog)
+})
+
+# Keybindings overrides for SpaceFM
+# (overrides some bindings from general file browser code block below)
+define_keymap(re.compile("spacefm", re.IGNORECASE),{
+    K("RC-Shift-N"): [K("RC-F")],	                # Create new folder is Ctrl+F by default
+    K("RC-Backspace"): [K("Delete"),K("Enter")],	# Move to Trash (delete, bypass dialog)
+    K("RC-comma"): [K("M-V"),K("p")],               # Overrides "Open preferences dialog" shortcut below
+    # This shortcut ^^^^^^^^^^^^^^^ is not fully working in SpaceFM. Opens "View" menu but not Preferences. 
+    # SpaceFM seems to be doing some nasty binding that blocks things like Alt+Tab while the menu is open. 
+})
+
+# Keybindings overrides for Thunar 
+# (overrides some bindings from general file browser code block below)
+define_keymap(re.compile("thunar", re.IGNORECASE),{
+    K("RC-Shift-T"): K("RC-Shift-P"),          # Open folder/file in new tab
+    K("RC-comma"): [K("M-E"),K("E")],          # Overrides "Open preferences dialog" shortcut below
+})
+
+# Keybindings for general file browsers group: 
+# 
+# Caja File Browser (MATE file manager, fork of Nautilus)
+# Dolphin (KDE file manager)
+# Nautilus (GNOME file manager, may be called "Files")
+# Nemo (Cinnamon file manager, fork of Nautilus, may be called "Files")
+# PCManFM (LXDE/LXQt file manager)
+# SpaceFM (Fork of PCManFM file manager)
+# Thunar File Manager (Xfce file manager)
+# 
+define_keymap(re.compile("caja|dolphin|nemo|org.gnome.Nautilus|pcmanfm|spacefm|thunar", re.IGNORECASE),{
+    K("RC-i"): K("M-Enter"),                # File properties dialog (Get Info)
+    K("RC-comma"): [K("M-E"),K("N")],       # Open preferences dialog
+    K("RC-Up"): K("M-Up"),                  # Go Up dir
+    # K("RC-Down"): K("M-Down"),            # Go Down dir (only works on folders)
+    # K("RC-Down"): K("RC-O"),              # Go Down dir (open folder/file)
+    K("RC-Down"): K("Enter"),               # Go Down dir (open folder/file)
+    # K("RC-Shift-Down"): K("RC-Shift-o"),  # Open folder/file in new window (doesn't match Finder)
+    K("RC-Shift-o"): K("RC-Shift-o"),       # Open folder/file in new window
+    K("RC-Left"): K("M-Left"),              # Go Back
+    K("RC-Right"): K("M-Right"),            # Go Forward
+    # To enable renaming files with the Enter key, uncomment the two lines just below. 
+    # Use Ctrl+Shift+Enter to escape or activate text fields. 
+    # K("Enter"): K("F2"),				    # Rename with Enter key
+    # K("RC-Shift-Enter"): K("Enter"),	    # Remap alternative "Enter" key to easily activate/exit text fields
+    K("RC-Shift-dot"): K("RC-H"),           # Show/hide hidden files ("dot" files)
+    K("RC-Backspace"): K("Delete"),	        # Move to Trash (delete)
+    K("RC-D"): [K("RC-C"),K("RC-V")],       # Mimic Finder's Duplicate command (Copy, then Paste)
+})
+
+########################################
+# END OF FILE MANAGER GROUP OF KEYMAPS #
+########################################
 
 # Keybindings for Browsers
 define_keymap(re.compile(browserStr, re.IGNORECASE),{
