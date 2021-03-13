@@ -5,7 +5,7 @@
 
 [![GitHub release](https://img.shields.io/github/release/rbreaves/kinto.svg)](https://github.com/rbreaves/kinto/releases/latest)
 
-\- Linux & Windows with Mac-style shortcut keys. \-
+\- Mac-style shortcut keys for Linux & Windows. \-
 
 Seamless copy and paste with all apps and terminals. The zero effort solution.
 
