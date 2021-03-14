@@ -73,7 +73,7 @@ def windows_setup():
 		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/{kbtype}/' + kbtype + '/g" "%userprofile%\\.kinto\\kinto-start.vbs"')
 		os.system('copy /Y "' + path + '\\windows\\usb.vbs" "%userprofile%\\.kinto\\usb.vbs"')
 		os.system('copy /Y "' + path + '\\windows\\detectUSB.ahk" "%userprofile%\\.kinto\\detectUSB.ahk"')
-		os.system('mklink "%userprofile%\\Start Menu\\Programs\\Startup\\kinto-start.vbs" "%userprofile%\\.kinto\\kinto-start.vbs"')
+		os.system('mklink "%userprofile%\\AppData\\Roaming\\Microsoft\\Windows\\STARTM~1\\Programs\\Startup\\kinto-start.vbs" "%userprofile%\\.kinto\\kinto-start.vbs"')
 		os.system('copy /Y "'+ path + '\\windows\\NoShell.vbs" "%userprofile%\\.kinto\\NoShell.vbs"')
 		os.system('copy /Y "'+ path + '\\windows\\toggle_kb.bat" "%userprofile%\\.kinto\\toggle_kb.bat"')
 		os.system('copy /Y "'+ path + '\\windows\\kinto-new.ahk" "%userprofile%\\.kinto\\kinto.ahk"')
