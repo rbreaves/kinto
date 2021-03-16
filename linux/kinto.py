@@ -219,14 +219,14 @@ define_keymap(re.compile("^jetbrains-(?!.*toolbox).*$", re.IGNORECASE),{
 # Keybindings overrides for Caja 
 # (overrides some bindings from general file browser code block below)
 define_keymap(re.compile("caja", re.IGNORECASE),{
-    K("RC-Shift-T"): K("RC-Shift-Enter"),   # Open folder/file in new tab 
-    K("RC-Shift-o"): K("RC-Shift-W"),       # Open folder/file in new window
+    K("RC-Shift-T"): K("RC-Shift-Enter"),   # Open folder in new tab 
+    K("RC-Shift-o"): K("RC-Shift-W"),       # Open folder in new window
 })
 
 # Keybindings overrides for Dolphin 
 # (overrides some bindings from general file browser code block below)
 define_keymap(re.compile("dolphin", re.IGNORECASE),{
-    K("RC-Shift-o"): K("RC-Shift-Enter"), # Open folder/file in new window 
+    K("RC-Shift-o"): K("RC-Shift-Enter"), # Open folder in new window 
     # "Open in new window" requires manually setting custom shortcut of Ctrl+Shift+Enter 
     # in Dolphin's keyboard shortcuts. There is no default shortcut set for this function.)
     ### 
@@ -237,11 +237,18 @@ define_keymap(re.compile("dolphin", re.IGNORECASE),{
     K("RC-comma"): K("RC-Shift-comma"),         # Open preferences dialog
 })
 
+# Keybindings overrides for elementary OS Files 
+# (overrides some bindings from general file browser code block below)
+define_keymap(re.compile("io.elementary.Files", re.IGNORECASE),{
+    K("RC-Shift-T"): K("Shift-Enter"),          # Open folder in new tab
+    K("RC-Comma"): None,                        # Disable preferences shortcut since none availabe
+})
+
 # Keybindings overrides for Nautilus 
 # (overrides some bindings from general file browser code block below)
 define_keymap(re.compile("org.gnome.Nautilus", re.IGNORECASE),{
-    K("RC-Shift-o"): K("Shift-Enter"),           # Open folder/file in new window
-    K("RC-Shift-T"): K("RC-Enter"),                 # Open folder/file in new tab
+    K("RC-Shift-o"): K("Shift-Enter"),           # Open in new window
+    K("RC-Shift-T"): K("RC-Enter"),                 # Open in new tab
     K("RC-comma"): K("RC-comma"),                   # Overrides "Open preferences dialog" shortcut below
 })
 
@@ -264,7 +271,7 @@ define_keymap(re.compile("spacefm", re.IGNORECASE),{
 # Keybindings overrides for Thunar 
 # (overrides some bindings from general file browser code block below)
 define_keymap(re.compile("thunar", re.IGNORECASE),{
-    K("RC-Shift-T"): K("RC-Shift-P"),          # Open folder/file in new tab
+    K("RC-Shift-T"): K("RC-Shift-P"),          # Open in new tab
     K("RC-comma"): [K("M-E"),K("E")],          # Overrides "Open preferences dialog" shortcut below
 })
 
@@ -272,27 +279,26 @@ define_keymap(re.compile("thunar", re.IGNORECASE),{
 # 
 # Caja File Browser (MATE file manager, fork of Nautilus)
 # Dolphin (KDE file manager)
+# elementary OS Files (eOS file manager, fork of Nautilus)
 # Nautilus (GNOME file manager, may be called "Files")
 # Nemo (Cinnamon file manager, fork of Nautilus, may be called "Files")
 # PCManFM (LXDE/LXQt file manager)
 # SpaceFM (Fork of PCManFM file manager)
 # Thunar File Manager (Xfce file manager)
 # 
-define_keymap(re.compile("caja|dolphin|nemo|org.gnome.Nautilus|pcmanfm|spacefm|thunar", re.IGNORECASE),{
+define_keymap(re.compile("caja|dolphin|io.elementary.Files|nemo|org.gnome.Nautilus|pcmanfm|spacefm|thunar", re.IGNORECASE),{
     K("RC-i"): K("M-Enter"),                # File properties dialog (Get Info)
     K("RC-comma"): [K("M-E"),K("N")],       # Open preferences dialog
     K("RC-Up"): K("M-Up"),                  # Go Up dir
     # K("RC-Down"): K("M-Down"),            # Go Down dir (only works on folders)
     # K("RC-Down"): K("RC-O"),              # Go Down dir (open folder/file)
     K("RC-Down"): K("Enter"),               # Go Down dir (open folder/file)
-    # K("RC-Shift-Down"): K("RC-Shift-o"),  # Open folder/file in new window (doesn't match Finder)
-    K("RC-Shift-o"): K("RC-Shift-o"),       # Open folder/file in new window
+    # K("RC-Shift-Down"): K("RC-Shift-o"),  # Open in new window (doesn't match Finder)
+    K("RC-Shift-o"): K("RC-Shift-o"),       # Open in new window
     K("RC-Left"): K("M-Left"),              # Go Back
     K("RC-Right"): K("M-Right"),            # Go Forward
-    # To enable renaming files with the Enter key, uncomment the two lines just below. 
-    # Use Ctrl+Shift+Enter to escape or activate text fields. 
-    # K("Enter"): K("F2"),				    # Rename with Enter key
-    # K("RC-Shift-Enter"): K("Enter"),	    # Remap alternative "Enter" key to easily activate/exit text fields
+    K("Enter"): K("F2"),				    # Rename with Enter key
+    K("RC-Shift-Enter"): K("Enter"),	    # Remap alternative "Enter" key to easily activate/exit text fields
     K("RC-Shift-dot"): K("RC-H"),           # Show/hide hidden files ("dot" files)
     K("RC-Backspace"): K("Delete"),	        # Move to Trash (delete)
     K("RC-D"): [K("RC-C"),K("RC-V")],       # Mimic Finder's Duplicate command (Copy, then Paste)
@@ -579,7 +585,6 @@ define_keymap(re.compile(termStr, re.IGNORECASE),{
     # K("RC-Shift-Tab"): K("RC-Shift-backslash"),   # xfce4
     # K("RC-Grave"): K("RC-Shift-backslash"),       # xfce4
     # Converts Cmd to use Ctrl-Shift
-    K("RC-V"): K("C-Shift-V"),
     K("RC-MINUS"): K("C-Shift-MINUS"),
     K("RC-EQUAL"): K("C-Shift-EQUAL"),
     K("RC-BACKSPACE"): K("C-Shift-BACKSPACE"),
