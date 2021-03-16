@@ -239,7 +239,7 @@ define_keymap(re.compile("dolphin", re.IGNORECASE),{
 
 # Keybindings overrides for elementary OS Files 
 # (overrides some bindings from general file browser code block below)
-define_keymap(re.compile("io.elementary.Files", re.IGNORECASE),{
+define_keymap(re.compile("io.elementary.files", re.IGNORECASE),{
     K("RC-Shift-T"): K("Shift-Enter"),          # Open folder in new tab
     K("RC-Comma"): None,                        # Disable preferences shortcut since none availabe
 })
@@ -286,7 +286,7 @@ define_keymap(re.compile("thunar", re.IGNORECASE),{
 # SpaceFM (Fork of PCManFM file manager)
 # Thunar File Manager (Xfce file manager)
 # 
-define_keymap(re.compile("caja|dolphin|io.elementary.Files|nemo|org.gnome.Nautilus|pcmanfm|spacefm|thunar", re.IGNORECASE),{
+define_keymap(re.compile("caja|dolphin|io.elementary.files|nemo|org.gnome.Nautilus|pcmanfm|spacefm|thunar", re.IGNORECASE),{
     K("RC-i"): K("M-Enter"),                # File properties dialog (Get Info)
     K("RC-comma"): [K("M-E"),K("N")],       # Open preferences dialog
     K("RC-Up"): K("M-Up"),                  # Go Up dir
@@ -297,8 +297,8 @@ define_keymap(re.compile("caja|dolphin|io.elementary.Files|nemo|org.gnome.Nautil
     K("RC-Shift-o"): K("RC-Shift-o"),       # Open in new window
     K("RC-Left"): K("M-Left"),              # Go Back
     K("RC-Right"): K("M-Right"),            # Go Forward
-    K("Enter"): K("F2"),				    # Rename with Enter key
-    K("RC-Shift-Enter"): K("Enter"),	    # Remap alternative "Enter" key to easily activate/exit text fields
+    # K("Enter"): K("F2"),				    # Rename with Enter key
+    # K("RC-Shift-Enter"): K("Enter"),	    # Remap alternative "Enter" key to easily activate/exit text fields
     K("RC-Shift-dot"): K("RC-H"),           # Show/hide hidden files ("dot" files)
     K("RC-Backspace"): K("Delete"),	        # Move to Trash (delete)
     K("RC-D"): [K("RC-C"),K("RC-V")],       # Mimic Finder's Duplicate command (Copy, then Paste)
