@@ -77,6 +77,7 @@ xfconf-query -c xsettings -p /Gtk/Modules -n -t string -s "appmenu-gtk-module"
 ```
 
 **Perfect HiDPI fractional scaling on Ubuntu Budgie 20.04 under x11**
+
 https://discourse.ubuntubudgie.org/t/ubuntu-budgie-20-04-fractional-hidpi-for-x11/4777
 
 ## How to Install (Windows)
