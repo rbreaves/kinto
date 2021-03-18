@@ -341,6 +341,7 @@ expsh=" "
 # fi
 if [ "$distro" == "ubuntu" ]; then
 	sudo ./linux/system-config/unipkg.sh gcc
+	sudo ./linux/system-config/unipkg.sh git
 fi
 if ! [ -x "$(command -v python3-config)" ]; then
 	if [ "$distro" == "ubuntu" ]; then
