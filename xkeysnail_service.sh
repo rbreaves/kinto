@@ -213,6 +213,7 @@ if ! [ -x "$(command -v pip3)" ]; then
 	if [ "$distro" == "ubuntu" ]; then
 		echo "Will need to install pip..."
 		sudo ./linux/system-config/unipkg.sh curl
+		sudo ./linux/system-config/unipkg.sh python3-setuptools
 		curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 		sudo python3 get-pip.py --upgrade && rm get-pip.py
 	fi
