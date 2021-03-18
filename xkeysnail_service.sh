@@ -209,6 +209,19 @@ sudo systemctl disable xkeysnail >/dev/null 2>&1
 sudo pkill -f bin/xkeysnail >/dev/null 2>&1
 sudo pkill -f "is-active xkeysnail" >/dev/null 2>&1
 
+if ! [ -x "$(command -v pip3)" ]; then
+	if [ "$distro" == "ubuntu" ]; then
+		echo "Will need to install pip..."
+		sudo ./linux/system-config/unipkg.sh curl
+		curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+		sudo python3 get-pip.py --upgrade
+		rm get-pip.py
+	fi
+else
+	echo "Will need to install python3-pip..."
+	sudo ./linux/system-config/unipkg.sh python3-pip
+fi
+
 pip3 install pillow
 
 # Add additional shortcuts if needed, does not modify existing ones
@@ -326,12 +339,14 @@ expsh=" "
 # 	echo "Will need to install inotify-tools to restart key remapper live for config file changes..."
 # 	sudo ./linux/system-config/unipkg.sh inotify-tools
 # fi
-if ! [ -x "$(command -v pip3)" ]; then
-	echo "Will need to install python3-pip..."
-	sudo ./linux/system-config/unipkg.sh python3-pip
+if [ "$distro" == "ubuntu" ]; then
+	sudo ./linux/system-config/unipkg.sh gcc
 fi
 if ! [ -x "$(command -v python3-config)" ]; then
-	if [ "$distro" == "ubuntu" ] || [ "$distro" == "debian" ] || [ "$distro" == 'linuxmint' ]; then
+	if [ "$distro" == "ubuntu" ]; then
+		sudo ./linux/system-config/unipkg.sh python3-dev
+		sudo ./linux/system-config/unipkg.sh python3-setuptools
+	elif [ "$distro" == "debian" ] || [ "$distro" == 'linuxmint' ]; then
 		pydev="python3-dev"
 	elif [ "$distro" == "fedora" ]; then
 		pydev="python3-devel"
