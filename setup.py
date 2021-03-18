@@ -121,6 +121,9 @@ if os.path.isdir(homedir + "/.config/kinto") == False:
 	os.mkdir(homedir + "/.config/kinto")
 	time.sleep(0.5)
 
+if ! [ -x "$(command -v git)" ]; then
+	sudo ./linux/system-config/unipkg.sh git	# Don't assume git is installed. User might be installing from ZIP file. 
+fi
 
 cmdline("git fetch")
 
