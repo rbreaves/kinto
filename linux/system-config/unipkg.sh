@@ -3,7 +3,7 @@
 if pkgmgr="$( which apt-get )" 2> /dev/null; then
    echo "Debian"
    $pkgmgr update
-   $pkgmgr --yes --force-yes install $1
+   $pkgmgr --yes --allow-downgrades --allow-remove-essential --allow-change-held-packages install $1
 elif pkgmgr="$( which dnf )" 2> /dev/null; then
    echo "dnf"
    $pkgmgr check-update; $pkgmgr install -y $1
