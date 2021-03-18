@@ -346,7 +346,6 @@ fi
 if ! [ -x "$(command -v python3-config)" ]; then
 	if [ "$distro" == "ubuntu" ]; then
 		sudo ./linux/system-config/unipkg.sh python3-dev
-		sudo ./linux/system-config/unipkg.sh python3-setuptools
 	elif [ "$distro" == "debian" ] || [ "$distro" == 'linuxmint' ]; then
 		pydev="python3-dev"
 	elif [ "$distro" == "fedora" ]; then
