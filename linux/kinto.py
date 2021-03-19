@@ -256,7 +256,7 @@ define_keymap(re.compile("dolphin", re.IGNORECASE),{
     K("RC-comma"): K("RC-Shift-comma"),         # Open preferences dialog
 })
 
-# Keybindings overrides for elementary OS Files 
+# Keybindings overrides for Pantheon Files (elementary OS)
 # (overrides some bindings from general file browser code block below)
 define_keymap(re.compile("io.elementary.files", re.IGNORECASE),{
     K("RC-Shift-T"): K("Shift-Enter"),          # Open folder in new tab
