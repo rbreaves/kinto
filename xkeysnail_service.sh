@@ -578,11 +578,11 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	if [ "$distro" == "linuxmint" ] && [ "$dename" == "cinnamon" ]; then
 		echo
 		echo "======================================================================================"
-		echo "ATTENTION! SPECIAL INSTRUCTIONS FOR CINNAMON DESKTOP ON LINUX MINT: "
+		echo "======== ATTENTION! SPECIAL INSTRUCTIONS FOR CINNAMON DESKTOP ON LINUX MINT: ========="
 		echo "======================================================================================"
 		echo 
 		echo "To get Alt+Tab (cycle windows) and Ctrl+H (minimize window) working correctly in "
-		echo "Mint Cinnamon after activating Kinto via the GUI: "
+		echo "Mint Cinnamon after activating Kinto via the GUI installer window: "
 		echo 
 		echo "Open the Keyboard settings app from the Cinnamon main menu. Go to the Shortcuts tab. "
 		echo 
@@ -597,8 +597,11 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 		echo 
 		echo "Use physical Ctrl+H keys to assign the shortcut \"Super+H\". Now Alt+H (or Cmd+H) will minimize (hide). "
 		echo 
+		echo "Kinto may have crashed if you Alt+Tabbed in the GUI window before fixing the shortcuts. "
+		echo "Just use the tray icon menu or quit and re-open the Kinto GUI and restart Kinto from menu. "
+		echo 
 		echo "======================================================================================"
-		echo "END OF SPECIAL INSTRUCTIONS FOR CINNAMON DESKTOP ON LINUX MINT (See above) "
+		echo "===== END OF SPECIAL INSTRUCTIONS FOR CINNAMON DESKTOP ON LINUX MINT (See above) ====="
 		echo "======================================================================================"
 		echo 
 	fi
