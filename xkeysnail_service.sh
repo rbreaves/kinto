@@ -588,15 +588,14 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 		echo 
 		echo "Under General -> \"Cycle through open windows\": "
 		echo "Click \"unassigned\" under the existing \"Alt+Tab\" shortcut until it says \"Pick an accelerator\"."
-		echo 
 		echo "Press physical Alt+Tab (or Cmd+Tab) keys to add a second shortcut (will show as \"Ctrl+Backslash\". "
 		echo 
-		echo "Optional: "
-		echo "Set \"Cycle backwards through open windows\" to use physical Shift+Alt+Tab (will show as \"Shift+Ctrl+\|\"). "
+		echo "Optional: Set \"Cycle backwards through open windows\":"
+		echo "Press physical Shift+Alt+Tab (will show as \"Shift+Ctrl+|\"). [Vertical bar/pipe character] "
 		echo 
 		echo "Under Windows -> \"Minimize window\": "
-		echo 
-		echo "Use physical Ctrl+H keys to assign the shortcut \"Super+H\". Now Alt+H (or Cmd+H) will minimize (hide). "
+		echo "Press physical Ctrl+H keys to assign the shortcut to show as \"Super+H\". "
+		echo "Now physical Alt+H (or Cmd+H on Apple keyboard) will minimize (hide) windows. "
 		echo 
 		echo "Kinto may have crashed if you Alt+Tabbed in the GUI window before fixing the shortcuts. "
 		echo "Just use the tray icon menu or quit and re-open the Kinto GUI and restart Kinto from menu. "
