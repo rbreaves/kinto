@@ -216,10 +216,10 @@ if ! [ -x "$(command -v pip3)" ]; then
 		sudo ./linux/system-config/unipkg.sh python3-setuptools
 		curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 		sudo python3 get-pip.py --upgrade && rm get-pip.py
+	else
+		echo "Will need to install python3-pip..."
+		sudo ./linux/system-config/unipkg.sh python3-pip
 	fi
-else
-	echo "Will need to install python3-pip..."
-	sudo ./linux/system-config/unipkg.sh python3-pip
 fi
 
 pip3 install pillow
@@ -347,10 +347,11 @@ if [ "$desktopsession" == "Lubuntu" ] || [ "$currentdesktop" == "LXQt" ]; then
 	sudo ./linux/system-config/unipkg.sh gir1.2-vte-2.91
 fi
 
-if [ "$distro" == "ubuntu" ]; then
+if [ "$distro" == "ubuntu" ] || [ "$distro" == "kdeneon" ]; then
 	sudo ./linux/system-config/unipkg.sh gcc
 	sudo ./linux/system-config/unipkg.sh git
 fi
+
 if ! [ -x "$(command -v python3-config)" ]; then
 	if [ "$distro" == "ubuntu" ] || [ "$distro" == "debian" ] || [ "$distro" == 'linuxmint' ]; then
 		pydev="python3-dev"
@@ -362,6 +363,7 @@ if ! [ -x "$(command -v python3-config)" ]; then
 		sudo ./linux/system-config/unipkg.sh "$pydev"
 	fi
 fi
+
 # if [ "$distro" == "ubuntu" ] && [ "$dename" == "gnome" ];then
 # 	sudo ./linux/system-config/unipkg.sh gnome-tweaks gnome-shell-extension-appindicator gir1.2-appindicator3-0.1
 # fi
@@ -370,6 +372,7 @@ if ! [ -x "$(command -v xhost)" ] || ! [ -x "$(command -v gcc)" ]; then
 		sudo ./linux/system-config/unipkg.sh "xorg-xhost gcc"
 	fi
 fi
+
 if [ "$distro" == 'linuxmint' ]; then
 	pip3 install setuptools
 fi
