@@ -341,9 +341,9 @@ expsh=" "
 # fi
 
 desktopsession=$(echo $DESKTOP_SESSION)
-currentdesktop=$(env | grep XDG_CURRENT_DESKTOP)
+currentdesktop=$(env | grep -i XDG_CURRENT_DESKTOP | awk -F"=" '/=/{print $2}')
 
-if [ "$desktopsession" == "Lubuntu" ]; then
+if [ "$desktopsession" == "Lubuntu" ] || [ "$currentdesktop" == "LXQt" ]; then
 	sudo ./linux/system-config/unipkg.sh gir1.2-vte-2.91
 fi
 
