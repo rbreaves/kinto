@@ -7,7 +7,26 @@ from xkeysnail.transform import *
 # Use the following for testing terminal keymaps
 # terminals = [ "", ... ]
 # xbindkeys -mk
-terminals = ["kinto-gui.py","gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm","kitty","alacritty","mate-terminal","tilix","xfce4-terminal","hyper"]
+terminals = [
+    "alacritty",
+    "eterm",
+    "gnome-terminal",
+    "guake",
+    "hyper",
+    "io.elementary.terminal",
+    "kinto-gui.py",
+    "kitty",
+    "konsole",
+    "mate-terminal",
+    "qterminal",
+    "sakura",
+    "terminator",
+    "tilda",
+    "tilix",
+    "xfce4-terminal",
+    "xterm",
+]
+
 terminals = [term.casefold() for term in terminals]
 termStr = "|".join(str(x) for x in terminals)
 
