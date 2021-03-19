@@ -576,15 +576,30 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	echo -e "You can then either \e]8;;https://google.com\a\e[1m\e[36mG\033[0;91mo\033[0;93mo\e[1m\e[36mg\e[1m\e[32ml\033[0;91me\e[0m\e]8;;\a what dependencies you may be missing\nor \e]8;;https://github.com/rbreaves/kinto/issues/new\?assignees=rbreaves&labels=bug&template=bug_report.md&title=\aopen an issue ticket.\e]8;;\a\n"
 
 	if [ "$distro" == "linuxmint" ] && [ "$dename" == "cinnamon" ]; then
-		echo "To get Alt+Tab (cycle windows) and Ctrl+H (minimize window) working in Mint Cinnamon: "
-		echo "Open the Keyboard settings app from Cinnamon main menu. Go to the Shortcuts tab. "
+		echo
+		echo "======================================================================================"
+		echo "ATTENTION! SPECIAL INSTRUCTIONS FOR CINNAMON DESKTOP ON LINUX MINT: "
+		echo "======================================================================================"
+		echo 
+		echo "To get Alt+Tab (cycle windows) and Ctrl+H (minimize window) working correctly in "
+		echo "Mint Cinnamon after activating Kinto via the GUI: "
+		echo 
+		echo "Open the Keyboard settings app from the Cinnamon main menu. Go to the Shortcuts tab. "
+		echo 
 		echo "Under General -> Cycle through open windows: "
-		echo "Click \"unassigned\" under \"Alt+Tab\" shortcut. "
-		echo "Press physical Alt+Tab keys to add a second shortcut showing as \"Ctrl+Backslash\". "
+		echo "Click \"unassigned\" under the existing \"Alt+Tab\" shortcut until it says \"Pick an accelerator\"."
+		echo 
+		echo "Press physical Alt+Tab (or Cmd+Tab) keys to add a second shortcut showing as \"Ctrl+Backslash\". "
+		echo 
 		echo "Optional: "
 		echo "Set \"Cycle backwards through open windows\" to use Alt+Shift+Tab (will display as Shift+Ctrl+\|). "
 		echo "Under Windows -> Minimize window: "
-		echo "Use physical Ctrl+H keys to assign the shortcut as Super+H. Now Alt+H (Cmd+H on Macs) will work. "
+		echo 
+		echo "Use physical Ctrl+H keys to assign the shortcut \"Super+H\". Now Alt+H (or Cmd+H) will minimize (hide). "
+		echo 
+		echo "======================================================================================"
+		echo "END OF SPECIAL INSTRUCTIONS FOR CINNAMON DESKTOP ON LINUX MINT (See above) "
+		echo "======================================================================================"
 		echo 
 	fi
 	
