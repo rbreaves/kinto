@@ -347,8 +347,11 @@ if [ "$desktopsession" == "Lubuntu" ] || [ "$currentdesktop" == "LXQt" ]; then
 	sudo ./linux/system-config/unipkg.sh gir1.2-vte-2.91
 fi
 
-if [ "$distro" == "ubuntu" ] || [ "$distro" == "kdeneon" ]; then
+if ! [ -x "$(command -v gcc)" ]; then
 	sudo ./linux/system-config/unipkg.sh gcc
+fi
+
+if ! [ -x "$(command -v git)" ]; then
 	sudo ./linux/system-config/unipkg.sh git
 fi
 
