@@ -479,6 +479,13 @@ if [[ $dename == "xfce" ]]; then
 	perl -pi -e "s/(\w.*)(# Default not-xfce4)/# \$1\$2/g" ./linux/kinto.py.new
 fi
 
+# Use xfce4 tweaks also on Linux Mint Cinnamon
+if [[ $dename == "cinnamon" ]] && [[ $distro == "linuxmint" ]]; then
+	perl -pi -e "\s{4}(# )(K.*)(# SL - .*xfce.*)/    \$2\$3/g" ./linux/kinto.py.new >/dev/null 2>&1
+	perl -pi -e "s/(# )(.*)(# xfce4)/\$2\$3/g" ./linux/kinto.py.new
+	perl -pi -e "s/(\w.*)(# Default not-xfce4)/# \$1\$2/g" ./linux/kinto.py.new
+fi
+
 if [[ $dename == "xfce" ]] && ls /etc/apt/sources.list.d/enso* 1> /dev/null 2>&1; then
     echo "enso OS detected, applying Cmd-Space for Launchy..."
     perl -pi -e "s/(K\(\"RC-Space)(.*)(# )(xfce4)/\$3\$1\$2\$3\$4/g" ./linux/kinto.py.new >/dev/null 2>&1
