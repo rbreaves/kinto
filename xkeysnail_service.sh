@@ -586,14 +586,15 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 		echo 
 		echo "Open the Keyboard settings app from the Cinnamon main menu. Go to the Shortcuts tab. "
 		echo 
-		echo "Under General -> Cycle through open windows: "
+		echo "Under General -> \"Cycle through open windows\": "
 		echo "Click \"unassigned\" under the existing \"Alt+Tab\" shortcut until it says \"Pick an accelerator\"."
 		echo 
-		echo "Press physical Alt+Tab (or Cmd+Tab) keys to add a second shortcut showing as \"Ctrl+Backslash\". "
+		echo "Press physical Alt+Tab (or Cmd+Tab) keys to add a second shortcut (will show as \"Ctrl+Backslash\". "
 		echo 
 		echo "Optional: "
-		echo "Set \"Cycle backwards through open windows\" to use Alt+Shift+Tab (will display as Shift+Ctrl+\|). "
-		echo "Under Windows -> Minimize window: "
+		echo "Set \"Cycle backwards through open windows\" to use physical Shift+Alt+Tab (will show as \"Shift+Ctrl+\|\"). "
+		echo 
+		echo "Under Windows -> \"Minimize window\": "
 		echo 
 		echo "Use physical Ctrl+H keys to assign the shortcut \"Super+H\". Now Alt+H (or Cmd+H) will minimize (hide). "
 		echo 
