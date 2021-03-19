@@ -304,7 +304,7 @@ filemanagers = [
     "pcmanfm-qt",
     "spacefm",
     "thunar",
-    ]
+]
 filemanagers = [filemanager.casefold() for filemanager in filemanagers]
 filemanagerStr = "|".join(str(x) for x in filemanagers)
 
