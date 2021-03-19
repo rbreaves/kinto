@@ -339,6 +339,14 @@ expsh=" "
 # 	echo "Will need to install inotify-tools to restart key remapper live for config file changes..."
 # 	sudo ./linux/system-config/unipkg.sh inotify-tools
 # fi
+
+desktopsession=$(echo $DESKTOP_SESSION)
+currentdesktop=$(env | grep XDG_CURRENT_DESKTOP)
+
+if [ "$desktopsession" == "Lubuntu" ]; then
+	sudo ./linux/system-config/unipkg.sh gir1.2-vte-2.91
+fi
+
 if [ "$distro" == "ubuntu" ]; then
 	sudo ./linux/system-config/unipkg.sh gcc
 	sudo ./linux/system-config/unipkg.sh git
