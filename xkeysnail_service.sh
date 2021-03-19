@@ -575,6 +575,19 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	echo -e "~/.config/kinto/gui/kinto-gui.py\n"
 	echo -e "You can then either \e]8;;https://google.com\a\e[1m\e[36mG\033[0;91mo\033[0;93mo\e[1m\e[36mg\e[1m\e[32ml\033[0;91me\e[0m\e]8;;\a what dependencies you may be missing\nor \e]8;;https://github.com/rbreaves/kinto/issues/new\?assignees=rbreaves&labels=bug&template=bug_report.md&title=\aopen an issue ticket.\e]8;;\a\n"
 
+	if [ "$distro" == "linuxmint" && [ "$dename" == "cinnamon" ]; then
+		echo "To get Alt+Tab (cycle windows) and Ctrl+H (minimize window) working in Mint Cinnamon: "
+		echo "Open the Keyboard settings app from Cinnamon main menu. Go to the Shortcuts tab. "
+		echo "Under General -> Cycle through open windows: "
+		echo "Click \"unassigned\" under \"Alt+Tab\" shortcut. "
+		echo "Press physical Alt+Tab keys to add a second shortcut showing as \"Ctrl+Backslash\". "
+		echo "Optional: "
+		echo "Set \"Cycle backwards through open windows\" to use Alt+Shift+Tab (will display as Shift+Ctrl+\|). "
+		echo "Under Windows -> Minimize window: "
+		echo "Use physical Ctrl+H keys to assign the shortcut as Super+H. Now Alt+H (Cmd+H on Macs) will work. "
+		echo 
+	fi
+	
 	if [ "$distro" == "manjarolinux" ]; then
 		echo "If you are using Manjaro and see an error about 'GLIBC_2.xx not found' appears then please update your system."
 		echo "sudo pacman -Syu"
