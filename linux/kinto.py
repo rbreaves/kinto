@@ -294,19 +294,33 @@ define_keymap(re.compile("thunar", re.IGNORECASE),{
     K("RC-comma"): [K("M-E"),K("E")],          # Overrides "Open preferences dialog" shortcut below
 })
 
+filemanagers = [
+    "caja",
+    "dolphin",
+    "io.elementary.files",
+    "nemo",
+    "org.gnome.Nautilus",
+    "pcmanfm",
+    "pcmanfm-qt",
+    "spacefm",
+    "thunar",
+    ]
+filemanagers = [filemanager.casefold() for filemanager in filemanagers]
+filemanagerStr = "|".join(str(x) for x in filemanagers)
+
 # Keybindings for general file browsers group: 
 # 
 # Caja File Browser (MATE file manager, fork of Nautilus)
 # Dolphin (KDE file manager)
-# elementary OS Files (eOS file manager, fork of Nautilus)
 # Nautilus (GNOME file manager, may be called "Files")
 # Nemo (Cinnamon file manager, fork of Nautilus, may be called "Files")
+# Pantheon Files (eOS file manager, fork of Nautilus)
 # PCManFM (LXDE file manager)
 # PCManFM-Qt (LXQt file manager)
 # SpaceFM (Fork of PCManFM file manager)
 # Thunar File Manager (Xfce file manager)
 # 
-define_keymap(re.compile("caja|dolphin|io.elementary.files|nemo|org.gnome.Nautilus|pcmanfm|pcmanfm-qt|spacefm|thunar", re.IGNORECASE),{
+define_keymap(re.compile(filemanagerStr, re.IGNORECASE),{
     K("RC-i"): K("M-Enter"),                # File properties dialog (Get Info)
     K("RC-comma"): [K("M-E"),K("N")],       # Open preferences dialog
     K("RC-Up"): K("M-Up"),                  # Go Up dir
