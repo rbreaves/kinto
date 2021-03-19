@@ -282,11 +282,12 @@ define_keymap(re.compile("thunar", re.IGNORECASE),{
 # elementary OS Files (eOS file manager, fork of Nautilus)
 # Nautilus (GNOME file manager, may be called "Files")
 # Nemo (Cinnamon file manager, fork of Nautilus, may be called "Files")
-# PCManFM (LXDE/LXQt file manager)
+# PCManFM (LXDE file manager)
+# PCManFM-Qt (LXQt file manager)
 # SpaceFM (Fork of PCManFM file manager)
 # Thunar File Manager (Xfce file manager)
 # 
-define_keymap(re.compile("caja|dolphin|io.elementary.files|nemo|org.gnome.Nautilus|pcmanfm|spacefm|thunar", re.IGNORECASE),{
+define_keymap(re.compile("caja|dolphin|io.elementary.files|nemo|org.gnome.Nautilus|pcmanfm|pcmanfm-qt|spacefm|thunar", re.IGNORECASE),{
     K("RC-i"): K("M-Enter"),                # File properties dialog (Get Info)
     K("RC-comma"): [K("M-E"),K("N")],       # Open preferences dialog
     K("RC-Up"): K("M-Up"),                  # Go Up dir
