@@ -347,6 +347,10 @@ if [ "$desktopsession" == "Lubuntu" ] || [ "$currentdesktop" == "LXQt" ]; then
 	sudo ./linux/system-config/unipkg.sh gir1.2-vte-2.91
 fi
 
+if [ "$distro" == "opensusetumbleweed" ]; then
+	sudo ./linux/system-config/unipkg.sh typelib-1_0-Vte-2.91necessary
+fi
+
 if ! [ -x "$(command -v gcc)" ]; then
 	sudo ./linux/system-config/unipkg.sh gcc
 fi
