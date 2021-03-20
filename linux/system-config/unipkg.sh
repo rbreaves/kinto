@@ -10,6 +10,10 @@ elif pkgmgr="$( which dnf )" 2> /dev/null; then
 elif pkgmgr="$( which pacman )" 2> /dev/null; then
    echo "Arch-based"
    $pkgmgr -Syy;yes | $pkgmgr -S $1
+elif pkgmgr="$( which zypper )" 2> /dev/null; then
+   echo "openSUSE"
+   $pkgmgr refresh
+   $pkgmgr -n install $1
 else
    echo "Package manager not found, please install $1" >&2
    exit 1
