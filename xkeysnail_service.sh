@@ -362,7 +362,7 @@ fi
 if ! [ -x "$(command -v python3-config)" ]; then
 	if [ "$distro" == "ubuntu" ] || [ "$distro" == "debian" ] || [ "$distro" == 'linuxmint' ]; then
 		pydev="python3-dev"
-	elif [ "$distro" == "fedora" ]; then
+	elif [ "$distro" == "fedora" ] || [ "$distro" == "opensusetumbleweed" ]; then
 		pydev="python3-devel"
 	fi
 	if [ "$distro" == "ubuntu" ] || [ "$distro" == "gnome" ] || [ "$distro" == "fedora" ] || [ "$distro" == "debian" ] || [ "$distro" == 'linuxmint' ]; then
