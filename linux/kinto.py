@@ -36,7 +36,10 @@ codeStr = "|".join(str(x) for x in mscodes)
 # Add remote desktop clients & VM software here
 # Ideally we'd only exclude the client window,
 # but that may not be easily done.
-remotes = ["org.remmina.Remmina","xfreerdp"]
+remotes = [
+    "org.remmina.Remmina",
+    "xfreerdp",
+]
 remotes = [client.casefold() for client in remotes]
 
 # Add remote desktop clients & VMs for no remapping
@@ -44,11 +47,26 @@ terminals.extend(remotes)
 mscodes.extend(remotes)
 
 # Use for browser specific hotkeys
-browsers = ["Chromium","Chromium-browser","Google-chrome","microsoft-edge-dev","microsoft-edge","Epiphany","Firefox","Discord"]
+browsers = [
+    "Chromium",
+    "Chromium-browser",
+    "Discord",
+    "Epiphany",
+    "Firefox",
+    "Google-chrome",
+    "microsoft-edge",
+    "microsoft-edge-dev",
+]
 browsers = [browser.casefold() for browser in browsers]
 browserStr = "|".join(str(x) for x in browsers)
 
-chromes = ["Chromium","Chromium-browser","Google-chrome","microsoft-edge-dev","microsoft-edge"]
+chromes = [
+    "Chromium",
+    "Chromium-browser",
+    "Google-chrome",
+    "microsoft-edge",
+    "microsoft-edge-dev",
+]
 chromes = [chrome.casefold() for chrome in chromes]
 chromeStr = "|".join(str(x) for x in chromes)
 
@@ -90,12 +108,12 @@ define_conditional_modmap(lambda wm_class: wm_class.casefold() not in terminals,
 
     # - Default Mac/Win
     # - Default Win
-    # Key.LEFT_ALT: Key.RIGHT_CTRL,   # WinMac
-    # Key.LEFT_META: Key.LEFT_ALT,    # WinMac
-    # Key.LEFT_CTRL: Key.LEFT_META,   # WinMac
-    # Key.RIGHT_ALT: Key.RIGHT_CTRL,  # WinMac - Multi-language (Remove)
-    # Key.RIGHT_META: Key.RIGHT_ALT,  # WinMac - Multi-language (Remove)
-    # Key.RIGHT_CTRL: Key.RIGHT_META, # WinMac - Multi-language (Remove)
+    Key.LEFT_ALT: Key.RIGHT_CTRL,   # WinMac
+    Key.LEFT_META: Key.LEFT_ALT,    # WinMac
+    Key.LEFT_CTRL: Key.LEFT_META,   # WinMac
+    Key.RIGHT_ALT: Key.RIGHT_CTRL,  # WinMac - Multi-language (Remove)
+    Key.RIGHT_META: Key.RIGHT_ALT,  # WinMac - Multi-language (Remove)
+    Key.RIGHT_CTRL: Key.RIGHT_META, # WinMac - Multi-language (Remove)
 
     # - Mac Only
     # Key.LEFT_META: Key.RIGHT_CTRL,  # Mac
@@ -127,12 +145,12 @@ define_conditional_modmap(re.compile(termStr, re.IGNORECASE), {
 
     # - Default Mac/Win
     # - Default Win
-    # Key.LEFT_ALT: Key.RIGHT_CTRL,   # WinMac
-    # Key.LEFT_META: Key.LEFT_ALT,    # WinMac
-    # Key.LEFT_CTRL: Key.LEFT_CTRL,   # WinMac
-    # Key.RIGHT_ALT: Key.RIGHT_CTRL,  # WinMac - Multi-language (Remove)
-    # Key.RIGHT_META: Key.RIGHT_ALT,  # WinMac - Multi-language (Remove)
-    # Key.RIGHT_CTRL: Key.LEFT_CTRL,  # WinMac - Multi-language (Remove)
+    Key.LEFT_ALT: Key.RIGHT_CTRL,   # WinMac
+    Key.LEFT_META: Key.LEFT_ALT,    # WinMac
+    Key.LEFT_CTRL: Key.LEFT_CTRL,   # WinMac
+    Key.RIGHT_ALT: Key.RIGHT_CTRL,  # WinMac - Multi-language (Remove)
+    Key.RIGHT_META: Key.RIGHT_ALT,  # WinMac - Multi-language (Remove)
+    Key.RIGHT_CTRL: Key.LEFT_CTRL,  # WinMac - Multi-language (Remove)
 
     # - Mac Only
     # Key.LEFT_META: Key.RIGHT_CTRL,  # Mac
@@ -238,14 +256,14 @@ define_keymap(re.compile("^jetbrains-(?!.*toolbox).*$", re.IGNORECASE),{
 # Keybindings overrides for Caja 
 # (overrides some bindings from general file browser code block below)
 define_keymap(re.compile("caja", re.IGNORECASE),{
-    K("RC-Shift-T"): K("RC-Shift-Enter"),   # Open folder in new tab 
-    K("RC-Shift-o"): K("RC-Shift-W"),       # Open folder in new window
+    # K("RC-Super-o"): K("RC-Shift-Enter"),   # Open in new tab 
+    K("RC-Super-o"): K("RC-Shift-W"),       # Open in new window
 })
 
 # Keybindings overrides for Dolphin 
 # (overrides some bindings from general file browser code block below)
 define_keymap(re.compile("dolphin", re.IGNORECASE),{
-    K("RC-Shift-o"): K("RC-Shift-Enter"), # Open folder in new window 
+    K("RC-Super-o"): K("RC-Shift-Enter"), # Open in new window 
     # "Open in new window" requires manually setting custom shortcut of Ctrl+Shift+Enter 
     # in Dolphin's keyboard shortcuts. There is no default shortcut set for this function.)
     ### 
@@ -256,18 +274,18 @@ define_keymap(re.compile("dolphin", re.IGNORECASE),{
     K("RC-comma"): K("RC-Shift-comma"),         # Open preferences dialog
 })
 
-# Keybindings overrides for Pantheon Files (elementary OS)
+# Keybindings overrides for elementary OS Files 
 # (overrides some bindings from general file browser code block below)
 define_keymap(re.compile("io.elementary.files", re.IGNORECASE),{
-    K("RC-Shift-T"): K("Shift-Enter"),          # Open folder in new tab
+    # K("RC-Super-o"): K("Shift-Enter"),          # Open folder in new tab
     K("RC-Comma"): None,                        # Disable preferences shortcut since none availabe
 })
 
 # Keybindings overrides for Nautilus 
 # (overrides some bindings from general file browser code block below)
 define_keymap(re.compile("org.gnome.Nautilus", re.IGNORECASE),{
-    K("RC-Shift-o"): K("Shift-Enter"),           # Open in new window
-    K("RC-Shift-T"): K("RC-Enter"),                 # Open in new tab
+    K("RC-Super-o"): K("Shift-Enter"),           # Open in new window
+    # K("RC-Super-o"): K("RC-Enter"),                 # Open in new tab
     K("RC-comma"): K("RC-comma"),                   # Overrides "Open preferences dialog" shortcut below
 })
 
@@ -290,7 +308,7 @@ define_keymap(re.compile("spacefm", re.IGNORECASE),{
 # Keybindings overrides for Thunar 
 # (overrides some bindings from general file browser code block below)
 define_keymap(re.compile("thunar", re.IGNORECASE),{
-    K("RC-Shift-T"): K("RC-Shift-P"),          # Open in new tab
+    K("RC-Super-o"): K("RC-Shift-P"),          # Open in new tab
     K("RC-comma"): [K("M-E"),K("E")],          # Overrides "Open preferences dialog" shortcut below
 })
 
@@ -314,7 +332,7 @@ filemanagerStr = "|".join(str(x) for x in filemanagers)
 # Dolphin (KDE file manager)
 # Nautilus (GNOME file manager, may be called "Files")
 # Nemo (Cinnamon file manager, fork of Nautilus, may be called "Files")
-# Pantheon Files (eOS file manager, fork of Nautilus)
+# Pantheon Files (elementary OS file manager, may be called "Files")
 # PCManFM (LXDE file manager)
 # PCManFM-Qt (LXQt file manager)
 # SpaceFM (Fork of PCManFM file manager)
@@ -328,9 +346,11 @@ define_keymap(re.compile(filemanagerStr, re.IGNORECASE),{
     # K("RC-Down"): K("RC-O"),              # Go Down dir (open folder/file)
     K("RC-Down"): K("Enter"),               # Go Down dir (open folder/file)
     # K("RC-Shift-Down"): K("RC-Shift-o"),  # Open in new window (doesn't match Finder)
-    K("RC-Shift-o"): K("RC-Shift-o"),       # Open in new window
+    K("RC-Super-o"): K("RC-Shift-o"),       # Open in new window
     K("RC-Left"): K("M-Left"),              # Go Back
     K("RC-Right"): K("M-Right"),            # Go Forward
+    # To enable renaming files with the Enter key, uncomment the two lines just below. 
+    # Use Ctrl+Shift+Enter to escape or activate text fields. 
     # K("Enter"): K("F2"),				    # Rename with Enter key
     # K("RC-Shift-Enter"): K("Enter"),	    # Remap alternative "Enter" key to easily activate/exit text fields
     K("RC-Shift-dot"): K("RC-H"),           # Show/hide hidden files ("dot" files)
@@ -360,17 +380,26 @@ define_keymap(re.compile(browserStr, re.IGNORECASE),{
 
 # Open preferences in browsers
 define_keymap(re.compile("Firefox", re.IGNORECASE),{
-    K("C-comma"): [K("C-T"),K("a"),K("b"),K("o"),K("u"),K("t"),K("Shift-SEMICOLON"),K("p"),K("r"),K("e"),K("f"),K("e"),K("r"),K("e"),K("n"),K("c"),K("e"),K("s"),K("Enter")],
+    K("C-comma"): [
+        K("C-T"),K("a"),K("b"),K("o"),K("u"),K("t"),
+        K("Shift-SEMICOLON"),K("p"),K("r"),K("e"),K("f"),
+        K("e"),K("r"),K("e"),K("n"),K("c"),K("e"),K("s"),K("Enter")
+    ],
 })
 define_keymap(re.compile(chromeStr, re.IGNORECASE),{
     K("C-comma"): [K("M-e"), K("s"),K("Enter")],
 })
 # Opera C-F12
 
+define_keymap(re.compile(termStr, re.IGNORECASE),{
+    K("RC-Dot"): K("LC-C"),                         # Map Ctrl+Dot to Ctrl+C in terminals
+}, "Mapping Ctrl+Dot to Ctrl+C in terminals")
+
 # None referenced here originally
 # - but remote clients and VM software ought to be set here
 # These are the typical remaps for ALL GUI based apps
 define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
+    K("RC-Dot"): K("Esc"),                          # Mimic macOS Cmd+dot = Escape key (not in terminals)
     K("RC-Space"): K("Alt-F1"),                   # Default SL - Launch Application Menu (gnome/kde)
     K("RC-F3"):K("Super-d"),                      # Default SL - Show Desktop (gnome/kde,eos)
     K("RC-Super-f"):K("M-F10"),                      # Default SL - Maximize app (gnome/kde)
@@ -437,13 +466,11 @@ define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
     K("RC-Shift-Up"): K("C-Shift-Home"),          # Select all to Beginning of File
     K("RC-Down"): K("C-End"),                     # End of File
     K("RC-Shift-Down"): K("C-Shift-End"),         # Select all to End of File
-    # K("RM-Backspace"): K("Delete"),               # Chromebook/IBM - Delete
-    K("Super-Backspace"): K("C-Backspace"),       # Delete Left Word of Cursor
-    K("Super-Delete"): K("C-Delete"),             # Delete Right Word of Cursor
-    # K("LM-Backspace"): K("C-Backspace"),          # Chromebook/IBM - Delete Left Word of Cursor
-    K("M-Backspace"): K("C-Backspace"),           # Default not-chromebook
-    K("RC-Backspace"): K("C-Shift-Backspace"),    # Delete Entire Line Left of Cursor
-    K("Alt-Delete"): K("C-Delete"),               # Delete Right Word of Cursor
+    # K("M-Backspace"): K("Delete"),                # Chromebook/IBM - Delete
+    K("Super-Backspace"): K("C-Backspace"),       # Default not-chromebook - Delete Left Word of Cursor
+    K("Super-Delete"): K("C-Delete"),             # Default not-chromebook - Delete Right Word of Cursor
+    K("Alt-Backspace"): K("C-Backspace"),         # Default not-chromebook - Delete Left Word of Cursor
+    K("Alt-Delete"): K("C-Delete"),               # Default not-chromebook - Delete Right Word of Cursor
     # K(""): pass_through_key,                      # cancel
     # K(""): K(""),                                 #
 })
@@ -654,7 +681,7 @@ define_keymap(re.compile(termStr, re.IGNORECASE),{
     K("RC-N"): K("C-Shift-N"),
     K("RC-M"): K("C-Shift-M"),
     K("RC-COMMA"): K("C-Shift-COMMA"),
-    K("RC-DOT"): K("C-Shift-DOT"),
+    # K("RC-DOT"): K("C-Shift-DOT"),
     K("RC-SLASH"): K("C-Shift-SLASH"),
     K("RC-KPASTERISK"): K("C-Shift-KPASTERISK"),
 }, "terminals")
