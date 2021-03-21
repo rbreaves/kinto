@@ -453,6 +453,10 @@ Windows 10 touchpad to precision touchpad driver
 
 macOS cursors for Windows
 
+[QuickLook](https://github.com/QL-Win/QuickLook) for Windows by QL-Win
+
+It allows users to peek into a file content in lightning speed by just pressing the Space key
+
 [fusuma](https://github.com/iberianpig/fusuma) by iberianpig
 
 Multitouch gestures with libinput driver on Linux
