@@ -62,7 +62,7 @@ def windows_setup():
 		os.system('C:\\Strawberry\\perl\\bin\\perl.exe -pi -e "s/(; )(.*)(; IBM)/$2$3/g" .\\windows\\kinto-new.ahk')
 	if default > 0 and default < 5:
 		stvscode = yn_choice(bcolors.CYELLOW2 + "Would you like to use Sublime Text 3 keymaps in VS Code?\n" + bcolors.ENDC)
-		print("\nWill now install Ubuntu Termimnal Theme as default...")
+		print("\nWill now install Ubuntu Terminal Theme as default...")
 		os.system('regedit "' + path + '\\windows\\theme_ubuntu.reg"')
 		os.system('robocopy "'+ path + '\\assets" "%userprofile%\\.kinto\\assets" /E')
 		if (stvscode and (default > 0 or default < 3)):
