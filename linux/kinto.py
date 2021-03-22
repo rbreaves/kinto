@@ -7,7 +7,26 @@ from xkeysnail.transform import *
 # Use the following for testing terminal keymaps
 # terminals = [ "", ... ]
 # xbindkeys -mk
-terminals = ["kinto-gui.py","gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm","kitty","alacritty","mate-terminal","tilix","xfce4-terminal","hyper"]
+terminals = [
+    "alacritty",
+    "eterm",
+    "gnome-terminal",
+    "guake",
+    "hyper",
+    "io.elementary.terminal",
+    "kinto-gui.py",
+    "kitty",
+    "konsole",
+    "mate-terminal",
+    "qterminal",
+    "sakura",
+    "terminator",
+    "tilda",
+    "tilix",
+    "xfce4-terminal",
+    "xterm",
+]
+
 terminals = [term.casefold() for term in terminals]
 termStr = "|".join(str(x) for x in terminals)
 
@@ -17,7 +36,10 @@ codeStr = "|".join(str(x) for x in mscodes)
 # Add remote desktop clients & VM software here
 # Ideally we'd only exclude the client window,
 # but that may not be easily done.
-remotes = ["org.remmina.Remmina"]
+remotes = [
+    "org.remmina.Remmina",
+    "xfreerdp",
+]
 remotes = [client.casefold() for client in remotes]
 
 # Add remote desktop clients & VMs for no remapping
@@ -25,11 +47,26 @@ terminals.extend(remotes)
 mscodes.extend(remotes)
 
 # Use for browser specific hotkeys
-browsers = ["Chromium","Chromium-browser","Google-chrome","microsoft-edge-dev","microsoft-edge","Epiphany","Firefox","Discord"]
+browsers = [
+    "Chromium",
+    "Chromium-browser",
+    "Discord",
+    "Epiphany",
+    "Firefox",
+    "Google-chrome",
+    "microsoft-edge",
+    "microsoft-edge-dev",
+]
 browsers = [browser.casefold() for browser in browsers]
 browserStr = "|".join(str(x) for x in browsers)
 
-chromes = ["Chromium","Chromium-browser","Google-chrome","microsoft-edge-dev","microsoft-edge"]
+chromes = [
+    "Chromium",
+    "Chromium-browser",
+    "Google-chrome",
+    "microsoft-edge",
+    "microsoft-edge-dev",
+]
 chromes = [chrome.casefold() for chrome in chromes]
 chromeStr = "|".join(str(x) for x in chromes)
 
@@ -212,13 +249,118 @@ define_keymap(re.compile("^jetbrains-(?!.*toolbox).*$", re.IGNORECASE),{
     K("Super-c"): K("LC-c"),                    # Sigints - interrupt
 })
 
-# Keybindings for Nautilus
-define_keymap(re.compile("org.gnome.nautilus", re.IGNORECASE),{
-    K("RC-Up"): K("M-Up"),          # Go Up dir
-    K("RC-Down"): K("M-Down"),      # Go Down dir
-    K("RC-Left"): K("M-Left"),      # Go Back
-    K("RC-Right"): K("M-Right"),    # Go Forward
+##########################################
+# START OF FILE MANAGER GROUP OF KEYMAPS #
+##########################################
+
+# Keybindings overrides for Caja 
+# (overrides some bindings from general file browser code block below)
+define_keymap(re.compile("caja", re.IGNORECASE),{
+    # K("RC-Super-o"): K("RC-Shift-Enter"),   # Open in new tab 
+    K("RC-Super-o"): K("RC-Shift-W"),       # Open in new window
 })
+
+# Keybindings overrides for Dolphin 
+# (overrides some bindings from general file browser code block below)
+define_keymap(re.compile("dolphin", re.IGNORECASE),{
+    K("RC-Super-o"): K("RC-Shift-Enter"), # Open in new window 
+    # "Open in new window" requires manually setting custom shortcut of Ctrl+Shift+Enter 
+    # in Dolphin's keyboard shortcuts. There is no default shortcut set for this function.)
+    ### 
+    # "Open in new tab" requires manually setting custom shortcut of Ctrl+Shift+T in 
+    # Dolphin's keyboard shortcuts. This conflicts with and replaces "Undo close tab".
+    ### 
+    K("RC-Shift-N"): K("F10"),                  # Create new folder
+    K("RC-comma"): K("RC-Shift-comma"),         # Open preferences dialog
+})
+
+# Keybindings overrides for elementary OS Files 
+# (overrides some bindings from general file browser code block below)
+define_keymap(re.compile("io.elementary.files", re.IGNORECASE),{
+    # K("RC-Super-o"): K("Shift-Enter"),          # Open folder in new tab
+    K("RC-Comma"): None,                        # Disable preferences shortcut since none availabe
+})
+
+# Keybindings overrides for Nautilus 
+# (overrides some bindings from general file browser code block below)
+define_keymap(re.compile("org.gnome.Nautilus", re.IGNORECASE),{
+    K("RC-Super-o"): K("Shift-Enter"),           # Open in new window
+    # K("RC-Super-o"): K("RC-Enter"),                 # Open in new tab
+    K("RC-comma"): K("RC-comma"),                   # Overrides "Open preferences dialog" shortcut below
+})
+
+# Keybindings overrides for PCManFM 
+# (overrides some bindings from general file browser code block below)
+define_keymap(re.compile("pcmanfm", re.IGNORECASE),{
+    K("RC-Backspace"): [K("Delete"),K("Enter")],    # Move to Trash (delete, bypass dialog)
+})
+
+# Keybindings overrides for SpaceFM
+# (overrides some bindings from general file browser code block below)
+define_keymap(re.compile("spacefm", re.IGNORECASE),{
+    K("RC-Shift-N"): [K("RC-F")],	                # Create new folder is Ctrl+F by default
+    K("RC-Backspace"): [K("Delete"),K("Enter")],	# Move to Trash (delete, bypass dialog)
+    K("RC-comma"): [K("M-V"),K("p")],               # Overrides "Open preferences dialog" shortcut below
+    # This shortcut ^^^^^^^^^^^^^^^ is not fully working in SpaceFM. Opens "View" menu but not Preferences. 
+    # SpaceFM seems to be doing some nasty binding that blocks things like Alt+Tab while the menu is open. 
+})
+
+# Keybindings overrides for Thunar 
+# (overrides some bindings from general file browser code block below)
+define_keymap(re.compile("thunar", re.IGNORECASE),{
+    K("RC-Super-o"): K("RC-Shift-P"),          # Open in new tab
+    K("RC-comma"): [K("M-E"),K("E")],          # Overrides "Open preferences dialog" shortcut below
+})
+
+filemanagers = [
+    "caja",
+    "dolphin",
+    "io.elementary.files",
+    "nemo",
+    "org.gnome.Nautilus",
+    "pcmanfm",
+    "pcmanfm-qt",
+    "spacefm",
+    "thunar",
+]
+filemanagers = [filemanager.casefold() for filemanager in filemanagers]
+filemanagerStr = "|".join(str(x) for x in filemanagers)
+
+# Keybindings for general file browsers group: 
+# 
+# Caja File Browser (MATE file manager, fork of Nautilus)
+# Dolphin (KDE file manager)
+# Nautilus (GNOME file manager, may be called "Files")
+# Nemo (Cinnamon file manager, fork of Nautilus, may be called "Files")
+# Pantheon Files (elementary OS file manager, may be called "Files")
+# PCManFM (LXDE file manager)
+# PCManFM-Qt (LXQt file manager)
+# SpaceFM (Fork of PCManFM file manager)
+# Thunar File Manager (Xfce file manager)
+# 
+define_keymap(re.compile(filemanagerStr, re.IGNORECASE),{
+    K("RC-i"): K("M-Enter"),                # File properties dialog (Get Info)
+    K("RC-comma"): [K("M-E"),K("N")],       # Open preferences dialog
+    K("RC-Up"): K("M-Up"),                  # Go Up dir
+    # K("RC-Down"): K("M-Down"),            # Go Down dir (only works on folders)
+    # K("RC-Down"): K("RC-O"),              # Go Down dir (open folder/file)
+    K("RC-Down"): K("Enter"),               # Go Down dir (open folder/file)
+    # K("RC-Shift-Down"): K("RC-Shift-o"),  # Open in new window (doesn't match Finder)
+    K("RC-Super-o"): K("RC-Shift-o"),       # Open in new window
+    K("RC-Left"): K("M-Left"),              # Go Back
+    K("RC-Right"): K("M-Right"),            # Go Forward
+    # To enable renaming files with the Enter key, uncomment the two lines just below. 
+    # Use Ctrl+Shift+Enter to escape or activate text fields. 
+    # K("Enter"): K("F2"),				    # Rename with Enter key
+    # K("RC-Shift-Enter"): K("Enter"),	    # Remap alternative "Enter" key to easily activate/exit text fields
+    K("RC-Shift-dot"): K("RC-H"),           # Show/hide hidden files ("dot" files)
+    K("RC-Backspace"): K("Delete"),	        # Move to Trash (delete)
+    K("RC-D"): [K("RC-C"),K("RC-V")],       # Mimic Finder's Duplicate command (Copy, then Paste)
+})
+
+########################################
+# END OF FILE MANAGER GROUP OF KEYMAPS #
+########################################
 
 # Keybindings for Browsers
 define_keymap(re.compile(browserStr, re.IGNORECASE),{
@@ -238,20 +380,29 @@ define_keymap(re.compile(browserStr, re.IGNORECASE),{
 
 # Open preferences in browsers
 define_keymap(re.compile("Firefox", re.IGNORECASE),{
-    K("C-comma"): [K("C-T"),K("a"),K("b"),K("o"),K("u"),K("t"),K("Shift-SEMICOLON"),K("p"),K("r"),K("e"),K("f"),K("e"),K("r"),K("e"),K("n"),K("c"),K("e"),K("s"),K("Enter")],
+    K("C-comma"): [
+        K("C-T"),K("a"),K("b"),K("o"),K("u"),K("t"),
+        K("Shift-SEMICOLON"),K("p"),K("r"),K("e"),K("f"),
+        K("e"),K("r"),K("e"),K("n"),K("c"),K("e"),K("s"),K("Enter")
+    ],
 })
 define_keymap(re.compile(chromeStr, re.IGNORECASE),{
     K("C-comma"): [K("M-e"), K("s"),K("Enter")],
 })
 # Opera C-F12
 
+define_keymap(re.compile(termStr, re.IGNORECASE),{
+    K("RC-Dot"): K("LC-C"),                         # Map Ctrl+Dot to Ctrl+C in terminals
+}, "Mapping Ctrl+Dot to Ctrl+C in terminals")
+
 # None referenced here originally
 # - but remote clients and VM software ought to be set here
 # These are the typical remaps for ALL GUI based apps
 define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
+    K("RC-Dot"): K("Esc"),                          # Mimic macOS Cmd+dot = Escape key (not in terminals)
     K("RC-Space"): K("Alt-F1"),                   # Default SL - Launch Application Menu (gnome/kde)
     K("RC-F3"):K("Super-d"),                      # Default SL - Show Desktop (gnome/kde,eos)
-    K("RC-LC-f"):K("M-F10"),                      # Default SL - Maximize app (gnome/kde)
+    K("RC-Super-f"):K("M-F10"),                      # Default SL - Maximize app (gnome/kde)
     # K("Super-Right"):K("C-M-Right"),              # Default SL - Change workspace (budgie)
     # K("Super-Left"):K("C-M-Left"),                # Default SL - Change workspace (budgie)
     K("RC-Q"): K("M-F4"),                         # Default SL - not-popos
@@ -374,8 +525,8 @@ define_keymap(re.compile(codeStr, re.IGNORECASE),{
     K("C-g"): K("f3"),                          # find_next
     K("Shift-f3"): pass_through_key,            # cancel find_prev
     K("C-Shift-g"): K("Shift-f3"),              # find_prev
-    # K("Super-c"): K("LC-c"),                    #  Default - Terminal - Sigint
-    # K("Super-x"): K("LC-x"),                    #  Default - Terminal - Exit nano
+    # K("Super-c"): K("LC-c"),                    # Default - Terminal - Sigint
+    # K("Super-x"): K("LC-x"),                    # Default - Terminal - Exit nano
     # K("M-c"): K("LC-c"),                        #  Chromebook/IBM - Terminal - Sigint
     # K("M-x"): K("LC-x"),                        #  Chromebook/IBM - Terminal - Exit nano
     # K("Super-C-g"): K("C-f2"),                  # Default - Sublime - find_all_under
@@ -388,8 +539,8 @@ define_keymap(re.compile(codeStr, re.IGNORECASE),{
 
 # Keybindings for Sublime Text
 define_keymap(re.compile("Sublime_text", re.IGNORECASE),{
-    # K("Super-c"): K("LC-c"),                    #  Default - Terminal - Sigint
-    # K("Super-x"): K("LC-x"),                    #  Default - Terminal - Exit nano
+    # K("Super-c"): K("LC-c"),                    # Default - Terminal - Sigint
+    # K("Super-x"): K("LC-x"),                    # Default - Terminal - Exit nano
     # K("M-c"): K("LC-c"),                        #  Chromebook/IBM - Terminal - Sigint
     # K("M-x"): K("LC-x"),                        #  Chromebook/IBM - Terminal - Exit nano
     K("Super-Space"): K("C-Space"),             # Basic code completion
@@ -495,7 +646,6 @@ define_keymap(re.compile(termStr, re.IGNORECASE),{
     # K("RC-Shift-Tab"): K("RC-Shift-backslash"),   # xfce4
     # K("RC-Grave"): K("RC-Shift-backslash"),       # xfce4
     # Converts Cmd to use Ctrl-Shift
-    K("RC-V"): K("C-Shift-V"),
     K("RC-MINUS"): K("C-Shift-MINUS"),
     K("RC-EQUAL"): K("C-Shift-EQUAL"),
     K("RC-BACKSPACE"): K("C-Shift-BACKSPACE"),
@@ -531,7 +681,7 @@ define_keymap(re.compile(termStr, re.IGNORECASE),{
     K("RC-N"): K("C-Shift-N"),
     K("RC-M"): K("C-Shift-M"),
     K("RC-COMMA"): K("C-Shift-COMMA"),
-    K("RC-DOT"): K("C-Shift-DOT"),
+    # K("RC-DOT"): K("C-Shift-DOT"),
     K("RC-SLASH"): K("C-Shift-SLASH"),
     K("RC-KPASTERISK"): K("C-Shift-KPASTERISK"),
 }, "terminals")

@@ -5,7 +5,7 @@
 
 [![GitHub release](https://img.shields.io/github/release/rbreaves/kinto.svg)](https://github.com/rbreaves/kinto/releases/latest)
 
-\- Linux & Windows with Mac-style shortcut keys. \-
+\- Mac-style shortcut keys for Linux & Windows. \-
 
 Seamless copy and paste with all apps and terminals. The zero effort solution.
 
@@ -110,7 +110,7 @@ Select Uninstall
 
 ## How to use in Remote Desktop Solutions
 
-RDP fully works as long as the entire keyboard input is being captured. RDP had been working for awhile with Windows but as of 2/14/2021 Linux is now supported and potentially macOS as well. VNC & other protocols may work, but is likely most dependent on how the keyboard input is captured on the computer running the client.
+RDP fully works as long as the entire keyboard input is being captured. RDP had been working for awhile with Windows but as of 2/14/2021 Linux & macOS is now supported. VNC & other protocols may work, but is likely most dependent on how the keyboard input is captured on the computer running the client.
 
 |Program|Src/Remote Client ⇒|Dst/Remote Server|Works? |Notes|
 |---|---|---|---|---|
@@ -537,11 +537,9 @@ Vala rewrite of SimplePanel - GitHub mirror (Global Menu for XFCE)
 
 ## Contributing
 
-I welcome any and all contributors who want to contribute something to this project.
+I welcome any and all contributors who want to add something to this project.
 
-If you are specifically wanting to contribute additional custom keymaps to help with aligning Kinto's behavior to that of a mac keyboard then I would strongly recommend that you read Glen Whitney's comment on Superuser (the link is below). You may also look at the .xkb directory, mac_wordwise.sh and xactive.sh files to better understand how Kinto operates so that you can test your own keymaps without having to use the systemd service or running the xactive.sh script.
-
-https://superuser.com/questions/385748/binding-superc-superv-to-copy-and-paste
+You can read the configuration files and the open issue tickets such as [#44 Shortcut Translation Tables](https://github.com/rbreaves/kinto/issues/44), [#115 Shortcut Creation (xkeysnail)](https://github.com/rbreaves/kinto/issues/115), and [#348 Missing Shortcuts: Post them here](https://github.com/rbreaves/kinto/issues/348) to best understand what's currently happening and how best to contribute.
 
 ## More information about Kinto
 
