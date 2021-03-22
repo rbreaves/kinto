@@ -209,6 +209,19 @@ sudo systemctl disable xkeysnail >/dev/null 2>&1
 sudo pkill -f bin/xkeysnail >/dev/null 2>&1
 sudo pkill -f "is-active xkeysnail" >/dev/null 2>&1
 
+if ! [ -x "$(command -v pip3)" ]; then
+	if [ "$distro" == "ubuntu" ]; then
+		echo "Will need to install pip..."
+		sudo ./linux/system-config/unipkg.sh curl
+		sudo ./linux/system-config/unipkg.sh python3-setuptools
+		curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+		sudo python3 get-pip.py --upgrade && rm get-pip.py
+	else
+		echo "Will need to install python3-pip..."
+		sudo ./linux/system-config/unipkg.sh python3-pip
+	fi
+fi
+
 pip3 install pillow
 
 # Add additional shortcuts if needed, does not modify existing ones
@@ -326,21 +339,38 @@ expsh=" "
 # 	echo "Will need to install inotify-tools to restart key remapper live for config file changes..."
 # 	sudo ./linux/system-config/unipkg.sh inotify-tools
 # fi
-if ! [ -x "$(command -v pip3)" ]; then
-	echo "Will need to install python3-pip..."
-	sudo ./linux/system-config/unipkg.sh python3-pip
+
+desktopsession=$(echo $DESKTOP_SESSION)
+currentdesktop=$(env | grep -i XDG_CURRENT_DESKTOP | awk -F"=" '/=/{print $2}')
+
+if [ "$desktopsession" == "Lubuntu" ] || [ "$currentdesktop" == "LXQt" ]; then
+	sudo ./linux/system-config/unipkg.sh gir1.2-vte-2.91
 fi
+
+if [ "$distro" == "opensusetumbleweed" ]; then
+	sudo ./linux/system-config/unipkg.sh typelib-1_0-Vte-2.91
+fi
+
+if ! [ -x "$(command -v gcc)" ]; then
+	sudo ./linux/system-config/unipkg.sh gcc
+fi
+
+if ! [ -x "$(command -v git)" ]; then
+	sudo ./linux/system-config/unipkg.sh git
+fi
+
 if ! [ -x "$(command -v python3-config)" ]; then
 	if [ "$distro" == "ubuntu" ] || [ "$distro" == "debian" ] || [ "$distro" == 'linuxmint' ]; then
 		pydev="python3-dev"
-	elif [ "$distro" == "fedora" ]; then
+	elif [ "$distro" == "fedora" ] || [ "$distro" == "opensusetumbleweed" ]; then
 		pydev="python3-devel"
 	fi
-	if [ "$distro" == "gnome" ] || [ "$distro" == "fedora" ] || [ "$distro" == "debian" ] || [ "$distro" == 'linuxmint' ]; then
+	if [ "$distro" == "ubuntu" ] || [ "$distro" == "gnome" ] || [ "$distro" == "fedora" ] || [ "$distro" == "debian" ] || [ "$distro" == 'linuxmint' ]; then
 		echo "Will need to install $pydev..."
 		sudo ./linux/system-config/unipkg.sh "$pydev"
 	fi
 fi
+
 # if [ "$distro" == "ubuntu" ] && [ "$dename" == "gnome" ];then
 # 	sudo ./linux/system-config/unipkg.sh gnome-tweaks gnome-shell-extension-appindicator gir1.2-appindicator3-0.1
 # fi
@@ -349,6 +379,7 @@ if ! [ -x "$(command -v xhost)" ] || ! [ -x "$(command -v gcc)" ]; then
 		sudo ./linux/system-config/unipkg.sh "xorg-xhost gcc"
 	fi
 fi
+
 if [ "$distro" == 'linuxmint' ]; then
 	pip3 install setuptools
 fi
@@ -452,6 +483,13 @@ if [[ $dename == "xfce" ]]; then
 	perl -pi -e "s/(\w.*)(# Default not-xfce4)/# \$1\$2/g" ./linux/kinto.py.new
 fi
 
+# Use xfce4 tweaks also on Linux Mint Cinnamon
+if [[ $dename == "cinnamon" ]] && [[ $distro == "linuxmint" ]]; then
+	perl -pi -e "\s{4}(# )(K.*)(# SL - .*xfce.*)/    \$2\$3/g" ./linux/kinto.py.new >/dev/null 2>&1
+	perl -pi -e "s/(# )(.*)(# xfce4)/\$2\$3/g" ./linux/kinto.py.new
+	perl -pi -e "s/(\w.*)(# Default not-xfce4)/# \$1\$2/g" ./linux/kinto.py.new
+fi
+
 if [[ $dename == "xfce" ]] && ls /etc/apt/sources.list.d/enso* 1> /dev/null 2>&1; then
     echo "enso OS detected, applying Cmd-Space for Launchy..."
     perl -pi -e "s/(K\(\"RC-Space)(.*)(# )(xfce4)/\$3\$1\$2\$3\$4/g" ./linux/kinto.py.new >/dev/null 2>&1
@@ -541,6 +579,37 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	echo -e "~/.config/kinto/gui/kinto-gui.py\n"
 	echo -e "You can then either \e]8;;https://google.com\a\e[1m\e[36mG\033[0;91mo\033[0;93mo\e[1m\e[36mg\e[1m\e[32ml\033[0;91me\e[0m\e]8;;\a what dependencies you may be missing\nor \e]8;;https://github.com/rbreaves/kinto/issues/new\?assignees=rbreaves&labels=bug&template=bug_report.md&title=\aopen an issue ticket.\e]8;;\a\n"
 
+	if [ "$distro" == "linuxmint" ] && [ "$dename" == "cinnamon" ]; then
+		echo
+		echo "======================================================================================"
+		echo "======== ATTENTION! SPECIAL INSTRUCTIONS FOR CINNAMON DESKTOP ON LINUX MINT: ========="
+		echo "======================================================================================"
+		echo 
+		echo "To get Alt+Tab (cycle windows) and Ctrl+H (minimize/hide window) working correctly in "
+		echo "Mint Cinnamon after activating Kinto via the GUI installer window: "
+		echo 
+		echo "Open the Keyboard settings app from the Cinnamon main menu. Go to the Shortcuts tab. "
+		echo 
+		echo "Under General -> \"Cycle through open windows\": "
+		echo "  Click \"unassigned\" under the existing \"Alt+Tab\" shortcut until it says \"Pick an accelerator\"."
+		echo "  Press physical Alt+Tab (or Cmd+Tab) keys to add a second shortcut (will show as \"Ctrl+Backslash\". "
+		echo 
+		echo "Optional: Set \"Cycle backwards through open windows\":"
+		echo "  Press physical Shift+Alt+Tab (will show as \"Shift+Ctrl+|\"). [Vertical bar/pipe character] "
+		echo 
+		echo "Under Windows -> \"Minimize window\": "
+		echo "  Press physical Ctrl+H keys to assign the shortcut to show as \"Super+H\". "
+		echo "  Now physical Alt+H (or Cmd+H on Apple keyboard) will minimize (hide) windows. "
+		echo 
+		echo "Kinto may have crashed if you Alt+Tabbed in the GUI window before fixing the shortcuts. "
+		echo "Just use the tray icon menu or quit and re-open the Kinto GUI and restart Kinto from menu. "
+		echo 
+		echo "======================================================================================"
+		echo "===== END OF SPECIAL INSTRUCTIONS FOR CINNAMON DESKTOP ON LINUX MINT (See above) ====="
+		echo "======================================================================================"
+		echo 
+	fi
+	
 	if [ "$distro" == "manjarolinux" ]; then
 		echo "If you are using Manjaro and see an error about 'GLIBC_2.xx not found' appears then please update your system."
 		echo "sudo pacman -Syu"

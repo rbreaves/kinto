@@ -76,6 +76,10 @@ sudo apt install xfce4-appmenu-plugin vala-panel-appmenu-common
 xfconf-query -c xsettings -p /Gtk/Modules -n -t string -s "appmenu-gtk-module"
 ```
 
+**Perfect HiDPI fractional scaling on Ubuntu Budgie 20.04 under x11**
+
+https://discourse.ubuntubudgie.org/t/ubuntu-budgie-20-04-fractional-hidpi-for-x11/4777
+
 ## How to Install (Windows)
 
 Video Tutorial: [How to Install Kinto.sh on Windows 10](https://youtu.be/sRk8A8krz40)
