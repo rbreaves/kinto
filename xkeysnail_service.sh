@@ -211,16 +211,21 @@ sudo pkill -f "is-active xkeysnail" >/dev/null 2>&1
 
 if ! [ -x "$(command -v pip3)" ]; then
 	if [ "$distro" == "ubuntu" ]; then
+		echo 
 		echo "Will need to install pip..."
 		sudo ./linux/system-config/unipkg.sh curl
 		sudo ./linux/system-config/unipkg.sh python3-setuptools
+		echo 
+		echo "Downloading pip installer... "
 		curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 		sudo python3 get-pip.py --upgrade && rm get-pip.py
 	elif [ "$distro" == "manjaro" ] && [ "$dename" == "lxqt" ]; then
+		echo 
 		echo "Will need to install python-pip..."
 		sudo ./linux/system-config/unipkg.sh python-setuptools
 		sudo ./linux/system-config/unipkg.sh python-pip
 	else
+		echo 
 		echo "Will need to install python3-pip..."
 		sudo ./linux/system-config/unipkg.sh python3-pip
 	fi
@@ -348,18 +353,26 @@ desktopsession=$(echo $DESKTOP_SESSION)
 currentdesktop=$(env | grep -i XDG_CURRENT_DESKTOP | awk -F"=" '/=/{print $2}')
 
 if [ "$desktopsession" == "Lubuntu" ]; then
+	echo 
+	echo "Will need to install gir1.2-vte-2.91... "
 	sudo ./linux/system-config/unipkg.sh gir1.2-vte-2.91
 fi
 
 if [ "$distro" == "opensusetumbleweed" ]; then
+	echo 
+	echo "Will need to install typelib-1_0-Vte-2.91... "
 	sudo ./linux/system-config/unipkg.sh typelib-1_0-Vte-2.91
 fi
 
 if ! [ -x "$(command -v gcc)" ]; then
+	echo 
+	echo "Will need to install gcc... "
 	sudo ./linux/system-config/unipkg.sh gcc
 fi
 
 if ! [ -x "$(command -v git)" ]; then
+	echo 
+	echo "Will need to install git... "
 	sudo ./linux/system-config/unipkg.sh git
 fi
 
@@ -370,6 +383,7 @@ if ! [ -x "$(command -v python3-config)" ]; then
 		pydev="python3-devel"
 	fi
 	if [ "$distro" == "ubuntu" ] || [ "$distro" == "gnome" ] || [ "$distro" == "fedora" ] || [ "$distro" == "debian" ] || [ "$distro" == 'linuxmint' ]; then
+		echo 
 		echo "Will need to install $pydev..."
 		sudo ./linux/system-config/unipkg.sh "$pydev"
 	fi
