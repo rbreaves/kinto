@@ -216,6 +216,10 @@ if ! [ -x "$(command -v pip3)" ]; then
 		sudo ./linux/system-config/unipkg.sh python3-setuptools
 		curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 		sudo python3 get-pip.py --upgrade && rm get-pip.py
+	elif [ "$distro" == "manjaro" ] && [ "$dename" == "lxqt" ]; then
+		echo "Will need to install python-pip..."
+		sudo ./linux/system-config/unipkg.sh python-setuptools
+		sudo ./linux/system-config/unipkg.sh python-pip
 	else
 		echo "Will need to install python3-pip..."
 		sudo ./linux/system-config/unipkg.sh python3-pip
@@ -343,7 +347,7 @@ expsh=" "
 desktopsession=$(echo $DESKTOP_SESSION)
 currentdesktop=$(env | grep -i XDG_CURRENT_DESKTOP | awk -F"=" '/=/{print $2}')
 
-if [ "$desktopsession" == "Lubuntu" ] || [ "$currentdesktop" == "LXQt" ]; then
+if [ "$desktopsession" == "Lubuntu" ]; then
 	sudo ./linux/system-config/unipkg.sh gir1.2-vte-2.91
 fi
 
