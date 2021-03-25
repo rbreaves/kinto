@@ -286,23 +286,42 @@ fi
 
 if [[ $distro == 'fedora' ]]; then
 	echo "Checking SELinux status..."
+	echo 
 	if [[ $(perl -ne 'print if /^SELINUX=enforcing/' /etc/selinux/config | wc -l) != 0 ]]; then
 		while true; do
-		read -rep $'\nWould you like to update your SELinux state from enforcing to permissive? (y/n)\n' yn
-		case $yn in
-			[Yy]* ) setSE='yes'; break;;
-			[Nn]* ) exp='no'; expsh=" " break;;
-			# * ) echo "Please answer yes or no.";;
-		esac
+			read -rep $'\nWould you like to update your SELinux state from enforcing to permissive? (y/n): ' yn
+			case $yn in
+				[Yy]* ) setSE='yes'; break;;
+				[Nn]* ) exp='no'; expsh=" " break;;
+				* ) echo -e "\nPlease answer [y]es or [n]o.";;
+			esac
 		done	
 
-		if [[ $yn == "yes" ]]; then
-			sed -i "s/SELINUX=enforcing/SELINUX=permissive/g" /etc/selinux/config
-			echo "/etc/selinux/config has been updated. Please reboot your computer before continuing."
-			exit 0
+		if [[ $setSE == "yes" ]]; then
+			sudo sed -i "s/SELINUX=enforcing/SELINUX=permissive/g" /etc/selinux/config
+			
+			if [[ $(perl -ne 'print if /^SELINUX=permissive/' /etc/selinux/config | wc -l) != 0 ]] && \
+			   [[ $(perl -ne 'print if /^SELINUX=enforcing/' /etc/selinux/config | wc -l) != 1 ]]; then
+			   	echo 
+				echo "================================================================================"
+				echo "SUCCESS! /etc/selinux/config has been updated. Please reboot your computer "
+				echo "before continuing with Kinto setup."
+				echo "================================================================================"
+				echo 
+				exit 0
+			else 
+				echo 
+				echo "================================================================================"
+				echo "ERROR! Could not update /etc/selinux/config. Please update SELINUX=enforcing to "
+				echo "SELINUX=permissive and reboot your computer before continuing with Kinto setup."
+				echo "================================================================================"
+				echo 
+				exit 1
+			fi
 		fi
 	else
 		echo "SELinux state should be ok for Kinto to install"
+		echo 
 	fi
 	if [[ $(gsettings get org.gnome.desktop.wm.keybindings show-desktop | grep "\[\]" | wc -l) == 1 ]];then
 		gsettings set org.gnome.desktop.wm.keybindings show-desktop "['<Super>d']"
