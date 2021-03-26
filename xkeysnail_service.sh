@@ -218,7 +218,7 @@ if ! [ -x "$(command -v pip3)" ]; then
 		echo "Downloading pip installer... "
 		curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 		sudo python3 get-pip.py --upgrade && rm get-pip.py
-	elif [ "$distro" == "manjaro" ] && [ "$dename" == "lxqt" ]; then
+	elif [ "$distro" == "manjaro" ] && ([ "$dename" == "lxqt" ] || [ "$dename" == "kde" ]); then
 		echo 
 		echo "Will need to install python-pip..."
 		sudo ./linux/system-config/unipkg.sh "python-setuptools python-pip"
