@@ -319,7 +319,7 @@ if [[ $distro == 'fedora' ]]; then
 				echo "       SELINUX=permissive and reboot your computer before continuing with setup."
 				echo "================================================================================"
 				echo 
-				exit 1
+				exit 0
 			fi
 		fi
 		
@@ -331,7 +331,7 @@ if [[ $distro == 'fedora' ]]; then
 		echo "  ERROR: You MUST reboot to enable SELinux permissive mode before continuing.   "
 		echo "================================================================================"
 		echo 
-		exit 1
+		exit 0
 	else
 		echo "SELinux state should be ok for Kinto to install"
 		echo 
