@@ -272,6 +272,8 @@ fi
 if [[ $dename == "kde" ]]; then
 	if [[ $distro == "manjarolinux" ]]; then
 		sudo ./linux/system-config/unipkg.sh vte3
+	elif [[ $distro == "fedora" ]]; then
+		sudo ./linux/system-config/unipkg.sh vte291
 	else
 		sudo ./linux/system-config/unipkg.sh libvte-2.91-dev
 	fi
