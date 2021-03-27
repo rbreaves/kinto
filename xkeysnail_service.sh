@@ -218,23 +218,42 @@ if ! [ -x "$(command -v pip3)" ]; then
 	if [ "$distro" == "ubuntu" ]; then
 		echo 
 		echo "Ubuntu-based..."
+		echo 
 		echo "Will need to install pip..."
 		sudo ./linux/system-config/unipkg.sh "curl python3-setuptools"
 		echo 
 		echo "Downloading pip installer... "
 		curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 		sudo python3 get-pip.py --upgrade && rm get-pip.py
-	elif [ "$distro" == "manjarolinux" ] && [ "$currentdesktop" == "lxqt" ]; then
-		echo 
-		echo "Found Manjaro LXQt..." 
-		echo "Will need to install python-pip..."
-		sudo ./linux/system-config/unipkg.sh "python-evdev python-wheel"
-		sudo ./linux/system-config/unipkg.sh "python-setuptools python-pip"
-	elif [ "$distro" == "manjarolinux" ] && [ "$dename" == "kde" ]; then
-		echo 
-		echo "Found Manjaro KDE..."
-		echo "Will need to install python-pip..."
-		sudo ./linux/system-config/unipkg.sh "python-setuptools python-pip"
+	elif [ "$distro" == "manjarolinux" ]; then
+		while true; do
+			read -rep $'\nHave you run \"sudo pacman -Syu\" before running Kinto setup? (y/n): ' updated	
+			case $updated in
+				[Yy]* ) mjupdated='yes'; break;;
+				[Nn]* ) mjupdated='no'; break;;
+				* ) echo -e "\nPlease answer [y]es or [n]o.";;
+			esac
+		done
+		if [[ "$mjupdated" == "no" ]]; then 
+			echo 
+			echo "Please run a full system update before installing Kinto. It's necessary." 
+			echo 
+			exit 0
+		fi
+		if [ "$currentdesktop" == "lxqt" ]; then
+			echo 
+			echo "Found Manjaro LXQt..." 
+			echo 
+			echo "Will need to install python-pip..."
+			sudo ./linux/system-config/unipkg.sh "python-evdev python-wheel"
+			sudo ./linux/system-config/unipkg.sh "python-setuptools python-pip"
+		elif [ "$dename" == "kde" ]; then
+			echo 
+			echo "Found Manjaro KDE..."
+			echo 
+			echo "Will need to install python-pip..."
+			sudo ./linux/system-config/unipkg.sh "python-setuptools python-pip"
+		fi
 	else
 		echo 
 		echo "Will need to install python3-pip..."
