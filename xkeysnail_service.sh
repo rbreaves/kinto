@@ -212,6 +212,7 @@ sudo pkill -f "is-active xkeysnail" >/dev/null 2>&1
 if ! [ -x "$(command -v pip3)" ]; then
 	if [ "$distro" == "ubuntu" ]; then
 		echo 
+		echo "Ubuntu-based..."
 		echo "Will need to install pip..."
 		sudo ./linux/system-config/unipkg.sh "curl python3-setuptools"
 		echo 
@@ -223,7 +224,7 @@ if ! [ -x "$(command -v pip3)" ]; then
 		echo "Found Manjaro LXQt..." 
 		echo "Will need to install python-pip..."
 		sudo ./linux/system-config/unipkg.sh "python-setuptools python-pip"
-	elif [ "$distro" == "manjarolinux" ] && [ "$dename" == "kde" ]); then
+	elif [ "$distro" == "manjarolinux" ] && [ "$dename" == "kde" ]; then
 		echo 
 		echo "Found Manjaro KDE..."
 		echo "Will need to install python-pip..."
