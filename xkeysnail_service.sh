@@ -8,6 +8,11 @@ distro=$(awk -F= '$1=="NAME" { gsub("[\",!,_, ]","",$2);print $2 ;}' /etc/os-rel
 typeset -l dename
 dename=$(./linux/system-config/dename.sh | cut -d " " -f1)
 
+typeset -l desktopsession
+desktopsession=$(echo $DESKTOP_SESSION)
+typeset -l currentdesktop
+currentdesktop=$(env | grep -i XDG_CURRENT_DESKTOP | awk -F"=" '/=/{print $2}')
+
 function uninstall {
 
 	echo -e "\nNote: Restoring keys is only relevant if you had installed a version prior to 1.2 of Kinto. You should skip this step if 1.2+ is all you have installed."
@@ -219,10 +224,11 @@ if ! [ -x "$(command -v pip3)" ]; then
 		echo "Downloading pip installer... "
 		curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 		sudo python3 get-pip.py --upgrade && rm get-pip.py
-	elif [ "$distro" == "manjarolinux" ] && [ "$dename" == "lxqt" ]; then
+	elif [ "$distro" == "manjarolinux" ] && [ "$currentdesktop" == "lxqt" ]; then
 		echo 
 		echo "Found Manjaro LXQt..." 
 		echo "Will need to install python-pip..."
+		sudo ./linux/system-config/unipkg.sh "python-evdev python-wheel"
 		sudo ./linux/system-config/unipkg.sh "python-setuptools python-pip"
 	elif [ "$distro" == "manjarolinux" ] && [ "$dename" == "kde" ]; then
 		echo 
@@ -388,9 +394,6 @@ expsh=" "
 # 	echo "Will need to install inotify-tools to restart key remapper live for config file changes..."
 # 	sudo ./linux/system-config/unipkg.sh inotify-tools
 # fi
-
-desktopsession=$(echo $DESKTOP_SESSION)
-currentdesktop=$(env | grep -i XDG_CURRENT_DESKTOP | awk -F"=" '/=/{print $2}')
 
 if [ "$desktopsession" == "Lubuntu" ]; then
 	echo 
