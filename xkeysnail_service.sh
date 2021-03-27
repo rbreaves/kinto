@@ -214,6 +214,25 @@ sudo systemctl disable xkeysnail >/dev/null 2>&1
 sudo pkill -f bin/xkeysnail >/dev/null 2>&1
 sudo pkill -f "is-active xkeysnail" >/dev/null 2>&1
 
+if [ "$distro" == "manjarolinux" ]; then
+	while true; do
+		read -rep $'\nHave you run \"sudo pacman -Syu\" before running Kinto setup? (y/n): ' updated	
+		case $updated in
+			[Yy]* ) mjupdated='yes'; break;;
+			[Nn]* ) mjupdated='no'; break;;
+			* ) echo -e "\nPlease answer [y]es or [n]o.";;
+		esac
+	done
+	if [[ "$mjupdated" == "no" ]]; then 
+		echo 
+		echo "================================================================================"
+		echo "==========  Please run a full system update before installing Kinto.  ==========" 
+		echo "================================================================================"
+		echo 
+		exit 0
+	fi
+fi
+
 if ! [ -x "$(command -v pip3)" ]; then
 	if [ "$distro" == "ubuntu" ]; then
 		echo 
@@ -226,20 +245,6 @@ if ! [ -x "$(command -v pip3)" ]; then
 		curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 		sudo python3 get-pip.py --upgrade && rm get-pip.py
 	elif [ "$distro" == "manjarolinux" ]; then
-		while true; do
-			read -rep $'\nHave you run \"sudo pacman -Syu\" before running Kinto setup? (y/n): ' updated	
-			case $updated in
-				[Yy]* ) mjupdated='yes'; break;;
-				[Nn]* ) mjupdated='no'; break;;
-				* ) echo -e "\nPlease answer [y]es or [n]o.";;
-			esac
-		done
-		if [[ "$mjupdated" == "no" ]]; then 
-			echo 
-			echo "Please run a full system update before installing Kinto. It's necessary." 
-			echo 
-			exit 0
-		fi
 		if [ "$currentdesktop" == "lxqt" ]; then
 			echo 
 			echo "Found Manjaro LXQt..." 
@@ -691,11 +696,14 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	fi
 	
 	if [ "$distro" == "manjarolinux" ]; then
+		echo 
 		echo "If you are using Manjaro and see an error about 'GLIBC_2.xx not found' appears then please update your system."
 		echo "sudo pacman -Syu"
+		echo 
 	fi
 
 	if [ "$dename" == "gnome" ];then
+		echo 
 		echo "Gnome may not support appindicators well, so by default you may need to install packages before enabling the System Tray."
 		echo "You may try one of the following extensions."
 		echo -e "    1) \e]8;;https://extensions.gnome.org/extension/615/appindicator-support/\aAppIndicator and KStatusNotifierItem Support\e]8;;\a"
