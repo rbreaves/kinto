@@ -226,12 +226,12 @@ define_keymap(re.compile("caja", re.IGNORECASE),{
 # Keybindings overrides for Dolphin 
 # (overrides some bindings from general file browser code block below)
 define_keymap(re.compile("dolphin", re.IGNORECASE),{
-    K("RC-Super-o"): K("RC-Shift-Enter"), # Open in new window 
-    # "Open in new window" requires manually setting custom shortcut of Ctrl+Shift+Enter 
-    # in Dolphin's keyboard shortcuts. There is no default shortcut set for this function.)
+    K("RC-Super-o"): K("RC-Shift-o"), # Open in new window (or new tab, user's choice)
+    # "Open in new window" requires manually setting custom shortcut of Ctrl+Shift+o 
+    # in Dolphin's keyboard shortcuts. There is no default shortcut set for this function.
     ### 
-    # "Open in new tab" requires manually setting custom shortcut of Ctrl+Shift+T in 
-    # Dolphin's keyboard shortcuts. This conflicts with and replaces "Undo close tab".
+    # "Open in new tab" requires manually setting custom shortcut of Ctrl+Shift+o in 
+    # Dolphin's keyboard shortcuts. There is no default shortcut set for this function. 
     ### 
     K("RC-Shift-N"): K("F10"),                  # Create new folder
     K("RC-comma"): K("RC-Shift-comma"),         # Open preferences dialog
