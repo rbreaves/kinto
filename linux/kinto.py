@@ -221,7 +221,7 @@ define_keymap(re.compile("^jetbrains-(?!.*toolbox).*$", re.IGNORECASE),{
 define_keymap(re.compile("caja", re.IGNORECASE),{
     # K("RC-Super-o"): K("RC-Shift-Enter"),   # Open in new tab 
     K("RC-Super-o"): K("RC-Shift-W"),       # Open in new window
-})
+},"Overrides_Caja")
 
 # Keybindings overrides for Dolphin 
 # (overrides some bindings from general file browser code block below)
@@ -235,14 +235,14 @@ define_keymap(re.compile("dolphin", re.IGNORECASE),{
     ### 
     K("RC-Shift-N"): K("F10"),                  # Create new folder
     K("RC-comma"): K("RC-Shift-comma"),         # Open preferences dialog
-})
+},"Overrides_Dolphin")
 
 # Keybindings overrides for elementary OS Files 
 # (overrides some bindings from general file browser code block below)
 define_keymap(re.compile("io.elementary.files", re.IGNORECASE),{
     # K("RC-Super-o"): K("Shift-Enter"),          # Open folder in new tab
     K("RC-Comma"): None,                        # Disable preferences shortcut since none availabe
-})
+},"Overrides_Pantheon")
 
 # Keybindings overrides for Nautilus 
 # (overrides some bindings from general file browser code block below)
@@ -250,13 +250,13 @@ define_keymap(re.compile("org.gnome.Nautilus", re.IGNORECASE),{
     K("RC-Super-o"): K("Shift-Enter"),           # Open in new window
     # K("RC-Super-o"): K("RC-Enter"),                 # Open in new tab
     K("RC-comma"): K("RC-comma"),                   # Overrides "Open preferences dialog" shortcut below
-})
+},"Overrides_Nautilus")
 
 # Keybindings overrides for PCManFM 
 # (overrides some bindings from general file browser code block below)
 define_keymap(re.compile("pcmanfm", re.IGNORECASE),{
     K("RC-Backspace"): [K("Delete"),K("Enter")],    # Move to Trash (delete, bypass dialog)
-})
+},"Overrides_PCManFM")
 
 # Keybindings overrides for SpaceFM
 # (overrides some bindings from general file browser code block below)
@@ -266,14 +266,14 @@ define_keymap(re.compile("spacefm", re.IGNORECASE),{
     K("RC-comma"): [K("M-V"),K("p")],               # Overrides "Open preferences dialog" shortcut below
     # This shortcut ^^^^^^^^^^^^^^^ is not fully working in SpaceFM. Opens "View" menu but not Preferences. 
     # SpaceFM seems to be doing some nasty binding that blocks things like Alt+Tab while the menu is open. 
-})
+},"Overrides_SpaceFM")
 
 # Keybindings overrides for Thunar 
 # (overrides some bindings from general file browser code block below)
 define_keymap(re.compile("thunar", re.IGNORECASE),{
     K("RC-Super-o"): K("RC-Shift-P"),          # Open in new tab
     K("RC-comma"): [K("M-E"),K("E")],          # Overrides "Open preferences dialog" shortcut below
-})
+},"Overrides_Thunar")
 
 filemanagers = [
     "caja",
@@ -319,7 +319,7 @@ define_keymap(re.compile(filemanagerStr, re.IGNORECASE),{
     K("RC-Shift-dot"): K("RC-H"),           # Show/hide hidden files ("dot" files)
     K("RC-Backspace"): K("Delete"),	        # Move to Trash (delete)
     K("RC-D"): [K("RC-C"),K("RC-V")],       # Mimic Finder's Duplicate command (Copy, then Paste)
-})
+},"File_Managers")
 
 ########################################
 # END OF FILE MANAGER GROUP OF KEYMAPS #
