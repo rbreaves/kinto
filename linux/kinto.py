@@ -7,7 +7,25 @@ from xkeysnail.transform import *
 # Use the following for testing terminal keymaps
 # terminals = [ "", ... ]
 # xbindkeys -mk
-terminals = ["kinto-gui.py","gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm","kitty","alacritty","mate-terminal","tilix","xfce4-terminal","hyper"]
+terminals = [
+    "alacritty",
+    "eterm",
+    "gnome-terminal",
+    "guake",
+    "hyper",
+    "io.elementary.terminal",
+    "kinto-gui.py",
+    "kitty",
+    "konsole",
+    "mate-terminal",
+    "qterminal",
+    "sakura",
+    "terminator",
+    "tilda",
+    "tilix",
+    "xfce4-terminal",
+    "xterm",
+]
 terminals = [term.casefold() for term in terminals]
 termStr = "|".join(str(x) for x in terminals)
 
@@ -17,7 +35,10 @@ codeStr = "|".join(str(x) for x in mscodes)
 # Add remote desktop clients & VM software here
 # Ideally we'd only exclude the client window,
 # but that may not be easily done.
-remotes = ["org.remmina.Remmina","xfreerdp"]
+remotes = [
+    "org.remmina.Remmina",
+    "xfreerdp",
+]
 remotes = [client.casefold() for client in remotes]
 
 # Add remote desktop clients & VMs for no remapping
@@ -25,11 +46,26 @@ terminals.extend(remotes)
 mscodes.extend(remotes)
 
 # Use for browser specific hotkeys
-browsers = ["Chromium","Chromium-browser","Google-chrome","microsoft-edge-dev","microsoft-edge","Epiphany","Firefox","Discord"]
+browsers = [
+    "Chromium",
+    "Chromium-browser",
+    "Discord",
+    "Epiphany",
+    "Firefox",
+    "Google-chrome",
+    "microsoft-edge",
+    "microsoft-edge-dev",
+]
 browsers = [browser.casefold() for browser in browsers]
 browserStr = "|".join(str(x) for x in browsers)
 
-chromes = ["Chromium","Chromium-browser","Google-chrome","microsoft-edge-dev","microsoft-edge"]
+chromes = [
+    "Chromium",
+    "Chromium-browser",
+    "Google-chrome",
+    "microsoft-edge",
+    "microsoft-edge-dev",
+]
 chromes = [chrome.casefold() for chrome in chromes]
 chromeStr = "|".join(str(x) for x in chromes)
 
@@ -240,7 +276,11 @@ define_keymap(re.compile(browserStr, re.IGNORECASE),{
 
 # Open preferences in browsers
 define_keymap(re.compile("Firefox", re.IGNORECASE),{
-    K("C-comma"): [K("C-T"),K("a"),K("b"),K("o"),K("u"),K("t"),K("Shift-SEMICOLON"),K("p"),K("r"),K("e"),K("f"),K("e"),K("r"),K("e"),K("n"),K("c"),K("e"),K("s"),K("Enter")],
+    K("C-comma"): [
+        K("C-T"),K("a"),K("b"),K("o"),K("u"),K("t"),
+        K("Shift-SEMICOLON"),K("p"),K("r"),K("e"),K("f"),
+        K("e"),K("r"),K("e"),K("n"),K("c"),K("e"),K("s"),K("Enter")
+    ],
 })
 define_keymap(re.compile(chromeStr, re.IGNORECASE),{
     K("C-comma"): [K("M-e"), K("s"),K("Enter")],
