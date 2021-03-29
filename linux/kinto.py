@@ -350,15 +350,10 @@ define_keymap(re.compile(chromeStr, re.IGNORECASE),{
 })
 # Opera C-F12
 
-define_keymap(re.compile(termStr, re.IGNORECASE),{
-    K("RC-Dot"): K("LC-c"),                         # Map Ctrl+Dot to Ctrl+C in terminals
-}, "Mapping Ctrl+Dot to Ctrl+C in terminals")
-
 # None referenced here originally
 # - but remote clients and VM software ought to be set here
 # These are the typical remaps for ALL GUI based apps
 define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
-    K("RC-Dot"): K("Esc"),                          # Mimic macOS Cmd+dot = Escape key (not in terminals)
     K("RC-Space"): K("Alt-F1"),                   # Default SL - Launch Application Menu (gnome/kde)
     K("RC-F3"):K("Super-d"),                      # Default SL - Show Desktop (gnome/kde,eos)
     K("RC-Super-f"):K("M-F10"),                      # Default SL - Maximize app (gnome/kde)
@@ -607,6 +602,7 @@ define_keymap(re.compile(termStr, re.IGNORECASE),{
     # K("RC-Shift-Tab"): K("RC-Shift-backslash"),   # xfce4
     # K("RC-Grave"): K("RC-Shift-backslash"),       # xfce4
     # Converts Cmd to use Ctrl-Shift
+    K("RC-V"): K("C-Shift-V"),
     K("RC-MINUS"): K("C-Shift-MINUS"),
     K("RC-EQUAL"): K("C-Shift-EQUAL"),
     K("RC-BACKSPACE"): K("C-Shift-BACKSPACE"),
@@ -642,8 +638,7 @@ define_keymap(re.compile(termStr, re.IGNORECASE),{
     K("RC-N"): K("C-Shift-N"),
     K("RC-M"): K("C-Shift-M"),
     K("RC-COMMA"): K("C-Shift-COMMA"),
-    # K("RC-DOT"): K("C-Shift-DOT"),
-    K("RC-Dot"): K("LC-c"),
+    K("RC-DOT"): K("C-Shift-DOT"),
     K("RC-SLASH"): K("C-Shift-SLASH"),
     K("RC-KPASTERISK"): K("C-Shift-KPASTERISK"),
 }, "terminals")
