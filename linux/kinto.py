@@ -392,7 +392,7 @@ define_keymap(re.compile(chromeStr, re.IGNORECASE),{
 # Opera C-F12
 
 define_keymap(re.compile(termStr, re.IGNORECASE),{
-    K("RC-Dot"): K("LC-C"),                         # Map Ctrl+Dot to Ctrl+C in terminals
+    K("RC-Dot"): K("LC-c"),                         # Map Ctrl+Dot to Ctrl+C in terminals
 }, "Mapping Ctrl+Dot to Ctrl+C in terminals")
 
 # None referenced here originally
@@ -466,11 +466,13 @@ define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
     K("RC-Shift-Up"): K("C-Shift-Home"),          # Select all to Beginning of File
     K("RC-Down"): K("C-End"),                     # End of File
     K("RC-Shift-Down"): K("C-Shift-End"),         # Select all to End of File
-    # K("M-Backspace"): K("Delete"),                # Chromebook/IBM - Delete
-    K("Super-Backspace"): K("C-Backspace"),       # Default not-chromebook - Delete Left Word of Cursor
-    K("Super-Delete"): K("C-Delete"),             # Default not-chromebook - Delete Right Word of Cursor
-    K("Alt-Backspace"): K("C-Backspace"),         # Default not-chromebook - Delete Left Word of Cursor
-    K("Alt-Delete"): K("C-Delete"),               # Default not-chromebook - Delete Right Word of Cursor
+    # K("RM-Backspace"): K("Delete"),               # Chromebook/IBM - Delete
+    K("Super-Backspace"): K("C-Backspace"),       # Delete Left Word of Cursor
+    K("Super-Delete"): K("C-Delete"),             # Delete Right Word of Cursor
+    # K("LM-Backspace"): K("C-Backspace"),          # Chromebook/IBM - Delete Left Word of Cursor
+    K("M-Backspace"): K("C-Backspace"),           # Default not-chromebook
+    K("RC-Backspace"): K("C-Shift-Backspace"),    # Delete Entire Line Left of Cursor
+    K("Alt-Delete"): K("C-Delete"),               # Delete Right Word of Cursor
     # K(""): pass_through_key,                      # cancel
     # K(""): K(""),                                 #
 })
@@ -682,6 +684,7 @@ define_keymap(re.compile(termStr, re.IGNORECASE),{
     K("RC-M"): K("C-Shift-M"),
     K("RC-COMMA"): K("C-Shift-COMMA"),
     # K("RC-DOT"): K("C-Shift-DOT"),
+    K("RC-Dot"): K("LC-c"),
     K("RC-SLASH"): K("C-Shift-SLASH"),
     K("RC-KPASTERISK"): K("C-Shift-KPASTERISK"),
 }, "terminals")
