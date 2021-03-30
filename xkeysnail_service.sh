@@ -263,25 +263,6 @@ if [[ $distro == 'kdeneon' ]]; then
 fi
 
 if [[ $distro == 'fedora' ]]; then
-	echo "Checking SELinux status..."
-	if [[ $(perl -ne 'print if /^SELINUX=enforcing/' /etc/selinux/config | wc -l) != 0 ]]; then
-		while true; do
-		read -rep $'\nWould you like to update your SELinux state from enforcing to permissive? (y/n)\n' yn
-		case $yn in
-			[Yy]* ) setSE='yes'; break;;
-			[Nn]* ) exp='no'; expsh=" " break;;
-			# * ) echo "Please answer yes or no.";;
-		esac
-		done	
-
-		if [[ $yn == "yes" ]]; then
-			sed -i "s/SELINUX=enforcing/SELINUX=permissive/g" /etc/selinux/config
-			echo "/etc/selinux/config has been updated. Please reboot your computer before continuing."
-			exit 0
-		fi
-	else
-		echo "SELinux state should be ok for Kinto to install"
-	fi
 	if [[ $(gsettings get org.gnome.desktop.wm.keybindings show-desktop | grep "\[\]" | wc -l) == 1 ]];then
 		gsettings set org.gnome.desktop.wm.keybindings show-desktop "['<Super>d']"
 	else
@@ -427,6 +408,11 @@ fi
 
 if [[ $distro == "fedora" ]]; then
 	perl -pi -e "\s{4}(# )(K.*)(# SL - .*fedora.*)/    \$2\$3/g" ./linux/kinto.py.new >/dev/null 2>&1
+	sed -i "s#{sudo}##g" ./linux/xkeysnail.service.new
+	selinuxuser=system_u
+	selinuxtype=systemd_unit_file_t
+else
+	sed -i "s#{sudo}#`\\which sudo` #g" ./linux/xkeysnail.service.new
 fi
 
 if [[ $distro == "elementaryos" ]]; then
@@ -460,7 +446,6 @@ fi
 
 if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	mv ./linux/kinto.py.new ~/.config/kinto/kinto.py
-	# if [ "$distro" == "fedora" ];then
 	sudo rm /etc/systemd/system/xkeysnail.service >/dev/null 2>&1
 	if [ -d /usr/lib/systemd/system ];then
 		xkeypath="/usr/lib/systemd/system/"
@@ -492,6 +477,8 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	sed -i "s#{xkeysnail}#`which xkeysnail`#g" ./linux/xkeysnail.service.new
 	sed -i "s#{xkeysnail}#`which xkeysnail`#g" ./linux/limitedadmins.new
 	sudo mv ./linux/xkeysnail.service.new "$xkeypath"xkeysnail.service && echo "Service file added to "$xkeypath"xkeysnail.service"
+	echo "Changing SELinux context"
+	sudo chcon -v --user=$selinuxuser --type=$selinuxtype "$xkeypath"xkeysnail.service
 	sudo chown root:root ./linux/limitedadmins.new
 	# Add a check here for xkeysnail path resolving
 	sudo mv ./linux/limitedadmins.new /etc/sudoers.d/limitedadmins
