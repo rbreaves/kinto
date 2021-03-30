@@ -419,7 +419,7 @@ expsh=" "
 # 	sudo ./linux/system-config/unipkg.sh inotify-tools
 # fi
 
-if [ "$desktopsession" == "Lubuntu" ]; then
+if [ "$desktopsession" == "lubuntu" ]; then
 	echo 
 	echo "Will need to install gir1.2-vte-2.91... "
 	sudo ./linux/system-config/unipkg.sh gir1.2-vte-2.91
@@ -429,6 +429,17 @@ if [ "$distro" == "opensusetumbleweed" ]; then
 	echo 
 	echo "Will need to install typelib-1_0-Vte-2.91... "
 	sudo ./linux/system-config/unipkg.sh typelib-1_0-Vte-2.91
+	echo 
+	echo "Will need to install python3-wheel... "
+	sudo ./linux/system-config/unipkg.sh python3-wheel
+	echo 
+	echo "Adding user to systemd-journal group..."
+	sudo usermod -a -G systemd-journal $(whoami)
+	echo 
+	echo "User is now in systemd-journal group, but you will "
+	echo "need to log out and back in to view the journal..."
+	echo 
+	sleep 3
 fi
 
 if ! [ -x "$(command -v gcc)" ]; then
@@ -449,7 +460,12 @@ if ! [ -x "$(command -v python3-config)" ]; then
 	elif [ "$distro" == "fedora" ] || [ "$distro" == "opensusetumbleweed" ]; then
 		pydev="python3-devel"
 	fi
-	if [ "$distro" == "ubuntu" ] || [ "$distro" == "gnome" ] || [ "$distro" == "fedora" ] || [ "$distro" == "debian" ] || [ "$distro" == 'linuxmint' ]; then
+	if [ "$distro" == "ubuntu" ] || \
+	   [ "$distro" == "gnome" ] || \
+	   [ "$distro" == "fedora" ] || \
+	   [ "$distro" == "debian" ] || \
+	   [ "$distro" == 'linuxmint' ] || \
+	   [ "$distro" == "opensusetumbleweed" ]; then
 		echo 
 		echo "Will need to install $pydev..."
 		sudo ./linux/system-config/unipkg.sh "$pydev"
@@ -612,8 +628,14 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 		echo -e "Run 'sudo pip3 install --upgrade .' to debug issue"
 		exit 0
 	fi
+	
 	sed -i "s#{xkeysnail}#`which xkeysnail`#g" ./linux/xkeysnail.service.new
 	sed -i "s#{xkeysnail}#`which xkeysnail`#g" ./linux/limitedadmins.new
+	
+	if [ "$distro" == "opensusetumbleweed" ]; then
+		sed -i "s#'/usr/bin/xhost#'export DISPLAY=`echo $DISPLAY` \&\& /usr/bin/xhost#g" ./linux/xkeysnail.service.new
+	fi
+	
 	sudo mv ./linux/xkeysnail.service.new "$xkeypath"xkeysnail.service && echo "Service file added to "$xkeypath"xkeysnail.service"
 	sudo chown root:root ./linux/limitedadmins.new
 	# Add a check here for xkeysnail path resolving
