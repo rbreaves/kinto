@@ -248,13 +248,118 @@ define_keymap(re.compile("^jetbrains-(?!.*toolbox).*$", re.IGNORECASE),{
     K("Super-c"): K("LC-c"),                    # Sigints - interrupt
 },"Jetbrains")
 
-# Keybindings for Nautilus
-define_keymap(re.compile("org.gnome.nautilus", re.IGNORECASE),{
-    K("RC-Up"): K("M-Up"),          # Go Up dir
-    K("RC-Down"): K("M-Down"),      # Go Down dir
-    K("RC-Left"): K("M-Left"),      # Go Back
-    K("RC-Right"): K("M-Right"),    # Go Forward
-},"Nautilus - Finder")
+##########################################
+# START OF FILE MANAGER GROUP OF KEYMAPS #
+##########################################
+
+# Keybindings overrides for Caja 
+# (overrides some bindings from general file browser code block below)
+define_keymap(re.compile("caja", re.IGNORECASE),{
+    # K("RC-Super-o"): K("RC-Shift-Enter"),   # Open in new tab 
+    K("RC-Super-o"): K("RC-Shift-W"),       # Open in new window
+},"Overrides for Caja - Finder")
+
+# Keybindings overrides for Dolphin 
+# (overrides some bindings from general file browser code block below)
+define_keymap(re.compile("dolphin", re.IGNORECASE),{
+    K("RC-Super-o"): K("RC-Shift-o"), # Open in new window (or new tab, user's choice)
+    # "Open in new window" requires manually setting custom shortcut of Ctrl+Shift+o 
+    # in Dolphin's keyboard shortcuts. There is no default shortcut set for this function.
+    ### 
+    # "Open in new tab" requires manually setting custom shortcut of Ctrl+Shift+o in 
+    # Dolphin's keyboard shortcuts. There is no default shortcut set for this function. 
+    ### 
+    K("RC-Shift-N"): K("F10"),                  # Create new folder
+    K("RC-comma"): K("RC-Shift-comma"),         # Open preferences dialog
+},"Overrides for Dolphin - Finder")
+
+# Keybindings overrides for elementary OS Files 
+# (overrides some bindings from general file browser code block below)
+define_keymap(re.compile("io.elementary.files", re.IGNORECASE),{
+    # K("RC-Super-o"): K("Shift-Enter"),          # Open folder in new tab
+    K("RC-Comma"): None,                        # Disable preferences shortcut since none availabe
+},"Overrides for Pantheon - Finder")
+
+# Keybindings overrides for Nautilus 
+# (overrides some bindings from general file browser code block below)
+define_keymap(re.compile("org.gnome.Nautilus", re.IGNORECASE),{
+    K("RC-Super-o"): K("Shift-Enter"),           # Open in new window
+    # K("RC-Super-o"): K("RC-Enter"),                 # Open in new tab
+    K("RC-comma"): K("RC-comma"),                   # Overrides "Open preferences dialog" shortcut below
+},"Overrides for Nautilus - Finder")
+
+# Keybindings overrides for PCManFM 
+# (overrides some bindings from general file browser code block below)
+define_keymap(re.compile("pcmanfm", re.IGNORECASE),{
+    K("RC-Backspace"): [K("Delete"),K("Enter")],    # Move to Trash (delete, bypass dialog)
+},"Overrides for PCManFM - Finder")
+
+# Keybindings overrides for SpaceFM
+# (overrides some bindings from general file browser code block below)
+define_keymap(re.compile("spacefm", re.IGNORECASE),{
+    K("RC-Shift-N"): [K("RC-F")],	                # Create new folder is Ctrl+F by default
+    K("RC-Backspace"): [K("Delete"),K("Enter")],	# Move to Trash (delete, bypass dialog)
+    K("RC-comma"): [K("M-V"),K("p")],               # Overrides "Open preferences dialog" shortcut below
+    # This shortcut ^^^^^^^^^^^^^^^ is not fully working in SpaceFM. Opens "View" menu but not Preferences. 
+    # SpaceFM seems to be doing some nasty binding that blocks things like Alt+Tab while the menu is open. 
+},"Overrides for SpaceFM - Finder")
+
+# Keybindings overrides for Thunar 
+# (overrides some bindings from general file browser code block below)
+define_keymap(re.compile("thunar", re.IGNORECASE),{
+    K("RC-Super-o"): K("RC-Shift-P"),          # Open in new tab
+    K("RC-comma"): [K("M-E"),K("E")],          # Overrides "Open preferences dialog" shortcut below
+},"Overrides for Thunar - Finder")
+
+filemanagers = [
+    "caja",
+    "dolphin",
+    "io.elementary.files",
+    "nemo",
+    "org.gnome.Nautilus",
+    "pcmanfm",
+    "pcmanfm-qt",
+    "spacefm",
+    "thunar",
+]
+filemanagers = [filemanager.casefold() for filemanager in filemanagers]
+filemanagerStr = "|".join(str(x) for x in filemanagers)
+
+# Keybindings for general file browsers group: 
+# 
+# Caja File Browser (MATE file manager, fork of Nautilus)
+# Dolphin (KDE file manager)
+# Nautilus (GNOME file manager, may be called "Files")
+# Nemo (Cinnamon file manager, fork of Nautilus, may be called "Files")
+# Pantheon Files (elementary OS file manager, may be called "Files")
+# PCManFM (LXDE file manager)
+# PCManFM-Qt (LXQt file manager)
+# SpaceFM (Fork of PCManFM file manager)
+# Thunar File Manager (Xfce file manager)
+# 
+define_keymap(re.compile(filemanagerStr, re.IGNORECASE),{
+    K("RC-i"): K("M-Enter"),                # File properties dialog (Get Info)
+    K("RC-comma"): [K("M-E"),K("N")],       # Open preferences dialog
+    K("RC-Up"): K("M-Up"),                  # Go Up dir
+    # K("RC-Down"): K("M-Down"),            # Go Down dir (only works on folders)
+    # K("RC-Down"): K("RC-O"),              # Go Down dir (open folder/file)
+    K("RC-Down"): K("Enter"),               # Go Down dir (open folder/file)
+    # K("RC-Shift-Down"): K("RC-Shift-o"),  # Open in new window (doesn't match Finder)
+    K("RC-Super-o"): K("RC-Shift-o"),       # Open in new window
+    K("RC-Left"): K("M-Left"),              # Go Back
+    K("RC-Right"): K("M-Right"),            # Go Forward
+    # To enable renaming files with the Enter key, uncomment the two lines just below. 
+    # Use Ctrl+Shift+Enter to escape or activate text fields. 
+    # K("Enter"): K("F2"),				    # Rename with Enter key
+    # K("RC-Shift-Enter"): K("Enter"),	    # Remap alternative "Enter" key to easily activate/exit text fields
+    K("RC-Shift-dot"): K("RC-H"),           # Show/hide hidden files ("dot" files)
+    K("RC-Backspace"): K("Delete"),	        # Move to Trash (delete)
+    K("RC-D"): [K("RC-C"),K("RC-V")],       # Mimic Finder's Duplicate command (Copy, then Paste)
+},"File Managers - Finder")
+
+########################################
+# END OF FILE MANAGER GROUP OF KEYMAPS #
+########################################
 
 # Keybindings for Browsers
 define_keymap(re.compile(browserStr, re.IGNORECASE),{
