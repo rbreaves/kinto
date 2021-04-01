@@ -22,7 +22,8 @@ remotes = [client.casefold() for client in remotes]
 
 # Add remote desktop clients & VMs for no remapping
 terminals.extend(remotes)
-mscodes.extend(remotes)
+remotes.extend(terminals)
+remotes = list(set(remotes))
 
 # Use for browser specific hotkeys
 browsers = ["Chromium","Chromium-browser","Google-chrome","microsoft-edge-dev","microsoft-edge","Epiphany","Firefox","Discord"]
@@ -210,7 +211,7 @@ define_keymap(re.compile("^jetbrains-(?!.*toolbox).*$", re.IGNORECASE),{
     # VCS/Local History
     K("Super-v"): K("M-Grave"),                 # VCS quick popup
     K("Super-c"): K("LC-c"),                    # Sigints - interrupt
-})
+},"Jetbrains")
 
 # Keybindings for Nautilus
 define_keymap(re.compile("org.gnome.nautilus", re.IGNORECASE),{
@@ -218,7 +219,7 @@ define_keymap(re.compile("org.gnome.nautilus", re.IGNORECASE),{
     K("RC-Down"): K("M-Down"),      # Go Down dir
     K("RC-Left"): K("M-Left"),      # Go Back
     K("RC-Right"): K("M-Right"),    # Go Forward
-})
+},"Nautilus - Finder")
 
 # Keybindings for Browsers
 define_keymap(re.compile(browserStr, re.IGNORECASE),{
@@ -244,13 +245,14 @@ define_keymap(re.compile("Firefox", re.IGNORECASE),{
 })
 define_keymap(re.compile(chromeStr, re.IGNORECASE),{
     K("C-comma"): [K("M-e"), K("s"),K("Enter")],
-})
+}, "Browsers")
 # Opera C-F12
 
 # None referenced here originally
 # - but remote clients and VM software ought to be set here
 # These are the typical remaps for ALL GUI based apps
 define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
+    K("RC-Dot"): K("Esc"),                          # Mimic macOS Cmd+dot = Escape key (not in terminals)
     K("RC-Space"): K("Alt-F1"),                   # Default SL - Launch Application Menu (gnome/kde)
     K("RC-F3"):K("Super-d"),                      # Default SL - Show Desktop (gnome/kde,eos)
     K("RC-Super-f"):K("M-F10"),                      # Default SL - Maximize app (gnome/kde)
@@ -326,7 +328,7 @@ define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
     K("Alt-Delete"): K("C-Delete"),               # Delete Right Word of Cursor
     # K(""): pass_through_key,                      # cancel
     # K(""): K(""),                                 #
-})
+}, "General GUI")
 
 define_keymap(lambda wm_class: wm_class.casefold() not in mscodes,{
     # Wordwise remaining - for Everything but VS Code
@@ -349,7 +351,7 @@ define_keymap(lambda wm_class: wm_class.casefold() not in mscodes,{
     #   https://superuser.com/questions/770301/pentadactyl-how-to-disable-menu-bar-toggle-by-alt
     # **
     #
-})
+}, "Wordwise - not vscode")
 
 # Keybindings for VS Code
 define_keymap(re.compile(codeStr, re.IGNORECASE),{
@@ -534,7 +536,7 @@ define_keymap(re.compile(termStr, re.IGNORECASE),{
     K("RC-N"): K("C-Shift-N"),
     K("RC-M"): K("C-Shift-M"),
     K("RC-COMMA"): K("C-Shift-COMMA"),
-    K("RC-DOT"): K("C-Shift-DOT"),
+    K("RC-Dot"): K("LC-c"),
     K("RC-SLASH"): K("C-Shift-SLASH"),
     K("RC-KPASTERISK"): K("C-Shift-KPASTERISK"),
 }, "terminals")
