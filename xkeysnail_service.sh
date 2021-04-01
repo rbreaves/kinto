@@ -491,6 +491,12 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	fi
 	sed -i "s#{xkeysnail}#`which xkeysnail`#g" ./linux/xkeysnail.service.new
 	sed -i "s#{xkeysnail}#`which xkeysnail`#g" ./linux/limitedadmins.new
+	
+	# openSUSE Tumbleweed needs DISPLAY exported inside main command to avoid display "" not found error. 
+	if [ "$distro" == "opensusetumbleweed" ]; then
+		sed -i "s#'/usr/bin/xhost#'export DISPLAY=`echo $DISPLAY` \&\& /usr/bin/xhost#g" ./linux/xkeysnail.service.new
+	fi
+	
 	sudo mv ./linux/xkeysnail.service.new "$xkeypath"xkeysnail.service && echo "Service file added to "$xkeypath"xkeysnail.service"
 	sudo chown root:root ./linux/limitedadmins.new
 	# Add a check here for xkeysnail path resolving
