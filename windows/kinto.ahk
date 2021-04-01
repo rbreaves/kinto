@@ -131,6 +131,7 @@ Exit() {
 SetTitleMatchMode, 2
 
 GroupAdd, terminals, ahk_exe ubuntu.exe
+GroupAdd, terminals, ahk_exe ubuntu2004.exe
 GroupAdd, terminals, ahk_exe ConEmu.exe
 GroupAdd, terminals, ahk_exe ConEmu64.exe
 GroupAdd, terminals, ahk_exe powershell.exe
@@ -144,6 +145,7 @@ GroupAdd, terminals, Fluent Terminal ahk_class ApplicationFrameWindow
 GroupAdd, terminals, ahk_class Console_2_Main
 
 GroupAdd, posix, ahk_exe ubuntu.exe
+GroupAdd, posix, ahk_exe ubuntu2004.exe
 GroupAdd, posix, ahk_exe ConEmu.exe
 GroupAdd, posix, ahk_exe ConEmu64.exe
 GroupAdd, posix, ahk_exe Hyper.exe
@@ -411,6 +413,7 @@ GroupAdd, intellij, ahk_exe idea64.exe
     ; #If                                                      ; Chromebook
 
     #IfWinNotActive ahk_group terminals
+        ^.::Send {Esc}
         ; emacs style
         #n::Send {Down}
         #p::Send {Up}
@@ -672,6 +675,7 @@ GroupAdd, intellij, ahk_exe idea64.exe
         ; Sigints - interrupt
         ; $#c::Send {Ctrl down}c{Ctrl up} ; Default
         ; $!c::Send {Ctrl down}c{Ctrl up} ; CB/IBM
+        $^.::Send {Ctrl down}c{Ctrl up}
 
         ; Windows Terminal
         ; Ctrl+Shift+C should do nothing
