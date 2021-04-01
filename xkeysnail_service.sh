@@ -589,11 +589,6 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	
 	sed -i "s#{xkeysnail}#`which xkeysnail`#g" ./linux/xkeysnail.service.new
 	sed -i "s#{xkeysnail}#`which xkeysnail`#g" ./linux/limitedadmins.new
-	
-	if [ "$distro" == "opensusetumbleweed" ]; then
-		sed -i "s#'/usr/bin/xhost#'export DISPLAY=`echo $DISPLAY` \&\& /usr/bin/xhost#g" ./linux/xkeysnail.service.new
-	fi
-	
 	sudo mv ./linux/xkeysnail.service.new "$xkeypath"xkeysnail.service && echo "Service file added to "$xkeypath"xkeysnail.service"
 	sudo chown root:root ./linux/limitedadmins.new
 	# Add a check here for xkeysnail path resolving
