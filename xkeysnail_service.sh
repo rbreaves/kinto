@@ -20,14 +20,14 @@ if [ "$sessiontype" == "wayland" ]; then
 	echo "     Kinto/xkeysnail doesn't work yet under Wayland.   "
 	echo "  ==================================================== "
 	echo  
-elif ! [ "$sessiontype" == "x11" ]; then 
+elif ! ([ "$sessiontype" == "x11" ] || [ "$sessiontype" == "xorg" ]); then 
 	echo 
 	echo "  ==================================================== "
 	echo "      Make sure you're in an Xorg/X11 environment.     "
 	echo "     Kinto/xkeysnail doesn't work yet under Wayland.  "
 	echo "  ==================================================== "
 	echo 
-elif [ "$sessiontype" == "x11" ]; then 
+elif [ "$sessiontype" == "x11" ] || [ "$sessiontype" == "xorg" ]; then 
 	echo 
 	echo "  X11 detected... good to go."
 	echo 
