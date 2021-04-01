@@ -686,8 +686,4 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 		echo -e "\nNote: you may want these supporting packages\n'sudo apt install gnome-tweaks gnome-shell-extension-appindicator gir1.2-appindicator3-0.1'"
 	fi
 	
-	if [ "$distro" == "opensusetumbleweed" ]; then 
-		sudo systemctl enable xkeysnail.service
-	fi
-
 fi
