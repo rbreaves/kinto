@@ -3,40 +3,6 @@
 # set about:config?filter=ui.key.menuAccessKeyFocuses
 # to false for wordwise to work in Firefox
 
-typeset -l sessiontype
-sessiontype=$XDG_SESSION_TYPE
-
-if [ "$sessiontype" == "wayland" ]; then 
-	echo 
-	echo "  ==================================================== "
-	echo "  Seems like you may be running Wayland, not Xorg/X11. "
-	echo "     Kinto/xkeysnail doesn't work yet under Wayland.   "
-	echo "  ==================================================== "
-	echo  
-elif ! [ "$sessiontype" == "x11" ]; then 
-	echo 
-	echo "  ==================================================== "
-	echo "      Make sure you're in an Xorg/X11 environment.     "
-	echo "     Kinto/xkeysnail doesn't work yet under Wayland.  "
-	echo "  ==================================================== "
-	echo 
-elif [ "$sessiontype" == "x11" ]; then 
-	echo 
-	echo "  X11 detected... good to go."
-	echo 
-fi
-
-if ! [ "$sessiontype" == "x11" ]; then
-	while true; do
-		read -rep $'  Are you sure you want to continue the install? (y/n): ' continue
-		case $continue in
-			[yY]* ) break;;
-			[nN]* ) echo -e "\n  Install canceled.\n\n  Log in with Xorg/X11 option and try again.\n"; exit 0; break;;
-			* ) ;;
-		esac
-	done
-fi
-
 typeset -l distro
 distro=$(awk -F= '$1=="NAME" { gsub("[\",!,_, ]","",$2);print $2 ;}' /etc/os-release)
 typeset -l dename
