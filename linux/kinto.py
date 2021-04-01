@@ -43,8 +43,7 @@ remotes = [client.casefold() for client in remotes]
 
 # Add remote desktop clients & VMs for no remapping
 terminals.extend(remotes)
-remotes.extend(terminals)
-remotes = list(set(remotes))
+mscodes.extend(remotes)
 
 # Use for browser specific hotkeys
 browsers = [
@@ -288,11 +287,15 @@ define_keymap(re.compile(chromeStr, re.IGNORECASE),{
 }, "Browsers")
 # Opera C-F12
 
+# Note: terminals extends to remotes as well
+define_keymap(lambda wm_class: wm_class.casefold() not in terminals,{
+    K("RC-Dot"): K("Esc"),                        # Mimic macOS Cmd+dot = Escape key (not in terminals)
+})
+
 # None referenced here originally
 # - but remote clients and VM software ought to be set here
 # These are the typical remaps for ALL GUI based apps
 define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
-    K("RC-Dot"): K("Esc"),                          # Mimic macOS Cmd+dot = Escape key (not in terminals)
     K("RC-Space"): K("Alt-F1"),                   # Default SL - Launch Application Menu (gnome/kde)
     K("RC-F3"):K("Super-d"),                      # Default SL - Show Desktop (gnome/kde,eos)
     K("RC-Super-f"):K("M-F10"),                      # Default SL - Maximize app (gnome/kde)
