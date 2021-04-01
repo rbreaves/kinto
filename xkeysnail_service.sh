@@ -292,6 +292,13 @@ if ! [ -x "$(command -v pip3)" ]; then
 			echo 
 			echo "Will need to install python-pip..."
 			sudo ./linux/system-config/unipkg.sh "python-setuptools python-pip"
+		else 
+			echo 
+			echo "Found Manjaro"
+			echo 
+			echo "Will need to install pip wheel evdev setuptools"
+			sudo ./linux/system-config/unipkg.sh "python-evdev python-wheel"
+			sudo ./linux/system-config/unipkg.sh "python-setuptools python-pip"
 		fi
 	else
 		echo 
