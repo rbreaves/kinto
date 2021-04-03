@@ -209,8 +209,6 @@ sudo systemctl disable xkeysnail >/dev/null 2>&1
 sudo pkill -f bin/xkeysnail >/dev/null 2>&1
 sudo pkill -f "is-active xkeysnail" >/dev/null 2>&1
 
-pip3 install pillow
-
 # Add additional shortcuts if needed, does not modify existing ones
 
 if [[ $dename == 'gnome' || $dename == 'budgie' ]];then
@@ -352,6 +350,8 @@ fi
 if [ "$distro" == 'linuxmint' ]; then
 	pip3 install setuptools
 fi
+
+pip3 install pillow
 
 # echo "Transferring files..."
 mkdir -p ~/.config/kinto
