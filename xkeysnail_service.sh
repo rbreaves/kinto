@@ -377,7 +377,16 @@ yes | cp -rf ./linux/xkeysnail.desktop ~/.config/kinto/xkeysnail.desktop
 # logoff fix - not solid for every os. Prevents missed 1 character input on login
 # yes | sudo cp -rf linux/gnome_logoff.sh ~/.config/kinto/logoff.sh
 
-echo "$(git describe --tag --abbrev=0 | head -n 1)" "build" "$(git rev-parse --short HEAD)" > ~/.config/kinto/version
+if [ -d "./.git" ] 
+then
+	echo "$(git describe --tag --abbrev=0 | head -n 1)" "build" "$(git rev-parse --short HEAD)" > ~/.config/kinto/version
+elif [ -f "./dl_version" ]; then
+	cp ./dl_version  ~/.config/kinto/version
+else
+	# Not a typo - v is built in
+	echo "ersion Unknown"  > ~/.config/kinto/version
+fi
+
 yes | cp -rf ./linux/kinto.py ./linux/kinto.py.new
 yes | cp -rf ./linux/limitedadmins ./linux/limitedadmins.new
 yes | cp -rf ./linux/gui/ ~/.config/kinto/
