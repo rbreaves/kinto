@@ -36,7 +36,7 @@ Video Tutorial: [Install Kinto.sh for Linux in less than a minute](https://www.y
 
 Paste the following into your Terminal
 ```
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/rbreaves/kinto/master/install/linux.sh)"
+/bin/bash -c "$(curl -fsSL http://linux.kinto.sh)"
 ```
 
 ### Old Install Method
