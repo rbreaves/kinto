@@ -324,6 +324,10 @@ expsh=" "
 # 	echo "Will need to install inotify-tools to restart key remapper live for config file changes..."
 # 	sudo ./linux/system-config/unipkg.sh inotify-tools
 # fi
+if ! [ -x "$(command -v git)" ]; then
+	echo "Will need to install git..."
+	sudo ./linux/system-config/unipkg.sh git
+fi
 if ! [ -x "$(command -v pip3)" ]; then
 	echo "Will need to install python3-pip..."
 	sudo ./linux/system-config/unipkg.sh python3-pip
