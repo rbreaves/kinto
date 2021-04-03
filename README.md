@@ -32,6 +32,15 @@ Video Tutorial: [Install Kinto.sh for Linux in less than a minute](https://www.y
 
 <img src="https://user-images.githubusercontent.com/10969616/97070698-179c4500-15a0-11eb-8064-c03aa7f4d4a5.png" width="75%">
 
+### Quick Install Method
+
+Paste the following into your Terminal
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/rbreaves/kinto/master/install/linux.sh)"
+```
+
+### Old Install Method
+
 1. clone this repo
 ```
 git clone https://github.com/rbreaves/kinto.git
