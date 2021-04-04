@@ -1,15 +1,31 @@
 #!/bin/bash
 
 if pkgmgr="$( which apt-get )" 2> /dev/null; then
-   echo "Debian"
+   echo 
+   echo "Debian apt-get package manager detected... "
+   echo "Installing $1... "
+   echo 
    $pkgmgr update
-   $pkgmgr --yes --force-yes install $1
+   $pkgmgr --yes install $1
 elif pkgmgr="$( which dnf )" 2> /dev/null; then
-   echo "dnf"
+   echo 
+   echo "dnf package manager detected... "
+   echo "Installing $1... "
+   echo 
    $pkgmgr check-update; $pkgmgr install -y $1
 elif pkgmgr="$( which pacman )" 2> /dev/null; then
-   echo "Arch-based"
+   echo 
+   echo "Arch-based pacman package manager detected... "
+   echo "Installing $1... "
+   echo 
    $pkgmgr -Syy;yes | $pkgmgr -S $1
+elif pkgmgr="$( which zypper )" 2> /dev/null; then
+   echo 
+   echo "zypper package manager detected... "
+   echo "Installing $1... "
+   echo 
+   $pkgmgr refresh
+   $pkgmgr -n install $1
 else
    echo "Package manager not found, please install $1" >&2
    exit 1
