@@ -337,8 +337,10 @@ if ! [ -x "$(command -v python3-config)" ]; then
 		pydev="python3-dev"
 	elif [ "$distro" == "fedora" ]; then
 		pydev="python3-devel"
+	elif [ "${distro:0:8}" == "opensuse" ]; then
+		pydev="python3-devel python3-gobject python3-gobject-Gdk typelib-1_0-Gtk-3_0 libgtk-3-0"
 	fi
-	if [ "$distro" == "gnome" ] || [ "$distro" == "fedora" ] || [ "$distro" == "debian" ] || [ "$distro" == 'linuxmint' ]; then
+	if [ "$distro" == "gnome" ] || [ "$distro" == "fedora" ] || [ "$distro" == "debian" ] || [ "$distro" == 'linuxmint' ] || [ "${distro:0:8}" == "opensuse" ]; then
 		echo "Will need to install $pydev..."
 		sudo ./linux/system-config/unipkg.sh "$pydev"
 	fi
@@ -347,8 +349,10 @@ fi
 # 	sudo ./linux/system-config/unipkg.sh gnome-tweaks gnome-shell-extension-appindicator gir1.2-appindicator3-0.1
 # fi
 if ! [ -x "$(command -v xhost)" ] || ! [ -x "$(command -v gcc)" ]; then
-	if [ "$distro" == "\"manjaro linux\"" ]; then
+	if [ "$distro" == "manjarolinux" ]; then
 		sudo ./linux/system-config/unipkg.sh "xorg-xhost gcc"
+	elif [ "${distro:0:8}" == "opensuse" ]; then
+		sudo ./linux/system-config/unipkg.sh "gcc"
 	fi
 fi
 if [ "$distro" == 'linuxmint' ]; then
@@ -494,8 +498,8 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	sed -i "s#{xkeysnail}#`which xkeysnail`#g" ./linux/xkeysnail.service.new
 	sed -i "s#{xkeysnail}#`which xkeysnail`#g" ./linux/limitedadmins.new
 	
-	# openSUSE Tumbleweed needs DISPLAY exported inside main command to avoid display "" not found error. 
-	if [ "$distro" == "opensusetumbleweed" ]; then
+	# openSUSE needs DISPLAY exported inside main command to avoid display "" not found error. 
+	if [[ ${distro:0:8} == "opensuse" ]];then
 		sed -i "s#'/usr/bin/xhost#'export DISPLAY=`echo $DISPLAY` \&\& /usr/bin/xhost#g" ./linux/xkeysnail.service.new
 	fi
 	
