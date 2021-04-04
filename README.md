@@ -32,6 +32,15 @@ Video Tutorial: [Install Kinto.sh for Linux in less than a minute](https://www.y
 
 <img src="https://user-images.githubusercontent.com/10969616/97070698-179c4500-15a0-11eb-8064-c03aa7f4d4a5.png" width="75%">
 
+### Quick Install Method
+
+Paste the following into your Terminal
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/rbreaves/kinto/master/install/linux.sh)"
+```
+
+### Old Install Method
+
 1. clone this repo
 ```
 git clone https://github.com/rbreaves/kinto.git
@@ -89,9 +98,13 @@ Video Tutorial: [How to Install Kinto.sh on Windows 10](https://youtu.be/sRk8A8k
 ### Quick install
 Open Powershell as Administrator and copy and paste the following. This will download & extract Kinto, install chocolatey, python3 and then install Kinto.
 
+**⚠ NOTE: Please inspect https://raw.githubusercontent.com/rbreaves/kinto/master/install/windows.ps1 and https://chocolatey.org/install.ps1 before running scripts directly. More information about running powershell scripts in this context can be found [here](https://chocolatey.org/install).**
+
 ```
-Invoke-WebRequest -Uri https://github.com/rbreaves/kinto/archive/refs/heads/master.zip -OutFile $env:USERPROFILE\Downloads\kinto.zip;Expand-Archive -LiteralPath "$env:USERPROFILE\Downloads\kinto.zip" -DestinationPath "$env:USERPROFILE\Downloads" -Force;Set-ExecutionPolicy Bypass -Scope Process -Force; iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex; choco install -y python3;cd "$env:USERPROFILE\Downloads\kinto-master";py .\setup.py
+Set-ExecutionPolicy Bypass -Scope Process -Force
+iwr https://raw.githubusercontent.com/rbreaves/kinto/master/install/windows.ps1 -UseBasicParsing | iex
 ```
+
 
 Update system tray to show Kinto icon at all times (optional)
 ```
