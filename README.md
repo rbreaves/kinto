@@ -46,21 +46,11 @@ Uninstall
 
 ### Old Install Method
 
-1. clone this repo
 ```
 git clone https://github.com/rbreaves/kinto.git
 cd kinto
-```
-2. Install python3 (If needed)
-
-Debian or Ubuntu 16.04 or 18.04
-```
 sudo apt update
 sudo apt install python3
-```
-
-3. Run the script, press 1 or 2 keys and you are done.
-```
 ./setup.py
 ```
 
