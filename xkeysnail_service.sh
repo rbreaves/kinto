@@ -3,10 +3,25 @@
 # set about:config?filter=ui.key.menuAccessKeyFocuses
 # to false for wordwise to work in Firefox
 
+################################################################################
+################################  VARIABLES  ###################################
+################################################################################
+
+# Allow users to submit CLI arguments as "--" style options and still match
+typeset -l arg1
+arg1="$(echo $1 | sed -e 's/^--//g')"
+
+# Identify distribution
 typeset -l distro
 distro=$(awk -F= '$1=="NAME" { gsub("[\",!,_, ]","",$2);print $2 ;}' /etc/os-release)
+
+# Identify Desktop Environment
 typeset -l dename
 dename=$(./linux/system-config/dename.sh | cut -d " " -f1)
+
+################################################################################
+################################  FUNCTIONS  ###################################
+################################################################################
 
 function uninstall {
 
@@ -158,7 +173,29 @@ function budgieUpdate {
 	fi
 }
 
-if [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
+################################################################################
+####################  PROMPT FOR ACTION IF NO OPTION GIVEN  ####################
+################################################################################
+
+# Ask user for instructions (install/remove/quit) if no arguments given on command line.
+if [[ $arg1 == "" ]]; then 
+    while true; do
+        read -rep $'\n\n  ================\n   Setup Options:\n  ================\n\n   [I]nstall Kinto\n   [R]emove Kinto\n   [Q]uit\n\n\n  (i/r/q): ' action	
+        case $action in
+            [Ii]* ) arg1='install'; echo -e "\n\nInstalling Kinto...\n"; break;;
+            [Rr]* ) arg1='uninstall'; echo -e "\n\nUninstalling Kinto...\n"; break;;
+            [Qq]* ) arg1='quit'; echo -e "\n\nExiting Kinto setup...\n"; exit 0; break;;
+            * ) echo -e "\n\n Please answer [i](install), [r](remove) or [q](quit)."; sleep 1;;
+        esac
+    done
+fi
+
+################################################################################
+###########################  UNINSTALLER PROCESS  ##############################
+################################################################################
+
+# Start uninstall process if matching command-line argument given. 
+if [[ $arg1 == "5" || $arg1 == "-r" || $arg1 == "remove" || $arg1 == "uninstall" ]]; then
 	echo "Uninstalling Kinto - xkeysnail (udev)"
 	uninstall
 	echo "Removing any Apple driver settings Kinto may have have set..."
@@ -202,7 +239,27 @@ if [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	sudo systemctl daemon-reload
 	# sudo systemctl --state=not-found --all | grep xkeysnail
 	exit 0
+# Confirm we will continue install process if matching command-line argument given. 
+elif [[ $arg1 == "-i" || $arg1 == "install" ]]; then
+    echo 
+    echo "Proceeding with Kinto install..."
+    echo
+# If command-line argument is not empty but doesn't match first two conditions, exit, display help. 
+elif ! [[ $arg1 == "" ]]; then
+    echo -e "\n\n  ERROR: Argument \"$arg1\" not recognized, exiting Kinto setup...\n\n"
+    echo "  Valid Kinto setup script command-line arguments are: "
+    echo 
+    echo "  To Install: -i, install, --install"
+    echo "  To Remove/Uninstall: -r, remove, --remove, uninstall, --uninstall"
+    echo 
+    # Exit setup because given command-line argument doesn't match any known option. 
+    exit 0
 fi
+# End of (uninstall [elif] install [elif] error-exit) logic block. 
+
+################################################################################
+#####################  START OF MAIN INSTALL PROCESS  ##########################
+################################################################################
 
 sudo systemctl stop xkeysnail >/dev/null 2>&1
 sudo systemctl disable xkeysnail >/dev/null 2>&1
