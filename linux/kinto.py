@@ -9,6 +9,7 @@ from xkeysnail.transform import *
 # xbindkeys -mk
 terminals = [
     "alacritty",
+    "deepin-terminal",
     "eterm",
     "gnome-terminal",
     "guake",
