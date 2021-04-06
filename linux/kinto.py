@@ -213,8 +213,7 @@ define_keymap(re.compile("^jetbrains-(?!.*toolbox).*$", re.IGNORECASE),{
     K("C-M-o"): K("C-M-Shift-n"),               # Go to symbol
     K("Super-Right"): K("M-Right"),             # Go to next editor tab
     K("Super-Left"): K("M-Left"),               # Go to previous editor tab
-    K("Super-l"): K("C-g"),                     # Go to line
-    K("Super-e"): K("C-e"),                     # Recent files popup
+    K("C-l"): K("C-g"),                         # Go to line
     K("M-Space"): K("C-Shift-i"),               # Open quick definition lookup
     K("C-Y"): K("C-Shift-i"),                   # Open quick definition lookup
     K("Super-Shift-b"): K("C-Shift-b"),         # Go to type declaration
