@@ -428,6 +428,8 @@ define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
     K("RC-Space"): K("Alt-F1"),                   # Default SL - Launch Application Menu (gnome/kde)
     K("RC-F3"):K("Super-d"),                      # Default SL - Show Desktop (gnome/kde,eos)
     K("RC-Super-f"):K("M-F10"),                   # Default SL - Maximize app (gnome/kde)
+    # K("RC-Super-q"): K("Super-l"),                # Default SL - Lock Screen (gnome)
+    # K("RC-Super-q"): K("LC-M-l"),                 # Default SL - Lock Screen (kde)
     # K("Super-Right"):K("C-M-Right"),              # Default SL - Change workspace (budgie)
     # K("Super-Left"):K("C-M-Left"),                # Default SL - Change workspace (budgie)
     K("RC-Q"): K("M-F4"),                         # Default SL - not-popos
@@ -651,6 +653,8 @@ define_keymap(re.compile("Io.elementary.terminal|kitty", re.IGNORECASE),{
 }, "Elementary Terminal tab switching")
 
 define_keymap(re.compile(termStr, re.IGNORECASE),{
+    # K("LC-RC-q"): K("Super-l"),                   # Default SL - Lock Screen (gnome)
+    # K("LC-RC-q"): K("LC-M-l"),                    # Default SL - Lock Screen (kde)
     # K("LC-Right"):K("C-M-Right"),                 # Default SL - Change workspace (budgie)
     # K("LC-Left"):K("C-M-Left"),                   # Default SL - Change workspace (budgie)
     # K("LC-Left"):K("C-M-End"),                    # SL - Change workspace xfce4     
