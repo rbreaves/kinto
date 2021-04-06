@@ -291,7 +291,7 @@ define_keymap(re.compile("io.elementary.files", re.IGNORECASE),{
 
 # Keybindings overrides for Nautilus 
 # (overrides some bindings from general file manager code block below)
-define_keymap(re.compile("org.gnome.Nautilus", re.IGNORECASE),{
+define_keymap(re.compile("org.gnome.nautilus|nautilus", re.IGNORECASE),{
     K("RC-Super-o"): K("Shift-Enter"),           # Open in new window
     # K("RC-Super-o"): K("RC-Enter"),                 # Open in new tab
     K("RC-comma"): K("RC-comma"),                   # Overrides "Open preferences dialog" shortcut below
@@ -325,8 +325,9 @@ filemanagers = [
     "dde-file-manager",
     "dolphin",
     "io.elementary.files",
+    "nautilus",
     "nemo",
-    "org.gnome.Nautilus",
+    "org.gnome.nautilus",
     "pcmanfm",
     "pcmanfm-qt",
     "spacefm",
