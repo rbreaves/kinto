@@ -256,28 +256,29 @@ define_keymap(re.compile("^jetbrains-(?!.*toolbox).*$", re.IGNORECASE),{
 # Keybindings overrides for Caja 
 # (overrides some bindings from general file manager code block below)
 define_keymap(re.compile("caja", re.IGNORECASE),{
-    # K("RC-Super-o"): K("RC-Shift-Enter"),   # Open in new tab 
-    K("RC-Super-o"): K("RC-Shift-W"),       # Open in new window
+    # K("RC-Super-o"): K("RC-Shift-Enter"),       # Open in new tab 
+    K("RC-Super-o"): K("RC-Shift-W"),           # Open in new window
 },"Overrides for Caja - Finder")
 
 # Keybindings overrides for DDE (Deepin) File Manager 
 # (overrides some bindings from general file manager code block below)
 define_keymap(re.compile("dde-file-manager", re.IGNORECASE),{
-    K("RC-i"): K("RC-i"),                # File properties dialog (Get Info)
-    K("RC-comma"): K("RC-comma"),       # Open preferences dialog (doesn't work, no shortcut available?)
-    K("RC-Up"): K("RC-Up"),                  # Go Up dir
+    K("RC-i"): K("RC-i"),                   # File properties dialog (Get Info)
+    K("RC-comma"): None,                    # Disable preferences shortcut (no shortcut available)
+    K("RC-Up"): K("RC-Up"),                 # Go Up dir
 },"Overrides for DDE File Manager - Finder")
 
 # Keybindings overrides for Dolphin 
 # (overrides some bindings from general file manager code block below)
 define_keymap(re.compile("dolphin", re.IGNORECASE),{
-    K("RC-Super-o"): K("RC-Shift-o"), # Open in new window (or new tab, user's choice)
-    # "Open in new window" requires manually setting custom shortcut of Ctrl+Shift+o 
-    # in Dolphin's keyboard shortcuts. There is no default shortcut set for this function.
-    ### 
-    # "Open in new tab" requires manually setting custom shortcut of Ctrl+Shift+o in 
-    # Dolphin's keyboard shortcuts. There is no default shortcut set for this function. 
-    ### 
+    ##########################################################################################
+    ### "Open in new window" requires manually setting custom shortcut of Ctrl+Shift+o 
+    ### in Dolphin's keyboard shortcuts. There is no default shortcut set for this function.
+    ##########################################################################################
+    ### "Open in new tab" requires manually setting custom shortcut of Ctrl+Shift+o in 
+    ### Dolphin's keyboard shortcuts. There is no default shortcut set for this function.  
+    ##########################################################################################
+    K("RC-Super-o"): K("RC-Shift-o"),           # Open in new window (or new tab, user's choice, see above)
     K("RC-Shift-N"): K("F10"),                  # Create new folder
     K("RC-comma"): K("RC-Shift-comma"),         # Open preferences dialog
 },"Overrides for Dolphin - Finder")
@@ -286,20 +287,20 @@ define_keymap(re.compile("dolphin", re.IGNORECASE),{
 # (overrides some bindings from general file manager code block below)
 define_keymap(re.compile("io.elementary.files", re.IGNORECASE),{
     # K("RC-Super-o"): K("Shift-Enter"),          # Open folder in new tab
-    K("RC-Comma"): None,                        # Disable preferences shortcut since none availabe
+    K("RC-Comma"): None,                        # Disable preferences shortcut since none available
 },"Overrides for Pantheon - Finder")
 
 # Keybindings overrides for Nautilus 
 # (overrides some bindings from general file manager code block below)
 define_keymap(re.compile("org.gnome.nautilus|nautilus", re.IGNORECASE),{
-    K("RC-Super-o"): K("Shift-Enter"),           # Open in new window
-    # K("RC-Super-o"): K("RC-Enter"),                 # Open in new tab
-    K("RC-comma"): K("RC-comma"),                   # Overrides "Open preferences dialog" shortcut below
+    K("RC-Super-o"): K("Shift-Enter"),          # Open in new window
+    # K("RC-Super-o"): K("RC-Enter"),             # Open in new tab
+    K("RC-comma"): K("RC-comma"),               # Overrides "Open preferences dialog" shortcut below
 },"Overrides for Nautilus - Finder")
 
-# Keybindings overrides for PCManFM 
+# Keybindings overrides for PCManFM and PCManFM-Qt
 # (overrides some bindings from general file manager code block below)
-define_keymap(re.compile("pcmanfm", re.IGNORECASE),{
+define_keymap(re.compile("pcmanfm|pcmanfm-qt", re.IGNORECASE),{
     K("RC-Backspace"): [K("Delete"),K("Enter")],    # Move to Trash (delete, bypass dialog)
 },"Overrides for PCManFM - Finder")
 
@@ -363,8 +364,8 @@ define_keymap(re.compile(filemanagerStr, re.IGNORECASE),{
     K("RC-Left"): K("M-Left"),              # Go Back
     K("RC-Right"): K("M-Right"),            # Go Forward
     K("RC-Up"): K("M-Up"),                  # Go Up dir
-    # K("RC-Down"): K("M-Down"),            # Go Down dir (only works on folders) [not universal]
-    # K("RC-Down"): K("RC-O"),              # Go Down dir (open folder/file) [not universal]
+    # K("RC-Down"): K("M-Down"),              # Go Down dir (only works on folders) [not universal]
+    # K("RC-Down"): K("RC-O"),                # Go Down dir (open folder/file) [not universal]
     K("RC-Down"): K("Enter"),               # Go Down dir (open folder/file) [universal]
     ###########################################################################################################
     ###  Open in New Window | Move to Trash | Duplicate file/folder                                         ###
@@ -376,8 +377,8 @@ define_keymap(re.compile(filemanagerStr, re.IGNORECASE),{
     ###  To enable renaming files with the Enter key, uncomment the two keymapping lines just below this.   ###
     ###  Use Ctrl+Shift+Enter to escape or activate text fields such as "[F]ind" and "[L]ocation" fields.   ###
     ###########################################################################################################
-    # K("Enter"): K("F2"),				    # Rename with Enter key
-    # K("RC-Shift-Enter"): K("Enter"),	    # Remap alternative "Enter" key to easily activate/exit text fields
+    # K("Enter"): K("F2"),                    # Rename with Enter key
+    # K("RC-Shift-Enter"): K("Enter"),        # Remap alternative "Enter" key to easily activate/exit text fields
 },"File Managers - Finder")
 
 ############################################
@@ -426,7 +427,7 @@ define_keymap(lambda wm_class: wm_class.casefold() not in terminals,{
 define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
     K("RC-Space"): K("Alt-F1"),                   # Default SL - Launch Application Menu (gnome/kde)
     K("RC-F3"):K("Super-d"),                      # Default SL - Show Desktop (gnome/kde,eos)
-    K("RC-Super-f"):K("M-F10"),                      # Default SL - Maximize app (gnome/kde)
+    K("RC-Super-f"):K("M-F10"),                   # Default SL - Maximize app (gnome/kde)
     # K("Super-Right"):K("C-M-Right"),              # Default SL - Change workspace (budgie)
     # K("Super-Left"):K("C-M-Left"),                # Default SL - Change workspace (budgie)
     K("RC-Q"): K("M-F4"),                         # Default SL - not-popos
@@ -475,7 +476,7 @@ define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
     K("Super-k"): [K("Shift-End"), K("Backspace")],
     K("Super-d"): K("Delete"),
 
-    # K("M-RC-Space"): K(""),                   # Open Finder - Placeholder
+    # K("M-RC-Space"): K(""),                       # Open Finder - Placeholder
 
     # Wordwise
     K("RC-Left"): K("Home"),                      # Beginning of Line
