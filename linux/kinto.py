@@ -278,7 +278,7 @@ define_keymap(re.compile("dolphin", re.IGNORECASE),{
     ### "Open in new tab" requires manually setting custom shortcut of Ctrl+Shift+o in 
     ### Dolphin's keyboard shortcuts. There is no default shortcut set for this function.  
     ##########################################################################################
-    K("RC-Super-o"): K("RC-Shift-o"), # Open in new window (or new tab, user's choice, see above)
+    K("RC-Super-o"): K("RC-Shift-o"),           # Open in new window (or new tab, user's choice, see above)
     K("RC-Shift-N"): K("F10"),                  # Create new folder
     K("RC-comma"): K("RC-Shift-comma"),         # Open preferences dialog
 },"Overrides for Dolphin - Finder")
@@ -427,7 +427,7 @@ define_keymap(lambda wm_class: wm_class.casefold() not in terminals,{
 define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
     K("RC-Space"): K("Alt-F1"),                   # Default SL - Launch Application Menu (gnome/kde)
     K("RC-F3"):K("Super-d"),                      # Default SL - Show Desktop (gnome/kde,eos)
-    K("RC-Super-f"):K("M-F10"),                      # Default SL - Maximize app (gnome/kde)
+    K("RC-Super-f"):K("M-F10"),                   # Default SL - Maximize app (gnome/kde)
     # K("Super-Right"):K("C-M-Right"),              # Default SL - Change workspace (budgie)
     # K("Super-Left"):K("C-M-Left"),                # Default SL - Change workspace (budgie)
     K("RC-Q"): K("M-F4"),                         # Default SL - not-popos
@@ -476,7 +476,7 @@ define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
     K("Super-k"): [K("Shift-End"), K("Backspace")],
     K("Super-d"): K("Delete"),
 
-    # K("M-RC-Space"): K(""),                   # Open Finder - Placeholder
+    # K("M-RC-Space"): K(""),                       # Open Finder - Placeholder
 
     # Wordwise
     K("RC-Left"): K("Home"),                      # Beginning of Line
