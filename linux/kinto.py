@@ -18,6 +18,7 @@ terminals = [
     "kinto-gui.py",
     "kitty",
     "konsole",
+    "lxterminal",
     "mate-terminal",
     "qterminal",
     "sakura",
