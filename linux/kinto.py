@@ -377,8 +377,8 @@ define_keymap(re.compile(filemanagerStr, re.IGNORECASE),{
     ###  To enable renaming files with the Enter key, uncomment the two keymapping lines just below this.   ###
     ###  Use Ctrl+Shift+Enter to escape or activate text fields such as "[F]ind" and "[L]ocation" fields.   ###
     ###########################################################################################################
-    # K("Enter"): K("F2"),				      # Rename with Enter key
-    # K("RC-Shift-Enter"): K("Enter"),	      # Remap alternative "Enter" key to easily activate/exit text fields
+    # K("Enter"): K("F2"),                    # Rename with Enter key
+    # K("RC-Shift-Enter"): K("Enter"),        # Remap alternative "Enter" key to easily activate/exit text fields
 },"File Managers - Finder")
 
 ############################################
