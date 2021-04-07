@@ -249,6 +249,12 @@ define_keymap(re.compile("^jetbrains-(?!.*toolbox).*$", re.IGNORECASE),{
     K("Super-c"): K("LC-c"),                    # Sigints - interrupt
 },"Jetbrains")
 
+# Keybindings overrides for gedit 
+define_keymap(re.compile("gedit", re.IGNORECASE),{
+    K("Super-Page_Up"): K("C-Page_Up"),
+    K("Super-Page_Down"): K("C-Page_Down"),
+},"Overrides for Gedit - Editor")
+
 ##############################################
 ### START OF FILE MANAGER GROUP OF KEYMAPS ###
 ##############################################
@@ -295,6 +301,8 @@ define_keymap(re.compile("org.gnome.nautilus|nautilus", re.IGNORECASE),{
     K("RC-Super-o"): K("Shift-Enter"),           # Open in new window
     # K("RC-Super-o"): K("RC-Enter"),                 # Open in new tab
     K("RC-comma"): K("RC-comma"),                   # Overrides "Open preferences dialog" shortcut below
+    K("Super-Page_Up"): K("C-Page_Up"),
+    K("Super-Page_Down"): K("C-Page_Down"),
 },"Overrides for Nautilus - Finder")
 
 # Keybindings overrides for PCManFM 
