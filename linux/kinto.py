@@ -40,6 +40,8 @@ codeStr = "|".join(str(x) for x in mscodes)
 remotes = [
     "org.remmina.Remmina",
     "xfreerdp",
+    "VirtualBox Machine",
+    "VirtualBox"
 ]
 remotes = [client.casefold() for client in remotes]
 
