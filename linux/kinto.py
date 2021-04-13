@@ -41,7 +41,8 @@ remotes = [
     "org.remmina.Remmina",
     "xfreerdp",
     "VirtualBox Machine",
-    "VirtualBox"
+    "VirtualBox",
+    "Gnome-boxes",
 ]
 remotes = [client.casefold() for client in remotes]
 
