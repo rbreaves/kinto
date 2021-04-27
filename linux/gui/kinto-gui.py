@@ -710,7 +710,7 @@ class MyWindow(Gtk.Window):
         restartsvc = False
         self.rightmod =  Gtk.CheckButton('AltGr on Right Cmd')
         self.vsc2st3 = Gtk.CheckButton('ST3 hotkeys for VS Code')
-        self.bracesnav = Gtk.CheckButton('Use braces for tab navigation in browsers')
+        self.bracesnav = Gtk.CheckButton('Use Cmd+Braces for tab navigation in browsers')
         self.caps2esc = Gtk.CheckButton('Capslock is Escape when tapped, Cmd when held')
         self.caps2cmd = Gtk.CheckButton('Capslock is Cmd')
         

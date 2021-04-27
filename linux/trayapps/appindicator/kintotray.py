@@ -58,7 +58,7 @@ class Indicator():
     tweaks = Gtk.MenuItem('Tweaks')
     rightmod =  Gtk.CheckButton('AltGr on Right Cmd')
     vsc2st3 = Gtk.CheckButton('ST3 hotkeys for VS Code')
-    bracesnav = Gtk.CheckButton('Use braces for tab navigation in browsers')
+    bracesnav = Gtk.CheckButton('Use Cmd+Braces for tab navigation in browsers')
     caps2esc = Gtk.CheckButton('Capslock is Escape when tapped, Cmd when held')
     caps2cmd = Gtk.CheckButton('Capslock is Cmd')
     button_config = Gtk.MenuItem('Kinto Config (shortcuts)')
