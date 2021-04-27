@@ -58,6 +58,7 @@ class Indicator():
     tweaks = Gtk.MenuItem('Tweaks')
     rightmod =  Gtk.CheckButton('AltGr on Right Cmd')
     vsc2st3 = Gtk.CheckButton('ST3 hotkeys for VS Code')
+    bracesnav = Gtk.CheckButton('Use braces for tab navigation in browsers')
     caps2esc = Gtk.CheckButton('Capslock is Escape when tapped, Cmd when held')
     caps2cmd = Gtk.CheckButton('Capslock is Cmd')
     button_config = Gtk.MenuItem('Kinto Config (shortcuts)')
@@ -374,7 +375,7 @@ class Indicator():
         win.set_default_icon_list([pixbuf])
 
         win.set_title("Kinto Tweaks")
-        win.set_default_size(350, 200)
+        win.set_default_size(500, 200)
         win.set_position(Gtk.WindowPosition.CENTER)
 
         # Check AltGr - commented out is enabled
@@ -384,6 +385,10 @@ class Indicator():
         # Sublime enabled for vscode
         is_vsc2st3 = "perl -ne 'print if /^(\s{4}\w.*)(- Sublime)/' ~/.config/kinto/kinto.py | wc -l"
         vsc2st3_result = int(self.queryConfig(is_vsc2st3))
+
+        # BracesNav enabled
+        is_bracesnav = "perl -ne 'print if /^(\s{4}\w.*)(BracesNav)/' ~/.config/kinto/kinto.py | wc -l"
+        bracesnav_result = int(self.queryConfig(is_bracesnav))
 
         # Caps2Esc enabled
         is_caps2esc = "perl -ne 'print if /^(\s{4}{\w.*)(# Caps2Esc)/' ~/.config/kinto/kinto.py | wc -l"
@@ -403,6 +408,7 @@ class Indicator():
         restartsvc = False
         self.rightmod =  Gtk.CheckButton('AltGr on Right Cmd')
         self.vsc2st3 = Gtk.CheckButton('ST3 hotkeys for VS Code')
+        self.bracesnav = Gtk.CheckButton('Use braces for tab navigation in browsers')
         self.caps2esc = Gtk.CheckButton('Capslock is Escape when tapped, Cmd when held')
         self.caps2cmd = Gtk.CheckButton('Capslock is Cmd')
         
@@ -411,6 +417,9 @@ class Indicator():
 
         if vsc2st3_result > 0:
             self.vsc2st3.set_active(True)
+
+        if bracesnav_result > 0:
+            self.bracesnav.set_active(True)
 
         if caps2esc_result > 0:
             self.caps2esc.set_active(True)
@@ -422,11 +431,13 @@ class Indicator():
 
         self.rightmod.signal_id = self.rightmod.connect('toggled',self.setRightMod)
         self.vsc2st3.signal_id = self.vsc2st3.connect('toggled',self.setVSC2ST3)
+        self.bracesnav.signal_id = self.bracesnav.connect('toggled',self.setBracesNav)
         self.caps2esc.signal_id = self.caps2esc.connect('toggled',self.setCaps2Esc)
         self.caps2cmd.signal_id = self.caps2cmd.connect('toggled',self.setCaps2Cmd)
 
         vbox.add(self.rightmod)
         vbox.add(self.vsc2st3)
+        vbox.add(self.bracesnav)
         vbox.add(self.caps2esc)
         vbox.add(self.caps2cmd)
         vbox.add(self.lbl)
@@ -501,6 +512,24 @@ class Indicator():
 
         except CalledProcessError:
             Popen(['notify-send','Kinto: Error Resetting SublimeText remaps for VSCode!'])
+        return
+
+    def setBracesNav(self,button):
+
+        global restartsvc
+        try:
+            if self.winkb.get_active() or self.winmackb.get_active() or self.ibmkb.get_active() or self.mackb.get_active():
+                setkb = 's/^(\s{4})((\w.*)(# )(BracesNav\n)|(\w.*)(# )(BracesNav - Chrome.*)|(# )(\w.*)(# )(BracesNav\n)|(\{\w.*)(# )(BracesNav.*)|(# )(\{.*)(# )(Placeholder))/    $4$3$4$5$7$6$7$8$10$11$12$14$13$14$15$17$18$19/g'
+
+            cmds = ['perl','-pi','-e',setkb,self.kconfig]
+
+            cmdsTerm = Popen(cmds)
+
+            restartsvc = True
+
+        except CalledProcessError:
+            Popen(['notify-send','Kinto: Error resetting bracesnav!'])
+
         return
 
     def setCaps2Esc(self,button):
