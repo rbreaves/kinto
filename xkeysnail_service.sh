@@ -8,6 +8,42 @@ distro=$(awk -F= '$1=="NAME" { gsub("[\",!,_, ]","",$2);print $2 ;}' /etc/os-rel
 typeset -l dename
 dename=$(./linux/system-config/dename.sh | cut -d " " -f1)
 
+typeset -l sessiontype
+sessiontype=$XDG_SESSION_TYPE
+
+# Supplemental check to see if user is in a verifiable X11/Xorg environment. 
+# Show warnings, ask user if they want to continue installing if X11/Xorg can't be verified. 
+if [ "$sessiontype" == "wayland" ]; then 
+	echo 
+	echo "  ==================================================== "
+	echo "  Seems like you may be running Wayland, not Xorg/X11. "
+	echo "     Kinto/xkeysnail doesn't work yet under Wayland.   "
+	echo "  ==================================================== "
+	echo  
+elif ! ([ "$sessiontype" == "x11" ] || [ "$sessiontype" == "xorg" ]); then 
+	echo 
+	echo "  ==================================================== "
+	echo "      Make sure you're in an Xorg/X11 environment.     "
+	echo "     Kinto/xkeysnail doesn't work yet under Wayland.  "
+	echo "  ==================================================== "
+	echo 
+elif [ "$sessiontype" == "x11" ] || [ "$sessiontype" == "xorg" ]; then 
+	echo 
+	echo "  X11 detected... good to go."
+	echo 
+fi
+
+if ! [ "$sessiontype" == "x11" ]; then
+	while true; do
+		read -rep $'  Are you sure you want to continue the install? (y/n): ' continue
+		case $continue in
+			[yY]* ) break;;
+			[nN]* ) echo -e "\n  Install canceled.\n\n  Log in with Xorg/X11 option and try again.\n"; exit 0; break;;
+			* ) ;;
+		esac
+	done
+fi
+
 function uninstall {
 
 	echo -e "\nNote: Restoring keys is only relevant if you had installed a version prior to 1.2 of Kinto. You should skip this step if 1.2+ is all you have installed."
