@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Kinto_xkey
+GenericName=Kinto_xkey
+Comment=Make Linux Type Like it's a Mac
+Exec=/bin/bash -c "grep -q 'autostart = true' {homedir}/.config/kinto/kinto.py && sudo -E /etc/init.d/kinto restart"
+Terminal=false
+Type=Application
+X-GNOME-Autostart-enabled=true

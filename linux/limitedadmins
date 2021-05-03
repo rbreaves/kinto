@@ -1,4 +1,7 @@
 # /etc/sudoers.d/limitedadmins
+Defaults    secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/X11/bin"
+Defaults!/etc/init.d/kinto setenv,env_reset,env_delete+=PATH,env_delete+=LD_PRELOAD,env_delete+=LD_LIBRARY_PATH,env_delete+=SSH_AUTH_SOCK,env_delete+=PYTHONPATH,env_delete+=PERL5LIB
+%{username} ALL=NOPASSWD: /etc/init.d/kinto *
 %{username} ALL=NOPASSWD: {systemctl} restart xkeysnail
 %{username} ALL=NOPASSWD: {systemctl} start xkeysnail
 %{username} ALL=NOPASSWD: {systemctl} stop xkeysnail
@@ -6,5 +9,5 @@
 %{username} ALL=(root) NOPASSWD: /usr/local/bin/logoff.sh
 %{username} ALL=NOPASSWD: {pkill} -f logoff
 %{username} ALL=NOPASSWD: {pkill} -f bin/xkeysnail
-%{username} ALL=NOPASSWD: {xkeysnail} /home/{username}/.config/kinto/kinto.py
+%{username} ALL=NOPASSWD: {xkeysnail} *
 %{username} ALL=NOPASSWD: {systemctl} is-active --quiet xkeysnail

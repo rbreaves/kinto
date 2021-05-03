@@ -54,7 +54,15 @@ class MyWindow(Gtk.Window):
     openWin = False
 
     global child_pid
-    kinto_status = Popen("while :; do clear; systemctl is-active xkeysnail; sleep 2; done", stdout=PIPE, shell=True)
+    global sysv
+    try:
+        sysv = int(Popen("pidof systemd >/dev/null 2>&1 && echo '0' || echo '1'", stdout=PIPE, shell=True).communicate()[0].strip().decode('UTF-8'))
+    except:
+        sysv = 2
+    if sysv:
+        kinto_status = Popen("while :; do clear; pgrep 'xkeysnail' && echo 'active'; sleep 2; done", stdout=PIPE, shell=True)
+    else:
+        kinto_status = Popen("while :; do clear; systemctl is-active xkeysnail; sleep 2; done", stdout=PIPE, shell=True)
     child_pid = kinto_status.pid
 
     winkb = Gtk.RadioMenuItem(label='Windows')
@@ -114,9 +122,15 @@ class MyWindow(Gtk.Window):
             None,
         )
         if self.args.debug:
-            self.command = 'sudo systemctl stop xkeysnail && sudo pkill -f bin/xkeysnail && sudo xkeysnail ~/.config/kinto/kinto.py\n'
+            if sysv:
+                self.command = 'sudo /etc/init.d/kinto stop && sudo pkill -f bin/xkeysnail && sudo xkeysnail ~/.config/kinto/kinto.py\n'
+            else:
+                self.command = 'sudo systemctl stop xkeysnail && sudo pkill -f bin/xkeysnail && sudo xkeysnail ~/.config/kinto/kinto.py\n'
         else:
-            self.command = "journalctl -f --unit=xkeysnail.service -b\n"
+            if sysv:
+                self.command = "tail -f /tmp/kinto.log\n"
+            else:
+                self.command = "journalctl -f --unit=xkeysnail.service -b\n"
         
         self.InputToTerm(self.command)
 
@@ -343,7 +357,6 @@ class MyWindow(Gtk.Window):
             self.menuitem_systray.signal_id = self.menuitem_systray.connect('activate',self.checkTray,False)
 
         restartsvc = True
-
     
     def initSetup(self):
         global win,openWin,restartsvc
@@ -456,7 +469,7 @@ class MyWindow(Gtk.Window):
     def image2pixbuf(self,im):
         data = im.tobytes()
         w, h = im.size
-        print(im.size)
+        # print(im.size)
         data = GLib.Bytes.new(data)
         pix = GdkPixbuf.Pixbuf.new_from_bytes(data, GdkPixbuf.Colorspace.RGB,True, 8, w, h, w * 4)
         return pix
@@ -517,7 +530,10 @@ class MyWindow(Gtk.Window):
         return
 
     def runDebug(self,button):
-        command = 'send \003 sudo systemctl stop xkeysnail && sudo pkill -f bin/xkeysnail && sudo xkeysnail ~/.config/kinto/kinto.py\n'
+        if sysv:
+            command = 'send \003 sudo /etc/init.d/kinto stop && sudo pkill -f bin/xkeysnail && sudo xkeysnail ~/.config/kinto/kinto.py\n'
+        else:
+            command = 'send \003 sudo systemctl stop xkeysnail && sudo pkill -f bin/xkeysnail && sudo xkeysnail ~/.config/kinto/kinto.py\n'
         self.InputToTerm(command)
 
     def openSupport(self,button):
@@ -610,7 +626,10 @@ class MyWindow(Gtk.Window):
             self.queryConfig(killspawn)
             time.sleep(1)
             global child_pid
-            self.kinto_status = Popen("while :; do clear; systemctl is-active xkeysnail; sleep 2; done", stdout=PIPE, shell=True)
+            if sysv:
+                self.kinto_status = Popen("while :; do clear; pgrep 'xkeysnail'; sleep 2; done", stdout=PIPE, shell=True)
+            else:
+                self.kinto_status = Popen("while :; do clear; systemctl is-active xkeysnail; sleep 2; done", stdout=PIPE, shell=True)
             child_pid = self.kinto_status.pid
             self.menuitem_systray.disconnect(self.menuitem_systray.signal_id)
             self.menuitem_systray.set_active(False)
@@ -618,6 +637,7 @@ class MyWindow(Gtk.Window):
         return
 
     def setKB(self,button,kbtype):
+        global sysv
         try:
             if kbtype == "win":
                 setkb = 's/^(\s{3})(\s{1}#)(.*# WinMac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Mac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(IBM.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Chromebook.*)|^(\s{3})(\s{1}# )(-)( Default Win)|^(\s{3})(\s{1}# )(-)(- Default Mac*)/   $3$7$6$7$8$12$11$12$13$17$16$17$18$20$21$21$22$24$26/g'
@@ -654,7 +674,10 @@ class MyWindow(Gtk.Window):
             elif kbtype == "ibm":
                 setkb ='s/^(\s{3})(\s{1}#)(.*# IBM.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(WinMac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Mac.*)|^(?!\s{4}#)(\s{3})(\s{1})(.*)( # )(Chromebook.*)|^(\s{3})(\s{1}# )(-)(- Default (Win|Mac.*))/   $3$7$6$7$8$12$11$12$13$17$16$17$18$20$22/g'
 
-            restart = ['sudo', 'systemctl','restart','xkeysnail']
+            if sysv:
+                restart = ['sudo', '-E','/etc/init.d/kinto','restart']
+            else:
+                restart = ['sudo', 'systemctl','restart','xkeysnail']
             cmds = ['perl','-pi','-e',setkb,self.kconfig]
 
             cmdsTerm = Popen(cmds)
@@ -746,11 +769,14 @@ class MyWindow(Gtk.Window):
     }
 
     def on_delete_event(event, self, widget):
-        global restartsvc, openWin
+        global restartsvc, openWin, sysv
         
         if restartsvc == True:
             try:
-                restartcmd = ['sudo', 'systemctl','restart','xkeysnail']
+                if sysv:
+                    restartcmd = ['sudo', '-E','/etc/init.d/kinto','restart']
+                else:
+                    restartcmd = ['sudo', 'systemctl','restart','xkeysnail']
                 Popen(restartcmd)
                 restartsvc = False
 
@@ -870,8 +896,12 @@ class MyWindow(Gtk.Window):
         return
 
     def runRestart(self,button):
+        global sysv
         try:
-            stop = Popen(['sudo', 'systemctl','stop','xkeysnail'])
+            if sysv:
+                stop = Popen(['sudo', '-E','/etc/init.d/kinto','stop'])
+            else:
+                stop = Popen(['sudo', 'systemctl','stop','xkeysnail'])
             stop.wait()
             time.sleep(1)
             res = Popen(['pgrep','xkeysnail'])
@@ -880,15 +910,23 @@ class MyWindow(Gtk.Window):
             if res.returncode == 0:
                 pkillxkey = Popen(['sudo', 'pkill','-f','bin/xkeysnail'])
                 pkillxkey.wait()
-            Popen(['sudo', 'systemctl','start','xkeysnail'])
-            self.command = "send \003 journalctl -f --unit=xkeysnail.service -b\n"
+            if sysv:
+                Popen(['sudo','-E','/etc/init.d/kinto','start'])
+                self.command = "send \003 tail -f /tmp/kinto.log\n"
+            else:
+                Popen(['sudo','systemctl','start','xkeysnail'])
+                self.command = "send \003 journalctl -f --unit=xkeysnail.service -b\n"
             self.InputToTerm(self.command)
         except:
             Popen(['notify-send','Kinto: Errror restarting Kinto!'])
 
     def runStop(self,button):
+        global sysv
         try:
-            stop = Popen(['sudo', 'systemctl','stop','xkeysnail'])
+            if sysv:
+                stop = Popen(['sudo', '-E','/etc/init.d/kinto','stop'])
+            else:
+                stop = Popen(['sudo', 'systemctl','stop','xkeysnail'])
             stop.wait()
             time.sleep(1)
             res = Popen(['pgrep','xkeysnail'])
@@ -1077,7 +1115,7 @@ class MyWindow(Gtk.Window):
             except:
                 pass
 
-        print(Vte.get_minor_version())
+        # print(Vte.get_minor_version())
 
     # def on_menu_auto(self, widget):
     #     print("add file open dialog")
