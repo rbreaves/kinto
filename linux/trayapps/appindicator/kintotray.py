@@ -7,7 +7,7 @@ gi.require_version('AppIndicator3', '0.1')
 gi.require_version('Notify', '0.7')
 
 import signal,time,os,fcntl,datetime,re
-from subprocess import Popen, PIPE, CalledProcessError, check_output
+from subprocess import Popen, PIPE, CalledProcessError
 from shutil import which
 from gi.repository import Gtk,GLib,GdkPixbuf
 from gi.repository import AppIndicator3 as appindicator
@@ -31,9 +31,9 @@ class Indicator():
     global child_pid
     global sysv
     try:
-        sysv = check_output("pidof systemd >/dev/null 2>&1 && echo '0' || echo '1'").strip().decode('UTF-8')
+        sysv = int(Popen("pidof systemd >/dev/null 2>&1 && echo '0' || echo '1'", stdout=PIPE, shell=True).communicate()[0].strip().decode('UTF-8'))
     except:
-        sysv = 1
+        sysv = 2
     if sysv:
         kinto_status = Popen("while :; do clear; pgrep 'xkeysnail' && echo 'active'; sleep 2; done", stdout=PIPE, shell=True)
     else:
