@@ -1,0 +1,11 @@
+"~/.config/kinto/browsers.sh Left"
+    m:0x8 + c:192
+    Alt + XF86Launch5 
+
+"~/.config/kinto/browsers.sh Right"
+    m:0x8 + c:193
+    Alt + XF86Launch6 
+
+"~/.config/kinto/browsers.sh Undo"
+    m:0x8 + c:194
+    Alt + XF86Launch7 

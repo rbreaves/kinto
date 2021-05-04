@@ -343,9 +343,29 @@ GroupAdd, intellij, ahk_exe idea64.exe
     ^+4::Send #+{S}
 
     ; wordwise support
-    $^Left::Send {Home}
+    #if !winactive("ahk_group browsers")
+        $^Left::Send {Home}
+        $^Right::Send {End}
+    #if
+    #if winactive("ahk_group browsers")
+        $^Left::
+        if(blinking()){
+            Send, {Home}
+        }
+        else{
+            Send, !{Left}
+        }
+        Return
+        $^Right::
+        if(blinking()){
+            Send, {End}
+        }
+        else{
+            Send, !{Right}
+        }
+        Return
+    #if
     $^+Left::Send +{Home}
-    $^Right::Send {End}
     $^+Right::Send +{End}
     ^Up::Send ^{Home}
     ^+Up::Send ^+{Home}
@@ -469,9 +489,18 @@ GroupAdd, intellij, ahk_exe idea64.exe
         ; Dev Tools
         !^i::send {Ctrl Down}{Shift Down}i{Shift Up}{Ctrl Up}
         !^j::send {Ctrl Down}{Shift Down}j{Shift Up}{Ctrl Up}
+        ; Reopen closed tab or Undo text field
+        $^z::
+        if(blinking()){
+            Send ^z
+        }
+        else{
+            Send ^+t
+        }
+        Return
         ; Open preferences
         #IfWinActive ahk_exe firefox.exe
-            ^,::send, {Ctrl Down}t{Ctrl Up}about:preferences{Enter}
+            ^,::send {Ctrl Down}t{Ctrl Up}about:preferences{Enter}
         #If
         #IfWinActive ahk_exe chrome.exe
             ^,::send {Alt Down}e{Alt Up}s{Enter}
@@ -760,3 +789,21 @@ Send {LWin up}
 Send {RShift up}
 Send {LShift up}
 return
+
+blinking(){
+    ClipSaved := ClipboardAll
+    clipboard := ""
+    status := False
+    Send, {Left}{Left}{Right}
+    Send, +{Right}
+    Send, ^c
+    Send, {Left}
+    ClipWait, 0.2
+    if(clipboard != "" ){
+        status := True
+    }
+    Sleep, 100
+    clipboard := ClipSaved
+    ClipSaved := ""
+    return status
+}
