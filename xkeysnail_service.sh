@@ -280,12 +280,11 @@ elif [[ $dename == 'xfce' ]];then
 		xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Alt>F1" --create --type string --set "$nlauncher" && echo "$nlauncher has been set to Alt-F1 for Cmd-Space to work."
 		# Unset Super_L to avoid issues during setup, will re-apply at the end
 		xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/Super_L" --reset
-		xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Super>Tab" --reset
-		xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Super>Tab" --create --type string --set ""
+		# xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Super>grave" --create --type string --set "switch_window_key"
+
 	fi
 	# Unset Super-Tab, breaks Ctrl-Tab. switch_window_key
 	sed -i '/.*name=\"&lt;Super&gt;Tab.*$/d' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
-
 fi
 
 # if ls /etc/apt/sources.list.d/system76* 1> /dev/null 2>&1; then
