@@ -45,7 +45,11 @@ function uninstall {
 			mv ~/.config/kglobalshortcutsrc ~/.config/kglobalshortcutsrc.kinto
 		elif [ "$dename" == "xfce" ];then
 			echo "Resetting DE hotkeys..."
-			cp /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
+			if test -f "/etc/mx-version";then
+				cp /etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
+			else
+				cp /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
+			fi
 		fi
 	elif [ "$yn" == "r" ]; then
 		echo "Restore original user shortcuts"
@@ -84,6 +88,12 @@ function uninstall {
 		echo -e "\nWill still be restoring the overlay key"
 		echo -e "gsettings set org.gnome.mutter overlay-key 'super'\n"
 		gsettings set org.gnome.mutter overlay-key 'super'
+	# Repetitive - xfce restore factory or backup does this
+	# Also needs to check if whiskermenu is even being used
+	# elif [[ $dename == "xfce" ]]; then
+	# 	echo -e "\nWill still be restoring the overlay key"
+	# 	echo -e "xfconf-query --channel xfce4-keyboard-shortcuts --property \"/commands/custom/Super_L\" --create --type string --set \"xfce4-popup-whiskermenu\""
+	# 	xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/Super_L" --create --type string --set "xfce4-popup-whiskermenu"
 	fi
 }
 
@@ -244,6 +254,15 @@ if [[ $dename == 'gnome' || $dename == 'budgie' ]];then
 		echo "Overlay key, " $bound ", detected. Will be removing so Super-Space can remap to Cmd-Space for app launching.."
 		gsettings set org.gnome.mutter overlay-key ''
 	fi
+elif [[ $dename == 'xfce' ]];then
+	# xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/Super_L" --reset
+	launcher=$(cat ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml | grep 'name="Super_L"' | sed 's:.*="::')
+	nlauncher=${launcher::-3}
+	# Replace Alt-F1 help file w/ whisker menu alternative hotkey
+	xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Alt>F1" --reset
+	# Clear Alt-F3 App Finder for sublime text global replace
+	xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Alt>F3" --reset
+	xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Alt>F1" --create --type string --set "$nlauncher" && echo "$nlauncher has been set to Alt-F1 for Cmd-Space to work."
 fi
 
 # if ls /etc/apt/sources.list.d/system76* 1> /dev/null 2>&1; then

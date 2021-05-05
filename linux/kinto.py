@@ -435,11 +435,11 @@ define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
     # K("Super-Left"):K("C-M-Left"),                # Default SL - Change workspace (budgie)
     K("RC-Q"): K("M-F4"),                         # Default SL - not-popos
     K("RC-H"):K("Super-h"),                       # Default SL - Minimize app (gnome/budgie/popos/fedora)
-    K("M-Tab"): pass_through_key,                 # Default not-xfce4 - Cmd Tab - App Switching Default
-    K("RC-Tab"): K("M-Tab"),                      # Default not-xfce4 - Cmd Tab - App Switching Default
-    K("RC-Shift-Tab"): K("M-Shift-Tab"),          # Default not-xfce4 - Cmd Tab - App Switching Default
-    K("RC-Grave"): K("M-Grave"),                  # Default not-xfce4 - Cmd ` - Same App Switching
-    K("RC-Shift-Grave"): K("M-Shift-Grave"),      # Default not-xfce4 - Cmd ` - Same App Switching
+    K("M-Tab"): pass_through_key,                 # Default - Cmd Tab - App Switching Default
+    K("RC-Tab"): K("M-Tab"),                      # Default - Cmd Tab - App Switching Default
+    K("RC-Shift-Tab"): K("M-Shift-Tab"),          # Default - Cmd Tab - App Switching Default
+    K("RC-Grave"): K("M-Grave"),                  # Default - Cmd ` - Same App Switching
+    K("RC-Shift-Grave"): K("M-Shift-Grave"),      # Default - Cmd ` - Same App Switching
     # K("Super-Right"):K("Super-Page_Up"),          # SL - Change workspace (ubuntu/fedora)
     # K("Super-Left"):K("Super-Page_Down"),         # SL - Change workspace (ubuntu/fedora)
     # K("Super-Right"):K("Super-C-Up"),             # SL - Change workspace (popos)
@@ -455,10 +455,6 @@ define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
     # Basic App hotkey functions
     # K("RC-H"):K("M-F9"),                          # SL - Minimize app xfce4
     # K("RC-LC-f"):K("Super-PAGE_DOWN"),            # SL - Minimize app manjaro
-    # Cmd Tab - App Switching Default
-    # K("RC-Tab"): K("RC-backslash"),               # xfce4
-    # K("RC-Shift-Tab"): K("RC-Shift-backslash"),   # xfce4
-    # K("RC-Grave"): K("RC-Shift-backslash"),       # xfce4
     # In-App Tab switching
     # K("M-Tab"): K("C-Tab"),                       # Chromebook/IBM - In-App Tab switching
     # K("M-Shift-Tab"): K("C-Shift-Tab"),           # Chromebook/IBM - In-App Tab switching
@@ -668,13 +664,9 @@ define_keymap(re.compile(termStr, re.IGNORECASE),{
     K("LC-Tab") : K("LC-PAGE_DOWN"),
     K("LC-Shift-Tab") : K("LC-PAGE_UP"),
     K("LC-Grave") : K("LC-PAGE_UP"),
-    # K("M-Tab"): pass_through_key,                 # Default not-xfce4 - Cmd Tab - App Switching Default
-    # K("RC-Tab"): K("M-Tab"),                      # Default not-xfce4 - Cmd Tab - App Switching Default
-    # K("RC-Shift-Tab"): K("M-Shift-Tab"),          # Default not-xfce4 - Cmd Tab - App Switching Default
-    # Cmd Tab - App Switching Default
-    # K("RC-Tab"): K("RC-backslash"),               # xfce4
-    # K("RC-Shift-Tab"): K("RC-Shift-backslash"),   # xfce4
-    # K("RC-Grave"): K("RC-Shift-backslash"),       # xfce4
+    # K("M-Tab"): pass_through_key,                 # Default - Cmd Tab - App Switching Default
+    # K("RC-Tab"): K("M-Tab"),                      # Default - Cmd Tab - App Switching Default
+    # K("RC-Shift-Tab"): K("M-Shift-Tab"),          # Default - Cmd Tab - App Switching Default
     # Converts Cmd to use Ctrl-Shift
     K("RC-MINUS"): K("C-Shift-MINUS"),
     K("RC-EQUAL"): K("C-Shift-EQUAL"),
