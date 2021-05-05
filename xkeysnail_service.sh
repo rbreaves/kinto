@@ -196,6 +196,7 @@ if [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	echo "rm /etc/systemd/system/graphical.target.wants/xkeysnail.service"
 	echo "rm /usr/lib/systemd/system/xkeysnail.service"
 	echo "rm /lib/systemd/system/xkeysnail.service"
+	sudo rm /etc/init.d/kinto >/dev/null 2>&1
 	sudo rm /etc/systemd/system/xkeysnail.service >/dev/null 2>&1
 	sudo rm /etc/systemd/system/graphical.target.wants/xkeysnail.service >/dev/null 2>&1
 	sudo rm /usr/lib/systemd/system/xkeysnail.service >/dev/null 2>&1
@@ -565,6 +566,7 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	else
 		# echo "Using sysvinit..."
 		echo ""
+		sudo cp ./linux/kinto-service.sh /etc/init.d/kinto
 		sudo -E /etc/init.d/kinto stop &
 	fi
 	# sudo systemctl --state=not-found --all | grep xkeysnail
