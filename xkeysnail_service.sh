@@ -280,7 +280,12 @@ elif [[ $dename == 'xfce' ]];then
 		xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Alt>F1" --create --type string --set "$nlauncher" && echo "$nlauncher has been set to Alt-F1 for Cmd-Space to work."
 		# Unset Super_L to avoid issues during setup, will re-apply at the end
 		xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/Super_L" --reset
+		xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Super>Tab" --reset
+		xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Super>Tab" --create --type string --set ""
 	fi
+	# Unset Super-Tab, breaks Ctrl-Tab. switch_window_key
+	sed -i '/.*name=\"&lt;Super&gt;Tab.*$/d' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
+
 fi
 
 # if ls /etc/apt/sources.list.d/system76* 1> /dev/null 2>&1; then
@@ -648,22 +653,22 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	echo -e "~/.config/kinto/gui/kinto-gui.py\n"
 	echo -e "You can then either \e]8;;https://google.com\a\e[1m\e[36mG\033[0;91mo\033[0;93mo\e[1m\e[36mg\e[1m\e[32ml\033[0;91me\e[0m\e]8;;\a what dependencies you may be missing\nor \e]8;;https://github.com/rbreaves/kinto/issues/new\?assignees=rbreaves&labels=bug&template=bug_report.md&title=\aopen an issue ticket.\e]8;;\a\n"
 
-	echo -e "\033[0;91mAfter the installer completes press Any key to re-apply your overlay (Super key) menu launcher.\e[0m\n"
+	# echo -e "\033[0;91mAfter the installer completes press Any key to re-apply your overlay (Super key) menu launcher.\e[0m\n"
 
-	if [[ $dename == 'gnome' || $dename == 'budgie' ]];then
-		echo "GNOME: gsettings set org.gnome.mutter overlay-key 'super'"
-	elif [[ $dename == 'xfce' ]];then
-		echo "XFCE: xfconf-query --channel xfce4-keyboard-shortcuts --property \"/commands/custom/Super_L\" --create --type string --set \"$nlauncher\""
-	fi
+	# if [[ $dename == 'gnome' || $dename == 'budgie' ]];then
+	# 	echo "GNOME: gsettings set org.gnome.mutter overlay-key 'super'"
+	# elif [[ $dename == 'xfce' ]];then
+	# 	echo "XFCE: xfconf-query --channel xfce4-keyboard-shortcuts --property \"/commands/custom/Super_L\" --create --type string --set \"$nlauncher\""
+	# fi
 
-	read -n 1 -s -r -p ""
+	# read -n 1 -s -r -p ""
 
-	if [[ $dename == 'gnome' || $dename == 'budgie' ]];then
-		gsettings set org.gnome.mutter overlay-key 'super'
-	elif [[ $dename == 'xfce' ]];then
-		echo -e "\nSetting xfce4 launcher $nlauncher back to Super_L."
-		xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/Super_L" --create --type string --set "$nlauncher" && echo "Success."
-	fi
+	# if [[ $dename == 'gnome' || $dename == 'budgie' ]];then
+	# 	gsettings set org.gnome.mutter overlay-key 'super'
+	# elif [[ $dename == 'xfce' ]];then
+	# 	echo -e "\nSetting xfce4 launcher $nlauncher back to Super_L."
+	# 	xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/Super_L" --create --type string --set "$nlauncher" && echo "Success."
+	# fi
 	
 
 	if [ "$distro" == "manjarolinux" ]; then
