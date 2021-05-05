@@ -225,6 +225,9 @@ fi
 sudo systemctl stop xkeysnail >/dev/null 2>&1
 sudo systemctl disable xkeysnail >/dev/null 2>&1
 sudo pkill -f bin/xkeysnail >/dev/null 2>&1
+sudo pkill -f kinto-gui.py >/dev/null 2>&1
+sudo pkill -f kintotray.py >/dev/null 2>&1
+ps aux | awk '/[s]h -c while/ {print $2}' | xargs -r -n1 sudo kill
 sudo pkill -f "is-active xkeysnail" >/dev/null 2>&1
 
 if [ "$distro" == "manjarolinux" ]; then
@@ -255,14 +258,29 @@ if [[ $dename == 'gnome' || $dename == 'budgie' ]];then
 		gsettings set org.gnome.mutter overlay-key ''
 	fi
 elif [[ $dename == 'xfce' ]];then
-	# xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/Super_L" --reset
 	launcher=$(cat ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml | grep 'name="Super_L"' | sed 's:.*="::')
-	nlauncher=${launcher::-3}
-	# Replace Alt-F1 help file w/ whisker menu alternative hotkey
-	xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Alt>F1" --reset
-	# Clear Alt-F3 App Finder for sublime text global replace
-	xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Alt>F3" --reset
-	xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Alt>F1" --create --type string --set "$nlauncher" && echo "$nlauncher has been set to Alt-F1 for Cmd-Space to work."
+	# echo "${#launcher}"
+	if [[ "${#launcher}" -eq 0 ]]; then
+		xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/Super_L" --create --type string --set "xfce4-popup-whiskermenu"
+		echo "Resetting Super_L, please wait..."
+		sleep 6
+		launcher=$(cat ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml | grep 'name="Super_L"' | sed 's:.*="::')
+		if [[ "${#launcher}" -gt 0 ]]; then
+			echo "Success."
+		else
+			echo "Failed. Skipping setup of Cmd-Space."
+		fi
+	fi
+	if [[ "${#launcher}" -gt 0 ]]; then
+		nlauncher=${launcher::-3}
+		# Replace Alt-F1 help file w/ whisker menu alternative hotkey
+		xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Alt>F1" --reset
+		# Clear Alt-F3 App Finder for sublime text global replace
+		xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Alt>F3" --reset
+		xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Alt>F1" --create --type string --set "$nlauncher" && echo "$nlauncher has been set to Alt-F1 for Cmd-Space to work."
+		# Unset Super_L to avoid issues during setup, will re-apply at the end
+		xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/Super_L" --reset
+	fi
 fi
 
 # if ls /etc/apt/sources.list.d/system76* 1> /dev/null 2>&1; then
@@ -530,6 +548,7 @@ if [[ $dename == "xfce" ]] && ls /etc/apt/sources.list.d/enso* 1> /dev/null 2>&1
 fi
 
 if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
+
 	mv ./linux/kinto.py.new ~/.config/kinto/kinto.py
 	# if [ "$distro" == "fedora" ];then
 	if [ ! "$sysv" -eq 0 ];then
@@ -586,7 +605,8 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 		# echo "Using sysvinit..."
 		echo ""
 		sudo cp ./linux/kinto-service.sh /etc/init.d/kinto
-		sudo -E /etc/init.d/kinto stop &
+		sudo -E /etc/init.d/kinto stop
+		mv /tmp/kinto.log /tmp/kinto.log.bak
 	fi
 	# sudo systemctl --state=not-found --all | grep xkeysnail
 	# if [ "$distro" == "fedora" ];then
@@ -627,6 +647,24 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	echo "If the setup wizard fails to appear then please run this command."
 	echo -e "~/.config/kinto/gui/kinto-gui.py\n"
 	echo -e "You can then either \e]8;;https://google.com\a\e[1m\e[36mG\033[0;91mo\033[0;93mo\e[1m\e[36mg\e[1m\e[32ml\033[0;91me\e[0m\e]8;;\a what dependencies you may be missing\nor \e]8;;https://github.com/rbreaves/kinto/issues/new\?assignees=rbreaves&labels=bug&template=bug_report.md&title=\aopen an issue ticket.\e]8;;\a\n"
+
+	echo -e "\033[0;91mAfter the installer completes press Any key to re-apply your overlay (Super key) menu launcher.\e[0m\n"
+
+	if [[ $dename == 'gnome' || $dename == 'budgie' ]];then
+		echo "GNOME: gsettings set org.gnome.mutter overlay-key 'super'"
+	elif [[ $dename == 'xfce' ]];then
+		echo "XFCE: xfconf-query --channel xfce4-keyboard-shortcuts --property \"/commands/custom/Super_L\" --create --type string --set \"$nlauncher\""
+	fi
+
+	read -n 1 -s -r -p ""
+
+	if [[ $dename == 'gnome' || $dename == 'budgie' ]];then
+		gsettings set org.gnome.mutter overlay-key 'super'
+	elif [[ $dename == 'xfce' ]];then
+		echo -e "\nSetting xfce4 launcher $nlauncher back to Super_L."
+		xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/Super_L" --create --type string --set "$nlauncher" && echo "Success."
+	fi
+	
 
 	if [ "$distro" == "manjarolinux" ]; then
 		echo "If you are using Manjaro and see an error about 'GLIBC_2.xx not found' appears then please update your system."
