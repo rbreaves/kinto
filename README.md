@@ -36,12 +36,12 @@ Video Tutorial: [Install Kinto.sh for Linux in less than a minute](https://www.y
 
 Paste the following into your Terminal
 ```
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/rbreaves/kinto/HEAD/install/linux.sh)"
+/bin/bash -c "$(wget -qO- https://raw.githubusercontent.com/rbreaves/kinto/HEAD/install/linux.sh || curl -fsSL https://raw.githubusercontent.com/rbreaves/kinto/HEAD/install/linux.sh)"
 ```
 
 Uninstall
 ```
-/bin/bash <( curl https://raw.githubusercontent.com/rbreaves/kinto/HEAD/install/linux.sh ) -r
+/bin/bash <( wget -qO- https://raw.githubusercontent.com/rbreaves/kinto/HEAD/install/linux.sh || curl -fsSL https://raw.githubusercontent.com/rbreaves/kinto/HEAD/install/linux.sh ) -r
 ```
 
 ### Old Install Method
