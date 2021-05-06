@@ -252,7 +252,7 @@ Additionally, if you are using a cross-platform app and if it happens to have a 
 ## What does Kinto require?
 
 - Python
-- systemd
+- systemd or sysvinit
 - x11
 - xkeysnail
 
