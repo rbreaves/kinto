@@ -27,7 +27,7 @@ start() {
 # Restart the service
 stop() {
         echo -n "Stopping Kinto (xkeynsail)" | logger
-        pgrep 'bin\xkeysnail' | xargs -r -n1 sudo kill
+        sudo pkill -f bin/xkeysnail >/dev/null 2>&1
         ### Now, delete the lock file ###
         rm -f /var/lock/subsys/kinto
         echo
