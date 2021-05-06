@@ -29,7 +29,15 @@ APPINDICATOR_ID = 'Kinto'
 class Indicator():
 
     global child_pid
-    kinto_status = Popen("while :; do clear; systemctl is-active xkeysnail; sleep 2s; done", stdout=PIPE, shell=True)
+    global sysv
+    try:
+        sysv = int(Popen("pidof systemd >/dev/null 2>&1 && echo '0' || echo '1'", stdout=PIPE, shell=True).communicate()[0].strip().decode('UTF-8'))
+    except:
+        sysv = 2
+    if sysv:
+        kinto_status = Popen("while :; do clear; pgrep 'xkeysnail' && echo 'active'; sleep 2; done", stdout=PIPE, shell=True)
+    else:
+        kinto_status = Popen("while :; do clear; systemctl is-active xkeysnail; sleep 2; done", stdout=PIPE, shell=True)
     child_pid = kinto_status.pid
 
     homedir = os.path.expanduser("~")
@@ -79,7 +87,15 @@ class Indicator():
     last_status = ""
 
     def __init__(self):
-        res = Popen(['sudo', 'systemctl','is-active','--quiet','xkeysnail'])
+        global sysv
+        try:
+            sysv = check_output("pidof systemd >/dev/null 2>&1 && echo '0' || echo '1'").strip().decode('UTF-8')
+        except:
+            sysv = 1
+        if sysv:
+            res = Popen(['pgrep','xkeysnail'])
+        else:
+            res = Popen(['sudo', 'systemctl','is-active','--quiet','xkeysnail'])
         res.wait()
 
         if res.returncode == 0:
@@ -446,7 +462,10 @@ class Indicator():
         global restartsvc 
         if restartsvc == True:
             try:
-                restartcmd = ['sudo', 'systemctl','restart','xkeysnail']
+                if sysv:
+                    restartcmd = ['sudo', '-E','/etc/init.d/kinto','restart']
+                else:
+                    restartcmd = ['sudo', 'systemctl','restart','xkeysnail']
                 Popen(restartcmd)
                 restartsvc = False
 
@@ -555,8 +574,12 @@ class Indicator():
         return
 
     def runRestart(self,button):
+        global sysv
         try:
-            stop = Popen(['sudo', 'systemctl','stop','xkeysnail'])
+            if sysv:
+                stop = Popen(['sudo', '-E','/etc/init.d/kinto','stop'])
+            else:
+                stop = Popen(['sudo', 'systemctl','stop','xkeysnail'])
             stop.wait()
             time.sleep(1)
             res = Popen(['pgrep','xkeysnail'])
@@ -567,13 +590,19 @@ class Indicator():
                 pkillxkey = Popen(['sudo', 'pkill','-f','bin/xkeysnail'])
                 pkillxkey.wait()
             
-            Popen(['sudo', 'systemctl','start','xkeysnail'])
+            if sysv:
+                Popen(['sudo', '-E','/etc/init.d/kinto','start'])
+            else:
+                Popen(['sudo', 'systemctl','start','xkeysnail'])
         except:
             Popen(['notify-send','Kinto: Error restarting Kinto!'])
 
     def runStop(self,button):
         try:
-            stop = Popen(['sudo', 'systemctl','stop','xkeysnail'])
+            if sysv:
+                stop = Popen(['sudo', '-E','/etc/init.d/kinto','stop'])
+            else:
+                stop = Popen(['sudo', 'systemctl','stop','xkeysnail'])
             stop.wait()
             time.sleep(1)
             res = Popen(['pgrep','xkeysnail'])
@@ -689,7 +718,10 @@ class Indicator():
             cmdsTerm = Popen(cmds)
             cmdsTerm.wait()
 
-            restart = ['sudo', 'systemctl','restart','xkeysnail']
+            if sysv:
+                restart = ['sudo', '-E','/etc/init.d/kinto','restart']
+            else:
+                restart = ['sudo', 'systemctl','restart','xkeysnail']
             Popen(restart)
 
         except CalledProcessError:
