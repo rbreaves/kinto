@@ -310,8 +310,14 @@ In the above example I am also showing that you can define a single shortcut to 
 
 You can also make changes to the file in your /tmp/kinto/xkeysnail/kinto.py location and see them take affect in real time, but for your changes to be permanent you will need to make your changes in the ~/.config/kinto/kinto.py location & restart the xkeysnail service.
 
+systemd
 ```
 sudo systemctl restart xkeysnail
+```
+
+sysvinit
+```
+sudo -E /etc/init.d/kinto restart
 ```
 
 More information can be seen on the readme page of [xkeysnail](https://github.com/mooz/xkeysnail).
@@ -375,23 +381,51 @@ git pull origin master
 This info is now superceded by the fact that linux has a full fledge GUI and system tray app that is very easy to use, but I will keep the command line options for those that want to know what they are.
 
 Status
+
+systemd
 ```
 sudo systemctl status xkeysnail
 ```
 
+sysvinit
+```
+tail -f /tmp/kinto.log
+```
+
 Stop (your keymap will return to normal)
+
+systemd
 ```
 sudo systemctl stop xkeysnail
 ```
 
+sysvinit
+```
+sudo -E /etc/init.d/kinto stop
+```
+
 Start
+
+systemd
 ```
 sudo systemctl start xkeysnail
 ```
 
+sysvinit
+```
+sudo -E /etc/init.d/kinto start
+```
+
 Restart
+
+systemd
 ```
 sudo systemctl restart xkeysnail
+```
+
+sysvinit
+```
+sudo -E /etc/init.d/kinto restart
 ```
 
 ## Troubleshooting
