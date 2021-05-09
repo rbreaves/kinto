@@ -398,7 +398,7 @@ define_keymap(re.compile(chromeStr, re.IGNORECASE),{
 }, "Overrides for Chrome-based Browsers")
 # Opera C-F12
 
-# Keybindings overrides for Chromes/Chromium browsers 
+# Keybindings overrides for Firefox browsers 
 # (overrides some shortcuts from General Web Browsers block below)
 define_keymap(re.compile("Firefox", re.IGNORECASE),{
     K("C-comma"): [
