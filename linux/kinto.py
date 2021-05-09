@@ -388,7 +388,27 @@ define_keymap(re.compile(filemanagerStr, re.IGNORECASE),{
 ### END OF FILE MANAGER GROUP OF KEYMAPS ###
 ############################################
 
-# Keybindings for Browsers
+# Keybindings overrides for Chromes/Chromium browsers 
+# (overrides some shortcuts from General Web Browsers block below)
+define_keymap(re.compile(chromeStr, re.IGNORECASE),{
+    K("RC-comma"): [
+            K("C-t"),K("c"),K("h"),K("r"),K("o"),K("m"),K("e"),K("Shift-Semicolon"),K("Slash"),K("Slash"),
+            K("s"),K("e"),K("t"),K("t"),K("i"),K("n"),K("g"),K("s"),K("Enter")],
+    K("RC-q"): K("M-F4"),
+}, "Overrides for Chrome-based Browsers")
+# Opera C-F12
+
+# Keybindings overrides for Chromes/Chromium browsers 
+# (overrides some shortcuts from General Web Browsers block below)
+define_keymap(re.compile("Firefox", re.IGNORECASE),{
+    K("C-comma"): [
+        K("C-T"),K("a"),K("b"),K("o"),K("u"),K("t"),
+        K("Shift-SEMICOLON"),K("p"),K("r"),K("e"),K("f"),
+        K("e"),K("r"),K("e"),K("n"),K("c"),K("e"),K("s"),K("Enter")
+    ],
+}, "Overrides for Firefox browsers")
+
+# Keybindings for General Web Browsers
 define_keymap(re.compile(browserStr, re.IGNORECASE),{
     K("RC-Q"): K("RC-Q"),           # Close all browsers Instances
     K("M-RC-I"): K("RC-Shift-I"),   # Dev tools
@@ -402,22 +422,9 @@ define_keymap(re.compile(browserStr, re.IGNORECASE),{
     K("RC-Key_7"): K("M-Key_7"),
     K("RC-Key_8"): K("M-Key_8"),
     K("RC-Key_9"): K("M-Key_9"),    # Jump to last tab
-    K("C-Left_Brace"): K("C-Page_Up"),
-    K("C-Right_Brace"): K("C-Page_Down"),
-})
-
-# Open preferences in browsers
-define_keymap(re.compile("Firefox", re.IGNORECASE),{
-    K("C-comma"): [
-        K("C-T"),K("a"),K("b"),K("o"),K("u"),K("t"),
-        K("Shift-SEMICOLON"),K("p"),K("r"),K("e"),K("f"),
-        K("e"),K("r"),K("e"),K("n"),K("c"),K("e"),K("s"),K("Enter")
-    ],
-})
-define_keymap(re.compile(chromeStr, re.IGNORECASE),{
-    K("C-comma"): [K("M-e"), K("s"),K("Enter")],
-}, "Browsers")
-# Opera C-F12
+    # K("C-Left_Brace"): K("C-Page_Up"),
+    # K("C-Right_Brace"): K("C-Page_Down"),
+}, "General Web Browsers")
 
 # Note: terminals extends to remotes as well
 define_keymap(lambda wm_class: wm_class.casefold() not in terminals,{
