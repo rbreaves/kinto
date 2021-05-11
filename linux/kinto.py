@@ -21,10 +21,13 @@ terminals = [
     "lxterminal",
     "mate-terminal",
     "qterminal",
+    "st",
     "sakura",
     "terminator",
+    "termite",
     "tilda",
     "tilix",
+    "urxvt",
     "xfce4-terminal",
     "xterm",
 ]
@@ -135,7 +138,7 @@ define_conditional_modmap(re.compile(termStr, re.IGNORECASE), {
     # Key.RIGHT_ALT: Key.RIGHT_CTRL,    # IBM - Multi-language (Remove)
     # Key.RIGHT_CTRL: Key.RIGHT_ALT,    # IBM
     # # Right Meta does not exist on chromebooks
-    
+
     # Key.RIGHT_ALT: Key.RIGHT_CTRL,  # IBM - Multi-language (Remove)
     # Key.RIGHT_CTRL: Key.RIGHT_ALT,  # IBM - Multi-language (Remove)
 
@@ -256,14 +259,14 @@ define_keymap(re.compile("^jetbrains-(?!.*toolbox).*$", re.IGNORECASE),{
 ### START OF FILE MANAGER GROUP OF KEYMAPS ###
 ##############################################
 
-# Keybindings overrides for Caja 
+# Keybindings overrides for Caja
 # (overrides some bindings from general file manager code block below)
 define_keymap(re.compile("caja", re.IGNORECASE),{
-    # K("RC-Super-o"): K("RC-Shift-Enter"),       # Open in new tab 
+    # K("RC-Super-o"): K("RC-Shift-Enter"),       # Open in new tab
     K("RC-Super-o"): K("RC-Shift-W"),           # Open in new window
 },"Overrides for Caja - Finder")
 
-# Keybindings overrides for DDE (Deepin) File Manager 
+# Keybindings overrides for DDE (Deepin) File Manager
 # (overrides some bindings from general file manager code block below)
 define_keymap(re.compile("dde-file-manager", re.IGNORECASE),{
     K("RC-i"): K("RC-i"),                   # File properties dialog (Get Info)
@@ -271,29 +274,29 @@ define_keymap(re.compile("dde-file-manager", re.IGNORECASE),{
     K("RC-Up"): K("RC-Up"),                 # Go Up dir
 },"Overrides for DDE File Manager - Finder")
 
-# Keybindings overrides for Dolphin 
+# Keybindings overrides for Dolphin
 # (overrides some bindings from general file manager code block below)
 define_keymap(re.compile("dolphin", re.IGNORECASE),{
     ##########################################################################################
-    ### "Open in new window" requires manually setting custom shortcut of Ctrl+Shift+o 
+    ### "Open in new window" requires manually setting custom shortcut of Ctrl+Shift+o
     ### in Dolphin's keyboard shortcuts. There is no default shortcut set for this function.
     ##########################################################################################
-    ### "Open in new tab" requires manually setting custom shortcut of Ctrl+Shift+o in 
-    ### Dolphin's keyboard shortcuts. There is no default shortcut set for this function.  
+    ### "Open in new tab" requires manually setting custom shortcut of Ctrl+Shift+o in
+    ### Dolphin's keyboard shortcuts. There is no default shortcut set for this function.
     ##########################################################################################
     K("RC-Super-o"): K("RC-Shift-o"),           # Open in new window (or new tab, user's choice, see above)
     K("RC-Shift-N"): K("F10"),                  # Create new folder
     K("RC-comma"): K("RC-Shift-comma"),         # Open preferences dialog
 },"Overrides for Dolphin - Finder")
 
-# Keybindings overrides for elementary OS Files 
+# Keybindings overrides for elementary OS Files
 # (overrides some bindings from general file manager code block below)
 define_keymap(re.compile("io.elementary.files", re.IGNORECASE),{
     # K("RC-Super-o"): K("Shift-Enter"),          # Open folder in new tab
     K("RC-Comma"): None,                        # Disable preferences shortcut since none available
 },"Overrides for Pantheon - Finder")
 
-# Keybindings overrides for Nautilus 
+# Keybindings overrides for Nautilus
 # (overrides some bindings from general file manager code block below)
 define_keymap(re.compile("org.gnome.nautilus|nautilus", re.IGNORECASE),{
     K("RC-Super-o"): K("Shift-Enter"),          # Open in new window
@@ -313,11 +316,11 @@ define_keymap(re.compile("spacefm", re.IGNORECASE),{
     K("RC-Shift-N"): [K("RC-F")],	                # Create new folder is Ctrl+F by default
     K("RC-Backspace"): [K("Delete"),K("Enter")],	# Move to Trash (delete, bypass dialog)
     K("RC-comma"): [K("M-V"),K("p")],               # Overrides "Open preferences dialog" shortcut below
-    # This shortcut ^^^^^^^^^^^^^^^ is not fully working in SpaceFM. Opens "View" menu but not Preferences. 
-    # SpaceFM seems to be doing some nasty binding that blocks things like Alt+Tab while the menu is open. 
+    # This shortcut ^^^^^^^^^^^^^^^ is not fully working in SpaceFM. Opens "View" menu but not Preferences.
+    # SpaceFM seems to be doing some nasty binding that blocks things like Alt+Tab while the menu is open.
 },"Overrides for SpaceFM - Finder")
 
-# Keybindings overrides for Thunar 
+# Keybindings overrides for Thunar
 # (overrides some bindings from general file manager code block below)
 define_keymap(re.compile("thunar", re.IGNORECASE),{
     K("RC-Super-o"): K("RC-Shift-P"),          # Open in new tab
@@ -340,8 +343,8 @@ filemanagers = [
 filemanagers = [filemanager.casefold() for filemanager in filemanagers]
 filemanagerStr = "|".join(str(x) for x in filemanagers)
 
-# Currently supported Linux file managers (file browsers): 
-# 
+# Currently supported Linux file managers (file browsers):
+#
 # Caja File Browser (MATE file manager, fork of Nautilus)
 # DDE File Manager (Deepin Linux file manager)
 # Dolphin (KDE file manager)
@@ -352,8 +355,8 @@ filemanagerStr = "|".join(str(x) for x in filemanagers)
 # PCManFM-Qt (LXQt file manager)
 # SpaceFM (Fork of PCManFM file manager)
 # Thunar File Manager (Xfce file manager)
-# 
-# Keybindings for general Linux file managers group: 
+#
+# Keybindings for general Linux file managers group:
 define_keymap(re.compile(filemanagerStr, re.IGNORECASE),{
     ###########################################################################################################
     ###  Show Properties (Get Info) | Open Settings/Preferences | Show/Hide hidden files                    ###
@@ -440,7 +443,7 @@ define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
     K("RC-Shift-Tab"): K("M-Shift-Tab"),          # Default - Cmd Tab - App Switching Default
     K("RC-Grave"): K("M-Grave"),                  # Default not-xfce4 - Cmd ` - Same App Switching
     K("RC-Shift-Grave"): K("M-Shift-Grave"),      # Default not-xfce4 - Cmd ` - Same App Switching
-    # K("RC-Grave"): K("Super-Tab"),                # xfce4 Switch within app group 
+    # K("RC-Grave"): K("Super-Tab"),                # xfce4 Switch within app group
     # K("RC-Shift-Grave"): K("Super-Shift-Tab"),    # xfce4 Switch within app group
     # K("Super-Right"):K("Super-Page_Up"),          # SL - Change workspace (ubuntu/fedora)
     # K("Super-Left"):K("Super-Page_Down"),         # SL - Change workspace (ubuntu/fedora)
@@ -466,7 +469,7 @@ define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
 
     # Fn to Alt style remaps
     K("RM-Enter"): K("insert"),                   # Insert
-    
+
     # emacs style
     K("Super-a"): K("Home"),                      # Beginning of Line
     K("Super-e"): K("End"),                       # End of Line
@@ -535,7 +538,7 @@ define_keymap(re.compile(codeStr, re.IGNORECASE),{
     K("M-Right"): [K("M-F19"),K("C-Right")],                # Right of Word
     K("M-Shift-Left"): [K("M-F19"),K("C-Shift-Left")],      # Select Left of Word
     K("M-Shift-Right"): [K("M-F19"),K("C-Shift-Right")],    # Select Right of Word
-    
+
     # K("C-PAGE_DOWN"): pass_through_key,         # cancel next_view
     # K("C-PAGE_UP"): pass_through_key,           # cancel prev_view
     K("C-M-Left"): K("C-PAGE_UP"),              # next_view
@@ -656,9 +659,9 @@ define_keymap(re.compile(termStr, re.IGNORECASE),{
     # K("RC-Shift-Grave"): K("Super-Shift-Tab"),    # xfce4 Switch within app group
     # K("LC-Right"):K("C-M-Right"),                 # Default SL - Change workspace (budgie)
     # K("LC-Left"):K("C-M-Left"),                   # Default SL - Change workspace (budgie)
-    # K("LC-Left"):K("C-M-End"),                    # SL - Change workspace xfce4     
-    # K("LC-Left"):K("Super-Left"),                 # SL - Change workspace eos 
-    # K("LC-Right"):K("C-M-Home"),                  # SL - Change workspace xfce4     
+    # K("LC-Left"):K("C-M-End"),                    # SL - Change workspace xfce4
+    # K("LC-Left"):K("Super-Left"),                 # SL - Change workspace eos
+    # K("LC-Right"):K("C-M-Home"),                  # SL - Change workspace xfce4
     # K("LC-Right"):K("Super-Right"),               # SL - Change workspace eos
     # K("LC-Right"):K("Super-Page_Up"),             # SL - Change workspace (ubuntu/fedora)
     # K("LC-Left"):K("Super-Page_Down"),            # SL - Change workspace (ubuntu/fedora)
