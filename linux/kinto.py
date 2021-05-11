@@ -23,6 +23,7 @@ terminals = [
     "qterminal",
     "st",
     "sakura",
+    "station",
     "terminator",
     "termite",
     "tilda",
