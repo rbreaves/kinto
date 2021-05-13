@@ -44,6 +44,7 @@ codeStr = "|".join(str(x) for x in mscodes)
 remotes = [
     "Gnome-boxes",
     "org.remmina.Remmina",
+    "qemu-system-.*",
     "Virt-manager",
     "VirtualBox",
     "VirtualBox Machine",
