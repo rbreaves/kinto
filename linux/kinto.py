@@ -42,11 +42,12 @@ codeStr = "|".join(str(x) for x in mscodes)
 # Ideally we'd only exclude the client window,
 # but that may not be easily done.
 remotes = [
-    "org.remmina.Remmina",
-    "xfreerdp",
-    "VirtualBox Machine",
-    "VirtualBox",
     "Gnome-boxes",
+    "org.remmina.Remmina",
+    "Virt-manager",
+    "VirtualBox",
+    "VirtualBox Machine",
+    "xfreerdp",
 ]
 remotes = [client.casefold() for client in remotes]
 
