@@ -172,8 +172,9 @@ GroupAdd, browsers, ahk_exe msedge.exe
 
 ; Disable Key Remapping for Virtual Machines
 ; Disable for Remote desktop solutions too
-GroupAdd, virtm, ahk_exe VirtualBoxVM.exe
-GroupAdd, virtm, ahk_exe mstsc.exe
+GroupAdd, remotes, ahk_exe VirtualBoxVM.exe
+GroupAdd, remotes, ahk_exe mstsc.exe
+GroupAdd, remotes, ahk_exe msrdc.exe
 
 ; Disabled Edge for now - no ability to close all instances
 ; GroupAdd, browsers, Microsoft Edge ahk_class ApplicationFrameWindow
@@ -188,7 +189,7 @@ GroupAdd, intellij, ahk_exe idea64.exe
 
 ; SetCapsLockState, AlwaysOff ; CB/IBM
 
-#IfWinNotActive ahk_group virtm
+#IfWinNotActive ahk_group remotes
 
     ; New AltTab and CtrlTab fix
     *tab:: 
