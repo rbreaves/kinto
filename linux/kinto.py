@@ -33,10 +33,10 @@ terminals = [
     "xterm",
 ]
 terminals = [term.casefold() for term in terminals]
-termStr = "|".join(str(x) for x in terminals)
+termStr = "|".join(str('^'+x+'$') for x in terminals)
 
 mscodes = ["code","vscodium"]
-codeStr = "|".join(str(x) for x in mscodes)
+codeStr = "|".join(str('^'+x+'$') for x in mscodes)
 
 # Add remote desktop clients & VM software here
 # Ideally we'd only exclude the client window,
@@ -68,7 +68,7 @@ browsers = [
     "microsoft-edge-dev",
 ]
 browsers = [browser.casefold() for browser in browsers]
-browserStr = "|".join(str(x) for x in browsers)
+browserStr = "|".join(str('^'+x+'$') for x in browsers)
 
 chromes = [
     "Chromium",
@@ -78,11 +78,11 @@ chromes = [
     "microsoft-edge-dev",
 ]
 chromes = [chrome.casefold() for chrome in chromes]
-chromeStr = "|".join(str(x) for x in chromes)
+chromeStr = "|".join(str('^'+x+'$') for x in chromes)
 
 # edges = ["microsoft-edge-dev","microsoft-edge"]
 # edges = [edge.casefold() for edge in edges]
-# edgeStr = "|".join(str(x) for x in edges)
+# edgeStr = "|".join(str('^'+x+'$') for x in edges)
 
 define_multipurpose_modmap(
     # {Key.ENTER: [Key.ENTER, Key.RIGHT_CTRL]   # Enter2Cmd
@@ -344,7 +344,7 @@ filemanagers = [
     "thunar",
 ]
 filemanagers = [filemanager.casefold() for filemanager in filemanagers]
-filemanagerStr = "|".join(str(x) for x in filemanagers)
+filemanagerStr = "|".join(str('^'+x+'$') for x in filemanagers)
 
 # Currently supported Linux file managers (file browsers):
 #
