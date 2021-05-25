@@ -189,6 +189,17 @@ GroupAdd, intellij, ahk_exe idea64.exe
 
 ; SetCapsLockState, AlwaysOff ; CB/IBM
 
+; Keyboards w/o media keys can use this Remap
+; This will replace unneeded dedicated keys
+; with most commonly used media keys
+;
+; Delete::SoundSet, +1, , mute  ; Toggles Speaker
+; End::SoundSetWaveVolume, -10  ; Decrease volume
+; PgDn::SoundSetWaveVolume, +10 ; Increase volume
+; Home::Send {Media_Play_Pause} ; Pause/Play
+; Insert::Send {Media_Prev}     ; Previous
+; PgUp::Send {Media_Next}       ; Next
+
 #IfWinNotActive ahk_group remotes
 
     ; New AltTab and CtrlTab fix
