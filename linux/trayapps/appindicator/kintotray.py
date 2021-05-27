@@ -35,9 +35,9 @@ class Indicator():
     except:
         sysv = 2
     if sysv:
-        kinto_status = Popen("while :; do clear; pgrep 'xkeysnail' && echo 'active'; sleep 2; done", stdout=PIPE, shell=True)
+        kinto_status = Popen("export TERM=xterm-color;while :; do clear; pgrep 'xkeysnail' && echo 'active'; sleep 2; done", stdout=PIPE, shell=True)
     else:
-        kinto_status = Popen("while :; do clear; systemctl is-active xkeysnail; sleep 2; done", stdout=PIPE, shell=True)
+        kinto_status = Popen("export TERM=xterm-color;while :; do clear; systemctl is-active xkeysnail; sleep 2; done", stdout=PIPE, shell=True)
     child_pid = kinto_status.pid
 
     homedir = os.path.expanduser("~")
