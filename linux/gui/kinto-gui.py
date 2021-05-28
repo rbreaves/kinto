@@ -628,9 +628,9 @@ class MyWindow(Gtk.Window):
             time.sleep(1)
             global child_pid
             if sysv:
-                self.kinto_status = Popen("while :; do clear; pgrep 'xkeysnail'; sleep 2; done", stdout=PIPE, shell=True)
+                self.kinto_status = Popen("export TERM=xterm-color;while :; do clear; pgrep 'xkeysnail'; sleep 2; done", stdout=PIPE, shell=True)
             else:
-                self.kinto_status = Popen("while :; do clear; systemctl is-active xkeysnail; sleep 2; done", stdout=PIPE, shell=True)
+                self.kinto_status = Popen("export TERM=xterm-color;while :; do clear; systemctl is-active xkeysnail; sleep 2; done", stdout=PIPE, shell=True)
             child_pid = self.kinto_status.pid
             self.menuitem_systray.disconnect(self.menuitem_systray.signal_id)
             self.menuitem_systray.set_active(False)
