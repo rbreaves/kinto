@@ -175,6 +175,7 @@ GroupAdd, browsers, ahk_exe msedge.exe
 GroupAdd, remotes, ahk_exe VirtualBoxVM.exe
 GroupAdd, remotes, ahk_exe mstsc.exe
 GroupAdd, remotes, ahk_exe msrdc.exe
+GroupAdd, remotes, ahk_exe nxplayer.bin
 
 ; Disabled Edge for now - no ability to close all instances
 ; GroupAdd, browsers, Microsoft Edge ahk_class ApplicationFrameWindow
