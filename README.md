@@ -140,6 +140,7 @@ RDP fully works as long as the entire keyboard input is being captured. RDP had 
 
 |Program|Src/Remote Client ⇒|Dst/Remote Server|Works? |Notes|
 |---|---|---|---|---|
+|Official MS RDP (mstsc.exe)| ❖Windows ⇒| 🐧Linux  | ✅ Yes| Note: [v1.0.7-3 Only](https://github.com/rbreaves/kinto/releases/tag/1.0.7-3). Should work for xRDP/VNC and other remote server protocols.  |
 |Official MS RDP (mstsc.exe)| ❖Windows ⇒| ❖Windows  | ✅ Yes|   |
 |Official MS RDP| ChromeOS 87+⇒| ❖Windows  | ✅ Yes|May work on earlier versions as well, if they support Android apps|
 |Remmina| 🐧Linux*/ChromeOS 87+⇒| ❖Windows  | ✅ Yes|*Use hover menu to enable "Grab all keyboard events"|
