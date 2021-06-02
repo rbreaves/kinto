@@ -11,9 +11,11 @@ Seamless copy and paste with all apps and terminals. The zero effort solution.
 
 v1.2 Release - Kinto now includes a system tray and simple wizard to setup the install with minimal effort.
 
+Kinto is powered by [xkeysnail](https://github.com/mooz/xkeysnail) for Linux & by [Autohotkey](https://github.com/Lexikos/AutoHotkey_L) for Windows 10.
+
 Note: If you plan to remote into Linux via VNC, xRDP, Synergy or other remote desktop solutions then remove the current release, or create a new user, & try an earlier [v1.0.7-3](https://github.com/rbreaves/kinto/releases/tag/1.0.7-3) release. It uses xkb so it'll work with virtual xinput devices. Some v1.1-x releases may offer both, but all v1.2.x releases ended support for xkb. I do plan to bring offical support back for virtual input devices.
 
-Kinto is powered by [xkeysnail](https://github.com/mooz/xkeysnail) for Linux & by [Autohotkey](https://github.com/Lexikos/AutoHotkey_L) for Windows 10.
+Additionally VMware, Virtualbox, KVM and other virtualization technologies work best with the current release - so *this note only applies to remote desktop into Linux* - not virtualization.
 
 ### [Table of Contents ](#Table-of-Contents)
 
