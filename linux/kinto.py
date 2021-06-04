@@ -678,7 +678,7 @@ define_keymap(re.compile(termStr, re.IGNORECASE),{
     # K("RC-Tab"): K("M-Tab"),                      # Default - Cmd Tab - App Switching Default
     # K("RC-Shift-Tab"): K("M-Shift-Tab"),          # Default - Cmd Tab - App Switching Default
     # Converts Cmd to use Ctrl-Shift
-    K("RC-MINUS"): K("C-Shift-MINUS"),
+    K("RC-MINUS"): K("C-MINUS"),
     K("RC-EQUAL"): K("C-Shift-EQUAL"),
     K("RC-BACKSPACE"): K("C-Shift-BACKSPACE"),
     K("RC-W"): K("C-Shift-W"),
