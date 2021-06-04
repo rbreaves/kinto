@@ -658,6 +658,7 @@ define_keymap(re.compile("Io.elementary.terminal|kitty", re.IGNORECASE),{
 }, "Elementary Terminal tab switching")
 
 define_keymap(re.compile(termStr, re.IGNORECASE),{
+    K("LC-RC-f"): K("M-F10"),                       # Toggle window maximized state
     # K("RC-Grave"): K("Super-Tab"),                # xfce4 Switch within app group
     # K("RC-Shift-Grave"): K("Super-Shift-Tab"),    # xfce4 Switch within app group
     # K("LC-Right"):K("C-M-Right"),                 # Default SL - Change workspace (budgie)
