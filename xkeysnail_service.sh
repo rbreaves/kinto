@@ -621,7 +621,7 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	# sudo systemctl restart xkeysnail
 	sudo pkill -f kintotray &
 	# >/dev/null 2>&1
-	if [[ $dename == "gnome" || $dename == "kde" ]];then
+	if [[ $dename == "kde" ]];then
 		sed -i "s/systray = true/systray = false/g" ~/.config/kinto/initkb
 	fi
 	nohup python3 ~/.config/kinto/gui/kinto-gui.py >/dev/null 2>&1 &
