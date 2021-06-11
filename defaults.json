@@ -1,6 +1,6 @@
 {"defaultapps":[{
 		"name":"term",
-		"appnames":[ "Gnome-terminal","konsole","io.elementary.terminal","terminator","sakura","guake","tilda","xterm","eterm","kitty" ]
+		"appnames":[ "Gnome-terminal","konsole","io.elementary.terminal","xfce4-terminal","terminator","sakura","guake","tilda","xterm","eterm","kitty" ]
 	}],
 	"defaulttypes":["windows","mac","chromebook"],
 	"defaults":[{
