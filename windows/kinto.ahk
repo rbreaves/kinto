@@ -202,6 +202,17 @@ GroupAdd, intellij, ahk_exe idea64.exe
 ; End::Send {Media_Play_Pause}  ; Pause/Play
 ; PgDn::Send {Media_Next}       ; Next
 
+; Temporary fix that allows for full remapping via Powertoys
+; useful for destinations where you cannot install Kinto
+; and you are using a Mac based keyboard
+; NOTE: Do not fully maximize the RDP window for this to work.
+#IfWinActive ahk_group remotes                  ; MacOnly
+; #IfWinActive ahk_exe msrdc.exe                ; MacOnly
+    $LWin::LAlt                                 ; MacOnly
+    $LAlt::RAlt                                 ; MacOnly
+    $LWin up::Send {LWin up}{LAlt up}{LCtrl up} ; MacOnly
+#If                                             ; MacOnly
+
 #IfWinNotActive ahk_group remotes
 
     ; New AltTab and CtrlTab fix
