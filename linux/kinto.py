@@ -428,6 +428,8 @@ define_keymap(re.compile(browserStr, re.IGNORECASE),{
     K("RC-Key_7"): K("M-Key_7"),
     K("RC-Key_8"): K("M-Key_8"),
     K("RC-Key_9"): K("M-Key_9"),    # Jump to last tab
+    K("RC-M-Left"):     K("C-Page_Up"),         # Go to prior tab
+    K("RC-M-Right"):    K("C-Page_Down"),       # Go to next tab
     K("Super-Page_Up"):     K("C-Page_Up"),     # Go to prior tab
     K("Super-Page_Down"):   K("C-Page_Down"),   # Go to next tab
     # Use brace keys for tab navigation instead of page navigation 
