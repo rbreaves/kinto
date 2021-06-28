@@ -422,6 +422,7 @@ define_keymap(re.compile("Firefox", re.IGNORECASE),{
 })
 define_keymap(re.compile(chromeStr, re.IGNORECASE),{
     K("C-comma"): [K("M-e"), K("s"),K("Enter")],
+    K("RC-K"): K("RC-L"),                         # Clear Chrome DevTools console
 }, "Browsers")
 # Opera C-F12
 
@@ -671,6 +672,11 @@ define_keymap(re.compile(termStr, re.IGNORECASE),{
     # K("LC-Left"):K("Super-Page_Down"),            # SL - Change workspace (ubuntu/fedora)
     # K("LC-Right"):K("Super-C-Up"),                # SL - Change workspace (popos)
     # K("LC-Left"):K("Super-C-Down"),               # SL - Change workspace (popos)
+    # Clears terminal - [Ctrl-Z, ' clear && fg 2>/dev/null']
+    K("RC-K"): [
+  	    K("RC-Z"),K("Space"),K("c"),K("l"),K("e"),K("a"),K("r"),K("Space"),K("Shift-KEY_7"),K("Shift-KEY_7"),K("Space"),
+  	    K("f"),K("g"),K("Space"),K("KEY_2"),K("Shift-Dot"),K("SLASH"),K("d"),K("e"),K("v"),K("SLASH"),K("n"),K("u"),K("l"),K("l"),K("Enter")
+    ],                
     # Ctrl Tab - In App Tab Switching
     K("LC-Tab") : K("LC-PAGE_DOWN"),
     K("LC-Shift-Tab") : K("LC-PAGE_UP"),
@@ -700,7 +706,6 @@ define_keymap(re.compile(termStr, re.IGNORECASE),{
     K("RC-G"): K("C-Shift-G"),
     K("RC-H"): K("C-Shift-H"),
     K("RC-J"): K("C-Shift-J"),
-    K("RC-K"): K("C-Shift-K"),
     K("RC-L"): K("C-Shift-L"),
     K("RC-SEMICOLON"): K("C-Shift-SEMICOLON"),
     K("RC-APOSTROPHE"): K("C-Shift-APOSTROPHE"),
