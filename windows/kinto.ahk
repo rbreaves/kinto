@@ -614,6 +614,7 @@ GroupAdd, intellij, ahk_exe idea64.exe
         ^!e::send ^+{h}                                         ; replace_next
         F3::Return                                              ; cancel find_next
         ^g::send {F3}                                           ; find_next
+        #g::send ^{g}                                           ; goto line - disable game bar - Start menu -> Game bar shortcuts -> toggle Off
         *F3::Return                                             ; cancel find_prev, find_under, find_all_under
         ^+g::send +{F3}                                         ; find_prev
         #!g::send ^{F3}                                         ; find_under
