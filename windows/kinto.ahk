@@ -582,7 +582,7 @@ GroupAdd, intellij, ahk_exe idea64.exe
         ; #x::Send ^{x}                                           ; Default - Terminal - Ctrl-x
         ; #c::Send ^{c}                                           ; Default - Terminal - Ctrl-c sigint
         ; !x::Send ^{x}                                           ; CB/IBM
-        ; !c::Send ^{c}                                           ; CB/IBM
+        ; !c::Send ^{c}                                           ; CB/IBM - Sigint
         ; #c::send ^{Pause}                                       ; cancel_build
         ; #Space::Send ^{Space}                                   ; Default - Basic code completion
         ; !Space::Send ^{Space}                                   ; CB/IBM - Basic code completion
@@ -606,7 +606,6 @@ GroupAdd, intellij, ahk_exe idea64.exe
         Insert::Return                                          ; cancel toggle_overwrite
         ^!O::send {Insert}                                      ; toggle_overwrite
         ; !c::Return                                              ; Default - cancel toggle_case_sensitive
-        ; $!c::send ^{c}                                          ; CB/IBM - Sigint
         ^!c::send !{c}                                          ; toggle_case_sensitive
         ; ^h::Return                                              ; cancel replace
         ^!f::send ^{h}                                          ; replace
