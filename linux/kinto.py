@@ -318,8 +318,8 @@ define_keymap(re.compile("pcmanfm|pcmanfm-qt", re.IGNORECASE),{
 define_keymap(re.compile("spacefm", re.IGNORECASE),{
     K("RC-Page_Up"): K("C-Shift-Tab"),              # Go to prior tab
     K("RC-Page_Down"): K("C-Tab"),                  # Go to next tab
-    K("RC-Shift-Left_Brace"): K("C-Shift-Tab"),              # Go to prior tab
-    K("RC-Shift-Right_Brace"): K("C-Tab"),                  # Go to next tab
+    K("RC-Shift-Left_Brace"): K("C-Shift-Tab"),     # Go to prior tab
+    K("RC-Shift-Right_Brace"): K("C-Tab"),          # Go to next tab
     K("RC-Shift-N"): [K("RC-F")],	                # Create new folder is Ctrl+F by default
     K("RC-Backspace"): [K("Delete"),K("Enter")],	# Move to Trash (delete, bypass dialog)
     K("RC-comma"): [K("M-V"),K("p")],               # Overrides "Open preferences dialog" shortcut below
