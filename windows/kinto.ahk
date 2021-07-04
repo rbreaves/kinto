@@ -131,6 +131,7 @@ Exit() {
 SetTitleMatchMode, 2
 
 GroupAdd, terminals, ahk_exe ubuntu.exe
+GroupAdd, terminals, ahk_exe ubuntu2004.exe
 GroupAdd, terminals, ahk_exe ConEmu.exe
 GroupAdd, terminals, ahk_exe ConEmu64.exe
 GroupAdd, terminals, ahk_exe powershell.exe
@@ -144,6 +145,7 @@ GroupAdd, terminals, Fluent Terminal ahk_class ApplicationFrameWindow
 GroupAdd, terminals, ahk_class Console_2_Main
 
 GroupAdd, posix, ahk_exe ubuntu.exe
+GroupAdd, posix, ahk_exe ubuntu2004.exe
 GroupAdd, posix, ahk_exe ConEmu.exe
 GroupAdd, posix, ahk_exe ConEmu64.exe
 GroupAdd, posix, ahk_exe Hyper.exe
@@ -170,8 +172,10 @@ GroupAdd, browsers, ahk_exe msedge.exe
 
 ; Disable Key Remapping for Virtual Machines
 ; Disable for Remote desktop solutions too
-GroupAdd, virtm, ahk_exe VirtualBoxVM.exe
-GroupAdd, virtm, ahk_exe mstsc.exe
+GroupAdd, remotes, ahk_exe VirtualBoxVM.exe
+GroupAdd, remotes, ahk_exe mstsc.exe
+GroupAdd, remotes, ahk_exe msrdc.exe
+GroupAdd, remotes, ahk_exe nxplayer.bin
 
 ; Disabled Edge for now - no ability to close all instances
 ; GroupAdd, browsers, Microsoft Edge ahk_class ApplicationFrameWindow
@@ -186,7 +190,19 @@ GroupAdd, intellij, ahk_exe idea64.exe
 
 ; SetCapsLockState, AlwaysOff ; CB/IBM
 
-#IfWinNotActive ahk_group virtm
+; Keyboards w/o media keys can use this Remap
+; This will replace unneeded dedicated keys
+; with most commonly used media keys
+;
+; Insert::SoundSet, +1, , mute  ; Toggles Speaker
+; +Insert::Insert               ; Shift Insert maps to Insert
+; Home::SoundSetWaveVolume, -10 ; Decrease volume
+; PgUp::SoundSetWaveVolume, +10 ; Increase volume
+; Delete::Send {Media_Prev}     ; Previous
+; End::Send {Media_Play_Pause}  ; Pause/Play
+; PgDn::Send {Media_Next}       ; Next
+
+#IfWinNotActive ahk_group remotes
 
     ; New AltTab and CtrlTab fix
     *tab:: 
@@ -411,6 +427,7 @@ GroupAdd, intellij, ahk_exe idea64.exe
     ; #If                                                      ; Chromebook
 
     #IfWinNotActive ahk_group terminals
+        ^.::Send {Esc}
         ; emacs style
         #n::Send {Down}
         #p::Send {Up}
@@ -565,7 +582,7 @@ GroupAdd, intellij, ahk_exe idea64.exe
         ; #x::Send ^{x}                                           ; Default - Terminal - Ctrl-x
         ; #c::Send ^{c}                                           ; Default - Terminal - Ctrl-c sigint
         ; !x::Send ^{x}                                           ; CB/IBM
-        ; !c::Send ^{c}                                           ; CB/IBM
+        ; !c::Send ^{c}                                           ; CB/IBM - Sigint
         ; #c::send ^{Pause}                                       ; cancel_build
         ; #Space::Send ^{Space}                                   ; Default - Basic code completion
         ; !Space::Send ^{Space}                                   ; CB/IBM - Basic code completion
@@ -589,7 +606,6 @@ GroupAdd, intellij, ahk_exe idea64.exe
         Insert::Return                                          ; cancel toggle_overwrite
         ^!O::send {Insert}                                      ; toggle_overwrite
         ; !c::Return                                              ; Default - cancel toggle_case_sensitive
-        ; $!c::send ^{c}                                          ; CB/IBM - Sigint
         ^!c::send !{c}                                          ; toggle_case_sensitive
         ; ^h::Return                                              ; cancel replace
         ^!f::send ^{h}                                          ; replace
@@ -597,6 +613,7 @@ GroupAdd, intellij, ahk_exe idea64.exe
         ^!e::send ^+{h}                                         ; replace_next
         F3::Return                                              ; cancel find_next
         ^g::send {F3}                                           ; find_next
+        #g::send ^{g}                                           ; goto line - disable game bar - Start menu -> Game bar shortcuts -> toggle Off
         *F3::Return                                             ; cancel find_prev, find_under, find_all_under
         ^+g::send +{F3}                                         ; find_prev
         #!g::send ^{F3}                                         ; find_under
@@ -672,6 +689,7 @@ GroupAdd, intellij, ahk_exe idea64.exe
         ; Sigints - interrupt
         ; $#c::Send {Ctrl down}c{Ctrl up} ; Default
         ; $!c::Send {Ctrl down}c{Ctrl up} ; CB/IBM
+        $^.::Send {Ctrl down}c{Ctrl up}
 
         ; Windows Terminal
         ; Ctrl+Shift+C should do nothing
@@ -725,45 +743,45 @@ GroupAdd, intellij, ahk_exe idea64.exe
         ; Clear Terminal and Scroll Buffer
         ^k::Send clear && printf '\e[3J'{Enter}
         ; Remap Physical Ctrl back to Ctrl
-        #0::Send {LCtrl down}0{Ctrl up}  ; Default
-        #1::Send {LCtrl down}1{Ctrl up}  ; Default
-        #2::Send {LCtrl down}2{Ctrl up}  ; Default
-        #3::Send {LCtrl down}3{Ctrl up}  ; Default
-        #4::Send {LCtrl down}4{Ctrl up}  ; Default
-        #5::Send {LCtrl down}5{Ctrl up}  ; Default
-        #6::Send {LCtrl down}6{Ctrl up}  ; Default
-        #7::Send {LCtrl down}7{Ctrl up}  ; Default
-        #8::Send {LCtrl down}8{Ctrl up}  ; Default
-        #9::Send {LCtrl down}9{Ctrl up}  ; Default
-        #-::Send {LCtrl down}-{Ctrl up}  ; Default
-        #=::Send {LCtrl down}={Ctrl up}  ; Default
-        #`::Send {LCtrl down}`{Ctrl up}  ; Default
-        #a::Send {LCtrl down}a{Ctrl up}  ; Default
-        #b::Send {LCtrl down}b{Ctrl up}  ; Default
-        #c::Send {LCtrl down}c{Ctrl up}  ; Default
-        #d::Send {LCtrl down}d{Ctrl up}  ; Default
-        #e::Send {LCtrl down}e{Ctrl up}  ; Default
-        #f::Send {LCtrl down}f{Ctrl up}  ; Default
-        #g::Send {LCtrl down}g{Ctrl up}  ; Default
-        #h::Send {LCtrl down}h{Ctrl up}  ; Default
-        #i::Send {LCtrl down}i{Ctrl up}  ; Default
-        #j::Send {LCtrl down}j{Ctrl up}  ; Default
-        #k::Send {LCtrl down}k{Ctrl up}  ; Default
-        #l::Send {LCtrl down}l{Ctrl up}  ; Default
-        #m::Send {LCtrl down}m{Ctrl up}  ; Default
-        #n::Send {LCtrl down}n{Ctrl up}  ; Default
-        #o::Send {LCtrl down}o{Ctrl up}  ; Default
-        #p::Send {LCtrl down}p{Ctrl up}  ; Default
-        #q::Send {LCtrl down}q{Ctrl up}  ; Default
-        #r::Send {LCtrl down}r{Ctrl up}  ; Default
-        #s::Send {LCtrl down}s{Ctrl up}  ; Default
-        #t::Send {LCtrl down}t{Ctrl up}  ; Default
-        #u::Send {LCtrl down}u{Ctrl up}  ; Default
-        #v::Send {LCtrl down}v{Ctrl up}  ; Default
-        #w::Send {LCtrl down}w{Ctrl up}  ; Default
-        #x::Send {LCtrl down}x{Ctrl up}  ; Default
-        #y::Send {LCtrl down}y{Ctrl up}  ; Default
-        #z::Send {LCtrl down}z{Ctrl up}  ; Default
+        ; #0::Send {LCtrl down}0{Ctrl up}  ; Default
+        ; #1::Send {LCtrl down}1{Ctrl up}  ; Default
+        ; #2::Send {LCtrl down}2{Ctrl up}  ; Default
+        ; #3::Send {LCtrl down}3{Ctrl up}  ; Default
+        ; #4::Send {LCtrl down}4{Ctrl up}  ; Default
+        ; #5::Send {LCtrl down}5{Ctrl up}  ; Default
+        ; #6::Send {LCtrl down}6{Ctrl up}  ; Default
+        ; #7::Send {LCtrl down}7{Ctrl up}  ; Default
+        ; #8::Send {LCtrl down}8{Ctrl up}  ; Default
+        ; #9::Send {LCtrl down}9{Ctrl up}  ; Default
+        ; #-::Send {LCtrl down}-{Ctrl up}  ; Default
+        ; #=::Send {LCtrl down}={Ctrl up}  ; Default
+        ; #`::Send {LCtrl down}`{Ctrl up}  ; Default
+        ; #a::Send {LCtrl down}a{Ctrl up}  ; Default
+        ; #b::Send {LCtrl down}b{Ctrl up}  ; Default
+        ; #c::Send {LCtrl down}c{Ctrl up}  ; Default
+        ; #d::Send {LCtrl down}d{Ctrl up}  ; Default
+        ; #e::Send {LCtrl down}e{Ctrl up}  ; Default
+        ; #f::Send {LCtrl down}f{Ctrl up}  ; Default
+        ; #g::Send {LCtrl down}g{Ctrl up}  ; Default
+        ; #h::Send {LCtrl down}h{Ctrl up}  ; Default
+        ; #i::Send {LCtrl down}i{Ctrl up}  ; Default
+        ; #j::Send {LCtrl down}j{Ctrl up}  ; Default
+        ; #k::Send {LCtrl down}k{Ctrl up}  ; Default
+        ; #l::Send {LCtrl down}l{Ctrl up}  ; Default
+        ; #m::Send {LCtrl down}m{Ctrl up}  ; Default
+        ; #n::Send {LCtrl down}n{Ctrl up}  ; Default
+        ; #o::Send {LCtrl down}o{Ctrl up}  ; Default
+        ; #p::Send {LCtrl down}p{Ctrl up}  ; Default
+        ; #q::Send {LCtrl down}q{Ctrl up}  ; Default
+        ; #r::Send {LCtrl down}r{Ctrl up}  ; Default
+        ; #s::Send {LCtrl down}s{Ctrl up}  ; Default
+        ; #t::Send {LCtrl down}t{Ctrl up}  ; Default
+        ; #u::Send {LCtrl down}u{Ctrl up}  ; Default
+        ; #v::Send {LCtrl down}v{Ctrl up}  ; Default
+        ; #w::Send {LCtrl down}w{Ctrl up}  ; Default
+        ; #x::Send {LCtrl down}x{Ctrl up}  ; Default
+        ; #y::Send {LCtrl down}y{Ctrl up}  ; Default
+        ; #z::Send {LCtrl down}z{Ctrl up}  ; Default
         ; !0::Send {LCtrl down}0{Ctrl up}  ; CB/IBM
         ; !1::Send {LCtrl down}1{Ctrl up}  ; CB/IBM
         ; !2::Send {LCtrl down}2{Ctrl up}  ; CB/IBM

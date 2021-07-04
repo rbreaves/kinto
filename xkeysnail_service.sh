@@ -3,10 +3,17 @@
 # set about:config?filter=ui.key.menuAccessKeyFocuses
 # to false for wordwise to work in Firefox
 
+function pause(){
+ read -s -n 1 -p "Press any key to continue . . ."
+ echo ""
+}
+
 typeset -l distro
 distro=$(awk -F= '$1=="NAME" { gsub("[\",!,_, ]","",$2);print $2 ;}' /etc/os-release)
 typeset -l dename
 dename=$(./linux/system-config/dename.sh | cut -d " " -f1)
+
+sysv=$(pidof systemd >/dev/null 2>&1 && echo "1" || echo "0")
 
 function uninstall {
 
@@ -38,7 +45,11 @@ function uninstall {
 			mv ~/.config/kglobalshortcutsrc ~/.config/kglobalshortcutsrc.kinto
 		elif [ "$dename" == "xfce" ];then
 			echo "Resetting DE hotkeys..."
-			cp /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
+			if test -f "/etc/mx-version";then
+				cp /etc/skel/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
+			else
+				cp /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
+			fi
 		fi
 	elif [ "$yn" == "r" ]; then
 		echo "Restore original user shortcuts"
@@ -77,6 +88,12 @@ function uninstall {
 		echo -e "\nWill still be restoring the overlay key"
 		echo -e "gsettings set org.gnome.mutter overlay-key 'super'\n"
 		gsettings set org.gnome.mutter overlay-key 'super'
+	# Repetitive - xfce restore factory or backup does this
+	# Also needs to check if whiskermenu is even being used
+	# elif [[ $dename == "xfce" ]]; then
+	# 	echo -e "\nWill still be restoring the overlay key"
+	# 	echo -e "xfconf-query --channel xfce4-keyboard-shortcuts --property \"/commands/custom/Super_L\" --create --type string --set \"xfce4-popup-whiskermenu\""
+	# 	xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/Super_L" --create --type string --set "xfce4-popup-whiskermenu"
 	fi
 }
 
@@ -189,6 +206,7 @@ if [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	echo "rm /etc/systemd/system/graphical.target.wants/xkeysnail.service"
 	echo "rm /usr/lib/systemd/system/xkeysnail.service"
 	echo "rm /lib/systemd/system/xkeysnail.service"
+	sudo rm /etc/init.d/kinto >/dev/null 2>&1
 	sudo rm /etc/systemd/system/xkeysnail.service >/dev/null 2>&1
 	sudo rm /etc/systemd/system/graphical.target.wants/xkeysnail.service >/dev/null 2>&1
 	sudo rm /usr/lib/systemd/system/xkeysnail.service >/dev/null 2>&1
@@ -207,9 +225,29 @@ fi
 sudo systemctl stop xkeysnail >/dev/null 2>&1
 sudo systemctl disable xkeysnail >/dev/null 2>&1
 sudo pkill -f bin/xkeysnail >/dev/null 2>&1
+sudo pkill -f kinto-gui.py >/dev/null 2>&1
+sudo pkill -f kintotray.py >/dev/null 2>&1
+ps aux | awk '/[s]h -c while/ {print $2}' | xargs -r -n1 sudo kill
 sudo pkill -f "is-active xkeysnail" >/dev/null 2>&1
 
-pip3 install pillow
+if [ "$distro" == "manjarolinux" ]; then
+	while true; do
+		read -rep $'\nHave you run \"sudo pacman -Syu\" before running Kinto setup? (y/n): ' updated	
+		case $updated in
+			[Yy]* ) mjupdated='yes'; break;;
+			[Nn]* ) mjupdated='no'; break;;
+			* ) echo -e "\nPlease answer [y]es or [n]o.";;
+		esac
+	done
+	if [[ "$mjupdated" == "no" ]]; then 
+		echo 
+		echo "================================================================================"
+		echo "==========  Please run a full system update before installing Kinto.  ==========" 
+		echo "================================================================================"
+		echo 
+		exit 0
+	fi
+fi
 
 # Add additional shortcuts if needed, does not modify existing ones
 
@@ -219,6 +257,34 @@ if [[ $dename == 'gnome' || $dename == 'budgie' ]];then
 		echo "Overlay key, " $bound ", detected. Will be removing so Super-Space can remap to Cmd-Space for app launching.."
 		gsettings set org.gnome.mutter overlay-key ''
 	fi
+elif [[ $dename == 'xfce' ]];then
+	launcher=$(cat ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml | grep 'name="Super_L"' | sed 's:.*="::')
+	# echo "${#launcher}"
+	if [[ "${#launcher}" -eq 0 ]]; then
+		xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/Super_L" --create --type string --set "xfce4-popup-whiskermenu"
+		echo "Resetting Super_L, please wait..."
+		sleep 6
+		launcher=$(cat ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml | grep 'name="Super_L"' | sed 's:.*="::')
+		if [[ "${#launcher}" -gt 0 ]]; then
+			echo "Success."
+		else
+			echo "Failed. Skipping setup of Cmd-Space."
+		fi
+	fi
+	if [[ "${#launcher}" -gt 0 ]]; then
+		nlauncher=${launcher::-3}
+		# Replace Alt-F1 help file w/ whisker menu alternative hotkey
+		xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Alt>F1" --reset
+		# Clear Alt-F3 App Finder for sublime text global replace
+		xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Alt>F3" --reset
+		xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Alt>F1" --create --type string --set "$nlauncher" && echo "$nlauncher has been set to Alt-F1 for Cmd-Space to work."
+		# Unset Super_L to avoid issues during setup, will re-apply at the end
+		xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/Super_L" --reset
+		# xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/<Super>grave" --create --type string --set "switch_window_key"
+
+	fi
+	# Unset Super-Tab, breaks Ctrl-Tab. switch_window_key
+	sed -i '/.*name=\"&lt;Super&gt;Tab.*$/d' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
 fi
 
 # if ls /etc/apt/sources.list.d/system76* 1> /dev/null 2>&1; then
@@ -307,17 +373,21 @@ expsh=" "
 # 	echo "Will need to install inotify-tools to restart key remapper live for config file changes..."
 # 	sudo ./linux/system-config/unipkg.sh inotify-tools
 # fi
+if ! [ -x "$(command -v git)" ]; then
+	echo "Will need to install git..."
+	sudo ./linux/system-config/unipkg.sh git
+fi
 if ! [ -x "$(command -v pip3)" ]; then
 	echo "Will need to install python3-pip..."
 	sudo ./linux/system-config/unipkg.sh python3-pip
 fi
 if ! [ -x "$(command -v python3-config)" ]; then
-	if [ "$distro" == "ubuntu" ] || [ "$distro" == "debian" ] || [ "$distro" == 'linuxmint' ]; then
+	if [ "$distro" == "ubuntu" ] || [ "${distro::6}" == "debian" ] || [ "$distro" == 'linuxmint' ]; then
 		pydev="python3-dev"
 	elif [ "$distro" == "fedora" ]; then
 		pydev="python3-devel"
 	fi
-	if [ "$distro" == "gnome" ] || [ "$distro" == "fedora" ] || [ "$distro" == "debian" ] || [ "$distro" == 'linuxmint' ]; then
+	if [ "$distro" == "gnome" ] || [ "$distro" == "fedora" ] || [ "${distro::6}" == "debian" ] || [ "$distro" == 'linuxmint' ]; then
 		echo "Will need to install $pydev..."
 		sudo ./linux/system-config/unipkg.sh "$pydev"
 	fi
@@ -330,9 +400,13 @@ if ! [ -x "$(command -v xhost)" ] || ! [ -x "$(command -v gcc)" ]; then
 		sudo ./linux/system-config/unipkg.sh "xorg-xhost gcc"
 	fi
 fi
-if [ "$distro" == 'linuxmint' ]; then
+if [ "$distro" == 'linuxmint' ] ; then
 	pip3 install setuptools
+elif [ "${distro::6}" == "debian" ]; then
+	sudo pip3 install setuptools wheel
 fi
+
+pip3 install pillow
 
 # echo "Transferring files..."
 mkdir -p ~/.config/kinto
@@ -344,7 +418,11 @@ mkdir -p ~/.config/kinto
 
 # KDE startup - xhost fix
 mkdir -p ~/.config/autostart
-yes | cp -rf ./linux/xkeysnail.desktop ~/.config/kinto/xkeysnail.desktop
+if [ ! "$sysv" -eq 0 ];then
+	yes | cp -rf ./linux/xkeysnail.desktop ~/.config/kinto/xkeysnail.desktop
+else
+	yes | cp -rf ./linux/xkeysnail_sysv.desktop ~/.config/kinto/xkeysnail.desktop
+fi
 
 # yes | cp -rf ./linux/xkeystart.sh ~/.config/kinto/xkeystart.sh
 
@@ -358,9 +436,17 @@ yes | cp -rf ./linux/xkeysnail.desktop ~/.config/kinto/xkeysnail.desktop
 # logoff fix - not solid for every os. Prevents missed 1 character input on login
 # yes | sudo cp -rf linux/gnome_logoff.sh ~/.config/kinto/logoff.sh
 
-echo "$(git describe --tag --abbrev=0 | head -n 1)" "build" "$(git rev-parse --short HEAD)" > ~/.config/kinto/version
+if [ -d "./.git" ] 
+then
+	echo "$(git describe --tag --abbrev=0 | head -n 1)" "build" "$(git rev-parse --short HEAD)" > ~/.config/kinto/version
+elif [ -f "./dl_version" ]; then
+	cp ./dl_version  ~/.config/kinto/version
+else
+	# Not a typo - v is built in
+	echo "ersion Unknown"  > ~/.config/kinto/version
+fi
+
 yes | cp -rf ./linux/kinto.py ./linux/kinto.py.new
-yes | cp -rf ./linux/limitedadmins ./linux/limitedadmins.new
 yes | cp -rf ./linux/gui/ ~/.config/kinto/
 yes | cp -nrf ./linux/initkb ~/.config/kinto/initkb
 yes | cp -rf ./linux/killdups.sh ~/.config/kinto/killdups.sh
@@ -373,29 +459,36 @@ yes | cp -rf ./linux/trayapps/appindicator/icons/kinto-invert-16.svg ~/.config/k
 yes | cp -rf ./linux/trayapps/appindicator/icons/kinto-solid-16.svg ~/.config/kinto/kinto-solid.svg
 yes | cp -rf ./linux/trayapps/appindicator/icons/kinto.svg ~/.config/kinto/kinto.svg
 # yes | cp -rf ./linux/system-config/caret_status_xkey.sh ~/.config/kinto/caret_status_xkey.sh
-yes | cp -rf ./linux/xkeysnail.service ./linux/xkeysnail.service.new
-# yes | cp -rf ./linux/xkeysnail.timer ~/.config/systemd/user/xkeysnail.timer
-sed -i "s#{experimental-caret}#$exp#g" ./linux/xkeysnail.service.new
-if [ "$expsh" != " " ];then
-	sed -i "s#{kill-caret}#/usr/bin/pkill -f $expsh#g" ./linux/xkeysnail.service.new
+
+yes | cp -rf ./linux/limitedadmins ./linux/limitedadmins.new
+sed -i "s/{username}/`whoami`/g" ./linux/limitedadmins.new
+sed -i "s#{systemctl}#`\\which systemctl`#g" ./linux/limitedadmins.new
+sed -i "s#{pkill}#`\\which pkill`#g" ./linux/limitedadmins.new
+if [ ! "$sysv" -eq 0 ];then
+	echo "Using systemd..."
+	yes | cp -rf ./linux/xkeysnail.service ./linux/xkeysnail.service.new
+	# yes | cp -rf ./linux/xkeysnail.timer ~/.config/systemd/user/xkeysnail.timer
+	sed -i "s#{experimental-caret}#$exp#g" ./linux/xkeysnail.service.new
+	if [ "$expsh" != " " ];then
+		sed -i "s#{kill-caret}#/usr/bin/pkill -f $expsh#g" ./linux/xkeysnail.service.new
+	else
+		sed -i "s#{kill-caret}#$expsh#g" ./linux/xkeysnail.service.new
+	fi
+	sed -i "s/{username}/`whoami`/g" ./linux/xkeysnail.service.new
+	sed -i "s#{homedir}#`echo "$HOME"`#g" ./linux/xkeysnail.service.new
+	sed -i "s#{xhost}#`\\which xhost`#g" ./linux/xkeysnail.service.new
+	sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ./linux/xkeysnail.service.new
 else
-	sed -i "s#{kill-caret}#$expsh#g" ./linux/xkeysnail.service.new
+	echo "Using sysvinit..."
 fi
-sed -i "s/{username}/`whoami`/g" ./linux/xkeysnail.service.new
-sed -i "s#{homedir}#`echo "$HOME"`#g" ./linux/xkeysnail.service.new
 sed -i "s#{homedir}#`echo "$HOME"`#g" ~/.config/kinto/kintotray.desktop
 sed -i "s#{homedir}#`echo "$HOME"`#g" ~/.config/kinto/gui/kinto-gui.py
 sed -i "s#{homedir}#`echo "$HOME"`#g" ./linux/gui/kinto.desktop.new
 sudo mv ./linux/gui/kinto.desktop.new /usr/share/applications/kinto.desktop
-sed -i "s#{xhost}#`\\which xhost`#g" ./linux/xkeysnail.service.new
-sed -i "s/{username}/`whoami`/g" ./linux/limitedadmins.new
-sed -i "s#{systemctl}#`\\which systemctl`#g" ./linux/limitedadmins.new
-sed -i "s#{pkill}#`\\which pkill`#g" ./linux/limitedadmins.new
 sed -i "s#{systemctl}#`\\which systemctl`#g" ~/.config/kinto/xkeysnail.desktop
 sed -i "s#{xhost}#`\\which xhost`#g" ~/.config/kinto/xkeysnail.desktop
 sed -i "s#{homedir}#`echo "$HOME"`#g" ~/.config/kinto/xkeysnail.desktop
 # sed -i "s#{homedir}#`echo "$HOME"`#g" ~/.config/kinto/prexk.sh
-sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ./linux/xkeysnail.service.new
 # sed -i "s/{displayid}/`echo "$DISPLAY"`/g" ~/.config/kinto/prexk.sh
 
 if [[ $dename == "budgie" ]]; then
@@ -445,8 +538,16 @@ if [[ $dename == "xfce" ]] && ls /etc/apt/sources.list.d/enso* 1> /dev/null 2>&1
 fi
 
 if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
+
 	mv ./linux/kinto.py.new ~/.config/kinto/kinto.py
-	sudo rm /etc/systemd/system/xkeysnail.service >/dev/null 2>&1
+	# if [ "$distro" == "fedora" ];then
+	if [ ! "$sysv" -eq 0 ];then
+		# echo "Using systemd..."
+		sudo rm /etc/systemd/system/xkeysnail.service >/dev/null 2>&1
+	else
+		# echo "Using sysvinit..."
+		echo ""
+	fi
 	if [ -d /usr/lib/systemd/system ];then
 		xkeypath="/usr/lib/systemd/system/"
 	elif [ -d /lib/systemd/system ];then
@@ -474,21 +575,42 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 		echo -e "Run 'sudo pip3 install --upgrade .' to debug issue"
 		exit 0
 	fi
-	sed -i "s#{xkeysnail}#`which xkeysnail`#g" ./linux/xkeysnail.service.new
 	sed -i "s#{xkeysnail}#`which xkeysnail`#g" ./linux/limitedadmins.new
-	sudo mv ./linux/xkeysnail.service.new "$xkeypath"xkeysnail.service && echo "Service file added to "$xkeypath"xkeysnail.service"
-	echo "Changing SELinux context"
-	sudo chcon -v --user=$selinuxuser --type=$selinuxtype "$xkeypath"xkeysnail.service
+	if [[ $distro == "fedora" ]]; then
+		echo "Changing SELinux context"
+		sudo chcon -v --user=$selinuxuser --type=$selinuxtype "$xkeypath"xkeysnail.service
+	fi
 	sudo chown root:root ./linux/limitedadmins.new
 	# Add a check here for xkeysnail path resolving
 	sudo mv ./linux/limitedadmins.new /etc/sudoers.d/limitedadmins
-	sudo chown -R root:root "$xkeypath"xkeysnail.service && echo "Ownership set for root..." || echo "Failed to set ownership..."
-	sudo chmod 644 "$xkeypath"xkeysnail.service && echo "Permissions set to 644..." || echo "Failed to set permissions..."
-	sudo ln -s "$xkeypath"xkeysnail.service /etc/systemd/system/xkeysnail.service && echo "Created soft symlink..." || echo "Failed to create soft symlink..."
-	sudo ln -s "$xkeypath"xkeysnail.service /etc/systemd/system/graphical.target.wants/xkeysnail.service && echo "Created soft symlink for graphical target..." || echo "Failed to create soft symlink for graphical target..."
-	sudo systemctl daemon-reload
-	sudo systemctl disable xkeysnail
-	sudo systemctl stop xkeysnail
+	if [ ! "$sysv" -eq 0 ];then
+		# echo "Using systemd..."
+		sed -i "s#{xkeysnail}#`which xkeysnail`#g" ./linux/xkeysnail.service.new
+		sudo mv ./linux/xkeysnail.service.new "$xkeypath"xkeysnail.service && echo "Service file added to "$xkeypath"xkeysnail.service"
+
+		if [[ $distro == "fedora" ]]; then
+			sudo cp "$xkeypath"xkeysnail.service /etc/systemd/system/xkeysnail.service && echo "Copied service file to system..." || echo "Failed to create copy..."
+			sudo cp "$xkeypath"xkeysnail.service /etc/systemd/system/graphical.target.wants/xkeysnail.service && echo "Copied service file to system for graphical target..." || echo "Failed to create copy for graphical target..."
+			sudo chown -R root:root /etc/systemd/system/xkeysnail.service && echo "Ownership set for root..." || echo "Failed to set ownership..."
+			sudo chown -R root:root /etc/systemd/system/graphical.target.wants/xkeysnail.service && echo "Ownership set for root..." || echo "Failed to set ownership..."
+			sudo chmod 644 /etc/systemd/system/xkeysnail.service && echo "Permissions set to 644..." || echo "Failed to set permissions..."
+			sudo chmod 644 /etc/systemd/system/graphical.target.wants/xkeysnail.service && echo "Permissions set to 644..." || echo "Failed to set permissions..."
+		else
+			sudo chown -R root:root "$xkeypath"xkeysnail.service && echo "Ownership set for root..." || echo "Failed to set ownership..."
+			sudo chmod 644 "$xkeypath"xkeysnail.service && echo "Permissions set to 644..." || echo "Failed to set permissions..."
+			sudo ln -s "$xkeypath"xkeysnail.service /etc/systemd/system/xkeysnail.service && echo "Created soft symlink..." || echo "Failed to create soft symlink..."
+			sudo ln -s "$xkeypath"xkeysnail.service /etc/systemd/system/graphical.target.wants/xkeysnail.service && echo "Created soft symlink for graphical target..." || echo "Failed to create soft symlink for graphical target..."
+		fi
+		sudo systemctl daemon-reload
+		sudo systemctl disable xkeysnail
+		sudo systemctl stop xkeysnail
+	else
+		# echo "Using sysvinit..."
+		echo ""
+		sudo cp ./linux/kinto-service.sh /etc/init.d/kinto
+		sudo -E /etc/init.d/kinto stop
+		mv /tmp/kinto.log /tmp/kinto.log.bak
+	fi
 	# sudo systemctl --state=not-found --all | grep xkeysnail
 	# if [ "$distro" == "fedora" ];then
 	# 	systemctl enable xkeysnail.service
@@ -496,8 +618,9 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	# 	sudo systemctl enable xkeysnail.service
 	# fi
 	# sudo systemctl restart xkeysnail
-	sudo pkill -f kintotray >/dev/null 2>&1
-	if [[ $dename == "gnome" || $dename == "kde" ]];then
+	sudo pkill -f kintotray &
+	# >/dev/null 2>&1
+	if [[ $dename == "kde" ]];then
 		sed -i "s/systray = true/systray = false/g" ~/.config/kinto/initkb
 	fi
 	nohup python3 ~/.config/kinto/gui/kinto-gui.py >/dev/null 2>&1 &
@@ -527,6 +650,24 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 	echo "If the setup wizard fails to appear then please run this command."
 	echo -e "~/.config/kinto/gui/kinto-gui.py\n"
 	echo -e "You can then either \e]8;;https://google.com\a\e[1m\e[36mG\033[0;91mo\033[0;93mo\e[1m\e[36mg\e[1m\e[32ml\033[0;91me\e[0m\e]8;;\a what dependencies you may be missing\nor \e]8;;https://github.com/rbreaves/kinto/issues/new\?assignees=rbreaves&labels=bug&template=bug_report.md&title=\aopen an issue ticket.\e]8;;\a\n"
+
+	# echo -e "\033[0;91mAfter the installer completes press Any key to re-apply your overlay (Super key) menu launcher.\e[0m\n"
+
+	# if [[ $dename == 'gnome' || $dename == 'budgie' ]];then
+	# 	echo "GNOME: gsettings set org.gnome.mutter overlay-key 'super'"
+	# elif [[ $dename == 'xfce' ]];then
+	# 	echo "XFCE: xfconf-query --channel xfce4-keyboard-shortcuts --property \"/commands/custom/Super_L\" --create --type string --set \"$nlauncher\""
+	# fi
+
+	# read -n 1 -s -r -p ""
+
+	# if [[ $dename == 'gnome' || $dename == 'budgie' ]];then
+	# 	gsettings set org.gnome.mutter overlay-key 'super'
+	# elif [[ $dename == 'xfce' ]];then
+	# 	echo -e "\nSetting xfce4 launcher $nlauncher back to Super_L."
+	# 	xfconf-query --channel xfce4-keyboard-shortcuts --property "/commands/custom/Super_L" --create --type string --set "$nlauncher" && echo "Success."
+	# fi
+	
 
 	if [ "$distro" == "manjarolinux" ]; then
 		echo "If you are using Manjaro and see an error about 'GLIBC_2.xx not found' appears then please update your system."

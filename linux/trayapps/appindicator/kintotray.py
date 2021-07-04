@@ -29,7 +29,15 @@ APPINDICATOR_ID = 'Kinto'
 class Indicator():
 
     global child_pid
-    kinto_status = Popen("while :; do clear; systemctl is-active xkeysnail; sleep 2s; done", stdout=PIPE, shell=True)
+    global sysv
+    try:
+        sysv = int(Popen("pidof systemd >/dev/null 2>&1 && echo '0' || echo '1'", stdout=PIPE, shell=True).communicate()[0].strip().decode('UTF-8'))
+    except:
+        sysv = 2
+    if sysv:
+        kinto_status = Popen("export TERM=xterm-color;while :; do clear; pgrep 'xkeysnail' && echo 'active'; sleep 2; done", stdout=PIPE, shell=True)
+    else:
+        kinto_status = Popen("export TERM=xterm-color;while :; do clear; systemctl is-active xkeysnail; sleep 2; done", stdout=PIPE, shell=True)
     child_pid = kinto_status.pid
 
     homedir = os.path.expanduser("~")
@@ -42,44 +50,52 @@ class Indicator():
     autostart_bool = False
     menu = Gtk.Menu()
     menukb = Gtk.Menu()
-    checkbox_autostart = Gtk.CheckMenuItem('Autostart')
-    restart = Gtk.MenuItem('Restart')
-    stop = Gtk.MenuItem('Stop')
-    keyboards = Gtk.MenuItem('Keyboard Types')
+    checkbox_autostart = Gtk.CheckMenuItem(label='Autostart')
+    restart = Gtk.MenuItem(label='Restart')
+    stop = Gtk.MenuItem(label='Stop')
+    keyboards = Gtk.MenuItem(label='Keyboard Types')
     keyboards.set_submenu(menukb)
     winkb = Gtk.RadioMenuItem(label='Windows')
     mackb = Gtk.RadioMenuItem(label='Apple',group=winkb)
     chromekb = Gtk.RadioMenuItem(label='Chromebook',group=winkb)
     ibmkb = Gtk.RadioMenuItem(label='IBM (No Super/Win key)',group=winkb)
     winmackb = Gtk.RadioMenuItem(label='Windows & Apple*',group=winkb)
-    edit = Gtk.MenuItem('Customize')
+    edit = Gtk.MenuItem(label='Customize')
     edit_submenu = Gtk.Menu()
     edit.set_submenu(edit_submenu)
-    tweaks = Gtk.MenuItem('Tweaks')
-    rightmod =  Gtk.CheckButton('AltGr on Right Cmd')
-    vsc2st3 = Gtk.CheckButton('ST3 hotkeys for VS Code')
-    caps2esc = Gtk.CheckButton('Capslock is Escape when tapped, Cmd when held')
-    caps2cmd = Gtk.CheckButton('Capslock is Cmd')
-    button_config = Gtk.MenuItem('Kinto Config (shortcuts)')
-    service = Gtk.MenuItem('Kinto Service')
+    tweaks = Gtk.MenuItem(label='Tweaks')
+    rightmod =  Gtk.CheckButton(label='AltGr on Right Cmd')
+    vsc2st3 = Gtk.CheckButton(label='ST3 hotkeys for VS Code')
+    caps2esc = Gtk.CheckButton(label='Capslock is Escape when tapped, Cmd when held')
+    caps2cmd = Gtk.CheckButton(label='Capslock is Cmd')
+    button_config = Gtk.MenuItem(label='Kinto Config (shortcuts)')
+    service = Gtk.MenuItem(label='Kinto Service')
     # Keyboard type set below
-    button_syskb = Gtk.MenuItem('System Shortcuts')
-    button_region = Gtk.MenuItem('Change Language')
-    systray = Gtk.CheckMenuItem('Tray Enabled')
-    helpm = Gtk.MenuItem('Help')
+    button_syskb = Gtk.MenuItem(label='System Shortcuts')
+    button_region = Gtk.MenuItem(label='Change Language')
+    systray = Gtk.CheckMenuItem(label='Tray Enabled')
+    helpm = Gtk.MenuItem(label='Help')
     help_submenu = Gtk.Menu()
     helpm.set_submenu(help_submenu)
-    debug = Gtk.MenuItem('Debug')
-    opengui = Gtk.MenuItem('Open Kinto')
-    support = Gtk.MenuItem("Support")
-    about = Gtk.MenuItem('About')
+    debug = Gtk.MenuItem(label='Debug')
+    opengui = Gtk.MenuItem(label='Open Kinto')
+    support = Gtk.MenuItem(label='Support')
+    about = Gtk.MenuItem(label='About')
     global restartsvc
     restartsvc = False
     unixts = int(time.time())
-    last_status = ""
+    last_status = ''
 
     def __init__(self):
-        res = Popen(['sudo', 'systemctl','is-active','--quiet','xkeysnail'])
+        global sysv
+        try:
+            sysv = int(Popen("pidof systemd >/dev/null 2>&1 && echo '0' || echo '1'", stdout=PIPE, shell=True).communicate()[0].strip().decode('UTF-8'))
+        except:
+            sysv = 1
+        if sysv:
+            res = Popen(['pgrep','xkeysnail'])
+        else:
+            res = Popen(['sudo', 'systemctl','is-active','--quiet','xkeysnail'])
         res.wait()
 
         if res.returncode == 0:
@@ -183,7 +199,7 @@ class Indicator():
         # self.button_region.connect('activate',self.setRegion)
         # self.menu.append(self.button_region)
 
-        item_quit = Gtk.MenuItem('Close')
+        item_quit = Gtk.MenuItem(label='Close')
         item_quit.connect('activate', quit)
         self.menu.append(item_quit)
         self.menu.show_all()
@@ -401,10 +417,10 @@ class Indicator():
         self.lbl = Gtk.Label()
         global restartsvc 
         restartsvc = False
-        self.rightmod =  Gtk.CheckButton('AltGr on Right Cmd')
-        self.vsc2st3 = Gtk.CheckButton('ST3 hotkeys for VS Code')
-        self.caps2esc = Gtk.CheckButton('Capslock is Escape when tapped, Cmd when held')
-        self.caps2cmd = Gtk.CheckButton('Capslock is Cmd')
+        self.rightmod =  Gtk.CheckButton(label='AltGr on Right Cmd')
+        self.vsc2st3 = Gtk.CheckButton(label='ST3 hotkeys for VS Code')
+        self.caps2esc = Gtk.CheckButton(label='Capslock is Escape when tapped, Cmd when held')
+        self.caps2cmd = Gtk.CheckButton(label='Capslock is Cmd')
         
         if rightmod_result == 0:
             self.rightmod.set_active(True)
@@ -446,7 +462,10 @@ class Indicator():
         global restartsvc 
         if restartsvc == True:
             try:
-                restartcmd = ['sudo', 'systemctl','restart','xkeysnail']
+                if sysv:
+                    restartcmd = ['sudo', '-E','/etc/init.d/kinto','restart']
+                else:
+                    restartcmd = ['sudo', 'systemctl','restart','xkeysnail']
                 Popen(restartcmd)
                 restartsvc = False
 
@@ -555,8 +574,12 @@ class Indicator():
         return
 
     def runRestart(self,button):
+        global sysv
         try:
-            stop = Popen(['sudo', 'systemctl','stop','xkeysnail'])
+            if sysv:
+                stop = Popen(['sudo', '-E','/etc/init.d/kinto','stop'])
+            else:
+                stop = Popen(['sudo', 'systemctl','stop','xkeysnail'])
             stop.wait()
             time.sleep(1)
             res = Popen(['pgrep','xkeysnail'])
@@ -567,13 +590,20 @@ class Indicator():
                 pkillxkey = Popen(['sudo', 'pkill','-f','bin/xkeysnail'])
                 pkillxkey.wait()
             
-            Popen(['sudo', 'systemctl','start','xkeysnail'])
+            if sysv:
+                Popen(['sudo', '-E','/etc/init.d/kinto','start'])
+            else:
+                Popen(['sudo', 'systemctl','start','xkeysnail'])
         except:
             Popen(['notify-send','Kinto: Error restarting Kinto!'])
 
     def runStop(self,button):
+        global sysv
         try:
-            stop = Popen(['sudo', 'systemctl','stop','xkeysnail'])
+            if sysv:
+                stop = Popen(['sudo', '-E','/etc/init.d/kinto','stop'])
+            else:
+                stop = Popen(['sudo', 'systemctl','stop','xkeysnail'])
             stop.wait()
             time.sleep(1)
             res = Popen(['pgrep','xkeysnail'])
@@ -689,7 +719,10 @@ class Indicator():
             cmdsTerm = Popen(cmds)
             cmdsTerm.wait()
 
-            restart = ['sudo', 'systemctl','restart','xkeysnail']
+            if sysv:
+                restart = ['sudo', '-E','/etc/init.d/kinto','restart']
+            else:
+                restart = ['sudo', 'systemctl','restart','xkeysnail']
             Popen(restart)
 
         except CalledProcessError:

@@ -13,6 +13,10 @@ v1.2 Release - Kinto now includes a system tray and simple wizard to setup the i
 
 Kinto is powered by [xkeysnail](https://github.com/mooz/xkeysnail) for Linux & by [Autohotkey](https://github.com/Lexikos/AutoHotkey_L) for Windows 10.
 
+Note: If you plan to remote into Linux via VNC, xRDP, Synergy or other remote desktop solutions then remove the current release & try an earlier [v1.0.7-3](https://github.com/rbreaves/kinto/releases/tag/1.0.7-3) release. It uses xkb so it'll work with virtual xinput devices. Some v1.1-x releases may offer both, but all v1.2.x releases ended support for xkb. I do plan to bring offical support back for virtual input devices.
+
+Additionally VMware, Virtualbox, KVM and other virtualization technologies work best with the current release - so *this note only applies to remote desktop into Linux* - not virtualization.
+
 ### [Table of Contents ](#Table-of-Contents)
 
 ## Donations
@@ -32,21 +36,25 @@ Video Tutorial: [Install Kinto.sh for Linux in less than a minute](https://www.y
 
 <img src="https://user-images.githubusercontent.com/10969616/97070698-179c4500-15a0-11eb-8064-c03aa7f4d4a5.png" width="75%">
 
-1. clone this repo
+### Quick Install Method
+
+Paste the following into your Terminal
+```
+/bin/bash -c "$(wget -qO- https://raw.githubusercontent.com/rbreaves/kinto/HEAD/install/linux.sh || curl -fsSL https://raw.githubusercontent.com/rbreaves/kinto/HEAD/install/linux.sh)"
+```
+
+Uninstall
+```
+/bin/bash <( wget -qO- https://raw.githubusercontent.com/rbreaves/kinto/HEAD/install/linux.sh || curl -fsSL https://raw.githubusercontent.com/rbreaves/kinto/HEAD/install/linux.sh ) -r
+```
+
+### Old Install Method
+
 ```
 git clone https://github.com/rbreaves/kinto.git
 cd kinto
-```
-2. Install python3 (If needed)
-
-Debian or Ubuntu 16.04 or 18.04
-```
 sudo apt update
 sudo apt install python3
-```
-
-3. Run the script, press 1 or 2 keys and you are done.
-```
 ./setup.py
 ```
 
@@ -72,7 +80,7 @@ Try toggling numlock on & off (clear key on official mac keyboards). If it still
 If you want a global menu app similar to what mac users have then I strongly recommend Ubuntu Budgie as it has the Vala Appmenu built in and ready for activation. Short of that Vala-AppMenu can be installed in various distros, mileage will vary. If you try to activate it in the latest 20.xx releases with XFCE then you may need to run the following commands.
 
 ```
-sudo apt install xfce4-appmenu-plugin vala-panel-appmenu-common
+sudo apt install xfce4-appmenu-plugin vala-panel-appmenu-common appmenu-gtk2-module appmenu-gtk3-module appmenu-gtk-module-common
 xfconf-query -c xsettings -p /Gtk/Modules -n -t string -s "appmenu-gtk-module"
 ```
 
@@ -85,6 +93,24 @@ https://discourse.ubuntubudgie.org/t/ubuntu-budgie-20-04-fractional-hidpi-for-x1
 Video Tutorial: [How to Install Kinto.sh on Windows 10](https://youtu.be/sRk8A8krz40)
 
 [Windows 10 Requirements](#Kinto-for-Windows-10-Requirements)
+
+### Quick install
+Open Powershell as Administrator and copy and paste the following. This will download & extract Kinto, install chocolatey, python3 and then install Kinto.
+
+**⚠ NOTE: Please inspect https://raw.githubusercontent.com/rbreaves/kinto/master/install/windows.ps1 and https://chocolatey.org/install.ps1 before running scripts directly. More information about running powershell scripts in this context can be found [here](https://chocolatey.org/install).**
+
+```
+Set-ExecutionPolicy Bypass -Scope Process -Force
+iwr https://raw.githubusercontent.com/rbreaves/kinto/master/install/windows.ps1 -UseBasicParsing | iex
+```
+
+
+Update system tray to show Kinto icon at all times (optional)
+```
+cmd /c "explorer shell:::{05d7b0f4-2121-4eff-bf6b-ed3f69b894d9}"
+```
+
+### Old method
 
 1. Open Powershell (Right click and Run as Administrator)
 
@@ -118,6 +144,7 @@ RDP fully works as long as the entire keyboard input is being captured. RDP had 
 
 |Program|Src/Remote Client ⇒|Dst/Remote Server|Works? |Notes|
 |---|---|---|---|---|
+|Official MS RDP (mstsc.exe)| ❖Windows ⇒| 🐧Linux  | ✅ Yes| Note: [v1.0.7-3 Only](https://github.com/rbreaves/kinto/releases/tag/1.0.7-3). Should work for xRDP/VNC and other remote server protocols.  |
 |Official MS RDP (mstsc.exe)| ❖Windows ⇒| ❖Windows  | ✅ Yes|   |
 |Official MS RDP| ChromeOS 87+⇒| ❖Windows  | ✅ Yes|May work on earlier versions as well, if they support Android apps|
 |Remmina| 🐧Linux*/ChromeOS 87+⇒| ❖Windows  | ✅ Yes|*Use hover menu to enable "Grab all keyboard events"|
@@ -230,7 +257,7 @@ Additionally, if you are using a cross-platform app and if it happens to have a 
 ## What does Kinto require?
 
 - Python
-- systemd
+- systemd or sysvinit
 - x11
 - xkeysnail
 
@@ -288,8 +315,14 @@ In the above example I am also showing that you can define a single shortcut to 
 
 You can also make changes to the file in your /tmp/kinto/xkeysnail/kinto.py location and see them take affect in real time, but for your changes to be permanent you will need to make your changes in the ~/.config/kinto/kinto.py location & restart the xkeysnail service.
 
+systemd
 ```
 sudo systemctl restart xkeysnail
+```
+
+sysvinit
+```
+sudo -E /etc/init.d/kinto restart
 ```
 
 More information can be seen on the readme page of [xkeysnail](https://github.com/mooz/xkeysnail).
@@ -353,23 +386,51 @@ git pull origin master
 This info is now superceded by the fact that linux has a full fledge GUI and system tray app that is very easy to use, but I will keep the command line options for those that want to know what they are.
 
 Status
+
+systemd
 ```
 sudo systemctl status xkeysnail
 ```
 
+sysvinit
+```
+tail -f /tmp/kinto.log
+```
+
 Stop (your keymap will return to normal)
+
+systemd
 ```
 sudo systemctl stop xkeysnail
 ```
 
+sysvinit
+```
+sudo -E /etc/init.d/kinto stop
+```
+
 Start
+
+systemd
 ```
 sudo systemctl start xkeysnail
 ```
 
+sysvinit
+```
+sudo -E /etc/init.d/kinto start
+```
+
 Restart
+
+systemd
 ```
 sudo systemctl restart xkeysnail
+```
+
+sysvinit
+```
+sudo -E /etc/init.d/kinto restart
 ```
 
 ## Troubleshooting
