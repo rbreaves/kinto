@@ -11,3 +11,4 @@ Defaults!/etc/init.d/kinto setenv,env_reset,env_delete+=PATH,env_delete+=LD_PREL
 %{username} ALL=NOPASSWD: {pkill} -f bin/xkeysnail
 %{username} ALL=NOPASSWD: {xkeysnail} *
 %{username} ALL=NOPASSWD: {systemctl} is-active --quiet xkeysnail
+%{username} ALL=NOPASSWD: /usr/lib/systemd/system/xkeysnail.service
