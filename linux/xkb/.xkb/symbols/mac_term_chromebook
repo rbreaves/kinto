@@ -1,0 +1,100 @@
+default partial xkb_symbols "mac_levelssym" {
+    key <LALT> {
+      repeat= no,
+      type= "ONE_LEVEL",
+      symbols[Group1]= [ Hyper_L ],
+      actions[group1]=[ SetMods(modifiers=Shift+Control) ]
+    };
+    key <RALT> {
+      repeat= no,
+      type= "ONE_LEVEL",
+      symbols[Group1]= [ Hyper_R ],
+      actions[group1]=[ SetMods(modifiers=Shift+Control) ]
+    };
+    // Page Up
+    replace key <UP> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            Up,
+            Up,
+            NoSymbol
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            RedirectKey(key=<PGUP>,clearmods=Shift+Control)
+        ]
+    };
+    // Page Down
+    replace key <DOWN> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            Down,
+            Down,
+            NoSymbol
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            RedirectKey(key=<PGDN>,clearmods=Shift+Control)
+        ]
+    };
+    // HOME
+    replace key <LEFT> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            Left,
+            Left,
+            NoSymbol
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            RedirectKey(key=<HOME>,clearmods=Shift+Control)
+        ]
+    };
+    // END
+    replace key <RGHT> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            Right,
+            Right,
+            NoSymbol
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            RedirectKey(key=<END>,clearmods=Shift+Control)
+        ]
+    };
+    // Full Print Screen
+    // GalliumOS
+    replace key <AE03> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            3,
+            numbersign,
+            F5
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            RedirectKey(key=<FK05>,clearmods=Shift)
+        ]
+    };
+    // Region Print Screen
+    // GalliumOS
+    replace key <AE04> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            4,
+            dollar,
+            F5
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            RedirectKey(key=<FK05>)
+        ]
+    };
+};

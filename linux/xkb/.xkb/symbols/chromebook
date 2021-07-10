@@ -1,0 +1,5 @@
+partial modifier_keys
+xkb_symbols "swap_lalt_lctrl" {
+    replace key <LALT> { [ Control_L, Control_L ] };
+    replace key <LCTL> { [ Alt_L, Meta_L ] };
+};

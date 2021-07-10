@@ -1,0 +1,210 @@
+default partial xkb_symbols "mac_apple" {
+    key <LWIN> {
+      repeat= no,
+      type= "ONE_LEVEL",
+      symbols[Group1]= [ Control_L ],
+      actions[group1]=[ SetMods(modifiers=Control+Shift) ]
+    };
+    key <RWIN> {
+      repeat= no,
+      type= "ONE_LEVEL",
+      symbols[Group1]= [ Control_R ],
+      actions[group1]=[ SetMods(modifiers=Control+Shift) ]
+    };
+};
+partial xkb_symbols "mac_win" {
+    key <LALT> {
+      repeat= no,
+      type= "ONE_LEVEL",
+      symbols[Group1]= [ Hyper_L ],
+      actions[group1]=[ SetMods(modifiers=Shift+Control) ]
+    };
+    key <RALT> {
+      repeat= no,
+      type= "ONE_LEVEL",
+      symbols[Group1]= [ Hyper_R ],
+      actions[group1]=[ SetMods(modifiers=Shift+Control) ]
+    };
+};
+partial xkb_symbols "mac_global" {
+    // // Minimize Window Cmd + H = Alt+F9
+    // replace key <AC06> {
+    //     type[Group1]= "ONE_LEVEL_CTRL",
+    //     symbols[Group1]= [
+    //         h,
+    //         H,
+    //         H
+    //     ],
+    //     actions[Group1]= [
+    //         NoAction(),
+    //         NoAction(),
+    //         RedirectKey(key=<AC06>,modifiers=Super,clearmods=Control+Shift)
+    //     ]
+    // };
+
+    //
+    // Some sort of glitch occurs on shifting F while this segment is active
+    // it is like the Control key is being held down when it isn't.
+    //
+    // // Maximize Window Ctrl + Cmd + F = Alt+F10
+    // replace key <AC04> {
+    //     type[Group1]= "ONE_LEVEL_CTRL",
+    //     symbols[Group1]= [
+    //         f,
+    //         F,
+    //         F
+    //     ],
+    //     actions[Group1]= [
+    //         // Base
+    //         NoAction(),
+    //         // Shift
+    //         NoAction(),
+    //         // Ctrl + Shift
+    //         RedirectKey(key=<FK10>,modifiers=Mod1,clearmods=Control+Shift)
+    //     ]
+    // };
+    
+    // Close App Cmd + Q = Alt + F4
+    replace key <AD01> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            q,
+            Q,
+            F4
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            RedirectKey(key=<FK04>,modifiers=Mod1,clearmods=Control+Shift)
+        ]
+    };
+
+    // Show Desktop Cmd + F3 = Super + D
+    replace key <FK03> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            F3,
+            F3,
+            D
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            RedirectKey(key=<AC03>,modifiers=Super,clearmods=Control+Shift)
+        ]
+    };
+
+    // Cycle App and In App Tab Switching
+    key <FK13> { [ F13 ] };
+    key <FK14> { [ F14 ] };
+
+    replace key <TAB> {
+        type[Group1]= "ONE_LEVEL_CMD",
+        symbols[Group1]= [
+            Tab,
+            Tab,
+            // F13 // Default cmdtab
+            // F13 // KDE cmdtab
+            // Right // Elementary ecmdtab
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            // Redirect(key=<FK13>) // Default cmdtab
+            // Redirect(key=<FK13>,clearmods=Shift) // KDE cmdtab
+            // Redirect(key=<RGHT>,mods=Control+Shift,clearmods=Mod4+Super) // Elementary cmdtab
+        ]
+    };
+
+    // Page Up
+    replace key <UP> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [ 
+            Up,
+            Up,
+            NoSymbol
+        ],
+        actions[Group1]= [ 
+            NoAction(),
+            NoAction(),
+            RedirectKey(key=<PGUP>,clearmods=Shift+Control) 
+        ]
+    };
+
+    // Page Down
+    replace key <DOWN> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            Down,
+            Down,
+            NoSymbol
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            RedirectKey(key=<PGDN>,clearmods=Shift+Control)
+        ]
+    };
+    // HOME
+    replace key <LEFT> {
+        type[Group1]= "ONE_LEVEL_CMD",
+        symbols[Group1]= [
+            Left,
+            Left,
+            NoSymbol,
+            Left
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            RedirectKey(key=<HOME>,clearmods=Shift+Control),
+            RedirectKey(key=<LEFT>,mods=Super,clearmods=Control)
+        ]
+    };
+    // END
+    replace key <RGHT> {
+        type[Group1]= "ONE_LEVEL_CMD",
+        symbols[Group1]= [
+            Right,
+            Right,
+            NoSymbol,
+            Right
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            RedirectKey(key=<END>,clearmods=Shift+Control),
+            RedirectKey(key=<RGHT>,mods=Super,clearmods=Control)
+        ]
+    };
+    // Full Print Screen
+    // Standard Ubuntu
+    replace key <AE03> {
+        type[Group1]= "ONE_LEVEL_CMD",
+        symbols[Group1]= [
+            3,
+            numbersign,
+            NoSymbol
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            RedirectKey(key=<PRSC>,clearmods=Shift+Control)
+        ]
+    };
+    // Region Print Screen
+    // Standard Ubuntu
+    replace key <AE04> {
+        type[Group1]= "ONE_LEVEL_CMD",
+        symbols[Group1]= [
+            4,
+            dollar,
+            NoSymbol
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            RedirectKey(key=<PRSC>,clearmods=Control)
+        ]
+    };
+};

@@ -1,0 +1,781 @@
+// Template
+//
+// ONE_LEVEL_CTRL
+// Base
+// Shift
+// Alt
+// Shift Alt
+// Control
+// Shift Control
+// Super
+// Shift Super
+// Control Alt
+// Super Control
+// Super Alt
+// Super Control Alt
+//
+// replace key <KEY> {
+//     type[Group1]= "ONE_LEVEL_CTRL",
+//     symbols[Group1]= [
+//         Base,
+//         Alt,
+//         Shift Alt,
+//         Control,
+//         Shift Control,
+//         Super,
+//         Shift Super,
+//         Control Alt,
+//         Super Control",
+//         Super Alt,
+//         Super Control Alt
+//     ],
+//     actions[Group1]= [
+//         NoAction(),
+//         RedirectKey(key=<KEY>,modifiers=NewMod,clearmods=Mod1),
+//         RedirectKey(key=<KEY>,modifiers=NewMod,clearmods=Mod1+Shift),
+//         RedirectKey(key=<KEY>,modifiers=NewMod,clearmods=Control),
+//         RedirectKey(key=<KEY>,modifiers=NewMod,clearmods=Control+Shift),
+//         RedirectKey(key=<KEY>,modifiers=NewMod,clearmods=Super),
+//         RedirectKey(key=<KEY>,modifiers=NewMod,clearmods=Super+Shift),
+//         RedirectKey(key=<KEY>,modifiers=NewMod,clearmods=Control+Alt),
+//         RedirectKey(key=<KEY>,modifiers=NewMod,clearmods=Super+Control),
+//         RedirectKey(key=<KEY>,modifiers=NewMod,clearmods=Super+Mod1),
+//         RedirectKey(key=<KEY>,modifiers=NewMod,clearmods=Control+Mod1)
+//     ]
+// };
+hidden partial modifier_keys
+xkb_symbols "swapescape" {
+    key <CAPS> { [ Escape ] };
+    key <ESC>  { [ Caps_Lock ] };
+};
+hidden partial modifier_keys
+xkb_symbols "caps_escape" {
+    key <CAPS> { [ Escape ] };
+};
+hidden partial modifier_keys
+xkb_symbols "caps_shiftlock" {
+    replace key <CAPS> { [ Shift_Lock ] };
+    modifier_map Shift { Shift_Lock };
+};
+hidden partial modifier_keys
+xkb_symbols "caps_none" {
+    key <CAPS> { [ VoidSymbol ] };
+};
+default partial xkb_symbols "mac_levelssym" {
+    // // Minimize window Cmd + H = Alt + F9
+    // // 2 caveats
+    // // 1 Cmd + H may not pass through on VMs
+    // // 2 may cause conflicts with apps
+    // replace key <AC06> {
+    //     type[Group1]= "ONE_LEVEL_CTRL",
+    //     symbols[Group1]= [
+    //         h,
+    //         H,
+    //         h,
+    //         H,
+    //         h
+    //     ],
+    //     actions[Group1]= [
+    //         NoAction(),
+    //         NoAction(),
+    //         NoAction(),
+    //         NoAction(),
+    //         RedirectKey(key=<AC06>,modifiers=Super,clearmods=Control)
+    //     ]
+    // };
+    // Maximize Window Ctrl + Cmd + F = Alt+F10
+    // Also maps Option + Cmd + F to Control+H for Replace - Sublime
+    // AD03=e,E 
+    // AC01=a,A
+    // Ctrl + A - Beginning of Line
+    replace key <AC01> {
+        type[Group1]= "ONE_LEVEL_SUPER",
+        symbols[Group1]= [
+            // Base
+            a,
+            // Shift
+            A,
+            // Super
+            NoSymbol,
+            // Shift Super
+            NoSymbol
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            RedirectKey(key=<HOME>,clearmods=Super),
+            RedirectKey(key=<HOME>,clearmods=Super)
+        ]
+    };
+    // Ctrl + E - End of Line
+    replace key <AD03> {
+        type[Group1]= "ONE_LEVEL_SUPER",
+        symbols[Group1]= [
+            // Base
+            e,
+            // Shift
+            E,
+            // Super
+            NoSymbol,
+            // Shift Super
+            NoSymbol
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            RedirectKey(key=<END>,clearmods=Super),
+            RedirectKey(key=<END>,clearmods=Super)
+        ]
+    };
+    replace key <AC04> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            // Base
+            f,
+            // Shift
+            F,
+            // Alt
+            f,
+            // Shift Alt
+            F,
+            // Control
+            f,
+            // Shift Control
+            F,
+            // Super
+            f,
+            // Shift Super
+            F,
+            // Control Alt
+            h
+            // Super Control
+            // ,F10 // Default maximize
+            // // Nothing // KDE maximize
+            // Super Alt
+            // Super Control Alt
+        ],
+        actions[Group1]= [
+            // Base
+            NoAction(),
+            // Shift
+            NoAction(),
+            // Alt
+            NoAction(),
+            // Shift Alt
+            NoAction(),
+            // Control
+            NoAction(),
+            // Shift Control
+            NoAction(),
+            // Super
+            NoAction(),
+            // Shift Super
+            NoAction(),
+            // Control Alt
+            RedirectKey(key=<AC06>,clearmods=Mod1)
+            // Super Control - Fullscreen
+            // ,RedirectKey(key=<FK10>,modifiers=Mod1,clearmods=Super+Control) // Default maximize
+            // // Nothing // KDE maximize
+            // Super Alt
+            // Super Control Alt
+        ]
+    };
+    // Close App Cmd + Q = Alt + F4
+    replace key <AD01> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            // Base
+            q,
+            // Shift
+            Q,
+            // Alt
+            q,
+            // Shift Alt
+            Q,
+            // Control
+            F4
+        ],
+        actions[Group1]= [
+            // Base
+            NoAction(),
+            // Shift
+            NoAction(),
+            // Alt
+            NoAction(),
+            // Shift Alt
+            NoAction(),
+            // Control
+            RedirectKey(key=<FK04>,modifiers=Mod1,clearmods=Control)
+        ]
+    };
+    // Show Desktop Cmd + F3 = Super + D
+    replace key <FK03> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            // Base
+            F3,
+            // Shift
+            F3,
+            // Alt
+            F3,
+            // Shift Alt
+            F3,
+            // Control
+            d
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            NoAction(),
+            NoAction(),
+            RedirectKey(key=<AC03>,modifiers=Super,clearmods=Control)
+        ]
+    };
+    // Fix the G key for Sublime Text
+    replace key <AC05> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            // Base
+            g,
+            // Shift
+            G,
+            // Alt
+            g,
+            // Shift Alt
+            G,
+            // Control
+            g,
+            // Shift Control
+            G,
+            // Super
+            NoSymbol,
+            // Shift Super
+            NoSymbol,
+            // Control Alt
+            g,
+            // Super Control
+            g,
+            // Super Alt
+            g,
+            // Super Control Alt
+            g
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            // Pass G Normally
+            RedirectKey(key=<AC05>),
+            RedirectKey(key=<AC05>),
+            // Find Next
+            RedirectKey(key=<FK03>,clearmods=Control),
+            // Find Previous
+            RedirectKey(key=<FK03>,clearmods=Control),
+            // Sublime Goto Line
+            RedirectKey(key=<AC05>,modifiers=Control,clearmods=Super),
+            NoAction(),
+            // Sublime Quick Find
+            RedirectKey(key=<FK03>,clearmods=Mod1),
+            // Sublime Select All Matches
+            RedirectKey(key=<FK03>,modifiers=Mod1,clearmods=Super+Control),
+            NoAction(),
+            NoAction()
+        ]
+    };
+    // LEFT to Begin Line or Beginning of word
+    replace key <LEFT> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            // Base
+            Left,
+            // Shift
+            Left,
+            // Alt
+            Left,
+            // Shift Alt
+            Left,
+            // Control
+            NoSymbol,
+            // Shift Control
+            NoSymbol,
+            // Super
+            Left
+        ],
+        actions[Group1]= [
+            // Base
+            NoAction(),
+            // Shift
+            NoAction(),
+            // Alt - Wordwise
+            RedirectKey(key=<LEFT>,mods=Control,clearmods=Mod1),
+            // Shift Alt
+            RedirectKey(key=<LEFT>,mods=Control,clearmods=Mod1),
+            // Control
+            RedirectKey(key=<HOME>,clearmods=Control),
+            // Shift Control
+            RedirectKey(key=<HOME>,clearmods=Control),
+            // Super - Change workspace
+            NoAction()
+        ]
+    };
+
+    // Right to End of Line or end of word
+    replace key <RGHT> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            // Base
+            Right,
+            // Shift
+            Right,
+            // Alt
+            Right,
+            // Shift Alt
+            Right,
+            // Control
+            NoSymbol,
+            // Shift Control
+            NoSymbol,
+            // Super
+            Right
+        ],
+        actions[Group1]= [
+            // Base
+            NoAction(),
+            // Shift
+            NoAction(),
+            // Alt - Wordwise
+            RedirectKey(key=<RGHT>,mods=Control,clearmods=Mod1),
+            // Shift Alt
+            RedirectKey(key=<RGHT>,mods=Control,clearmods=Mod1),
+            // Control
+            RedirectKey(key=<END>,clearmods=Control),
+            // Shift Control
+            RedirectKey(key=<END>,clearmods=Control),
+            // Super - Change workspace
+            NoAction()
+        ]
+    };
+
+    //Up to Mac Home
+    replace key <UP> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            // Base
+            Up,
+            // Shift
+            Up,
+            // Alt
+            Up,
+            // Shift Alt
+            Up,
+            // Control
+            NoSymbol,
+            // Shift Control
+            NoSymbol,
+            // Super
+            Up,
+            // Shift Super
+            Up
+        ],
+        actions[Group1]= [
+            // Base
+            NoAction(),
+            // Shift
+            NoAction(),
+            // Alt - Wordwise
+            RedirectKey(key=<UP>,clearmods=Mod1),
+            // Shift Alt
+            // RedirectKey(key=<UP>), // Chromebook multicursor
+            RedirectKey(key=<UP>,clearmods=Mod1), // Default multicursor
+            // Control
+            RedirectKey(key=<HOME>),
+            // Shift Control
+            RedirectKey(key=<HOME>),
+            // Super - Wordwise - Sublime?
+            RedirectKey(key=<PGUP>,clearmods=Super),
+            // Shift Super
+            RedirectKey(key=<UP>,modifiers=Mod1,clearmods=Super)
+        ]
+    };
+
+    // Down to Mac End
+    replace key <DOWN> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            // Base
+            Down,
+            // Shift
+            Down,
+            // Alt
+            Down,
+            // Shift Alt
+            Down,
+            // Control
+            NoSymbol,
+            // Shift Control
+            NoSymbol,
+            // Super
+            Down,
+            // Shift Super
+            Down
+        ],
+        actions[Group1]= [
+            // Base
+            NoAction(),
+            // Shift
+            NoAction(),
+            // Alt - Wordwise
+            RedirectKey(key=<DOWN>,clearmods=Mod1),
+            // Shift Alt
+            RedirectKey(key=<DOWN>,clearmods=Mod1),
+            // Control
+            RedirectKey(key=<END>),
+            // Shift Control
+            RedirectKey(key=<END>),
+            // Super - Wordwise - Sublime?
+            RedirectKey(key=<PGDN>,clearmods=Super),
+            // Shift Super
+            RedirectKey(key=<DOWN>,modifiers=Mod1,clearmods=Super)
+        ]
+    };
+    // Alt BKSP to DELETE
+    replace key <BKSP> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            BackSpace,
+            BackSpace,
+            BackSpace
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            RedirectKey(key=<DELE>,clearmods=Mod1)
+        ]
+    };
+    // // Full Print Screen
+    // // GalliumOS
+    // replace key <AE03> {
+    //     type[Group1]= "ONE_LEVEL_CTRL",
+    //     symbols[Group1]= [         3,         3, 3, F5 ],
+    //     actions[Group1]= [      NoAction(),      NoAction(), NoAction(), RedirectKey(key=<FK05>,clearmods=Shift) ]
+    // };
+    // // Region Print Screen
+    // // GalliumOS
+    // replace key <AE04> {
+    //     type[Group1]= "ONE_LEVEL_CTRL",
+    //     symbols[Group1]= [         4,         4, 4, F5 ],
+    //     actions[Group1]= [      NoAction(),      NoAction(), NoAction(), RedirectKey(key=<FK05>) ]
+    // };
+    // // Full Print Screen
+    // // Standard Ubuntu
+    // replace key <AE03> {
+    //     type[Group1]= "ONE_LEVEL_CTRL",
+    //     symbols[Group1]= [         3,         3, 3, F5 ],
+    //     actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<PRSC>,clearmods=Shift+Control) ]
+    // };
+    // // Region Print Screen
+    // // Standard Ubuntu
+    // replace key <AE04> {
+    //     type[Group1]= "ONE_LEVEL_CTRL",
+    //     symbols[Group1]= [         4,         4, 4, F5 ],
+    //     actions[Group1]= [      NoAction(),      NoAction(), RedirectKey(key=<PRSC>,clearmods=Control) ]
+    // };
+};
+partial xkb_symbols "mac_appcycle_chromebook" {
+    // Cycle App and In App Tab Switching
+    replace key <TAB> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            Tab,
+            Tab,
+            Tab,
+            Tab,
+            backslash,
+            backslash,
+            NoSymbol,
+            NoSymbol
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            // Alt
+            Redirect(key=<TAB>,mods=Control,clearmods=Mod1),
+            // Alt + Shift
+            Redirect(key=<TAB>,mods=Control,clearmods=Mod1),
+            // Control
+            Redirect(key=<BKSL>),
+            // Control+Shift
+            Redirect(key=<BKSL>),
+            // Super
+            NoAction(),
+            // Super + Shift
+            NoAction()
+        ]
+    };
+};
+partial xkb_symbols "mac_appcycle" {
+    // Cycle App and In App Tab Switching
+    key <FK13> { [ F13 ] };
+    key <FK14> { [ F14 ] };
+    replace key <TAB> {
+        type[Group1]= "ONE_LEVEL_CMD",
+        symbols[Group1]= [
+            Tab,
+            Tab,
+            F14,
+            F13,
+            NoSymbol,
+            NoSymbol
+        ],
+        actions[Group1]= [
+            // Base
+            NoAction(),
+            // Shift
+            NoAction(),
+            // Control + Shift
+            Redirect(key=<FK14>),
+            // Control
+            Redirect(key=<FK13>),
+            // Super
+            Redirect(key=<TAB>,mods=Control,clearmods=Mod4+Super),
+            // Super + Shift
+            Redirect(key=<TAB>,mods=Control,clearmods=Mod4+Super)
+        ]
+    };
+};
+partial xkb_symbols "mac_browsers_chromebook" {
+    // Cycle App and In App Tab Switching
+    replace key <TAB> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            Tab,
+            Tab,
+            NoSymbol,
+            NoSymbol,
+            backslash,
+            backslash,
+            NoSymbol,
+            NoSymbol
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            // Alt
+            Redirect(key=<PGDN>,mods=Control,clearmods=Mod1),
+            // Alt + Shift
+            Redirect(key=<PGUP>,mods=Control,clearmods=Mod1+Shift),
+            // Control
+            Redirect(key=<BKSL>),
+            // Control+Shift
+            Redirect(key=<BKSL>),
+            // Super
+            NoAction(),
+            // Super + Shift
+            NoAction()
+        ]
+    };
+    //Up to Mac Home
+    replace key <UP> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            Up,
+            Up,
+            Up,
+            Up,
+            NoSymbol,
+            NoSymbol,
+            Up
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            // Wordwise
+            RedirectKey(key=<UP>,clearmods=Mod1),
+            RedirectKey(key=<UP>,clearmods=Mod1),
+            RedirectKey(key=<HOME>),
+            RedirectKey(key=<HOME>),
+            // Wordwise - Sublime?
+            RedirectKey(key=<PGUP>,clearmods=Super),
+            RedirectKey(key=<UP>,modifiers=Mod1,clearmods=Super)
+        ]
+    };
+    // Down to Mac End
+    replace key <DOWN> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            Down,
+            Down,
+            Down,
+            Down,
+            NoSymbol,
+            NoSymbol,
+            Down
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            // Wordwise
+            RedirectKey(key=<DOWN>,clearmods=Mod1),
+            RedirectKey(key=<DOWN>,clearmods=Mod1),
+            RedirectKey(key=<END>),
+            RedirectKey(key=<END>),
+            // Wordwise - Sublime?
+            RedirectKey(key=<PGDN>,clearmods=Super),
+            RedirectKey(key=<DOWN>,modifiers=Mod1,clearmods=Super)
+        ]
+    };
+    // Alt BKSP to DELETE
+    replace key <BKSP> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            BackSpace,
+            BackSpace,
+            BackSpace
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            RedirectKey(key=<DELE>,clearmods=Mod1)
+        ]
+    };
+};
+partial xkb_symbols "mac_browsers" {
+    // Cycle App and In App Tab Switching
+    key <FK13> { [ F13 ] };
+    key <FK14> { [ F14 ] };
+    replace key <TAB> {
+        type[Group1]= "ONE_LEVEL_CMD",
+        symbols[Group1]= [
+            Tab,
+            Tab,
+            F14,
+            F13,
+            NoSymbol,
+            NoSymbol
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            Redirect(key=<FK14>),
+            Redirect(key=<FK13>),
+            Redirect(key=<PGDN>,mods=Control,clearmods=Mod4+Super),
+            Redirect(key=<PGUP>,mods=Control,clearmods=Mod4+Super+Shift)
+        ]
+    };
+    //Up to Mac Home
+    replace key <UP> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            Up,
+            Up,
+            Up,
+            Up,
+            NoSymbol,
+            NoSymbol,
+            Up
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            // Wordwise
+            RedirectKey(key=<UP>,clearmods=Mod1),
+            RedirectKey(key=<UP>,clearmods=Mod1),
+            RedirectKey(key=<HOME>),
+            RedirectKey(key=<HOME>),
+            // Wordwise - Sublime?
+            RedirectKey(key=<PGUP>,clearmods=Super),
+            RedirectKey(key=<UP>,modifiers=Mod1,clearmods=Super)
+        ]
+    };
+    // Down to Mac End
+    replace key <DOWN> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            Down,
+            Down,
+            Down,
+            Down,
+            NoSymbol,
+            NoSymbol,
+            Down
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            // Wordwise
+            RedirectKey(key=<DOWN>,clearmods=Mod1),
+            RedirectKey(key=<DOWN>,clearmods=Mod1),
+            RedirectKey(key=<END>),
+            RedirectKey(key=<END>),
+            // Wordwise - Sublime?
+            RedirectKey(key=<PGDN>,clearmods=Super),
+            RedirectKey(key=<DOWN>,modifiers=Mod1,clearmods=Super)
+        ]
+    };
+    // Alt BKSP to DELETE
+    replace key <BKSP> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            BackSpace,
+            BackSpace,
+            BackSpace
+        ],
+        actions[Group1]= [
+            NoAction(),
+            NoAction(),
+            RedirectKey(key=<DELE>,clearmods=Mod1)
+        ]
+    };
+};
+partial xkb_symbols "mac_chrome" {
+    // Back Button
+    replace key <LEFT> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            Left,
+            Left,
+            NoSymbol,
+            NoSymbol,
+            Left
+        ],
+        actions[Group1]= [
+            // Base
+            NoAction(),
+            // Shift
+            NoAction(),
+            // Alt
+            RedirectKey(key=<FK18>),
+            // Alt
+            RedirectKey(key=<FK18>),
+            // Control
+            RedirectKey(key=<LEFT>,modifiers=Mod1,clearmods=Control)
+        ]
+    };
+    // Forwards Button
+    replace key <RGHT> {
+        type[Group1]= "ONE_LEVEL_CTRL",
+        symbols[Group1]= [
+            // Base
+            Right,
+            // Shift
+            Right,
+            // Alt
+            NoSymbol,
+            // Shift Alt
+            NoSymbol,
+            // Control
+            Right
+        ],
+        actions[Group1]= [
+            // Base
+            NoAction(),
+            // Shift
+            NoAction(),
+            // Alt
+            RedirectKey(key=<FK18>),
+            // Shift Alt
+            RedirectKey(key=<FK18>),
+            // Control
+            RedirectKey(key=<RGHT>,modifiers=Mod1,clearmods=Control)
+        ]
+    };
+};

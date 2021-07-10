@@ -1,0 +1,53 @@
+default partial xkb_types "addmac_levels" {
+    Virtual_modifiers Super;
+    type "ONE_LEVEL_CTRL" {
+        modifiers = Shift+Mod1+Super+Control;
+        map[Shift] = Level2;
+        map[Shift+Control] = Level3;
+        // map[Mod1] = Level4;
+        map[Shift+Mod1] = Level5;
+        map[Control] = Level6;
+        map[Super] = Level7;
+        map[Shift+Super] = Level8;
+        map[Mod1+Control] = 9;
+        map[Super+Control] = 10;
+        map[Super+Mod1] = 11;
+        map[Super+Mod1+Control] = 12;
+        level_name[Level1] = "Base";
+        level_name[Level2] = "Shift";
+        level_name[Level3] = "Shift Control";
+        // level_name[Level4] = "Alt";
+        level_name[Level5] = "Shift Alt";
+        level_name[Level6] = "Control";
+        level_name[Level7] = "Super";
+        level_name[Level8] = "Shift Super";
+        level_name[9] = "Control Alt";
+        level_name[10] = "Super Control";
+        level_name[11] = "Super Alt";
+        level_name[12] = "Super Control Alt";
+    };
+    type "ONE_LEVEL_CMD" {
+        modifiers = Shift+Control+Super;
+        map[Shift] = Level2;
+        map[Shift+Control] = Level3;
+        map[Control] = Level4;
+        map[Super] = Level5;
+        map[Shift+Super] = Level6;
+        level_name[Level1] = "Base";
+        level_name[Level2] = "Shift";
+        level_name[Level3] = "Control Shift";
+        level_name[Level4] = "Control";
+        level_name[Level5] = "Super";
+        level_name[Level6] = "Super Shift";
+    };
+    type "ONE_LEVEL_SUPER" {
+        modifiers = Shift+Super;
+        map[Shift] = Level2;
+        map[Super] = Level3;
+        map[Shift+Super] = Level4;
+        level_name[Level1] = "Base";
+        level_name[Level2] = "Shift";
+        level_name[Level3] = "Super";
+        level_name[Level4] = "Super Shift";
+    };
+};
