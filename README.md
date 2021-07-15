@@ -158,7 +158,7 @@ RDP fully works as long as the entire keyboard input is being captured. RDP had 
 |Official MS RDP| 🍎🤖iOS/Android⇒| ❖Windows  | ❌ No|No workaround atm|
 
 ## How to Remap Windows keyboards for remote access to macOS
-Quick summary - Swap Alt & Win to conform with Apple keyboard layouts. Sharpkeys for Windows, Setkeycodes for Linux, then install Kinto.sh.
+Quick summary - Swap Alt & Win to conform with Apple keyboard layouts. Sharpkeys for Windows, Setkeycodes for Linux, then install Kinto.sh or change/update the Keyboard Type to Apple in the system tray.
 https://benreaves.medium.com/macos-to-linux-back-again-c6151200f4dc
 
 ## FreeRDP for macOS
