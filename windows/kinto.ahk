@@ -24,10 +24,10 @@ AHK_NOTIFYICON(wParam, lParam)
 }
 ; End Enable Left clicks
 
-; I_Icon = %A_ScriptDir%\assets\kinto-white-invert.ico    ; MacModifiers
-; IfExist, %I_Icon%                                       ; MacModifiers
-; Menu, Tray, Icon, %I_Icon%,, 1                          ; MacModifiers
-; Menu, Tray, Tip, Mac - Kinto                            ; MacModifiers
+I_Icon = %A_ScriptDir%\assets\kinto-white-invert.ico    ; MacModifiers
+IfExist, %I_Icon%                                       ; MacModifiers
+Menu, Tray, Icon, %I_Icon%,, 1                          ; MacModifiers
+Menu, Tray, Tip, Mac - Kinto                            ; MacModifiers
 
 ; I_Icon = %A_ScriptDir%\assets\kinto-white-invert.ico    ; WinModifiers/CB/IBM
 ; IfExist, %I_Icon%                                       ; WinModifiers/CB/IBM
@@ -107,9 +107,9 @@ tray_suspend(){
     }
     else{
         menu, tray, unCheck, Suspend Kinto
-;         I_Icon = %A_ScriptDir%\assets\kinto-white-invert.ico    ; MacModifiers
+        I_Icon = %A_ScriptDir%\assets\kinto-white-invert.ico    ; MacModifiers
 ;         I_Icon = %A_ScriptDir%\assets\kinto-white-invert.ico    ; WinModifiers/CB/IBM
-;         Menu, Tray, Tip, Mac - Kinto                            ; MacModifiers
+        Menu, Tray, Tip, Mac - Kinto                            ; MacModifiers
 ;         Menu, Tray, Tip, Windows - Kinto                        ; WinModifiers
 ;         Menu, Tray, Tip, Chromebook - Kinto                     ; Chromebook
 ;         Menu, Tray, Tip, IBM - Kinto                            ; IBM
@@ -211,37 +211,37 @@ GroupAdd, intellij, ahk_exe idea64.exe
         if (GetKeyState("LCtrl", "P") AND GetKeyState("LShift", "P") = false) {
             ; Secondary
             ; Send {LCtrl down}{Secondary up}{tab}
-    ;        Send {LCtrl down}{LWin up}{tab}               ; WinModifiers
-    ;        Send {LCtrl down}{LAlt up}{tab}               ; MacModifiers
-    ;        Send {LCtrl down}{CapsLock up}{tab}           ; CB/IBM
+;            Send {LCtrl down}{LWin up}{tab}               ; WinModifiers
+           Send {LCtrl down}{LAlt up}{tab}               ; MacModifiers
+;     ;        Send {LCtrl down}{CapsLock up}{tab}           ; CB/IBM
             KeyWait, tab
         ; Tertiary
         } else if (GetKeyState("LCtrl", "P") AND GetKeyState("LShift", "P")) {
             ; Secondary
             ; Send {LCtrl down}{Secondary up}{LShift down}{tab}
-    ;        Send {LCtrl down}{LWin up}{LShift down}{tab}     ; WinModifiers/CB
-    ;        Send {LCtrl down}{LAlt up}{LShift down}{tab}     ; MacModifiers
-    ;        Send {LCtrl down}{CapsLock up}{LShift down}{tab} ; IBM
+;            Send {LCtrl down}{LWin up}{LShift down}{tab}     ; WinModifiers/CB
+           Send {LCtrl down}{LAlt up}{LShift down}{tab}     ; MacModifiers
+;     ;        Send {LCtrl down}{CapsLock up}{LShift down}{tab} ; IBM
             KeyWait, tab
         ; Primary
-    ;    } else if (GetKeyState("LAlt", "P") AND GetKeyState("LShift", "P") = false) {   ; WinModifiers/CB/IBM
-    ;    } else if (GetKeyState("LWin", "P") AND GetKeyState("LShift", "P") = false) {   ; MacModifiers
+;        } else if (GetKeyState("LAlt", "P") AND GetKeyState("LShift", "P") = false) {   ; WinModifiers/CB/IBM
+       } else if (GetKeyState("LWin", "P") AND GetKeyState("LShift", "P") = false) {   ; MacModifiers
             Send {LAlt down}{tab}
             KeyWait, tab
         ; Primary
-    ;    } else if (GetKeyState("LAlt", "P") AND GetKeyState("LShift", "P")) { ; WinModifiers/CB/IBM
-    ;    } else if (GetKeyState("LWin", "P") AND GetKeyState("LShift", "P")) { ; MacModifiers
+;        } else if (GetKeyState("LAlt", "P") AND GetKeyState("LShift", "P")) { ; WinModifiers/CB/IBM
+       } else if (GetKeyState("LWin", "P") AND GetKeyState("LShift", "P")) { ; MacModifiers
             Send {LAlt down}{LShift down}{tab}
             KeyWait, tab
         ; Secondary 
-    ;    } else if (GetKeyState("LWin", "P") AND GetKeyState("LShift", "P")) = false {     ; WinModifiers/CB
-    ;    } else if (GetKeyState("LAlt", "P") AND GetKeyState("LShift", "P") = false) {     ; MacModifiers
-    ;    } else if (GetKeyState("CapsLock", "P") AND GetKeyState("LShift", "P")) = false { ; IBM
+;        } else if (GetKeyState("LWin", "P") AND GetKeyState("LShift", "P")) = false {     ; WinModifiers/CB
+       } else if (GetKeyState("LAlt", "P") AND GetKeyState("LShift", "P") = false) {     ; MacModifiers
+;     ;    } else if (GetKeyState("CapsLock", "P") AND GetKeyState("LShift", "P")) = false { ; IBM
             return
         ; Secondary
-    ;     } else if (GetKeyState("LWin", "P") AND GetKeyState("LShift", "P")) {     ; WinModifiers/CB
-    ;     } else if (GetKeyState("LAlt", "P") AND GetKeyState("LShift", "P")) {     ; MacModifiers
-    ;     } else if (GetKeyState("CapsLock", "P") AND GetKeyState("LShift", "P")) { ; IBM
+;         } else if (GetKeyState("LWin", "P") AND GetKeyState("LShift", "P")) {     ; WinModifiers/CB
+        } else if (GetKeyState("LAlt", "P") AND GetKeyState("LShift", "P")) {     ; MacModifiers
+;     ;     } else if (GetKeyState("CapsLock", "P") AND GetKeyState("LShift", "P")) { ; IBM
             return
         } else {
             send {Blind}{tab}
@@ -259,28 +259,28 @@ GroupAdd, intellij, ahk_exe idea64.exe
     ; Secondary::LAlt
     ; Tertiary::LWin
 
-    ; $LAlt::LCtrl     ; CB/IBM
-    ; $RAlt::RCtrl     ; IBM
-    ; $RCtrl::RAlt     ; CB/IBM
-    ; $CapsLock::LWin  ; IBM
-    ; $LCtrl::LAlt     ; CB/IBM
+;     ; $LAlt::LCtrl     ; CB/IBM
+;     ; $RAlt::RCtrl     ; IBM
+;     ; $RCtrl::RAlt     ; CB/IBM
+;     ; $CapsLock::LWin  ; IBM
+;     ; $LCtrl::LAlt     ; CB/IBM
 
-    ; $LAlt::LCtrl   ; WinModifiers
-    ; $RAlt::RCtrl   ; WinModifiers
-    ; $RCtrl::RAlt   ; WinModifiers
-    ; $LWin::LAlt    ; WinModifiers
-    ; $LCtrl::LWin   ; WinModifiers
+;     $LAlt::LCtrl   ; WinModifiers
+;     $RAlt::RCtrl   ; WinModifiers
+;     $RCtrl::RAlt   ; WinModifiers
+;     $LWin::LAlt    ; WinModifiers
+;     $LCtrl::LWin   ; WinModifiers
 
-    ; $LWin::LCtrl   ; MacModifiers
-    ; $RWin::RCtrl   ; MacModifiers
-    ; $LCtrl::LWin   ; MacModifiers
+    $LWin::LCtrl   ; MacModifiers
+    $RWin::RCtrl   ; MacModifiers
+    $LCtrl::LWin   ; MacModifiers
 
     ; Hack to disable start menu on winkey
     ; Static - Does not apply to IBM or Chromebooks
-    ; $LCtrl up::Send {Ctrl down}{LWin up}{Ctrl up}            ; Default
-    ; LWin::return                                             ; Chromebook
-    ; RWin::return                                             ; Chromebook
-    ; RAlt::return                                             ; Chromebook
+    $LCtrl up::Send {Ctrl down}{LWin up}{Ctrl up}            ; Default
+;     ; LWin::return                                             ; Chromebook
+;     ; RWin::return                                             ; Chromebook
+;     ; RAlt::return                                             ; Chromebook
 
     ; Disable Win-Up/Down - interferes with Sublime text 3 multi-cursors
     #Down::return
@@ -289,9 +289,9 @@ GroupAdd, intellij, ahk_exe idea64.exe
     ; temporary hack to ensure keys don't get stuck
     ; impacts Alt-Tab fix
     ; Primary
-    ; $LAlt up::Send {LWin up}{LAlt up}{LCtrl up} ; WinModifiers
-    ; $LWin up::Send {LWin up}{LAlt up}{LCtrl up} ; MacModifiers
-    ; $LAlt up::Send {LWin up}{CapsLock up}{LAlt up}{LCtrl up} ; CB/IBM
+;     $LAlt up::Send {LWin up}{LAlt up}{LCtrl up} ; WinModifiers
+    $LWin up::Send {LWin up}{LAlt up}{LCtrl up} ; MacModifiers
+;     ; $LAlt up::Send {LWin up}{CapsLock up}{LAlt up}{LCtrl up} ; CB/IBM
 
     !Enter:: 
     {
@@ -306,10 +306,6 @@ GroupAdd, intellij, ahk_exe idea64.exe
 
     ; Remap Alt+Esc to Break/Pause
     !Esc::SendInput, {Pause}
-
-    ; Go up or down a page
-    $!Down::Send {PgDn};
-    $!Up::Send {PgUp};
 
     ; Close Apps 
     ^q::Send !{F4}
@@ -353,8 +349,8 @@ GroupAdd, intellij, ahk_exe idea64.exe
     ^F3::Send #d
 
     ; Emoji Panel
-    ; #^Space::Send {LWin down};{LWin up} ; Default
-    ; !^Space::Send {LWin down};{LWin up} ; CB/IBM
+    #^Space::Send {LWin down};{LWin up} ; Default
+;     ; !^Space::Send {LWin down};{LWin up} ; CB/IBM
 
     ; Full Screenshot
     ^+3::Send {PrintScreen}
@@ -363,8 +359,8 @@ GroupAdd, intellij, ahk_exe idea64.exe
     ^+4::Send #+{S}
 
     ; Open File Browser
-    ; !^space::Send #e ; Default
-    ; #^space::Send #e ; CB/IBM
+    !^space::Send #e ; Default
+;     ; #^space::Send #e ; CB/IBM
 
     ; wordwise support
     ^Up::Send ^{Home}
@@ -382,49 +378,49 @@ GroupAdd, intellij, ahk_exe idea64.exe
     $^Right::Send {End}
     $^+Right::Send +{End}
 
-    ; #if GetKeyState("LWin", "P") || GetKeyState("RAlt", "P") ; Chromebook
-    ;     Space::Send ^{Esc}                                   ; Chromebook
-    ;     0::Send #0                                           ; Chromebook
-    ;     1::Send #1                                           ; Chromebook
-    ;     2::Send #2                                           ; Chromebook
-    ;     3::Send #3                                           ; Chromebook
-    ;     4::Send #4                                           ; Chromebook
-    ;     5::Send #5                                           ; Chromebook
-    ;     6::Send #6                                           ; Chromebook
-    ;     7::Send #7                                           ; Chromebook
-    ;     8::Send #8                                           ; Chromebook
-    ;     9::Send #9                                           ; Chromebook
-    ;     -::Send #-                                           ; Chromebook
-    ;     =::Send #=                                           ; Chromebook
-    ;     `::Send #`                                           ; Chromebook
-    ;     `;::Send #;                                          ; Chromebook
-    ;     a::Send #a                                           ; Chromebook
-    ;     b::Send #b                                           ; Chromebook
-    ;     c::Send #c                                           ; Chromebook
-    ;     d::Send #d                                           ; Chromebook
-    ;     e::Send #e                                           ; Chromebook
-    ;     f::Send #f                                           ; Chromebook
-    ;     g::Send #g                                           ; Chromebook
-    ;     h::Send #h                                           ; Chromebook
-    ;     i::Send #i                                           ; Chromebook
-    ;     j::Send #j                                           ; Chromebook
-    ;     k::Send #k                                           ; Chromebook
-    ;     l::Send #l                                           ; Chromebook
-    ;     m::Send #m                                           ; Chromebook
-    ;     n::Send #n                                           ; Chromebook
-    ;     o::Send #o                                           ; Chromebook
-    ;     p::Send #p                                           ; Chromebook
-    ;     q::Send #q                                           ; Chromebook
-    ;     r::Send #r                                           ; Chromebook
-    ;     s::Send #s                                           ; Chromebook
-    ;     t::Send #t                                           ; Chromebook
-    ;     u::Send #u                                           ; Chromebook
-    ;     v::Send #v                                           ; Chromebook
-    ;     w::Send #w                                           ; Chromebook
-    ;     x::Send #x                                           ; Chromebook
-    ;     y::Send #y                                           ; Chromebook
-    ;     z::Send #z                                           ; Chromebook
-    ; #If                                                      ; Chromebook
+;     ; #if GetKeyState("LWin", "P") || GetKeyState("RAlt", "P") ; Chromebook
+;     ;     Space::Send ^{Esc}                                   ; Chromebook
+;     ;     0::Send #0                                           ; Chromebook
+;     ;     1::Send #1                                           ; Chromebook
+;     ;     2::Send #2                                           ; Chromebook
+;     ;     3::Send #3                                           ; Chromebook
+;     ;     4::Send #4                                           ; Chromebook
+;     ;     5::Send #5                                           ; Chromebook
+;     ;     6::Send #6                                           ; Chromebook
+;     ;     7::Send #7                                           ; Chromebook
+;     ;     8::Send #8                                           ; Chromebook
+;     ;     9::Send #9                                           ; Chromebook
+;     ;     -::Send #-                                           ; Chromebook
+;     ;     =::Send #=                                           ; Chromebook
+;     ;     `::Send #`                                           ; Chromebook
+;     ;     `;::Send #;                                          ; Chromebook
+;     ;     a::Send #a                                           ; Chromebook
+;     ;     b::Send #b                                           ; Chromebook
+;     ;     c::Send #c                                           ; Chromebook
+;     ;     d::Send #d                                           ; Chromebook
+;     ;     e::Send #e                                           ; Chromebook
+;     ;     f::Send #f                                           ; Chromebook
+;     ;     g::Send #g                                           ; Chromebook
+;     ;     h::Send #h                                           ; Chromebook
+;     ;     i::Send #i                                           ; Chromebook
+;     ;     j::Send #j                                           ; Chromebook
+;     ;     k::Send #k                                           ; Chromebook
+;     ;     l::Send #l                                           ; Chromebook
+;     ;     m::Send #m                                           ; Chromebook
+;     ;     n::Send #n                                           ; Chromebook
+;     ;     o::Send #o                                           ; Chromebook
+;     ;     p::Send #p                                           ; Chromebook
+;     ;     q::Send #q                                           ; Chromebook
+;     ;     r::Send #r                                           ; Chromebook
+;     ;     s::Send #s                                           ; Chromebook
+;     ;     t::Send #t                                           ; Chromebook
+;     ;     u::Send #u                                           ; Chromebook
+;     ;     v::Send #v                                           ; Chromebook
+;     ;     w::Send #w                                           ; Chromebook
+;     ;     x::Send #x                                           ; Chromebook
+;     ;     y::Send #y                                           ; Chromebook
+;     ;     z::Send #z                                           ; Chromebook
+;     ; #If                                                      ; Chromebook
 
     #IfWinNotActive ahk_group terminals
         ^.::Send {Esc}
@@ -443,8 +439,8 @@ GroupAdd, intellij, ahk_exe idea64.exe
     $^Space::Send ^{Esc}
 
     #IfWinActive ahk_group intellij
-        ; $#c::Send ^{c}                  ; Default - Sigints interrupt
-        ; $!c::Send ^{c}                  ; CB/IBM
+        $#c::Send ^{c}                  ; Default - Sigints interrupt
+;         ; $!c::Send ^{c}                  ; CB/IBM
         ; General
         ^0::Send !{0}                   ;Open corresponding tool window
         ^1::Send !{1}                   ;Open corresponding tool window
@@ -468,8 +464,8 @@ GroupAdd, intellij, ahk_exe idea64.exe
         ^#g::Send ^!+j                  ;Select all occurrences
         #+g::Send !+j                   ;Unselect occurrence
         ; Editing
-        ; #Space::Send ^{Space}           ; Default - Basic code completion
-        ; !Space::Send ^{Space}           ; CB/IBM - Basic code completion
+        #Space::Send ^{Space}           ; Default - Basic code completion
+;         ; !Space::Send ^{Space}           ; CB/IBM - Basic code completion
         #+Space::Send ^+{Space}         ;Smart code completion
         #j::Send ^q                     ;Quick documentation lookup
         ^n::Send !{Insert}              ;Generate code...
@@ -500,8 +496,8 @@ GroupAdd, intellij, ahk_exe idea64.exe
         #Left::Send !{Left}             ;Go to previous editor tab
         #l::Send ^g                     ;Go to line
         #e::Send ^e                     ;Recent files popup
-        ; !Space::Send ^+i                ; Default - Open quick definition lookup
-        ; #Space::Send ^+i                ; CB/IBM - Open quick definition lookup
+        !Space::Send ^+i                ; Default - Open quick definition lookup
+;         ; #Space::Send ^+i                ; CB/IBM - Open quick definition lookup
         ^Y::Send ^+i                    ;Open quick definition lookup
         #+b::Send ^+b                   ;Go to type declaration
         #Up::Send !{Up}                 ;Go to previous
@@ -561,31 +557,39 @@ GroupAdd, intellij, ahk_exe idea64.exe
         #n::send {Down}                                      ; Allow for traversing quick list
         ; Remap Ctrl+Shift to behave like macOS Sublimetext
         ; Will extend cursor to multiple lines
-    ;    #+Up::send ^!{Up}                                   ; Default - ST2CODE
-    ;    !+Up::send ^!{Up}                                   ; CB/IBM - ST2CODE
-    ;    #+Down::send ^!{Down}                               ; Default - ST2CODE
-    ;    !+Down::send ^!{Down}                               ; CB/IBM - ST2CODE
+       #+Up::send ^!{Up}                                   ; Default - ST2CODE
+;     ;    !+Up::send ^!{Up}                                   ; CB/IBM - ST2CODE
+       #+Down::send ^!{Down}                               ; Default - ST2CODE
+;     ;    !+Down::send ^!{Down}                               ; CB/IBM - ST2CODE
         ; Remap Ctrl+Cmd+G to select all matches
-    ;    #^g::send ^+{L}                                     ; Default - ST2CODE
-    ;    !^g::send ^+{L}                                     ; CB/IBM - ST2CODE
+       #^g::send ^+{L}                                     ; Default - ST2CODE
+;     ;    !^g::send ^+{L}                                     ; CB/IBM - ST2CODE
         !+g::send ^+{G}                                      ; View source control
-    ;    $#c::Send {Ctrl down}c{Ctrl up}                     ; Default - Sigints interrupt
-    ;    $!c::Send {Ctrl down}c{Ctrl up}                     ; CB/IBM
-    ;    $#x::Send {Ctrl down}x{Ctrl up}                     ; Default - Sigints interrupt
-    ;    $!x::Send {Ctrl down}x{Ctrl up}                     ; CB/IBM
+       $#c::Send {Ctrl down}c{Ctrl up}                     ; Default - Sigints interrupt
+;     ;    $!c::Send {Ctrl down}c{Ctrl up}                     ; CB/IBM
+       $#x::Send {Ctrl down}x{Ctrl up}                     ; Default - Sigints interrupt
+;     ;    $!x::Send {Ctrl down}x{Ctrl up}                     ; CB/IBM
 
-    ;   #Space::Send ^{Space}                                ; Default - Basic code completion
-    ;   !Space::Send ^{Space}                                ; CB/IBM - Basic code completion
+      #Space::Send ^{Space}                                ; Default - Basic code completion
+;     ;   !Space::Send ^{Space}                                ; CB/IBM - Basic code completion
+      $!Down::Send !{Down}
+      $!Up::Send !{Up}
+    #If
+
+    #IfWinNotActive ahk_group vscode
+    ; Go up or down a page
+      $!Down::Send {PgDn}
+      $!Up::Send {PgUp}
     #If
 
     #IfWinActive ahk_exe sublime_text.exe
-        ; #x::Send ^{x}                                           ; Default - Terminal - Ctrl-x
-        ; #c::Send ^{c}                                           ; Default - Terminal - Ctrl-c sigint
-        ; !x::Send ^{x}                                           ; CB/IBM
-        ; !c::Send ^{c}                                           ; CB/IBM - Sigint
+        #x::Send ^{x}                                           ; Default - Terminal - Ctrl-x
+        #c::Send ^{c}                                           ; Default - Terminal - Ctrl-c sigint
+;         ; !x::Send ^{x}                                           ; CB/IBM
+;         ; !c::Send ^{c}                                           ; CB/IBM - Sigint
         ; #c::send ^{Pause}                                       ; cancel_build
-        ; #Space::Send ^{Space}                                   ; Default - Basic code completion
-        ; !Space::Send ^{Space}                                   ; CB/IBM - Basic code completion
+        #Space::Send ^{Space}                                   ; Default - Basic code completion
+;         ; !Space::Send ^{Space}                                   ; CB/IBM - Basic code completion
         #^Up::send !{O}                                         ; Switch file
         #^f::send {F11}                                         ; toggle_full_screen
         ^!v::send {Ctrl Down}k{Ctrl Up}{Ctrl Down}v{Ctrl Up}    ; paste_from_history
@@ -593,10 +597,10 @@ GroupAdd, intellij, ahk_exe idea64.exe
         ^!Up::send ^{Up}                                        ; scroll_lines up
         ^Down::Return                                           ; cancel scroll_lines down
         ^!Down::send ^{Down}                                    ; scroll_lines down
-        ; #+Up::send {shift up}^!{Up}                             ; Default - multi-cursor up
-        ; #+Down::send {shift up}^!{Down}                         ; Default - multi-cursor down
-        ; !+Up::send {shift up}^!{Up}                             ; CB/IBM - multi-cursor up
-        ; !+Down::send {shift up}^!{Down}                         ; CB/IBM - multi-cursor down
+        #+Up::send {shift up}^!{Up}                             ; Default - multi-cursor up
+        #+Down::send {shift up}^!{Down}                         ; Default - multi-cursor down
+;         ; !+Up::send {shift up}^!{Up}                             ; CB/IBM - multi-cursor up
+;         ; !+Down::send {shift up}^!{Down}                         ; CB/IBM - multi-cursor down
         ^PgDn::Return                                           ; cancel next_view
         ^PgUp::Return                                           ; cancel prev_view
         ^+{::send ^{PgDn}                                       ; next_view
@@ -605,7 +609,7 @@ GroupAdd, intellij, ahk_exe idea64.exe
         ^!Left::send ^{PgUp}                                    ; prev_view
         Insert::Return                                          ; cancel toggle_overwrite
         ^!O::send {Insert}                                      ; toggle_overwrite
-        ; !c::Return                                              ; Default - cancel toggle_case_sensitive
+        !c::Return                                              ; Default - cancel toggle_case_sensitive
         ^!c::send !{c}                                          ; toggle_case_sensitive
         ; ^h::Return                                              ; cancel replace
         ^!f::send ^{h}                                          ; replace
@@ -618,8 +622,8 @@ GroupAdd, intellij, ahk_exe idea64.exe
         ^+g::send +{F3}                                         ; find_prev
         #!g::send ^{F3}                                         ; find_under
         #!+g::send ^+{F3}                                       ; find_under_prev
-        ; #^g::send !{F3}                                         ; Default - find_all_under
-        ; !^g::send !{F3}                                         ; CB/IBM - find_all_under
+        #^g::send !{F3}                                         ; Default - find_all_under
+;         ; !^g::send !{F3}                                         ; CB/IBM - find_all_under
         ^+Up::Return                                            ; cancel swap_line_up
         #!Up::send ^+{Up}                                       ; swap_line_up
         ^+Down::Return                                          ; cancel swap_line_down
@@ -649,14 +653,14 @@ GroupAdd, intellij, ahk_exe idea64.exe
     #IfWinActive ahk_group terminals
 
         ; End of Line
-        ; #e:: ; Default
-        ; !e:: ; CB/IBM
+        #e:: ; Default
+;         ; !e:: ; CB/IBM
         Send {End}
         return
 
         ; Beginning of Line
-        ; #a:: ; Default
-        ; !a:: ; CB/IBM
+        #a:: ; Default
+;         ; !a:: ; CB/IBM
         Send {Home}
         return
 
@@ -687,8 +691,8 @@ GroupAdd, intellij, ahk_exe idea64.exe
         return
 
         ; Sigints - interrupt
-        ; $#c::Send {Ctrl down}c{Ctrl up} ; Default
-        ; $!c::Send {Ctrl down}c{Ctrl up} ; CB/IBM
+        $#c::Send {Ctrl down}c{Ctrl up} ; Default
+;         ; $!c::Send {Ctrl down}c{Ctrl up} ; CB/IBM
         $^.::Send {Ctrl down}c{Ctrl up}
 
         ; Windows Terminal
@@ -743,84 +747,84 @@ GroupAdd, intellij, ahk_exe idea64.exe
         ; Clear Terminal and Scroll Buffer
         ^k::Send clear && printf '\e[3J'{Enter}
         ; Remap Physical Ctrl back to Ctrl
-        ; #0::Send {LCtrl down}0{Ctrl up}  ; Default
-        ; #1::Send {LCtrl down}1{Ctrl up}  ; Default
-        ; #2::Send {LCtrl down}2{Ctrl up}  ; Default
-        ; #3::Send {LCtrl down}3{Ctrl up}  ; Default
-        ; #4::Send {LCtrl down}4{Ctrl up}  ; Default
-        ; #5::Send {LCtrl down}5{Ctrl up}  ; Default
-        ; #6::Send {LCtrl down}6{Ctrl up}  ; Default
-        ; #7::Send {LCtrl down}7{Ctrl up}  ; Default
-        ; #8::Send {LCtrl down}8{Ctrl up}  ; Default
-        ; #9::Send {LCtrl down}9{Ctrl up}  ; Default
-        ; #-::Send {LCtrl down}-{Ctrl up}  ; Default
-        ; #=::Send {LCtrl down}={Ctrl up}  ; Default
-        ; #`::Send {LCtrl down}`{Ctrl up}  ; Default
-        ; #a::Send {LCtrl down}a{Ctrl up}  ; Default
-        ; #b::Send {LCtrl down}b{Ctrl up}  ; Default
-        ; #c::Send {LCtrl down}c{Ctrl up}  ; Default
-        ; #d::Send {LCtrl down}d{Ctrl up}  ; Default
-        ; #e::Send {LCtrl down}e{Ctrl up}  ; Default
-        ; #f::Send {LCtrl down}f{Ctrl up}  ; Default
-        ; #g::Send {LCtrl down}g{Ctrl up}  ; Default
-        ; #h::Send {LCtrl down}h{Ctrl up}  ; Default
-        ; #i::Send {LCtrl down}i{Ctrl up}  ; Default
-        ; #j::Send {LCtrl down}j{Ctrl up}  ; Default
-        ; #k::Send {LCtrl down}k{Ctrl up}  ; Default
-        ; #l::Send {LCtrl down}l{Ctrl up}  ; Default
-        ; #m::Send {LCtrl down}m{Ctrl up}  ; Default
-        ; #n::Send {LCtrl down}n{Ctrl up}  ; Default
-        ; #o::Send {LCtrl down}o{Ctrl up}  ; Default
-        ; #p::Send {LCtrl down}p{Ctrl up}  ; Default
-        ; #q::Send {LCtrl down}q{Ctrl up}  ; Default
-        ; #r::Send {LCtrl down}r{Ctrl up}  ; Default
-        ; #s::Send {LCtrl down}s{Ctrl up}  ; Default
-        ; #t::Send {LCtrl down}t{Ctrl up}  ; Default
-        ; #u::Send {LCtrl down}u{Ctrl up}  ; Default
-        ; #v::Send {LCtrl down}v{Ctrl up}  ; Default
-        ; #w::Send {LCtrl down}w{Ctrl up}  ; Default
-        ; #x::Send {LCtrl down}x{Ctrl up}  ; Default
-        ; #y::Send {LCtrl down}y{Ctrl up}  ; Default
-        ; #z::Send {LCtrl down}z{Ctrl up}  ; Default
-        ; !0::Send {LCtrl down}0{Ctrl up}  ; CB/IBM
-        ; !1::Send {LCtrl down}1{Ctrl up}  ; CB/IBM
-        ; !2::Send {LCtrl down}2{Ctrl up}  ; CB/IBM
-        ; !3::Send {LCtrl down}3{Ctrl up}  ; CB/IBM
-        ; !4::Send {LCtrl down}4{Ctrl up}  ; CB/IBM
-        ; !5::Send {LCtrl down}5{Ctrl up}  ; CB/IBM
-        ; !6::Send {LCtrl down}6{Ctrl up}  ; CB/IBM
-        ; !7::Send {LCtrl down}7{Ctrl up}  ; CB/IBM
-        ; !8::Send {LCtrl down}8{Ctrl up}  ; CB/IBM
-        ; !9::Send {LCtrl down}9{Ctrl up}  ; CB/IBM
-        ; !-::Send {LCtrl down}-{Ctrl up}  ; CB/IBM
-        ; !=::Send {LCtrl down}={Ctrl up}  ; CB/IBM
-        ; !`::Send {LCtrl down}`{Ctrl up}  ; CB/IBM
-        ; !a::Send {LCtrl down}a{Ctrl up}  ; CB/IBM
-        ; !b::Send {LCtrl down}b{Ctrl up}  ; CB/IBM
-        ; !c::Send {LCtrl down}c{Ctrl up}  ; CB/IBM
-        ; !d::Send {LCtrl down}d{Ctrl up}  ; CB/IBM
-        ; !e::Send {LCtrl down}e{Ctrl up}  ; CB/IBM
-        ; !f::Send {LCtrl down}f{Ctrl up}  ; CB/IBM
-        ; !g::Send {LCtrl down}g{Ctrl up}  ; CB/IBM
-        ; !h::Send {LCtrl down}h{Ctrl up}  ; CB/IBM
-        ; !i::Send {LCtrl down}i{Ctrl up}  ; CB/IBM
-        ; !j::Send {LCtrl down}j{Ctrl up}  ; CB/IBM
-        ; !k::Send {LCtrl down}k{Ctrl up}  ; CB/IBM
-        ; !l::Send {LCtrl down}l{Ctrl up}  ; CB/IBM
-        ; !m::Send {LCtrl down}m{Ctrl up}  ; CB/IBM
-        ; !n::Send {LCtrl down}n{Ctrl up}  ; CB/IBM
-        ; !o::Send {LCtrl down}o{Ctrl up}  ; CB/IBM
-        ; !p::Send {LCtrl down}p{Ctrl up}  ; CB/IBM
-        ; !q::Send {LCtrl down}q{Ctrl up}  ; CB/IBM
-        ; !r::Send {LCtrl down}r{Ctrl up}  ; CB/IBM
-        ; !s::Send {LCtrl down}s{Ctrl up}  ; CB/IBM
-        ; !t::Send {LCtrl down}t{Ctrl up}  ; CB/IBM
-        ; !u::Send {LCtrl down}u{Ctrl up}  ; CB/IBM
-        ; !v::Send {LCtrl down}v{Ctrl up}  ; CB/IBM
-        ; !w::Send {LCtrl down}w{Ctrl up}  ; CB/IBM
-        ; !x::Send {LCtrl down}x{Ctrl up}  ; CB/IBM
-        ; !y::Send {LCtrl down}y{Ctrl up}  ; CB/IBM
-        ; !z::Send {LCtrl down}z{Ctrl up}  ; CB/IBM
+        #0::Send {LCtrl down}0{Ctrl up}  ; Default
+        #1::Send {LCtrl down}1{Ctrl up}  ; Default
+        #2::Send {LCtrl down}2{Ctrl up}  ; Default
+        #3::Send {LCtrl down}3{Ctrl up}  ; Default
+        #4::Send {LCtrl down}4{Ctrl up}  ; Default
+        #5::Send {LCtrl down}5{Ctrl up}  ; Default
+        #6::Send {LCtrl down}6{Ctrl up}  ; Default
+        #7::Send {LCtrl down}7{Ctrl up}  ; Default
+        #8::Send {LCtrl down}8{Ctrl up}  ; Default
+        #9::Send {LCtrl down}9{Ctrl up}  ; Default
+        #-::Send {LCtrl down}-{Ctrl up}  ; Default
+        #=::Send {LCtrl down}={Ctrl up}  ; Default
+        #`::Send {LCtrl down}`{Ctrl up}  ; Default
+        #a::Send {LCtrl down}a{Ctrl up}  ; Default
+        #b::Send {LCtrl down}b{Ctrl up}  ; Default
+        #c::Send {LCtrl down}c{Ctrl up}  ; Default
+        #d::Send {LCtrl down}d{Ctrl up}  ; Default
+        #e::Send {LCtrl down}e{Ctrl up}  ; Default
+        #f::Send {LCtrl down}f{Ctrl up}  ; Default
+        #g::Send {LCtrl down}g{Ctrl up}  ; Default
+        #h::Send {LCtrl down}h{Ctrl up}  ; Default
+        #i::Send {LCtrl down}i{Ctrl up}  ; Default
+        #j::Send {LCtrl down}j{Ctrl up}  ; Default
+        #k::Send {LCtrl down}k{Ctrl up}  ; Default
+        #l::Send {LCtrl down}l{Ctrl up}  ; Default
+        #m::Send {LCtrl down}m{Ctrl up}  ; Default
+        #n::Send {LCtrl down}n{Ctrl up}  ; Default
+        #o::Send {LCtrl down}o{Ctrl up}  ; Default
+        #p::Send {LCtrl down}p{Ctrl up}  ; Default
+        #q::Send {LCtrl down}q{Ctrl up}  ; Default
+        #r::Send {LCtrl down}r{Ctrl up}  ; Default
+        #s::Send {LCtrl down}s{Ctrl up}  ; Default
+        #t::Send {LCtrl down}t{Ctrl up}  ; Default
+        #u::Send {LCtrl down}u{Ctrl up}  ; Default
+        #v::Send {LCtrl down}v{Ctrl up}  ; Default
+        #w::Send {LCtrl down}w{Ctrl up}  ; Default
+        #x::Send {LCtrl down}x{Ctrl up}  ; Default
+        #y::Send {LCtrl down}y{Ctrl up}  ; Default
+        #z::Send {LCtrl down}z{Ctrl up}  ; Default
+;         ; !0::Send {LCtrl down}0{Ctrl up}  ; CB/IBM
+;         ; !1::Send {LCtrl down}1{Ctrl up}  ; CB/IBM
+;         ; !2::Send {LCtrl down}2{Ctrl up}  ; CB/IBM
+;         ; !3::Send {LCtrl down}3{Ctrl up}  ; CB/IBM
+;         ; !4::Send {LCtrl down}4{Ctrl up}  ; CB/IBM
+;         ; !5::Send {LCtrl down}5{Ctrl up}  ; CB/IBM
+;         ; !6::Send {LCtrl down}6{Ctrl up}  ; CB/IBM
+;         ; !7::Send {LCtrl down}7{Ctrl up}  ; CB/IBM
+;         ; !8::Send {LCtrl down}8{Ctrl up}  ; CB/IBM
+;         ; !9::Send {LCtrl down}9{Ctrl up}  ; CB/IBM
+;         ; !-::Send {LCtrl down}-{Ctrl up}  ; CB/IBM
+;         ; !=::Send {LCtrl down}={Ctrl up}  ; CB/IBM
+;         ; !`::Send {LCtrl down}`{Ctrl up}  ; CB/IBM
+;         ; !a::Send {LCtrl down}a{Ctrl up}  ; CB/IBM
+;         ; !b::Send {LCtrl down}b{Ctrl up}  ; CB/IBM
+;         ; !c::Send {LCtrl down}c{Ctrl up}  ; CB/IBM
+;         ; !d::Send {LCtrl down}d{Ctrl up}  ; CB/IBM
+;         ; !e::Send {LCtrl down}e{Ctrl up}  ; CB/IBM
+;         ; !f::Send {LCtrl down}f{Ctrl up}  ; CB/IBM
+;         ; !g::Send {LCtrl down}g{Ctrl up}  ; CB/IBM
+;         ; !h::Send {LCtrl down}h{Ctrl up}  ; CB/IBM
+;         ; !i::Send {LCtrl down}i{Ctrl up}  ; CB/IBM
+;         ; !j::Send {LCtrl down}j{Ctrl up}  ; CB/IBM
+;         ; !k::Send {LCtrl down}k{Ctrl up}  ; CB/IBM
+;         ; !l::Send {LCtrl down}l{Ctrl up}  ; CB/IBM
+;         ; !m::Send {LCtrl down}m{Ctrl up}  ; CB/IBM
+;         ; !n::Send {LCtrl down}n{Ctrl up}  ; CB/IBM
+;         ; !o::Send {LCtrl down}o{Ctrl up}  ; CB/IBM
+;         ; !p::Send {LCtrl down}p{Ctrl up}  ; CB/IBM
+;         ; !q::Send {LCtrl down}q{Ctrl up}  ; CB/IBM
+;         ; !r::Send {LCtrl down}r{Ctrl up}  ; CB/IBM
+;         ; !s::Send {LCtrl down}s{Ctrl up}  ; CB/IBM
+;         ; !t::Send {LCtrl down}t{Ctrl up}  ; CB/IBM
+;         ; !u::Send {LCtrl down}u{Ctrl up}  ; CB/IBM
+;         ; !v::Send {LCtrl down}v{Ctrl up}  ; CB/IBM
+;         ; !w::Send {LCtrl down}w{Ctrl up}  ; CB/IBM
+;         ; !x::Send {LCtrl down}x{Ctrl up}  ; CB/IBM
+;         ; !y::Send {LCtrl down}y{Ctrl up}  ; CB/IBM
+;         ; !z::Send {LCtrl down}z{Ctrl up}  ; CB/IBM
     #If
 #If
 
