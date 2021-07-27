@@ -308,8 +308,10 @@ GroupAdd, intellij, ahk_exe idea64.exe
     !Esc::SendInput, {Pause}
 
     ; Go up or down a page
-    $!Down::Send {PgDn};
-    $!Up::Send {PgUp};
+    #IfWinNotActive ahk_group editors
+        $!Down::Send {PgDn}
+        $!Up::Send {PgUp}
+    #If
 
     ; Close Apps 
     ^q::Send !{F4}
