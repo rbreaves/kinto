@@ -706,6 +706,7 @@ define_keymap(re.compile(termStr, re.IGNORECASE),{
     K("RC-G"): K("C-Shift-G"),
     K("RC-H"): K("C-Shift-H"),
     K("RC-J"): K("C-Shift-J"),
+    # Removed RC-K to clear terminal normally
     K("RC-L"): K("C-Shift-L"),
     K("RC-SEMICOLON"): K("C-Shift-SEMICOLON"),
     K("RC-APOSTROPHE"): K("C-Shift-APOSTROPHE"),
