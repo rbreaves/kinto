@@ -538,6 +538,13 @@ GroupAdd, intellij, ahk_exe idea64.exe
 
     ; Close all browsers
     #IfWinActive ahk_group browsers
+        ;Tab Navigation
+        ^+[::send ^{PgUp}
+        ^+]::send ^{PgDn}
+        ^!Left::send ^{PgUp}
+        ^!Right::send ^{PgDn}
+        #Left::send ^{PgUp}
+        #Right::send ^{PgDn}
         ^q::send {Alt Down}f{Alt Up}x   ; exit all windows
         ; Dev Tools
         !^i::send {Ctrl Down}{Shift Down}i{Shift Up}{Ctrl Up}
