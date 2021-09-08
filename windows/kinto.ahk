@@ -529,6 +529,7 @@ GroupAdd, intellij, ahk_exe idea64.exe
         ; Open preferences
         #IfWinActive ahk_exe firefox.exe
             ^,::send, {Ctrl Down}t{Ctrl Up}about:preferences{Enter}
+            ^+n::send ^+p
         #If
         #IfWinActive ahk_exe chrome.exe
             ^,::send {Alt Down}e{Alt Up}s{Enter}
