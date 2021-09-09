@@ -536,6 +536,8 @@ GroupAdd, intellij, ahk_exe idea64.exe
 
     ; Close all browsers
     #IfWinActive ahk_group browsers
+        ; Clear Dev Tools terminal
+        ^k::send  ^+l
         ^q::send {Alt Down}f{Alt Up}x   ; exit all windows
         ; Dev Tools
         !^i::send {Ctrl Down}{Shift Down}i{Shift Up}{Ctrl Up}
