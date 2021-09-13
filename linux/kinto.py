@@ -64,6 +64,7 @@ browsers = [
     "Discord",
     "Epiphany",
     "Firefox",
+    "Firefox Developer Edition",
     "Google-chrome",
     "microsoft-edge",
     "microsoft-edge-dev",
