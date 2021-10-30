@@ -203,6 +203,35 @@ GroupAdd, intellij, ahk_exe idea64.exe
 ; End::Send {Media_Play_Pause}  ; Pause/Play
 ; PgDn::Send {Media_Next}       ; Next
 
+; Virtual Desktop Hack via TotalSpaces2 - macOS Remote Desktop
+; Custom Bind Gestures in Windows
+; Shift-F8 on Left Swipe
+; Shift-F9 on Right Swipe
+#IfWinActive ahk_exe nxplayer.bin
+    +F8::Send !+-     ; macOS TotalSpaces2 - Space Left
+    +F6::Send !+=     ; macOS TotalSpaces2 - Space Right
+#If
+; +F8::Send {LCtrl down}{LWin down}{left}{LCtrl up}{LWin up}  ; Comment out on host machine
+; +F6::Send {LCtrl down}{LWin down}{right}{LCtrl up}{LWin up} ; Comment out on host machine
+
+#IfWinNotActive ahk_group remotes
+    ; wordwise support
+    ^Up::Send ^{Home}
+    ^+Up::Send ^+{Home}
+    ^Down::Send ^{End}
+    ^+Down::Send ^+{End}
+    $^Backspace::Send +{Home}{Delete}
+    !Backspace::Send ^{Backspace}
+    !Left::Send ^{Left}
+    !+Left::Send ^+{Left}
+    !Right::Send ^{Right}
+    !+Right::Send ^+{Right}
+    $^Left::Send {Home}
+    $^+Left::Send +{Home}
+    $^Right::Send {End}
+    $^+Right::Send +{End}
+#If
+
 #IfWinNotActive ahk_group remotes
 
     ; New AltTab and CtrlTab fix
@@ -368,22 +397,6 @@ GroupAdd, intellij, ahk_exe idea64.exe
     ; Open File Browser
     ; !^space::Send #e ; Default
     ; #^space::Send #e ; CB/IBM
-
-    ; wordwise support
-    ^Up::Send ^{Home}
-    ^+Up::Send ^+{Home}
-    ^Down::Send ^{End}
-    ^+Down::Send ^+{End}
-    $^Backspace::Send +{Home}{Delete}
-    !Backspace::Send ^{Backspace}
-    !Left::Send ^{Left}
-    !+Left::Send ^+{Left}
-    !Right::Send ^{Right}
-    !+Right::Send ^+{Right}
-    $^Left::Send {Home}
-    $^+Left::Send +{Home}
-    $^Right::Send {End}
-    $^+Right::Send +{End}
 
     ; #if GetKeyState("LWin", "P") || GetKeyState("RAlt", "P") ; Chromebook
     ;     Space::Send ^{Esc}                                   ; Chromebook
