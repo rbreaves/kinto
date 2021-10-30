@@ -55,3 +55,7 @@ def yn_choice(message, default='y'):
     choice = input("%s (%s) " % (message, choices))
     values = ('y', 'yes', '') if choices == 'Y/n' else ('y', 'yes')
     return choice.strip().lower() in values
+
+yn_choices()
+choices = input()
+values = int(input())
