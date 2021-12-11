@@ -473,7 +473,7 @@ define_keymap(re.compile("ulauncher", re.IGNORECASE),{
     K("RC-n"):          K("M-n"),
     K("RC-o"):          K("M-o"),
     K("RC-p"):          K("M-p"),
-    K("RC-q"):          K("M-q"),
+    # K("RC-q"):          K("M-q"),
     K("RC-r"):          K("M-r"),
     K("RC-s"):          K("M-s"),
     K("RC-t"):          K("M-t"),
