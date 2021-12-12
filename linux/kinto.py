@@ -448,6 +448,44 @@ define_keymap(re.compile(chromeStr, re.IGNORECASE),{
 }, "Browsers")
 # Opera C-F12
 
+define_keymap(re.compile("ulauncher", re.IGNORECASE),{
+    K("RC-Key_1"):      K("M-Key_1"),      # Remap Ctrl+[1-9] and Ctrl+[a-z] to Alt+[1-9] and Alt+[a-z]
+    K("RC-Key_2"):      K("M-Key_2"),
+    K("RC-Key_3"):      K("M-Key_3"),
+    K("RC-Key_4"):      K("M-Key_4"),
+    K("RC-Key_5"):      K("M-Key_5"),
+    K("RC-Key_6"):      K("M-Key_6"),
+    K("RC-Key_7"):      K("M-Key_7"),
+    K("RC-Key_8"):      K("M-Key_8"),
+    K("RC-Key_9"):      K("M-Key_9"),
+    K("RC-a"):          K("M-a"),
+    K("RC-b"):          K("M-b"),
+    K("RC-c"):          K("M-c"),
+    K("RC-d"):          K("M-d"),
+    K("RC-e"):          K("M-e"),
+    K("RC-f"):          K("M-f"),
+    K("RC-g"):          K("M-g"),
+    K("RC-h"):          K("M-h"),
+    K("RC-i"):          K("M-i"),
+    K("RC-j"):          K("M-j"),
+    K("RC-k"):          K("M-k"),
+    K("RC-l"):          K("M-l"),
+    K("RC-m"):          K("M-m"),
+    K("RC-n"):          K("M-n"),
+    K("RC-o"):          K("M-o"),
+    K("RC-p"):          K("M-p"),
+    # K("RC-q"):          K("M-q"),
+    K("RC-r"):          K("M-r"),
+    K("RC-s"):          K("M-s"),
+    K("RC-t"):          K("M-t"),
+    K("RC-u"):          K("M-u"),
+    K("RC-v"):          K("M-v"),
+    K("RC-w"):          K("M-w"),
+    K("RC-x"):          K("M-x"),
+    K("RC-y"):          K("M-y"),
+    K("RC-z"):          K("M-z"),
+}, "Ulauncher")
+
 # Note: terminals extends to remotes as well
 define_keymap(lambda wm_class: wm_class.casefold() not in terminals,{
     K("RC-Dot"): K("Esc"),                        # Mimic macOS Cmd+dot = Escape key (not in terminals)
