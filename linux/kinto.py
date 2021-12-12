@@ -46,6 +46,7 @@ remotes = [
     "org.remmina.Remmina",
     "remmina",
     "qemu-system-.*",
+    "qemu",
     "Spicy",
     "Virt-manager",
     "VirtualBox",
