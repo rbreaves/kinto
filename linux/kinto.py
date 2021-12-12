@@ -24,6 +24,7 @@ terminals = [
     "st",
     "sakura",
     "station",
+    "tabby",
     "terminator",
     "termite",
     "tilda",
