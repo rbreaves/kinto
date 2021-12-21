@@ -450,14 +450,10 @@ define_keymap(re.compile(chromeStr, re.IGNORECASE),{
 # Opera C-F12
 
 define_keymap(re.compile("libreoffice*", re.IGNORECASE),{
-    # K("RC-M-f"):                K("C-h"),           # Find & Replace dialog (LibreOffice for macOS)
-    # Uncomment the line above to enable the official LibreOffice for macOS shortcut
+    K("RC-M-f"):                K("C-h"),           # Find & Replace dialog (LibreOffice for macOS)
     K("RC-Shift-h"):            K("C-h"),           # Find & Replace dialog (Microsoft Excel for macOS)
     # LibreOffice for macOS uses Cmd+Option+F, Excel for macOS uses Cmd+Shift+H
-    # Alternatives are required to avoid conflicting with Cmd+H (Hide Window)
-    # Ctrl+Alt+F is useful as a system shortcut to open a file browser, 
-    # so Excel's Ctrl+Shift+H is also mapped here as an alternative. 
-    # 
+    # Remap required to avoid conflicting with system shortcut Cmd+H (Hide Window)
 },"LibreOffice")
 
 define_keymap(re.compile("ulauncher", re.IGNORECASE),{
