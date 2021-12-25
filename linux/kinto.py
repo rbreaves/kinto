@@ -392,6 +392,8 @@ define_keymap(re.compile(filemanagerStr, re.IGNORECASE),{
     ###########################################################################################################
     K("RC-Left_Brace"):         K("M-Left"),        # Go Back
     K("RC-Right_Brace"):        K("M-Right"),       # Go Forward
+    K("RC-Shift-Left"):         K("M-Left"),        # Go Back
+    K("RC-Shift-Right"):        K("M-Right"),       # Go Forward
     K("RC-Left"):               K("M-Left"),        # Go Back
     K("RC-Right"):              K("M-Right"),       # Go Forward
     K("RC-Up"):                 K("M-Up"),          # Go Up dir
