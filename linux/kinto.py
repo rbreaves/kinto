@@ -468,6 +468,13 @@ define_keymap(re.compile(chromeStr, re.IGNORECASE),{
 }, "Browsers")
 # Opera C-F12
 
+define_keymap(re.compile("libreoffice*", re.IGNORECASE),{
+    K("RC-M-f"):                K("C-h"),           # Find & Replace dialog (LibreOffice for macOS)
+    K("RC-Shift-h"):            K("C-h"),           # Find & Replace dialog (Microsoft Excel for macOS)
+    # LibreOffice for macOS uses Cmd+Option+F, Excel for macOS uses Cmd+Shift+H
+    # Remap required to avoid conflicting with system shortcut Cmd+H (Hide Window)
+},"LibreOffice")
+
 define_keymap(re.compile("ulauncher", re.IGNORECASE),{
     K("RC-Key_1"):      K("M-Key_1"),      # Remap Ctrl+[1-9] and Ctrl+[a-z] to Alt+[1-9] and Alt+[a-z]
     K("RC-Key_2"):      K("M-Key_2"),
