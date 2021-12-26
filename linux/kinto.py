@@ -275,8 +275,10 @@ define_keymap(re.compile("dde-file-manager", re.IGNORECASE),{
     K("RC-i"):                  K("RC-i"),          # File properties dialog (Get Info)
     K("RC-comma"):              None,               # Disable preferences shortcut (no shortcut available)
     K("RC-Up"):                 K("RC-Up"),         # Go Up dir
-    K("RC-Shift-Left_Brace"):   K("C-Shift-Tab"),   # Go to prior tab
-    K("RC-Shift-Right_Brace"):  K("C-Tab"),         # Go to next tab
+    K("RC-Shift-Left_Brace"):   K("C-Shift-Tab"),           # Go to prior tab
+    K("RC-Shift-Right_Brace"):  K("C-Tab"),                 # Go to next tab
+    K("RC-Shift-Left"):         K("C-Shift-Tab"),           # Go to prior tab
+    K("RC-Shift-Right"):        K("C-Tab"),                 # Go to next tab
 },"Overrides for DDE File Manager - Finder Mods")
 
 # Keybindings overrides for Dolphin
@@ -330,6 +332,8 @@ define_keymap(re.compile("spacefm", re.IGNORECASE),{
     K("RC-Page_Down"):          K("C-Tab"),                 # Go to next tab
     K("RC-Shift-Left_Brace"):   K("C-Shift-Tab"),           # Go to prior tab
     K("RC-Shift-Right_Brace"):  K("C-Tab"),                 # Go to next tab
+    K("RC-Shift-Left"):         K("C-Shift-Tab"),           # Go to prior tab
+    K("RC-Shift-Right"):        K("C-Tab"),                 # Go to next tab
     K("RC-Shift-N"):            K("RC-F"),	                # Create new folder is Ctrl+F by default
     K("RC-Backspace"):          [K("Delete"),K("Enter")],   # Move to Trash (delete, bypass dialog)
     K("RC-comma"):              [K("M-V"),K("p")],          # Overrides "Open preferences dialog" shortcut below
@@ -386,8 +390,6 @@ define_keymap(re.compile(filemanagerStr, re.IGNORECASE),{
     ###########################################################################################################
     K("RC-Left_Brace"):         K("M-Left"),        # Go Back
     K("RC-Right_Brace"):        K("M-Right"),       # Go Forward
-    K("RC-Shift-Left"):         K("M-Left"),        # Go Back
-    K("RC-Shift-Right"):        K("M-Right"),       # Go Forward
     K("RC-Left"):               K("M-Left"),        # Go Back
     K("RC-Right"):              K("M-Right"),       # Go Forward
     K("RC-Up"):                 K("M-Up"),          # Go Up dir
@@ -396,6 +398,8 @@ define_keymap(re.compile(filemanagerStr, re.IGNORECASE),{
     K("RC-Down"):               K("Enter"),         # Go Down dir (open folder/file) [universal]
     K("RC-Shift-Left_Brace"):   K("C-Page_Up"),     # Go to prior tab
     K("RC-Shift-Right_Brace"):  K("C-Page_Down"),   # Go to next tab
+    K("RC-Shift-Left"):         K("C-Page_Up"),     # Go to prior tab
+    K("RC-Shift-Right"):        K("C-Page_Down"),   # Go to next tab
     ###########################################################################################################
     ###  Open in New Window | Move to Trash | Duplicate file/folder                                         ###
     ###########################################################################################################
