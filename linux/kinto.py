@@ -425,6 +425,20 @@ define_keymap(re.compile(filemanagerStr, re.IGNORECASE),{
 ### END OF FILE MANAGER GROUP OF KEYMAPS ###
 ############################################
 
+# Open preferences in browsers
+define_keymap(re.compile("Firefox", re.IGNORECASE),{
+    K("C-comma"): [
+        K("C-T"),K("a"),K("b"),K("o"),K("u"),K("t"),
+        K("Shift-SEMICOLON"),K("p"),K("r"),K("e"),K("f"),
+        K("e"),K("r"),K("e"),K("n"),K("c"),K("e"),K("s"),K("Enter")
+    ],
+    K("RC-Shift-N"):    K("RC-Shift-P"),        # Open private window with Ctrl+Shift+N like other browsers
+})
+define_keymap(re.compile(chromeStr, re.IGNORECASE),{
+    K("C-comma"): [K("M-e"), K("s"),K("Enter")],
+}, "Browsers")
+# Opera C-F12
+
 # Keybindings for General Web Browsers
 define_keymap(re.compile(browserStr, re.IGNORECASE),{
     K("RC-Q"): K("RC-Q"),           # Close all browsers Instances
@@ -452,21 +466,6 @@ define_keymap(re.compile(browserStr, re.IGNORECASE),{
     # K("C-Left_Brace"): K("C-Page_Up"),
     # K("C-Right_Brace"): K("C-Page_Down"),
 }, "General Web Browsers")
-
-
-# Open preferences in browsers
-define_keymap(re.compile("Firefox", re.IGNORECASE),{
-    K("C-comma"): [
-        K("C-T"),K("a"),K("b"),K("o"),K("u"),K("t"),
-        K("Shift-SEMICOLON"),K("p"),K("r"),K("e"),K("f"),
-        K("e"),K("r"),K("e"),K("n"),K("c"),K("e"),K("s"),K("Enter")
-    ],
-    K("RC-Shift-N"):    K("RC-Shift-P"),        # Open private window with Ctrl+Shift+N like other browsers
-})
-define_keymap(re.compile(chromeStr, re.IGNORECASE),{
-    K("C-comma"): [K("M-e"), K("s"),K("Enter")],
-}, "Browsers")
-# Opera C-F12
 
 define_keymap(re.compile("ulauncher", re.IGNORECASE),{
     K("RC-Key_1"):      K("M-Key_1"),      # Remap Ctrl+[1-9] and Ctrl+[a-z] to Alt+[1-9] and Alt+[a-z]
