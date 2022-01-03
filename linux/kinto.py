@@ -440,6 +440,7 @@ define_keymap(re.compile("Firefox", re.IGNORECASE),{
 # (overrides some shortcuts from General Web Browsers block below)
 define_keymap(re.compile(chromeStr, re.IGNORECASE),{
     K("C-comma"): [K("M-e"), K("s"),K("Enter")],
+    K("RC-q"): K("M-F4"),
 }, "Overrides for Chrome-based Browsers")
 # Opera C-F12
 
