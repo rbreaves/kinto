@@ -281,10 +281,10 @@ define_keymap(re.compile("dde-file-manager", re.IGNORECASE),{
     K("RC-i"):                  K("RC-i"),          # File properties dialog (Get Info)
     K("RC-comma"):              None,               # Disable preferences shortcut (no shortcut available)
     K("RC-Up"):                 K("RC-Up"),         # Go Up dir
-    K("RC-Shift-Left_Brace"):   K("C-Shift-Tab"),           # Go to prior tab
-    K("RC-Shift-Right_Brace"):  K("C-Tab"),                 # Go to next tab
-    K("RC-Shift-Left"):         K("C-Shift-Tab"),           # Go to prior tab
-    K("RC-Shift-Right"):        K("C-Tab"),                 # Go to next tab
+    K("RC-Shift-Left_Brace"):   K("C-Shift-Tab"),   # Go to prior tab
+    K("RC-Shift-Right_Brace"):  K("C-Tab"),         # Go to next tab
+    K("RC-Shift-Left"):         K("C-Shift-Tab"),   # Go to prior tab
+    K("RC-Shift-Right"):        K("C-Tab"),         # Go to next tab
 },"Overrides for DDE File Manager - Finder Mods")
 
 # Keybindings overrides for Dolphin
@@ -425,7 +425,8 @@ define_keymap(re.compile(filemanagerStr, re.IGNORECASE),{
 ### END OF FILE MANAGER GROUP OF KEYMAPS ###
 ############################################
 
-# Open preferences in browsers
+# Keybindings overrides for Firefox browsers 
+# (overrides some shortcuts from General Web Browsers block below)
 define_keymap(re.compile("Firefox", re.IGNORECASE),{
     K("C-comma"): [
         K("C-T"),K("a"),K("b"),K("o"),K("u"),K("t"),
@@ -434,25 +435,28 @@ define_keymap(re.compile("Firefox", re.IGNORECASE),{
     ],
     K("RC-Shift-N"):    K("RC-Shift-P"),        # Open private window with Ctrl+Shift+N like other browsers
 })
+
+# Keybindings overrides for Chromes/Chromium browsers 
+# (overrides some shortcuts from General Web Browsers block below)
 define_keymap(re.compile(chromeStr, re.IGNORECASE),{
     K("C-comma"): [K("M-e"), K("s"),K("Enter")],
-}, "Browsers")
+}, "Overrides for Chrome-based Browsers")
 # Opera C-F12
 
 # Keybindings for General Web Browsers
 define_keymap(re.compile(browserStr, re.IGNORECASE),{
-    K("RC-Q"): K("RC-Q"),           # Close all browsers Instances
-    K("M-RC-I"): K("RC-Shift-I"),   # Dev tools
-    K("M-RC-J"): K("RC-Shift-J"),   # Dev tools
-    K("RC-Key_1"): K("M-Key_1"),    # Jump to Tab #1-#8
-    K("RC-Key_2"): K("M-Key_2"),
-    K("RC-Key_3"): K("M-Key_3"),
-    K("RC-Key_4"): K("M-Key_4"),
-    K("RC-Key_5"): K("M-Key_5"),
-    K("RC-Key_6"): K("M-Key_6"),
-    K("RC-Key_7"): K("M-Key_7"),
-    K("RC-Key_8"): K("M-Key_8"),
-    K("RC-Key_9"): K("M-Key_9"),    # Jump to last tab
+    K("RC-Q"):                  K("RC-Q"),          # Close all browsers Instances
+    K("M-RC-I"):                K("RC-Shift-I"),    # Dev tools
+    K("M-RC-J"):                K("RC-Shift-J"),    # Dev tools
+    K("RC-Key_1"):              K("M-Key_1"),       # Jump to Tab #1-#8
+    K("RC-Key_2"):              K("M-Key_2"),
+    K("RC-Key_3"):              K("M-Key_3"),
+    K("RC-Key_4"):              K("M-Key_4"),
+    K("RC-Key_5"):              K("M-Key_5"),
+    K("RC-Key_6"):              K("M-Key_6"),
+    K("RC-Key_7"):              K("M-Key_7"),
+    K("RC-Key_8"):              K("M-Key_8"),
+    K("RC-Key_9"):              K("M-Key_9"),       # Jump to last tab
     # Enable Cmd+Shift+Braces for tab navigation
     K("RC-Shift-Left_Brace"):   K("C-Page_Up"),     # Go to prior tab
     K("RC-Shift-Right_Brace"):  K("C-Page_Down"),   # Go to next tab
@@ -463,8 +467,8 @@ define_keymap(re.compile(browserStr, re.IGNORECASE),{
     K("Super-Page_Up"):         K("C-Page_Up"),     # Go to prior tab
     K("Super-Page_Down"):       K("C-Page_Down"),   # Go to next tab
     # Use Cmd+Braces keys for tab navigation instead of page navigation 
-    # K("C-Left_Brace"): K("C-Page_Up"),
-    # K("C-Right_Brace"): K("C-Page_Down"),
+    # K("C-Left_Brace"):          K("C-Page_Up"),
+    # K("C-Right_Brace"):         K("C-Page_Down"),
 }, "General Web Browsers")
 
 define_keymap(re.compile("ulauncher", re.IGNORECASE),{
