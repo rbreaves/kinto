@@ -757,6 +757,8 @@ define_keymap(re.compile(termStr, re.IGNORECASE),{
     K("RC-P"): K("C-Shift-P"),
     K("RC-LEFT_BRACE"): K("C-Shift-LEFT_BRACE"),
     K("RC-RIGHT_BRACE"): K("C-Shift-RIGHT_BRACE"),
+    K("RC-Shift-Left_Brace"):   K("C-Page_Up"),     # Go to prior tab (Left)
+    K("RC-Shift-Right_Brace"):  K("C-Page_Down"),   # Go to next tab (Right)
     K("RC-A"): K("C-Shift-A"),
     K("RC-S"): K("C-Shift-S"),
     K("RC-D"): K("C-Shift-D"),
