@@ -116,6 +116,8 @@ class Indicator():
         with open(self.kconfig) as configfile:
             autostart_line = configfile.read().split('\n')[1]
 
+        autostart_bool = False
+
         # Autostart
         if "autostart = true" in autostart_line.casefold():
             autostart_bool = True
@@ -619,9 +621,9 @@ class Indicator():
     def runDebug(self,button,opendebug):
         try:
             if opendebug:
-                Popen([os.environ['HOME']+'/.config/kinto/gui/kinto-gui.py','-d'])
+                Popen(['/usr/bin/python3',os.environ['HOME']+'/.config/kinto/gui/kinto-gui.py','-d'])
             else:
-                Popen([os.environ['HOME']+'/.config/kinto/gui/kinto-gui.py'])
+                Popen(['/usr/bin/python3',os.environ['HOME']+'/.config/kinto/gui/kinto-gui.py'])
         except:
             Popen(['notify-send','Kinto: Error opening Kinto!'])
 

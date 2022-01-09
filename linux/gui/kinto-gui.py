@@ -353,7 +353,7 @@ class MyWindow(Gtk.Window):
             self.queryConfig('cp '+os.environ['HOME']+'/.config/kinto/xkeysnail.desktop '+os.environ['HOME']+'/.config/autostart/xkeysnail.desktop')
         if self.options["systray"]:
             self.queryConfig('cp '+os.environ['HOME']+'/.config/kinto/kintotray.desktop '+os.environ['HOME']+'/.config/autostart/kintotray.desktop')
-            self.queryConfig("nohup python3 ~/.config/kinto/kintotray.py >/dev/null 2>&1 &")
+            self.queryConfig("nohup /usr/bin/python3 ~/.config/kinto/kintotray.py >/dev/null 2>&1 &")
             self.menuitem_systray.disconnect(self.menuitem_systray.signal_id)
             self.menuitem_systray.set_active(True)
             self.menuitem_systray.signal_id = self.menuitem_systray.connect('activate',self.checkTray,False)
@@ -616,7 +616,7 @@ class MyWindow(Gtk.Window):
         if tray_bool:
             Popen(['cp',os.environ['HOME']+'/.config/kinto/kintotray.desktop',os.environ['HOME']+'/.config/autostart/kintotray.desktop'])
             if not kintotray:
-                Popen([os.environ['HOME']+'/.config/kinto/kintotray.py'])
+                Popen(['/usr/bin/python3',os.environ['HOME']+'/.config/kinto/kintotray.py'])
             self.menuitem_systray.disconnect(self.menuitem_systray.signal_id)
             self.menuitem_systray.set_active(True)
             self.menuitem_systray.signal_id = self.menuitem_systray.connect('activate',self.checkTray,False)
