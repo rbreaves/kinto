@@ -606,10 +606,12 @@ define_keymap(re.compile(codeStr, re.IGNORECASE),{
     K("M-Shift-Left"): [K("M-F19"),K("C-Shift-Left")],      # Select Left of Word
     K("M-Shift-Right"): [K("M-F19"),K("C-Shift-Right")],    # Select Right of Word
 
-    # K("C-PAGE_DOWN"): pass_through_key,         # cancel next_view
-    # K("C-PAGE_UP"): pass_through_key,           # cancel prev_view
-    K("C-M-Left"): K("C-PAGE_UP"),              # next_view
-    K("C-M-Right"): K("C-PAGE_DOWN"),           # prev_view
+    # K("C-PAGE_DOWN"):         pass_through_key,             # cancel next_view
+    # K("C-PAGE_UP"):           pass_through_key,             # cancel prev_view
+    K("C-M-Left"):              K("C-PAGE_UP"),             # next_view
+    K("C-M-Right"):             K("C-PAGE_DOWN"),           # prev_view
+    K("RC-Shift-Left_Brace"):   K("C-PAGE_UP"),             # next_view
+    K("RC-Shift-Right_Brace"):  K("C-PAGE_DOWN"),           # prev_view
 
     # VS Code Shortcuts
     K("C-g"): pass_through_key,                 # cancel Go to Line...
