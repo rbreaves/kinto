@@ -412,6 +412,9 @@ define_keymap(re.compile(filemanagerStr, re.IGNORECASE),{
     K("RC-Super-o"):    K("RC-Shift-o"),        # Open in new window (or tab, depends on FM setup) [not universal]
     K("RC-Backspace"):  K("Delete"),	        # Move to Trash (delete)
     K("RC-D"):          [K("RC-C"),K("RC-V")],  # Mimic Finder's Duplicate command (Copy, then Paste)
+    K("Backspace"):     None,                   # Block Backspace key from performing any action (error in macOS)
+    K("Delete"):        None,                   # Block Delete key from performing any action (error in macOS)
+    K("RC-Delete"):     None,                   # Block Ctrl+Delete from performing any action (error in macOS)
     ###########################################################################################################
     ###  To enable renaming files with the Enter key, uncomment the two keymapping lines just below this.   ###
     ###  Use Ctrl+Shift+Enter to escape or activate text fields such as "[F]ind" and "[L]ocation" fields.   ###
