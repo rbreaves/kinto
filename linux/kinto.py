@@ -411,7 +411,7 @@ define_keymap(re.compile(filemanagerStr, re.IGNORECASE),{
     ###########################################################################################################
     K("RC-Super-o"):    K("RC-Shift-o"),        # Open in new window (or tab, depends on FM setup) [not universal]
     K("RC-Backspace"):  K("Delete"),	        # Move to Trash (delete)
-    K("RC-D"):          [K("RC-C"),K("RC-V")],  # Mimic Finder's Duplicate command (Copy, then Paste)
+    # K("RC-D"):          [K("RC-C"),K("RC-V")],  # Duplicate file/folder (Copy, then Paste) [conflicts with "Add Bookmark"]
     ###########################################################################################################
     ###  To enable renaming files with the Enter key, uncomment the two keymapping lines just below this.   ###
     ###  Use Ctrl+Shift+Enter to escape or activate text fields such as "[F]ind" and "[L]ocation" fields.   ###
