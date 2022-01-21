@@ -9,6 +9,7 @@ from xkeysnail.transform import *
 # xbindkeys -mk
 terminals = [
     "alacritty",
+    "cutefish-terminal",
     "deepin-terminal",
     "eterm",
     "gnome-terminal",
@@ -356,6 +357,7 @@ define_keymap(re.compile("thunar", re.IGNORECASE),{
 
 filemanagers = [
     "caja",
+    "cutefish-filemanager",
     "dde-file-manager",
     "dolphin",
     "io.elementary.files",
