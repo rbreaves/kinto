@@ -305,6 +305,7 @@ fi
 
 if [[ $distro == "elementaryos" ]]; then
 	gsettings set io.elementary.terminal.settings natural-copy-paste false
+	sudo ./linux/system-config/unipkg.sh libvte-2.91-dev
 fi
 
 if ! [ -x "$(command -v xhost)" ] || ! [ -x "$(command -v gcc)" ]; then
