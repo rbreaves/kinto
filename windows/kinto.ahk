@@ -215,6 +215,15 @@ GroupAdd, intellij, ahk_exe idea64.exe
 ; +F6::Send {LCtrl down}{LWin down}{right}{LCtrl up}{LWin up} ; Comment out on host machine
 
 #IfWinNotActive ahk_group remotes
+    ; Lock Workstation
+    #^q::DllCall("LockWorkStation")
+    ; Conflicts w/ Win-L so will use Ctrl-Shift-L as Ctrl-L replacement
+    ; Helpful for Sublime text lowercasing & VSCode
+    ^+l::Send ^{l}
+    ; Adds Task View to Ctrl-Cmd-Down
+    #^Down::
+        Run, "C:\Windows\explorer.exe" "shell:::{3080F90E-D7AD-11D9-BD98-0000947B0257}"
+        return
     ; wordwise support
     ^Up::Send ^{Home}
     ^+Up::Send ^+{Home}
