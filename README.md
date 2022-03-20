@@ -26,7 +26,7 @@ If you like or appreciate this project then please consider donating.
 |**Wishlists**|[Amazon](https://smile.amazon.com/hz/wishlist/ls/3EVXR21VFKD9Z?ref_=wl_share)|[Adafruit](https://www.adafruit.com/wishlists/515932)|[eBay](https://www.ebay.com/mye/myebay/WatchList?custom_list_id=636668138019)|
 |---|---|---|---|
 
-I have received some really great letters with donations & email, so I plan to make some of them public while redacting last names or anything I feel should remain private, and will be posting them on the frontpage of kinto.sh as I really do appreciate all of the support!
+I have received some really great letters with donations & email. I've also posted some of them with redacted first names to kinto.sh.
 
 Also if you would like to send me a keyboard directly then please reach out to me over [twitter](https://twitter.com/gbit86) and send me a DM.
 
