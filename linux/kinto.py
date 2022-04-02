@@ -87,6 +87,8 @@ chromes = [
 chromes = [chrome.casefold() for chrome in chromes]
 chromeStr = "|".join(str('^'+x+'$') for x in chromes)
 
+# Reference group-name-custom.yaml
+
 # edges = ["microsoft-edge-dev","microsoft-edge"]
 # edges = [edge.casefold() for edge in edges]
 # edgeStr = "|".join(str('^'+x+'$') for x in edges)
