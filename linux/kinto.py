@@ -69,6 +69,8 @@ browsers = [
     "Epiphany",
     "Firefox",
     "Firefox Developer Edition",
+    "Navigator",
+    "firefoxdeveloperedition",
     "Waterfox",
     "Google-chrome",
     "microsoft-edge",
