@@ -322,7 +322,7 @@ define_keymap(re.compile("Sublime_text"),{
 
 In the above example I am also showing that you can define a single shortcut to enact multiple shortcut keys if needed by defining an array of shortcuts to trigger.
 
-You can also make changes to the file in your /tmp/kinto/xkeysnail/kinto.py location and see them take affect in real time, but for your changes to be permanent you will need to make your changes in the ~/.config/kinto/kinto.py location & restart the xkeysnail service.
+To make changes you can edit ~/.config/kinto/kinto.py under linux & restart the xkeysnail service via the system tray, app or CLI.
 
 systemd
 ```
