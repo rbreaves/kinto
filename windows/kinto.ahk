@@ -858,3 +858,28 @@ Send {LWin up}
 Send {RShift up}
 Send {LShift up}
 return
+
+#IfWinNotActive ahk_group remotes
+    $!u::Goto, ActivateUmlautModifier
+    $!s::Send, ß
+
+    ActivateUmlautModifier:
+    StringCaseSense, On
+    ; watch next input string
+	Input, UserInput, L1 B
+    if UserInput = o
+        Send, ö
+    else if UserInput = O
+        Send, Ö
+    else if UserInput = a
+        Send, ä
+    else if UserInput = A
+        Send, Ä
+    else if UserInput = u
+        Send, ü
+    else if UserInput = U
+        Send, Ü
+    else
+        Send, %UserInput%
+    return
+#If
