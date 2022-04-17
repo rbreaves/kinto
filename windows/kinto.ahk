@@ -552,13 +552,16 @@ GroupAdd, intellij, ahk_exe idea64.exe
 
     ; Close all browsers
     #IfWinActive ahk_group browsers
-        ;Tab Navigation
-        ^+[::send ^{PgUp}
-        ^+]::send ^{PgDn}
-        ^!Left::send ^{PgUp}
-        ^!Right::send ^{PgDn}
-        #Left::send ^{PgUp}
-        #Right::send ^{PgDn}
+        ; Page Navigation
+        ^[::send !{Left}                ; Go to prior page
+        ^]::send !{Right}               ; Go to next page
+         ;Tab Navigation
+        ^+[::send ^{PgUp}               ; Go to prior tab (left)
+        ^+]::send ^{PgDn}               ; Go to next tab (right)
+        ^!Left::send ^{PgUp}            ; Go to prior tab (left)
+        ^!Right::send ^{PgDn}           ; Go to next tab (right)
+        #Left::send ^{PgUp}             ; Go to prior tab (left)
+        #Right::send ^{PgDn}            ; Go to next tab (right)
         ^q::send {Alt Down}f{Alt Up}x   ; exit all windows
         ; Dev Tools
         !^i::send {Ctrl Down}{Shift Down}i{Shift Up}{Ctrl Up}
