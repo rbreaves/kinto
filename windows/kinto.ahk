@@ -214,6 +214,58 @@ GroupAdd, intellij, ahk_exe idea64.exe
 ; +F8::Send {LCtrl down}{LWin down}{left}{LCtrl up}{LWin up}  ; Comment out on host machine
 ; +F6::Send {LCtrl down}{LWin down}{right}{LCtrl up}{LWin up} ; Comment out on host machine
 
+; #########################################################################
+; #############   START OF FINDER MODS FOR FILE MANAGERS   ################
+; #########################################################################
+; Finder Mods for Windows File Explorer (explore.exe)
+; #IfWinActive ahk_exe explorer.exe
+#IfWinActive ahk_class CabinetWClass ahk_exe explorer.exe
+    ^i::Send !{Enter}           ; Cmd+i: Get Info / Properties
+    ^r::Send {F5}               ; Cmd+R: Refresh view (Not actually a Finder shortcut? But works in Linux file browsers too.)
+    ^1::Send ^+2                ; Cmd+1: View as Icons
+    ^2::Send ^+6                ; Cmd+2: View as List (Detailed)
+    ^3::Send ^+5                ; Cmd+3: View as List (Compact)
+    ^4::Send ^+1                ; Cmd+4: View as Gallery
+    ^Up::Send !{Up}             ; Cmd+Up: Up to parent folder
+    ^Left::Send !{Left}         ; Cmd+Left: Go to prior location in history
+    ^Right::Send !{Right}       ; Cmd+Right: Go to next location in history
+    ^[::Send !{Left}            ; Cmd+Left_Brace: Go to prior location in history
+    ^]::Send !{Right}           ; Cmd+Right_Brace: Go to next location in history
+    ^+o::Send ^{Enter}          ; Cmd+Shift+o: Open in new window (tabs not available)
+    ^Delete::Send {Delete}      ; Cmd+Delete: Delete / Send to Trash
+    ^BackSpace::Send {Delete}   ; Cmd+Delete: Delete / Send to Trash
+    ^d::return,                 ; Block the unusual Explorer "delete" shortcut of Ctrl+D, used for "bookmark" elsewhere
+    ^Down:: ; CTRL-DOWN = Navigate into the selected directory
+    For window in ComObjCreate("Shell.Application").Windows
+        If WinActive() = window.hwnd
+            For item in window.document.SelectedItems {
+                window.Navigate(item.Path)
+                Return
+            }
+    Return
+    $Enter:: ; Use Enter key to rename (F2), unless focus is inside a text input field. 
+    ControlGetFocus, fc, A
+    If fc contains Edit,Search,Notify,Windows.UI.Core.CoreWindow1,SysTreeView321
+        Send {Enter}
+    Else Send {F2}
+    Return
+    $BackSpace:: ; Backspace (without Cmd): Block Backspace key with error beep, unless inside text input field
+    ControlGetFocus, fc, A
+    If fc contains Edit,Search,Notify,Windows.UI.Core.CoreWindow1
+        Send {BackSpace}
+    Else SoundBeep,
+    Return
+    $Delete:: ; Delete (without Cmd): Block Delete key with error beep, unless inside text input field
+    ControlGetFocus, fc, A
+    If fc contains Edit,Search,Notify,Windows.UI.Core.CoreWindow1
+        Send {Delete}
+    Else SoundBeep,
+    Return
+#IfWinActive
+; #########################################################################
+; ##############   END OF FINDER MODS FOR FILE MANAGERS   #################
+; #########################################################################
+
 #IfWinNotActive ahk_group remotes
     ; wordwise support
     ^Up::Send ^{Home}
