@@ -252,13 +252,13 @@ GroupAdd, intellij, ahk_exe idea64.exe
     ControlGetFocus, fc, A
     If fc contains Edit,Search,Notify,Windows.UI.Core.CoreWindow1
         Send {BackSpace}
-    Else SoundBeep,
+    Else SoundBeep, 600, 300
     Return
     $Delete:: 			; Delete (without Cmd): Block Delete key with error beep, unless inside text input field
     ControlGetFocus, fc, A
     If fc contains Edit,Search,Notify,Windows.UI.Core.CoreWindow1
         Send {Delete}
-    Else SoundBeep,
+    Else SoundBeep, 600, 300
     Return
 #IfWinActive
 ; #########################################################################
