@@ -497,6 +497,12 @@ define_keymap(lambda wm_class: wm_class.casefold() not in terminals,{
     K("RC-Dot"): K("Esc"),                        # Mimic macOS Cmd+dot = Escape key (not in terminals)
 })
 
+# Special overrides for terminals for shortcuts that conflict with General GUI block below.
+define_keymap(re.compile(termStr, re.IGNORECASE),{
+    K("RC-Shift-Left"):         K("C-Page_Up"),     # Go to prior tab (Left)
+    K("RC-Shift-Right"):        K("C-Page_Down"),   # Go to next tab (Right)
+},"Special overrides for terminals")
+
 # None referenced here originally
 # - but remote clients and VM software ought to be set here
 # These are the typical remaps for ALL GUI based apps
