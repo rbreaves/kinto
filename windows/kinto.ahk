@@ -234,6 +234,27 @@ GroupAdd, intellij, ahk_exe idea64.exe
 
 #IfWinNotActive ahk_group remotes
 
+    ; Switch within the windows of a single application with Cmd+Grave (backtick)
+    switch()
+    {
+        SetTitleMatchMode, 2
+        DetectHiddenWindows, % "off"
+        winId := WinExist("A")
+        WinGetClass, winClass, % "ahk_id " . winId
+        WinGet, winExe, ProcessName, % "ahk_id " . winId
+        title := "ahk_class " . winClass . " ahk_exe " . winExe
+        WinGet, Instances, Count, % title
+        If ( Instances > 1 )
+        {
+            WinSet, Bottom,, % "ahk_id " . winId
+            WinActivate, % title
+        }
+    }
+
+    ^SC029::
+        switch()
+    Return
+
     ; New AltTab and CtrlTab fix
     *tab:: 
     {
