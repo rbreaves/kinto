@@ -438,9 +438,15 @@ define_keymap(re.compile("Firefox", re.IGNORECASE),{
     ],
     K("RC-Shift-N"):    K("RC-Shift-P"),        # Open private window with Ctrl+Shift+N like other browsers
 })
+
 define_keymap(re.compile(chromeStr, re.IGNORECASE),{
-    K("C-comma"): [K("M-e"), K("s"),K("Enter")],
-}, "Browsers")
+    K("C-comma"): [K("M-e"), K("s"),K("Enter")],    # Open preferences
+    K("RC-q"):              K("M-F4"),              # Quit Chrome(s) browsers with Cmd+Q
+    # K("RC-Left"):           K("M-Left"),            # Page nav: Back to prior page in history (conflict with wordwise)
+    # K("RC-Right"):          K("M-Right"),           # Page nav: Forward to next page in history (conflict with wordwise)
+    K("RC-Left_Brace"):     K("M-Left"),            # Page nav: Back to prior page in history
+    K("RC-Right_Brace"):    K("M-Right"),           # Page nav: Forward to next page in history
+}, "Chrome Browsers")
 # Opera C-F12
 
 # Keybindings for General Web Browsers
