@@ -385,10 +385,10 @@ fi
 if ! [ -x "$(command -v python3-config)" ]; then
 	if [ "$distro" == "ubuntu" ] || [ "${distro::6}" == "debian" ] || [ "$distro" == 'linuxmint' ]; then
 		pydev="python3-dev"
-	elif [ "$distro" == "fedora" ]; then
+	elif [ "$distro" == "fedora" ] || [ "$distro" == "fedoralinux" ]; then
 		pydev="python3-devel"
 	fi
-	if [ "$distro" == "gnome" ] || [ "$distro" == "fedora" ] || [ "${distro::6}" == "debian" ] || [ "$distro" == 'linuxmint' ]; then
+	if [ "$distro" == "gnome" ] || [ "$distro" == "fedora" ] || [ "$distro" == "fedoralinux" ] || [ "${distro::6}" == "debian" ] || [ "$distro" == 'linuxmint' ] ; then
 		echo "Will need to install $pydev..."
 		sudo ./linux/system-config/unipkg.sh "$pydev"
 	fi
