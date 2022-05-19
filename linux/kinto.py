@@ -75,6 +75,7 @@ browsers = [
     "Google-chrome",
     "microsoft-edge",
     "microsoft-edge-dev",
+    "org.deepin.browser",
 ]
 browsers = [browser.casefold() for browser in browsers]
 browserStr = "|".join(str('^'+x+'$') for x in browsers)
@@ -85,6 +86,7 @@ chromes = [
     "Google-chrome",
     "microsoft-edge",
     "microsoft-edge-dev",
+    "org.deepin.browser",
 ]
 chromes = [chrome.casefold() for chrome in chromes]
 chromeStr = "|".join(str('^'+x+'$') for x in chromes)
