@@ -737,6 +737,15 @@ define_keymap(re.compile("Io.elementary.terminal|kitty", re.IGNORECASE),{
 
 }, "Elementary Terminal tab switching")
 
+define_keymap(re.compile("deepin-terminal", re.IGNORECASE),{
+    K("RC-w"):                  K("M-w"),           # Close only current tab, instead of all other tabs
+    K("RC-j"):                  None,               # Block Cmd+J from remapping to vertical split (Ctrl+Shift+J) 
+    K("RC-Shift-Left_Brace"):   K("C-Tab"),         # Tab nav: Go to prior tab (left)
+    K("RC-Shift-Right_Brace"):  K("C-Shift-Tab"),   # Tab nav: Go to next tab (right)
+    K("RC-minus"):              K("C-minus"),       # Decrease font size/zoom out 
+    K("RC-equal"):              K("C-equal"),       # Increase font size/zoom in
+},"Deepin Terminal fixes")
+
 define_keymap(re.compile(termStr, re.IGNORECASE),{
     K("LC-RC-f"): K("M-F10"),                       # Toggle window maximized state
     # K("RC-Grave"): K("Super-Tab"),                # xfce4 Switch within app group
