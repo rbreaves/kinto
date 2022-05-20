@@ -518,7 +518,8 @@ define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
     # K("Super-Right"):K("C-M-Right"),              # Default SL - Change workspace (budgie)
     # K("Super-Left"):K("C-M-Left"),                # Default SL - Change workspace (budgie)
     K("RC-Q"): K("M-F4"),                         # Default SL - not-popos
-    K("RC-H"):K("Super-h"),                       # Default SL - Minimize app (gnome/budgie/popos/fedora)
+    K("RC-H"):K("Super-h"),                       # Default SL - Minimize app (gnome/budgie/popos/fedora) not-deepin
+    # K("RC-H"):K("Super-n"),                       # Default SL - Minimize app (deepin)
     K("M-Tab"): pass_through_key,                 # Default - Cmd Tab - App Switching Default
     K("RC-Tab"): K("M-Tab"),                      # Default - Cmd Tab - App Switching Default
     K("RC-Shift-Tab"): K("M-Shift-Tab"),          # Default - Cmd Tab - App Switching Default
@@ -561,7 +562,8 @@ define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
     K("Super-k"): [K("Shift-End"), K("Backspace")],
     K("Super-d"): K("Delete"),
 
-    # K("M-RC-Space"): K(""),                       # Open Finder - Placeholder
+    # K("M-RC-Space"): K(""),                       # Open Finder - Placeholder not-deepin
+    # K("M-RC-Space"): K("Super-e"),                # Open Finder - Placeholder (deepin)
 
     # Wordwise
     K("RC-Left"): K("Home"),                      # Beginning of Line
