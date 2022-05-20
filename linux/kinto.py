@@ -18,9 +18,11 @@ terminals = [
     "io.elementary.terminal",
     "kinto-gui.py",
     "kitty",
+    "Kgx",                      # GNOME Console terminal app
     "konsole",
     "lxterminal",
     "mate-terminal",
+    "org.gnome.Console",
     "qterminal",
     "st",
     "sakura",
