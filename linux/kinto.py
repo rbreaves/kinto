@@ -507,10 +507,32 @@ define_keymap(lambda wm_class: wm_class.casefold() not in terminals,{
     K("RC-Dot"): K("Esc"),                        # Mimic macOS Cmd+dot = Escape key (not in terminals)
 })
 
+# Tab navigation overrides for apps that use Ctrl+Shift+Tab/Ctrl+Tab instead of Ctrl+PgUp/PgDn
+define_keymap(re.compile("org.gnome.Console|Kgx|deepin-terminal|Angry*IP*Scanner|jDownloader", re.IGNORECASE),{
+    ### Tab navigation
+    K("RC-Shift-Left_Brace"):   K("C-Shift-Tab"),       # Tab nav: Go to prior tab (left)
+    K("RC-Shift-Right_Brace"):  K("C-Tab"),             # Tab nav: Go to next tab (right)
+    K("RC-Shift-Left"):         K("C-Shift-Tab"),       # Tab nav: Go to prior tab (left)
+    K("RC-Shift-Right"):        K("C-Tab"),             # Tab nav: Go to next tab (right)
+},"Tab Navigation for apps that want Ctrl+Shift+Tab/Ctrl+Tab")
+
+# Special overrides for terminals for shortcuts that conflict with General GUI block below.
+define_keymap(re.compile(termStr, re.IGNORECASE),{
+    K("M-Backspace"):           K("M-Shift-Backspace"), # Wordwise delete word left of cursor in terminals
+    K("M-Delete"):              [K("Esc"),K("d")],      # Wordwise delete word right of cursor in terminals
+    K("RC-Backspace"):          K("C-u"),               # Wordwise delete line left of cursor in terminals
+    K("RC-Delete"):             K("C-k"),               # Wordwise delete line right of cursor in terminals
+    ### Tab navigation
+    K("RC-Shift-Left"):         K("C-Page_Up"),         # Tab nav: Go to prior tab (Left)
+    K("RC-Shift-Right"):        K("C-Page_Down"),       # Tab nav: Go to next tab (Right)
+},"Special overrides for terminals")
+
 # None referenced here originally
 # - but remote clients and VM software ought to be set here
 # These are the typical remaps for ALL GUI based apps
 define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
+    K("RC-Shift-Left_Brace"):   K("C-Page_Up"),         # Tab nav: Go to prior (left) tab
+    K("RC-Shift-Right_Brace"):  K("C-Page_Down"),       # Tab nav: Go to next (right) tab
     K("RC-Space"): K("Alt-F1"),                   # Default SL - Launch Application Menu (gnome/kde)
     K("RC-F3"):K("Super-d"),                      # Default SL - Show Desktop (gnome/kde,eos)
     K("RC-Super-f"):K("M-F10"),                   # Default SL - Maximize app (gnome/kde)
@@ -740,8 +762,6 @@ define_keymap(re.compile("Io.elementary.terminal|kitty", re.IGNORECASE),{
 define_keymap(re.compile("deepin-terminal", re.IGNORECASE),{
     K("RC-w"):                  K("M-w"),           # Close only current tab, instead of all other tabs
     K("RC-j"):                  None,               # Block Cmd+J from remapping to vertical split (Ctrl+Shift+J) 
-    K("RC-Shift-Left_Brace"):   K("C-Tab"),         # Tab nav: Go to prior tab (left)
-    K("RC-Shift-Right_Brace"):  K("C-Shift-Tab"),   # Tab nav: Go to next tab (right)
     K("RC-minus"):              K("C-minus"),       # Decrease font size/zoom out 
     K("RC-equal"):              K("C-equal"),       # Increase font size/zoom in
 },"Deepin Terminal fixes")
