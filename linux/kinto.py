@@ -444,7 +444,7 @@ define_keymap(re.compile("Firefox", re.IGNORECASE),{
 })
 
 define_keymap(re.compile(chromeStr, re.IGNORECASE),{
-    K("C-comma"): [K("M-e"), K("s"),K("Enter")],    # Open preferences
+    K("C-comma"): [K("M-e"), sleep(10/1000), K("s"),K("Enter")],    # Open preferences
     K("RC-q"):              K("M-F4"),              # Quit Chrome(s) browsers with Cmd+Q
     # K("RC-Left"):           K("M-Left"),            # Page nav: Back to prior page in history (conflict with wordwise)
     # K("RC-Right"):          K("M-Right"),           # Page nav: Forward to next page in history (conflict with wordwise)
