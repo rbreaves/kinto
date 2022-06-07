@@ -441,7 +441,7 @@ define_keymap(re.compile("Firefox", re.IGNORECASE),{
         K("e"),K("r"),K("e"),K("n"),K("c"),K("e"),K("s"),K("Enter")
     ],
     K("RC-Shift-N"):    K("RC-Shift-P"),        # Open private window with Ctrl+Shift+N like other browsers
-})
+}. "Firefox")
 
 define_keymap(re.compile(chromeStr, re.IGNORECASE),{
     K("C-comma"): [K("M-e"), K("s"),K("Enter")],    # Open preferences
