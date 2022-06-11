@@ -769,6 +769,10 @@ define_keymap(re.compile("deepin-terminal", re.IGNORECASE),{
     K("RC-equal"):              K("C-equal"),       # Increase font size/zoom in
 },"Deepin Terminal fixes")
 
+define_keymap(re.compile("alacritty", re.IGNORECASE),{
+    K("RC-K"): K("C-L"),                            # clear log
+})
+
 define_keymap(re.compile(termStr, re.IGNORECASE),{
     K("LC-RC-f"): K("M-F10"),                       # Toggle window maximized state
     # K("RC-Grave"): K("Super-Tab"),                # xfce4 Switch within app group
