@@ -4,6 +4,10 @@
 import re
 from xkeysnail.transform import *
 
+# a tiny No-OP command for ignoring key combos
+# that we do not wish to register
+ignore_key = NONE
+
 # Use the following for testing terminal keymaps
 # terminals = [ "", ... ]
 # xbindkeys -mk
@@ -544,7 +548,7 @@ define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
     # K("Super-Left"):K("C-M-Left"),                # Default SL - Change workspace (budgie)
     K("RC-Q"): K("M-F4"),                         # Default SL - not-popos
     K("RC-H"):K("Super-h"),                       # Default SL - Minimize app (gnome/budgie/popos/fedora)
-    K("M-Tab"): pass_through_key,                 # Default - Cmd Tab - App Switching Default
+    K("M-Tab"): ignore_key,                 # Default - Cmd Tab - App Switching Default
     K("RC-Tab"): K("M-Tab"),                      # Default - Cmd Tab - App Switching Default
     K("RC-Shift-Tab"): K("M-Shift-Tab"),          # Default - Cmd Tab - App Switching Default
     K("RC-Grave"): K("M-Grave"),                  # Default not-xfce4 - Cmd ` - Same App Switching
@@ -608,7 +612,7 @@ define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
     K("M-Backspace"): K("C-Backspace"),           # Default not-chromebook
     K("RC-Backspace"): K("C-Shift-Backspace"),    # Delete Entire Line Left of Cursor
     K("Alt-Delete"): K("C-Delete"),               # Delete Right Word of Cursor
-    # K(""): pass_through_key,                      # cancel
+    # K(""): ignore_key,                      # cancel
     # K(""): K(""),                                 #
 }, "General GUI")
 
@@ -645,24 +649,24 @@ define_keymap(re.compile(codeStr, re.IGNORECASE),{
     K("M-Shift-Left"): [K("M-F19"),K("C-Shift-Left")],      # Select Left of Word
     K("M-Shift-Right"): [K("M-F19"),K("C-Shift-Right")],    # Select Right of Word
 
-    # K("C-PAGE_DOWN"):         pass_through_key,             # cancel next_view
-    # K("C-PAGE_UP"):           pass_through_key,             # cancel prev_view
+    # K("C-PAGE_DOWN"):         ignore_key,             # cancel next_view
+    # K("C-PAGE_UP"):           ignore_key,             # cancel prev_view
     K("C-M-Left"):              K("C-PAGE_UP"),             # next_view
     K("C-M-Right"):             K("C-PAGE_DOWN"),           # prev_view
     K("RC-Shift-Left_Brace"):   K("C-PAGE_UP"),             # next_view
     K("RC-Shift-Right_Brace"):  K("C-PAGE_DOWN"),           # prev_view
 
     # VS Code Shortcuts
-    K("C-g"): pass_through_key,                 # cancel Go to Line...
+    K("C-g"): ignore_key,                 # cancel Go to Line...
     K("Super-g"): K("C-g"),                     # Go to Line...
-    K("F3"): pass_through_key,                  # cancel Find next
-    K("C-h"): pass_through_key,                 # cancel replace
+    K("F3"): ignore_key,                  # cancel Find next
+    K("C-h"): ignore_key,                 # cancel replace
     K("C-M-f"): K("C-h"),                       # replace
-    K("C-Shift-h"): pass_through_key,           # cancel replace_next
+    K("C-Shift-h"): ignore_key,           # cancel replace_next
     K("C-M-e"): K("C-Shift-h"),                 # replace_next
-    K("f3"): pass_through_key,                  # cancel find_next
+    K("f3"): ignore_key,                  # cancel find_next
     K("C-g"): K("f3"),                          # find_next
-    K("Shift-f3"): pass_through_key,            # cancel find_prev
+    K("Shift-f3"): ignore_key,            # cancel find_prev
     K("C-Shift-g"): K("Shift-f3"),              # find_prev
     # K("Super-c"): K("LC-c"),                    # Default - Terminal - Sigint
     # K("Super-x"): K("LC-x"),                    # Default - Terminal - Exit nano
@@ -672,7 +676,7 @@ define_keymap(re.compile(codeStr, re.IGNORECASE),{
     # K("C-M-g"): K("C-f2"),                      # Chromebook/IBM - Sublime - find_all_under
     # K("Super-Shift-up"): K("M-Shift-up"),       # multi-cursor up - Sublime
     # K("Super-Shift-down"): K("M-Shift-down"),   # multi-cursor down - Sublime
-    # K(""): pass_through_key,                    # cancel
+    # K(""): ignore_key,                    # cancel
     # K(""): K(""),                               #
 }, "Code")
 
@@ -686,63 +690,63 @@ define_keymap(re.compile(sublimeStr, re.IGNORECASE),{
     K("C-Super-up"): K("M-o"),                  # Switch file
     K("Super-RC-f"): K("f11"),                  # toggle_full_screen
     K("C-M-v"): [K("C-k"), K("C-v")],           # paste_from_history
-    K("C-up"): pass_through_key,                # cancel scroll_lines up
+    K("C-up"): ignore_key,                # cancel scroll_lines up
     K("C-M-up"): K("C-up"),                     # scroll_lines up
-    K("C-down"): pass_through_key,              # cancel scroll_lines down
+    K("C-down"): ignore_key,              # cancel scroll_lines down
     K("C-M-down"): K("C-down"),                 # scroll_lines down
     K("Super-Shift-up"): K("M-Shift-up"),       # multi-cursor up
     K("Super-Shift-down"): K("M-Shift-down"),   # multi-cursor down
-    K("C-PAGE_DOWN"): pass_through_key,         # cancel next_view
-    K("C-PAGE_UP"): pass_through_key,           # cancel prev_view
+    K("C-PAGE_DOWN"): ignore_key,         # cancel next_view
+    K("C-PAGE_UP"): ignore_key,           # cancel prev_view
     K("C-Shift-left_brace"): K("C-PAGE_DOWN"),  # next_view
     K("C-Shift-right_brace"): K("C-PAGE_UP"),   # prev_view
     K("C-M-right"): K("C-PAGE_DOWN"),           # next_view
     K("C-M-left"): K("C-PAGE_UP"),              # prev_view
-    K("insert"): pass_through_key,              # cancel toggle_overwrite
+    K("insert"): ignore_key,              # cancel toggle_overwrite
     K("C-M-o"): K("insert"),                    # toggle_overwrite
-    K("M-c"): pass_through_key,                 # cancel toggle_case_sensitive
+    K("M-c"): ignore_key,                 # cancel toggle_case_sensitive
     K("C-M-c"): K("M-c"),                       # toggle_case_sensitive
-    K("C-h"): pass_through_key,                 # cancel replace
+    K("C-h"): ignore_key,                 # cancel replace
     K("C-M-f"): K("C-h"),                       # replace
-    K("C-Shift-h"): pass_through_key,           # cancel replace_next
+    K("C-Shift-h"): ignore_key,           # cancel replace_next
     K("C-M-e"): K("C-Shift-h"),                 # replace_next
-    K("f3"): pass_through_key,                  # cancel find_next
+    K("f3"): ignore_key,                  # cancel find_next
     K("C-g"): K("f3"),                          # find_next
-    K("Shift-f3"): pass_through_key,            # cancel find_prev
+    K("Shift-f3"): ignore_key,            # cancel find_prev
     K("C-Shift-g"): K("Shift-f3"),              # find_prev
-    K("C-f3"): pass_through_key,                # cancel find_under
+    K("C-f3"): ignore_key,                # cancel find_under
     K("Super-M-g"): K("C-f3"),                  # find_under
-    K("C-Shift-f3"): pass_through_key,          # cancel find_under_prev
+    K("C-Shift-f3"): ignore_key,          # cancel find_under_prev
     K("Super-M-Shift-g"): K("C-Shift-f3"),      # find_under_prev
-    K("M-f3"): pass_through_key,                # Default - cancel find_all_under
-    # K("M-Refresh"): pass_through_key,           # Chromebook/IBM - cancel find_all_under
+    K("M-f3"): ignore_key,                # Default - cancel find_all_under
+    # K("M-Refresh"): ignore_key,           # Chromebook/IBM - cancel find_all_under
     # K("M-C-g"): K("M-Refresh"),                 # Chromebook/IBM - find_all_under
     K("Super-C-g"): K("M-f3"),                  # Default - find_all_under
-    K("C-Shift-up"): pass_through_key,          # cancel swap_line_up
+    K("C-Shift-up"): ignore_key,          # cancel swap_line_up
     K("Super-M-up"): K("C-Shift-up"),           # swap_line_up
-    K("C-Shift-down"): pass_through_key,        # cancel swap_line_down
+    K("C-Shift-down"): ignore_key,        # cancel swap_line_down
     K("Super-M-down"): K("C-Shift-down"),       # swap_line_down
-    K("C-Pause"): pass_through_key,             # cancel cancel_build
+    K("C-Pause"): ignore_key,             # cancel cancel_build
     K("Super-c"): K("C-Pause"),                 # cancel_build
-    K("f9"): pass_through_key,                  # cancel sort_lines case_s false
+    K("f9"): ignore_key,                  # cancel sort_lines case_s false
     K("f5"): K("f9"),                           # sort_lines case_s false
-    K("Super-f9"): pass_through_key,            # cancel sort_lines case_s true
+    K("Super-f9"): ignore_key,            # cancel sort_lines case_s true
     K("Super-f5"): K("Super-f9"),               # sort_lines case_s true
-    K("M-Shift-Key_1"): pass_through_key,       # cancel set_layout
+    K("M-Shift-Key_1"): ignore_key,       # cancel set_layout
     K("C-M-Key_1"): K("M-Shift-Key_1"),         # set_layout
-    K("M-Shift-Key_2"): pass_through_key,       # cancel set_layout
+    K("M-Shift-Key_2"): ignore_key,       # cancel set_layout
     K("C-M-Key_2"): K("M-Shift-Key_2"),         # set_layout
-    K("M-Shift-Key_3"): pass_through_key,       # cancel set_layout
+    K("M-Shift-Key_3"): ignore_key,       # cancel set_layout
     K("C-M-Key_3"): K("M-Shift-Key_3"),         # set_layout
-    K("M-Shift-Key_4"): pass_through_key,       # cancel set_layout
+    K("M-Shift-Key_4"): ignore_key,       # cancel set_layout
     K("C-M-Key_4"): K("M-Shift-Key_4"),         # set_layout
-    K("M-Shift-Key_8"): pass_through_key,       # cancel set_layout
+    K("M-Shift-Key_8"): ignore_key,       # cancel set_layout
     K("C-M-Shift-Key_2"): K("M-Shift-Key_8"),   # set_layout
-    K("M-Shift-Key_9"): pass_through_key,       # cancel set_layout
+    K("M-Shift-Key_9"): ignore_key,       # cancel set_layout
     K("C-M-Shift-Key_3"): K("M-Shift-Key_9"),   # set_layout
-    K("M-Shift-Key_5"): pass_through_key,       # cancel set_layout
+    K("M-Shift-Key_5"): ignore_key,       # cancel set_layout
     K("C-M-Shift-Key_5"): K("M-Shift-Key_5"),   # set_layout
-    # K(""): pass_through_key,                    # cancel
+    # K(""): ignore_key,                    # cancel
     # K(""): K(""),                               #
 }, "Sublime Text")
 
@@ -787,7 +791,7 @@ define_keymap(re.compile(termStr, re.IGNORECASE),{
     K("LC-Tab") : K("LC-PAGE_DOWN"),
     K("LC-Shift-Tab") : K("LC-PAGE_UP"),
     K("LC-Grave") : K("LC-PAGE_UP"),
-    # K("M-Tab"): pass_through_key,                 # Default - Cmd Tab - App Switching Default
+    # K("M-Tab"): ignore_key,                       # Default - Cmd Tab - App Switching Default
     # K("RC-Tab"): K("M-Tab"),                      # Default - Cmd Tab - App Switching Default
     # K("RC-Shift-Tab"): K("M-Shift-Tab"),          # Default - Cmd Tab - App Switching Default
     # Converts Cmd to use Ctrl-Shift
