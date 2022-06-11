@@ -530,87 +530,6 @@ define_keymap(re.compile(termStr, re.IGNORECASE),{
     K("RC-Shift-Right"):        K("C-Page_Down"),       # Tab nav: Go to next tab (Right)
 },"Special overrides for terminals")
 
-# None referenced here originally
-# - but remote clients and VM software ought to be set here
-# These are the typical remaps for ALL GUI based apps
-define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
-    K("RC-Shift-Left_Brace"):   K("C-Page_Up"),         # Tab nav: Go to prior (left) tab
-    K("RC-Shift-Right_Brace"):  K("C-Page_Down"),       # Tab nav: Go to next (right) tab
-    K("RC-Space"): K("Alt-F1"),                   # Default SL - Launch Application Menu (gnome/kde)
-    K("RC-F3"):K("Super-d"),                      # Default SL - Show Desktop (gnome/kde,eos)
-    K("RC-Super-f"):K("M-F10"),                   # Default SL - Maximize app (gnome/kde)
-    # K("RC-Super-f"): K("Super-Page_Up"),          # SL - Toggle maximized window state (kde_neon)
-    # K("Super-Right"):K("C-M-Right"),              # Default SL - Change workspace (budgie)
-    # K("Super-Left"):K("C-M-Left"),                # Default SL - Change workspace (budgie)
-    K("RC-Q"): K("M-F4"),                         # Default SL - not-popos
-    K("RC-H"):K("Super-h"),                       # Default SL - Minimize app (gnome/budgie/popos/fedora)
-    K("M-Tab"): pass_through_key,                 # Default - Cmd Tab - App Switching Default
-    K("RC-Tab"): K("M-Tab"),                      # Default - Cmd Tab - App Switching Default
-    K("RC-Shift-Tab"): K("M-Shift-Tab"),          # Default - Cmd Tab - App Switching Default
-    K("RC-Grave"): K("M-Grave"),                  # Default not-xfce4 - Cmd ` - Same App Switching
-    K("RC-Shift-Grave"): K("M-Shift-Grave"),      # Default not-xfce4 - Cmd ` - Same App Switching
-    # K("RC-Grave"): K("Super-Tab"),                # xfce4 Switch within app group
-    # K("RC-Shift-Grave"): K("Super-Shift-Tab"),    # xfce4 Switch within app group
-    # K("Super-Right"):K("Super-Page_Up"),          # SL - Change workspace (ubuntu/fedora)
-    # K("Super-Left"):K("Super-Page_Down"),         # SL - Change workspace (ubuntu/fedora)
-    # K("Super-Right"):K("Super-C-Up"),             # SL - Change workspace (popos)
-    # K("Super-Left"):K("Super-C-Down"),            # SL - Change workspace (popos)
-    # K("RC-Q"):K("Super-q"),                       # SL - Close Apps (popos)
-    # K("RC-Space"): K("Super-Space"),              # SL - Launch Application Menu (eos)
-    # K("RC-H"): K("Super-Page_Down"),              # SL - Minimize app (kde_neon)
-                                                  # SL - Default SL - Change workspace (kde_neon)
-    # K("RC-Space"): K("LC-Esc"),                   # SL- Launch Application Menu xfce4
-    # K("RC-F3"):K("C-M-d"),                        # SL- Show Desktop xfce4
-    # K("RC-LC-f"):K("Super-Up"),                   # SL- Maximize app eos
-    # K("RC-LC-f"):K("Super-PAGE_UP"),              # SL- Maximize app manjaro
-    # Basic App hotkey functions
-    # K("RC-H"):K("M-F9"),                          # SL - Minimize app xfce4
-    # K("RC-LC-f"):K("Super-PAGE_DOWN"),            # SL - Minimize app manjaro
-    # In-App Tab switching
-    # K("M-Tab"): K("C-Tab"),                       # Chromebook/IBM - In-App Tab switching
-    # K("M-Shift-Tab"): K("C-Shift-Tab"),           # Chromebook/IBM - In-App Tab switching
-    # K("M-Grave") : K("C-Shift-Tab"),              # Chromebook/IBM - In-App Tab switching
-    K("Super-Tab"): K("LC-Tab"),                  # Default not-chromebook
-    K("Super-Shift-Tab"): K("LC-Shift-Tab"),      # Default not-chromebook
-
-    # Fn to Alt style remaps
-    K("RM-Enter"): K("insert"),                   # Insert
-
-    # emacs style
-    K("Super-a"): K("Home"),                      # Beginning of Line
-    K("Super-e"): K("End"),                       # End of Line
-    K("Super-b"): K("Left"),
-    K("Super-f"): K("Right"),
-    K("Super-n"): K("Down"),
-    K("Super-p"): K("Up"),
-    K("Super-k"): [K("Shift-End"), K("Backspace")],
-    K("Super-d"): K("Delete"),
-
-    # K("M-RC-Space"): K(""),                       # Open Finder - Placeholder
-
-    # Wordwise
-    K("RC-Left"): K("Home"),                      # Beginning of Line
-    K("RC-Shift-Left"): K("Shift-Home"),          # Select all to Beginning of Line
-    K("RC-Right"): K("End"),                      # End of Line
-    K("RC-Shift-Right"): K("Shift-End"),          # Select all to End of Line
-    # K("RC-Left"): K("C-LEFT_BRACE"),              # Firefox-nw - Back
-    # K("RC-Right"): K("C-RIGHT_BRACE"),            # Firefox-nw - Forward
-    # K("RC-Left"): K("M-LEFT"),                    # Chrome-nw - Back
-    # K("RC-Right"): K("M-RIGHT"),                  # Chrome-nw - Forward
-    K("RC-Up"): K("C-Home"),                      # Beginning of File
-    K("RC-Shift-Up"): K("C-Shift-Home"),          # Select all to Beginning of File
-    K("RC-Down"): K("C-End"),                     # End of File
-    K("RC-Shift-Down"): K("C-Shift-End"),         # Select all to End of File
-    # K("RM-Backspace"): K("Delete"),               # Chromebook/IBM - Delete
-    K("Super-Backspace"): K("C-Backspace"),       # Delete Left Word of Cursor
-    K("Super-Delete"): K("C-Delete"),             # Delete Right Word of Cursor
-    # K("LM-Backspace"): K("C-Backspace"),          # Chromebook/IBM - Delete Left Word of Cursor
-    K("M-Backspace"): K("C-Backspace"),           # Default not-chromebook
-    K("RC-Backspace"): K("C-Shift-Backspace"),    # Delete Entire Line Left of Cursor
-    K("Alt-Delete"): K("C-Delete"),               # Delete Right Word of Cursor
-    # K(""): pass_through_key,                      # cancel
-    # K(""): K(""),                                 #
-}, "General GUI")
 
 define_keymap(lambda wm_class: wm_class.casefold() not in mscodes,{
     # Wordwise remaining - for Everything but VS Code
@@ -831,3 +750,85 @@ define_keymap(re.compile(termStr, re.IGNORECASE),{
     K("RC-SLASH"): K("C-Shift-SLASH"),
     K("RC-KPASTERISK"): K("C-Shift-KPASTERISK"),
 }, "terminals")
+
+# None referenced here originally
+# - but remote clients and VM software ought to be set here
+# These are the typical remaps for ALL GUI based apps
+define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
+    K("RC-Shift-Left_Brace"):   K("C-Page_Up"),         # Tab nav: Go to prior (left) tab
+    K("RC-Shift-Right_Brace"):  K("C-Page_Down"),       # Tab nav: Go to next (right) tab
+    K("RC-Space"): K("Alt-F1"),                   # Default SL - Launch Application Menu (gnome/kde)
+    K("RC-F3"):K("Super-d"),                      # Default SL - Show Desktop (gnome/kde,eos)
+    K("RC-Super-f"):K("M-F10"),                   # Default SL - Maximize app (gnome/kde)
+    # K("RC-Super-f"): K("Super-Page_Up"),          # SL - Toggle maximized window state (kde_neon)
+    # K("Super-Right"):K("C-M-Right"),              # Default SL - Change workspace (budgie)
+    # K("Super-Left"):K("C-M-Left"),                # Default SL - Change workspace (budgie)
+    K("RC-Q"): K("M-F4"),                         # Default SL - not-popos
+    K("RC-H"):K("Super-h"),                       # Default SL - Minimize app (gnome/budgie/popos/fedora)
+    K("M-Tab"): pass_through_key,                 # Default - Cmd Tab - App Switching Default
+    K("RC-Tab"): K("M-Tab"),                      # Default - Cmd Tab - App Switching Default
+    K("RC-Shift-Tab"): K("M-Shift-Tab"),          # Default - Cmd Tab - App Switching Default
+    K("RC-Grave"): K("M-Grave"),                  # Default not-xfce4 - Cmd ` - Same App Switching
+    K("RC-Shift-Grave"): K("M-Shift-Grave"),      # Default not-xfce4 - Cmd ` - Same App Switching
+    # K("RC-Grave"): K("Super-Tab"),                # xfce4 Switch within app group
+    # K("RC-Shift-Grave"): K("Super-Shift-Tab"),    # xfce4 Switch within app group
+    # K("Super-Right"):K("Super-Page_Up"),          # SL - Change workspace (ubuntu/fedora)
+    # K("Super-Left"):K("Super-Page_Down"),         # SL - Change workspace (ubuntu/fedora)
+    # K("Super-Right"):K("Super-C-Up"),             # SL - Change workspace (popos)
+    # K("Super-Left"):K("Super-C-Down"),            # SL - Change workspace (popos)
+    # K("RC-Q"):K("Super-q"),                       # SL - Close Apps (popos)
+    # K("RC-Space"): K("Super-Space"),              # SL - Launch Application Menu (eos)
+    # K("RC-H"): K("Super-Page_Down"),              # SL - Minimize app (kde_neon)
+                                                  # SL - Default SL - Change workspace (kde_neon)
+    # K("RC-Space"): K("LC-Esc"),                   # SL- Launch Application Menu xfce4
+    # K("RC-F3"):K("C-M-d"),                        # SL- Show Desktop xfce4
+    # K("RC-LC-f"):K("Super-Up"),                   # SL- Maximize app eos
+    # K("RC-LC-f"):K("Super-PAGE_UP"),              # SL- Maximize app manjaro
+    # Basic App hotkey functions
+    # K("RC-H"):K("M-F9"),                          # SL - Minimize app xfce4
+    # K("RC-LC-f"):K("Super-PAGE_DOWN"),            # SL - Minimize app manjaro
+    # In-App Tab switching
+    # K("M-Tab"): K("C-Tab"),                       # Chromebook/IBM - In-App Tab switching
+    # K("M-Shift-Tab"): K("C-Shift-Tab"),           # Chromebook/IBM - In-App Tab switching
+    # K("M-Grave") : K("C-Shift-Tab"),              # Chromebook/IBM - In-App Tab switching
+    K("Super-Tab"): K("LC-Tab"),                  # Default not-chromebook
+    K("Super-Shift-Tab"): K("LC-Shift-Tab"),      # Default not-chromebook
+
+    # Fn to Alt style remaps
+    K("RM-Enter"): K("insert"),                   # Insert
+
+    # emacs style
+    K("Super-a"): K("Home"),                      # Beginning of Line
+    K("Super-e"): K("End"),                       # End of Line
+    K("Super-b"): K("Left"),
+    K("Super-f"): K("Right"),
+    K("Super-n"): K("Down"),
+    K("Super-p"): K("Up"),
+    K("Super-k"): [K("Shift-End"), K("Backspace")],
+    K("Super-d"): K("Delete"),
+
+    # K("M-RC-Space"): K(""),                       # Open Finder - Placeholder
+
+    # Wordwise
+    K("RC-Left"): K("Home"),                      # Beginning of Line
+    K("RC-Shift-Left"): K("Shift-Home"),          # Select all to Beginning of Line
+    K("RC-Right"): K("End"),                      # End of Line
+    K("RC-Shift-Right"): K("Shift-End"),          # Select all to End of Line
+    # K("RC-Left"): K("C-LEFT_BRACE"),              # Firefox-nw - Back
+    # K("RC-Right"): K("C-RIGHT_BRACE"),            # Firefox-nw - Forward
+    # K("RC-Left"): K("M-LEFT"),                    # Chrome-nw - Back
+    # K("RC-Right"): K("M-RIGHT"),                  # Chrome-nw - Forward
+    K("RC-Up"): K("C-Home"),                      # Beginning of File
+    K("RC-Shift-Up"): K("C-Shift-Home"),          # Select all to Beginning of File
+    K("RC-Down"): K("C-End"),                     # End of File
+    K("RC-Shift-Down"): K("C-Shift-End"),         # Select all to End of File
+    # K("RM-Backspace"): K("Delete"),               # Chromebook/IBM - Delete
+    K("Super-Backspace"): K("C-Backspace"),       # Delete Left Word of Cursor
+    K("Super-Delete"): K("C-Delete"),             # Delete Right Word of Cursor
+    # K("LM-Backspace"): K("C-Backspace"),          # Chromebook/IBM - Delete Left Word of Cursor
+    K("M-Backspace"): K("C-Backspace"),           # Default not-chromebook
+    K("RC-Backspace"): K("C-Shift-Backspace"),    # Delete Entire Line Left of Cursor
+    K("Alt-Delete"): K("C-Delete"),               # Delete Right Word of Cursor
+    # K(""): pass_through_key,                      # cancel
+    # K(""): K(""),                                 #
+}, "General GUI")
