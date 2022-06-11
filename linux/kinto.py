@@ -42,6 +42,9 @@ termStr = "|".join(str('^'+x+'$') for x in terminals)
 mscodes = ["code","vscodium"]
 codeStr = "|".join(str('^'+x+'$') for x in mscodes)
 
+sublimes   = ["Sublime_text","subl"]
+sublimeStr = "|".join(str('^'+x+'$') for x in sublimes)
+
 # Add remote desktop clients & VM software here
 # Ideally we'd only exclude the client window,
 # but that may not be easily done.
@@ -674,7 +677,7 @@ define_keymap(re.compile(codeStr, re.IGNORECASE),{
 }, "Code")
 
 # Keybindings for Sublime Text
-define_keymap(re.compile("Sublime_text", re.IGNORECASE),{
+define_keymap(re.compile(sublimeStr, re.IGNORECASE),{
     # K("Super-c"): K("LC-c"),                    # Default - Terminal - Sigint
     # K("Super-x"): K("LC-x"),                    # Default - Terminal - Exit nano
     # K("M-c"): K("LC-c"),                        #  Chromebook/IBM - Terminal - Sigint
