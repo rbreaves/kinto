@@ -6,7 +6,7 @@ from xkeysnail.transform import *
 
 # a tiny No-OP command for ignoring key combos
 # that we do not wish to register
-ignore_key = NONE
+ignore_key = None
 
 # Use the following for testing terminal keymaps
 # terminals = [ "", ... ]
