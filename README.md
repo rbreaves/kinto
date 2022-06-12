@@ -13,7 +13,9 @@ v1.2 Release - Kinto now includes a system tray and simple wizard to setup the i
 
 Kinto is powered by [xkeysnail](https://github.com/mooz/xkeysnail) for Linux & by [Autohotkey](https://github.com/Lexikos/AutoHotkey_L) for Windows 10 & 11.
 
-Note: If you plan to remote into Linux via VNC, xRDP, Synergy or other remote desktop solutions then remove the current release & try an earlier [v1.0.7-3](https://github.com/rbreaves/kinto/releases/tag/1.0.7-3) release. It uses xkb so it'll work with virtual xinput devices. Some v1.1-x releases may offer both, but all v1.2.x releases ended support for xkb. I do plan to bring offical support back for virtual input devices.
+Note: VNC is now experimentally supported on Linux w/ the latest releases, but you must compile & install x11vnc. More info can be [found here](https://gist.github.com/rbreaves/87059f92f030ee4e068f911ddb56a4dd).
+
+~~Note: If you plan to remote into Linux via VNC, xRDP, Synergy or other remote desktop solutions then remove the current release & try an earlier [v1.0.7-3](https://github.com/rbreaves/kinto/releases/tag/1.0.7-3) release. It uses xkb so it'll work with virtual xinput devices. Some v1.1-x releases may offer both, but all v1.2.x releases ended support for xkb. I do plan to bring offical support back for virtual input devices.~~
 
 Additionally VMware, Virtualbox, KVM and other virtualization technologies work best with the current release - so *this note only applies to remote desktop into Linux* - not virtualization.
 
