@@ -59,6 +59,7 @@ remotes = [
     "VirtualBox",
     "VirtualBox Machine",
     "xfreerdp",
+    "Wfica",
 ]
 remotes = [client.casefold() for client in remotes]
 
