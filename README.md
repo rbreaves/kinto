@@ -156,8 +156,8 @@ RDP fully works as long as the entire keyboard input is being captured. RDP had 
 |Official MS RDC from Store| ❖Windows ⇒| ❖Windows  | ✅ Yes|   |
 |Official MS RDC from Store| ❖Windows ⇒| 🍎macOS  | ✅ Yes| Note: Must compile & install xrdp.   |
 |RealVNC| ❖Windows ⇒| 🐧Linux  | ✅ Yes| Note: Compile & install my forked [x11vnc](https://gist.github.com/rbreaves/87059f92f030ee4e068f911ddb56a4dd) for compatibility. |
-|Official MS RDP (mstsc.exe)| ❖Windows ⇒| 🐧Linux  | ☐ Maybe | Note: Compile & install my forked [x11vnc](https://gist.github.com/rbreaves/87059f92f030ee4e068f911ddb56a4dd) for compatibility. |
-|Official MS RDC from Store| ❖Windows ⇒| 🐧Linux  | ☐ Maybe| Note: Compile & install my forked [x11vnc](https://gist.github.com/rbreaves/87059f92f030ee4e068f911ddb56a4dd) for compatibility.  |
+|Official MS RDP (mstsc.exe)| ❖Windows ⇒| 🐧Linux  | ☐ Maybe | Note: Compile & install my forked [x11vnc](https://gist.github.com/rbreaves/87059f92f030ee4e068f911ddb56a4dd) for compatibility, then setup xrdp like normal. |
+|Official MS RDC from Store| ❖Windows ⇒| 🐧Linux  | ☐ Maybe| Note: Compile & install my forked [x11vnc](https://gist.github.com/rbreaves/87059f92f030ee4e068f911ddb56a4dd) for compatibility, then setup xrdp like normal. |
 |Official MS RDP| ChromeOS 87+⇒| ❖Windows  | ✅ Yes|May work on earlier versions as well, if they support Android apps|
 |Remmina| 🐧Linux*/ChromeOS 87+⇒| ❖Windows  | ✅ Yes|*Use hover menu to enable "Grab all keyboard events"|
 |FreeRDP| 🐧Linux/ChromeOS 87+⇒| ❖Windows  | ✅ Yes | |
