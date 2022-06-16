@@ -177,6 +177,9 @@ GroupAdd, remotes, ahk_exe mstsc.exe
 GroupAdd, remotes, ahk_exe msrdc.exe
 GroupAdd, remotes, ahk_exe nxplayer.bin
 GroupAdd, remotes, ahk_exe vmconnect.exe
+GroupAdd, remotes, ahk_exe RemoteDesktopManagerFree.exe
+GroupAdd, remotes, ahk_exe vncviewer.exe
+GroupAdd, remotes, Remote Desktop ahk_class ApplicationFrameWindow
 
 ; Disabled Edge for now - no ability to close all instances
 ; GroupAdd, browsers, Microsoft Edge ahk_class ApplicationFrameWindow
@@ -442,7 +445,7 @@ GroupAdd, intellij, ahk_exe idea64.exe
     ;     z::Send #z                                           ; Chromebook
     ; #If                                                      ; Chromebook
 
-    #IfWinNotActive ahk_group terminals
+    #If Not WinActive("ahk_group terminals") and Not WinActive("ahk_group remotes")
         ^.::Send {Esc}
         ; emacs style
         #n::Send {Down}

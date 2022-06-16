@@ -62,6 +62,7 @@ remotes = [
     "Wfica",
 ]
 remotes = [client.casefold() for client in remotes]
+remotesStr = "|".join(str('^'+x+'$') for x in remotes)
 
 # Add remote desktop clients & VMs for no remapping
 terminals.extend(remotes)
@@ -281,14 +282,14 @@ define_keymap(re.compile("^jetbrains-(?!.*toolbox).*$", re.IGNORECASE),{
 
 # Keybindings overrides for Caja
 # (overrides some bindings from general file manager code block below)
-define_keymap(re.compile("caja", re.IGNORECASE),{
+define_keymap(re.compile("^caja$", re.IGNORECASE),{
     # K("RC-Super-o"): K("RC-Shift-Enter"),       # Open in new tab
     K("RC-Super-o"):    K("RC-Shift-W"),        # Open in new window
 },"Overrides for Caja - Finder Mods")
 
 # Keybindings overrides for DDE (Deepin) File Manager
 # (overrides some bindings from general file manager code block below)
-define_keymap(re.compile("dde-file-manager", re.IGNORECASE),{
+define_keymap(re.compile("^dde-file-manager$", re.IGNORECASE),{
     K("RC-i"):                  K("RC-i"),          # File properties dialog (Get Info)
     K("RC-comma"):              None,               # Disable preferences shortcut (no shortcut available)
     K("RC-Up"):                 K("RC-Up"),         # Go Up dir
@@ -300,7 +301,7 @@ define_keymap(re.compile("dde-file-manager", re.IGNORECASE),{
 
 # Keybindings overrides for Dolphin
 # (overrides some bindings from general file manager code block below)
-define_keymap(re.compile("dolphin", re.IGNORECASE),{
+define_keymap(re.compile("^dolphin$", re.IGNORECASE),{
     K("RC-KEY_2"):      K("C-KEY_3"),           # View as List (Detailed)
     K("RC-KEY_3"):      K("C-KEY_2"),           # View as List (Compact)
     ##########################################################################################
@@ -317,14 +318,14 @@ define_keymap(re.compile("dolphin", re.IGNORECASE),{
 
 # Keybindings overrides for elementary OS Files (Pantheon)
 # (overrides some bindings from general file manager code block below)
-define_keymap(re.compile("io.elementary.files", re.IGNORECASE),{
+define_keymap(re.compile("^io.elementary.files$", re.IGNORECASE),{
     # K("RC-Super-o"):    K("Shift-Enter"),       # Open folder in new tab
     K("RC-comma"): None,                        # Disable preferences shortcut since none available
 },"Overrides for Pantheon - Finder Mods")
 
 # Keybindings overrides for Nautilus
 # (overrides some bindings from general file manager code block below)
-define_keymap(re.compile("org.gnome.nautilus|nautilus", re.IGNORECASE),{
+define_keymap(re.compile("^org.gnome.nautilus$|^nautilus$", re.IGNORECASE),{
     # K("RC-N"): K("C-M-Space"), # macOS Finder search window shortcut Cmd+Option+Space
     # For this ^^^^^^^^^^^ to work, a custom shortcut must be set up in the Settings app in GNOME 
     # to run command: "nautilus --new-window /home/USER" [ replace "USER" ]
@@ -337,14 +338,14 @@ define_keymap(re.compile("org.gnome.nautilus|nautilus", re.IGNORECASE),{
 
 # Keybindings overrides for PCManFM and PCManFM-Qt
 # (overrides some bindings from general file manager code block below)
-define_keymap(re.compile("pcmanfm|pcmanfm-qt", re.IGNORECASE),{
+define_keymap(re.compile("^pcmanfm$|^pcmanfm-qt$", re.IGNORECASE),{
     K("RC-KEY_2"):      K("C-KEY_4"),               # View as List (Detailed) [Not in PCManFM-Qt]
     K("RC-Backspace"):  [K("Delete"),K("Enter")],   # Move to Trash (delete, bypass dialog)
 },"Overrides for PCManFM - Finder Mods")
 
 # Keybindings overrides for SpaceFM
 # (overrides some bindings from general file manager code block below)
-define_keymap(re.compile("spacefm", re.IGNORECASE),{
+define_keymap(re.compile("^spacefm$", re.IGNORECASE),{
     K("RC-Page_Up"):            K("C-Shift-Tab"),           # Go to prior tab
     K("RC-Page_Down"):          K("C-Tab"),                 # Go to next tab
     K("RC-Shift-Left_Brace"):   K("C-Shift-Tab"),           # Go to prior tab
@@ -360,7 +361,7 @@ define_keymap(re.compile("spacefm", re.IGNORECASE),{
 
 # Keybindings overrides for Thunar
 # (overrides some bindings from general file manager code block below)
-define_keymap(re.compile("thunar", re.IGNORECASE),{
+define_keymap(re.compile("^thunar$", re.IGNORECASE),{
     K("RC-Super-o"):    K("RC-Shift-P"),            # Open in new tab
     K("RC-comma"):      [K("M-E"),K("E")],          # Overrides "Open preferences dialog" shortcut below
 },"Overrides for Thunar - Finder Mods")
@@ -438,7 +439,7 @@ define_keymap(re.compile(filemanagerStr, re.IGNORECASE),{
 ############################################
 
 # Open preferences in browsers
-define_keymap(re.compile("Firefox", re.IGNORECASE),{
+define_keymap(re.compile("^Firefox$", re.IGNORECASE),{
     K("C-comma"): [
         K("C-T"),K("a"),K("b"),K("o"),K("u"),K("t"),
         K("Shift-SEMICOLON"),K("p"),K("r"),K("e"),K("f"),
@@ -485,7 +486,7 @@ define_keymap(re.compile(browserStr, re.IGNORECASE),{
     # K("C-Right_Brace"): K("C-Page_Down"),
 }, "General Web Browsers")
 
-define_keymap(re.compile("ulauncher", re.IGNORECASE),{
+define_keymap(re.compile("^ulauncher$", re.IGNORECASE),{
     K("RC-Key_1"):      K("M-Key_1"),      # Remap Ctrl+[1-9] and Ctrl+[a-z] to Alt+[1-9] and Alt+[a-z]
     K("RC-Key_2"):      K("M-Key_2"),
     K("RC-Key_3"):      K("M-Key_3"),
@@ -512,7 +513,7 @@ define_keymap(lambda wm_class: wm_class.casefold() not in terminals,{
 })
 
 # Tab navigation overrides for apps that use Ctrl+Shift+Tab/Ctrl+Tab instead of Ctrl+PgUp/PgDn
-define_keymap(re.compile("org.gnome.Console|Kgx|deepin-terminal|Angry*IP*Scanner|jDownloader", re.IGNORECASE),{
+define_keymap(re.compile("^org.gnome.Console$|^Kgx$|^deepin-terminal$|^Angry*IP*Scanner$|^jDownloader$", re.IGNORECASE),{
     ### Tab navigation
     K("RC-Shift-Left_Brace"):   K("C-Shift-Tab"),       # Tab nav: Go to prior tab (left)
     K("RC-Shift-Right_Brace"):  K("C-Tab"),             # Tab nav: Go to next tab (right)
@@ -747,7 +748,7 @@ define_keymap(re.compile(sublimeStr, re.IGNORECASE),{
     # K(""): K(""),                               #
 }, "Sublime Text")
 
-define_keymap(re.compile("konsole", re.IGNORECASE),{
+define_keymap(re.compile("^konsole$", re.IGNORECASE),{
     # Ctrl Tab - In App Tab Switching
     K("LC-Tab") : K("Shift-Right"),
     K("LC-Shift-Tab") : K("Shift-Left"),
@@ -755,7 +756,7 @@ define_keymap(re.compile("konsole", re.IGNORECASE),{
 
 }, "Konsole tab switching")
 
-define_keymap(re.compile("Io.elementary.terminal|kitty", re.IGNORECASE),{
+define_keymap(re.compile("^Io.elementary.terminal$|^kitty$", re.IGNORECASE),{
     # Ctrl Tab - In App Tab Switching
     K("LC-Tab") : K("LC-Shift-Right"),
     K("LC-Shift-Tab") : K("LC-Shift-Left"),
@@ -763,7 +764,7 @@ define_keymap(re.compile("Io.elementary.terminal|kitty", re.IGNORECASE),{
 
 }, "Elementary Terminal tab switching")
 
-define_keymap(re.compile("deepin-terminal", re.IGNORECASE),{
+define_keymap(re.compile("^deepin-terminal$", re.IGNORECASE),{
     K("RC-w"):                  K("M-w"),           # Close only current tab, instead of all other tabs
     K("RC-j"):                  None,               # Block Cmd+J from remapping to vertical split (Ctrl+Shift+J) 
     K("RC-minus"):              K("C-minus"),       # Decrease font size/zoom out 
