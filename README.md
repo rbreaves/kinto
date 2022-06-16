@@ -151,14 +151,20 @@ RDP fully works as long as the entire keyboard input is being captured. RDP had 
 
 |Program|Src/Remote Client ⇒|Dst/Remote Server|Works? |Notes|
 |---|---|---|---|---|
-|Official MS RDP (mstsc.exe)| ❖Windows ⇒| 🐧Linux  | ✅ Yes| Note: [v1.0.7-3 Only](https://github.com/rbreaves/kinto/releases/tag/1.0.7-3). Should work for xRDP/VNC and other remote server protocols.  |
 |Official MS RDP (mstsc.exe)| ❖Windows ⇒| ❖Windows  | ✅ Yes|   |
+|Official MS RDP (mstsc.exe)| ❖Windows ⇒| 🍎macOS  | ✅ Yes| Note: Must compile & install xrdp.   |
+|Official MS RDC from Store| ❖Windows ⇒| ❖Windows  | ✅ Yes|   |
+|Official MS RDC from Store| ❖Windows ⇒| 🍎macOS  | ✅ Yes| Note: Must compile & install xrdp.   |
+|RealVNC| ❖Windows ⇒| 🐧Linux  | ✅ Yes| Note: Compile & install my forked [x11vnc](https://gist.github.com/rbreaves/87059f92f030ee4e068f911ddb56a4dd) for compatibility. |
+|Official MS RDP (mstsc.exe)| ❖Windows ⇒| 🐧Linux  | ☐ Maybe | Note: Compile & install my forked [x11vnc](https://gist.github.com/rbreaves/87059f92f030ee4e068f911ddb56a4dd) for compatibility. |
+|Official MS RDC from Store| ❖Windows ⇒| 🐧Linux  | ☐ Maybe| Note: Compile & install my forked [x11vnc](https://gist.github.com/rbreaves/87059f92f030ee4e068f911ddb56a4dd) for compatibility.  |
 |Official MS RDP| ChromeOS 87+⇒| ❖Windows  | ✅ Yes|May work on earlier versions as well, if they support Android apps|
 |Remmina| 🐧Linux*/ChromeOS 87+⇒| ❖Windows  | ✅ Yes|*Use hover menu to enable "Grab all keyboard events"|
 |FreeRDP| 🐧Linux/ChromeOS 87+⇒| ❖Windows  | ✅ Yes | |
 |FreeRDP| 🍎macOS⇒| ❖Windows  | ✅ Yes| [FreeRDP for macOS](#FreeRDP-for-macOS)|
 |Remote Desktop Manager Free|🍎iOS⇒| ❖Windows  | ✅ Yes| |
 |Jump Desktop (RDP)| 🍎macOS*/iOS ⇒| ❖Windows  | ✅ Yes|*Preferences -> Keyboard -> Disable "Key Conversions", Enabled "Send macOS Shortcuts" under Keyboard shortcuts|
+|RealVNC| 🍎macOS⇒| 🐧Linux   | ✅ Yes| Note: Compile & install my forked [x11vnc](https://gist.github.com/rbreaves/87059f92f030ee4e068f911ddb56a4dd) for compatibility. |
 |Official MS RDP| 🍎macOS⇒| ❖Windows  | ❌ No|Initial Cmd key press not being passed|
 |Remote Desktop Manager Free| 🍎macOS⇒| ❖Windows  | ❌ No|Initial Cmd key press not being passed|
 |Royal TSX Client| 🍎macOS⇒| ❖Windows  | ❌ No|Initial Cmd key press not being passed|
