@@ -13,7 +13,9 @@ v1.2 Release - Kinto now includes a system tray and simple wizard to setup the i
 
 Kinto is powered by [xkeysnail](https://github.com/mooz/xkeysnail) for Linux & by [Autohotkey](https://github.com/Lexikos/AutoHotkey_L) for Windows 10 & 11.
 
-Note: If you plan to remote into Linux via VNC, xRDP, Synergy or other remote desktop solutions then remove the current release & try an earlier [v1.0.7-3](https://github.com/rbreaves/kinto/releases/tag/1.0.7-3) release. It uses xkb so it'll work with virtual xinput devices. Some v1.1-x releases may offer both, but all v1.2.x releases ended support for xkb. I do plan to bring offical support back for virtual input devices.
+Note: VNC is now experimentally supported on Linux w/ the latest releases, but you must compile & install x11vnc. More info can be [found here](https://gist.github.com/rbreaves/87059f92f030ee4e068f911ddb56a4dd).
+
+~~Note: If you plan to remote into Linux via VNC, xRDP, Synergy or other remote desktop solutions then remove the current release & try an earlier [v1.0.7-3](https://github.com/rbreaves/kinto/releases/tag/1.0.7-3) release. It uses xkb so it'll work with virtual xinput devices. Some v1.1-x releases may offer both, but all v1.2.x releases ended support for xkb. I do plan to bring offical support back for virtual input devices.~~
 
 Additionally VMware, Virtualbox, KVM and other virtualization technologies work best with the current release - so *this note only applies to remote desktop into Linux* - not virtualization.
 
@@ -149,14 +151,20 @@ RDP fully works as long as the entire keyboard input is being captured. RDP had 
 
 |Program|Src/Remote Client ⇒|Dst/Remote Server|Works? |Notes|
 |---|---|---|---|---|
-|Official MS RDP (mstsc.exe)| ❖Windows ⇒| 🐧Linux  | ✅ Yes| Note: [v1.0.7-3 Only](https://github.com/rbreaves/kinto/releases/tag/1.0.7-3). Should work for xRDP/VNC and other remote server protocols.  |
 |Official MS RDP (mstsc.exe)| ❖Windows ⇒| ❖Windows  | ✅ Yes|   |
+|Official MS RDP (mstsc.exe)| ❖Windows ⇒| 🍎macOS  | ✅ Yes| Note: Must compile & install xrdp.   |
+|Official MS RDC from Store| ❖Windows ⇒| ❖Windows  | ✅ Yes|   |
+|Official MS RDC from Store| ❖Windows ⇒| 🍎macOS  | ✅ Yes| Note: Must compile & install xrdp.   |
+|RealVNC| ❖Windows ⇒| 🐧Linux  | ✅ Yes| Note: Compile & install my forked [x11vnc](https://gist.github.com/rbreaves/87059f92f030ee4e068f911ddb56a4dd) for compatibility. |
+|Official MS RDP (mstsc.exe)| ❖Windows ⇒| 🐧Linux  | ☐ Maybe | Note: Compile & install my forked [x11vnc](https://gist.github.com/rbreaves/87059f92f030ee4e068f911ddb56a4dd) for compatibility, then setup xrdp like normal. |
+|Official MS RDC from Store| ❖Windows ⇒| 🐧Linux  | ☐ Maybe| Note: Compile & install my forked [x11vnc](https://gist.github.com/rbreaves/87059f92f030ee4e068f911ddb56a4dd) for compatibility, then setup xrdp like normal. |
 |Official MS RDP| ChromeOS 87+⇒| ❖Windows  | ✅ Yes|May work on earlier versions as well, if they support Android apps|
 |Remmina| 🐧Linux*/ChromeOS 87+⇒| ❖Windows  | ✅ Yes|*Use hover menu to enable "Grab all keyboard events"|
 |FreeRDP| 🐧Linux/ChromeOS 87+⇒| ❖Windows  | ✅ Yes | |
 |FreeRDP| 🍎macOS⇒| ❖Windows  | ✅ Yes| [FreeRDP for macOS](#FreeRDP-for-macOS)|
 |Remote Desktop Manager Free|🍎iOS⇒| ❖Windows  | ✅ Yes| |
 |Jump Desktop (RDP)| 🍎macOS*/iOS ⇒| ❖Windows  | ✅ Yes|*Preferences -> Keyboard -> Disable "Key Conversions", Enabled "Send macOS Shortcuts" under Keyboard shortcuts|
+|RealVNC| 🍎macOS⇒| 🐧Linux   | ✅ Yes| Note: Compile & install my forked [x11vnc](https://gist.github.com/rbreaves/87059f92f030ee4e068f911ddb56a4dd) for compatibility. |
 |Official MS RDP| 🍎macOS⇒| ❖Windows  | ❌ No|Initial Cmd key press not being passed|
 |Remote Desktop Manager Free| 🍎macOS⇒| ❖Windows  | ❌ No|Initial Cmd key press not being passed|
 |Royal TSX Client| 🍎macOS⇒| ❖Windows  | ❌ No|Initial Cmd key press not being passed|
