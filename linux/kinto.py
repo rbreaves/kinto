@@ -684,6 +684,7 @@ define_keymap(re.compile(sublimeStr, re.IGNORECASE),{
     # K("Super-x"): K("LC-x"),                    # Default - Terminal - Exit nano
     # K("M-c"): K("LC-c"),                        #  Chromebook/IBM - Terminal - Sigint
     # K("M-x"): K("LC-x"),                        #  Chromebook/IBM - Terminal - Exit nano
+    K("Super-grave"): K("C-grave"),             # toggle the console
     K("Super-Space"): K("C-Space"),             # Basic code completion
     K("C-Super-up"): K("M-o"),                  # Switch file
     K("Super-RC-f"): K("f11"),                  # toggle_full_screen
