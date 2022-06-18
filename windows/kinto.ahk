@@ -62,6 +62,8 @@ Menu, Tray, Add, Autodetect Keyboards, autodetect
 ; Menu, Tray, check, Autodetect Keyboards ; Autodetect
 ; Menu, Tray, disable, Autodetect Keyboards ; CB/IBM
 Menu, Tray, Add, Suspend Kinto, tray_suspend
+; Add tray menu item for toggling Option key special character entry scheme
+Menu, Tray, Add, OptSpecialChars   Shift+Opt+Cmd+O, toggle_optspecialchars
 ; Menu, Tray, Add, Returns to Desktop, min
 Menu, Tray, Add
 Menu, Tray, Add, Close, Exit
@@ -865,27 +867,553 @@ Send {RShift up}
 Send {LShift up}
 return
 
-#IfWinNotActive ahk_group remotes
-    $!u::Goto, ActivateUmlautModifier
-    $!s::Send, ß
+; ###############################################################################################################
+; ###   Special character insertion like Apple/macOS Option key methods, mapping to Unicode input method
+; ###   Common symbols available with Option+key or Shift+Option+key, accented keys with Option+Key1, then Key2
+; ###############################################################################################################
 
-    ActivateUmlautModifier:
-    StringCaseSense, On
-    ; watch next input string
-	Input, UserInput, L1 B
-    if UserInput = o
-        Send, ö
-    else if UserInput = O
-        Send, Ö
-    else if UserInput = a
-        Send, ä
-    else if UserInput = A
-        Send, Ä
-    else if UserInput = u
-        Send, ü
-    else if UserInput = U
-        Send, Ü
-    else
-        Send, %UserInput%
+; Shortcut to activate Option key special character scheme
+^+!o::Gosub, toggle_optspecialchars
+
+; Function (subroutine?) for activation by tray menu item or keyboard shortcut
+toggle_optspecialchars:
+    optspecialchars:=!optspecialchars         ; Toggle value of optspecialchars variable on/off
+    if (optspecialchars = 1) {
+        Menu, Tray, Check, OptSpecialChars   Shift+Opt+Cmd+O
+        MsgBox, 0, ALERT, % "Option key special character entry scheme is now ENABLED.`n`n"
+                            . "WARNING: This will interfere with many Alt and Alt-Shift shortcuts.`n`n"
+                            . "Disable from tray menu or with Shift+Opt+Cmd+O."
+        return
+    }
+    if (optspecialchars = 0) {
+        Menu, Tray, Uncheck, OptSpecialChars   Shift+Opt+Cmd+O
+        MsgBox, 0, ALERT, Option key special character entry scheme is now DISABLED.
+        return
+    }
     return
-#If
+
+; #IfWinNotActive ahk_group remotes
+#If !WinActive("ahk_group remotes") && optspecialchars = 1
+
+    ; ######   NUMBER KEYS ROW   ######
+
+    ; Dead_Keys_Accent_Grave
+    ; ###   SC029 is ` (Grave key above Tab)
+    ; Grave accent: Option+`, then key to accent
+    $!SC029::
+        ; Use Apple "dead keys" Option key method to attach accents to next character typed
+        ; Grave accent activated by Option+` (Alt plus scan code SC029, or !SC029)
+        StringCaseSense, On
+        ; watch next input string
+        Input, UserInput, L1 
+        ; Watch for Escape key, cancel dead keys sequence
+        if UserInput = Esc
+            Return
+        ; Option/Alt key needed to access menus sometimes
+        ; If user repeats same shortcut, just send to app unmodified.
+        ; else if UserInput = !SC029
+        ;     Send, {Alt down}{SC029}{Alt up}
+        else if UserInput = a
+            ; à {U+00E0} (Alt+0224)
+            Send, {U+00E0}
+        else if UserInput = e
+            ; è {U+00E8} (Alt+0232)
+            Send, {U+00E8}
+        else if UserInput = i
+            ; ì {U+00EC} (Alt+0236)
+            Send, {U+00EC}
+        else if UserInput = o
+            ; ò {U+00F2} (Alt+0242)
+            Send, {U+00F2}
+        else if UserInput = u
+            ; ù {U+00F9} (Alt+0249)
+            Send, {U+00F9}
+        else if UserInput = A
+            ; À {U+00C0} (Alt+0192)
+            Send, {U+00C0}
+        else if UserInput = E
+            ; È {U+00C8} (Alt+0200)
+            Send, {U+00C8}
+        else if UserInput = I
+            ; Ì {U+00CC} (Alt+0204)
+            Send, {U+00CC}
+        else if UserInput = O
+            ; Ò {U+00D2} (Alt+0210)
+            Send, {U+00D2}
+        else if UserInput = U
+            ; Ù {U+00D9} (Alt+0217)
+            Send, {U+00D9}
+        ; No relevant character to accent? Send input unmodified. 
+        else
+            Send, %UserInput%
+        Return
+
+    ; ###   SC029 is ` (Grave key above Tab)
+    ; Grave Accent diacritic (non-combining) {U+0060}: ` (Alt+96)
+    $!+SC029::Send, {U+0060}
+
+    ; Inverted Exclamation Mark {U+00A1}: ¡ (Alt+0161)
+    !1::Send, {U+00A1}
+    ; Fraction Slash, solidus (U+2044): ⁄ (Alt+8260) [Needs Unicode]
+    !+1::Send, {U+2044}
+
+    ; Trade Mark Sign Emoji {U+2122}: ™ (Alt+0153)
+    !2::Send, {U+2122}
+    ; Euro currency symbol {U+20AC}: € (Alt+0128)
+    !+2::Send, {U+20AC}
+
+    ; British Pound currency symbol {U+00A3}: £ (Alt+0163)
+    !3::Send, {U+00A3}
+    ; Single Left-Pointing Angle Quotation mark {U+2039}: (Alt+0139)
+    !+3::Send, {U+2039}
+
+    ; Cent currency symbol {U+00A2}: ¢ (Alt+0162)
+    !4::Send, {U+00A2}
+    ; Single Right-Pointing Angle Quotation mark (U+203A): (Alt+0155)
+    !+4::Send, {U+203A}
+
+    ; Infinity mathematical symbol {U+221E}: ∞ (Alt+236)
+    !5::Send, {U+221E}
+    ; fi latin small ligature: ﬁ (U+FB01) (Alt+64257) [Needs Unicode]
+    !+5::Send, {U+FB01}
+
+    ; Section symbol {U+00A7}: § (Alt+0167)
+    !6::Send, {U+00A7}
+    ; fl small ligature: (U+FB02) (Alt+64258) [Needs Unicode.]
+    !+6::Send, {U+FB02}
+
+    ; Paragraph mark (Pilcrow) symbol {U+00B6}: ¶ (Alt+0182)
+    !7::Send, {U+00B6}
+    ; Double dagger (cross) symbol {U+2021}: ‡ (Alt+0135) [Simple dagger/cross: Alt+0134]
+    !+7::Send, {U+2021}
+
+    ; Bullet point symbol {U+2022}: • (Alt+0149) 
+    !8::Send, {U+2022}
+    ; Degree symbol {U+00B0}: ° (Alt+0176)
+    ; NOT degree symbol: Option+0: Masculine Ordinal Indicator {U+00BA} (Alt+167 or 0186)
+    ; Also NOT degree symbol: Option+k: Ring Above diacritic {U+02DA}
+    !+8::Send, {U+00B0}
+
+    ; Feminine Ordinal Indicator symbol {U+00AA}: ª (Alt+0170)
+    !9::Send, {U+00AA}
+    ; Middle Dot (interpunct/middot) symbol {U+00B7}: · (Alt+0183) 
+    !+9::Send, {U+00B7}
+
+    ; Masculine Ordinal Indicator symbol {U+00BA}: º (Alt+0186)
+    !0::Send, {U+00BA}
+    ; Single low-9 quotation mark {U+201A}: ‚ (Alt+0130) 
+    !+0::Send, {U+201A}
+
+    ; En Dash symbol {U+2013}: – (Alt+0150)
+    !-::Send, {U+2013}
+    ; Em Dash symbol {U+2014}: — (Alt+0151)
+    !+-::Send, {U+2014}
+
+    ; Not Equal To symbol (U+2260): ≠ (Alt+8800) [Needs Unicode]
+    !=::Send, {U+2260}
+    ; Plus Minus symbol {U+00B1}: ± (Alt+0177)
+    !+=::Send, {U+00B1}
+
+
+    ; ######   LETTER AND PUNCTUATION KEYS   ###### [ in QWERTY order ]
+
+
+    ; ##############
+    ; ###   1st row: Tab-key row [ qwertyuiop[]\ ] [ QWERTYUIOP{}| ]
+
+    ; Small oe (oethel) ligature {U+0153}: œ (Alt+0156)
+    !q::Send, {U+0153}
+    ; Capital OE (Oethel) ligature {U+0152}: Œ (Alt+0140)
+    !+q::Send, {U+0152}
+
+    ; N-Ary Summation (sigma) notation (U+2211}: ∑ [Needs Unicode]
+    $!w::Send, {U+2211}
+    ; Double Low-9 Quotation mark {U+201E}: „ (Alt+0132)
+    $!+w::Send, {U+201E}
+
+    ; Dead_Keys_Accent_Acute
+    ; Acute accent: Option+e, then key to accent
+    $!e::
+        ; Use Apple "dead keys" Option key method to attach accents to next character typed
+        ; Acute accent activated by Option+e (logical Alt+e)
+        StringCaseSense, On
+        ; watch next input string
+        Input, UserInput, L1 
+        ; Watch for Escape key, cancel dead keys sequence
+        if UserInput = Esc
+            Return
+        ; Option/Alt key needed to access menus sometimes
+        ; If user repeats same shortcut, just send to app unmodified.
+        ; else if UserInput = !e
+        ;     Send, {Alt down}e{Alt up}
+        else if UserInput = a
+            ; á {U+00E1} (Alt+0225)
+            Send, {U+00E1}
+        else if UserInput = e
+            ; é {U+00E9} (Alt+0233)
+            Send, {U+00E9}
+        else if UserInput = i
+            ; í {U+00ED} (Alt+0237)
+            Send, {U+00ED}
+        else if UserInput = o
+            ; ó {U+00F3} (Alt+0243)
+            Send, {U+00F3}
+        else if UserInput = u
+            ; ú {U+00FA} (Alt+0250)
+            Send, {U+00FA}
+        else if UserInput = A
+            ; Á {U+00C1} (Alt+0193)
+            Send, {U+00C1}
+        else if UserInput = E
+            ; É {U+00C9} (Alt+0201)
+            Send, {U+00C9}
+        else if UserInput = I
+            ; Í {U+00CD} (Alt+0205)
+            Send, {U+00CD}
+        else if UserInput = O
+            ; Ó {U+00D3} (Alt+0211)
+            Send, {U+00D3}
+        else if UserInput = U
+            ; Ú {U+00DA} (Alt+0218)
+            Send, {U+00DA}
+        ; No relevant character to accent? Send input unmodified. 
+        else
+            Send, %UserInput%
+        Return
+
+    ; Acute accent diacritic (non-combining) {U+00B4}: ´ (Alt+0180)
+    !+e::Send, {U+00B4}
+
+    ; Registered Trade Mark Sign {U+00AE}: ® (Alt+0174)
+    $!r::Send, {U+00AE}
+    ; Per mille symbol {U+2030}: ‰ (Alt+0137)
+    $!+r::Send, {U+2030}
+
+    ; Simple dagger (cross) symbol {U+2020}: † (Alt+0134)
+    !t::Send, {U+2020}
+    ; Caron/hacek diacritic (non-combining) (U+02C7): ˇ (Alt+0134)
+    !+t::Send, {U+02C7}
+
+    ; Yen currency symbol {U+00A5}: ¥ (Alt+0165)
+    !y::Send, {U+00A5}
+    ; Latin Capital Letter a with Acute (U+00C1): Á (Alt+0193)
+    !+y::Send, {U+00C1}
+
+    ; Dead_Keys_Accent_Umlaut
+    ; Umlaut/Diaeresis accent: Option+u, then key to accent
+    $!u::
+        ; Use Apple "dead keys" Option key method to attach accents to next character typed
+        ; Umlaut/Diaeresis accent activated by Option+u (logical Alt+u)
+        StringCaseSense, On
+        ; watch next input string
+        Input, UserInput, L1 
+        ; Watch for Escape key, cancel dead keys sequence
+        if UserInput = Esc
+            Return
+        ; Option/Alt key needed to access menus sometimes
+        ; If user repeats same shortcut, just send to app unmodified.
+        ; else if UserInput = !u
+        ;     Send, {Alt down}u{Alt up}
+        else if UserInput = a
+            ; ä {U+00E4} (Alt+0228)
+            Send, {U+00E4}
+        else if UserInput = e
+            ; ë {U+00EB} (Alt+0235)
+            Send, {U+00EB}
+        else if UserInput = i
+            ; ï {U+00EF} (Alt+0239)
+            Send, {U+00EF}
+        else if UserInput = o
+            ; ö {U+00F6} (Alt+0246)
+            Send, {U+00F6}
+        else if UserInput = u
+            ; ü {U+00FC} (Alt+0252)
+            Send, {U+00FC}
+        else if UserInput = y
+            ; ÿ {U+00FF} (Alt+0255)
+            Send, {U+00FF}
+        else if UserInput = A
+            ; Ä {U+00C4} (Alt+0196)
+            Send, {U+00C4}
+        else if UserInput = E
+            ; Ë {U+00CB} (Alt+0203)
+            Send, {U+00CB}
+        else if UserInput = I
+            ; Ï {U+00CF} (Alt+0207)
+            Send, {U+00CF}
+        else if UserInput = O
+            ; Ö {U+00D6} (Alt+0214)
+            Send, {U+00D6}
+        else if UserInput = U
+            ; Ü {U+00DC} (Alt+0220)
+            Send, {U+00DC}
+        else if UserInput = Y
+            ; Ÿ {U+0178} (Alt+0159)
+            Send, {U+0178}
+        ; No relevant character to accent? Send input unmodified. 
+        else
+            Send, %UserInput%
+        Return
+
+    ; Umlaut/Diaeresis diacritic (non-combining) {U+00A8}: (Alt+0168)
+    !+u::Send, {U+00A8}
+
+    ; Dead_Keys_Accent_Circumflex
+    ; Circumflex accent: Option+i, then key to accent
+    $!i::
+        ; Use Apple "dead keys" Option key method to attach accents to next character typed
+        ; Circumflex accent activated by Option+i (logical Alt+i)
+        StringCaseSense, On
+        ; watch next input string
+        Input, UserInput, L1 
+        ; Watch for Escape key, cancel dead keys sequence
+        if UserInput = Esc
+            Return
+        ; Option/Alt key needed to access menus sometimes
+        ; If user repeats same shortcut, just send to app unmodified.
+        ; else if UserInput = !i
+        ;     Send, {Alt down}i{Alt up}
+        else if UserInput = a
+            ; â {U+00E2} (Alt+0226)
+            Send, {U+00E2}
+        else if UserInput = e
+            ; ê {U+00EA} (Alt+0234)
+            Send, {U+00EA}
+        else if UserInput = i
+            ; î {U+00EE} (Alt+0238)
+            Send, {U+00EE}
+        else if UserInput = o
+            ; ô {U+00F4} (Alt+0244)
+            Send, {U+00F4}
+        else if UserInput = u
+            ; û {U+00FB} (Alt+0251)
+            Send, {U+00FB}
+        else if UserInput = A
+            ; Â {U+00C2} (Alt+0194)
+            Send, {U+00C2}
+        else if UserInput = E
+            ; Ê {U+00CA} (Alt+0202)
+            Send, {U+00CA}
+        else if UserInput = I
+            ; Î {U+00CE} (Alt+0206)
+            Send, {U+00CE}
+        else if UserInput = O
+            ; Ô {U+00D4} (Alt+0212)
+            Send, {U+00D4}
+        else if UserInput = U
+            ; Û {U+00DB} (Alt+0219)
+            Send, {U+00DB}
+        ; No relevant character to accent? Send input unmodified. 
+        else
+            Send, %UserInput%
+        Return
+
+    ; Modifier Letter Circumflex Accent (U+02C6): ˆ (Alt+0137)
+    !+i::Send, {U+02C6}
+
+    ; Latin Small Letter o with Stroke {U+00F8}: ø (Alt+0248)
+    !o::Send, {U+00F8}
+    ; Latin Capital Letter O with Stroke {U+00D8}: Ø (Alt+0216)
+    !+o::Send, {U+00D8}
+
+    ; Greek Small Letter Pi {U+03C0}: π (Alt+227)
+    $!p::Send, {U+03C0}
+    ; N-Ary Product mathematical symbol (U+220F): ∏ (No Alt Code) [Needs Unicode]
+    $!+p::Send, {U+220F}
+
+    ; Left Double Quotation Mark {U+201C}: “ (Alt+0147)
+    $![::Send, {U+201C}
+    ; Right Double Quotation Mark {U+201D}: ” (Alt+8)
+    $!+[::Send, {U+201D}
+
+    ; Left Single Quotation Mark {U+2018}: ‘ (Alt+0145)
+    $!]::Send, {U+2018}
+    ; Right Single Quotation Mark {U+2019}: ’ (Alt+0146)
+    $+!]::Send, {U+2019}
+
+    ; LEFT-POINTING DOUBLE ANGLE QUOTATION MARK {U+00AB}: « (Alt+0171)
+    $!\::Send, {U+00AB}
+    ; RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK {U+00BB}: » (Alt+0187)
+    $!+\::Send, {U+00BB}
+
+
+    ; ##############
+    ; ###   2nd row: Caps Lock row [ asdfghjkl;' ] [ ASDFGHJKL:" ]
+
+
+    ; Overring accented "a/A" used by Nordic, Greenlandic, Germanic languages
+    ; 
+    ; Small Letter a with Ring Above {U+00E5}: å (Alt+0229)
+    $!a::Send, {U+00E5}
+    ; Capital Letter A with Ring Above {U+00C5}: Å (Alt+0197)
+    $!+a::Send, {U+00C5}
+
+    ; German Eszett/beta (Sharfes/Sharp S) {U+00DF}: ß (Alt+0223)
+    $!s::Send, {U+00DF}
+    ; Latin Capital Letter I with Acute {U+00CD}: Í (Alt+0205)
+    $!+s::Send, {U+00CD}
+
+    ; Partial Differential mathematical symbol {U+2202}: ∂ (Alt+2202) [Needs Unicode]
+    $!d::Send, {U+2202}
+    ; Latin Capital Letter I with Circumflex {U+00CE}: Î (Alt+0206)
+    $!+d::Send, {U+00CE}
+
+    ; Function/florin currency symbol {U+0192}: ƒ (Alt+159)
+    $!f::Send, {U+0192}
+    ; Latin Capital Letter I with Diaeresis {U+00CF}: Ï (Alt+0207)
+    $!+f::Send, {U+00CF}
+
+    ; #######################################################################
+    ; ##  Problem: Option+g (Win+g) brings up Windows XBox Game Bar! 
+    ; ##  To remove/disable paste this text in Powershell (without quotes): 
+    ; ##  "Get-AppxPackage Microsoft.XboxGamingOverlay | Remove-AppxPackage"
+    ; #######################################################################
+    ; Copyright Sign {U+00A9}: © (Alt+0169)
+    !g::Send, {U+00A9}
+    ; Double Acute Accent diacritic (non-combining) {U+02DD}: ˝ [Needs Unicode]
+    !+g::Send, {U+02DD}
+
+    ; Dot Above diacritic (non-combining) {U+02D9}: ˙ [Needs Unicode]
+    $!h::Send, {U+02D9}
+    ; Latin Capital Letter O with Acute {U+00D3}: Ó (Alt+0211)
+    $!+h::Send, {U+00D3}
+
+    ; Increment, laplace operator symbol {U+2206}: ∆ [Needs Unicode]
+    $!j::Send, {U+2206}
+    ; Latin Capital Letter O with Circumflex {U+00D4}: Ô (Alt+0212)
+    $!+j::Send, {U+00D4}
+
+    ; Ring Above diacritic (non-combining) {U+02DA}: ˚ [Needs Unicode] (NOT degree sign/symbol)
+    $!k::Send, {U+02DA}
+    ; Apple logo {U+F8FF}:  [Unicode Private Use Area, req's Baskerville Old Face font]
+    ; $!+k::Send, {U+F8FF}    ; This Unicode address only works with Mac fonts
+    $!+k::
+        Send, {U+F000}    ; Change font of inserted character (may be invisible) to Baskerville Old Face
+        apple_logo_alert:=1     ; Set to zero to disable, one to enable (default is enabled)
+        if (apple_logo_alert=1) {
+            MsgBox, 0, ALERT, % "ALERT: Change the font of the inserted character!`n`n"
+                                . "Apple logo character requires the Baskerville Old Face font.`n`n`n"
+                                . "Note 1: The character has been inserted but may be INVISIBLE`n"
+                                . "             (i.e., non-printing) in its current font.`n`n`n"
+                                . "Note 2: The inserted character will probably NOT be portable`n"
+                                . "             to a Mac document/font. Use only for print/PDF `n"
+                                . "             purposes on PC.`n`n`n"
+                                . "Note 3: Search for apple_logo_alert in kinto.ahk config and `n"
+                                . "             set it to zero to disable this MsgBox.`n`n`n"
+        }
+        return
+
+    ; #######################################################################
+    ; ##  Option+L works, but will also trigger the Win+L screen locking.
+    ; ##  The screen locking shortcut can only be disabled in the registry. 
+    ; #######################################################################
+    ; Not Sign angled dash symbol {U+00AC}: ¬ (Alt+170) [Triggers Win+L screen locking!]
+    $!l::Send, {U+00AC}
+    ; Latin Capital Letter O with Grave {U+00D2}: Ò (Alt+0210)
+    $!+l::Send, {U+00D2}
+
+    ; Horizontal elipsis {U+2026}: … (Alt+0133)
+    $!;::Send, {U+2026}
+    ; Latin Capital Letter U with Acute {U+00DA}: Ú (Alt+0218)
+    $!+;::Send, {U+00DA}
+
+    ; #######################################################################
+    ; ##  SC028 is single-quote key scan code
+    ; #######################################################################
+    ; Small ae ligature {U+00E6}: æ (Alt+0230)
+    !SC028::Send, {U+00E6}
+    ; Capital AE ligature {U+00C6}: Æ (Alt+0198)
+    !+SC028::Send, {U+00C6}
+
+
+    ; ##############
+    ; ###   3rd row: Shift-Keys row [ zxcvbnm,./ ] [ ZXCVBNM<>? ]
+
+
+    ; Greek Capital Letter Omega symbol {U+03A9} Ω (Alt+234)
+    $!z::Send, {U+03A9}
+    ; Spacing Cedilla diacritic symbol (non-combining) {U+00B8}: ¸ (Alt+0184)
+    $!+z::Send, {U+00B8}
+
+    ; Almost Equal To symbol (U+2248): ≈ (Alt+247)
+    $!x::Send, {U+2248}
+    ; Ogonek diacritic (non-combining) (U+02DB): ˛ (No Alt Code)
+    $!+x::Send, {U+02DB}
+
+    ; Small Letter c with Cedilla {U+00E7}: ç (Alt+0231)
+    $!c::Send, {U+00E7}
+    ; Capital Letter C with Cedilla {U+00C7}: Ç (Alt+0199)
+    $!+c::Send, {U+00C7}
+
+    ; Square Root radical sign (U+221A): √ (Alt+251)
+    !v::Send, {U+221A}
+    ; Lozenge (diamond) shape symbol (U+25CA): ◊ (No Alt Code) [Needs Unicode]
+    !+v::Send, {U+25CA}
+
+    ; Integral mathematical symbol (U+222B): ∫ (No Alt Code) [Needs Unicode]
+    $!b::Send, {U+222B}
+    ; Latin Small Letter Dotless i (U+0131): ı (No Alt Code) [Needs Unicode]
+    $!+b::Send, {U+0131}
+
+    ; Dead_Keys_Accent_Tilde
+    ; Tilde accent: Option+n, then key to accent
+    $!n::
+        ; Use Apple "dead keys" Option key method to attach accents to next character typed
+        ; Tilde accent activated by Option+n (logical Alt+n)
+        StringCaseSense, On
+        ; watch next input string
+        Input, UserInput, L1 
+        ; Watch for Escape key, cancel dead keys sequence
+        if UserInput = Esc
+            Return
+        ; Option/Alt key needed to access menus sometimes
+        ; If user repeats same shortcut, just send to app unmodified.
+        else if UserInput = !n
+            Send, {Alt down}n{Alt up}
+        else if UserInput = a
+            ; ã {U+00E3} (Alt+0227)
+            Send, {U+00E3}
+        else if UserInput = n
+            ; ñ {U+00F1} (Alt+0241)
+            Send, {U+00F1}
+        else if UserInput = o
+            ; õ {U+00F5} (Alt+0245)
+            Send, {U+00F5}
+        else if UserInput = A
+            ; Ã {U+00C3} (Alt+0195)
+            Send, {U+00C3}
+        else if UserInput = N
+            ; Ñ {U+00D1} (Alt+0209)
+            Send, {U+00D1}
+        else if UserInput = O
+            ; Õ {U+00D5} (Alt+0213)
+            Send, {U+00D5}
+        ; No relevant character to accent? Send input unmodified. 
+        else
+            Send, %UserInput%
+        Return
+
+    ; Small Tilde character (U+02DC): ˜ (Alt+0152)
+    !+n::Send, {U+02DC}
+
+    ; Micro (mu) symbol {U+00B5}: µ (Alt+0181)
+    $!m::Send, {U+00B5}
+    ; Latin Capital Letter a with Circumflex (U+00C2): Â (Alt+0194)
+    $!+m::Send, {U+00C2}
+
+    ; Less than or equal to symbol {U+2264}: ≤ (Alt+243)
+    $!,::Send, {U+2264}
+    ; Macron/overline/apl overbar (non-combining) (U+00AF): ¯ (Alt+0175)
+    $!+,::Send, {U+00AF}
+
+    ; Greater than or equal to symbol {U+2265}: ≥ (Alt+242)
+    $!.::Send, {U+2265}
+    ; Breve diacritic (non-combining) {U+02D8}: ˘ (No Alt Code) [Needs Unicode]
+    $!+.::Send, {U+02D8}
+
+    ; Obelus/Division symbol {U+00F7}: ÷ (Alt+0247)
+    $!/::Send, {U+00F7}
+    ; Inverted Question Mark {U+00BF}: ¿ (Alt+0191)
+    $!+/::Send, {U+00BF}
+
+#If ; ### END of special character insertion with Option(Alt) key
