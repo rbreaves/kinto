@@ -156,14 +156,15 @@ RDP fully works as long as the entire keyboard input is being captured. RDP had 
 |Official MS RDC from Store| ❖Windows ⇒| ❖Windows  | ✅ Yes|   |
 |Official MS RDC from Store| ❖Windows ⇒| 🍎macOS  | ✅ Yes| Note: Must compile & install xrdp.   |
 |RealVNC| ❖Windows ⇒| 🐧Linux  | ✅ Yes| Note: Compile & install my forked [x11vnc](https://gist.github.com/rbreaves/87059f92f030ee4e068f911ddb56a4dd) for compatibility. |
-|Official MS RDP (mstsc.exe)| ❖Windows ⇒| 🐧Linux  | ☐ Maybe | Note: Compile & install my forked [x11vnc](https://gist.github.com/rbreaves/87059f92f030ee4e068f911ddb56a4dd) for compatibility, then setup xrdp like normal. |
-|Official MS RDC from Store| ❖Windows ⇒| 🐧Linux  | ☐ Maybe| Note: Compile & install my forked [x11vnc](https://gist.github.com/rbreaves/87059f92f030ee4e068f911ddb56a4dd) for compatibility, then setup xrdp like normal. |
+|Official MS RDP (mstsc.exe)| ❖Windows ⇒| 🐧Linux  | ✅ Yes | Note: Compile & install my forked [x11vnc](https://gist.github.com/rbreaves/87059f92f030ee4e068f911ddb56a4dd) for compatibility, then setup xrdp like normal & use xrdp 0.9.18+. |
+|Official MS RDC from Store| ❖Windows ⇒| 🐧Linux  | ✅ Yes | Note: Compile & install my forked [x11vnc](https://gist.github.com/rbreaves/87059f92f030ee4e068f911ddb56a4dd) for compatibility, then setup xrdp like normal & use xrdp 0.9.18+. |
 |Official MS RDP| ChromeOS 87+⇒| ❖Windows  | ✅ Yes|May work on earlier versions as well, if they support Android apps|
 |Remmina| 🐧Linux*/ChromeOS 87+⇒| ❖Windows  | ✅ Yes|*Use hover menu to enable "Grab all keyboard events"|
 |FreeRDP| 🐧Linux/ChromeOS 87+⇒| ❖Windows  | ✅ Yes | |
 |FreeRDP| 🍎macOS⇒| ❖Windows  | ✅ Yes| [FreeRDP for macOS](#FreeRDP-for-macOS)|
 |Remote Desktop Manager Free|🍎iOS⇒| ❖Windows  | ✅ Yes| |
 |Jump Desktop (RDP)| 🍎macOS*/iOS ⇒| ❖Windows  | ✅ Yes|*Preferences -> Keyboard -> Disable "Key Conversions", Enabled "Send macOS Shortcuts" under Keyboard shortcuts|
+|Jump Desktop (RDP)| 🍎macOS⇒| 🐧Linux   | ✅ Yes| Note: Compile & install my forked [x11vnc](https://gist.github.com/rbreaves/87059f92f030ee4e068f911ddb56a4dd) for compatibility & use xrdp 0.9.18+. |
 |RealVNC| 🍎macOS⇒| 🐧Linux   | ✅ Yes| Note: Compile & install my forked [x11vnc](https://gist.github.com/rbreaves/87059f92f030ee4e068f911ddb56a4dd) for compatibility. |
 |Official MS RDP| 🍎macOS⇒| ❖Windows  | ❌ No|Initial Cmd key press not being passed|
 |Remote Desktop Manager Free| 🍎macOS⇒| ❖Windows  | ❌ No|Initial Cmd key press not being passed|
