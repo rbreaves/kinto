@@ -62,6 +62,8 @@ Menu, Tray, Add, Autodetect Keyboards, autodetect
 ; Menu, Tray, check, Autodetect Keyboards ; Autodetect
 ; Menu, Tray, disable, Autodetect Keyboards ; CB/IBM
 Menu, Tray, Add, Suspend Kinto, tray_suspend
+; Add tray menu item for toggling media_arrows_fix
+Menu, Tray, Add, Media Arrows Fix   Shift+Opt+Cmd+M, toggle_media_arrows_fix
 ; Menu, Tray, Add, Returns to Desktop, min
 Menu, Tray, Add
 Menu, Tray, Add, Close, Exit
