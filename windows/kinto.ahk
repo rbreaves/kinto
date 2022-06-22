@@ -128,6 +128,12 @@ Exit() {
     ExitApp
 }
 
+; Set this variable to 1 to ENABLE Media Arrows Fix by default
+media_arrows_fix:=0
+if (media_arrows_fix=1) {
+    Menu, Tray, Check, Media Arrows Fix   Shift+Opt+Cmd+M
+}
+
 SetTitleMatchMode, 2
 
 GroupAdd, terminals, ahk_exe ubuntu.exe
@@ -864,6 +870,124 @@ Send {LWin up}
 Send {RShift up}
 Send {LShift up}
 return
+
+
+; ##########################################################################################
+; ###   MEDIA ARROWS FIX
+; ###   Fix to make laptops with media functions on arrow keys act like Apple laptops
+; ###   To set this to ENABLED by default, search for "Enable Media Arrows Fix by default"
+; ##########################################################################################
+
+; Shortcut to activate media arrow keys fix
+^+!m::Gosub, toggle_media_arrows_fix
+
+; Function (subroutine?) for activation by tray menu item or keyboard shortcut
+toggle_media_arrows_fix:
+    media_arrows_fix:=!media_arrows_fix         ; Toggle value of optspecialchars variable on/off
+    if (media_arrows_fix = 1) {
+        Menu, Tray, Check, Media Arrows Fix   Shift+Opt+Cmd+M
+        MsgBox, 0, ALERT, % "Media Arrows Fix is now ENABLED.`n`n"
+                            . "When used with the Fn key, arrow keys with `n"
+                            . "media functions will now behave as if they are`n"
+                            . "PgUp/PgDn/Home/End navigation keys.`n`n"
+                            . "To ENABLE by default, search in kinto.ahk for`n"
+                            . "   'Enable Media Arrows Fix by default'`n`n"
+                            . "Disable from tray menu or with Shift+Opt+Cmd+M."
+        return
+    }
+    if (media_arrows_fix = 0) {
+        Menu, Tray, Uncheck, Media Arrows Fix   Shift+Opt+Cmd+M
+        MsgBox, 0, ALERT, Media arrow keys fix is now DISABLED.
+        return
+    }
+
+#If !WinActive("ahk_group remotes") && media_arrows_fix = 1
+    ; Base media key
+    Media_Play_Pause::      Send, {PgUp}
+    Media_Stop::            Send, {PgDn}
+    Media_Prev::            Send, {Home}
+    Media_Next::            Send, {End}
+
+    ; ONE MODIFIER
+    #Media_Play_Pause::      Send, ^{PgUp}
+    #Media_Stop::            Send, ^{PgDn}
+    #Media_Prev::            Send, ^{Home}
+    #Media_Next::            Send, ^{End}
+
+    !Media_Play_Pause::      Send, #{PgUp}
+    !Media_Stop::            Send, #{PgDn}
+    !Media_Prev::            Send, #{Home}
+    !Media_Next::            Send, #{End}
+
+    +Media_Play_Pause::      Send, +{PgUp}
+    +Media_Stop::            Send, +{PgDn}
+    +Media_Prev::            Send, +{Home}
+    +Media_Next::            Send, +{End}
+
+    ^Media_Play_Pause::      Send, !{PgUp}
+    ^Media_Stop::            Send, !{PgDn}
+    ^Media_Prev::            Send, !{Home}
+    ^Media_Next::            Send, !{End}
+
+    ; TWO MODIFIERS
+    #!Media_Play_Pause::      Send, ^#{PgUp}
+    #!Media_Stop::            Send, ^#{PgDn}
+    #!Media_Prev::            Send, ^#{Home}
+    #!Media_Next::            Send, ^#{End}
+
+    #+Media_Play_Pause::      Send, ^+{PgUp}
+    #+Media_Stop::            Send, ^+{PgDn}
+    #+Media_Prev::            Send, ^+{Home}
+    #+Media_Next::            Send, ^+{End}
+
+    #^Media_Play_Pause::      Send, ^!{PgUp}
+    #^Media_Stop::            Send, ^!{PgDn}
+    #^Media_Prev::            Send, ^!{Home}
+    #^Media_Next::            Send, ^!{End}
+
+    !+Media_Play_Pause::      Send, +#{PgUp}
+    !+Media_Stop::            Send, +#{PgDn}
+    !+Media_Prev::            Send, +#{Home}
+    !+Media_Next::            Send, +#{End}
+
+    !^Media_Play_Pause::      Send, !#{PgUp}
+    !^Media_Stop::            Send, !#{PgDn}
+    !^Media_Prev::            Send, !#{Home}
+    !^Media_Next::            Send, !#{End}
+
+    +^Media_Play_Pause::      Send, !+{PgUp}
+    +^Media_Stop::            Send, !+{PgDn}
+    +^Media_Prev::            Send, !+{Home}
+    +^Media_Next::            Send, !+{End}
+
+    ; THREE MODIFIERS
+    #!+Media_Play_Pause::      Send, ^+#{PgUp}
+    #!+Media_Stop::            Send, ^+#{PgDn}
+    #!+Media_Prev::            Send, ^+#{Home}
+    #!+Media_Next::            Send, ^+#{End}
+
+    #!^Media_Play_Pause::      Send, ^!#{PgUp}
+    #!^Media_Stop::            Send, ^!#{PgDn}
+    #!^Media_Prev::            Send, ^!#{Home}
+    #!^Media_Next::            Send, ^!#{End}
+
+    #+^Media_Play_Pause::      Send, ^!+{PgUp}
+    #+^Media_Stop::            Send, ^!+{PgDn}
+    #+^Media_Prev::            Send, ^!+{Home}
+    #+^Media_Next::            Send, ^!+{End}
+
+    !+^Media_Play_Pause::      Send, !+#{PgUp}
+    !+^Media_Stop::            Send, !+#{PgDn}
+    !+^Media_Prev::            Send, !+#{Home}
+    !+^Media_Next::            Send, !+#{End}
+
+    ; FOUR MODIFIERS
+    #!+^Media_Play_Pause::      Send, ^!+#{PgUp}
+    #!+^Media_Stop::            Send, ^!+#{PgDn}
+    #!+^Media_Prev::            Send, ^!+#{Home}
+    #!+^Media_Next::            Send, ^!+#{End}
+
+#If ; Negates the previous #If directive for media arrow keys fix
 
 #IfWinNotActive ahk_group remotes
     $!u::Goto, ActivateUmlautModifier
