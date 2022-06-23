@@ -906,46 +906,20 @@ toggle_optspecialchars:
         StringCaseSense, On
         ; watch next input string
         Input, UserInput, L1 
-        ; Watch for Escape key, cancel dead keys sequence
-        if UserInput = Esc
-            Return
-        ; Option/Alt key needed to access menus sometimes
-        ; If user repeats same shortcut, just send to app unmodified.
-        ; else if UserInput = !SC029
-        ;     Send, {Alt down}{SC029}{Alt up}
-        else if UserInput = a
-            ; à {U+00E0} (Alt+0224)
-            Send, {U+00E0}
-        else if UserInput = e
-            ; è {U+00E8} (Alt+0232)
-            Send, {U+00E8}
-        else if UserInput = i
-            ; ì {U+00EC} (Alt+0236)
-            Send, {U+00EC}
-        else if UserInput = o
-            ; ò {U+00F2} (Alt+0242)
-            Send, {U+00F2}
-        else if UserInput = u
-            ; ù {U+00F9} (Alt+0249)
-            Send, {U+00F9}
-        else if UserInput = A
-            ; À {U+00C0} (Alt+0192)
-            Send, {U+00C0}
-        else if UserInput = E
-            ; È {U+00C8} (Alt+0200)
-            Send, {U+00C8}
-        else if UserInput = I
-            ; Ì {U+00CC} (Alt+0204)
-            Send, {U+00CC}
-        else if UserInput = O
-            ; Ò {U+00D2} (Alt+0210)
-            Send, {U+00D2}
-        else if UserInput = U
-            ; Ù {U+00D9} (Alt+0217)
-            Send, {U+00D9}
-        ; No relevant character to accent? Send input unmodified. 
-        else
-            Send, %UserInput%
+        Switch UserInput {
+            Case Esc: Return            ; Watch for Escape key, cancel dead keys sequence
+            Case "a": Send, {U+00E0}              ; à {U+00E0} (Alt+0224)
+            Case "e": Send, {U+00E8}              ; è {U+00E8} (Alt+0232)
+            Case "i": Send, {U+00EC}              ; ì {U+00EC} (Alt+0236)
+            Case "o": Send, {U+00F2}              ; ò {U+00F2} (Alt+0242)
+            Case "u": Send, {U+00F9}              ; ù {U+00F9} (Alt+0249)
+            Case "A": Send, {U+00C0}              ; À {U+00C0} (Alt+0192)
+            Case "E": Send, {U+00C8}              ; È {U+00C8} (Alt+0200)
+            Case "I": Send, {U+00CC}              ; Ì {U+00CC} (Alt+0204)
+            Case "O": Send, {U+00D2}              ; Ò {U+00D2} (Alt+0210)
+            Case "U": Send, {U+00D9}              ; Ù {U+00D9} (Alt+0217)
+            Default: Send, %UserInput%          ; No match? Send input through.
+        }
         Return
 
     ; ###   SC029 is ` (Grave key above Tab)
@@ -1039,46 +1013,20 @@ toggle_optspecialchars:
         StringCaseSense, On
         ; watch next input string
         Input, UserInput, L1 
-        ; Watch for Escape key, cancel dead keys sequence
-        if UserInput = Esc
-            Return
-        ; Option/Alt key needed to access menus sometimes
-        ; If user repeats same shortcut, just send to app unmodified.
-        ; else if UserInput = !e
-        ;     Send, {Alt down}e{Alt up}
-        else if UserInput = a
-            ; á {U+00E1} (Alt+0225)
-            Send, {U+00E1}
-        else if UserInput = e
-            ; é {U+00E9} (Alt+0233)
-            Send, {U+00E9}
-        else if UserInput = i
-            ; í {U+00ED} (Alt+0237)
-            Send, {U+00ED}
-        else if UserInput = o
-            ; ó {U+00F3} (Alt+0243)
-            Send, {U+00F3}
-        else if UserInput = u
-            ; ú {U+00FA} (Alt+0250)
-            Send, {U+00FA}
-        else if UserInput = A
-            ; Á {U+00C1} (Alt+0193)
-            Send, {U+00C1}
-        else if UserInput = E
-            ; É {U+00C9} (Alt+0201)
-            Send, {U+00C9}
-        else if UserInput = I
-            ; Í {U+00CD} (Alt+0205)
-            Send, {U+00CD}
-        else if UserInput = O
-            ; Ó {U+00D3} (Alt+0211)
-            Send, {U+00D3}
-        else if UserInput = U
-            ; Ú {U+00DA} (Alt+0218)
-            Send, {U+00DA}
-        ; No relevant character to accent? Send input unmodified. 
-        else
-            Send, %UserInput%
+        Switch UserInput {
+            Case Esc: Return            ; Watch for Escape key, cancel dead keys sequence
+            Case "a": Send, {U+00E1}            ; á {U+00E1} (Alt+0225)
+            Case "e": Send, {U+00E9}            ; é {U+00E9} (Alt+0233)
+            Case "i": Send, {U+00ED}            ; í {U+00ED} (Alt+0237)
+            Case "o": Send, {U+00F3}            ; ó {U+00F3} (Alt+0243)
+            Case "u": Send, {U+00FA}            ; ú {U+00FA} (Alt+0250)
+            Case "A": Send, {U+00C1}            ; Á {U+00C1} (Alt+0193)
+            Case "E": Send, {U+00C9}            ; É {U+00C9} (Alt+0201)
+            Case "I": Send, {U+00CD}            ; Í {U+00CD} (Alt+0205)
+            Case "O": Send, {U+00D3}            ; Ó {U+00D3} (Alt+0211)
+            Case "U": Send, {U+00DA}            ; Ú {U+00DA} (Alt+0218)
+            Default: Send, %UserInput%          ; No match? Send input through.
+        }
         Return
 
     ; Acute accent diacritic (non-combining) {U+00B4}: ´ (Alt+0180)
@@ -1107,52 +1055,22 @@ toggle_optspecialchars:
         StringCaseSense, On
         ; watch next input string
         Input, UserInput, L1 
-        ; Watch for Escape key, cancel dead keys sequence
-        if UserInput = Esc
-            Return
-        ; Option/Alt key needed to access menus sometimes
-        ; If user repeats same shortcut, just send to app unmodified.
-        ; else if UserInput = !u
-        ;     Send, {Alt down}u{Alt up}
-        else if UserInput = a
-            ; ä {U+00E4} (Alt+0228)
-            Send, {U+00E4}
-        else if UserInput = e
-            ; ë {U+00EB} (Alt+0235)
-            Send, {U+00EB}
-        else if UserInput = i
-            ; ï {U+00EF} (Alt+0239)
-            Send, {U+00EF}
-        else if UserInput = o
-            ; ö {U+00F6} (Alt+0246)
-            Send, {U+00F6}
-        else if UserInput = u
-            ; ü {U+00FC} (Alt+0252)
-            Send, {U+00FC}
-        else if UserInput = y
-            ; ÿ {U+00FF} (Alt+0255)
-            Send, {U+00FF}
-        else if UserInput = A
-            ; Ä {U+00C4} (Alt+0196)
-            Send, {U+00C4}
-        else if UserInput = E
-            ; Ë {U+00CB} (Alt+0203)
-            Send, {U+00CB}
-        else if UserInput = I
-            ; Ï {U+00CF} (Alt+0207)
-            Send, {U+00CF}
-        else if UserInput = O
-            ; Ö {U+00D6} (Alt+0214)
-            Send, {U+00D6}
-        else if UserInput = U
-            ; Ü {U+00DC} (Alt+0220)
-            Send, {U+00DC}
-        else if UserInput = Y
-            ; Ÿ {U+0178} (Alt+0159)
-            Send, {U+0178}
-        ; No relevant character to accent? Send input unmodified. 
-        else
-            Send, %UserInput%
+        Switch UserInput {
+            Case Esc: Return            ; Watch for Escape key, cancel dead keys sequence
+            Case "a": Send, {U+00E4}            ; ä {U+00E4} (Alt+0228)
+            Case "e": Send, {U+00EB}            ; ë {U+00EB} (Alt+0235)
+            Case "i": Send, {U+00EF}            ; ï {U+00EF} (Alt+0239)
+            Case "o": Send, {U+00F6}            ; ö {U+00F6} (Alt+0246)
+            Case "u": Send, {U+00FC}            ; ü {U+00FC} (Alt+0252)
+            Case "y": Send, {U+00FF}            ; ÿ {U+00FF} (Alt+0255)
+            Case "A": Send, {U+00C4}            ; Ä {U+00C4} (Alt+0196)
+            Case "E": Send, {U+00CB}            ; Ë {U+00CB} (Alt+0203)
+            Case "I": Send, {U+00CF}            ; Ï {U+00CF} (Alt+0207)
+            Case "O": Send, {U+00D6}            ; Ö {U+00D6} (Alt+0214)
+            Case "U": Send, {U+00DC}            ; Ü {U+00DC} (Alt+0220)
+            Case "Y": Send, {U+0178}            ; Ÿ {U+0178} (Alt+0159)
+            Default: Send, %UserInput%          ; No match? Send input through.
+        }
         Return
 
     ; Umlaut/Diaeresis diacritic (non-combining) {U+00A8}: (Alt+0168)
@@ -1166,46 +1084,20 @@ toggle_optspecialchars:
         StringCaseSense, On
         ; watch next input string
         Input, UserInput, L1 
-        ; Watch for Escape key, cancel dead keys sequence
-        if UserInput = Esc
-            Return
-        ; Option/Alt key needed to access menus sometimes
-        ; If user repeats same shortcut, just send to app unmodified.
-        ; else if UserInput = !i
-        ;     Send, {Alt down}i{Alt up}
-        else if UserInput = a
-            ; â {U+00E2} (Alt+0226)
-            Send, {U+00E2}
-        else if UserInput = e
-            ; ê {U+00EA} (Alt+0234)
-            Send, {U+00EA}
-        else if UserInput = i
-            ; î {U+00EE} (Alt+0238)
-            Send, {U+00EE}
-        else if UserInput = o
-            ; ô {U+00F4} (Alt+0244)
-            Send, {U+00F4}
-        else if UserInput = u
-            ; û {U+00FB} (Alt+0251)
-            Send, {U+00FB}
-        else if UserInput = A
-            ; Â {U+00C2} (Alt+0194)
-            Send, {U+00C2}
-        else if UserInput = E
-            ; Ê {U+00CA} (Alt+0202)
-            Send, {U+00CA}
-        else if UserInput = I
-            ; Î {U+00CE} (Alt+0206)
-            Send, {U+00CE}
-        else if UserInput = O
-            ; Ô {U+00D4} (Alt+0212)
-            Send, {U+00D4}
-        else if UserInput = U
-            ; Û {U+00DB} (Alt+0219)
-            Send, {U+00DB}
-        ; No relevant character to accent? Send input unmodified. 
-        else
-            Send, %UserInput%
+        Switch UserInput {
+            Case Esc: Return            ; Watch for Escape key, cancel dead keys sequence
+            Case "a": Send, {U+00E2}            ; â {U+00E2} (Alt+0226)
+            Case "e": Send, {U+00EA}            ; ê {U+00EA} (Alt+0234)
+            Case "i": Send, {U+00EE}            ; î {U+00EE} (Alt+0238)
+            Case "o": Send, {U+00F4}            ; ô {U+00F4} (Alt+0244)
+            Case "u": Send, {U+00FB}            ; û {U+00FB} (Alt+0251)
+            Case "A": Send, {U+00C2}            ; Â {U+00C2} (Alt+0194)
+            Case "E": Send, {U+00CA}            ; Ê {U+00CA} (Alt+0202)
+            Case "I": Send, {U+00CE}            ; Î {U+00CE} (Alt+0206)
+            Case "O": Send, {U+00D4}            ; Ô {U+00D4} (Alt+0212)
+            Case "U": Send, {U+00DB}            ; Û {U+00DB} (Alt+0219)
+            Default: Send, %UserInput%          ; No match? Send input through.
+        }
         Return
 
     ; Modifier Letter Circumflex Accent (U+02C6): ˆ (Alt+0137)
@@ -1265,7 +1157,7 @@ toggle_optspecialchars:
 
     ; #######################################################################
     ; ##  Problem: Option+g (Win+g) brings up Windows XBox Game Bar! 
-    ; ##  To remove/disable paste this text in Powershell (without quotes): 
+    ; ##  To remove/disable paste this text in PowerShell (without quotes): 
     ; ##  "Get-AppxPackage Microsoft.XboxGamingOverlay | Remove-AppxPackage"
     ; #######################################################################
     ; Copyright Sign {U+00A9}: © (Alt+0169)
@@ -1363,34 +1255,16 @@ toggle_optspecialchars:
         StringCaseSense, On
         ; watch next input string
         Input, UserInput, L1 
-        ; Watch for Escape key, cancel dead keys sequence
-        if UserInput = Esc
-            Return
-        ; Option/Alt key needed to access menus sometimes
-        ; If user repeats same shortcut, just send to app unmodified.
-        else if UserInput = !n
-            Send, {Alt down}n{Alt up}
-        else if UserInput = a
-            ; ã {U+00E3} (Alt+0227)
-            Send, {U+00E3}
-        else if UserInput = n
-            ; ñ {U+00F1} (Alt+0241)
-            Send, {U+00F1}
-        else if UserInput = o
-            ; õ {U+00F5} (Alt+0245)
-            Send, {U+00F5}
-        else if UserInput = A
-            ; Ã {U+00C3} (Alt+0195)
-            Send, {U+00C3}
-        else if UserInput = N
-            ; Ñ {U+00D1} (Alt+0209)
-            Send, {U+00D1}
-        else if UserInput = O
-            ; Õ {U+00D5} (Alt+0213)
-            Send, {U+00D5}
-        ; No relevant character to accent? Send input unmodified. 
-        else
-            Send, %UserInput%
+        Switch UserInput {
+            Case Esc: Return            ; Watch for Escape key, cancel dead keys sequence
+            Case "a": Send, {U+00E3}            ; ã {U+00E3} (Alt+0227)
+            Case "n": Send, {U+00F1}            ; ñ {U+00F1} (Alt+0241)
+            Case "o": Send, {U+00F5}            ; õ {U+00F5} (Alt+0245)
+            Case "A": Send, {U+00C3}            ; Ã {U+00C3} (Alt+0195)
+            Case "N": Send, {U+00D1}            ; Ñ {U+00D1} (Alt+0209)
+            Case "O": Send, {U+00D5}            ; Õ {U+00D5} (Alt+0213)
+            Default: Send, %UserInput%          ; No match? Send input through.
+        }
         Return
 
     ; Small Tilde character (U+02DC): ˜ (Alt+0152)
