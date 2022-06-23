@@ -235,7 +235,7 @@ GroupAdd, intellij, ahk_exe idea64.exe
 #IfWinNotActive ahk_group remotes
 
     ; Switch within the windows of a single application with Cmd+Grave (backtick)
-    switch()
+    same_app_switch()
     {
         SetTitleMatchMode, 2
         DetectHiddenWindows, % "off"
@@ -252,7 +252,7 @@ GroupAdd, intellij, ahk_exe idea64.exe
     }
 
     ^SC029::
-        switch()
+        same_app_switch()
     Return
 
     ; New AltTab and CtrlTab fix
