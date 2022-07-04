@@ -943,7 +943,6 @@ toggle_optspecialchars:
     }
     return
 
-; #IfWinNotActive ahk_group remotes
 #If !WinActive("ahk_group remotes") && optspecialchars = 1
 
     ; ######   NUMBER KEYS ROW   ######
@@ -976,17 +975,17 @@ toggle_optspecialchars:
     ; ###   SC029 is ` (Grave key above Tab)
     $!+SC029::Send, {U+0060} ; Grave Accent diacritic (non-combining) {U+0060}: ` (Alt+96)
     $!1::Send,  {U+00A1} ; Inverted Exclamation Mark {U+00A1}: ¡ (Alt+0161)
-    $!+1::Send, {U+2044} ; Fraction Slash, solidus (U+2044): ⁄ (Alt+8260) [Needs Unicode]
+    $!+1::Send, {U+2044} ; Fraction Slash, solidus {U+2044}: ⁄ (Alt+8260) [Needs Unicode]
     $!2::Send,  {U+2122} ; Trade Mark Sign Emoji {U+2122}: ™ (Alt+0153)
     $!+2::Send, {U+20AC} ; Euro currency symbol {U+20AC}: € (Alt+0128)
     $!3::Send,  {U+00A3} ; British Pound currency symbol {U+00A3}: £ (Alt+0163)
-    $!+3::Send, {U+2039} ; Single Left-Pointing Angle Quotation mark {U+2039}: (Alt+0139)
+    $!+3::Send, {U+2039} ; Single Left-Pointing Angle Quotation mark {U+2039}: ‹ (Alt+0139)
     $!4::Send,  {U+00A2} ; Cent currency symbol {U+00A2}: ¢ (Alt+0162)
-    $!+4::Send, {U+203A} ; Single Right-Pointing Angle Quotation mark (U+203A): (Alt+0155)
+    $!+4::Send, {U+203A} ; Single Right-Pointing Angle Quotation mark {U+203A}: › (Alt+0155)
     $!5::Send,  {U+221E} ; Infinity mathematical symbol {U+221E}: ∞ (Alt+236)
-    $!+5::Send, {U+FB01} ; fi latin small ligature: ﬁ (U+FB01) (Alt+64257) [Needs Unicode]
+    $!+5::Send, {U+FB01} ; fi Latin small ligature {U+FB01}: ﬁ (Alt+64257) [Needs Unicode]
     $!6::Send,  {U+00A7} ; Section symbol {U+00A7}: § (Alt+0167)
-    $!+6::Send, {U+FB02} ; fl small ligature: (U+FB02) (Alt+64258) [Needs Unicode.]
+    $!+6::Send, {U+FB02} ; fl Latin small ligature {U+FB02}: ﬂ (Alt+64258) [Needs Unicode]
     $!7::Send,  {U+00B6} ; Paragraph mark (Pilcrow) symbol {U+00B6}: ¶ (Alt+0182)
     $!+7::Send, {U+2021} ; Double dagger (cross) symbol {U+2021}: ‡ (Alt+0135)
     $!8::Send,  {U+2022} ; Bullet point symbol {U+2022}: • (Alt+0149) 
@@ -997,7 +996,7 @@ toggle_optspecialchars:
     $!+0::Send, {U+201A} ; Single low-9 quotation mark {U+201A}: ‚ (Alt+0130) 
     $!-::Send,  {U+2013} ; En Dash symbol {U+2013}: – (Alt+0150)
     $!+-::Send, {U+2014} ; Em Dash symbol {U+2014}: — (Alt+0151)
-    $!=::Send,  {U+2260} ; Not Equal To symbol (U+2260): ≠ (Alt+8800) [Needs Unicode]
+    $!=::Send,  {U+2260} ; Not Equal To symbol {U+2260}: ≠ (Alt+8800) [Needs Unicode]
     $!+=::Send, {U+00B1} ; Plus Minus symbol {U+00B1}: ± (Alt+0177)
 
 
@@ -1008,7 +1007,7 @@ toggle_optspecialchars:
 
     $!q::Send,  {U+0153} ; Small oe (oethel) ligature {U+0153}: œ (Alt+0156)
     $!+q::Send, {U+0152} ; Capital OE (Oethel) ligature {U+0152}: Œ (Alt+0140)
-    $!w::Send,  {U+2211} ; N-Ary Summation (sigma) notation (U+2211}: ∑ [Needs Unicode]
+    $!w::Send,  {U+2211} ; N-Ary Summation (sigma) notation {U+2211}: ∑ [Needs Unicode]
     $!+w::Send, {U+201E} ; Double Low-9 Quotation mark {U+201E}: „ (Alt+0132)
 
     ; Dead_Keys_Accent_Acute
@@ -1039,9 +1038,9 @@ toggle_optspecialchars:
     $!r::Send,  {U+00AE} ; Registered Trade Mark Sign {U+00AE}: ® (Alt+0174)
     $!+r::Send, {U+2030} ; Per mille symbol {U+2030}: ‰ (Alt+0137)
     $!t::Send,  {U+2020} ; Simple dagger (cross) symbol {U+2020}: † (Alt+0134)
-    $!+t::Send, {U+02C7} ; Caron/hacek diacritic (non-combining) (U+02C7): ˇ (Alt+0134)
+    $!+t::Send, {U+02C7} ; Caron/hacek diacritic (non-combining) {U+02C7}: ˇ (Alt+0134)
     $!y::Send,  {U+00A5} ; Yen currency symbol {U+00A5}: ¥ (Alt+0165)
-    $!+y::Send, {U+00C1} ; Latin Capital Letter a with Acute (U+00C1): Á (Alt+0193)
+    $!+y::Send, {U+00C1} ; Latin Capital Letter a with Acute {U+00C1}: Á (Alt+0193)
 
     ; Dead_Keys_Accent_Umlaut
     ; Umlaut/Diaeresis accent: Option+u, then key to accent
@@ -1069,7 +1068,7 @@ toggle_optspecialchars:
         }
         Return
 
-    $!+u::Send, {U+00A8} ; Umlaut/Diaeresis diacritic (non-combining) {U+00A8}: (Alt+0168)
+    $!+u::Send, {U+00A8} ; Umlaut/Diaeresis diacritic (non-combining) {U+00A8}: ¨ (Alt+0168)
 
     ; Dead_Keys_Accent_Circumflex
     ; Circumflex accent: Option+i, then key to accent
@@ -1095,11 +1094,11 @@ toggle_optspecialchars:
         }
         Return
 
-    $!+i::Send, {U+02C6} ; Modifier Letter Circumflex Accent (U+02C6): ˆ (Alt+0137)
+    $!+i::Send, {U+02C6} ; Modifier Letter Circumflex Accent {U+02C6}: ˆ (Alt+0137)
     $!o::Send,  {U+00F8} ; Latin Small Letter o with Stroke {U+00F8}: ø (Alt+0248)
     $!+o::Send, {U+00D8} ; Latin Capital Letter O with Stroke {U+00D8}: Ø (Alt+0216)
     $!p::Send,  {U+03C0} ; Greek Small Letter Pi {U+03C0}: π (Alt+227)
-    $!+p::Send, {U+220F} ; N-Ary Product mathematical symbol (U+220F): ∏ [Needs Unicode]
+    $!+p::Send, {U+220F} ; N-Ary Product mathematical symbol {U+220F}: ∏ [Needs Unicode]
     $![::Send,  {U+201C} ; Left Double Quotation Mark {U+201C}: “ (Alt+0147)
     $!+[::Send, {U+201D} ; Right Double Quotation Mark {U+201D}: ” (Alt+8)
     $!]::Send,  {U+2018} ; Left Single Quotation Mark {U+2018}: ‘ (Alt+0145)
@@ -1131,7 +1130,7 @@ toggle_optspecialchars:
     $!+h::Send, {U+00D3} ; Latin Capital Letter O with Acute {U+00D3}: Ó (Alt+0211)
     $!j::Send,  {U+2206} ; Increment, laplace operator symbol {U+2206}: ∆ [Needs Unicode]
     $!+j::Send, {U+00D4} ; Latin Capital Letter O with Circumflex {U+00D4}: Ô (Alt+0212)
-    $!k::Send,  {U+02DA} ; Ring Above diacritic (non-combining) {U+02DA}: ˚ [Needs Unicode] (NOT degree sign/symbol)
+    $!k::Send,  {U+02DA} ; Ring Above diacritic (non-combining) {U+02DA}: ˚ [Needs Unicode]
 
     ; Apple logo {U+F8FF}:  [Unicode Private Use Area, req's Baskerville Old Face font]
     ; $!+k::Send, {U+F8FF}    ; This Unicode address only works with Mac fonts
@@ -1172,14 +1171,14 @@ toggle_optspecialchars:
 
     $!z::Send,  {U+03A9} ; Greek Capital Letter Omega symbol {U+03A9} Ω (Alt+234)
     $!+z::Send, {U+00B8} ; Spacing Cedilla diacritic symbol (non-combining) {U+00B8}: ¸ (Alt+0184)
-    $!x::Send,  {U+2248} ; Almost Equal To symbol (U+2248): ≈ (Alt+247)
-    $!+x::Send, {U+02DB} ; Ogonek diacritic (non-combining) (U+02DB): ˛ [Needs Unicode]
+    $!x::Send,  {U+2248} ; Almost Equal To symbol {U+2248}: ≈ (Alt+247)
+    $!+x::Send, {U+02DB} ; Ogonek diacritic (non-combining) {U+02DB}: ˛ [Needs Unicode]
     $!c::Send,  {U+00E7} ; Small Letter c with Cedilla {U+00E7}: ç (Alt+0231)
     $!+c::Send, {U+00C7} ; Capital Letter C with Cedilla {U+00C7}: Ç (Alt+0199)
-    $!v::Send,  {U+221A} ; Square Root radical sign (U+221A): √ (Alt+251)
-    $!+v::Send, {U+25CA} ; Lozenge (diamond) shape symbol (U+25CA): ◊ [Needs Unicode]
-    $!b::Send,  {U+222B} ; Integral mathematical symbol (U+222B): ∫ [Needs Unicode]
-    $!+b::Send, {U+0131} ; Latin Small Letter Dotless i (U+0131): ı [Needs Unicode]
+    $!v::Send,  {U+221A} ; Square Root radical sign {U+221A}: √ (Alt+251)
+    $!+v::Send, {U+25CA} ; Lozenge (diamond) shape symbol {U+25CA}: ◊ [Needs Unicode]
+    $!b::Send,  {U+222B} ; Integral mathematical symbol {U+222B}: ∫ [Needs Unicode]
+    $!+b::Send, {U+0131} ; Latin Small Letter Dotless i {U+0131}: ı [Needs Unicode]
 
     ; Dead_Keys_Accent_Tilde
     ; Tilde accent: Option+n, then key to accent
@@ -1201,11 +1200,11 @@ toggle_optspecialchars:
         }
         Return
 
-    $!+n::Send, {U+02DC} ; Small Tilde character (U+02DC): ˜ (Alt+0152)
+    $!+n::Send, {U+02DC} ; Small Tilde character {U+02DC}: ˜ (Alt+0152)
     $!m::Send,  {U+00B5} ; Micro (mu) symbol {U+00B5}: µ (Alt+0181)
-    $!+m::Send, {U+00C2} ; Latin Capital Letter a with Circumflex (U+00C2): Â (Alt+0194)
+    $!+m::Send, {U+00C2} ; Latin Capital Letter a with Circumflex {U+00C2}: Â (Alt+0194)
     $!,::Send,  {U+2264} ; Less than or equal to symbol {U+2264}: ≤ (Alt+243)
-    $!+,::Send, {U+00AF} ; Macron/overline/apl overbar (non-combining) (U+00AF): ¯ (Alt+0175)
+    $!+,::Send, {U+00AF} ; Macron/overline/apl overbar (non-combining) {U+00AF}: ¯ (Alt+0175)
     $!.::Send,  {U+2265} ; Greater than or equal to symbol {U+2265}: ≥ (Alt+242)
     $!+.::Send, {U+02D8} ; Breve diacritic (non-combining) {U+02D8}: ˘ [Needs Unicode]
     $!/::Send,  {U+00F7} ; Obelus/Division symbol {U+00F7}: ÷ (Alt+0247)
