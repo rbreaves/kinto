@@ -315,8 +315,9 @@ if ! [ -x "$(command -v xhost)" ] || ! [ -x "$(command -v gcc)" ]; then
 fi
 
 if [[ $dename == "kde" ]]; then
-	if [[ $distro == "manjarolinux" ]]; then
+	if [[ $distro == "manjarolinux" ]] || cat /etc/os-release | grep -E "^ID(_LIKE)?" | grep -q arch; then # Manjario or other arch-like distros: SteamOS3,HoloISO
 		sudo ./linux/system-config/unipkg.sh vte3
+		sudo ./linux/system-config/unipkg.sh python-pip
 	else
 		sudo ./linux/system-config/unipkg.sh libvte-2.91-dev
 	fi
