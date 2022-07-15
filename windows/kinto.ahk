@@ -956,7 +956,7 @@ toggle_optspecialchars:
         Send, {U+0060}{Shift down}{Left}{Shift up}
         StringCaseSense, On
         ; watch next input string
-        Input, UserInput, L1, {BS}{Del}{Left}{Right}{Up}{Down}{LAlt}{RAlt}
+        Input, UserInput, L1, {BS}{Del}{Left}{Right}{Up}{Down}{LAlt}{RAlt}{LCtrl}{RCtrl}
         ; MsgBox % GetKeyName(UserInput)              ; Show normalized key name
         ; MsgBox % ErrorLevel                         ; Show ErrorLevel value
         name := GetKeyName(UserInput)               ; Get normalized name of UserInput
@@ -1025,7 +1025,7 @@ toggle_optspecialchars:
         Send, {U+00B4}{Shift down}{Left}{Shift up}
         StringCaseSense, On
         ; watch next input string
-        Input, UserInput, L1, {BS}{Del}{Left}{Right}{Up}{Down}{LAlt}{RAlt}
+        Input, UserInput, L1, {BS}{Del}{Left}{Right}{Up}{Down}{LAlt}{RAlt}{LCtrl}{RCtrl}
         ; MsgBox % GetKeyName(UserInput)              ; Show normalized key name
         ; MsgBox % ErrorLevel                         ; Show ErrorLevel value
         name := GetKeyName(UserInput)               ; Get normalized name of UserInput
@@ -1064,7 +1064,7 @@ toggle_optspecialchars:
         Send, {U+00A8}{Shift down}{Left}{Shift up}
         StringCaseSense, On
         ; watch next input string
-        Input, UserInput, L1, {BS}{Del}{Left}{Right}{Up}{Down}{LAlt}{RAlt}
+        Input, UserInput, L1, {BS}{Del}{Left}{Right}{Up}{Down}{LAlt}{RAlt}{LCtrl}{RCtrl}
         ; MsgBox % GetKeyName(UserInput)              ; Show normalized key name
         ; MsgBox % ErrorLevel                         ; Show ErrorLevel value
         name := GetKeyName(UserInput)               ; Get normalized name of UserInput
@@ -1099,7 +1099,7 @@ toggle_optspecialchars:
         Send, {U+02C6}{Shift down}{Left}{Shift up}
         StringCaseSense, On
         ; watch next input string
-        Input, UserInput, L1, {BS}{Del}{Left}{Right}{Up}{Down}{LAlt}{RAlt}
+        Input, UserInput, L1, {BS}{Del}{Left}{Right}{Up}{Down}{LAlt}{RAlt}{LCtrl}{RCtrl}
         ; MsgBox % GetKeyName(UserInput)              ; Show normalized key name
         ; MsgBox % ErrorLevel                         ; Show ErrorLevel value
         name := GetKeyName(UserInput)               ; Get normalized name of UserInput
@@ -1216,7 +1216,7 @@ toggle_optspecialchars:
         Send, {U+02DC}{Shift down}{Left}{Shift up}
         StringCaseSense, On
         ; watch next input string
-        Input, UserInput, L1, {BS}{Del}{Left}{Right}{Up}{Down}{LAlt}{RAlt}
+        Input, UserInput, L1, {BS}{Del}{Left}{Right}{Up}{Down}{LAlt}{RAlt}{LCtrl}{RCtrl}
         ; MsgBox % GetKeyName(UserInput)              ; Show normalized key name
         ; MsgBox % ErrorLevel                         ; Show ErrorLevel value
         name := GetKeyName(UserInput)               ; Get normalized name of UserInput
