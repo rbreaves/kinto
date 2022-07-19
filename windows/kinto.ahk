@@ -131,7 +131,7 @@ Exit() {
 }
 
 ; Set this variable to 1 to ENABLE Media Arrows Fix by default
-media_arrows_fix:=1
+media_arrows_fix:=0
 if (media_arrows_fix=1) {
     Menu, Tray, Check, Media Arrows Fix   Shift+Opt+Cmd+M
 }
