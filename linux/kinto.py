@@ -276,6 +276,261 @@ define_keymap(re.compile("^jetbrains-(?!.*toolbox).*$", re.IGNORECASE),{
     K("Super-c"): K("LC-c"),                    # Sigints - interrupt
 },"Jetbrains")
 
+
+################################################################################
+###########   START OF OPTION KEY SPECIAL CHARACTER ENTRY SCHEME   #############
+################################################################################
+### 
+### Full list of special characters on Apple US keyboard layout: 
+### https://github.org/RedBearAK/optspecialchars
+
+# Short names for processing helper functions
+UC = unicode_keystrokes
+# ST = to_keystrokes
+ST = to_US_keystrokes
+
+_optspecialchars = False
+
+
+def toggle_optspecialchars():
+    """Toggle the value of the _optspecialchars variable"""
+    from subprocess import run
+    def _toggle_optspecialchars():
+        global _optspecialchars
+        _optspecialchars = not _optspecialchars
+        if _optspecialchars:
+            run('notify-send ALERT "OptSpecialChars is now ENABLED.\
+                \rWill interfere with Alt & Alt+Shift shortcuts!\
+                \rDisable with Shift+Opt+Cmd+o."', shell=True)
+            print("(DD) OptSpecialChars is now ENABLED.", flush=True)
+        else:
+            run('notify-send ALERT "OptSpecialChars is now DISABLED."', shell=True)
+            print("(DD) OptSpecialChars is now DISABLED.", flush=True)
+
+    return _toggle_optspecialchars
+
+
+#########################################################
+# Set this to False to disable the alert that appears 
+# when using Apple logo shortcut (Shift+Option+K)
+_applelogoalert = True
+
+
+def apple_logo_alert():
+    """Show a notification about needing Baskerville Old Face font for displaying Apple logo"""
+    def _apple_logo_alert():
+        from subprocess import run
+        global _applelogoalert
+        if _applelogoalert:
+            run('notify-send ALERT "Apple logo requires Baskerville Old Face font.\
+                \rTo disable warning, change \\"_applelogoalert\\" \
+                \rvariable value in config file to \\"False\\"."', shell=True)
+
+    return _apple_logo_alert
+
+
+keymap("Option key special characters scheme", {
+
+    # Number keys row with Option
+    ######################################################
+    C("Alt-Grave"): {                       # Dead Keys Accent Grave
+        C("Esc"):                   UC(0x0060),     # ` Leave accent character if dead keys Escaped
+        C("Space"):                 UC(0x0060),     # ` Leave accent character if user hits Space
+        C("Grave"):                 [UC(0x0060),UC(0x0060)],    # Output two Graves if Grave is next key
+        C("A"):                     UC(0x00E0),     # à Latin Small a with Grave
+        C("E"):                     UC(0x00E8),     # è Latin Small e with Grave
+        C("I"):                     UC(0x00EC),     # ì Latin Small i with Grave
+        C("O"):                     UC(0x00F2),     # ò Latin Small o with Grave
+        C("U"):                     UC(0x00F9),     # ù Latin Small u with Grave
+        C("Shift-A"):               UC(0x00C0),     # À Latin Capital A with Grave
+        C("Shift-E"):               UC(0x00C8),     # È Latin Capital E with Grave
+        C("Shift-I"):               UC(0x00CC),     # Ì Latin Capital I with Grave
+        C("Shift-O"):               UC(0x00D2),     # Ò Latin Capital O with Grave
+        C("Shift-U"):               UC(0x00D9),     # Ù Latin Capital U with Grave
+    },
+
+    C("Alt-1"):                     UC(0x00A1),     # ¡ Inverted Exclamation Mark
+    C("Alt-2"):                     UC(0x2122),     # ™ Trade Mark Sign Emoji
+    C("Alt-3"):                     UC(0x00A3),     # £ British Pound currency symbol
+    C("Alt-4"):                     UC(0x00A2),     # ¢ Cent currency symbol
+    C("Alt-5"):                     UC(0x221E),     # ∞ Infinity mathematical symbol
+    C("Alt-6"):                     UC(0x00A7),     # § Section symbol
+    C("Alt-7"):                     UC(0x00B6),     # ¶ Paragraph mark (Pilcrow) symbol
+    C("Alt-8"):                     UC(0x2022),     # • Bullet Point symbol (solid)
+    C("Alt-9"):                     UC(0x00AA),     # ª Feminine Ordinal Indicator
+    C("Alt-0"):                     UC(0x00BA),     # º Masculine Ordinal Indicator
+    C("Alt-Minus"):                 UC(0x2013),     # – En Dash punctuation mark
+    C("Alt-Equal"):                 UC(0x2260),     # ≠ Not Equal To symbol
+
+    # Number keys row with Shift+Option
+    ######################################################
+    C("Shift-Alt-Grave"):           UC(0x0060),     # ` Grave Accent (non-combining)
+    C("Shift-Alt-1"):               UC(0x2044),     # ⁄ Fraction Slash
+    C("Shift-Alt-2"):               UC(0x20AC),     # € Euro currency symbol
+    C("Shift-Alt-3"):               UC(0x2039),     # ‹ Single Left-Pointing Angle Quotation mark
+    C("Shift-Alt-4"):               UC(0x203A),     # › Single Right-Pointing Angle Quotation mark
+    C("Shift-Alt-5"):               UC(0xFB01),     # ﬁ Latin Small Ligature Fi
+    C("Shift-Alt-6"):               UC(0xFB02),     # ﬂ Latin Small Ligature Fl
+    C("Shift-Alt-7"):               UC(0x2021),     # ‡ Double dagger (cross) symbol
+    C("Shift-Alt-8"):               UC(0x00B0),     # ° Degree Sign
+    C("Shift-Alt-9"):               UC(0x00B7),     # · Middle Dot (interpunct/middot)
+    C("Shift-Alt-0"):               UC(0x201A),     # ‚ Single low-9 quotation mark
+    C("Shift-Alt-Minus"):           UC(0x2014),     # — Em Dash punctuation mark
+    C("Shift-Alt-Equal"):           UC(0x00B1),     # ± Plus Minus mathematical symbol
+
+    # Tab key row with Option
+    ######################################################
+    C("Alt-Q"):                     UC(0x0153),     # œ Small oe (oethel) ligature
+    C("Alt-W"):                     UC(0x2211),     # ∑ N-Ary Summation (sigma) notation
+
+    C("Alt-E"): {                                   # Dead Keys Accent Acute
+        C("Esc"):                   UC(0x00B4),     # ´ Leave accent character if dead keys Escaped
+        C("Space"):                 UC(0x00B4),     # ´ Leave accent character if user hits Space
+        C("A"):                     UC(0x00E1),     # á Latin Small a with Acute
+        C("E"):                     UC(0x00E9),     # é Latin Small e with Acute
+        C("I"):                     UC(0x00ED),     # í Latin Small i with Acute
+        C("O"):                     UC(0x00F3),     # ó Latin Small o with Acute
+        C("U"):                     UC(0x00FA),     # ú Latin Small u with Acute
+        C("Shift-A"):               UC(0x00C1),     # Á Latin Capital A with Acute
+        C("Shift-E"):               UC(0x00C9),     # É Latin Capital E with Acute
+        C("Shift-I"):               UC(0x00CD),     # Í Latin Capital I with Acute
+        C("Shift-O"):               UC(0x00D3),     # Ó Latin Capital O with Acute
+        C("Shift-U"):               UC(0x00DA),     # Ú Latin Capital U with Acute
+    },
+    C("Alt-R"):                     UC(0x00AE),     # ® Registered Trade Mark Sign
+    C("Alt-T"):                     UC(0x2020),     # † Simple dagger (cross) symbol
+    C("Alt-Y"):                     UC(0x00A5),     # ¥ Japanese Yen currency symbol
+
+    C("Alt-U"): {                                   # Dead Keys Accent Umlaut
+        C("Esc"):                   UC(0x00A8),     # ¨ Leave accent character if dead keys Escaped
+        C("Space"):                 UC(0x00A8),     # ¨ Leave accent character if user hits Space
+        C("A"):                     UC(0x00E4),     # ä Latin Small a with Umlaut
+        C("E"):                     UC(0x00EB),     # ë Latin Small e with Umlaut
+        C("I"):                     UC(0x00EF),     # ï Latin Small i with Umlaut
+        C("O"):                     UC(0x00F6),     # ö Latin Small o with Umlaut
+        C("U"):                     UC(0x00FC),     # ü Latin Small u with Umlaut
+        C("Y"):                     UC(0x00FF),     # ÿ Latin Small y with Umlaut
+        C("Shift-A"):               UC(0x00C4),     # Ä Latin Capital A with Umlaut
+        C("Shift-E"):               UC(0x00CB),     # Ë Latin Capital E with Umlaut
+        C("Shift-I"):               UC(0x00CF),     # Ï Latin Capital I with Umlaut
+        C("Shift-O"):               UC(0x00D6),     # Ö Latin Capital O with Umlaut
+        C("Shift-U"):               UC(0x00DC),     # Ü Latin Capital U with Umlaut
+        C("Shift-Y"):               UC(0x0178),     # Ÿ Latin Capital Y with Umlaut
+    },
+
+    C("Alt-I"): {                                   # Dead Keys Accent Circumflex
+        C("Esc"):                   UC(0x02C6),     # ˆ Leave accent character if dead keys Escaped
+        C("Space"):                 UC(0x02C6),     # ˆ Leave accent character if user hits Space
+        C("A"):                     UC(0x00E2),     # â Latin Small a with Circumflex
+        C("E"):                     UC(0x00EA),     # ê Latin Small e with Circumflex
+        C("I"):                     UC(0x00EE),     # î Latin Small i with Circumflex
+        C("O"):                     UC(0x00F4),     # ô Latin Small o with Circumflex
+        C("U"):                     UC(0x00FB),     # û Latin Small u with Circumflex
+        C("Shift-A"):               UC(0x00C2),     # Â Latin Capital A with Circumflex
+        C("Shift-E"):               UC(0x00CA),     # Ê Latin Capital E with Circumflex
+        C("Shift-I"):               UC(0x00CE),     # Î Latin Capital I with Circumflex
+        C("Shift-O"):               UC(0x00D4),     # Ô Latin Capital O with Circumflex
+        C("Shift-U"):               UC(0x00DB),     # Û Latin Capital U with Circumflex
+    },
+
+    C("Alt-O"):                     UC(0x00F8),     # ø Latin Small Letter o with Stroke
+    C("Alt-P"):                     UC(0x03C0),     # π Greek Small Letter Pi
+    C("Alt-Left_Brace"):            UC(0x201C),     # “ Left Double Quotation Mark
+    C("Alt-Right_Brace"):           UC(0x2018),     # ‘ Left Single Quotation Mark
+    C("Alt-Backslash"):             UC(0x00AB),     # « Left-Pointing Double Angle Quotation Mark
+
+    # Tab key row with Shift+Option
+    ######################################################
+    C("Shift-Alt-Q"):               UC(0x0152),     # Œ Capital OE (Oethel) ligature
+    C("Shift-Alt-W"):               UC(0x201E),     # „ Double Low-9 Quotation mark
+    C("Shift-Alt-E"):               UC(0x00B4),     # ´ Acute Accent diacritic (non-combining)
+    C("Shift-Alt-R"):               UC(0x2030),     # ‰ Per mille symbol (zero over zero-zero)
+    C("Shift-Alt-T"):               UC(0x02C7),     # ˇ Caron/hacek diacritic (non-combining)
+    C("Shift-Alt-Y"):               UC(0x00C1),     # Á Latin Capital Letter A with Acute
+    C("Shift-Alt-U"):               UC(0x00A8),     # ¨ Diaeresis/Umlaut (non-combining)
+    C("Shift-Alt-I"):               UC(0x02C6),     # ˆ Circumflex Accent (non-combining)
+    C("Shift-Alt-O"):               UC(0x00D8),     # Ø Latin Capital Letter O with Stroke
+    C("Shift-Alt-P"):               UC(0x220F),     # ∏ N-Ary Product mathematical symbol
+    C("Shift-Alt-Left_Brace"):      UC(0x201D),     # ” Right Double Quotation Mark
+    C("Shift-Alt-Right_Brace"):     UC(0x2019),     # ’ Right Single Quotation Mark
+    C("Shift-Alt-Backslash"):       UC(0x00BB),     # » Right-Pointing Double Angle Quotation Mark
+
+    # CapsLock key row with Option
+    ######################################################
+    C("Alt-A"):                     UC(0x00E5),     # å Small Letter a with Ring Above
+    C("Alt-S"):                     UC(0x00DF),     # ß German Eszett/beta (Sharfes/Sharp S)
+    C("Alt-D"):                     UC(0x2202),     # ∂ Partial Differential
+    C("Alt-F"):                     UC(0x0192),     # ƒ Function/florin currency symbol
+    C("Alt-G"):                     UC(0x00A9),     # © Copyright Sign
+    C("Alt-H"):                     UC(0x02D9),     # ˙ Dot Above diacritic (non-combining)
+    C("Alt-J"):                     UC(0x2206),     # ∆ Increment, laplace operator symbol
+    C("Alt-K"):                     UC(0x02DA),     # ˚ Ring Above diacritic (non-combining)
+    C("Alt-L"):                     UC(0x00AC),     # ¬ Not Sign angled dash symbol
+    C("Alt-Semicolon"):             UC(0x2026),     # … Horizontal ellipsis
+    C("Alt-Apostrophe"):            UC(0x00E6),     # æ Small ae ligature
+
+    # CapsLock key row with Shift+Option
+    ######################################################
+    C("Shift-Alt-A"):               UC(0x00C5),     # Å Capital Letter A with Ring Above
+    C("Shift-Alt-S"):               UC(0x00CD),     # Í Latin Capital Letter I with Acute
+    C("Shift-Alt-D"):               UC(0x00CE),     # Î Latin Capital Letter I with Circumflex
+    C("Shift-Alt-F"):               UC(0x00CF),     # Ï Latin Capital Letter I with Diaeresis
+    C("Shift-Alt-G"):               UC(0x02DD),     # ˝ Double Acute Accent (non-combining)
+    C("Shift-Alt-H"):               UC(0x00D3),     # Ó Latin Capital Letter O with Acute
+    C("Shift-Alt-J"):               UC(0x00D4),     # Ô Latin Capital Letter O with Circumflex
+    #########################################################################################################
+    # The Apple logo is at {U+F8FF} in a Unicode Private Use Area. Only at that location in Mac fonts. 
+    # Symbol exists at {U+F000} in Baskerville Old Face font. 
+    C("Shift-Alt-K"):   [apple_logo_alert(),UC(0xF000)], #  Apple logo [req's Baskerville Old Face font]
+    C("Shift-Alt-L"):               UC(0x00D2),     # Ò Latin Capital Letter O with Grave
+    C("Shift-Alt-Semicolon"):       UC(0x00DA),     # Ú Latin Capital Letter U with Acute
+    C("Shift-Alt-Apostrophe"):      UC(0x00C6),     # Æ Capital AE ligature
+
+    # Shift keys row with Option
+    ######################################################
+    C("Alt-Z"):                     UC(0x03A9),     # Ω Greek Capital Letter Omega
+    C("Alt-X"):                     UC(0x2248),     # ≈ Almost Equal To symbol
+    C("Alt-C"):                     UC(0x00E7),     # ç Small Letter c with Cedilla
+    C("Alt-V"):                     UC(0x221A),     # √ Square Root radical sign
+    C("Alt-B"):                     UC(0x222B),     # ∫ Integral mathematical symbol
+
+    C("Alt-N"): {                                   # Dead Keys Accent Tilde
+        C("Esc"):                   UC(0x02DC),     # ˜ Leave accent character if dead keys Escaped
+        C("Space"):                 UC(0x02DC),     # ˜ Leave accent character if user hits Space
+        C("A"):                     UC(0x00E3),     # ã Latin Small a with Tilde
+        C("N"):                     UC(0x00F1),     # ñ Latin Small n with Tilde
+        C("O"):                     UC(0x00F5),     # õ Latin Small o with Tilde
+        C("Shift-A"):               UC(0x00C3),     # Ã Latin Capital A with Tilde
+        C("Shift-N"):               UC(0x00D1),     # Ñ Latin Capital N with Tilde
+        C("Shift-O"):               UC(0x00D5),     # Õ Latin Capital O with Tilde
+    },
+
+    C("Alt-M"):                     UC(0x00B5),     # µ Micro (mu) symbol
+    C("Alt-Comma"):                 UC(0x2264),     # ≤ Less Than or Equal To symbol
+    C("Alt-Dot"):                   UC(0x2265),     # ≥ Greater Than or Equal To symbol
+    C("Alt-Slash"):                 UC(0x00F7),     # ÷ Obelus/Division symbol
+
+    # Shift keys row with Shift+Option
+    ######################################################
+    C("Shift-Alt-Z"):               UC(0x00B8),     # ¸ Spacing Cedilla diacritic (non-combining)
+    C("Shift-Alt-X"):               UC(0x02DB),     # ˛ Ogonek diacritic (non-combining)
+    C("Shift-Alt-C"):               UC(0x00C7),     # Ç Capital Letter C with Cedilla
+    C("Shift-Alt-V"):               UC(0x25CA),     # ◊ Lozenge (diamond) shape symbol
+    C("Shift-Alt-B"):               UC(0x0131),     # ı Latin Small Letter Dotless i
+    C("Shift-Alt-N"):               UC(0x02DC),     # ˜ Small Tilde character
+    C("Shift-Alt-M"):               UC(0x00C2),     # Â Latin Capital Letter A with Circumflex
+    C("Shift-Alt-Comma"):           UC(0x00AF),     # ¯ Macron/overline/overbar (non-combining)
+    C("Shift-Alt-Dot"):             UC(0x02D8),     # ˘ Breve diacritic (non-combining)
+    C("Shift-Alt-Slash"):           UC(0x00BF),     # ¿ Inverted Question mark
+
+}, when = lambda ctx: ctx.wm_class.casefold() not in remotes and _optspecialchars is True)
+# }, when = lambda _: _optspecialchars is True)
+
+################################################################################
+############   END OF OPTION KEY SPECIAL CHARACTER ENTRY SCHEME   ##############
+################################################################################
+
+
 ##############################################
 ### START OF FILE MANAGER GROUP OF KEYMAPS ###
 ##############################################
@@ -536,6 +791,7 @@ define_keymap(re.compile(termStr, re.IGNORECASE),{
 # - but remote clients and VM software ought to be set here
 # These are the typical remaps for ALL GUI based apps
 define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
+    K("Shift-Alt-RC-o"): toggle_optspecialchars(),
     K("RC-Shift-Left_Brace"):   K("C-Page_Up"),         # Tab nav: Go to prior (left) tab
     K("RC-Shift-Right_Brace"):  K("C-Page_Down"),       # Tab nav: Go to next (right) tab
     K("RC-Space"): K("Alt-F1"),                   # Default SL - Launch Application Menu (gnome/kde)
