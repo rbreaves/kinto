@@ -162,7 +162,7 @@ RDP fully works as long as the entire keyboard input is being captured. RDP had 
 |FreeRDP| 🍎macOS⇒| ❖Windows  | ✅ Yes| [FreeRDP for macOS](#FreeRDP-for-macOS)|
 |Remote Desktop Manager Free|🍎iOS⇒| ❖Windows  | ✅ Yes| |
 |Jump Desktop (RDP)| 🍎macOS*/iOS ⇒| ❖Windows  | ✅ Yes|*Preferences -> Keyboard -> Disable "Key Conversions", Enabled "Send macOS Shortcuts" under Keyboard shortcuts|
-|Jump Desktop (RDP)| 🍎macOS⇒| 🐧Linux   | ✅ Yes| Note: Compile & install my forked [x11vnc](https://gist.github.com/rbreaves/87059f92f030ee4e068f911ddb56a4dd) for compatibility & use xrdp 0.9.18+. |
+|Jump Desktop (VNC)| 🍎macOS⇒| 🐧Linux   | ✅ Yes| Note: Compile & install my forked [x11vnc](https://gist.github.com/rbreaves/87059f92f030ee4e068f911ddb56a4dd) for compatibility & use xrdp 0.9.18+. |
 |RealVNC| 🍎macOS⇒| 🐧Linux   | ✅ Yes| Note: Compile & install my forked [x11vnc](https://gist.github.com/rbreaves/87059f92f030ee4e068f911ddb56a4dd) for compatibility. |
 |Official MS RDP| 🍎macOS⇒| ❖Windows  | ❌ No|Initial Cmd key press not being passed|
 |Remote Desktop Manager Free| 🍎macOS⇒| ❖Windows  | ❌ No|Initial Cmd key press not being passed|
