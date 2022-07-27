@@ -149,9 +149,9 @@ RDP fully works as long as the entire keyboard input is being captured. RDP had 
 
 |Program|Src/Remote Client ⇒|Dst/Remote Server|Works? |Notes|
 |---|---|---|---|---|
-|Official MS RDP (mstsc.exe)| ❖Windows ⇒| ❖Windows  | ✅ Yes|   |
+|Official MS RDP (mstsc.exe)| ❖Windows ⇒| ❖Windows  | ✅ Yes| Note: Make sure to set all keyboard input to go to remote. |
 |Official MS RDP (mstsc.exe)| ❖Windows ⇒| 🍎macOS  | ✅ Yes| Note: Must compile & install xrdp.   |
-|Official MS RDC from Store| ❖Windows ⇒| ❖Windows  | ✅ Yes|   |
+|Official MS RDC from Store| ❖Windows ⇒| ❖Windows  | ✅ Yes| Note: Only when maximized, all modifier keys will not pass in otherwise. |
 |Official MS RDC from Store| ❖Windows ⇒| 🍎macOS  | ✅ Yes| Note: Must compile & install xrdp.   |
 |RealVNC| ❖Windows ⇒| 🐧Linux  | ✅ Yes| Note: Compile & install my forked [x11vnc](https://gist.github.com/rbreaves/87059f92f030ee4e068f911ddb56a4dd) for compatibility. |
 |Official MS RDP (mstsc.exe)| ❖Windows ⇒| 🐧Linux  | ✅ Yes | Note: Compile & install my forked [x11vnc](https://gist.github.com/rbreaves/87059f92f030ee4e068f911ddb56a4dd) for compatibility, then setup xrdp like normal & use xrdp 0.9.18+. |
