@@ -288,12 +288,11 @@ _mac_numpad_first_run = True
 
 def mac_numpad_alert():
     global _mac_numpad_first_run
-    if _mac_numpad:
+    if _mac_numpad and not _mac_numpad_first_run:
         run('notify-send -u critical ALERT "Kinto Mac Numpad is now ENABLED.\
             \rNumlock == Clear (Escape)\
             \rDisable with Option+Numlock."', shell=True)
         print("(DD) Kinto Mac Numpad is now ENABLED.", flush=True)
-    # Don't show pointless alert on startup if feature is set to be disabled by default
     if not _mac_numpad and not _mac_numpad_first_run:
         run('notify-send ALERT "Kinto Mac Numpad is now DISABLED.\
             \rRe-enable with Option+Numlock."', shell=True)
