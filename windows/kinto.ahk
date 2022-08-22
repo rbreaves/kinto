@@ -930,14 +930,14 @@ return
 toggle_optspecialchars:
     optspecialchars:=!optspecialchars         ; Toggle value of optspecialchars variable on/off
     if (optspecialchars = 1) {
-        Menu, Tray, Check, OptSpecialChars     Shift+Opt+Cmd+O
+        Menu, Tray, Check, OptSpecialChars      Shift+Opt+Cmd+O
         MsgBox, 0, ALERT, % "Option key special character entry scheme is now ENABLED.`n`n"
                             . "WARNING: This will interfere with many Alt and Alt-Shift shortcuts.`n`n"
                             . "Disable from tray menu or with Shift+Opt+Cmd+O."
         return
     }
     if (optspecialchars = 0) {
-        Menu, Tray, Uncheck, OptSpecialChars     Shift+Opt+Cmd+O
+        Menu, Tray, Uncheck, OptSpecialChars      Shift+Opt+Cmd+O
         MsgBox, 0, ALERT, Option key special character entry scheme is now DISABLED.
         return
     }
