@@ -930,14 +930,14 @@ return
 toggle_optspecialchars:
     optspecialchars:=!optspecialchars         ; Toggle value of optspecialchars variable on/off
     if (optspecialchars = 1) {
-        Menu, Tray, Check, OptSpecialChars   Shift+Opt+Cmd+O
+        Menu, Tray, Check, OptSpecialChars     Shift+Opt+Cmd+O
         MsgBox, 0, ALERT, % "Option key special character entry scheme is now ENABLED.`n`n"
                             . "WARNING: This will interfere with many Alt and Alt-Shift shortcuts.`n`n"
                             . "Disable from tray menu or with Shift+Opt+Cmd+O."
         return
     }
     if (optspecialchars = 0) {
-        Menu, Tray, Uncheck, OptSpecialChars   Shift+Opt+Cmd+O
+        Menu, Tray, Uncheck, OptSpecialChars     Shift+Opt+Cmd+O
         MsgBox, 0, ALERT, Option key special character entry scheme is now DISABLED.
         return
     }
@@ -957,25 +957,29 @@ toggle_optspecialchars:
         StringCaseSense, On
         ; watch next input string
         Input, UserInput, L1, {BS}{Del}{Left}{Right}{Up}{Down}{LAlt}{RAlt}{LCtrl}{RCtrl}
-        ; MsgBox % GetKeyName(UserInput)              ; Show normalized key name
-        ; MsgBox % ErrorLevel                         ; Show ErrorLevel value
+        ; MsgBox % GetKeyName(UserInput)              ; Debugging: Show normalized key name
+        ; MsgBox % ErrorLevel                         ; Debugging: Show ErrorLevel value
         name := GetKeyName(UserInput)               ; Get normalized name of UserInput
         e := SubStr(ErrorLevel, 8)                  ; Get normalized name of EndKey
         Switch {
-            Case name = "Escape": Send, {Right}     ; Escape: Leave accent character, exit dead key
-            Case name = "Space": Send, {Right}      ; Space: Leave accent character, exit dead key
-            Case e = "Backspace": Send, {Right}{BS} ; Backspace: Delete accent character
-            Case UserInput == "a": Send, {U+00E0}   ; à {U+00E0} (Alt+0224)
-            Case UserInput == "e": Send, {U+00E8}   ; è {U+00E8} (Alt+0232)
-            Case UserInput == "i": Send, {U+00EC}   ; ì {U+00EC} (Alt+0236)
-            Case UserInput == "o": Send, {U+00F2}   ; ò {U+00F2} (Alt+0242)
-            Case UserInput == "u": Send, {U+00F9}   ; ù {U+00F9} (Alt+0249)
-            Case UserInput == "A": Send, {U+00C0}   ; À {U+00C0} (Alt+0192)
-            Case UserInput == "E": Send, {U+00C8}   ; È {U+00C8} (Alt+0200)
-            Case UserInput == "I": Send, {U+00CC}   ; Ì {U+00CC} (Alt+0204)
-            Case UserInput == "O": Send, {U+00D2}   ; Ò {U+00D2} (Alt+0210)
-            Case UserInput == "U": Send, {U+00D9}   ; Ù {U+00D9} (Alt+0217)
-            Default: Send, {Right}%UserInput%       ; No match? Leave accent char and send input.
+            Default:                Send, {Right}%UserInput%    ; No match? Leave accent char and send input.
+            Case name = "Escape":   Send, {Right}               ; Escape: Leave accent character, exit dead key
+            Case name = "Space":    Send, {Right}               ; Space: Leave accent character, exit dead key
+            Case e = "Up":          Send, {Right}{Up}           ; Up: Leave accent character, exit dead key, move
+            Case e = "Down":        Send, {Right}{Down}         ; Down: Leave accent character, exit dead key, move
+            Case e = "Left":        Send, {Right}{Left}         ; Left: Leave accent character, exit dead key, move
+            Case e = "Right":       Send, {Right}{Right}        ; Right: Leave accent character, exit dead key, move
+            Case e = "Backspace":   Send, {Right}{BS}           ; Backspace: Delete accent character
+            Case UserInput == "a":  Send, {U+00E0}              ; à {U+00E0} (Alt+0224)
+            Case UserInput == "e":  Send, {U+00E8}              ; è {U+00E8} (Alt+0232)
+            Case UserInput == "i":  Send, {U+00EC}              ; ì {U+00EC} (Alt+0236)
+            Case UserInput == "o":  Send, {U+00F2}              ; ò {U+00F2} (Alt+0242)
+            Case UserInput == "u":  Send, {U+00F9}              ; ù {U+00F9} (Alt+0249)
+            Case UserInput == "A":  Send, {U+00C0}              ; À {U+00C0} (Alt+0192)
+            Case UserInput == "E":  Send, {U+00C8}              ; È {U+00C8} (Alt+0200)
+            Case UserInput == "I":  Send, {U+00CC}              ; Ì {U+00CC} (Alt+0204)
+            Case UserInput == "O":  Send, {U+00D2}              ; Ò {U+00D2} (Alt+0210)
+            Case UserInput == "U":  Send, {U+00D9}              ; Ù {U+00D9} (Alt+0217)
         }
         Return
 
@@ -1026,25 +1030,29 @@ toggle_optspecialchars:
         StringCaseSense, On
         ; watch next input string
         Input, UserInput, L1, {BS}{Del}{Left}{Right}{Up}{Down}{LAlt}{RAlt}{LCtrl}{RCtrl}
-        ; MsgBox % GetKeyName(UserInput)              ; Show normalized key name
-        ; MsgBox % ErrorLevel                         ; Show ErrorLevel value
+        ; MsgBox % GetKeyName(UserInput)              ; Debugging: Show normalized key name
+        ; MsgBox % ErrorLevel                         ; Debugging: Show ErrorLevel value
         name := GetKeyName(UserInput)               ; Get normalized name of UserInput
         e := SubStr(ErrorLevel, 8)                  ; Get normalized name of EndKey
         Switch {
-            Case name = "Escape": Send, {Right}     ; Escape: Leave accent character, exit dead key
-            Case name = "Space": Send, {Right}      ; Space: Leave accent character, exit dead key
-            Case e = "Backspace": Send, {Right}{BS} ; Backspace: Delete accent character
-            Case UserInput == "a": Send, {U+00E1}   ; á {U+00E1} (Alt+0225)
-            Case UserInput == "e": Send, {U+00E9}   ; é {U+00E9} (Alt+0233)
-            Case UserInput == "i": Send, {U+00ED}   ; í {U+00ED} (Alt+0237)
-            Case UserInput == "o": Send, {U+00F3}   ; ó {U+00F3} (Alt+0243)
-            Case UserInput == "u": Send, {U+00FA}   ; ú {U+00FA} (Alt+0250)
-            Case UserInput == "A": Send, {U+00C1}   ; Á {U+00C1} (Alt+0193)
-            Case UserInput == "E": Send, {U+00C9}   ; É {U+00C9} (Alt+0201)
-            Case UserInput == "I": Send, {U+00CD}   ; Í {U+00CD} (Alt+0205)
-            Case UserInput == "O": Send, {U+00D3}   ; Ó {U+00D3} (Alt+0211)
-            Case UserInput == "U": Send, {U+00DA}   ; Ú {U+00DA} (Alt+0218)
-            Default: Send, {Right}%UserInput%       ; No match? Leave accent char and send input.
+            Default:                Send, {Right}%UserInput%    ; No match? Leave accent char and send input.
+            Case name = "Escape":   Send, {Right}               ; Escape: Leave accent character, exit dead key
+            Case name = "Space":    Send, {Right}               ; Space: Leave accent character, exit dead key
+            Case e = "Up":          Send, {Right}{Up}           ; Up: Leave accent character, exit dead key, move
+            Case e = "Down":        Send, {Right}{Down}         ; Down: Leave accent character, exit dead key, move
+            Case e = "Left":        Send, {Right}{Left}         ; Left: Leave accent character, exit dead key, move
+            Case e = "Right":       Send, {Right}{Right}        ; Right: Leave accent character, exit dead key, move
+            Case e = "Backspace":   Send, {Right}{BS}           ; Backspace: Delete accent character
+            Case UserInput == "a":  Send, {U+00E1}              ; á {U+00E1} (Alt+0225)
+            Case UserInput == "e":  Send, {U+00E9}              ; é {U+00E9} (Alt+0233)
+            Case UserInput == "i":  Send, {U+00ED}              ; í {U+00ED} (Alt+0237)
+            Case UserInput == "o":  Send, {U+00F3}              ; ó {U+00F3} (Alt+0243)
+            Case UserInput == "u":  Send, {U+00FA}              ; ú {U+00FA} (Alt+0250)
+            Case UserInput == "A":  Send, {U+00C1}              ; Á {U+00C1} (Alt+0193)
+            Case UserInput == "E":  Send, {U+00C9}              ; É {U+00C9} (Alt+0201)
+            Case UserInput == "I":  Send, {U+00CD}              ; Í {U+00CD} (Alt+0205)
+            Case UserInput == "O":  Send, {U+00D3}              ; Ó {U+00D3} (Alt+0211)
+            Case UserInput == "U":  Send, {U+00DA}              ; Ú {U+00DA} (Alt+0218)
         }
         Return
 
@@ -1065,27 +1073,31 @@ toggle_optspecialchars:
         StringCaseSense, On
         ; watch next input string
         Input, UserInput, L1, {BS}{Del}{Left}{Right}{Up}{Down}{LAlt}{RAlt}{LCtrl}{RCtrl}
-        ; MsgBox % GetKeyName(UserInput)              ; Show normalized key name
-        ; MsgBox % ErrorLevel                         ; Show ErrorLevel value
+        ; MsgBox % GetKeyName(UserInput)              ; Debugging: Show normalized key name
+        ; MsgBox % ErrorLevel                         ; Debugging: Show ErrorLevel value
         name := GetKeyName(UserInput)               ; Get normalized name of UserInput
         e := SubStr(ErrorLevel, 8)                  ; Get normalized name of EndKey
         Switch {
-            Case name = "Escape": Send, {Right}     ; Escape: Leave accent character, exit dead key
-            Case name = "Space": Send, {Right}      ; Space: Leave accent character, exit dead key
-            Case e = "Backspace": Send, {Right}{BS} ; Backspace: Delete accent character
-            Case UserInput == "a": Send, {U+00E4}       ; ä {U+00E4} (Alt+0228)
-            Case UserInput == "e": Send, {U+00EB}       ; ë {U+00EB} (Alt+0235)
-            Case UserInput == "i": Send, {U+00EF}       ; ï {U+00EF} (Alt+0239)
-            Case UserInput == "o": Send, {U+00F6}       ; ö {U+00F6} (Alt+0246)
-            Case UserInput == "u": Send, {U+00FC}       ; ü {U+00FC} (Alt+0252)
-            Case UserInput == "y": Send, {U+00FF}       ; ÿ {U+00FF} (Alt+0255)
-            Case UserInput == "A": Send, {U+00C4}       ; Ä {U+00C4} (Alt+0196)
-            Case UserInput == "E": Send, {U+00CB}       ; Ë {U+00CB} (Alt+0203)
-            Case UserInput == "I": Send, {U+00CF}       ; Ï {U+00CF} (Alt+0207)
-            Case UserInput == "O": Send, {U+00D6}       ; Ö {U+00D6} (Alt+0214)
-            Case UserInput == "U": Send, {U+00DC}       ; Ü {U+00DC} (Alt+0220)
-            Case UserInput == "Y": Send, {U+0178}       ; Ÿ {U+0178} (Alt+0159)
-            Default: Send, {Right}%UserInput%           ; No match? Leave accent char and send input.
+            Default:                Send, {Right}%UserInput%    ; No match? Leave accent char and send input.
+            Case name = "Escape":   Send, {Right}               ; Escape: Leave accent character, exit dead key
+            Case name = "Space":    Send, {Right}               ; Space: Leave accent character, exit dead key
+            Case e = "Up":          Send, {Right}{Up}           ; Up: Leave accent character, exit dead key, move
+            Case e = "Down":        Send, {Right}{Down}         ; Down: Leave accent character, exit dead key, move
+            Case e = "Left":        Send, {Right}{Left}         ; Left: Leave accent character, exit dead key, move
+            Case e = "Right":       Send, {Right}{Right}        ; Right: Leave accent character, exit dead key, move
+            Case e = "Backspace":   Send, {Right}{BS}           ; Backspace: Delete accent character
+            Case UserInput == "a":  Send, {U+00E4}              ; ä {U+00E4} (Alt+0228)
+            Case UserInput == "e":  Send, {U+00EB}              ; ë {U+00EB} (Alt+0235)
+            Case UserInput == "i":  Send, {U+00EF}              ; ï {U+00EF} (Alt+0239)
+            Case UserInput == "o":  Send, {U+00F6}              ; ö {U+00F6} (Alt+0246)
+            Case UserInput == "u":  Send, {U+00FC}              ; ü {U+00FC} (Alt+0252)
+            Case UserInput == "y":  Send, {U+00FF}              ; ÿ {U+00FF} (Alt+0255)
+            Case UserInput == "A":  Send, {U+00C4}              ; Ä {U+00C4} (Alt+0196)
+            Case UserInput == "E":  Send, {U+00CB}              ; Ë {U+00CB} (Alt+0203)
+            Case UserInput == "I":  Send, {U+00CF}              ; Ï {U+00CF} (Alt+0207)
+            Case UserInput == "O":  Send, {U+00D6}              ; Ö {U+00D6} (Alt+0214)
+            Case UserInput == "U":  Send, {U+00DC}              ; Ü {U+00DC} (Alt+0220)
+            Case UserInput == "Y":  Send, {U+0178}              ; Ÿ {U+0178} (Alt+0159)
         }
         Return
 
@@ -1100,25 +1112,29 @@ toggle_optspecialchars:
         StringCaseSense, On
         ; watch next input string
         Input, UserInput, L1, {BS}{Del}{Left}{Right}{Up}{Down}{LAlt}{RAlt}{LCtrl}{RCtrl}
-        ; MsgBox % GetKeyName(UserInput)              ; Show normalized key name
-        ; MsgBox % ErrorLevel                         ; Show ErrorLevel value
+        ; MsgBox % GetKeyName(UserInput)              ; Debugging: Show normalized key name
+        ; MsgBox % ErrorLevel                         ; Debugging: Show ErrorLevel value
         name := GetKeyName(UserInput)               ; Get normalized name of UserInput
         e := SubStr(ErrorLevel, 8)                  ; Get normalized name of EndKey
         Switch {
-            Case name = "Escape": Send, {Right}     ; Escape: Leave accent character, exit dead key
-            Case name = "Space": Send, {Right}      ; Space: Leave accent character, exit dead key
-            Case e = "Backspace": Send, {Right}{BS} ; Backspace: Delete accent character
-            Case UserInput == "a": Send, {U+00E2}   ; â {U+00E2} (Alt+0226)
-            Case UserInput == "e": Send, {U+00EA}   ; ê {U+00EA} (Alt+0234)
-            Case UserInput == "i": Send, {U+00EE}   ; î {U+00EE} (Alt+0238)
-            Case UserInput == "o": Send, {U+00F4}   ; ô {U+00F4} (Alt+0244)
-            Case UserInput == "u": Send, {U+00FB}   ; û {U+00FB} (Alt+0251)
-            Case UserInput == "A": Send, {U+00C2}   ; Â {U+00C2} (Alt+0194)
-            Case UserInput == "E": Send, {U+00CA}   ; Ê {U+00CA} (Alt+0202)
-            Case UserInput == "I": Send, {U+00CE}   ; Î {U+00CE} (Alt+0206)
-            Case UserInput == "O": Send, {U+00D4}   ; Ô {U+00D4} (Alt+0212)
-            Case UserInput == "U": Send, {U+00DB}   ; Û {U+00DB} (Alt+0219)
-            Default: Send, {Right}%UserInput%       ; No match? Leave accent char and send input.
+            Default:                Send, {Right}%UserInput%    ; No match? Leave accent char and send input.
+            Case name = "Escape":   Send, {Right}               ; Escape: Leave accent character, exit dead key
+            Case name = "Space":    Send, {Right}               ; Space: Leave accent character, exit dead key
+            Case e = "Up":          Send, {Right}{Up}           ; Up: Leave accent character, exit dead key, move
+            Case e = "Down":        Send, {Right}{Down}         ; Down: Leave accent character, exit dead key, move
+            Case e = "Left":        Send, {Right}{Left}         ; Left: Leave accent character, exit dead key, move
+            Case e = "Right":       Send, {Right}{Right}        ; Right: Leave accent character, exit dead key, move
+            Case e = "Backspace":   Send, {Right}{BS}           ; Backspace: Delete accent character
+            Case UserInput == "a":  Send, {U+00E2}              ; â {U+00E2} (Alt+0226)
+            Case UserInput == "e":  Send, {U+00EA}              ; ê {U+00EA} (Alt+0234)
+            Case UserInput == "i":  Send, {U+00EE}              ; î {U+00EE} (Alt+0238)
+            Case UserInput == "o":  Send, {U+00F4}              ; ô {U+00F4} (Alt+0244)
+            Case UserInput == "u":  Send, {U+00FB}              ; û {U+00FB} (Alt+0251)
+            Case UserInput == "A":  Send, {U+00C2}              ; Â {U+00C2} (Alt+0194)
+            Case UserInput == "E":  Send, {U+00CA}              ; Ê {U+00CA} (Alt+0202)
+            Case UserInput == "I":  Send, {U+00CE}              ; Î {U+00CE} (Alt+0206)
+            Case UserInput == "O":  Send, {U+00D4}              ; Ô {U+00D4} (Alt+0212)
+            Case UserInput == "U":  Send, {U+00DB}              ; Û {U+00DB} (Alt+0219)
         }
         Return
 
@@ -1217,21 +1233,25 @@ toggle_optspecialchars:
         StringCaseSense, On
         ; watch next input string
         Input, UserInput, L1, {BS}{Del}{Left}{Right}{Up}{Down}{LAlt}{RAlt}{LCtrl}{RCtrl}
-        ; MsgBox % GetKeyName(UserInput)              ; Show normalized key name
-        ; MsgBox % ErrorLevel                         ; Show ErrorLevel value
+        ; MsgBox % GetKeyName(UserInput)              ; Debugging: Show normalized key name
+        ; MsgBox % ErrorLevel                         ; Debugging: Show ErrorLevel value
         name := GetKeyName(UserInput)               ; Get normalized name of UserInput
         e := SubStr(ErrorLevel, 8)                  ; Get normalized name of EndKey
         Switch {
-            Case name = "Escape": Send, {Right}     ; Escape: Leave accent character, exit dead key
-            Case name = "Space": Send, {Right}      ; Space: Leave accent character, exit dead key
-            Case e = "Backspace": Send, {Right}{BS} ; Backspace: Delete accent character
-            Case UserInput == "a": Send, {U+00E3}   ; ã {U+00E3} (Alt+0227)
-            Case UserInput == "n": Send, {U+00F1}   ; ñ {U+00F1} (Alt+0241)
-            Case UserInput == "o": Send, {U+00F5}   ; õ {U+00F5} (Alt+0245)
-            Case UserInput == "A": Send, {U+00C3}   ; Ã {U+00C3} (Alt+0195)
-            Case UserInput == "N": Send, {U+00D1}   ; Ñ {U+00D1} (Alt+0209)
-            Case UserInput == "O": Send, {U+00D5}   ; Õ {U+00D5} (Alt+0213)
-            Default: Send, {Right}%UserInput%       ; No match? Leave accent char and send input.
+            Default:                Send, {Right}%UserInput%    ; No match? Leave accent char and send input.
+            Case name = "Escape":   Send, {Right}               ; Escape: Leave accent character, exit dead key
+            Case name = "Space":    Send, {Right}               ; Space: Leave accent character, exit dead key
+            Case e = "Up":          Send, {Right}{Up}           ; Up: Leave accent character, exit dead key, move
+            Case e = "Down":        Send, {Right}{Down}         ; Down: Leave accent character, exit dead key, move
+            Case e = "Left":        Send, {Right}{Left}         ; Left: Leave accent character, exit dead key, move
+            Case e = "Right":       Send, {Right}{Right}        ; Right: Leave accent character, exit dead key, move
+            Case e = "Backspace":   Send, {Right}{BS}           ; Backspace: Delete accent character
+            Case UserInput == "n":  Send, {U+00F1}              ; ñ {U+00F1} (Alt+0241)
+            Case UserInput == "a":  Send, {U+00E3}              ; ã {U+00E3} (Alt+0227)
+            Case UserInput == "o":  Send, {U+00F5}              ; õ {U+00F5} (Alt+0245)
+            Case UserInput == "A":  Send, {U+00C3}              ; Ã {U+00C3} (Alt+0195)
+            Case UserInput == "N":  Send, {U+00D1}              ; Ñ {U+00D1} (Alt+0209)
+            Case UserInput == "O":  Send, {U+00D5}              ; Õ {U+00D5} (Alt+0213)
         }
         Return
 
