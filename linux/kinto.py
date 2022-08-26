@@ -776,6 +776,8 @@ define_keymap(re.compile("alacritty", re.IGNORECASE),{
 })
 
 define_keymap(re.compile(termStr, re.IGNORECASE),{
+    K("LC-Space"):          K("Super-Space"),       # switch keyboard input source (gnome)
+    K("Shift-LC-Space"):    K("Shift-Super-Space"), # switch keyboard input source in reverse (gnome)
     K("LC-RC-f"): K("Alt-F10"),                       # Toggle window maximized state
     # K("RC-Grave"): K("Super-Tab"),                # xfce4 Switch within app group
     # K("RC-Shift-Grave"): K("Super-Shift-Tab"),    # xfce4 Switch within app group
