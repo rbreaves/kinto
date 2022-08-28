@@ -284,28 +284,26 @@ define_keymap(re.compile("^jetbrains-(?!.*toolbox).*$", re.IGNORECASE),{
 # Toggle feature on/off with Option+Numlock (Fn+Numlock might work on Apple keyboards)
 # Set _mac_numpad var to "False" (no quotes) to disable by default
 _mac_numpad = True
-_mac_numpad_first_run = True
 
 def mac_numpad_alert():
-    global _mac_numpad_first_run
-    if _mac_numpad and not _mac_numpad_first_run:
-        run('notify-send ALERT "Kinto Mac Numpad is now ENABLED.\
-            \rNumlock == Clear (Escape)\
+    """Show notification of state of Kinto's Mac Numpad feature"""
+    from subprocess import run
+    if _mac_numpad:
+        run('notify-send ALERT \
+            "Kinto Mac Numpad feature is now ENABLED.\
+            \rNumlock becomes "Clear" key (Escape)\
             \rDisable with Option+Numlock."', shell=True)
-        print("(DD) Kinto Mac Numpad is now ENABLED.", flush=True)
-    if not _mac_numpad and not _mac_numpad_first_run:
-        run('notify-send ALERT "Kinto Mac Numpad is now DISABLED.\
+        print("(DD) Kinto Mac Numpad feature is now ENABLED.", flush=True)
+    # Don't show pointless alert on startup if feature is set to be disabled by default
+    if not _mac_numpad:
+        run('notify-send ALERT \
+            "Kinto Mac Numpad feature is now DISABLED.\
             \rRe-enable with Option+Numlock."', shell=True)
-        print("(DD) Kinto Mac Numpad is now DISABLED.", flush=True)
-    _mac_numpad_first_run = False
-
-
-mac_numpad_alert()
+        print("(DD) Kinto Mac Numpad feature is now DISABLED.", flush=True)
 
 
 def toggle_mac_numpad():
-    """Toggle the value of the _optspecialchars variable"""
-    from subprocess import run
+    """Toggle the value of the _mac_numpad variable"""
     def _toggle_mac_numpad():
         global _mac_numpad
         _mac_numpad = not _mac_numpad
