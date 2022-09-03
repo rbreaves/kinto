@@ -3,15 +3,19 @@
 import gi
 
 gi.require_version('Gtk', '3.0')
-gi.require_version('AppIndicator3', '0.1')
 gi.require_version('Notify', '0.7')
 
 import signal,time,os,fcntl,datetime,re
 from subprocess import Popen, PIPE, CalledProcessError
 from shutil import which
 from gi.repository import Gtk,GLib,GdkPixbuf
-from gi.repository import AppIndicator3 as appindicator
 from gi.repository import Notify as notify
+try:
+    gi.require_version('AyatanaAppIndicator3', '0.1')
+    from gi.repository import AyatanaAppIndicator3 as appindicator
+except ValueError:
+    gi.require_version('AppIndicator3', '0.1')
+    from gi.repository import AppIndicator3 as appindicator
 
 import signal
 

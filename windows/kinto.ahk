@@ -62,6 +62,8 @@ Menu, Tray, Add, Autodetect Keyboards, autodetect
 ; Menu, Tray, check, Autodetect Keyboards ; Autodetect
 ; Menu, Tray, disable, Autodetect Keyboards ; CB/IBM
 Menu, Tray, Add, Suspend Kinto, tray_suspend
+; Add tray menu item for toggling Option key special character entry scheme
+Menu, Tray, Add, OptSpecialChars   Shift+Opt+Cmd+O, toggle_optspecialchars
 ; Menu, Tray, Add, Returns to Desktop, min
 Menu, Tray, Add
 Menu, Tray, Add, Close, Exit
@@ -177,6 +179,9 @@ GroupAdd, remotes, ahk_exe mstsc.exe
 GroupAdd, remotes, ahk_exe msrdc.exe
 GroupAdd, remotes, ahk_exe nxplayer.bin
 GroupAdd, remotes, ahk_exe vmconnect.exe
+GroupAdd, remotes, ahk_exe RemoteDesktopManagerFree.exe
+GroupAdd, remotes, ahk_exe vncviewer.exe
+GroupAdd, remotes, Remote Desktop ahk_class ApplicationFrameWindow
 
 ; Disabled Edge for now - no ability to close all instances
 ; GroupAdd, browsers, Microsoft Edge ahk_class ApplicationFrameWindow
@@ -213,6 +218,57 @@ GroupAdd, intellij, ahk_exe idea64.exe
 #If
 ; +F8::Send {LCtrl down}{LWin down}{left}{LCtrl up}{LWin up}  ; Comment out on host machine
 ; +F6::Send {LCtrl down}{LWin down}{right}{LCtrl up}{LWin up} ; Comment out on host machine
+
+; #########################################################################
+; #############   START OF FINDER MODS FOR FILE MANAGERS   ################
+; #########################################################################
+; Finder Mods for Windows File Explorer (explore.exe)
+#IfWinActive ahk_class CabinetWClass ahk_exe explorer.exe
+    ^i::Send !{Enter}           ; Cmd+i: Get Info / Properties
+    ^r::Send {F5}               ; Cmd+R: Refresh view (Not actually a Finder shortcut? But works in Linux file browsers too.)
+    ^1::Send ^+2                ; Cmd+1: View as Icons
+    ^2::Send ^+6                ; Cmd+2: View as List (Detailed)
+    ^3::Send ^+5                ; Cmd+3: View as List (Compact)
+    ^4::Send ^+1                ; Cmd+4: View as Gallery
+    ^Up::Send !{Up}             ; Cmd+Up: Up to parent folder
+    ^Left::Send !{Left}         ; Cmd+Left: Go to prior location in history
+    ^Right::Send !{Right}       ; Cmd+Right: Go to next location in history
+    ^Down::                     ; Cmd-Down: Navigate into the selected directory
+    For window in ComObjCreate("Shell.Application").Windows
+        If WinActive() = window.hwnd
+            For item in window.document.SelectedItems {
+                window.Navigate(item.Path)
+                Return
+            }
+    Return
+    ^[::Send !{Left}            ; Cmd+Left_Brace: Go to prior location in history
+    ^]::Send !{Right}           ; Cmd+Right_Brace: Go to next location in history
+    ^+o::Send ^{Enter}          ; Cmd+Shift+o: Open in new window (tabs not available)
+    ^Delete::Send {Delete}      ; Cmd+Delete: Delete / Send to Trash
+    ^BackSpace::Send {Delete}   ; Cmd+Delete: Delete / Send to Trash
+    ^d::return,                 ; Block the unusual Explorer "delete" shortcut of Ctrl+D, used for "bookmark" in similar apps
+    $Enter:: 			; Use Enter key to rename (F2), unless focus is inside a text input field. 
+    ControlGetFocus, fc, A
+    If fc contains Edit,Search,Notify,Windows.UI.Core.CoreWindow1,SysTreeView321
+        Send {Enter}
+    Else Send {F2}
+    Return
+    $BackSpace:: 		; Backspace (without Cmd): Block Backspace key with error beep, unless inside text input field
+    ControlGetFocus, fc, A
+    If fc contains Edit,Search,Notify,Windows.UI.Core.CoreWindow1
+        Send {BackSpace}
+    Else SoundBeep, 600, 300
+    Return
+    $Delete:: 			; Delete (without Cmd): Block Delete key with error beep, unless inside text input field
+    ControlGetFocus, fc, A
+    If fc contains Edit,Search,Notify,Windows.UI.Core.CoreWindow1
+        Send {Delete}
+    Else SoundBeep, 600, 300
+    Return
+#IfWinActive
+; #########################################################################
+; ##############   END OF FINDER MODS FOR FILE MANAGERS   #################
+; #########################################################################
 
 #IfWinNotActive ahk_group remotes
     ; Lock Workstation
@@ -451,7 +507,7 @@ GroupAdd, intellij, ahk_exe idea64.exe
     ;     z::Send #z                                           ; Chromebook
     ; #If                                                      ; Chromebook
 
-    #IfWinNotActive ahk_group terminals
+    #If Not WinActive("ahk_group terminals") and Not WinActive("ahk_group remotes")
         ^.::Send {Esc}
         ; emacs style
         #n::Send {Down}
@@ -561,13 +617,16 @@ GroupAdd, intellij, ahk_exe idea64.exe
 
     ; Close all browsers
     #IfWinActive ahk_group browsers
-        ;Tab Navigation
-        ^+[::send ^{PgUp}
-        ^+]::send ^{PgDn}
-        ^!Left::send ^{PgUp}
-        ^!Right::send ^{PgDn}
-        #Left::send ^{PgUp}
-        #Right::send ^{PgDn}
+        ; Page Navigation
+        ^[::send !{Left}                ; Go to prior page
+        ^]::send !{Right}               ; Go to next page
+         ;Tab Navigation
+        ^+[::send ^{PgUp}               ; Go to prior tab (left)
+        ^+]::send ^{PgDn}               ; Go to next tab (right)
+        ^!Left::send ^{PgUp}            ; Go to prior tab (left)
+        ^!Right::send ^{PgDn}           ; Go to next tab (right)
+        #Left::send ^{PgUp}             ; Go to prior tab (left)
+        #Right::send ^{PgDn}            ; Go to next tab (right)
         ^q::send {Alt Down}f{Alt Up}x   ; exit all windows
         ; Dev Tools
         !^i::send {Ctrl Down}{Shift Down}i{Shift Up}{Ctrl Up}
@@ -867,3 +926,298 @@ Send {LWin up}
 Send {RShift up}
 Send {LShift up}
 return
+
+; ###############################################################################################################
+; ###   Special character insertion like Apple/macOS Option key methods, mapping to Unicode input method
+; ###   Common symbols available with Option+key or Shift+Option+key, accented keys with Option+Key1, then Key2
+; ###############################################################################################################
+
+; Shortcut to activate Option key special character scheme
+^+!o::Gosub, toggle_optspecialchars
+
+; Function (subroutine?) for activation by tray menu item or keyboard shortcut
+toggle_optspecialchars:
+    optspecialchars:=!optspecialchars         ; Toggle value of optspecialchars variable on/off
+    if (optspecialchars = 1) {
+        Menu, Tray, Check, OptSpecialChars   Shift+Opt+Cmd+O
+        MsgBox, 0, ALERT, % "Option key special character entry scheme is now ENABLED.`n`n"
+                            . "WARNING: This will interfere with many Alt and Alt-Shift shortcuts.`n`n"
+                            . "Disable from tray menu or with Shift+Opt+Cmd+O."
+        return
+    }
+    if (optspecialchars = 0) {
+        Menu, Tray, Uncheck, OptSpecialChars   Shift+Opt+Cmd+O
+        MsgBox, 0, ALERT, Option key special character entry scheme is now DISABLED.
+        return
+    }
+    return
+
+; #IfWinNotActive ahk_group remotes
+#If !WinActive("ahk_group remotes") && optspecialchars = 1
+
+    ; ######   NUMBER KEYS ROW   ######
+
+    ; Dead_Keys_Accent_Grave
+    ; ###   SC029 is ` (Grave key above Tab)
+    ; Grave accent: Option+`, then key to accent
+    $!SC029::
+        ; Use Apple "dead keys" Option key method to attach accents to next character typed
+        ; Grave accent activated by Option+` (Alt plus scan code SC029, or !SC029)
+        StringCaseSense, On
+        ; watch next input string
+        Input, UserInput, L1 
+        Switch UserInput {
+            Case Esc: Return            ; Watch for Escape key, cancel dead keys sequence
+            Case "a": Send, {U+00E0}              ; à {U+00E0} (Alt+0224)
+            Case "e": Send, {U+00E8}              ; è {U+00E8} (Alt+0232)
+            Case "i": Send, {U+00EC}              ; ì {U+00EC} (Alt+0236)
+            Case "o": Send, {U+00F2}              ; ò {U+00F2} (Alt+0242)
+            Case "u": Send, {U+00F9}              ; ù {U+00F9} (Alt+0249)
+            Case "A": Send, {U+00C0}              ; À {U+00C0} (Alt+0192)
+            Case "E": Send, {U+00C8}              ; È {U+00C8} (Alt+0200)
+            Case "I": Send, {U+00CC}              ; Ì {U+00CC} (Alt+0204)
+            Case "O": Send, {U+00D2}              ; Ò {U+00D2} (Alt+0210)
+            Case "U": Send, {U+00D9}              ; Ù {U+00D9} (Alt+0217)
+            Default: Send, %UserInput%          ; No match? Send input through.
+        }
+        Return
+
+    ; ###   SC029 is ` (Grave key above Tab)
+    $!+SC029::Send, {U+0060} ; Grave Accent diacritic (non-combining) {U+0060}: ` (Alt+96)
+    $!1::Send,  {U+00A1} ; Inverted Exclamation Mark {U+00A1}: ¡ (Alt+0161)
+    $!+1::Send, {U+2044} ; Fraction Slash, solidus (U+2044): ⁄ (Alt+8260) [Needs Unicode]
+    $!2::Send,  {U+2122} ; Trade Mark Sign Emoji {U+2122}: ™ (Alt+0153)
+    $!+2::Send, {U+20AC} ; Euro currency symbol {U+20AC}: € (Alt+0128)
+    $!3::Send,  {U+00A3} ; British Pound currency symbol {U+00A3}: £ (Alt+0163)
+    $!+3::Send, {U+2039} ; Single Left-Pointing Angle Quotation mark {U+2039}: (Alt+0139)
+    $!4::Send,  {U+00A2} ; Cent currency symbol {U+00A2}: ¢ (Alt+0162)
+    $!+4::Send, {U+203A} ; Single Right-Pointing Angle Quotation mark (U+203A): (Alt+0155)
+    $!5::Send,  {U+221E} ; Infinity mathematical symbol {U+221E}: ∞ (Alt+236)
+    $!+5::Send, {U+FB01} ; fi latin small ligature: ﬁ (U+FB01) (Alt+64257) [Needs Unicode]
+    $!6::Send,  {U+00A7} ; Section symbol {U+00A7}: § (Alt+0167)
+    $!+6::Send, {U+FB02} ; fl small ligature: (U+FB02) (Alt+64258) [Needs Unicode.]
+    $!7::Send,  {U+00B6} ; Paragraph mark (Pilcrow) symbol {U+00B6}: ¶ (Alt+0182)
+    $!+7::Send, {U+2021} ; Double dagger (cross) symbol {U+2021}: ‡ (Alt+0135)
+    $!8::Send,  {U+2022} ; Bullet point symbol {U+2022}: • (Alt+0149) 
+    $!+8::Send, {U+00B0} ; Degree symbol {U+00B0}: ° (Alt+0176)
+    $!9::Send,  {U+00AA} ; Feminine Ordinal Indicator symbol {U+00AA}: ª (Alt+0170)
+    $!+9::Send, {U+00B7} ; Middle Dot (interpunct/middot) symbol {U+00B7}: · (Alt+0183) 
+    $!0::Send,  {U+00BA} ; Masculine Ordinal Indicator symbol {U+00BA}: º (Alt+0186)
+    $!+0::Send, {U+201A} ; Single low-9 quotation mark {U+201A}: ‚ (Alt+0130) 
+    $!-::Send,  {U+2013} ; En Dash symbol {U+2013}: – (Alt+0150)
+    $!+-::Send, {U+2014} ; Em Dash symbol {U+2014}: — (Alt+0151)
+    $!=::Send,  {U+2260} ; Not Equal To symbol (U+2260): ≠ (Alt+8800) [Needs Unicode]
+    $!+=::Send, {U+00B1} ; Plus Minus symbol {U+00B1}: ± (Alt+0177)
+
+
+    ; ######   LETTER AND PUNCTUATION KEYS   ###### [ in QWERTY order ]
+
+    ; ##############
+    ; ###   1st row: Tab-key row [ qwertyuiop[]\ ] [ QWERTYUIOP{}| ]
+
+    $!q::Send,  {U+0153} ; Small oe (oethel) ligature {U+0153}: œ (Alt+0156)
+    $!+q::Send, {U+0152} ; Capital OE (Oethel) ligature {U+0152}: Œ (Alt+0140)
+    $!w::Send,  {U+2211} ; N-Ary Summation (sigma) notation (U+2211}: ∑ [Needs Unicode]
+    $!+w::Send, {U+201E} ; Double Low-9 Quotation mark {U+201E}: „ (Alt+0132)
+
+    ; Dead_Keys_Accent_Acute
+    ; Acute accent: Option+e, then key to accent
+    $!e::
+        ; Use Apple "dead keys" Option key method to attach accents to next character typed
+        ; Acute accent activated by Option+e (logical Alt+e)
+        StringCaseSense, On
+        ; watch next input string
+        Input, UserInput, L1 
+        Switch UserInput {
+            Case Esc: Return            ; Watch for Escape key, cancel dead keys sequence
+            Case "a": Send, {U+00E1}            ; á {U+00E1} (Alt+0225)
+            Case "e": Send, {U+00E9}            ; é {U+00E9} (Alt+0233)
+            Case "i": Send, {U+00ED}            ; í {U+00ED} (Alt+0237)
+            Case "o": Send, {U+00F3}            ; ó {U+00F3} (Alt+0243)
+            Case "u": Send, {U+00FA}            ; ú {U+00FA} (Alt+0250)
+            Case "A": Send, {U+00C1}            ; Á {U+00C1} (Alt+0193)
+            Case "E": Send, {U+00C9}            ; É {U+00C9} (Alt+0201)
+            Case "I": Send, {U+00CD}            ; Í {U+00CD} (Alt+0205)
+            Case "O": Send, {U+00D3}            ; Ó {U+00D3} (Alt+0211)
+            Case "U": Send, {U+00DA}            ; Ú {U+00DA} (Alt+0218)
+            Default: Send, %UserInput%          ; No match? Send input through.
+        }
+        Return
+
+    $!+e::Send, {U+00B4} ; Acute accent diacritic (non-combining) {U+00B4}: ´ (Alt+0180)
+    $!r::Send,  {U+00AE} ; Registered Trade Mark Sign {U+00AE}: ® (Alt+0174)
+    $!+r::Send, {U+2030} ; Per mille symbol {U+2030}: ‰ (Alt+0137)
+    $!t::Send,  {U+2020} ; Simple dagger (cross) symbol {U+2020}: † (Alt+0134)
+    $!+t::Send, {U+02C7} ; Caron/hacek diacritic (non-combining) (U+02C7): ˇ (Alt+0134)
+    $!y::Send,  {U+00A5} ; Yen currency symbol {U+00A5}: ¥ (Alt+0165)
+    $!+y::Send, {U+00C1} ; Latin Capital Letter a with Acute (U+00C1): Á (Alt+0193)
+
+    ; Dead_Keys_Accent_Umlaut
+    ; Umlaut/Diaeresis accent: Option+u, then key to accent
+    $!u::
+        ; Use Apple "dead keys" Option key method to attach accents to next character typed
+        ; Umlaut/Diaeresis accent activated by Option+u (logical Alt+u)
+        StringCaseSense, On
+        ; watch next input string
+        Input, UserInput, L1 
+        Switch UserInput {
+            Case Esc: Return            ; Watch for Escape key, cancel dead keys sequence
+            Case "a": Send, {U+00E4}            ; ä {U+00E4} (Alt+0228)
+            Case "e": Send, {U+00EB}            ; ë {U+00EB} (Alt+0235)
+            Case "i": Send, {U+00EF}            ; ï {U+00EF} (Alt+0239)
+            Case "o": Send, {U+00F6}            ; ö {U+00F6} (Alt+0246)
+            Case "u": Send, {U+00FC}            ; ü {U+00FC} (Alt+0252)
+            Case "y": Send, {U+00FF}            ; ÿ {U+00FF} (Alt+0255)
+            Case "A": Send, {U+00C4}            ; Ä {U+00C4} (Alt+0196)
+            Case "E": Send, {U+00CB}            ; Ë {U+00CB} (Alt+0203)
+            Case "I": Send, {U+00CF}            ; Ï {U+00CF} (Alt+0207)
+            Case "O": Send, {U+00D6}            ; Ö {U+00D6} (Alt+0214)
+            Case "U": Send, {U+00DC}            ; Ü {U+00DC} (Alt+0220)
+            Case "Y": Send, {U+0178}            ; Ÿ {U+0178} (Alt+0159)
+            Default: Send, %UserInput%          ; No match? Send input through.
+        }
+        Return
+
+    $!+u::Send, {U+00A8} ; Umlaut/Diaeresis diacritic (non-combining) {U+00A8}: (Alt+0168)
+
+    ; Dead_Keys_Accent_Circumflex
+    ; Circumflex accent: Option+i, then key to accent
+    $!i::
+        ; Use Apple "dead keys" Option key method to attach accents to next character typed
+        ; Circumflex accent activated by Option+i (logical Alt+i)
+        StringCaseSense, On
+        ; watch next input string
+        Input, UserInput, L1 
+        Switch UserInput {
+            Case Esc: Return            ; Watch for Escape key, cancel dead keys sequence
+            Case "a": Send, {U+00E2}            ; â {U+00E2} (Alt+0226)
+            Case "e": Send, {U+00EA}            ; ê {U+00EA} (Alt+0234)
+            Case "i": Send, {U+00EE}            ; î {U+00EE} (Alt+0238)
+            Case "o": Send, {U+00F4}            ; ô {U+00F4} (Alt+0244)
+            Case "u": Send, {U+00FB}            ; û {U+00FB} (Alt+0251)
+            Case "A": Send, {U+00C2}            ; Â {U+00C2} (Alt+0194)
+            Case "E": Send, {U+00CA}            ; Ê {U+00CA} (Alt+0202)
+            Case "I": Send, {U+00CE}            ; Î {U+00CE} (Alt+0206)
+            Case "O": Send, {U+00D4}            ; Ô {U+00D4} (Alt+0212)
+            Case "U": Send, {U+00DB}            ; Û {U+00DB} (Alt+0219)
+            Default: Send, %UserInput%          ; No match? Send input through.
+        }
+        Return
+
+    $!+i::Send, {U+02C6} ; Modifier Letter Circumflex Accent (U+02C6): ˆ (Alt+0137)
+    $!o::Send,  {U+00F8} ; Latin Small Letter o with Stroke {U+00F8}: ø (Alt+0248)
+    $!+o::Send, {U+00D8} ; Latin Capital Letter O with Stroke {U+00D8}: Ø (Alt+0216)
+    $!p::Send,  {U+03C0} ; Greek Small Letter Pi {U+03C0}: π (Alt+227)
+    $!+p::Send, {U+220F} ; N-Ary Product mathematical symbol (U+220F): ∏ [Needs Unicode]
+    $![::Send,  {U+201C} ; Left Double Quotation Mark {U+201C}: “ (Alt+0147)
+    $!+[::Send, {U+201D} ; Right Double Quotation Mark {U+201D}: ” (Alt+8)
+    $!]::Send,  {U+2018} ; Left Single Quotation Mark {U+2018}: ‘ (Alt+0145)
+    $+!]::Send, {U+2019} ; Right Single Quotation Mark {U+2019}: ’ (Alt+0146)
+    $!\::Send,  {U+00AB} ; LEFT-POINTING DOUBLE ANGLE QUOTATION MARK {U+00AB}: « (Alt+0171)
+    $!+\::Send, {U+00BB} ; RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK {U+00BB}: » (Alt+0187)
+
+
+    ; ##############
+    ; ###   2nd row: Caps Lock row [ asdfghjkl;' ] [ ASDFGHJKL:" ]
+
+    $!a::Send,  {U+00E5} ; Small Letter a with Ring Above {U+00E5}: å (Alt+0229)
+    $!+a::Send, {U+00C5} ; Capital Letter A with Ring Above {U+00C5}: Å (Alt+0197)
+    $!s::Send,  {U+00DF} ; German Eszett/beta (Sharfes/Sharp S) {U+00DF}: ß (Alt+0223)
+    $!+s::Send, {U+00CD} ; Latin Capital Letter I with Acute {U+00CD}: Í (Alt+0205)
+    $!d::Send,  {U+2202} ; Partial Differential mathematical symbol {U+2202}: ∂ (Alt+2202) [Needs Unicode]
+    $!+d::Send, {U+00CE} ; Latin Capital Letter I with Circumflex {U+00CE}: Î (Alt+0206)
+    $!f::Send,  {U+0192} ; Function/florin currency symbol {U+0192}: ƒ (Alt+159)
+    $!+f::Send, {U+00CF} ; Latin Capital Letter I with Diaeresis {U+00CF}: Ï (Alt+0207)
+
+    ; #######################################################################
+    ; ##  Problem: Option+g (Win+g) brings up Windows XBox Game Bar! 
+    ; ##  To remove/disable paste this text in PowerShell (without quotes): 
+    ; ##  "Get-AppxPackage Microsoft.XboxGamingOverlay | Remove-AppxPackage"
+    ; #######################################################################
+    $!g::Send,  {U+00A9} ; Copyright Sign {U+00A9}: © (Alt+0169)
+    $!+g::Send, {U+02DD} ; Double Acute Accent diacritic (non-combining) {U+02DD}: ˝ [Needs Unicode]
+    $!h::Send,  {U+02D9} ; Dot Above diacritic (non-combining) {U+02D9}: ˙ [Needs Unicode]
+    $!+h::Send, {U+00D3} ; Latin Capital Letter O with Acute {U+00D3}: Ó (Alt+0211)
+    $!j::Send,  {U+2206} ; Increment, laplace operator symbol {U+2206}: ∆ [Needs Unicode]
+    $!+j::Send, {U+00D4} ; Latin Capital Letter O with Circumflex {U+00D4}: Ô (Alt+0212)
+    $!k::Send,  {U+02DA} ; Ring Above diacritic (non-combining) {U+02DA}: ˚ [Needs Unicode] (NOT degree sign/symbol)
+
+    ; Apple logo {U+F8FF}:  [Unicode Private Use Area, req's Baskerville Old Face font]
+    ; $!+k::Send, {U+F8FF}    ; This Unicode address only works with Mac fonts
+    $!+k::
+        Send, {U+F000}    ; Change font of inserted character (may be invisible) to Baskerville Old Face
+        apple_logo_alert:=1     ; Set to zero to disable, one to enable (default is enabled)
+        if (apple_logo_alert=1) {
+            MsgBox, 0, ALERT, % "ALERT: Change the font of the inserted character!`n`n"
+                                . "Apple logo character requires the Baskerville Old Face font.`n`n`n"
+                                . "Note 1: The character has been inserted but may be INVISIBLE`n"
+                                . "             (i.e., non-printing) in its current font.`n`n`n"
+                                . "Note 2: The inserted character will probably NOT be portable`n"
+                                . "             to a Mac document/font. Use only for print/PDF `n"
+                                . "             purposes on PC.`n`n`n"
+                                . "Note 3: Search for apple_logo_alert in kinto.ahk config and `n"
+                                . "             set it to zero to disable this MsgBox.`n`n`n"
+        }
+        return
+
+    ; #######################################################################
+    ; ##  Option+L works, but will also trigger the Win+L screen locking.
+    ; ##  The screen locking shortcut can only be disabled in the registry. 
+    ; #######################################################################
+    $!l::Send,  {U+00AC} ; Not Sign angled dash symbol {U+00AC}: ¬ (Alt+170)
+    $!+l::Send, {U+00D2} ; Latin Capital Letter O with Grave {U+00D2}: Ò (Alt+0210)
+    $!;::Send,  {U+2026} ; Horizontal elipsis {U+2026}: … (Alt+0133)
+    $!+;::Send, {U+00DA} ; Latin Capital Letter U with Acute {U+00DA}: Ú (Alt+0218)
+
+    ; #######################################################################
+    ; ##  SC028 is single-quote key scan code
+    ; #######################################################################
+    $!SC028::Send,  {U+00E6} ; Small ae ligature {U+00E6}: æ (Alt+0230)
+    $!+SC028::Send, {U+00C6} ; Capital AE ligature {U+00C6}: Æ (Alt+0198)
+
+
+    ; ##############
+    ; ###   3rd row: Shift-Keys row [ zxcvbnm,./ ] [ ZXCVBNM<>? ]
+
+    $!z::Send,  {U+03A9} ; Greek Capital Letter Omega symbol {U+03A9} Ω (Alt+234)
+    $!+z::Send, {U+00B8} ; Spacing Cedilla diacritic symbol (non-combining) {U+00B8}: ¸ (Alt+0184)
+    $!x::Send,  {U+2248} ; Almost Equal To symbol (U+2248): ≈ (Alt+247)
+    $!+x::Send, {U+02DB} ; Ogonek diacritic (non-combining) (U+02DB): ˛ [Needs Unicode]
+    $!c::Send,  {U+00E7} ; Small Letter c with Cedilla {U+00E7}: ç (Alt+0231)
+    $!+c::Send, {U+00C7} ; Capital Letter C with Cedilla {U+00C7}: Ç (Alt+0199)
+    $!v::Send,  {U+221A} ; Square Root radical sign (U+221A): √ (Alt+251)
+    $!+v::Send, {U+25CA} ; Lozenge (diamond) shape symbol (U+25CA): ◊ [Needs Unicode]
+    $!b::Send,  {U+222B} ; Integral mathematical symbol (U+222B): ∫ [Needs Unicode]
+    $!+b::Send, {U+0131} ; Latin Small Letter Dotless i (U+0131): ı [Needs Unicode]
+
+    ; Dead_Keys_Accent_Tilde
+    ; Tilde accent: Option+n, then key to accent
+    $!n::
+        ; Use Apple "dead keys" Option key method to attach accents to next character typed
+        ; Tilde accent activated by Option+n (logical Alt+n)
+        StringCaseSense, On
+        ; watch next input string
+        Input, UserInput, L1 
+        Switch UserInput {
+            Case Esc: Return            ; Watch for Escape key, cancel dead keys sequence
+            Case "a": Send, {U+00E3}            ; ã {U+00E3} (Alt+0227)
+            Case "n": Send, {U+00F1}            ; ñ {U+00F1} (Alt+0241)
+            Case "o": Send, {U+00F5}            ; õ {U+00F5} (Alt+0245)
+            Case "A": Send, {U+00C3}            ; Ã {U+00C3} (Alt+0195)
+            Case "N": Send, {U+00D1}            ; Ñ {U+00D1} (Alt+0209)
+            Case "O": Send, {U+00D5}            ; Õ {U+00D5} (Alt+0213)
+            Default: Send, %UserInput%          ; No match? Send input through.
+        }
+        Return
+
+    $!+n::Send, {U+02DC} ; Small Tilde character (U+02DC): ˜ (Alt+0152)
+    $!m::Send,  {U+00B5} ; Micro (mu) symbol {U+00B5}: µ (Alt+0181)
+    $!+m::Send, {U+00C2} ; Latin Capital Letter a with Circumflex (U+00C2): Â (Alt+0194)
+    $!,::Send,  {U+2264} ; Less than or equal to symbol {U+2264}: ≤ (Alt+243)
+    $!+,::Send, {U+00AF} ; Macron/overline/apl overbar (non-combining) (U+00AF): ¯ (Alt+0175)
+    $!.::Send,  {U+2265} ; Greater than or equal to symbol {U+2265}: ≥ (Alt+242)
+    $!+.::Send, {U+02D8} ; Breve diacritic (non-combining) {U+02D8}: ˘ [Needs Unicode]
+    $!/::Send,  {U+00F7} ; Obelus/Division symbol {U+00F7}: ÷ (Alt+0247)
+    $!+/::Send, {U+00BF} ; Inverted Question Mark {U+00BF}: ¿ (Alt+0191)
+
+#If ; ### END of special character insertion with Option(Alt) key

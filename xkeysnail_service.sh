@@ -315,8 +315,9 @@ if ! [ -x "$(command -v xhost)" ] || ! [ -x "$(command -v gcc)" ]; then
 fi
 
 if [[ $dename == "kde" ]]; then
-	if [[ $distro == "manjarolinux" ]]; then
+	if [[ $distro == "manjarolinux" ]] || cat /etc/os-release | grep -E "^ID(_LIKE)?" | grep -q arch; then # Manjario or other arch-like distros: SteamOS3,HoloISO
 		sudo ./linux/system-config/unipkg.sh vte3
+		sudo ./linux/system-config/unipkg.sh python-pip
 	else
 		sudo ./linux/system-config/unipkg.sh libvte-2.91-dev
 	fi
@@ -329,7 +330,7 @@ if [[ $distro == 'kdeneon' ]]; then
 	kquitapp5 kglobalaccel && sleep 2s && kglobalaccel5 &
 fi
 
-if [[ $distro == 'fedora' ]]; then
+if [[ $distro == 'fedora' ]] || [[ $distro == 'fedoralinux' ]]; then
 	if [[ $(gsettings get org.gnome.desktop.wm.keybindings show-desktop | grep "\[\]" | wc -l) == 1 ]];then
 		gsettings set org.gnome.desktop.wm.keybindings show-desktop "['<Super>d']"
 	else
@@ -385,10 +386,10 @@ fi
 if ! [ -x "$(command -v python3-config)" ]; then
 	if [ "$distro" == "ubuntu" ] || [ "${distro::6}" == "debian" ] || [ "$distro" == 'linuxmint' ]; then
 		pydev="python3-dev"
-	elif [ "$distro" == "fedora" ]; then
+	elif [ "$distro" == "fedora" ] || [ "$distro" == "fedoralinux" ]; then
 		pydev="python3-devel"
 	fi
-	if [ "$distro" == "gnome" ] || [ "$distro" == "fedora" ] || [ "${distro::6}" == "debian" ] || [ "$distro" == 'linuxmint' ]; then
+	if [ "$distro" == "gnome" ] || [ "$distro" == "fedora" ] || [ "$distro" == "fedoralinux" ] || [ "${distro::6}" == "debian" ] || [ "$distro" == 'linuxmint' ] ; then
 		echo "Will need to install $pydev..."
 		sudo ./linux/system-config/unipkg.sh "$pydev"
 	fi
@@ -500,7 +501,7 @@ if [[ $distro == "popos" ]]; then
 	perl -pi -e "\s{4}(# )(K.*)(# SL - .*popos.*)/    \$2\$3/g" ./linux/kinto.py.new >/dev/null 2>&1
 fi
 
-if [[ $distro == "fedora" ]]; then
+if [[ $distro == 'fedora' ]] || [[ $distro == 'fedoralinux' ]]; then
 	perl -pi -e "\s{4}(# )(K.*)(# SL - .*fedora.*)/    \$2\$3/g" ./linux/kinto.py.new >/dev/null 2>&1
 	sed -i "s#{sudo}##g" ./linux/xkeysnail.service.new
 	selinuxuser=system_u
@@ -575,7 +576,7 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 		exit 0
 	fi
 	sed -i "s#{xkeysnail}#`which xkeysnail`#g" ./linux/limitedadmins.new
-	if [[ $distro == "fedora" ]]; then
+	if [[ $distro == 'fedora' ]] || [[ $distro == 'fedoralinux' ]]; then
 		echo "Changing SELinux context"
 		sudo chcon -v --user=$selinuxuser --type=$selinuxtype "$xkeypath"xkeysnail.service
 	fi
@@ -587,7 +588,7 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 		sed -i "s#{xkeysnail}#`which xkeysnail`#g" ./linux/xkeysnail.service.new
 		sudo mv ./linux/xkeysnail.service.new "$xkeypath"xkeysnail.service && echo "Service file added to "$xkeypath"xkeysnail.service"
 
-		if [[ $distro == "fedora" ]]; then
+		if [[ $distro == 'fedora' ]] || [[ $distro == 'fedoralinux' ]]; then
 			sudo cp "$xkeypath"xkeysnail.service /etc/systemd/system/xkeysnail.service && echo "Copied service file to system..." || echo "Failed to create copy..."
 			sudo cp "$xkeypath"xkeysnail.service /etc/systemd/system/graphical.target.wants/xkeysnail.service && echo "Copied service file to system for graphical target..." || echo "Failed to create copy for graphical target..."
 			sudo chown -R root:root /etc/systemd/system/xkeysnail.service && echo "Ownership set for root..." || echo "Failed to set ownership..."
