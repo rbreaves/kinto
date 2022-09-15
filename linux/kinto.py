@@ -639,6 +639,15 @@ define_keymap(lambda wm_class: wm_class.casefold() not in mscodes,{
 
 # Keybindings for VS Code
 define_keymap(re.compile(codeStr, re.IGNORECASE),{
+    # Find dialog options
+    C("Alt-RC-C"):              C("Alt-C"),                     # Find: toggle "Match Case"
+    C("Alt-RC-W"):              C("Alt-W"),                     # Find: toggle "Match Whole Word"
+    C("Alt-RC-R"):              C("Alt-R"),                     # Find: toggle "Use Regular Expression"
+    C("Alt-RC-L"):              C("Alt-L"),                     # Find: toggle "Find in Selection"
+    C("Alt-RC-P"):              C("Alt-P"),                     # Replace: toggle "Preserve Case"
+
+    C("Alt-RC-Z"):              C("Alt-Z"),                     # View: toggle "Word Wrap"
+
     K("Super-Space"): K("LC-Space"),                        # Basic code completion
     # Wordwise remaining - for VS Code
     # Alt-F19 hack fixes Alt menu activation
