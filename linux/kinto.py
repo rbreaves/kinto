@@ -505,7 +505,7 @@ define_keymap(re.compile("^Angry.*IP.*Scanner$", re.IGNORECASE),{
     C("RC-comma"):              C("Shift-RC-P"),                # Open preferences
 }, "Angry IP Scanner")
 
-define_keymap(re.compile("^transmission$", re.IGNORECASE),{
+define_keymap(re.compile("^transmission-gtk$", re.IGNORECASE),{
     C("RC-i"):                  C("Alt-Enter"),                 # Open properties (Get Info) dialog
     C("RC-comma"):             [C("Alt-e"),C("p")],             # Open preferences (settings) dialog
 }, "Transmission bittorrent client")
@@ -1070,7 +1070,7 @@ define_keymap(re.compile(sublimeStr, re.IGNORECASE),{
 
 keymap("Modal dialog fix - GNOME Settings child windows",{
     C("RC-W"):                  C("Alt-F4"),
-}, when = lambda ctx: ctx.wm_class == "^Gnome-control-center$" and not ctx.wm_name == "^Settings$")
+}, when = lambda ctx: ctx.wm_class == "Gnome-control-center" and not ctx.wm_name == "Settings")
 
 keymap("Modal dialog fix - Nautilus file Properties",{
     C("RC-W"):                  C("Alt-F4"),
@@ -1079,15 +1079,15 @@ keymap("Modal dialog fix - Nautilus file Properties",{
 
 keymap("Modal dialog fix - Transmission child windows",{
     C("RC-W"):                  C("Esc"),                       # preferences and Alt+F4 causes main Transmission window to crash?
-}, when = lambda ctx: ctx.wm_class == "^Transmission-gtk$" and not ctx.wm_name == "^Transmission$")
+}, when = lambda ctx: ctx.wm_class == "Transmission-gtk" and not ctx.wm_name == "Transmission")
 
 keymap("Modal dialog fix - Totem child windows",{
     C("RC-W"):                  C("Alt-F4"),
-}, when = lambda ctx: ctx.wm_class == "^Totem$" and not ctx.wm_name == "^Videos$")
+}, when = lambda ctx: ctx.wm_class == "Totem" and not ctx.wm_name == "Videos")
 
 keymap("Modal dialog fix - pCloud child windows",{
     C("RC-W"):                  C("Alt-F4"),
-}, when = lambda ctx: ctx.wm_class == "^pcloud$")
+}, when = lambda ctx: ctx.wm_class == "pcloud")
 
 
 
