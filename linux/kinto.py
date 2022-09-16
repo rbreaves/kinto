@@ -479,9 +479,6 @@ include("optspecialchars.py")
 ######################################################################################
 ### Good place for adding new custom keymaps for user applications and custom function keys
 
-# REMOVE THE CONTENTS OF THIS FOR GENERAL USE
-define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
-}, "User hardware-specific customizations")
 
 
 
