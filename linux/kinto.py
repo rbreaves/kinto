@@ -247,7 +247,7 @@ def isWindow(cls, nm, case='i'):
 # Variable to enable media_arrows_fix
 # Makes arrow keys with media (Play_Pause/Stop/Rew/Fwd) functions 
 # become PgUp/PgDn/Home/End keys when used with Fn key, like a MacBook
-_media_arrows_fix = True
+_media_arrows_fix = False
 
 
 modmap("Conditional modmap - Mac Numpad feature",{
