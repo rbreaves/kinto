@@ -694,7 +694,7 @@ keymap("XDG file dialogs", {
     C("RC-Right"):              C("Alt-Right"),                 # Go Forward
     C("RC-Up"):                 C("Alt-Up"),                    # Go Up dir
     C("RC-Down"):               C("Enter"),                     # Go Down dir (open folder/file) [universal]
-}, when = lambda ctx: ctx.wm_class == "^xdg-desktop-portal-gnome$" and (ctx.wm_name == "Open File" or ctx.wm_name == "Save As"))
+}, when = lambda ctx: ctx.wm_class == "xdg-desktop-portal-gnome" and (ctx.wm_name == "Open File" or ctx.wm_name == "Save As"))
 
 
 define_keymap(re.compile(filemanStr, re.IGNORECASE),{
@@ -1074,7 +1074,6 @@ keymap("Modal dialog fix - GNOME Settings child windows",{
 
 keymap("Modal dialog fix - Nautilus file Properties",{
     C("RC-W"):                  C("Alt-F4"),
-# }, when = lambda ctx: ctx.wm_class == "^.*nautilus$" and ctx.wm_name == "^.*Properties$")
 }, when = isWindow("^.*nautilus$", "^.*Properties$"))
 
 keymap("Modal dialog fix - Transmission child windows",{
