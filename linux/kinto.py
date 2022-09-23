@@ -20,7 +20,7 @@ UC = unicode_keystrokes
 
 
 
-###@########  LISTS OF WM_CLASS STRINGS ##############
+############  LISTS OF WM_CLASS STRINGS ##############
 ###                                                ###
 ###                                                ###
 ###      ██      ██ ███████ ████████ ███████       ###
