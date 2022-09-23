@@ -1070,23 +1070,23 @@ define_keymap(re.compile(sublimeStr, re.IGNORECASE),{
 
 keymap("Modal dialog fix - GNOME Settings child windows",{
     C("RC-W"):                  C("Alt-F4"),
-}, when = lambda ctx: ctx.wm_class == "Gnome-control-center" and not ctx.wm_name == "Settings")
+}, when = isWindow("^Gnome-control-center$", "(?!^Settings$)"))
 
 keymap("Modal dialog fix - Nautilus file Properties",{
     C("RC-W"):                  C("Alt-F4"),
 }, when = isWindow("^.*nautilus$", "^.*Properties$"))
 
 keymap("Modal dialog fix - Transmission child windows",{
-    C("RC-W"):                  C("Esc"),                       # preferences and Alt+F4 causes main Transmission window to crash?
-}, when = lambda ctx: ctx.wm_class == "Transmission-gtk" and not ctx.wm_name == "Transmission")
+    C("RC-W"):                  C("Esc"),
+}, when = isWindow("^Transmission-gtk$", "(?!^Transmission$)"))
 
 keymap("Modal dialog fix - Totem child windows",{
     C("RC-W"):                  C("Alt-F4"),
-}, when = lambda ctx: ctx.wm_class == "Totem" and not ctx.wm_name == "Videos")
+}, when = isWindow("^Totem$", "(?!^Videos$)"))
 
 keymap("Modal dialog fix - pCloud child windows",{
     C("RC-W"):                  C("Alt-F4"),
-}, when = lambda ctx: ctx.wm_class == "pcloud")
+}, when = isWindow("^pcloud$", None))
 
 
 
