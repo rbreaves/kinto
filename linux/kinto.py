@@ -1217,7 +1217,7 @@ define_keymap(re.compile(termStr, re.IGNORECASE),{
     C("RC-L"):                  C("C-Shift-L"),
     C("RC-SEMICOLON"):          C("C-Shift-SEMICOLON"),
     C("RC-APOSTROPHE"):         C("C-Shift-APOSTROPHE"),
-    C("RC-GRAVE"):              C("C-Shift-GRAVE"),
+    # C("RC-GRAVE"):              C("C-Shift-GRAVE"),
     C("RC-Z"):                  C("C-Shift-Z"),
     C("RC-X"):                  C("C-Shift-X"),
     C("RC-C"):                  C("C-Shift-C"),
