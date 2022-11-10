@@ -224,6 +224,8 @@ GroupAdd, intellij, ahk_exe idea64.exe
 ; #########################################################################
 ; Finder Mods for Windows File Explorer (explore.exe)
 #IfWinActive ahk_class CabinetWClass ahk_exe explorer.exe
+    ^+[::Send ^+{Tab}           ; Tab nav: Go to prior tab (left)
+    ^+]::Send ^{Tab}            ; Tab nav: Go to next tab (right)
     ^i::Send !{Enter}           ; Cmd+i: Get Info / Properties
     ^r::Send {F5}               ; Cmd+R: Refresh view (Not actually a Finder shortcut? But works in Linux file browsers too.)
     ^1::Send ^+2                ; Cmd+1: View as Icons
