@@ -70,6 +70,7 @@ mscodes.extend(remotes)
 
 # Use for browser specific hotkeys
 browsers = [
+    "Brave-browser",
     "Chromium",
     "Chromium-browser",
     "Discord",
@@ -88,6 +89,7 @@ browsers = [browser.casefold() for browser in browsers]
 browserStr = "|".join(str('^'+x+'$') for x in browsers)
 
 chromes = [
+    "Brave-browser",
     "Chromium",
     "Chromium-browser",
     "Google-chrome",
