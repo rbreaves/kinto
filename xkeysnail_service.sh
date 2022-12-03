@@ -385,9 +385,9 @@ if ! [ -x "$(command -v pip3)" ]; then
 fi
 if ! [ -x "$(command -v python3-config)" ]; then
 	if [ "$distro" == "ubuntu" ] || [ "${distro::6}" == "debian" ] || [ "$distro" == 'linuxmint' ]; then
-		pydev="python3-dev"
+		pydev="python3-dev python3-tk"
 	elif [ "$distro" == "fedora" ] || [ "$distro" == "fedoralinux" ]; then
-		pydev="python3-devel"
+		pydev="python3-devel python3-tkinter"
 	fi
 	if [ "$distro" == "gnome" ] || [ "$distro" == "fedora" ] || [ "$distro" == "fedoralinux" ] || [ "${distro::6}" == "debian" ] || [ "$distro" == 'linuxmint' ] ; then
 		echo "Will need to install $pydev..."
