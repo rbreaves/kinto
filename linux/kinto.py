@@ -441,13 +441,16 @@ define_keymap(re.compile(filemanagerStr, re.IGNORECASE),{
 ############################################
 
 # Open preferences in browsers
-define_keymap(re.compile("^Firefox$", re.IGNORECASE),{
+define_keymap(re.compile("^Firefox.*$", re.IGNORECASE),{
     K("C-comma"): [
         K("C-T"),K("a"),K("b"),K("o"),K("u"),K("t"),
         K("Shift-SEMICOLON"),K("p"),K("r"),K("e"),K("f"),
         K("e"),K("r"),K("e"),K("n"),K("c"),K("e"),K("s"),K("Enter")
     ],
-    K("RC-Shift-N"):    K("RC-Shift-P"),        # Open private window with Ctrl+Shift+N like other browsers
+    K("RC-Shift-N"):            K("RC-Shift-P"),                # Open private window with Cmd+Shift+N like other browsers
+    # Wordwise shortcut overrides
+    K("RC-Backspace"):         [K("Shift-Home"), K("Backspace")],     # Delete Entire Line Left of Cursor
+    K("RC-Delete"):            [K("Shift-End"), K("Delete")],         # Delete Entire Line Right of Cursor
 })
 
 define_keymap(re.compile(chromeStr, re.IGNORECASE),{
