@@ -35,6 +35,7 @@ terminals = [
     "urxvt",
     "xfce4-terminal",
     "xterm",
+    "yakuake"
 ]
 terminals = [term.casefold() for term in terminals]
 termStr = "|".join(str('^'+x+'$') for x in terminals)
