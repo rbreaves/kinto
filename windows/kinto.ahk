@@ -223,7 +223,9 @@ GroupAdd, intellij, ahk_exe idea64.exe
 ; #############   START OF FINDER MODS FOR FILE MANAGERS   ################
 ; #########################################################################
 ; Finder Mods for Windows File Explorer (explore.exe)
-#IfWinActive ahk_class CabinetWClass ahk_exe explorer.exe
+#If WinActive("ahk_class CabinetWClass ahk_exe explorer.exe") or WinActive("ahk_class Progman ahk_exe explorer.exe")
+    ^+[::Send ^+{Tab}           ; Tab nav: Go to prior tab (left)
+    ^+]::Send ^{Tab}            ; Tab nav: Go to next tab (right)
     ^i::Send !{Enter}           ; Cmd+i: Get Info / Properties
     ^r::Send {F5}               ; Cmd+R: Refresh view (Not actually a Finder shortcut? But works in Linux file browsers too.)
     ^1::Send ^+2                ; Cmd+1: View as Icons
@@ -239,31 +241,38 @@ GroupAdd, intellij, ahk_exe idea64.exe
             For item in window.document.SelectedItems {
                 window.Navigate(item.Path)
                 Return
-            }
+            }   
     Return
     ^[::Send !{Left}            ; Cmd+Left_Brace: Go to prior location in history
     ^]::Send !{Right}           ; Cmd+Right_Brace: Go to next location in history
     ^+o::Send ^{Enter}          ; Cmd+Shift+o: Open in new window (tabs not available)
     ^Delete::Send {Delete}      ; Cmd+Delete: Delete / Send to Trash
-    ^BackSpace::Send {Delete}   ; Cmd+Delete: Delete / Send to Trash
-    ^d::return,                 ; Block the unusual Explorer "delete" shortcut of Ctrl+D, used for "bookmark" in similar apps
-    $Enter:: 			; Use Enter key to rename (F2), unless focus is inside a text input field. 
+    ; ^BackSpace::Send {Delete}   ; Cmd+Delete: Delete / Send to Trash
+    $^BackSpace::                ; Backspace (without Cmd): Block Backspace key with error beep, unless inside text input field
+    ControlGetFocus, fc, A
+    If fc contains Edit,Search,Notify,Windows.UI.Core.CoreWindow1
+        Send +{Home}{Delete}
+    Else Send {Delete}
+    Return
+    ^d::return,                 ; Block the unusual Explorer "delete" shortcut of Ctrl+D, used for "bookmark" elsewhere
+    $Enter::                    ; Use Enter key to rename (F2), unless focus is inside a text input field. 
     ControlGetFocus, fc, A
     If fc contains Edit,Search,Notify,Windows.UI.Core.CoreWindow1,SysTreeView321
         Send {Enter}
     Else Send {F2}
     Return
-    $BackSpace:: 		; Backspace (without Cmd): Block Backspace key with error beep, unless inside text input field
+    $BackSpace::                ; Backspace (without Cmd): Block Backspace key with error beep, unless inside text input field
     ControlGetFocus, fc, A
     If fc contains Edit,Search,Notify,Windows.UI.Core.CoreWindow1
         Send {BackSpace}
     Else SoundBeep, 600, 300
     Return
-    $Delete:: 			; Delete (without Cmd): Block Delete key with error beep, unless inside text input field
+    $Delete::                   ; Delete (without Cmd): Block Delete key with error beep, unless inside text input field
     ControlGetFocus, fc, A
     If fc contains Edit,Search,Notify,Windows.UI.Core.CoreWindow1
         Send {Delete}
-    Else SoundBeep, 600, 300
+    ; Else SoundBeep, 600, 300
+    Else Return,
     Return
 #IfWinActive
 ; #########################################################################
