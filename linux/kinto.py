@@ -60,6 +60,7 @@ remotes = [
     "VirtualBox Machine",
     "xfreerdp",
     "Wfica",
+    "Anydesk",
 ]
 remotes = [client.casefold() for client in remotes]
 remotesStr = "|".join(str('^'+x+'$') for x in remotes)

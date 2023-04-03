@@ -176,6 +176,7 @@ GroupAdd, browsers, ahk_exe msedge.exe
 ; Disable for Remote desktop solutions too
 GroupAdd, remotes, ahk_exe VirtualBoxVM.exe
 GroupAdd, remotes, ahk_exe mstsc.exe
+GroupAdd, remotes, ahk_exe anydesk.exe
 GroupAdd, remotes, ahk_exe msrdc.exe
 GroupAdd, remotes, ahk_exe nxplayer.bin
 GroupAdd, remotes, ahk_exe vmconnect.exe
