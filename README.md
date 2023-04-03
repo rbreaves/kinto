@@ -290,7 +290,7 @@ Other programs that will be installed when you run ./setup.py
 
 Note: Sublime Text users should disable screen rotation hotkeys as they will interfere with multi-cursor and possibly other combos. See https://windowsloop.com/disable-screen-rotation-keyboard-shortcut/ for details.
 
-You may also want to disable the Xbox Game Bar so that Win+G or other shortcuts will not interfer with any of your remaps. Start menu -> Game bar shortcuts -> toggle Off.
+You may also want to disable the Xbox Game Bar so that Win+G or other shortcuts will not interfere with any of your remaps. Start menu -> Game bar shortcuts -> toggle Off.
 
 ## Shortcut Creation
 
@@ -544,7 +544,7 @@ Linux driver for Facetime HD on macbooks
 
 [Windows Terminal Preview](https://aka.ms/terminal-preview) by Microsoft
 
-The best Terminal app built for Windows hands down. I have tried countless, but this one actually seems to get everything right, despite the lack of a GUI to configure all aspects of the program. Custom configurations have to be done via a json file - but given the performance and feature set I feel like it is the a decent trade off.
+The best Terminal app built for Windows hands down. I have tried countless, but this one actually seems to get everything right, despite the lack of a GUI to configure all aspects of the program. Custom configurations have to be done via a json file - but given the performance and feature set I feel like it is a decent trade off.
 
 I will update Kinto to have custom configurations for this specific Terminal in the future. Will make seamless copy & paste, which already works, work even better (Cmd-C can still trigger sigint - but there is a fix for that that involves updating the json config).
 
@@ -641,7 +641,7 @@ I would just like to thank a few people here directly that have helped me tremen
 
 First off I'd like to thank the Stackoverflow and Stackexchange community. I have probably rubbed some mods the wrong way over there, but the people from the community in general are extremely helpful and gracious and without their contributions would have made this much more difficult. The person I'd like to thank most though from over there is Glen Whitney. Without his detailed explaining of how to rebind keys in xkb this would not have come together at all, as every other remapping solution were non-starters as complexity increases. *Kinto today no longer uses xkb, but Glen Whitney did provide the basis of a workable method that helped me pursue this method and think it was a worthwhile project to pursue, so for that I thank him.*
 
-Secondarily I'd like to thank Christian Eriksson*, as he provided information that kept me up at night.. literally. Even after I implemented a similar bash script to one he had suggested I knew that fully implementing a c/c++ solution was where Kinto needed to head to and his explaination was better than I remember it being now that I have gone back to read it again. He also never provided a full implementation of a c/c++ solution - he did hit on the pain points pretty well of what one would need to do and watch out for. I am not sure where I got the first example code of implementing a c based solution, but he definitely went over it well.
+Secondarily I'd like to thank Christian Eriksson*, as he provided information that kept me up at night.. literally. Even after I implemented a similar bash script to one he had suggested I knew that fully implementing a c/c++ solution was where Kinto needed to head to and his explanation was better than I remember it being now that I have gone back to read it again. He also never provided a full implementation of a c/c++ solution - he did hit on the pain points pretty well of what one would need to do and watch out for. I am not sure where I got the first example code of implementing a c based solution, but he definitely went over it well.
 
 
 Kui and his gist file** was really the c based solution that I found had the fewest issues to resolve to making it a reliable solution. It didn't account for all failures very well, aka BadWindow issues, but it made for a great foundation on which Kintox11 is built. I cannot thank him enough for putting it out there for others to work with.
