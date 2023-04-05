@@ -835,7 +835,7 @@ define_keymap(re.compile(termStr, re.IGNORECASE),{
     K("RC-V"): K("C-Shift-V"),
     K("RC-B"): K("C-Shift-B"),
     K("RC-N"): K("C-Shift-N"),
-    K("RC-Alt"): K("C-Shift-Alt"),
+    K("RC-M"): K("C-Shift-M"),
     K("RC-COMMA"): K("C-Shift-COMMA"),
     K("RC-Dot"): K("LC-c"),
     K("RC-SLASH"): K("C-Shift-SLASH"),
