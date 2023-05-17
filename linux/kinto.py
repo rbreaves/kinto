@@ -23,6 +23,7 @@ terminals = [
     "lxterminal",
     "mate-terminal",
     "org.gnome.Console",
+    "roxterm",
     "qterminal",
     "st",
     "sakura",
