@@ -645,6 +645,8 @@ define_keymap(lambda wm_class: wm_class.casefold() not in mscodes,{
 # Keybindings for VS Code
 define_keymap(re.compile(codeStr, re.IGNORECASE),{
     K("Super-Space"): K("LC-Space"),                        # Basic code completion
+    # Override the global Cmd+Dot (Escape/cancel) shortcut
+    K("RC-Dot"): K("RC-Dot"),                               # QuickFix
     # Wordwise remaining - for VS Code
     # Alt-F19 hack fixes Alt menu activation
     K("Alt-Left"): [K("Alt-F19"),K("C-Left")],                  # Left of Word
