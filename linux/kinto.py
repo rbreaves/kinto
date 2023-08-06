@@ -543,7 +543,7 @@ define_keymap(re.compile(termStr, re.IGNORECASE),{
 define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
     K("RC-Shift-Left_Brace"):   K("C-Page_Up"),         # Tab nav: Go to prior (left) tab
     K("RC-Shift-Right_Brace"):  K("C-Page_Down"),       # Tab nav: Go to next (right) tab
-    K("RC-Space"): K("Alt-F1"),                   # Default SL - Launch Application Menu (gnome/kde)
+    # K("RC-Space"): K("Alt-F1"),                   # Default SL - Launch Application Menu (gnome/kde)
     K("RC-F3"):K("Super-d"),                      # Default SL - Show Desktop (gnome/kde,eos)
     K("RC-Super-f"):K("Alt-F10"),                   # Default SL - Maximize app (gnome/kde)
     # K("RC-Super-f"): K("Super-Page_Up"),          # SL - Toggle maximized window state (kde_neon)
