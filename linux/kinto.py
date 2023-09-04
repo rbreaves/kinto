@@ -683,6 +683,13 @@ define_keymap(re.compile(codeStr, re.IGNORECASE),{
     # K(""): K(""),                               #
 }, "Code")
 
+#Keybindings for for GEDIT, the Gnome Text Editor: 
+define_keymap(re.compile("^gedit$", re.IGNORECASE), {
+    K("Super-c") : K("C-c"), #Copy 
+    K("Super-v") : K("C-v"),  #Paste
+    K("Super-s") : K("C-s") #Save 
+}) 
+
 # Keybindings for Sublime Text
 define_keymap(re.compile(sublimeStr, re.IGNORECASE),{
     # K("Super-c"): K("LC-c"),                    # Default - Terminal - Sigint
