@@ -369,6 +369,8 @@ define_keymap(re.compile("^spacefm$", re.IGNORECASE),{
 define_keymap(re.compile("^thunar$", re.IGNORECASE),{
     K("RC-Super-o"):    K("RC-Shift-P"),            # Open in new tab
     K("RC-comma"):      [K("Alt-E"),K("E")],          # Overrides "Open preferences dialog" shortcut below
+    K("C-Shift-DOT"):   K("LC-H"),                  # Show/Hide Hidden Files
+    K("C-M-Backspace"): K("Shift-Delete"),            # Delete Files Permanently
 },"Overrides for Thunar - Finder Mods")
 
 filemanagers = [
@@ -460,6 +462,9 @@ define_keymap(re.compile(chromeStr, re.IGNORECASE),{
     # K("RC-Right"):          K("Alt-Right"),           # Page nav: Forward to next page in history (conflict with wordwise)
     K("RC-Left_Brace"):     K("Alt-Left"),            # Page nav: Back to prior page in history
     K("RC-Right_Brace"):    K("Alt-Right"),           # Page nav: Forward to next page in history
+    K("RC-Y"): K("RC-H"),           # Browser History
+    K("M-RC-U"): K("RC-U"),         # View Page Source
+    K("M-RC-L"): K("RC-J"),         # Downloads
 }, "Chrome Browsers")
 # Opera C-F12
 

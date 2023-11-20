@@ -235,6 +235,8 @@ GroupAdd, intellij, ahk_exe idea64.exe
     ^Left::Send !{Left}         ; Cmd+Left: Go to prior location in history
     ^Right::Send !{Right}       ; Cmd+Right: Go to next location in history
     ^Down::                     ; Cmd-Down: Navigate into the selected directory
+    ^+.::send {Alt Down}vhh{Alt Up} ; Show/Hide Hidden Files
+    $^!Backspace::send {LShift down}{Delete}{LShift up} ; Delete Files Permanently
     For window in ComObjCreate("Shell.Application").Windows
         If WinActive() = window.hwnd
             For item in window.document.SelectedItems {
@@ -630,6 +632,12 @@ GroupAdd, intellij, ahk_exe idea64.exe
         #If
         #IfWinActive ahk_exe chrome.exe
             ^,::send {Alt Down}e{Alt Up}s{Enter}
+            ; Browser History
+            ^y::send {Ctrl Down}h{Ctrl Up}
+            ; View Page Source
+            !^u::send {Ctrl Down}u{Ctrl Up}
+            ; Downloads
+            !^l::send {Ctrl Down}j{Ctrl Up}
         #If
         #IfWinActive ahk_exe msedge.exe
             ^,::send {Alt Down}e{Alt Up}s{Enter}
