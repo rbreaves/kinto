@@ -617,6 +617,166 @@ define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
     K("Alt-Delete"): K("C-Delete"),               # Delete Right Word of Cursor
     # K(""): pass_through_key,                      # cancel
     # K(""): K(""),                                 #
+
+    ###########################################################################################################
+    ###  Fixes for behavior of numeric keypad keys in GTK apps (arrows and PgDn/PgUp/Home/End)
+    ###  Uncomment first 8 lines to make numpad navigation keys always act as PgUp/PgDn/Home/End/arrows. 
+    ###  WARNING: Remapping the base keys this way will disable using numpad keys for numbers! 
+    ###========================================================================================================
+
+    ###  Keypad keys with no modifier keys (base key) 
+    # K("KP9"):                   K("Page_Up"),                   # (fix_numpad_nav_keys_base_key)
+    # K("KP3"):                   K("Page_Down"),                 # (fix_numpad_nav_keys_base_key)
+    # K("KP7"):                   K("Home"),                      # (fix_numpad_nav_keys_base_key)
+    # K("KP1"):                   K("End"),                       # (fix_numpad_nav_keys_base_key)
+    # K("KP8"):                   K("Up"),                        # (fix_numpad_nav_keys_base_key)
+    # K("KP2"):                   K("Down"),                      # (fix_numpad_nav_keys_base_key)
+    # K("KP4"):                   K("Left"),                      # (fix_numpad_nav_keys_base_key)
+    # K("KP6"):                   K("Right"),                     # (fix_numpad_nav_keys_base_key)
+
+    ###  Keypad keys with 1 modifier key
+    K("Super-KP9"):             K("C-Page_Up"),                 # (fix_numpad_nav_keys) 
+    K("Super-KP3"):             K("C-Page_Down"),               # (fix_numpad_nav_keys) 
+    K("Super-KP7"):             K("C-Home"),                    # (fix_numpad_nav_keys) 
+    K("Super-KP1"):             K("C-End"),                     # (fix_numpad_nav_keys) 
+    K("Super-KP8"):             K("C-Up"),                      # (fix_numpad_nav_keys) 
+    K("Super-KP2"):             K("C-Down"),                    # (fix_numpad_nav_keys) 
+    K("Super-KP4"):             K("C-Left"),                    # (fix_numpad_nav_keys) 
+    K("Super-KP6"):             K("C-Right"),                   # (fix_numpad_nav_keys) 
+
+    K("Shift-KP9"):             K("Shift-Page_Up"),             # (fix_numpad_nav_keys) 
+    K("Shift-KP3"):             K("Shift-Page_Down"),           # (fix_numpad_nav_keys) 
+    K("Shift-KP7"):             K("Shift-Home"),                # (fix_numpad_nav_keys) 
+    K("Shift-KP1"):             K("Shift-End"),                 # (fix_numpad_nav_keys) 
+    K("Shift-KP8"):             K("Shift-Up"),                  # (fix_numpad_nav_keys) 
+    K("Shift-KP2"):             K("Shift-Down"),                # (fix_numpad_nav_keys) 
+    K("Shift-KP4"):             K("Shift-Left"),                # (fix_numpad_nav_keys) 
+    K("Shift-KP6"):             K("Shift-Right"),               # (fix_numpad_nav_keys) 
+
+    K("M-KP9"):                 K("M-Page_Up"),                 # (fix_numpad_nav_keys) 
+    K("M-KP3"):                 K("M-Page_Down"),               # (fix_numpad_nav_keys) 
+    K("M-KP7"):                 K("M-Home"),                    # (fix_numpad_nav_keys) 
+    K("M-KP1"):                 K("M-End"),                     # (fix_numpad_nav_keys) 
+    K("M-KP8"):                 K("M-Up"),                      # (fix_numpad_nav_keys) 
+    K("M-KP2"):                 K("M-Down"),                    # (fix_numpad_nav_keys) 
+    K("M-KP4"):                 K("M-Left"),                    # (fix_numpad_nav_keys) 
+    K("M-KP6"):                 K("M-Right"),                   # (fix_numpad_nav_keys) 
+
+    K("RC-KP9"):                K("Super-Page_Up"),             # (fix_numpad_nav_keys) 
+    K("RC-KP3"):                K("Super-Page_Down"),           # (fix_numpad_nav_keys) 
+    K("RC-KP7"):                K("Super-Home"),                # (fix_numpad_nav_keys) 
+    K("RC-KP1"):                K("Super-End"),                 # (fix_numpad_nav_keys) 
+    K("RC-KP8"):                K("Super-Up"),                  # (fix_numpad_nav_keys) 
+    K("RC-KP2"):                K("Super-Down"),                # (fix_numpad_nav_keys) 
+    K("RC-KP4"):                K("Super-Left"),                # (fix_numpad_nav_keys) 
+    K("RC-KP6"):                K("Super-Right"),               # (fix_numpad_nav_keys) 
+    
+    ###  Keypad keys with 2 modifier keys
+    K("Super-M-KP9"):           K("C-M-Page_Up"),               # (fix_numpad_nav_keys) 
+    K("Super-M-KP3"):           K("C-M-Page_Down"),             # (fix_numpad_nav_keys) 
+    K("Super-M-KP7"):           K("C-M-Home"),                  # (fix_numpad_nav_keys) 
+    K("Super-M-KP1"):           K("C-M-End"),                   # (fix_numpad_nav_keys) 
+    K("Super-M-KP8"):           K("C-M-Up"),                    # (fix_numpad_nav_keys) 
+    K("Super-M-KP2"):           K("C-M-Down"),                  # (fix_numpad_nav_keys) 
+    K("Super-M-KP4"):           K("C-M-Left"),                  # (fix_numpad_nav_keys) 
+    K("Super-M-KP6"):           K("C-M-Right"),                 # (fix_numpad_nav_keys) 
+
+    K("Super-Shift-KP9"):       K("C-Shift-Page_Up"),           # (fix_numpad_nav_keys) 
+    K("Super-Shift-KP3"):       K("C-Shift-Page_Down"),         # (fix_numpad_nav_keys) 
+    K("Super-Shift-KP7"):       K("C-Shift-Home"),              # (fix_numpad_nav_keys) 
+    K("Super-Shift-KP1"):       K("C-Shift-End"),               # (fix_numpad_nav_keys) 
+    K("Super-Shift-KP8"):       K("C-Shift-Up"),                # (fix_numpad_nav_keys) 
+    K("Super-Shift-KP2"):       K("C-Shift-Down"),              # (fix_numpad_nav_keys) 
+    K("Super-Shift-KP4"):       K("C-Shift-Left"),              # (fix_numpad_nav_keys) 
+    K("Super-Shift-KP6"):       K("C-Shift-Right"),             # (fix_numpad_nav_keys) 
+
+    K("Super-RC-KP9"):          K("C-Super-Page_Up"),           # (fix_numpad_nav_keys) 
+    K("Super-RC-KP3"):          K("C-Super-Page_Down"),         # (fix_numpad_nav_keys) 
+    K("Super-RC-KP7"):          K("C-Super-Home"),              # (fix_numpad_nav_keys) 
+    K("Super-RC-KP1"):          K("C-Super-End"),               # (fix_numpad_nav_keys) 
+    K("Super-RC-KP8"):          K("C-Super-Up"),                # (fix_numpad_nav_keys) 
+    K("Super-RC-KP2"):          K("C-Super-Down"),              # (fix_numpad_nav_keys) 
+    K("Super-RC-KP4"):          K("C-Super-Left"),              # (fix_numpad_nav_keys) 
+    K("Super-RC-KP6"):          K("C-Super-Right"),             # (fix_numpad_nav_keys) 
+
+    K("M-Shift-KP9"):           K("M-Shift-Page_Up"),           # (fix_numpad_nav_keys) 
+    K("M-Shift-KP3"):           K("M-Shift-Page_Down"),         # (fix_numpad_nav_keys) 
+    K("M-Shift-KP7"):           K("M-Shift-Home"),              # (fix_numpad_nav_keys) 
+    K("M-Shift-KP1"):           K("M-Shift-End"),               # (fix_numpad_nav_keys) 
+    K("M-Shift-KP8"):           K("M-Shift-Up"),                # (fix_numpad_nav_keys) 
+    K("M-Shift-KP2"):           K("M-Shift-Down"),              # (fix_numpad_nav_keys) 
+    K("M-Shift-KP4"):           K("M-Shift-Left"),              # (fix_numpad_nav_keys) 
+    K("M-Shift-KP6"):           K("M-Shift-Right"),             # (fix_numpad_nav_keys) 
+
+    K("M-RC-KP9"):              K("M-Super-Page_Up"),           # (fix_numpad_nav_keys) 
+    K("M-RC-KP3"):              K("M-Super-Page_Down"),         # (fix_numpad_nav_keys) 
+    K("M-RC-KP7"):              K("M-Super-Home"),              # (fix_numpad_nav_keys) 
+    K("M-RC-KP1"):              K("M-Super-End"),               # (fix_numpad_nav_keys) 
+    K("M-RC-KP8"):              K("M-Super-Up"),                # (fix_numpad_nav_keys) 
+    K("M-RC-KP2"):              K("M-Super-Down"),              # (fix_numpad_nav_keys) 
+    K("M-RC-KP4"):              K("M-Super-Left"),              # (fix_numpad_nav_keys) 
+    K("M-RC-KP6"):              K("M-Super-Right"),             # (fix_numpad_nav_keys) 
+
+    K("Shift-RC-KP9"):          K("Shift-Super-Page_Up"),       # (fix_numpad_nav_keys) 
+    K("Shift-RC-KP3"):          K("Shift-Super-Page_Down"),     # (fix_numpad_nav_keys) 
+    K("Shift-RC-KP7"):          K("Shift-Super-Home"),          # (fix_numpad_nav_keys) 
+    K("Shift-RC-KP1"):          K("Shift-Super-End"),           # (fix_numpad_nav_keys) 
+    K("Shift-RC-KP8"):          K("Shift-Super-Up"),            # (fix_numpad_nav_keys) 
+    K("Shift-RC-KP2"):          K("Shift-Super-Down"),          # (fix_numpad_nav_keys) 
+    K("Shift-RC-KP4"):          K("Shift-Super-Left"),          # (fix_numpad_nav_keys) 
+    K("Shift-RC-KP6"):          K("Shift-Super-Right"),         # (fix_numpad_nav_keys) 
+
+    ###  Keypad keys with 3 modifier keys
+    K("Super-M-Shift-KP9"):     K("M-Shift-Super-Page_Up"),     # (fix_numpad_nav_keys) 
+    K("Super-M-Shift-KP3"):     K("M-Shift-Super-Page_Down"),   # (fix_numpad_nav_keys) 
+    K("Super-M-Shift-KP7"):     K("M-Shift-Super-Home"),        # (fix_numpad_nav_keys) 
+    K("Super-M-Shift-KP1"):     K("M-Shift-Super-End"),         # (fix_numpad_nav_keys) 
+    K("Super-M-Shift-KP8"):     K("M-Shift-Super-Up"),          # (fix_numpad_nav_keys) 
+    K("Super-M-Shift-KP2"):     K("M-Shift-Super-Down"),        # (fix_numpad_nav_keys) 
+    K("Super-M-Shift-KP4"):     K("M-Shift-Super-Left"),        # (fix_numpad_nav_keys) 
+    K("Super-M-Shift-KP6"):     K("M-Shift-Super-Right"),       # (fix_numpad_nav_keys) 
+
+    K("Super-M-RC-KP9"):        K("C-M-Super-Page_Up"),         # (fix_numpad_nav_keys) 
+    K("Super-M-RC-KP3"):        K("C-M-Super-Page_Down"),       # (fix_numpad_nav_keys) 
+    K("Super-M-RC-KP7"):        K("C-M-Super-Home"),            # (fix_numpad_nav_keys) 
+    K("Super-M-RC-KP1"):        K("C-M-Super-End"),             # (fix_numpad_nav_keys) 
+    K("Super-M-RC-KP8"):        K("C-M-Super-Up"),              # (fix_numpad_nav_keys) 
+    K("Super-M-RC-KP2"):        K("C-M-Super-Down"),            # (fix_numpad_nav_keys) 
+    K("Super-M-RC-KP4"):        K("C-M-Super-Left"),            # (fix_numpad_nav_keys) 
+    K("Super-M-RC-KP6"):        K("C-M-Super-Right"),           # (fix_numpad_nav_keys) 
+
+    K("Super-Shift-RC-KP9"):    K("C-Shift-Super-Page_Up"),     # (fix_numpad_nav_keys) 
+    K("Super-Shift-RC-KP3"):    K("C-Shift-Super-Page_Down"),   # (fix_numpad_nav_keys) 
+    K("Super-Shift-RC-KP7"):    K("C-Shift-Super-Home"),        # (fix_numpad_nav_keys) 
+    K("Super-Shift-RC-KP1"):    K("C-Shift-Super-End"),         # (fix_numpad_nav_keys) 
+    K("Super-Shift-RC-KP8"):    K("C-Shift-Super-Up"),          # (fix_numpad_nav_keys) 
+    K("Super-Shift-RC-KP2"):    K("C-Shift-Super-Down"),        # (fix_numpad_nav_keys) 
+    K("Super-Shift-RC-KP4"):    K("C-Shift-Super-Left"),        # (fix_numpad_nav_keys) 
+    K("Super-Shift-RC-KP6"):    K("C-Shift-Super-Right"),       # (fix_numpad_nav_keys) 
+
+    K("M-Shift-RC-KP9"):        K("M-Shift-Super-Page_Up"),     # (fix_numpad_nav_keys) 
+    K("M-Shift-RC-KP3"):        K("M-Shift-Super-Page_Down"),   # (fix_numpad_nav_keys) 
+    K("M-Shift-RC-KP7"):        K("M-Shift-Super-Home"),        # (fix_numpad_nav_keys) 
+    K("M-Shift-RC-KP1"):        K("M-Shift-Super-End"),         # (fix_numpad_nav_keys) 
+    K("M-Shift-RC-KP8"):        K("M-Shift-Super-Up"),          # (fix_numpad_nav_keys) 
+    K("M-Shift-RC-KP2"):        K("M-Shift-Super-Down"),        # (fix_numpad_nav_keys) 
+    K("M-Shift-RC-KP4"):        K("M-Shift-Super-Left"),        # (fix_numpad_nav_keys) 
+    K("M-Shift-RC-KP6"):        K("M-Shift-Super-Right"),       # (fix_numpad_nav_keys) 
+
+    ###  Keypad keys with 4 modifier keys
+    K("Super-M-Shift-RC-KP9"):  K("C-M-Shift-Super-Page_Up"),   # (fix_numpad_nav_keys) 
+    K("Super-M-Shift-RC-KP3"):  K("C-M-Shift-Super-Page_Down"), # (fix_numpad_nav_keys) 
+    K("Super-M-Shift-RC-KP7"):  K("C-M-Shift-Super-Home"),      # (fix_numpad_nav_keys) 
+    K("Super-M-Shift-RC-KP1"):  K("C-M-Shift-Super-End"),       # (fix_numpad_nav_keys) 
+    K("Super-M-Shift-RC-KP8"):  K("C-M-Shift-Super-Up"),        # (fix_numpad_nav_keys) 
+    K("Super-M-Shift-RC-KP2"):  K("C-M-Shift-Super-Down"),      # (fix_numpad_nav_keys) 
+    K("Super-M-Shift-RC-KP4"):  K("C-M-Shift-Super-Left"),      # (fix_numpad_nav_keys) 
+    K("Super-M-Shift-RC-KP6"):  K("C-M-Shift-Super-Right"),     # (fix_numpad_nav_keys) 
+
+    ###========================================================================================================
+    ###  END OF NUMERIC KEYPAD REMAPPING FIXES
+    ###########################################################################################################
+
 }, "General GUI")
 
 define_keymap(lambda wm_class: wm_class.casefold() not in mscodes,{
@@ -843,4 +1003,164 @@ define_keymap(re.compile(termStr, re.IGNORECASE),{
     K("RC-Dot"): K("LC-c"),
     K("RC-SLASH"): K("C-Shift-SLASH"),
     K("RC-KPASTERISK"): K("C-Shift-KPASTERISK"),
+
+    ###########################################################################################################
+    ###  Fixes for behavior of numeric keypad keys in GTK apps (arrows and PgDn/PgUp/Home/End)
+    ###  Uncomment first 8 lines to make numpad navigation keys always act as PgUp/PgDn/Home/End/arrows. 
+    ###  WARNING: Remapping the base keys this way will disable using numpad keys for numbers! 
+    ###========================================================================================================
+
+    ###  Keypad keys with no modifier keys (base key) 
+    # K("KP9"):                   K("Page_Up"),                   # (fix_numpad_nav_keys_base_key)
+    # K("KP3"):                   K("Page_Down"),                 # (fix_numpad_nav_keys_base_key)
+    # K("KP7"):                   K("Home"),                      # (fix_numpad_nav_keys_base_key)
+    # K("KP1"):                   K("End"),                       # (fix_numpad_nav_keys_base_key)
+    # K("KP8"):                   K("Up"),                        # (fix_numpad_nav_keys_base_key)
+    # K("KP2"):                   K("Down"),                      # (fix_numpad_nav_keys_base_key)
+    # K("KP4"):                   K("Left"),                      # (fix_numpad_nav_keys_base_key)
+    # K("KP6"):                   K("Right"),                     # (fix_numpad_nav_keys_base_key)
+
+    ###  Keypad keys with 1 modifier key
+    K("LC-KP9"):                K("C-Page_Up"),                 # (fix_numpad_nav_keys) 
+    K("LC-KP3"):                K("C-Page_Down"),               # (fix_numpad_nav_keys) 
+    K("LC-KP7"):                K("C-Home"),                    # (fix_numpad_nav_keys) 
+    K("LC-KP1"):                K("C-End"),                     # (fix_numpad_nav_keys) 
+    K("LC-KP8"):                K("C-Up"),                      # (fix_numpad_nav_keys) 
+    K("LC-KP2"):                K("C-Down"),                    # (fix_numpad_nav_keys) 
+    K("LC-KP4"):                K("C-Left"),                    # (fix_numpad_nav_keys) 
+    K("LC-KP6"):                K("C-Right"),                   # (fix_numpad_nav_keys) 
+
+    K("Shift-KP9"):             K("Shift-Page_Up"),             # (fix_numpad_nav_keys) 
+    K("Shift-KP3"):             K("Shift-Page_Down"),           # (fix_numpad_nav_keys) 
+    K("Shift-KP7"):             K("Shift-Home"),                # (fix_numpad_nav_keys) 
+    K("Shift-KP1"):             K("Shift-End"),                 # (fix_numpad_nav_keys) 
+    K("Shift-KP8"):             K("Shift-Up"),                  # (fix_numpad_nav_keys) 
+    K("Shift-KP2"):             K("Shift-Down"),                # (fix_numpad_nav_keys) 
+    K("Shift-KP4"):             K("Shift-Left"),                # (fix_numpad_nav_keys) 
+    K("Shift-KP6"):             K("Shift-Right"),               # (fix_numpad_nav_keys) 
+
+    K("M-KP9"):                 K("M-Page_Up"),                 # (fix_numpad_nav_keys) 
+    K("M-KP3"):                 K("M-Page_Down"),               # (fix_numpad_nav_keys) 
+    K("M-KP7"):                 K("M-Home"),                    # (fix_numpad_nav_keys) 
+    K("M-KP1"):                 K("M-End"),                     # (fix_numpad_nav_keys) 
+    K("M-KP8"):                 K("M-Up"),                      # (fix_numpad_nav_keys) 
+    K("M-KP2"):                 K("M-Down"),                    # (fix_numpad_nav_keys) 
+    K("M-KP4"):                 K("M-Left"),                    # (fix_numpad_nav_keys) 
+    K("M-KP6"):                 K("M-Right"),                   # (fix_numpad_nav_keys) 
+
+    K("RC-KP9"):                K("Super-Page_Up"),             # (fix_numpad_nav_keys) 
+    K("RC-KP3"):                K("Super-Page_Down"),           # (fix_numpad_nav_keys) 
+    K("RC-KP7"):                K("Super-Home"),                # (fix_numpad_nav_keys) 
+    K("RC-KP1"):                K("Super-End"),                 # (fix_numpad_nav_keys) 
+    K("RC-KP8"):                K("Super-Up"),                  # (fix_numpad_nav_keys) 
+    K("RC-KP2"):                K("Super-Down"),                # (fix_numpad_nav_keys) 
+    K("RC-KP4"):                K("Super-Left"),                # (fix_numpad_nav_keys) 
+    K("RC-KP6"):                K("Super-Right"),               # (fix_numpad_nav_keys) 
+    
+    ###  Keypad keys with 2 modifier keys
+    K("LC-M-KP9"):              K("C-M-Page_Up"),               # (fix_numpad_nav_keys) 
+    K("LC-M-KP3"):              K("C-M-Page_Down"),             # (fix_numpad_nav_keys) 
+    K("LC-M-KP7"):              K("C-M-Home"),                  # (fix_numpad_nav_keys) 
+    K("LC-M-KP1"):              K("C-M-End"),                   # (fix_numpad_nav_keys) 
+    K("LC-M-KP8"):              K("C-M-Up"),                    # (fix_numpad_nav_keys) 
+    K("LC-M-KP2"):              K("C-M-Down"),                  # (fix_numpad_nav_keys) 
+    K("LC-M-KP4"):              K("C-M-Left"),                  # (fix_numpad_nav_keys) 
+    K("LC-M-KP6"):              K("C-M-Right"),                 # (fix_numpad_nav_keys) 
+
+    K("LC-Shift-KP9"):          K("C-Shift-Page_Up"),           # (fix_numpad_nav_keys) 
+    K("LC-Shift-KP3"):          K("C-Shift-Page_Down"),         # (fix_numpad_nav_keys) 
+    K("LC-Shift-KP7"):          K("C-Shift-Home"),              # (fix_numpad_nav_keys) 
+    K("LC-Shift-KP1"):          K("C-Shift-End"),               # (fix_numpad_nav_keys) 
+    K("LC-Shift-KP8"):          K("C-Shift-Up"),                # (fix_numpad_nav_keys) 
+    K("LC-Shift-KP2"):          K("C-Shift-Down"),              # (fix_numpad_nav_keys) 
+    K("LC-Shift-KP4"):          K("C-Shift-Left"),              # (fix_numpad_nav_keys) 
+    K("LC-Shift-KP6"):          K("C-Shift-Right"),             # (fix_numpad_nav_keys) 
+
+    K("LC-RC-KP9"):             K("C-Super-Page_Up"),           # (fix_numpad_nav_keys) 
+    K("LC-RC-KP3"):             K("C-Super-Page_Down"),         # (fix_numpad_nav_keys) 
+    K("LC-RC-KP7"):             K("C-Super-Home"),              # (fix_numpad_nav_keys) 
+    K("LC-RC-KP1"):             K("C-Super-End"),               # (fix_numpad_nav_keys) 
+    K("LC-RC-KP8"):             K("C-Super-Up"),                # (fix_numpad_nav_keys) 
+    K("LC-RC-KP2"):             K("C-Super-Down"),              # (fix_numpad_nav_keys) 
+    K("LC-RC-KP4"):             K("C-Super-Left"),              # (fix_numpad_nav_keys) 
+    K("LC-RC-KP6"):             K("C-Super-Right"),             # (fix_numpad_nav_keys) 
+
+    K("M-Shift-KP9"):           K("M-Shift-Page_Up"),           # (fix_numpad_nav_keys) 
+    K("M-Shift-KP3"):           K("M-Shift-Page_Down"),         # (fix_numpad_nav_keys) 
+    K("M-Shift-KP7"):           K("M-Shift-Home"),              # (fix_numpad_nav_keys) 
+    K("M-Shift-KP1"):           K("M-Shift-End"),               # (fix_numpad_nav_keys) 
+    K("M-Shift-KP8"):           K("M-Shift-Up"),                # (fix_numpad_nav_keys) 
+    K("M-Shift-KP2"):           K("M-Shift-Down"),              # (fix_numpad_nav_keys) 
+    K("M-Shift-KP4"):           K("M-Shift-Left"),              # (fix_numpad_nav_keys) 
+    K("M-Shift-KP6"):           K("M-Shift-Right"),             # (fix_numpad_nav_keys) 
+
+    K("M-RC-KP9"):              K("M-Super-Page_Up"),           # (fix_numpad_nav_keys) 
+    K("M-RC-KP3"):              K("M-Super-Page_Down"),         # (fix_numpad_nav_keys) 
+    K("M-RC-KP7"):              K("M-Super-Home"),              # (fix_numpad_nav_keys) 
+    K("M-RC-KP1"):              K("M-Super-End"),               # (fix_numpad_nav_keys) 
+    K("M-RC-KP8"):              K("M-Super-Up"),                # (fix_numpad_nav_keys) 
+    K("M-RC-KP2"):              K("M-Super-Down"),              # (fix_numpad_nav_keys) 
+    K("M-RC-KP4"):              K("M-Super-Left"),              # (fix_numpad_nav_keys) 
+    K("M-RC-KP6"):              K("M-Super-Right"),             # (fix_numpad_nav_keys) 
+
+    K("Shift-RC-KP9"):          K("Shift-Super-Page_Up"),       # (fix_numpad_nav_keys) 
+    K("Shift-RC-KP3"):          K("Shift-Super-Page_Down"),     # (fix_numpad_nav_keys) 
+    K("Shift-RC-KP7"):          K("Shift-Super-Home"),          # (fix_numpad_nav_keys) 
+    K("Shift-RC-KP1"):          K("Shift-Super-End"),           # (fix_numpad_nav_keys) 
+    K("Shift-RC-KP8"):          K("Shift-Super-Up"),            # (fix_numpad_nav_keys) 
+    K("Shift-RC-KP2"):          K("Shift-Super-Down"),          # (fix_numpad_nav_keys) 
+    K("Shift-RC-KP4"):          K("Shift-Super-Left"),          # (fix_numpad_nav_keys) 
+    K("Shift-RC-KP6"):          K("Shift-Super-Right"),         # (fix_numpad_nav_keys) 
+
+    ###  Keypad keys with 3 modifier keys
+    K("LC-M-Shift-KP9"):        K("M-Shift-Super-Page_Up"),     # (fix_numpad_nav_keys) 
+    K("LC-M-Shift-KP3"):        K("M-Shift-Super-Page_Down"),   # (fix_numpad_nav_keys) 
+    K("LC-M-Shift-KP7"):        K("M-Shift-Super-Home"),        # (fix_numpad_nav_keys) 
+    K("LC-M-Shift-KP1"):        K("M-Shift-Super-End"),         # (fix_numpad_nav_keys) 
+    K("LC-M-Shift-KP8"):        K("M-Shift-Super-Up"),          # (fix_numpad_nav_keys) 
+    K("LC-M-Shift-KP2"):        K("M-Shift-Super-Down"),        # (fix_numpad_nav_keys) 
+    K("LC-M-Shift-KP4"):        K("M-Shift-Super-Left"),        # (fix_numpad_nav_keys) 
+    K("LC-M-Shift-KP6"):        K("M-Shift-Super-Right"),       # (fix_numpad_nav_keys) 
+
+    K("LC-M-RC-KP9"):           K("C-M-Super-Page_Up"),         # (fix_numpad_nav_keys) 
+    K("LC-M-RC-KP3"):           K("C-M-Super-Page_Down"),       # (fix_numpad_nav_keys) 
+    K("LC-M-RC-KP7"):           K("C-M-Super-Home"),            # (fix_numpad_nav_keys) 
+    K("LC-M-RC-KP1"):           K("C-M-Super-End"),             # (fix_numpad_nav_keys) 
+    K("LC-M-RC-KP8"):           K("C-M-Super-Up"),              # (fix_numpad_nav_keys) 
+    K("LC-M-RC-KP2"):           K("C-M-Super-Down"),            # (fix_numpad_nav_keys) 
+    K("LC-M-RC-KP4"):           K("C-M-Super-Left"),            # (fix_numpad_nav_keys) 
+    K("LC-M-RC-KP6"):           K("C-M-Super-Right"),           # (fix_numpad_nav_keys) 
+
+    K("LC-Shift-RC-KP9"):       K("C-Shift-Super-Page_Up"),     # (fix_numpad_nav_keys) 
+    K("LC-Shift-RC-KP3"):       K("C-Shift-Super-Page_Down"),   # (fix_numpad_nav_keys) 
+    K("LC-Shift-RC-KP7"):       K("C-Shift-Super-Home"),        # (fix_numpad_nav_keys) 
+    K("LC-Shift-RC-KP1"):       K("C-Shift-Super-End"),         # (fix_numpad_nav_keys) 
+    K("LC-Shift-RC-KP8"):       K("C-Shift-Super-Up"),          # (fix_numpad_nav_keys) 
+    K("LC-Shift-RC-KP2"):       K("C-Shift-Super-Down"),        # (fix_numpad_nav_keys) 
+    K("LC-Shift-RC-KP4"):       K("C-Shift-Super-Left"),        # (fix_numpad_nav_keys) 
+    K("LC-Shift-RC-KP6"):       K("C-Shift-Super-Right"),       # (fix_numpad_nav_keys) 
+
+    K("M-Shift-RC-KP9"):        K("M-Shift-Super-Page_Up"),     # (fix_numpad_nav_keys) 
+    K("M-Shift-RC-KP3"):        K("M-Shift-Super-Page_Down"),   # (fix_numpad_nav_keys) 
+    K("M-Shift-RC-KP7"):        K("M-Shift-Super-Home"),        # (fix_numpad_nav_keys) 
+    K("M-Shift-RC-KP1"):        K("M-Shift-Super-End"),         # (fix_numpad_nav_keys) 
+    K("M-Shift-RC-KP8"):        K("M-Shift-Super-Up"),          # (fix_numpad_nav_keys) 
+    K("M-Shift-RC-KP2"):        K("M-Shift-Super-Down"),        # (fix_numpad_nav_keys) 
+    K("M-Shift-RC-KP4"):        K("M-Shift-Super-Left"),        # (fix_numpad_nav_keys) 
+    K("M-Shift-RC-KP6"):        K("M-Shift-Super-Right"),       # (fix_numpad_nav_keys) 
+
+    ###  Keypad keys with 4 modifier keys
+    K("LC-M-Shift-RC-KP9"):     K("C-M-Shift-Super-Page_Up"),   # (fix_numpad_nav_keys) 
+    K("LC-M-Shift-RC-KP3"):     K("C-M-Shift-Super-Page_Down"), # (fix_numpad_nav_keys) 
+    K("LC-M-Shift-RC-KP7"):     K("C-M-Shift-Super-Home"),      # (fix_numpad_nav_keys) 
+    K("LC-M-Shift-RC-KP1"):     K("C-M-Shift-Super-End"),       # (fix_numpad_nav_keys) 
+    K("LC-M-Shift-RC-KP8"):     K("C-M-Shift-Super-Up"),        # (fix_numpad_nav_keys) 
+    K("LC-M-Shift-RC-KP2"):     K("C-M-Shift-Super-Down"),      # (fix_numpad_nav_keys) 
+    K("LC-M-Shift-RC-KP4"):     K("C-M-Shift-Super-Left"),      # (fix_numpad_nav_keys) 
+    K("LC-M-Shift-RC-KP6"):     K("C-M-Shift-Super-Right"),     # (fix_numpad_nav_keys) 
+
+    ###========================================================================================================
+    ###  END OF NUMERIC KEYPAD REMAPPING FIXES
+    ###########################################################################################################
+
 }, "terminals")
