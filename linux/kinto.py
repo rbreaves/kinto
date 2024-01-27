@@ -41,7 +41,7 @@ terminals = [
 terminals = [term.casefold() for term in terminals]
 termStr = "|".join(str('^'+x+'$') for x in terminals)
 
-mscodes = ["code","vscodium"]
+mscodes = ["code","code-oss","vscodium"]
 codeStr = "|".join(str('^'+x+'$') for x in mscodes)
 
 sublimes   = ["Sublime_text","subl"]
