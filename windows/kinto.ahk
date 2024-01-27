@@ -64,6 +64,8 @@ Menu, Tray, Add, Autodetect Keyboards, autodetect
 Menu, Tray, Add, Suspend Kinto, tray_suspend
 ; Add tray menu item for toggling Option key special character entry scheme
 Menu, Tray, Add, OptSpecialChars   Shift+Opt+Cmd+O, toggle_optspecialchars
+; Add tray menu item for toggling mac_numpad
+Menu, Tray, Add, Mac Numpad           Option+NumLock, toggle_mac_numpad
 ; Menu, Tray, Add, Returns to Desktop, min
 Menu, Tray, Add
 Menu, Tray, Add, Close, Exit
@@ -128,6 +130,13 @@ Exit() {
         WinClose
 
     ExitApp
+}
+
+; Set this variable to 1 to ENABLE Mac Numpad feature by default
+mac_numpad:=1
+if (mac_numpad=1) {
+    SetNumLockState, AlwaysOn
+    Menu, Tray, Check, Mac Numpad           Option+NumLock
 }
 
 SetTitleMatchMode, 2
@@ -918,6 +927,42 @@ Send {LWin up}
 Send {RShift up}
 Send {LShift up}
 return
+
+
+; ##########################################################################################
+; ###   MAC NUMPAD FEATURE
+; ###   Make the numpad always act like a numpad, even when numlock is OFF
+; ###   Numlock becomes "Clear" key for use with calculator apps (sends Escape)
+; ###   
+; ###   To enable this feature by default: 
+; ###   Search for "ENABLE Mac Numpad feature" and set the variable to 1
+; ##########################################################################################
+
+; Shortcut to activate media arrow keys fix
+; ^+!n::Gosub, toggle_mac_numpad
+$!NumLock::Gosub, toggle_mac_numpad
+
+; Function (subroutine?) for activation by tray menu item or keyboard shortcut
+toggle_mac_numpad:
+    mac_numpad:=!mac_numpad         ; Toggle value of media_arrows_fix variable on/off
+    if (mac_numpad = 1) {
+        Menu, Tray, Check, Mac Numpad           Option+NumLock
+        MsgBox, 0, ALERT, % "Mac Numpad feature is now ENABLED.`n`n"
+                            . "Disable from tray menu or with Option+NumLock."
+        return
+    }
+    if (mac_numpad = 0) {
+        Menu, Tray, Uncheck, Mac Numpad           Option+NumLock
+        MsgBox, 0, ALERT, % "Mac Numpad feature is now DISABLED.`n`n"
+                            . "Re-enable from tray menu or with Option+NumLock."
+        return
+    }
+
+#If !WinActive("ahk_group remotes") && mac_numpad = 1
+    ; Make numpad act like a real Mac (always a numpad, Numlock is "Clear")
+    $NumLock::Send, {Esc}
+#If ; Technically unnecessary closing #If, but nullifies previous #If directive
+
 
 ; ###############################################################################################################
 ; ###   Special character insertion like Apple/macOS Option key methods, mapping to Unicode input method

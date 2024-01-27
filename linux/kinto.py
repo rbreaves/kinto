@@ -281,6 +281,63 @@ define_keymap(re.compile("^jetbrains-(?!.*toolbox).*$", re.IGNORECASE),{
     K("Super-c"): K("LC-c"),                    # Sigints - interrupt
 },"Jetbrains")
 
+#########################################################
+###########   START OF MAC NUMPAD FEATURE   #############
+#########################################################
+# Force the numpad to always be a numpad, like a Mac keyboard on macOS
+# Numlock key becomes "Clear" key for use with calculator (sends Escape)
+# Toggle feature on/off with Option+Numlock (Fn+Numlock might work on Apple keyboards)
+# Set _mac_numpad var to "False" (no quotes) to disable by default
+_mac_numpad = True
+
+def mac_numpad_alert():
+    """Show notification of state of Kinto's Mac Numpad feature"""
+    from subprocess import run
+    if _mac_numpad:
+        run('notify-send ALERT \
+            "Kinto Mac Numpad feature is now ENABLED.\
+            \rNumlock becomes "Clear" key (Escape)\
+            \rDisable with Option+Numlock."', shell=True)
+        print("(DD) Kinto Mac Numpad feature is now ENABLED.", flush=True)
+    # Don't show pointless alert on startup if feature is set to be disabled by default
+    if not _mac_numpad:
+        run('notify-send ALERT \
+            "Kinto Mac Numpad feature is now DISABLED.\
+            \rRe-enable with Option+Numlock."', shell=True)
+        print("(DD) Kinto Mac Numpad feature is now DISABLED.", flush=True)
+
+
+def toggle_mac_numpad():
+    """Toggle the value of the _mac_numpad variable"""
+    def _toggle_mac_numpad():
+        global _mac_numpad
+        _mac_numpad = not _mac_numpad
+        mac_numpad_alert()
+
+    return _toggle_mac_numpad
+
+
+define_keymap(lambda wm_class: wm_class.casefold() not in remotes,{
+    C("Alt-Numlock"):       toggle_mac_numpad(),
+    C("Fn-Numlock"):        toggle_mac_numpad(),
+},"Mac Numpad toggle")
+
+define_keymap(lambda wm_class: wm_class.casefold() not in remotes and _mac_numpad is True,{
+    C("KP1"):               C("1"),
+    C("KP2"):               C("2"),
+    C("KP3"):               C("3"),
+    C("KP4"):               C("4"),
+    C("KP5"):               C("5"),
+    C("KP6"):               C("6"),
+    C("KP7"):               C("7"),
+    C("KP8"):               C("8"),
+    C("KP9"):               C("9"),
+    C("KP0"):               C("0"),
+    C("KPDot"):             C("Dot"),
+    C("Numlock"):           C("Esc"),
+},"Mac Numpad")
+
+
 ##############################################
 ### START OF FILE MANAGER GROUP OF KEYMAPS ###
 ##############################################
