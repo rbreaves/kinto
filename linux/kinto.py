@@ -153,6 +153,13 @@ define_conditional_modmap(lambda wm_class: wm_class.casefold() not in terminals,
     # Key.LEFT_CTRL: Key.LEFT_META,   # Mac
     # Key.RIGHT_META: Key.RIGHT_CTRL, # Mac - Multi-language (Remove)
     # Key.RIGHT_CTRL: Key.RIGHT_META, # Mac - Multi-language (Remove)
+    
+    # Fix arrow keys with media functions instead of PgUp/PgDn/Home/End
+    # Key.PLAYPAUSE:      Key.PAGE_UP,        # (media_arrows_fix)
+    # Key.STOPCD:         Key.PAGE_DOWN,      # (media_arrows_fix)
+    # Key.PREVIOUSSONG:   Key.HOME,           # (media_arrows_fix)
+    # Key.NEXTSONG:       Key.END,            # (media_arrows_fix)
+
 })
 
 # [Conditional modmap] Change modifier keys in certain applications
@@ -190,6 +197,13 @@ define_conditional_modmap(re.compile(termStr, re.IGNORECASE), {
     # # Left Ctrl Stays Left Ctrl
     # Key.RIGHT_META: Key.RIGHT_CTRL, # Mac - Multi-language (Remove)
     # Key.RIGHT_CTRL: Key.LEFT_CTRL,  # Mac - Multi-language (Remove)
+    
+    # Fix arrow keys with media functions instead of PgUp/PgDn/Home/End
+    # Key.PLAYPAUSE:      Key.PAGE_UP,        # (media_arrows_fix)
+    # Key.STOPCD:         Key.PAGE_DOWN,      # (media_arrows_fix)
+    # Key.PREVIOUSSONG:   Key.HOME,           # (media_arrows_fix)
+    # Key.NEXTSONG:       Key.END,            # (media_arrows_fix)
+
 })
 
 # Keybindings for IntelliJ
