@@ -248,25 +248,27 @@ GroupAdd, intellij, ahk_exe idea64.exe
     ^Delete::Send {Delete}      ; Cmd+Delete: Delete / Send to Trash
     ^BackSpace::Send {Delete}   ; Cmd+Delete: Delete / Send to Trash
     ^d::return,                 ; Block the unusual Explorer "delete" shortcut of Ctrl+D, used for "bookmark" in similar apps
-    $Enter:: 			; Use Enter key to rename (F2), unless focus is inside a text input field. 
+    $Enter::                    ; Use Enter key to rename (F2), unless focus is inside a text input field. 
     ControlGetFocus, fc, A
-    If fc contains Edit,Search,Notify,Windows.UI.Core.CoreWindow1,SysTreeView321
+    If fc contains Edit,Search,Notify,Windows.UI.Core.CoreWindow1,SysTreeView321,DirectUIHWND
         Send {Enter}
     Else Send {F2}
     Return
-    $BackSpace:: 		; Backspace (without Cmd): Block Backspace key with error beep, unless inside text input field
+    $BackSpace::                ; Backspace (without Cmd): Block Backspace key with error beep, unless inside text input field
     ControlGetFocus, fc, A
-    If fc contains Edit,Search,Notify,Windows.UI.Core.CoreWindow1
+    If fc contains Edit,Search,Notify,Windows.UI.Core.CoreWindow1,DirectUIHWND
         Send {BackSpace}
     Else SoundBeep, 600, 300
     Return
-    $Delete:: 			; Delete (without Cmd): Block Delete key with error beep, unless inside text input field
+    $Delete::                   ; Delete (without Cmd): Block Delete key with error beep, unless inside text input field
     ControlGetFocus, fc, A
-    If fc contains Edit,Search,Notify,Windows.UI.Core.CoreWindow1
+    If fc contains Edit,Search,Notify,Windows.UI.Core.CoreWindow1,DirectUIHWND
         Send {Delete}
-    Else SoundBeep, 600, 300
+    ; Else SoundBeep, 600, 300
+    Else Return,
     Return
-#IfWinActive
+#If
+
 ; #########################################################################
 ; ##############   END OF FINDER MODS FOR FILE MANAGERS   #################
 ; #########################################################################
