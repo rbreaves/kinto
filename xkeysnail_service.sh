@@ -566,7 +566,7 @@ if ! [[ $1 == "5" || $1 == "uninstall" || $1 == "Uninstall" ]]; then
 		git clone -b kinto --depth 10 https://github.com/rbreaves/xkeysnail.git
 		cd xkeysnail
 	fi
-	sudo pip3 install --upgrade .
+	sudo pip3 install --upgrade . --break-system-packages
 	cd ..
 	which xkeysnail
 	if [ $? -eq 1 ]; then
