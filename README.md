@@ -181,7 +181,7 @@ https://benreaves.medium.com/macos-to-linux-back-again-c6151200f4dc
 
 2. Install XQuartz (x11/xorg)
 
-```brew install --cask xquartz```
+```brew install xquartz```
 
 3. log off and back on.
 4. Install FreeRDP
@@ -610,7 +610,7 @@ Latest Official Synergy
 
 [Karabiner-Elements](https://github.com/pqrs-org/Karabiner-Elements) by pqrs-org
 
-Karabiner-Elements is a powerful utility for keyboard customization on macOS Sierra (10.12) or later. 
+Karabiner-Elements is a powerful utility for keyboard customization on macOS Sierra (10.12) or later.
 
 [mbpfan](https://github.com/linux-on-mac/mbpfan) by linux-on-mac
 
