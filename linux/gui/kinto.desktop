@@ -7,5 +7,5 @@ Type=Application
 Exec=/usr/bin/python3 {homedir}/.config/kinto/gui/kinto-gui.py
 Icon={homedir}/.config/kinto/kinto-color-48.svg
 # Icon=/usr/share/icons/Pocillo/kinto-color.svg
-Terminal=false
+Terminal=true
 NoDisplay=false
