@@ -63,6 +63,7 @@ remotes = [
     "xfreerdp",
     "Wfica",
     "Anydesk",
+    "Nxplayer.bin",
 ]
 remotes = [client.casefold() for client in remotes]
 remotesStr = "|".join(str('^'+x+'$') for x in remotes)
